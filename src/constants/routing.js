@@ -142,6 +142,13 @@ export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master')
 export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-transaction');
 export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');
 export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
+
+
+// UI-Screens
 export const ROUTING_DEALER_CORPORATE_CLAIM = ROUTING_SALES.concat('dealer-corporate-claim');
 export const ROUTING_CORPORATE_MASTER = ROUTING_SALES.concat('corporate-master');
 export const ROUTING_CORPORATE_SCHEME_REGISTRATION = ROUTING_SALES.concat('corporate-scheme-registration');
+
+export const ROUTING_DEALER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('dealer-empowerment');
+export const ROUTING_CUSTOMER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('employee-empowerment');
+//

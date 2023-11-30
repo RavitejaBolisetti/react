@@ -43,12 +43,13 @@ const ViewDetailMain = (props) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label={'Dealer Share Amount' || translateContent('amcRegistration.label.dealerShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={'OEM Share Amount' || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Total Amount' || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
-                    
+                    <Descriptions.Item label={'Additional Discount Amount' || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'OEM Total Amount' || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
+                    {/* for later use */}
                     {/* <Descriptions.Item label={'Approved Dealer Share Amount' || translateContent('amcRegistration.label.dealerShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={'Approved OEM Share Amount' || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={'Approved Total Amount' || translateContent('amcRegistration.label.oemShareAmount')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item> */}
-    
+
                     <Descriptions.Item label={'M & M Claim No' || translateContent('amcRegistration.label.mnmClaimNo')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={'M & M Claim Date' || translateContent('amcRegistration.label.mnmClaimDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
 
@@ -60,9 +61,20 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label={'Debit Note Date' || translateContent('amcRegistration.label.mnmClaimDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={'Debit Note Amount' || translateContent('amcRegistration.label.mnmClaimDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.gstin, isLoading)}</Descriptions.Item>
                 </Descriptions>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Form.Item label={'Remarks' || translateContent('customerMaster.label.documentType')} name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.documentType'))] : ''} placeholder={translateContent('customerMaster.placeholder.documentType')}>
+                        <TextArea
+                            autoSize={{
+                                minRows: 1,
+                                maxRows: 3,
+                            }}
+                            placeholder="Remarks"
+                        />
+                    </Form.Item>
+                </Col>
             </Card>
 
-            <Card>
+            {/* <Card>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Form.Item label={'Claim Type' || translateContent('customerMaster.label.documentType')} name="claimType" rules={true ? [validateRequiredInputField(translateContent('customerMaster.validation.documentType'))] : ''} placeholder={translateContent('customerMaster.placeholder.documentType')}>
@@ -77,7 +89,6 @@ const ViewDetailMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Form.Item label={'Remarks' || translateContent('customerMaster.label.documentType')} name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.documentType'))] : ''} placeholder={translateContent('customerMaster.placeholder.documentType')}>
-                            {/* <label>Remarks</label> */}
                             <TextArea
                                 autoSize={{
                                     minRows: 1,
@@ -88,7 +99,7 @@ const ViewDetailMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-            </Card>
+            </Card> */}
         </>
     );
 };

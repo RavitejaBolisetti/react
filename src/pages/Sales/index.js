@@ -38,7 +38,9 @@ import RsmAsmApprovalPage from './RsmAsmApproval';
 import RSARegistrationPage from './RSARegistration';
 import DealerCorporateClaimMasterPage from './DealerCorporateClaim';
 import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
-import CorporateMasterPage from './CorporateMaster'
+import CorporateMasterPage from './CorporateMaster';
+import EmployeeEmpowermentMasterPage from './EmployeeEmpowerment'
+
 
 
 export {
@@ -74,4 +76,5 @@ export {
     CoDealerInvoiceGenerationPage,
     DealerCorporateClaimMasterPage,
     CorporateMasterPage,
+    EmployeeEmpowermentMasterPage
 };

@@ -46,7 +46,7 @@ export const AdvancedSearchFrom = (props) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label={'Corporate Category' || translateContent('city.label.countryCode')} name="countryCode" rules={[validateRequiredSelectField('corporate category' || translateContent('city.validation.country'))]}>
                         {defaultCountry && (
-                            <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder={'corporate category' || translateContent('city.placeholder.select')} allowClear onChange={handleFilterChange('countryCode')}>
+                            <Select defaultValue={null} showSearch loading={!isDataCountryLoaded} placeholder={'corporate category' || translateContent('city.placeholder.select')} allowClear onChange={handleFilterChange('countryCode')}>
                                 {countryData?.map((item) => (
                                     <Option key={item?.countryCode} value={item?.countryCode}>
                                         {item?.countryName?.qw}

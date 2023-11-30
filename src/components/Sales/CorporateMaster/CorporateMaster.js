@@ -438,6 +438,7 @@ export const CorporateMasterBase = (props) => {
         setFilteredDistrictData,
         tableData: searchData,
         showAddButton: true,
+        showRefreshBtn: false
 
     };
 

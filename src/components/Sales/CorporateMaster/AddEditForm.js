@@ -105,13 +105,16 @@ const AddEditFormMain = (props) => {
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={'Corporate Category' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Corporate Category' || translateContent('city.validation.cityName'))]} name="name">
-                                        <Input placeholder={preparePlaceholderText('Corporate Category' || translateContent('city.placeholder.cityName'))} maxLength={50} />
+                                        <Select optionFilterProp="children" options={ []} placeholder={preparePlaceholderSelect('Corporate Category')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                        {/* <Input placeholder={preparePlaceholderText('Corporate Category' || translateContent('city.placeholder.cityName'))} maxLength={50} /> */}
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={'Corporate Type' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField(translateContent('Corporate Type' || 'city.validation.cityName'))]} name="name">
-                                        <Input placeholder={preparePlaceholderText('Corporate Type' || translateContent('city.placeholder.cityName'))} maxLength={50} />
+                                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Corporate Type')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+
+                                        {/* <Input placeholder={preparePlaceholderText('Corporate Type' || translateContent('city.placeholder.cityName'))} maxLength={50} /> */}
                                     </Form.Item>
                                 </Col>
 

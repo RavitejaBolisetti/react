@@ -38,11 +38,15 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
+        common: {
+            Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
+        }
     } = state;
     const moduleTitle = 'Claim';
 
     let returnValue = {
         userId,
+        loginUserType: loginUserData?.userType,
         moduleTitle,
         typeData: typeData['CHK_STATS'],
         typedataMaster: typeData,
@@ -86,7 +90,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DealerCorporateClaimMasterBase = (props) => {
-    const { userId, data, totalRecords, moduleTitle } = props;
+    const { userId, data, totalRecords, moduleTitle , loginUserType} = props;
+    console.log("🚀 ~ file: DealerCorporateClaimMaster.js:94 ~ DealerCorporateClaimMasterBase ~ loginUserData:", loginUserType)
     const { isModelDataLoading, vehicleModelData } = props;
     const { isProfileDataLoaded, ProfileData, ChecklistData, typeData } = props;
     const { VehicleLovCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
@@ -415,7 +420,9 @@ export const DealerCorporateClaimMasterBase = (props) => {
         handleSearchChange,
         handleButtonClick,
         // saveButtonName: !isLastSection && 'Save'
-        saveButtonName:'Save'
+        saveButtonName:'Save',
+        claimStatus
+
     };
 
     const containerProps = {
@@ -474,7 +481,10 @@ export const DealerCorporateClaimMasterBase = (props) => {
         data,
         isProfileDataLoading,
         isProductHierarchyLoading,
+        claimStatus,
+        loginUserType
     };
+
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         titleOverride: 'Advance Filters',
@@ -493,6 +503,9 @@ export const DealerCorporateClaimMasterBase = (props) => {
         showAddButton: true,
         showRefreshBtn: false,
         tableData: [{}],
+        claimStatus,
+        loginUserType
+        
     };
 
     return (

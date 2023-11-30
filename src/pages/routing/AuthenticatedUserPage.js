@@ -79,6 +79,7 @@ import {
     CoDealerInvoiceGenerationPage,
     DealerCorporateClaimMasterPage,
     CorporateMasterPage,
+    EmployeeEmpowermentMasterPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -96,6 +97,7 @@ import { VehicleSalesSchemeMasterPage } from 'pages/Sales/VehicleSalesSchemeMast
 import { UnAuthozisedAccess } from 'components/UnAuthozisedAccess';
 import { withSpinner } from 'components/withSpinner';
 import CorporateSchemeRegistrationMasterPage from 'pages/Sales/CorporateSchemeRegistration';
+import DealerEmpowermentMasterPage from 'pages/Sales/DealerEmpowerment';
 
 const mapStateToProps = (state) => {
     const {
@@ -267,9 +269,15 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
                 <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
+
+            {/* UI-Screens */}
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_SCHEME_REGISTRATION} element={<CorporateSchemeRegistrationMasterPage />} exact />
+
+                <Route path={routing.ROUTING_DEALER_EMPOWERMENT_REQUEST} element={<DealerEmpowermentMasterPage />} exact />
+                <Route path={routing.ROUTING_CUSTOMER_EMPOWERMENT_REQUEST} element={<EmployeeEmpowermentMasterPage />} exact />
+                {/*  */}
             </Routes>
         ) : (
             <Routes>

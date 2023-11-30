@@ -11,6 +11,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 // const { Text } = Typography;
 const { Search } = Input;
@@ -46,7 +47,11 @@ export default function AdvanceFilter(props) {
                         </Button>
                     </Col>
                 )}
-               
+                <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                    <Button data-testid="addBtn" className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                        {translateContent('global.buttons.add')}
+                                    </Button>
+                                </Col>
             </Row>
             {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

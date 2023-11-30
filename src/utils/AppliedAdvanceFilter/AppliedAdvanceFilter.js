@@ -47,8 +47,8 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                         <TreeSelectField {...treeSelectFieldProps} />
-                                        {/* <Search placeholder={translateContent('global.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} /> */}
+                                         {/* <TreeSelectField {...treeSelectFieldProps} /> */}
+                                        <Search placeholder={translateContent('global.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                     </Form.Item>
                                 </Form>
                             </Col>

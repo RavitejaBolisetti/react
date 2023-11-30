@@ -4,16 +4,21 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Select } from 'antd';
+import { Row, Col, Form, Select, Card, Descriptions, Button, Space, Typography,Upload } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { UploadUtil } from 'utils/Upload';
 import { translateContent } from 'utils/translateContent';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import styles from 'assets/sass/app.module.scss';
+import { UploadBoxIcon } from 'Icons';
 
+const { Text, Title } = Typography;
+const { Dragger } = Upload;
 const { Option } = Select;
 
 const AddEditForm = (uploadProps) => {
-    const { mandatoryFields, handleClearChange } = uploadProps;
+    const { mandatoryFields, handleClearChange, formData, isLoading } = uploadProps;
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -46,7 +51,7 @@ const AddEditForm = (uploadProps) => {
 
     return (
         <>
-            <Row gutter={16}>
+            {/* <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label={ 'Document List'|| translateContent('customerMaster.label.documentType')} name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField(translateContent('customerMaster.validation.documentType'))] : ''} placeholder={translateContent('customerMaster.placeholder.documentType')}>
                         <Select loading={!(typedataTemp?.length !== 0)} onChange={handleClearChange} placeholder={translateContent('global.placeholder.select')} {...selectProps}>
@@ -58,8 +63,46 @@ const AddEditForm = (uploadProps) => {
                         </Select>
                     </Form.Item>
                 </Col>
-            </Row>
-            <UploadUtil {...uploadProps} />
+            </Row> */}
+
+            <Card>
+                <Descriptions
+                // {...uploadProps}
+                >
+                    <Descriptions.Item label={'Document Name' || translateContent('amcRegistration.label.customerCategory')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'File Name' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={''}>
+                        <Dragger
+                        className={styles.uploadDraggerStrip}
+                        // className{styles.uploadDraggerBox}
+                        //  key={key} className={fileList?.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps} disabled={draggerDisable ? draggerDisable : false}
+                         >
+                            <Space direction="vertical">
+                                {/* <UploadBoxIcon /> */}
+                                <div>
+                                    <Title level={5}>{'Click or drop your file here to upload'}</Title>
+                                    {/* <Text>{'validationText'}</Text> */}
+                                </div>
+                                {/* <Space>
+                                    <Button disabled={false} type="primary">
+                                        Upload File
+                                    </Button>
+                                    {'isReplacing' && (
+                                        <Button 
+                                        onClick={()=>console.log('replace')}
+                                        // onClick={onCancelReplace}
+                                         danger>
+                                            {translateContent('global.buttons.cancel')}
+                                        </Button>
+                                    )}
+                                </Space> */}
+                            </Space>
+                        </Dragger>
+                    </Descriptions.Item>
+                </Descriptions>
+            </Card>
+
+            {/* <UploadUtil {...uploadProps} /> */}
         </>
     );
 };
