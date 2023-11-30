@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -20,12 +20,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            // ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
-            OTF: {
-                OtfCancellation: { detailData: dealerDataList },
-            },
         },
     } = state;
 
@@ -36,13 +31,7 @@ const mapStateToProps = (state) => {
         accessToken,
         token,
         typeData: typeData,
-        isDataLoaded,
-        isLoading,
-        supportingData,
         moduleTitle,
-        // isProductHierarchyLoading,
-        // productHierarchyData,
-        dealerDataList,
     };
     return returnValue;
 };
@@ -64,19 +53,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const PoCancellationMasterBase = (props) => {
     const { otfData, selectedOrder, typeData, onFinishVPOCancellation, selectedRecord, setSelectedRecord } = props;
-    const { userId, listShowLoading } = props;
-    const { fetchProductHierarchyList, dealerDataList } = props;
+    const { productHierarchyData } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, cancelOTFBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const handleButtonClick = ({ record = null, buttonAction }) => {};
-
-    useEffect(() => {
-        if (userId) {
-            fetchProductHierarchyList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
 
     const formProps = {
         ...props,
@@ -87,8 +68,7 @@ const PoCancellationMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         typeData: typeData,
-        // productHierarchyData,
-        dealerDataList,
+        productHierarchyData,
         onFinishVPOCancellation,
         selectedRecord,
         setSelectedRecord,

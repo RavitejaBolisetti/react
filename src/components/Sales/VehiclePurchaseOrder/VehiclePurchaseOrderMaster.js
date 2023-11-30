@@ -52,13 +52,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isLoading: false,
         isDetailLoaded: true,
-        filterString,
-        // isProductHierarchyDataLoaded,
-        // isProductHierarchyLoading,
-        // productAttributeData,
-        // isProductDataLoaded,
-        // isProductDataLoading: !isProductDataLoaded,
-        // productCode,
+        filterString,        
         productHierarchyDataListArray: productHierarchyData,
     };
     return returnValue;
@@ -144,16 +138,12 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     }, [productHierarchyDataListArray]);
 
     useEffect(() => {
-        if (userId && productHierarchyDataListArray.length > 0) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',
                     value: 'Sales',
-                },
-                {
-                    key: 'prodctCode',
-                    value: productHierarchyDataListArray?.modelCode,
-                },
+                },                
                 {
                     key: 'hierarchyNode',
                     value: 'MV',
@@ -162,7 +152,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, productHierarchyDataListArray]);
+    }, [userId]);
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
