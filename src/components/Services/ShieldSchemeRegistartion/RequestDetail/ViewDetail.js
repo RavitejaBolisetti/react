@@ -61,7 +61,7 @@ const ViewDetail = (props) => {
                     </Col>
                 </Row>
 
-                {userType !== AMC_CONSTANTS?.MNM?.key ? (
+                {userType === AMC_CONSTANTS?.MNM?.key ? (
                     <>
                         {selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key && (
                             <>
