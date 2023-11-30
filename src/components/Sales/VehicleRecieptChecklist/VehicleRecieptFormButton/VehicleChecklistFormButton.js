@@ -11,7 +11,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const VehicleCheckListbutton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection, buttonType = false }) => {
+export const VehicleCheckListbutton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.save'), handleButtonClick, isLoadingOnSave, isLastSection, buttonType = false }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -36,7 +36,7 @@ export const VehicleCheckListbutton = ({ record, onCloseAction, buttonData, setB
                         </Button>
                     )}
 
-                    {buttonData?.nextBtn && !isLastSection && (
+                    {buttonData?.nextBtn && !isLastSection &&  (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             {translateContent('global.buttons.next')}
                         </Button>

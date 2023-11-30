@@ -308,11 +308,11 @@
     & :global {
         .ant-tooltip-content {
             .ant-tooltip-inner {
+                color: $primaryBlack;
+                background: $primaryWhite !important;
                 p {
                     padding-left: 12px !important;
                 }
-
-                color: $primaryBlack;
             }
 
             border: 1px solid $semanticInfo !important;
@@ -1434,11 +1434,11 @@
 
     .advanceFilterItem {
         height: 30px;
-        border-radius: 20px;
+        border-radius: 2px;
         margin-top: 6px;
-        padding: 4px 10px;
-        border: solid 1px $primaryRed;
-        color: $primaryRed;
+        padding: 4px 8px;
+        border: solid 1px $neutralGrey2;
+        color: $neutralGrey4;
         line-height: 18px;
         margin-right: 12px;
 
@@ -1931,10 +1931,10 @@
         font-size: 12px;
         line-height: 20px;
         font-weight: 500;
-        // color: $neutralGrey4;
+        color: $neutralGrey4;
 
         span {
-            // color: $primaryBlack;
+            color: $primaryBlack;
             max-width: 9.5vw;
             word-wrap: break-word;
         }
