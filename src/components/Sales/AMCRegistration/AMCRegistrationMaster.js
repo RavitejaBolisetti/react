@@ -250,7 +250,7 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [amcRegistrationDetailData]);
 
     const handleDealerParentChange = (parentGroupCode) => {
-        fetchDealerLocations({ customURL: customLocationURL + '?parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
+        fetchDealerLocations({ customURL: customLocationURL + '?dealerParentCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
     };
     const handleModelData = ({ modelCode = null, modelFamily = null, modelGroup = null }) => {
         const modelParams = [
