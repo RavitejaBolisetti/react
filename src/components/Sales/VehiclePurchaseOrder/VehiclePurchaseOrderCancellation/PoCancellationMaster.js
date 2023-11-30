@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
+            // ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
@@ -40,8 +40,8 @@ const mapStateToProps = (state) => {
         isLoading,
         supportingData,
         moduleTitle,
-        isProductHierarchyLoading,
-        productHierarchyData,
+        // isProductHierarchyLoading,
+        // productHierarchyData,
         dealerDataList,
     };
     return returnValue;
@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 const PoCancellationMasterBase = (props) => {
     const { otfData, selectedOrder, typeData, onFinishVPOCancellation, selectedRecord, setSelectedRecord } = props;
     const { userId, listShowLoading } = props;
-    const { fetchProductHierarchyList, productHierarchyData, dealerDataList } = props;
+    const { fetchProductHierarchyList, dealerDataList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, cancelOTFBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -87,7 +87,7 @@ const PoCancellationMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         typeData: typeData,
-        productHierarchyData,
+        // productHierarchyData,
         dealerDataList,
         onFinishVPOCancellation,
         selectedRecord,
