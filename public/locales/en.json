@@ -27,7 +27,8 @@
             "tehsil": "Tehsil",
             "select": "Select",
             "passwordStrength": "Password strength",
-            "actions": "Actions"
+            "actions": "Actions",
+            "input": "input"
         },
         "validation": {
             "input": "Please enter ",
