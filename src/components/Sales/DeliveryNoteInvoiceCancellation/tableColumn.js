@@ -11,6 +11,7 @@ import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 export const tableColumn = ({ handleButtonClick, typeData }) => {
     const tableColumn = [
@@ -18,17 +19,13 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             title: translateContent('deliveryNoteInvoiceCancellation.label.requestType'),
             dataIndex: 'requestType',
             width: '20%',
-            render: (__, value) => {
-                return checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, value?.requestType));
-            },
+            render: (__, value) => checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, value?.requestType)),
         }),
         tblPrepareColumns({
             title: translateContent('deliveryNoteInvoiceCancellation.label.requestStatus'),
             dataIndex: 'requestStatus',
             width: '20%',
-            render: (__, value) => {
-                return checkAndSetDefaultValue(getCodeValue(typeData?.CDLR_INV_APP_STATUS, value?.requestStatus));
-            },
+            render: (__, value) => checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.DEL_NOTE_CANCL_STATS?.id], value?.requestStatus)),
         }),
 
         tblPrepareColumns({
@@ -41,9 +38,7 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             title: translateContent('deliveryNoteInvoiceCancellation.label.requestDate'),
             dataIndex: 'requestDate',
             width: '12%',
-            render: (value) => {
-                return convertDate(value, dateFormatView);
-            },
+            render: (value) => convertDate(value, dateFormatView),
         }),
         tblPrepareColumns({
             title: translateContent('deliveryNoteInvoiceCancellation.label.invoiceId'),

@@ -117,7 +117,7 @@ const AddEditFormMain = (props) => {
                                 {customSelectBox({
                                     data: filteredVariantData,
                                     loading: isVariantLoading,
-                                    disabled: disabled,
+                                    disabled: viewOnly || disabled,
                                     fieldNames: isMahindraMake ? { key: 'variantCode', value: 'variantDescription' } : undefined,
                                 })}
                             </Form.Item>

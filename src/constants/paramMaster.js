@@ -505,4 +505,8 @@ export const PARAM_MASTER = {
         id: 'ENROLLED_BY',
         title: 'Enrolled By',
     },
+    DEL_NOTE_CANCL_STATS: {
+        id: 'DEL_NOTE_CANCL_STATS',
+        title: 'Delivery Note Cancellation',
+    },
 };

@@ -123,7 +123,7 @@ const AddEditFormMain = (props) => {
                         ) : (
                             <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
                                 {/* <Select placeholder={preparePlaceholderSelect('customer name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
-                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect, disabled: !corporateType })}
                             </Form.Item>
                         )}
                     </Col>
@@ -137,7 +137,7 @@ const AddEditFormMain = (props) => {
                     )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label={translateContent('customerMaster.label.corporateCategory')} name="corporateCategory" data-testid="corporateCategory">
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateCategory'))} disabled={corporateType === 'LIS'} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateCategory'))} disabled={corporateType === 'LIS' || !corporateType} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
                         </Form.Item>
                     </Col>
 

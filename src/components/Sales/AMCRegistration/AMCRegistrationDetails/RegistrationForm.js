@@ -50,9 +50,6 @@ const RegistrationForm = (props) => {
                     )}
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('amcRegistration.label.employeeName')} name="employeeCode" rules={[validateRequiredInputField(translateContent('amcRegistration.label.employeeName'))]}>
-                            {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Search onSearch={handleEmployeeNameSearch} onChange={handleOnClear} placeholder={translateContent('amcRegistration.placeholder.search')} loading={isEmployeeDataLoading} type="text" allowClear />
-                            </AutoComplete> */}
                             {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.employeeName')) })}
                         </Form.Item>
                     </Col>

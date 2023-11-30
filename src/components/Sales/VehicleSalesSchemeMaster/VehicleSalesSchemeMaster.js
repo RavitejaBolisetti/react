@@ -249,7 +249,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     useEffect(() => {
         if (isVehicleSalesSchemeDataLoaded) {
             setFormData(vehicleSalesSchemeDetails);
-            setOrganizationId(vehicleSalesSchemeDetails?.moHierarchyMstId)
+            setOrganizationId(vehicleSalesSchemeDetails?.moHierarchyMstId);
             vehicleSalesSchemeDetails && addSchemeForm.setFieldsValue({ ...vehicleSalesSchemeDetails, validityFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityFromDate), validityToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityToDate), vehicleInvoiceFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceFromDate), vehicleInvoiceToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceToDate) });
             setSchemeCategorySelect(vehicleSalesSchemeDetails?.schemeType);
             handleSchemeCategory(vehicleSalesSchemeDetails?.schemeType);
@@ -497,20 +497,45 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     const handleSchemeCategory = (value) => {
         const disabledAmountField = value !== '';
 
-        if (value === SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key) {
-            setSchemeCategoryList({ amc: true, rsa: false, shield: false });
-            setDisableAmountTaxField(disabledAmountField);
-        } else if (value === SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key) {
-            setSchemeCategoryList({ amc: false, rsa: true, shield: false });
-            setDisableAmountTaxField(disabledAmountField);
-        } else if (value === SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key) {
-            setSchemeCategoryList({ amc: false, rsa: false, shield: true });
-            setDisableAmountTaxField(disabledAmountField);
-        } else {
-            setDisableAmountTaxField(!disabledAmountField);
+        switch (value) {
+            case SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key:
+                setSchemeCategoryList({ amc: true, rsa: false, shield: false });
+                setDisableAmountTaxField(disabledAmountField);
+                break;
+            case SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key:
+                setSchemeCategoryList({ amc: false, rsa: true, shield: false });
+                setDisableAmountTaxField(disabledAmountField);
+                break;
+            case SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key:
+                setSchemeCategoryList({ amc: false, rsa: false, shield: true });
+                setDisableAmountTaxField(disabledAmountField);
+                break;
+            default:
+                setDisableAmountTaxField(!disabledAmountField);
         }
         setSchemeCategorySelect(value);
+        if(schemeCategorySelect){
+            addSchemeForm.setFieldsValue({ schemeCategory: null });
+        }
     };
+
+    // const handleSchemeCategory = (value) => {
+    //     const disabledAmountField = value !== '';
+
+    //     if (value === SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key) {
+    //         setSchemeCategoryList({ amc: true, rsa: false, shield: false });
+    //         setDisableAmountTaxField(disabledAmountField);
+    //     } else if (value === SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key) {
+    //         setSchemeCategoryList({ amc: false, rsa: true, shield: false });
+    //         setDisableAmountTaxField(disabledAmountField);
+    //     } else if (value === SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key) {
+    //         setSchemeCategoryList({ amc: false, rsa: false, shield: true });
+    //         setDisableAmountTaxField(disabledAmountField);
+    //     } else {
+    //         setDisableAmountTaxField(!disabledAmountField);
+    //     }
+    //     setSchemeCategorySelect(value);
+    // };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         addSchemeForm.resetFields();
@@ -528,6 +553,14 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             ];
 
             fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL, onErrorAction });
+            if (record?.encash === ENCASH_CONSTANTS.SALES?.key) {
+                setSaleService({ sales: true, service: false });
+            } else if (record?.encash === ENCASH_CONSTANTS.SERVICE?.key) {
+                setSaleService({ sales: false, service: true });
+            }
+            if (record?.encash === ENCASH_CONSTANTS.ALL?.key) {
+                setSaleService({ sales: true, service: true });
+            }
         }
 
         if (buttonAction !== NEXT_ACTION && !(buttonAction === VIEW_ACTION)) {
@@ -551,6 +584,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         setIsViewDetailVisible(true);
     };
 
+    console.log(saleService);
+
     const handleZoneChange = (value) => {
         const extraParams = [
             {
@@ -559,6 +594,10 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             },
         ];
         fetchAreaOfficeList({ setIsLoading: listAreaOfficeListShowLoading, userId, extraParams });
+        setZone(value);
+        if(zone){
+            addZoneAreaForm.setFieldsValue({ area: null });
+        }
     };
 
     const onSearchHandle = (value) => {
@@ -748,7 +787,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(" ").concat(translateContent('vehicleSalesSchemeMaster.heading.moduleTitle')),
+        titleOverride: drawerTitle.concat(' ').concat(translateContent('vehicleSalesSchemeMaster.heading.moduleTitle')),
         buttonData,
         setButtonData,
         handleButtonClick,

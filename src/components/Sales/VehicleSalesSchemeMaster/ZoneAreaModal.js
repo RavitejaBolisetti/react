@@ -9,6 +9,7 @@ import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { validateRequiredSelectField } from 'utils/validation';
 
 const { Option } = Select;
 
@@ -19,7 +20,7 @@ export const ZoneAreaModalForm = (props) => {
         <Form autoComplete="off" layout="vertical" form={addZoneAreaForm} onFinish={onFinishAddZoneDetails}>
             <Row gutter={24}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.zone')} name="zone" initialValue={formData?.zone}>
+                    <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.zone')} name="zone" initialValue={formData?.zone} rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.zone'))]}>
                         <Select placeholder={translateContent('global.placeholder.select')} onChange={handleZoneChange} allowClear>
                             {zoneMasterData?.map((item) => (
                                 <Option value={item?.zoneCode}>{item?.zoneDescription}</Option>
@@ -29,7 +30,7 @@ export const ZoneAreaModalForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.area')} name="area" initialValue={formData?.area}>
+                    <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.area')} name="area" initialValue={formData?.area} rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.area'))]}>
                         <Select placeholder={translateContent('global.placeholder.select')} allowClear>
                             {areaOfficeData?.map((item) => (
                                 <Option value={item?.areaCode}>{item?.areaDescription}</Option>

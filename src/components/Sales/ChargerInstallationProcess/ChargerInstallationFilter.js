@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { PlusOutlined } from '@ant-design/icons';
@@ -20,10 +20,18 @@ import { translateContent } from 'utils/translateContent';
 export default function ChargerInstallationFilter(props) {
     const { extraParams, removeFilter, typeData, chargerStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleChargerTypeChange, setAdvanceSearchVisible, handleButtonClick, chargerStatus } = props;
 
+    useEffect(() => {
+        if (typeData) {
+            searchForm?.setFieldValue('searchType', 'otfNumber');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [typeData]);
+
     const serachBoxProps = {
         searchForm,
         filterString,
         optionType: typeData?.[PARAM_MASTER.CH_SER.id],
+        defaultOption: 'otfNumber',
         setFilterString,
         allowClear: false,
     };

@@ -46,8 +46,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="chasisNumber" label={translateContent('bookingSoMappUnmapp.label.chasisNumber')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.chasisNumber'))} />
+                    <Form.Item name="chasisNumber" label={translateContent('bookingSoMappUnmapp.label.chassisNumber')}>
+                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.chassisNumber'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>

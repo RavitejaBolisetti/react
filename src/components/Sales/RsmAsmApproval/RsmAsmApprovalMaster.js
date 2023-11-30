@@ -253,7 +253,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity });
-        // record?.requestStatus === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: true }) : setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: false });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setSelectedId(record?.id);
         setIsFormVisible(true);

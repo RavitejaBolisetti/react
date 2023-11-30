@@ -18,17 +18,13 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             title: translateContent('rsmAsmApproval.label.requestType'),
             dataIndex: 'requestType',
             width: '16%',
-            render: (__, value) => {
-                return checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, value?.requestType));
-            },
+            render: (__, value) => checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, value?.requestType)),
         }),
         tblPrepareColumns({
             title: translateContent('rsmAsmApproval.label.requestStatus'),
             dataIndex: 'requestStatus',
             width: '16%',
-            render: (__, value) => {
-                return checkAndSetDefaultValue(getCodeValue(typeData?.CDLR_INV_APP_STATUS, value?.requestStatus));
-            },
+            render: (__, value) => checkAndSetDefaultValue(getCodeValue(typeData?.DEL_NOTE_CANCL_STATS, value?.requestStatus)),
         }),
 
         tblPrepareColumns({

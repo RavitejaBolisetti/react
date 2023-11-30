@@ -60,26 +60,15 @@ const ViewDetail = (props) => {
                                     )}
 
                                     <Row gutter={20} className={styles.marB20}>
-                                        {/* <Col xs={8} sm={8} md={8} lg={8}>
-                                            <Button type="primary" onClick={handleMNMApproval}>
-                                                {translateContent('global.buttons.approve')}
-                                            </Button>
-
-                                            <span className={styles.marL5}>
-                                                <Button danger onClick={handleMNMRejection}>
-                                                    {translateContent('global.buttons.reject')}
-                                                </Button>
-                                            </span>
-                                        </Col> */}
-                                        {workflowMasterDetails?.allowedActions?.map((element, i) => {
-                                            return (
-                                                <Col xs={8} sm={8} md={8} lg={8}>
-                                                    <Button onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
+                                        <Col xs={8} sm={8} md={8} lg={8}>
+                                            {workflowMasterDetails?.allowedActions?.map((element, i) => {
+                                                return (
+                                                    <Button className={i && styles.marL5} onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
                                                         {element?.actionName}
                                                     </Button>
-                                                </Col>
-                                            );
-                                        })}
+                                                );
+                                            })}
+                                        </Col>
                                     </Row>
                                 </>
                             ) : (
