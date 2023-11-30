@@ -68,7 +68,7 @@ const mapStateToProps = (state) => {
             DealerHierarchy: {
                 DealerParent: { filteredListData: dealerParentsLovList },
             },
-            ApplicationMaster: { dealerLocationsName = [] },
+            ApplicationMaster: { dealerLocations = [] },
         },
         common: {
             Header: { data: loginUserData = [], isLoading: isLoginDataLoading = false },
@@ -103,7 +103,7 @@ const mapStateToProps = (state) => {
         isLoginDataLoading,
 
         dealerParentsLovList,
-        dealerLocations: dealerLocationsName.filter((value) => value?.locationId && value?.dealerLocationName),
+        dealerLocations: dealerLocations.filter((value) => value?.locationId && value?.dealerLocationName),
 
         locations,
 
