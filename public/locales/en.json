@@ -27,7 +27,8 @@
             "tehsil": "Tehsil",
             "select": "Select",
             "passwordStrength": "Password strength",
-            "actions": "Actions"
+            "actions": "Actions",
+            "input": "input"
         },
         "validation": {
             "input": "Please enter ",
@@ -94,7 +95,7 @@
         },
 
         "advanceFilter": {
-            "title": "Advance Filters",
+            "title": "Advance Filter",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
         "toolTip": {
@@ -134,6 +135,7 @@
             "title": "Change History"
         },
         "buttons": {
+            "retry": "Retry",
             "download": "Download",
             "downloadTemplate": "Download Template",
             "add": "Add",
@@ -144,7 +146,7 @@
             "cancel": "Cancel",
             "print/download": "Print/Download",
             "replaceImage": "Replace Image",
-            "saveAndNew": "Save and New",
+            "saveAndNew": "Save & New",
             "saveAndAddNew": "Save & Add New",
             "saveAndNext": "Save & Next",
             "next": "Next",
@@ -171,7 +173,7 @@
             "unAllot": "Un-Allot",
             "invoice": "Invoice",
             "deliveryNote": " Delivery Note",
-            "advancedFilter": "Advance Filters",
+            "advancedFilter": "Advance Filter",
             "viewHistory": "View History",
             "uploadFile": "Upload File",
             "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order",
@@ -179,7 +181,7 @@
             "addCreditNote": "Add Credit Note",
             "addDebitNote": "Add Dedit Note",
             "printReceipt": "Print Receipt",
-            "applyFilter": "Apply Filter",
+            "applyFilter": "Apply",
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
@@ -187,12 +189,13 @@
             "backToLogin": "Back to Login",
             "resendOTP": "Resend OTP",
             "verifyOTP": "Verify OTP",
-            "leave":"Leave",
+            "leave": "Leave",
             "lightMode": "Light Mode",
             "darkMode": "Dark Mode",
             "approve": "Approve",
             "reject": "Reject",
             "addRequest": "Add request",
+            "printCreditDebit": "Print Credit Debit Note",
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
             "reGenerateIRN": "Re-Generate IRN"
@@ -208,6 +211,10 @@
         },
         "sectionHeading": {
             "thankYou": "Thank You"
+        },
+        "access": {
+            "accessProvide": "Accesses Provided",
+            "applicationAccess": "application access"
         }
     },
     "commonModules": {
@@ -251,14 +258,17 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.printDiscount": "Print Discount?",
+            "vehicleDetails.taxCalculation": "Tax Calculation",
             "vehicleDetails.availableStock": "Available Stock",
             "vehicleDetails.poNumber": "PO Number",
             "vehicleDetails.poDate": "PO Date",
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
-            "vehicleDetails.printDiscount": "Print",
             "vehicleDetails.model": "Model",
+            "vehicleDetails.totalTaxAmount": "Total Tax Amount",
+            "vehicleDetails.tcsAmount": "TCS Amount",
 
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
@@ -362,6 +372,7 @@
         },
         "validation": {
             "mandatoryBookingCustomer": "Please provide booking customer",
+            "mandatoryBillingCustomer": "Please provide Billing customer",
             "modelValidation": "Model selected is not valid",
             "modelChangeConfirmation": "If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?"
         }
@@ -415,7 +426,8 @@
         "heading": {
             "mainTitle": "Forgot Your Password",
             "subtitle": "Please enter your user credential",
-            "createNewPassword": "Create New Password"
+            "createNewPassword": "Create New Password",
+            "newPassword": "New Password"
         },
         "label": {
             "userId": "user id",
@@ -428,7 +440,7 @@
             "dealerManagementSystem": "Dealer Management System",
             "otpVerification": "OTP Verification",
             "enterOTP": "Enter OTP",
-            "newPassword": "new password",
+            "newPassword": "New password",
             "confirmPassword": "Confirm password",
             "DidnotReceiveAnOTP": "Didn't receive an OTP"
         },
@@ -509,7 +521,7 @@
             "parentGroupName": "Parent Group Name",
             "companyCode": "Company Code",
             "stateName": "State Name",
-            "Company Name": "Company Name"
+            "companyName": "Company Name"
         },
 
         "label": {
@@ -603,7 +615,7 @@
         "heading": {
             "title": "Role Name",
             "pageTitle": "Dealer Role Master",
-            "titleOverride": "Advance Filters"
+            "titleOverride": "Advance Filter"
         },
 
         "tableColHeading": {
@@ -892,7 +904,8 @@
             "duplicateVehicle": "Vehicle is duplicate",
             "vehicleRegistrationNoMandatory": "Please add vehicle registration number to continue",
             "onlyOneVehicleAllowed": "ACM type is comprehensive, Only one vehicle is allowed",
-            "taxValidation": "Please select sale type, scheme and scheme discount"
+            "taxValidation": "Please select sale type, scheme and scheme discount",
+            "atLeastOneVehicle": "Please add atleast one vehicle to continue"
         },
         "label": {
             "amcRegNoDate": "AMC Registration No. & Date",
@@ -987,7 +1000,7 @@
             "roleDescription": "Role Description"
         },
         "placeholder": {
-            "search": "Search"
+            "search": "Search by Role Name"
         },
         "validation": {
             "noApplicationText": "No Application Available"
@@ -1454,7 +1467,7 @@
         "heading": {
             "mainTitle": "Designation Master",
             "drawerTitle": "Designation",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "title": "Designation Name "
         },
         "label": {
@@ -1580,6 +1593,7 @@
             "deliveryInformation": "Delivery Information",
             "addAccessories": "Add accessories",
             "partName": "Part Name",
+            "partDescription": "Part Description",
             "partNumber": "Part Number",
             "partType": "Part Type",
             "sellingPrice": "Selling Price",
@@ -1637,13 +1651,26 @@
         },
         "button": {
             "selectPart": "Select Part"
+        },
+        "modelVariant": {
+            "label": {
+                "modelDescription": "Revised Model Description",
+                "modelCode": "Revised Model Code"
+            },
+            "validation": {
+                "model": "Model",
+                "modelCode": "Model Code"
+            },
+            "placeholder": {
+                "modelCode": "Model Code"
+            }
         }
     },
 
     "chargerInstallationProcess": {
         "heading": {
             "title": "Charger Installation",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "mainTitle": "Charger Installation",
             "chargerDetailsTitle": "Charger Installation Details",
             "addressDetailsTitle": "Installation Address Details",
@@ -1926,7 +1953,7 @@
         "heading": {
             "mainTitle": "RSM/ASM Approval",
             "title": "RSM Approval Summary",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters :"
         },
         "label": {
@@ -1944,6 +1971,12 @@
         }
     },
     "userManagement": {
+        "constant": {
+            "userType": {
+                "Manufacturer": "Manufacturer",
+                "Dealer": "Dealer"
+            }
+        },
         "heading": {
             "pageTitle": "User Management",
             "role": "Role",
@@ -1994,7 +2027,7 @@
     },
     "state": {
         "title": {
-            "advanceFilters": "Advance Filters"
+            "advanceFilters": "Advance Filter"
         },
         "heading": {
             "moduleTitle": "State",
@@ -2057,7 +2090,7 @@
             "state": "State",
             "district": "District",
             "keyword": "keyword",
-            "advanceFilters": "Advance Filters",
+            "advanceFilters": "Advance Filter",
             "cityName": "City Name",
             "cityCode": "City Code",
             "districtName": "District Name",
@@ -2093,7 +2126,7 @@
             "country": "Country",
             "state": "State",
             "district": "District",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "districtName": "District Name",
             "districtCode": "District Code",
             "stateName": "State Name"
@@ -2211,7 +2244,7 @@
     "crmSchemeEnrolment": {
         "heading": {
             "drawerTitle": " Scheme Enrolment Details",
-            "title": "CRM Scheme Enrolment Screens",
+            "title": "CRM Scheme Enrolment",
             "moduleTitle": "Dealer List",
             "enrollmentTitle": "Enrolment Number Generated Successfully",
             "enrolmentDetails": "Enrolment Details",
@@ -2291,10 +2324,10 @@
             "pageTitle": "HO Price Upload Mapping for Dealer",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "dealerList": "Dealer List",
             "modelDetails": "Model Details",
-            "advancedFilter": "Advanced Filter",
+            "advancedFilter": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters"
         },
         "label": {
@@ -2364,7 +2397,7 @@
             "pageTitle": "Vehicle Inventory Management",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "dealerList": "Dealer List",
             "modelDetails": "Model Details",
             "vehicleDetails": "Vehicle Details",
@@ -2420,14 +2453,14 @@
             "drawerTitleMaster": "Invoice",
             "cancelRequestTitle": "Cancel Request",
 
-            "section.1": "Invoice Details",
-            "section.2": "Vehicle Details",
-            "section.3": "Scheme and Offer Details",
-            "section.4": "Insurance Details",
-            "section.5": "Finance Details",
-            "section.6": "Exchange Details",
-            "section.7": "Referrals",
-            "section.8": "Loyalty Scheme",
+            "section1": "Invoice Details",
+            "section2": "Vehicle Details",
+            "section3": "Scheme and Offer Details",
+            "section4": "Insurance Details",
+            "section5": "Finance Details",
+            "section6": "Exchange Details",
+            "section7": "Referrals",
+            "section8": "Loyalty Scheme",
 
             "collapse.bookingDetails": "Booking Details",
             "collapse.bookingCustomer": "Booking Customer",
@@ -2458,7 +2491,9 @@
             "profileCard.cancelReason": "Cancellation Reason:",
 
             "notification.allotedOtfMessage": "Only alloted OTF can be invoice",
-            "notification.otfAlreadyInvoiced": "OTF number is already invoiced"
+            "notification.otfAlreadyInvoiced": "OTF number is already invoiced",
+            "thankYouMessage": "Invoice number created successfully",
+            "thankYouPrintInvoce": "Do you want to Print or download this invoice"
         },
         "label": {
             "bookingDetails.bookingNumber": "Booking Number",
@@ -2668,7 +2703,7 @@
             "pricingCity": "Pricing City",
             "endDate": "End Date",
             "downloadHere": "Download Here",
-            "advanceFilters": "Advance Filters",
+            "advanceFilters": "Advance Filter",
             "uploadVehicle": "Upload Vehicle Price Master Form",
             "uploadButtonName": "Upload Price Master",
             "messageText": "Click or drop your file here to upload",
@@ -2799,6 +2834,7 @@
                 "paymentMode": "Payment Mode",
                 "creditCardTransactionsNumber": "Credit Card Transaction No.",
                 "receiveAmount": "Receive Amount",
+                "receivedAmount": "Received Amount",
                 "serviceChargePercentage": "Service Charge Percentage",
                 "serviceChargeAmount": "Service Charge Amount",
                 "taxOnServiceCharge": "Tax On Service Charge",
@@ -3254,13 +3290,19 @@
             "mainTitle": "Delivery Note",
             "title": "Vehicle Delivery Note"
         },
+        "cancelTitle": {
+            "challan": "Challan"
+        },
         "buttons": {
             "cancelTitle": "Cancel ",
             "challan": "Challan",
             "cancelDeliveryNote": "Cancel Delivery Note",
             "cancelChallan": "Cancel Challan",
             "printDeliveryNote": "Print Delivery Note",
-            "printChallan": "Print Challan"
+            "printChallan": "Print Challan",
+
+            "deliveryNote": "Delivery Note",
+            "deliveryChallan": "Delivery Challan"
         },
         "label": {
             "customerName": "Customer Name",
@@ -3392,6 +3434,21 @@
         "thankYouPage": {
             "downloadDeliveryNote": "Do you want to Print or download this Delivery Note",
             "printDownload": "Download/Print"
+        },
+        "constants": {
+            "pending": "Pending",
+            "generated": "Generated",
+            "cancelled": "Cancelled"
+        },
+        "sections": {
+            "invoiceDetails": "Invoice Details",
+            "customerDetails": "Customer Details",
+            "vehicleDetails": "Vehicle Details",
+            "financeDetails": "Finance Details",
+            "insuranceDetails": "Insurance Details",
+            "addonDetails": "Add On Details",
+            "deliverableChecklist": "Deliverable Checklist",
+            "thankYou": "Thank You"
         }
     },
     "creditDebitNote": {
@@ -3406,7 +3463,9 @@
             "customerName": "Customer Name",
             "paidAmount": "Paid Amount",
             "fromDate": "From Date",
-            "toDate": "To Date"
+            "toDate": "To Date",
+            "voucherDetails": "Voucher Details",
+            "partyDetails": "Party Details"
         },
         "placeholder": {
             "searchTitle": "Search Credit/Debit",
@@ -3489,7 +3548,8 @@
                 "totalWrite-OffAmount": "Total Write-Off Amount",
                 "totalApportionedAmount": "Total Apportioned Amount",
                 "totalAmount": "Total Amount",
-                "totalBalancedAmount": "Total Balanced Amount"
+                "totalBalancedAmount": "Total Balanced Amount",
+                "remarks": "Remarks"
             },
             "placeholder": {
                 "searchTitle": "Search Credit/Debit",
@@ -3503,7 +3563,13 @@
                 "address": "Address",
                 "city": "City",
                 "state": "State",
-                "phoneNo": "Phone No"
+                "phoneNo": "Phone No",
+                "remarks": "Remarks",
+                "totalSettledAmount": "Total Settled Amount",
+                "totalWrite-OffAmount": "Total Write-Off Amount",
+                "totalApportionedAmount": "Total Apportioned Amount",
+                "totalAmount": "Total Amount",
+                "totalBalancedAmount": "Total Balanced Amount"
             },
             "validation": {
                 "selectPartySegment": "Please select party segment",
@@ -3771,7 +3837,7 @@
         },
         "gstBranchAccessibleMaster": {
             "heading": {
-                "moduleTitle": " GST Details"
+                "moduleTitle": "GST Details"
             },
             "label": {
                 "branchName": "Branch Name",
@@ -4093,7 +4159,7 @@
                 "soNo": "So No",
                 "soDate": "So Date",
                 "soStatus": "So Status",
-                "sapStatus":"Sap Status"
+                "sapStatus": "SAP Response Status"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",
@@ -4203,6 +4269,7 @@
             "employeeName": "Employee Name",
             "managerName": "Manager Name",
             "saleType": "Sale Type",
+            "priceType": "Price Type",
             "availableFunds": "Available Funds",
             "bookingNo": "Booking No.",
             "odometerReading": "Odometer Reading",
@@ -4252,7 +4319,8 @@
             "remarkforCancellation": "Remark for Cancellation",
             "otherReason": "Other Reason",
             "schemeRegNo": "Scheme Reg. No.",
-            "registrationDate": "Registration Date"
+            "registrationDate": "Registration Date",
+            "mobileNo": "Mobile No"
         },
         "buttons": {
             "cancelScheme": "Cancel Scheme",
@@ -4332,7 +4400,8 @@
             "vehicleInvoiceToDate": "vehicle invoice to date",
             "vehicleInvoiceFromDate": "vehicle invoice from date",
             "zone": "zone",
-            "area": "area"
+            "area": "area",
+            "mobileNumberFound": "Mobile Number already exist. Please use another mobile number."
         },
         "text": {
             "messageText": "Click or drop your file here to upload",
@@ -4346,6 +4415,49 @@
             "upload": "Upload Sales Scheme Master",
             "addScheme": "Add Scheme",
             "downloadTemplate": "Download Template"
+        }
+    },
+    "coDealer": {
+        "heading": {
+            "moduleTitle": "Co Dealer Invoice",
+            "title": "Co Dealer Invoice"
+        },
+        "label": {
+            "status": "Status",
+            "indentDealerToParent": "Indent Dealer To Parent",
+            "indentDetails": {
+                "indentNumber": "Indent No.",
+                "indentDate": "Indent Date",
+                "dealerCode": "Dealer Code",
+                "dealerName": "Dealer Name",
+                "address": "Address",
+                "cityDistrict": "City/District",
+                "state": "State",
+                "pinCode": "Pin Code",
+                "gstIn": "GSTIN"
+            },
+            "profileCard": {
+                "invoiceNumber": "Invoice Number",
+                "invoiceDate": "Invoice Date",
+                "invoiceStatus": "Invoice Status"
+            },
+            "tableColumn": {
+                "invoiceNumberAndDate": "Invoice No. & Date",
+                "DealerName": "Indent Dealer Name",
+                "ModelDescription": "Model Description",
+                "IndentNumberAndDate": "Indent No. & Date",
+                "IRNStatus": "IRN Status"
+            }
+        },
+        "placeholder": {},
+        "validation": {
+            "toDate": "Date cant be less than Effective from date",
+            "ModelCode": "Model code is not present"
+        },
+        "text": {},
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
         }
     }
 }
