@@ -47,6 +47,7 @@ export const ChecklistModalForms = (props) => {
 
     useEffect(() => {
         if (AdvanceformData && isVisible) {
+            setsaveDisabled(true);
             aggregateForm.setFieldsValue({ ...AdvanceformData, answerFromDate: formatDateToCalenderDate(AdvanceformData?.answerFromDate), answerToDate: formatDateToCalenderDate(AdvanceformData?.answerToDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

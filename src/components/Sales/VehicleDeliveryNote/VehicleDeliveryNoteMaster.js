@@ -39,6 +39,7 @@ import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data
 import { DELIVERY_NOTE_STATUS } from './constants/deliveryNoteStatus';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
 
 const mapStateToProps = (state) => {
     const {
@@ -160,6 +161,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
+    const [formValuesChanged, setFormValuesChanges] = useState(false);
+    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -619,7 +622,15 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const handleFormValueChange = () => {
+        setFormValuesChanges(true);
         setButtonData({ ...buttonData, formBtnActive: true });
+    };
+    const onCloseDrawer = () => {
+        if (formValuesChanged) {
+            setIsUnsavedDataPopup(true);
+        } else {
+            onCloseAction();
+        }
     };
 
     const onCloseAction = () => {
@@ -644,6 +655,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelDeliveryNoteVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        setFormValuesChanges(false);
+        setIsUnsavedDataPopup(false);
     };
 
     const tableProps = {
@@ -804,7 +817,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setFormActionType,
         deliveryNoteOnFinish: onFinish,
         isVisible: isFormVisible,
-        onCloseAction,
+        onCloseAction: onCloseDrawer,
         titleOverride: drawerTitle(formActionType)
             .concat(' ')
             .concat(soldByDealer ? moduleTitle : translateContent('vehicleDeliveryNote.cancelTitle.challan')),
@@ -876,7 +889,14 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             setReportVisible(false);
         },
     };
-
+    const handleCancelUnsaveDataModal = () => {
+        setIsUnsavedDataPopup(false);
+    };
+    const unsavedDataModalProps = {
+        isVisible: isUnsavedDataPopup,
+        onCloseAction: handleCancelUnsaveDataModal,
+        onSubmitAction: onCloseAction,
+    };
     return (
         <>
             <VehicleDeliveryNoteFilter {...advanceFilterResultProps} />
@@ -889,6 +909,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             <VehicleDeliveryNoteMainConatiner {...containerProps} />
             <CancelDeliveryNote {...cancelDeliveryNoteProps} />
             <ReportModal {...reportProps} reportDetail={reportDetail} />
+            <UnSaveDataConfirmation {...unsavedDataModalProps} />
         </>
     );
 };
