@@ -19,6 +19,11 @@ export const AMC_CONSTANTS = {
         key: 'GENERATED_SUCCESSFULLY',
         title: 'Scheme Registration Completed Successfully',
     },
+    RSA_GENERATED_SUCCESSFULLY: {
+        id: 3,
+        key: 'GENERATED_SUCCESSFULLY',
+        title: 'RSA Registration Completed Successfully',
+    },
     DEALER: {
         id: 4,
         key: 'DLR',
@@ -69,4 +74,45 @@ export const AMC_CONSTANTS = {
         key: 'AMC',
         title: 'API key for registration type',
     },
+    CANCELLED: {
+        id: 17,
+        key: 'CNCL',
+        title: 'Cancelled',
+    },
+    REGISTRATION_REQUEST: {
+        id: 18,
+        key: 'REG',
+        title: 'Registration Request',
+    },
+    CANCELLATION_REQUEST: {
+        id: 19,
+        key: 'CNCL',
+        title: 'Cancellation Request',
+    },
+    WORKFLOW_REJECT: {
+        id: 20,
+        key: 'WFACTREJ',
+        title: 'Reject',
+    },
+    WORKFLOW_APPROVE: {
+        id: 21,
+        key: 'WFACTAPR',
+        title: 'Approve',
+    },
+    UNDER_PROGRESS: {
+        id: 22,
+        key: 'UPR',
+        title: 'Under Progress',
+    },
+    PAID: {
+        id: 23,
+        key: 'DP',
+        title: 'Paid',
+    },
+    CUSTOMER_MOBILE_NO : {
+        id : 24,
+        key : 'customerMobileNo',
+        title : 'customer mobile number parameter'
+    }
+
 };

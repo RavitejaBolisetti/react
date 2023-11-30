@@ -36,7 +36,7 @@ function DocumentTypesForm({ form, onFieldsChange, onFinish, isEditing, isBtnDis
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                         <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" htmlType="submit">
-                            {translateContent('global.buttons.save')}
+                            {translateContent('global.buttons.add')}
                         </Button>
                     </Col>
                 </Row>

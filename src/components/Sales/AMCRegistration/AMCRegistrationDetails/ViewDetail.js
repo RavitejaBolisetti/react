@@ -94,7 +94,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label={translateContent('amcRegistration.label.schemeTaxAmount')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeTaxAmount, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('amcRegistration.label.schemeEndDate')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeEndDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 </Descriptions>
-                                {formData?.amcRegistration?.priceType !== AMC_CONSTANTS?.MNM_FOC?.key && (
+                                {formData?.amcRegistration?.priceType !== AMC_CONSTANTS?.MNM_FOC?.key && record?.status === AMC_CONSTANTS?.APPROVED?.key && (
                                     <>
                                         <Card>
                                             <Row>

@@ -41,20 +41,14 @@ const AddEditFormMain = (props) => {
     const [AdvanceformData, setAdvanceformData] = useState();
     const AggregateModuleTitle = `Aggregates`;
 
-    useEffect(() => {
-        if (modelData && modelFamilyData && variantData) {
-            modelData?.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
-            modelFamilyData.length > 0 && form.setFieldsValue({ modelFamily: modelFamilyData[0]?.familyDescription });
-            variantData.length > 0 && form.setFieldsValue({ modelVariant: variantData[0]?.variantDescription });
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [modelData, modelFamilyData, variantData]);
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
             form.setFieldsValue({
                 ...formData?.productAttributeDetail,
+                modelGroup: modelData?.[0]?.modelGroupDescription,
+                modelFamily: modelFamilyData?.[0]?.familyDescription,
+                modelVariant: variantData?.[0]?.variantDescription,
                 manufacturerInvoiceDate: formattedCalendarDate(formData?.productAttributeDetail?.manufacturerInvoiceDate),
                 manufacturerWarrantyStartDate: formattedCalendarDate(formData?.productAttributeDetail?.manufacturerWarrantyStartDate),
             });
@@ -67,7 +61,7 @@ const AddEditFormMain = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData,modelData, modelFamilyData, variantData, formActionType,formData]);
 
     const addContactHandeler = (e) => {
         aggregateForm.resetFields();
@@ -186,7 +180,7 @@ const AddEditFormMain = (props) => {
                                         <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelVariant'))} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltipView}>
+                                <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={styles.modelTooltipView}>
                                     {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={15} />)}
                                     <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelDescription')} name="model">
                                         <Input title={formData?.productAttributeDetail?.model} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelDescription'))} {...disabledProps} />

@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AddOnDetailsMasterMain = (props) => {
     const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
-    const { form, section, selectedOrder, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { buttonData, setButtonData, form, section, selectedOrder, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setFormData] = useState();
 
@@ -207,6 +207,7 @@ export const AddOnDetailsMasterMain = (props) => {
         const data = { id: AddonDetailsData?.id ?? '', otfId: selectedRecordId, otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
 
         const onSuccess = (res) => {
+            setButtonData({ ...buttonData, formBtnActive: false });
             setFormDataSetter({});
             setFormData();
             accessoryForm.resetFields();

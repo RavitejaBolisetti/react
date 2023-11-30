@@ -8,13 +8,13 @@ import { Button } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const QueryButtons = ({ items = {}, onClick, currentItem = items?.PENDING?.key }) => {
+export const QueryButtons = ({ items = {}, onClick, currentItem = items?.PENDING?.key, moduleKey = undefined }) => {
     return (
         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
             {Object.entries(items)?.map(([keyName, item], index) => {
                 return (
                     <Button onClick={() => onClick(item, keyName)} type={currentItem === item?.key ? 'primary' : 'link'}>
-                        {translateContent(item?.translateKey)}
+                        {moduleKey ? translateContent(`${moduleKey}.constants.${item?.translateKey ? item?.translateKey : item?.title}`) : item?.title}
                     </Button>
                 );
             })}

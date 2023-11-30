@@ -86,7 +86,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
-    const { fetchProductList, productHierarchyDataList } = props;
+    const { fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
@@ -98,9 +98,13 @@ const VehicleDetailsMasterMain = (props) => {
     const [productHierarchyData, setProductHierarchyData] = useState([]);
     const [vehicleDetailData, setVehicleDetailData] = useState();
     const [filterVehicleData, setFilterVehicleData] = useState([]);
-
+    const [customerNameList, setCustomerNameList] = useState({});
+    const [nameChangeRequested, setNameChangeRequested] = useState(false);
+    const [confirmRequest, setConfirmRequest] = useState();
+    const [changeModel, setChangeModel] = useState(false);
+    const [onModelSubmit, setOnModelSubmit] = useState(false);
     const onSuccessAction = () => {
-        return;
+        return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
@@ -394,6 +398,23 @@ const VehicleDetailsMasterMain = (props) => {
         viewOnly: !isOTFModule,
         isOTFModule,
         orderStatus: selectedOrder?.orderStatus,
+        showOptionalService,
+        customerNameList,
+        setCustomerNameList,
+        nameChangeRequested,
+        setNameChangeRequested,
+        confirmRequest,
+        setConfirmRequest,
+        changeModel,
+        setChangeModel,
+        isVehicleServiceLoaded,
+        fetchServiceLov,
+        serviceLoading,
+        onModelSubmit,
+        setOnModelSubmit,
+        setRefreshData,
+        refreshData,
+        setFormData,
     };
 
     const viewProps = {
@@ -409,6 +430,7 @@ const VehicleDetailsMasterMain = (props) => {
         typeData,
         isLoading,
         isOTFModule,
+        showOptionalService,
     };
 
     return (

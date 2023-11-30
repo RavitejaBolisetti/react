@@ -6,10 +6,11 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { RsmAsmApprovalMaster } from 'components/Sales/RsmAsmApproval';
+import { CoDealerInvoiceMaster } from 'components/Sales/CoDealerInvoiceGeneration';
+import { translateContent } from 'utils/translateContent';
 
-const RsmAsmApprovalBase = (props) => {
-    const pageTitle = 'RSM/ASM Approval';
+const CoDealerInvoiceGenerationBase = () => {
+    const pageTitle = translateContent('coDealer.heading.moduleTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -18,9 +19,9 @@ const RsmAsmApprovalBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <RsmAsmApprovalMaster />
+            <CoDealerInvoiceMaster />
         </>
     );
 };
 
-export const RsmAsmApprovalPage = withLayoutMaster(RsmAsmApprovalBase);
+export const CoDealerInvoiceGenerationPage = withLayoutMaster(CoDealerInvoiceGenerationBase);

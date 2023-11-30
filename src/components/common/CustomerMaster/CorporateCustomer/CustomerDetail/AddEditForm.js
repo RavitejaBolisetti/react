@@ -25,7 +25,7 @@ const AddEditFormMain = (props) => {
     }, [formData?.corporateType]);
 
     useEffect(() => {
-            form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
+        form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerParentCompanyData?.parentCompanyName]);
 
@@ -34,6 +34,7 @@ const AddEditFormMain = (props) => {
         if (value === 'NON-LIS') {
             form.setFieldsValue({
                 corporateName: null,
+                corporateCategory: null,
             });
         } else if (value === 'LIS') {
             form.setFieldsValue({
@@ -89,8 +90,8 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode" >
-                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.companyCode'))} onBlur={validateParentCode} disabled={editMode} />
+                        <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode">
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.companyCode'))} onChange={validateParentCode} disabled={editMode} />
                         </Form.Item>
                         {/* rules={[validateRequiredInputField(translateContent('customerMaster.validation.parentCode'))]} */}
                     </Col>
@@ -117,12 +118,12 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         {corporateType === 'NON-LIS' ? (
                             <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} disabled={editMode} />
+                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} />
                             </Form.Item>
                         ) : (
                             <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
                                 {/* <Select placeholder={preparePlaceholderSelect('customer name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
-                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect, disabled: editMode })}
+                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect, disabled: !corporateType })}
                             </Form.Item>
                         )}
                     </Col>
@@ -136,7 +137,7 @@ const AddEditFormMain = (props) => {
                     )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label={translateContent('customerMaster.label.corporateCategory')} name="corporateCategory" data-testid="corporateCategory">
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateCategory'))} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateCategory'))} disabled={corporateType === 'LIS' || !corporateType} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
                         </Form.Item>
                     </Col>
 

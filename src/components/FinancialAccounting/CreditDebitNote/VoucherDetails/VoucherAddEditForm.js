@@ -138,15 +138,15 @@ export const AdvanceForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label={translateContent('creditDebitNote.voucherDetails.label.accountNarration')} name="accountNarration" rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.accountNarration'))]}>
-                                <Input allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.accountNarration'))} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label={translateContent('creditDebitNote.voucherDetails.label.amount')} name="amount" rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.amount')), validateNumberWithTwoDecimalPlaces(translateContent('creditDebitNote.voucherDetails.label.amount'))]}>
                                 <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.amount'))} />
                             </Form.Item>
                             <Form.Item name="id" hidden></Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item label={translateContent('creditDebitNote.voucherDetails.label.accountNarration')} name="accountNarration" rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.accountNarration'))]}>
+                                <Input allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.accountNarration'))} />
+                            </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>

@@ -30,7 +30,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ShieldDetailCard = (props) => {
-    const { detailShieldData, isLoading, typeData } = props;
+    const { record, isLoading, typeData, selectedCardData } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -39,11 +39,10 @@ const ShieldDetailCard = (props) => {
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
                             <span>{translateContent('shieldSchemeRegistration.label.schemeRegNo')}:</span>
                             <span>
-                                {detailShieldData?.registrationDetails?.registrationInformation?.schemeRegistrationNumber}
-                                {detailShieldData?.registrationDetails?.registrationInformation?.schemeRegistrationNumber && (
-                                    <a className={styles.marL5}>
-                                        <CopytoClipboard text={detailShieldData?.registrationDetails?.registrationInformation?.schemeRegistrationNumber} />
-                                        {/* <FiCopy className={styles.activeForm} /> */}
+                                {selectedCardData?.schemeNumber}
+                                {selectedCardData?.schemeNumber && (
+                                    <a className={styles.marL5} href="javascript.void(0)">
+                                        <CopytoClipboard buttonText={null} text={selectedCardData?.schemeNumber} />
                                     </a>
                                 )}
                             </span>
@@ -54,11 +53,11 @@ const ShieldDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('shieldSchemeRegistration.label.registrationDate')}: <span>{checkAndSetDefaultValue(detailShieldData?.registrationDetails?.registrationInformation?.registrationDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    {translateContent('shieldSchemeRegistration.label.registrationDate')}: <span>{checkAndSetDefaultValue(selectedCardData?.schemeDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('shieldSchemeRegistration.label.status')}: <span>{checkAndSetDefaultValue(getCodeValue(typeData?.AMC_REG_APRVL_STAT, detailShieldData?.registrationDetails?.registrationInformation?.status), isLoading)}</span>
+                    {translateContent('shieldSchemeRegistration.label.status')}: <span>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedCardData?.status) || 'In-Progress'}</span>
                 </div>
             </Panel>
         </Collapse>

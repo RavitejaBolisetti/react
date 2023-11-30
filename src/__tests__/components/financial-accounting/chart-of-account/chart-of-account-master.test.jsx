@@ -217,10 +217,6 @@ describe("ChartOfAccountMaster component render", ()=>{
         fireEvent.click(cancelBtn)
     });
 
-    // it("isChildAvailable",()=>{
-    //     const formActionType={EDIT: 'edit'};
-    //     const buttonData = {editBtn:true}
-
     it('handleAdd', ()=>{
         const formActionType={EDIT: 'edit'};
         const buttonData = {editBtn:true}

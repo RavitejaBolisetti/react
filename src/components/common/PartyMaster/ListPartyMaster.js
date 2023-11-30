@@ -97,7 +97,9 @@ export const ListPartyMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [recordData, setRecordData] = useState();
-    const [onSaveShowLoading, setOnSaveShowLoading] = useState(false);
+
+    const defaultSaveBtnLoading = { isSaveAndNewBtnLoading: false, isSaveBtnLoading: false };
+    const [onSaveShowLoading, setOnSaveShowLoading] = useState(defaultSaveBtnLoading);
 
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -162,9 +164,9 @@ export const ListPartyMasterBase = (props) => {
     const onFinish = (values) => {
         let data = { ...values };
 
-        setOnSaveShowLoading(true);
+        setOnSaveShowLoading({ isSaveAndNewBtnLoading: buttonData?.saveAndNewBtnClicked, isSaveBtnLoading: !buttonData?.saveAndNewBtnClicked });
         const onSuccess = (res) => {
-            setOnSaveShowLoading(false);
+            setOnSaveShowLoading(defaultSaveBtnLoading);
             form.resetFields();
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
@@ -182,7 +184,7 @@ export const ListPartyMasterBase = (props) => {
 
         const onError = (message) => {
             showGlobalNotification({ message });
-            setOnSaveShowLoading(false);
+            setOnSaveShowLoading(defaultSaveBtnLoading);
         };
 
         const requestData = {
@@ -227,7 +229,7 @@ export const ListPartyMasterBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: searchData,
         typeData,
         fetchDetail,

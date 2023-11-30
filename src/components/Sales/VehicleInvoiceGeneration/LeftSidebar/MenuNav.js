@@ -9,6 +9,7 @@ import { Timeline } from 'antd';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 export const validateInvoiceMenu = ({ item, otfData }) => {
     switch (item?.id) {
@@ -50,7 +51,7 @@ const MenuNav = (props) => {
                         dot: menuNavIcon,
                         children: (
                             <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
-                                {item.title}
+                                {translateContent(item?.translateKey)}
                             </div>
                         ),
                         className: activeClassName,

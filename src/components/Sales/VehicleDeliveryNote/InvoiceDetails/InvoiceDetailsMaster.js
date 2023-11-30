@@ -179,7 +179,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const invoiceDetailsRequest = { ...values, relationShipManagerCode: values?.relationShipManager, relationShipManager: values?.relationShipManagerCode };
-        setRequestPayload({ ...requestPayload, engineDetailDto: { ...invoiceDetailsRequest }, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: convertDate(invoiceData?.customerPromiseDate) } });
+        setRequestPayload({ ...requestPayload, engineDetailDto: { ...invoiceDetailsRequest }, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: invoiceData?.customerPromiseDate ? convertDate(invoiceData?.customerPromiseDate) : '' } });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -234,7 +234,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>{translateContent(section?.translateKey)}</h2>
                         </Col>
                     </Row>
 

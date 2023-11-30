@@ -28,7 +28,6 @@ const ViewDetailMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        // setRejectRequest,
         handleRequest,
         workFlowDetails,
     };
@@ -40,7 +39,7 @@ const ViewDetailMain = (props) => {
                     <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                         <Descriptions {...viewOneColProps}>
                             <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DEL_INV_CAN_TYP, detailData?.requestType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.CDLR_INV_APP_STATUS, detailData?.requestStatus), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DEL_NOTE_CANCL_STATS, detailData?.requestStatus), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestNumber')}>{checkAndSetDefaultValue(detailData?.requestNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('rsmAsmApproval.label.requestDate')}>{checkAndSetDefaultValue(detailData?.requestDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             <Descriptions.Item label={translateContent('rsmAsmApproval.label.deliveryOrInvoiceId')}>{checkAndSetDefaultValue(detailData?.deliveryOrInvoiceId, isLoading)}</Descriptions.Item>

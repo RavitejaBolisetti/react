@@ -18,9 +18,9 @@ import styles from 'assets/sass/app.module.scss';
 
 const ShieldRegistrationDetailMasterBase = (props) => {
     const { typeData, detailShieldData, registrationDetails, employeeData, managerData, resetDetail, fetchEmployeeList, fetchManagerList, listEmployeeShowLoading } = props;
-    const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading } = props;
-    const { form, saleType, handlePrintDownload, handleSaleTypeChange, handleOtfSearch, handleVinSearch, handleEmployeeSearch, schemeDetail, shieldDetailForm, formActionType, NEXT_ACTION, handleButtonClick } = props;
-    const { setRequestPayload, vinNumber, setVinNumber, bookingNumber, isEmployeeDataLoading } = props;
+    const { userId, buttonData, setButtonData, section, filterString, isDataLoaded, isLoading } = props;
+    const { form, amcStatus, saleType, handlePrintDownload, handleSaleTypeChange, handleOtfSearch, handleVinSearch, handleEmployeeSearch, schemeDetail, shieldDetailForm, formActionType, NEXT_ACTION, handleButtonClick } = props;
+    const { screenType, setRequestPayload, vinNumber, setVinNumber, bookingNumber, isEmployeeDataLoading } = props;
 
     const [activeKey, setActiveKey] = useState('');
     const [options, setOptions] = useState(false);
@@ -33,7 +33,7 @@ const ShieldRegistrationDetailMasterBase = (props) => {
             },
             {
                 key: 'registrationType',
-                value: AMC_CONSTANTS?.REGISTRATION_TYPE?.key,
+                value: screenType === 'RSA' ? 'RSA' : AMC_CONSTANTS?.REGISTRATION_TYPE?.key,
             },
         ];
         return extraParams;
@@ -92,7 +92,6 @@ const ShieldRegistrationDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        console.log('🚀 ~ file: ShieldRegistrationDetailMaster.js:108 ~ onFinish ~ values:', values);
         if (values?.hasOwnProperty('schemeDetails') && !values?.hasOwnProperty('registrationInformation')) {
             setActiveKey(1);
         } else if (!values?.hasOwnProperty('schemeDetails') && values?.hasOwnProperty('registrationInformation')) {
@@ -157,6 +156,8 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         employeeData,
         managerData,
         handlePrintDownload,
+        filterString,
+        amcStatus,
         ...props,
         // formData: detailShieldData?.shieldRegistrationDetails,
     };

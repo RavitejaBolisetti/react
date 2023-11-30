@@ -65,6 +65,7 @@ import { AMCRegistration } from './amcRegistration';
 import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
 import { ShieldSchemeRegistration } from './services';
 import { Dashboard } from './dashboard';
+import { CoDealerInvoice } from './CoDealerInvoice';
 
 export const data = combineReducers({
     Menu,
@@ -127,4 +128,5 @@ export const data = combineReducers({
     AMCSchemeCategoryLov,
     RSASchemeCategoryLov,
     ShieldSchemeCategoryLov,
+    CoDealerInvoice,
 });

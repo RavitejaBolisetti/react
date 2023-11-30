@@ -13,9 +13,10 @@ import { AMCStatusTags } from '../utils/AMCStatusTags';
 import styles from 'assets/sass/app.module.scss';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import RequestedOnDate from '../utils/RequestedOnDate';
 
 const ViewDetail = (props) => {
-    const { workflowMasterDetails, formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection, typeData } = props;
+    const { workflowMasterDetails, amcRegistration, formData, userType, selectedAMC, handleCancelRequest, handleMNMApproval, handleMNMRejection, typeData } = props;
 
     const viewProps = {
         bordered: false,
@@ -38,10 +39,10 @@ const ViewDetail = (props) => {
                                 </Row>
                                 {AMCStatusTags(data?.amcStatus)}
                             </Row>
-                            <Row type="flex" align="middle" className={data?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
+                            <Row type="flex" align="middle" className={data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <div className={styles.tableTextColor85}>
-                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(data?.status === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key ? data?.amcRegistrationDate : data?.status === AMC_CONSTANTS?.APPROVED?.key || data?.status === AMC_CONSTANTS?.REJECTED?.key ? data?.approvedDate : data?.amcCancelDate, false, DATA_TYPE?.DATE?.key)}
+                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, amcRegistration?.priceType), false, DATA_TYPE?.DATE?.key)}
                                     </div>
                                 </Col>
                             </Row>
@@ -59,26 +60,15 @@ const ViewDetail = (props) => {
                                     )}
 
                                     <Row gutter={20} className={styles.marB20}>
-                                        {/* <Col xs={8} sm={8} md={8} lg={8}>
-                                            <Button type="primary" onClick={handleMNMApproval}>
-                                                {translateContent('global.buttons.approve')}
-                                            </Button>
-
-                                            <span className={styles.marL5}>
-                                                <Button danger onClick={handleMNMRejection}>
-                                                    {translateContent('global.buttons.reject')}
-                                                </Button>
-                                            </span>
-                                        </Col> */}
-                                        {workflowMasterDetails?.allowedActions?.map((element, i) => {
-                                            return (
-                                                <Col xs={8} sm={8} md={8} lg={8}>
-                                                    <Button onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
+                                        <Col xs={8} sm={8} md={8} lg={8}>
+                                            {workflowMasterDetails?.allowedActions?.map((element, i) => {
+                                                return (
+                                                    <Button className={i && styles.marL5} onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
                                                         {element?.actionName}
                                                     </Button>
-                                                </Col>
-                                            );
-                                        })}
+                                                );
+                                            })}
+                                        </Col>
                                     </Row>
                                 </>
                             ) : (

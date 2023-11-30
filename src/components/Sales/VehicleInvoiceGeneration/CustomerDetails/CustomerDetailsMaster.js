@@ -11,10 +11,10 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails
 import styles from 'assets/sass/app.module.scss';
 
 export const CustomerDetailsMain = (props) => {
-    const { isLoading, isDataLoaded, formData, showGlobalNotification } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick } = props;
-    const { typeData, selectedOrderId } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, activeKey, setActiveKey } = props;
+    const { isLoading, isDataLoaded, formData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType } = props;
+    const { typeData } = props;
+    const { activeKey, setActiveKey } = props;
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
 
     const [form] = Form.useForm();

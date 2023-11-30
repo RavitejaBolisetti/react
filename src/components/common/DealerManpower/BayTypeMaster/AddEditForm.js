@@ -62,6 +62,9 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
+                            <Col xs={0}>
+                                <Form.Item label="Id" initialValue={formData?.id} name="id" />
+                            </Col>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">

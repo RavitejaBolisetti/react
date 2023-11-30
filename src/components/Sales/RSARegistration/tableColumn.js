@@ -9,8 +9,11 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 import { RSARegistrationStatusTag } from './utils/RSARegistrationStatusTag';
 import { translateContent } from 'utils/translateContent';
+import { RSA_CONSTANTS } from './utils/RSA_CONSTANT';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
-export const tableColumn = ({ handleButtonClick, typeData }) => {
+export const tableColumn = ({ handleButtonClick, userType, locations }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('rsaTableColumn.label.rsaRegistration'),
@@ -28,6 +31,9 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             title: translateContent('rsaTableColumn.label.dealerLocation'),
             dataIndex: 'dealerLocation',
             width: '22%',
+            render: (value) => {
+                return checkAndSetDefaultValue(getCodeValue(locations, value, 'dealerLocationName', true, 'locationId'));
+            },
         }),
 
         tblPrepareColumns({
@@ -36,12 +42,20 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             width: '22%',
         }),
 
-        tblPrepareColumns({
-            title: translateContent('rsaTableColumn.label.status'),
-            dataIndex: 'status',
-            width: '22%',
-            render: (_, record) => RSARegistrationStatusTag(record.status),
-        }),
+        userType === RSA_CONSTANTS?.MNM?.key
+            ? tblPrepareColumns({
+                  title: translateContent('shieldSchemeRegistration.label.mobileNo'),
+                  dataIndex: 'mobileNumber',
+                  width: '22%',
+              })
+            : tblPrepareColumns({
+                  title: translateContent('shieldSchemeRegistration.label.status'),
+                  dataIndex: 'status',
+                  width: '22%',
+                  render: (status) => {
+                      return RSARegistrationStatusTag(status);
+                  },
+              }),
 
         tblActionColumn({ handleButtonClick, styles, width: '12%', canEdit: false }),
     ];

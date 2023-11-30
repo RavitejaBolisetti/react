@@ -98,7 +98,7 @@ describe('Corporate customer  Details render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper resetData={jest.fn()} setRefreshCustomerList={jest.fn()} formActionType={formActionType} fetchDetailList={fetchDetailList} saveData={saveData} handleButtonClick={jest.fn()} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
+                <FormWrapper resetData={jest.fn()} setFilterString={jest.fn()} setRefreshCustomerList={jest.fn()} formActionType={formActionType} fetchDetailList={fetchDetailList} saveData={saveData} handleButtonClick={jest.fn()} fetchList={fetchList} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         );
         const save = screen.getAllByRole('button', { name: 'Save & Next' });

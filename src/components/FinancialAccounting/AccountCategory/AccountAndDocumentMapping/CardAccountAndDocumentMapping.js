@@ -146,14 +146,14 @@ const CardAccountAndDocumentMapping = (props) => {
                             )}
                         </div>
                         {formEdit && props?.internalId === uniqueCardEdit && (
-                            <div className={styles.cardItemBtn} data-testid="cancel_btn">
+                            <Space className={styles.cardItemBtn} data-testid="cancel_btn">
                                 <Button type="link" onClick={onAccountDocumentMapsCancel}>
-                                    {translateContent('global.button.cancel')}
+                                    {translateContent('global.buttons.cancel')}
                                 </Button>
                                 <Button type="link" onClick={onAccountDocumentMapsSave} data-testid="save_btn">
-                                    {translateContent('global.button.save')}
+                                    {translateContent('global.buttons.save')}
                                 </Button>
-                            </div>
+                            </Space>
                         )}
                     </Row>
                 ) : null}

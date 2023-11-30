@@ -135,6 +135,10 @@ const AddEditFormMain = (props) => {
         });
     };
 
+    const handleEnter = (e) => {
+        e.code === 'Enter' && e.preventDefault();
+    };
+
     const viewProps = {
         isVisible: viewMode,
         formData,
@@ -159,7 +163,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
+            <Form layout="vertical" onKeyDownCapture={handleEnter} autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {viewMode ? (
@@ -332,7 +336,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitle}>
-                                        {translateContent('partyMaster.label.drawerSubheadingOtherDetails')}
+                                        {translateContent('partyMaster.heading.drawerSubheadingOtherDetails')}
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
@@ -355,11 +359,11 @@ const AddEditFormMain = (props) => {
                                             initialValue={formData?.panNumber}
                                             rules={[
                                                 // validateRequiredInputField('PAN'),
-                                                validatePanField(translateContent('partyMaster.label.gstinNumber')),
+                                                validatePanField(translateContent('partyMaster.label.pan')),
                                             ]}
                                             name="panNumber"
                                         >
-                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.gstinNumber'))} maxLength={10} />
+                                            <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('partyMaster.label.pan'))} maxLength={10} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

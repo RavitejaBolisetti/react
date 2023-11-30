@@ -31,11 +31,13 @@ import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
+        auth: { userId },
         data: {
             ForgotPassword: { isLoading },
         },
     } = state;
     return {
+        userId,
         isLoading,
     };
 };
@@ -57,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ForgotPasswordBase = (props) => {
-    const { verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading } = props;
+    const { userId, verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading } = props;
 
     const [form] = Form.useForm();
     const navigate = useNavigate();
@@ -101,7 +103,7 @@ const ForgotPasswordBase = (props) => {
     };
 
     const onError = (message) => {
-        showGlobalNotification({ title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
+        showGlobalNotification({ notificationType: 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
         if (otpInput?.length === 6) {
             setCounter(0);
         }
@@ -165,7 +167,7 @@ const ForgotPasswordBase = (props) => {
 
                 const onSuccess = (res) => {
                     setCounter(RESEND_OTP_TIME);
-                    showGlobalNotification({ notificationType: 'warning', title: translateContent('global.generalMessage.otpSent'), message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'warningBeforeLogin', title: translateContent('global.generalMessage.otpSent'), message: res?.responseMessage });
                     setOTPMessage(res?.data?.message);
                     setCurrentStep(3);
                 };

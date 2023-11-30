@@ -14,7 +14,7 @@ import { translateContent } from 'utils/translateContent';
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData } = props;
+    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData, section } = props;
 
     const myProps = {
         ...props,
@@ -34,7 +34,7 @@ export const ThankYouMaster = (props) => {
                     <Space direction="vertical">
                         <Avatar size={180} icon={<HiCheck />} />
                         <Title level={5} style={{ margin: '18px 0', fontSize: '32px' }}>
-                            <h2>{translateContent(`global.heading.sectionHeading.thankYou`)}</h2>
+                            <h2>{translateContent('vehicleInvoiceGeneration.heading.thankYouMessage')}</h2>
                         </Title>
                     </Space>
                 </Col>
@@ -50,7 +50,7 @@ export const ThankYouMaster = (props) => {
                                     <CopytoClipboard type={'primary'} text={otfData?.invoiceNumber} />
                                 </Space>
                                 <Divider style={{ margin: '18px 0' }} />
-                                <Text style={{ color: '#858585', fontWeight: '500' }}>Do you want to Print or download this invoice </Text>
+                                <Text style={{ color: '#858585', fontWeight: '500' }}>{translateContent('vehicleInvoiceGeneration.heading.thankYouPrintInvoce')}</Text>
                                 <Button
                                     danger
                                     style={{ margin: '18px 0' }}

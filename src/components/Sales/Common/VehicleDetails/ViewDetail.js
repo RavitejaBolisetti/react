@@ -66,7 +66,7 @@ const ViewDetailMain = (props) => {
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}>{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')}>{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')}>{checkAndSetDefaultValue(formData?.consumerSchemeWithTax, isLoading)}</Descriptions.Item>
                                 {showPrintDiscount && <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>{formData?.printDiscount === 'Y' ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no')}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>

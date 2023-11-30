@@ -76,6 +76,7 @@ import {
     ChargerInstallationPage,
     AMCRegistrationMasterPage,
     RSARegistrationPage,
+    CoDealerInvoiceGenerationPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -127,10 +128,10 @@ const AuthenticatedUserPageMain = (props) => {
 
     const location = useLocation();
     const pagePath = location.pathname;
-    const canViewPage = true || flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
+    const canViewPage = flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (!isDataLoaded && userId) { 
             fetchMenuList({
                 setIsLoading: listShowMenuLoading,
                 userId,
@@ -262,6 +263,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
                 <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
+                <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
             </Routes>
         ) : (
             <Routes>

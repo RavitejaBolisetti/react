@@ -148,6 +148,7 @@ const ExchangeVehiclesBase = (props) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modelGroup, setModelGroup] = useState(null);
     const [isMahindraMake, setIsMahindraMake] = useState(false);
+    const [isExchangeVisible, setExchangeVisible] = useState(false);
 
     const [exhangeDataParams, setExchangeDataParams] = useState();
 
@@ -197,11 +198,11 @@ const ExchangeVehiclesBase = (props) => {
 
     const fnSetData = (data) => {
         if (data?.make) {
-            setFormData({ ...data, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
             setEditableOnSearch(true);
         } else if (data && !data?.make) {
-            setFormData({ ...data, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
             setEditableOnSearch(true);
         } else if (!data) {
@@ -493,6 +494,8 @@ const ExchangeVehiclesBase = (props) => {
         handleSchemeChange,
         MAHINDRA_MAKE,
         isMahindraMake,
+        isExchangeVisible,
+        setExchangeVisible,
     };
 
     const viewProps = {

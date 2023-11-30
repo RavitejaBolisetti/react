@@ -17,15 +17,13 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './search/AdvancedSearch';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { BASE_URL_CRM_SCHEME_ENROLLMENT_DETAILS as customURL } from 'constants/routingApi';
-import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { crmSchemeEnrollmentDataActions } from 'store/actions/data/crmSchemeEnrollment';
-
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
 
-import { FilterIcon } from 'Icons';
 import { drawerTitle } from 'utils/drawerTitle';
 
 const mapStateToProps = (state) => {
@@ -34,9 +32,6 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CRMSchemeEnrollmentList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded, detailData = [] },
-            OTF: {
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, isLoading: isSalesConsultantDataLoading, data: salesConsultantLovData = [] },
-            },
         },
     } = state;
 
@@ -52,9 +47,6 @@ const mapStateToProps = (state) => {
         filterString,
         isDetailLoaded,
         detailData,
-        isSalesConsultantDataLoaded,
-        salesConsultantLovData,
-        isSalesConsultantDataLoading,
     };
     return returnValue;
 };
@@ -71,10 +63,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDetail: crmSchemeEnrollmentDataActions.fetchDetail,
             listDetailShowLoading: crmSchemeEnrollmentDataActions.listShowLoading,
             saveData: crmSchemeEnrollmentDataActions.saveData,
-
-            fetchSalesConsultant: salesConsultantActions.fetchList,
-            listConsultantShowLoading: salesConsultantActions.listShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -82,8 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CrmScreenEnrolmentBase = (props) => {
-    const { filterString, setFilterString, fetchList, saveData, data, listShowLoading, userId, salesConsultantLovData, isSearchLoading } = props;
-    const { typeData, totalRecords, showGlobalNotification, fetchDetail, listDetailShowLoading, detailData, fetchSalesConsultant, listConsultantShowLoading, isSalesConsultantDataLoading } = props;
+    const { filterString, setFilterString, fetchList, saveData, data, listShowLoading, userId, isSearchLoading } = props;
+    const { typeData, totalRecords, showGlobalNotification, fetchDetail, listDetailShowLoading, detailData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [openAccordian, setOpenAccordian] = useState('');
     const [isEnrolmentGenerated, setIsEnrolmentGenerated] = useState(false);
@@ -99,6 +87,9 @@ export const CrmScreenEnrolmentBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
+    const [schemeType, setSchemeType] = useState();
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -172,13 +163,13 @@ export const CrmScreenEnrolmentBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 filter: false,
             },
             {
@@ -211,17 +202,11 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, page, filterString]);
-
-    useEffect(() => {
-        if (userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
 
     useEffect(() => {
         if (Object.values(detailData)?.length > 0) {
@@ -297,6 +282,9 @@ export const CrmScreenEnrolmentBase = (props) => {
     // };
 
     const handleResetFilter = () => {
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
@@ -330,6 +318,17 @@ export const CrmScreenEnrolmentBase = (props) => {
     };
 
     const onFinishSearch = (values) => {};
+
+    const handlePrintDownload = (record) => {
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'sc_ws_enrolment_detail_id',
+                value: record?.record?.id,
+            },
+        ]);
+    };
 
     const onFinish = (values) => {
         if (formActionType?.addMode) {
@@ -390,6 +389,10 @@ export const CrmScreenEnrolmentBase = (props) => {
         setChangePress(() => !changePress);
     };
 
+    const onSchemeChange = (schemeTyp) => {
+        setSchemeType(schemeTyp);
+    };
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
@@ -428,8 +431,8 @@ export const CrmScreenEnrolmentBase = (props) => {
         }
     };
 
-    const title = translateContent('crmSchemeEnrolment.heading.title');
     const drawerShortTitle = translateContent('crmSchemeEnrolment.heading.drawerTitle');
+    const title = translateContent('crmSchemeEnrolment.heading.title');
 
     const normalSearchProps = {
         extraParams,
@@ -452,9 +455,10 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
+        title,
         handleResetFilter,
         filterString,
         setFilterString,
@@ -466,7 +470,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(drawerShortTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(drawerShortTitle),
         handleButtonClick,
         formActionType,
         onCloseAction,
@@ -484,10 +488,21 @@ export const CrmScreenEnrolmentBase = (props) => {
         detailData,
         customerData,
         vehicleDataDetails,
-        isSalesConsultantDataLoading,
-        salesConsultantLovData,
         isSearchLoading,
         generatedData,
+        handlePrintDownload,
+        onSchemeChange,
+        schemeType,
+    };
+
+    const reportDetail = EMBEDDED_REPORTS?.REFERRAL_SCHEME_REGISTRATION_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
     };
 
     return (
@@ -502,6 +517,7 @@ export const CrmScreenEnrolmentBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
 
             <AddViewFormMaster {...formProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };

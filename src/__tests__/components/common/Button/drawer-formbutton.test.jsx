@@ -37,7 +37,7 @@ describe('DrawerFormButton', () => {
             saveAndNewBtnClicked: false,
         };
 
- customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
+        customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
 
         expect(screen.getByText('Close')).toBeInTheDocument();
         expect(screen.getByText('Cancel')).toBeInTheDocument();
@@ -69,6 +69,6 @@ describe('DrawerFormButton components', () => {
         fireEvent.click(saveAddNewButton);
 
         const editButton = screen.getAllByRole('button', { name: 'Edit', exact: false });
-        fireEvent.click(editButton[1]);
+        fireEvent.click(editButton[0]);
     });
 });

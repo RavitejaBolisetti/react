@@ -218,29 +218,29 @@ export const TaxChargesCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData, extraParams]);
 
-    useEffect(() => {
-        setDropdownItems(() => []);
-        if (taxChargeCalList && taxChargeCalList?.length > 0) {
-            let len1 = taxChargeCalList?.length;
-            let len2 = taxChargeCategoryCodeData?.length;
-            for (let j = 0; j < len2; j++) {
-                let flag = false;
-                for (let i = 0; i < len1; i++) {
-                    if (taxChargeCalList[i]?.chargeCode === taxChargeCategoryCodeData[j]?.taxCode) {
-                        setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: true }]);
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: false }]);
-                }
-            }
-        } else if (taxChargeCategoryCodeData && taxChargeCategoryCodeData?.length) {
-            setDropdownItems(() => [...taxChargeCategoryCodeData]);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [taxChargeCategoryCodeData]);
+    // useEffect(() => {
+    //     setDropdownItems(() => []);
+    //     if (taxChargeCalList && taxChargeCalList?.length > 0) {
+    //         let len1 = taxChargeCalList?.length;
+    //         let len2 = taxChargeCategoryCodeData?.length;
+    //         for (let j = 0; j < len2; j++) {
+    //             let flag = false;
+    //             for (let i = 0; i < len1; i++) {
+    //                 if (taxChargeCalList[i]?.chargeCode === taxChargeCategoryCodeData[j]?.taxCode) {
+    //                     setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: true }]);
+    //                     flag = true;
+    //                     break;
+    //                 }
+    //             }
+    //             if (!flag) {
+    //                 setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: false }]);
+    //             }
+    //         }
+    //     } else if (taxChargeCategoryCodeData && taxChargeCategoryCodeData?.length) {
+    //         setDropdownItems(() => [...taxChargeCategoryCodeData]);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [taxChargeCategoryCodeData]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -260,12 +260,6 @@ export const TaxChargesCategoryMain = (props) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: false, keyword: value, current: 1, pageSize: 10 });
         }
-    };
-
-    const handleResetFilter = () => {
-        setFilterString({ current: 1, pageSize: 10 });
-        listFilterForm.resetFields();
-        setShowDataLoading(false);
     };
 
     const handleClearInSearch = (e) => {
@@ -332,7 +326,7 @@ export const TaxChargesCategoryMain = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('taxChargeCatagory.heading.moduleTitle')),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(translateContent('taxChargeCatagory.heading.moduleTitle')),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -341,7 +335,7 @@ export const TaxChargesCategoryMain = (props) => {
 
         setButtonData,
         handleButtonClick,
-        stateData,
+        stateData: stateData?.filter((e) => e?.stateCode !== null),
         saleData,
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
@@ -356,6 +350,7 @@ export const TaxChargesCategoryMain = (props) => {
         setDropdownItems,
         isTaxCategoryCodeLoading,
         isConfigurableLoading,
+        showGlobalNotification,
     };
 
     const tableProps = {
@@ -378,7 +373,6 @@ export const TaxChargesCategoryMain = (props) => {
         from: listFilterForm,
         onFinish,
         onSearchHandle,
-        handleResetFilter,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,

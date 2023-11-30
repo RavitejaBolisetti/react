@@ -29,13 +29,15 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { translateContent } from 'utils/translateContent';
+import { ChangeModelVariantMaster } from './ChangeModelVariant';
+import { TbRefresh } from 'react-icons/tb';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, orderStatus, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData } = props;
-    const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, orderStatus, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, changeModel, setChangeModel, onModelSubmit, setOnModelSubmit } = props;
+    const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -115,8 +117,19 @@ const AddEditFormMain = (props) => {
         setOptionalServices,
         handleFormValueChange,
         vehicleServiceData,
+    };
+
+    const myProp = {
+        ...props,
+        ...OptionServicesFormProps,
+        setCustomerNameList,
+        customerNameList,
         editingOptionalData,
         setEditingOptionalData,
+        onModelSubmit,
+        setOnModelSubmit,
+        setFilterVehicleData,
+        setChangeModel,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -155,9 +168,9 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: formData?.model,
         handleSelectTreeClick,
         treeExpandedKeys: [formData?.model],
-        placeholder: preparePlaceholderSelect(translateContent('commonModules.vehicleDetails.model')),
+        placeholder: preparePlaceholderSelect(translateContent('commonModules.label.vehicleDetails.modelDescription')),
         loading: !viewOnly ? isProductDataLoading : false,
-        treeDisabled: orderStatus === OTF_STATUS.BOOKED.key ? false : true,
+        treeDisabled: true,
     };
 
     const [timer, setTimer] = useState(null);
@@ -168,6 +181,10 @@ const AddEditFormMain = (props) => {
             handleVehicleDetailChange({ ...filterVehicleData, discountAmount: e?.target?.value });
         }, 500);
         setTimer(newTimer);
+    };
+
+    const handleChangeModel = () => {
+        setChangeModel(true);
     };
 
     return (
@@ -185,13 +202,28 @@ const AddEditFormMain = (props) => {
                                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                                 </Col>
 
-                                <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')} name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
                                     </Form.Item>
                                 </Col>
+
+                                {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
+                                    <Col xs={24} sm={24} md={3} lg={3} xl={3} style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={onModelSubmit}>
+                                            Change
+                                        </Button>
+                                    </Col>
+                                )}
                             </Row>
                             <Divider />
+                            {changeModel && (
+                                <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <ChangeModelVariantMaster {...myProp} />
+                                    </Col>
+                                </Row>
+                            )}
 
                             <Row gutter={20}>
                                 {isOTFModule && (
@@ -283,7 +315,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="taxAmount">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="consumerSchemeWithTax">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax'))} />
                                     </Form.Item>
                                 </Col>

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -19,7 +19,6 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -40,6 +39,7 @@ const mapStateToProps = (state) => {
         data: data.customerLessorCompanyMasterResponses,
         isLoading,
         moduleTitle,
+        totalRecords: data?.totalRecords || [],
     };
     return returnValue;
 };
@@ -58,23 +58,29 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListLessorCompanyMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, listShowLoading, showGlobalNotification, moduleTitle, totalRecords } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
+    const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
+
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState(data);
     const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState('');
+    const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [page, setPage] = useState({});
+
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const dynamicPagination = true;
+
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -90,33 +96,65 @@ export const ListLessorCompanyMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    const extraParams = [
-        {
-            value: '',
-            key: 'status',
-        },
-        {
-            key: 'pageSize',
-            title: 'Value',
-            value: 100,
-            canRemove: true,
-            filter: false,
-        },
-        {
-            key: 'pageNumber',
-            title: 'Value',
-            value: 1,
-            canRemove: true,
-            filter: false,
-        },
-    ];
+    const defaultExtraParam = useMemo(() => {
+        return [
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: filterString?.pageSize,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: filterString?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: filterString?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: filterString?.sortType,
+                canRemove: true,
+                filter: false,
+            },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
+    const extraParams = useMemo(() => {
+        if (filterString) {
+            return [
+                ...defaultExtraParam,
+                {
+                    key: 'companyName',
+                    title: 'Search Param',
+                    value: filterString?.companyName,
+                    name: filterString?.companyName,
+                    canRemove: true,
+                    filter: true,
+                },
+            ];
+        } else {
+            return defaultExtraParam;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, defaultExtraParam]);
 
     useEffect(() => {
-        if (userId && !isDataLoaded) {
+        if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
+    }, [userId, extraParams]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -126,26 +164,24 @@ export const ListLessorCompanyMasterBase = (props) => {
     }, [userId, refershData]);
 
     useEffect(() => {
-        if (data?.length) {
             setSearchdata(data);
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    useEffect(() => {
-        if (data?.length > 0 && userId) {
-            if (filterString) {
-                const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
-                setSearchdata(filterDataItem);
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data);
-                setShowDataLoading(false);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, data, userId]);
+    // useEffect(() => {
+    //     if (data?.length > 0 && userId) {
+    //         if (filterString) {
+    //             const keyword = filterString?.keyword;
+    //             const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
+    //             setSearchdata(filterDataItem);
+    //             setShowDataLoading(false);
+    //         } else {
+    //             setSearchdata(data);
+    //             setShowDataLoading(false);
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString, isDataLoaded, data, userId]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -164,14 +200,15 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
+        // setPage({ ...page, current: 1 });
         if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+            setFilterString({ ...filterString, advanceFilter: false, companyName: value });
         }
     };
 
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
-            setFilterString();
+            setFilterString((prev) => ({ current: 1, pageSize: prev?.pageSize }));
             listFilterForm.resetFields();
             setShowDataLoading(false);
         } else if (e.target.value.length > 2) {
@@ -244,11 +281,17 @@ export const ListLessorCompanyMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+       
     };
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
+        page: filterString,
+        setPage: setFilterString,
+        filterString,
+        totalRecords,
+        dynamicPagination,
     };
 
     const title = translateContent('LessorCompanyMaster.heading.title');

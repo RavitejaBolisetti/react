@@ -33,7 +33,7 @@ const VehicleCustomerDetailMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, vehicleCustomerDetails]);
+    }, [userId, vehicleCustomerDetails, section]);
 
     const onFinishFailed = () => {};
 

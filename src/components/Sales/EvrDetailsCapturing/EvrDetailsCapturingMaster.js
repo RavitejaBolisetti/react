@@ -27,6 +27,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { validateRequiredInputField } from 'utils/validation';
 
 const mapStateToProps = (state) => {
     const {
@@ -85,6 +86,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [modelCodeName, setModelCodeName] = useState();
     const [modelGroupProductData, setModelGroupProductData] = useState([]);
+    const [validationRules, setValidationRules] = useState([]);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -94,7 +96,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [chargingStatusType, setChargingStatusType] = useState(EVR_STATUS?.DUE_FOR_CHARGING.key);
     const dynamicPagination = true;
-    const page = { pageSize: 10, current: 1 };
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -133,6 +134,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     };
 
     const extraParams = useMemo(() => {
+        const page = { pageSize: 10, current: 1 };
         return [
             {
                 key: 'searchParam',
@@ -201,7 +203,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chargingStatusType, filterString, page]);
+    }, [chargingStatusType, filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -303,6 +305,12 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
+        if (!value) {
+            setValidationRules([validateRequiredInputField(translateContent('global.label.input'))]);
+            searchForm.validateFields();
+            return false;
+        }
+        setValidationRules([]);
         setFilterString({ ...filterString, modelDescription: value, advanceFilter: true, current: 1 });
         searchForm.resetFields();
     };
@@ -456,6 +464,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         searchForm,
         evrStatusList,
         handleClear,
+        validationRules,
     };
 
     const advanceFilterProps = {
@@ -479,7 +488,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(translateContent('evrDetailsCapturing.heading.moduleTitle')),
         handleButtonClick,
         formActionType,
         onCloseAction,

@@ -8,10 +8,10 @@ import React from 'react';
 import { Card } from 'antd';
 import { FiTrash } from 'react-icons/fi';
 import { AiOutlineEye } from 'react-icons/ai';
-import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const ViewDetail = (props) => {
     const {

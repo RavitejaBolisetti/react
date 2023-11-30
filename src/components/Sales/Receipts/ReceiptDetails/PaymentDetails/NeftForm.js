@@ -10,6 +10,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
+import { disableFutureDate } from 'utils/disableDate';
 
 const { Search } = Input;
 const NeftFormBase = (props) => {
@@ -30,7 +31,7 @@ const NeftFormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.transactionDate} label={translateContent('receipts.label.receiptDetails.transactionDate')} name="transactionDate">
-                        <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.transactionDate'))} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.transactionDate'))} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>

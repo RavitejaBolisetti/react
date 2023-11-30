@@ -135,7 +135,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item> */}
                                     <Form.Item
                                         initialValue={formatDateToCalenderDate(formData?.effectiveToDate)}
-                                        label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate')}
+                                        label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')}
                                         name="effectiveToDate"
                                         rules={[
                                             validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')),

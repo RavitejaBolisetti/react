@@ -6,7 +6,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty, Spin } from 'antd';
+import { Button, Col, Form, Row, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
@@ -171,7 +171,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                 status: values?.applicationStatus,
                 parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
-                accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId })),
+                accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id, status }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId, status })),
                 deviceType: menuType,
                 applicationAction: actionData,
                 accessableIndicator: Number(values?.accessableIndicator),
@@ -200,7 +200,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
-            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map((el) => ({ ...el })), documentType, accessibleLocation });
+            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map((el) => ({ ...el })), documentType, accessibleLocation: accessibleLocation?.map((i) => ({ ...i, status: true })) });
             setIsReadOnly(false);
             setIsFieldDisable(true);
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
@@ -224,7 +224,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     const onClose = () => {
         setisVisible(false);
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
-        setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+            setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation: accessibleLocation?.map(i=> ({...i, status: true}))  });
         applicationForm.resetFields();
         forceUpdate();
         setIsBtnDisabled(false);
@@ -258,7 +258,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         configurableParamData,
         actions,
         menuData,
-        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(" "+ moduleTitle),
+        titleOverride: (finalFormdata?.applicationDetails?.id ? translateContent('global.buttons.edit') : translateContent('global.buttons.add')).concat(' ' + moduleTitle),
         setSelectedTreeKey,
         selectedTreeKey,
         isApplicatinoOnSaveLoading,
@@ -278,30 +278,30 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     {/* <Spin spinning={isLoading}> */}
-                        {menuData?.length <= 0 ? (
-                            <div className={styles.emptyContainer}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            {translateContent(global.generalMessage.noRecordsFound)} <br /> {translateContent(global.generalMessage.noRecordsFoundAddNew).replace('{NAME}', moduleTitle)}
-                                            {}
-                                        </span>
-                                    }
-                                >
-                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
-                                        {translateContent('global.buttons.add')}
-                                    </Button>
-                                </Empty>
-                            </div>
-                        ) : (
-                            <div className={` ${styles.leftPanelScroll}`}>
-                                <LeftPanel {...myProps} />
-                            </div>
-                        )}
+                    {menuData?.length <= 0 ? (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        {translateContent(global.generalMessage?.noRecordsFound)} <br /> {translateContent(global.generalMessage?.noRecordsFoundAddNew).replace('{NAME}', moduleTitle)}
+                                        {}
+                                    </span>
+                                }
+                            >
+                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                    {translateContent('global.buttons.add')}
+                                </Button>
+                            </Empty>
+                        </div>
+                    ) : (
+                        <div className={` ${styles.leftPanelScroll}`}>
+                            <LeftPanel {...myProps} />
+                        </div>
+                    )}
                     {/* </Spin> */}
                 </Col>
 
@@ -321,11 +321,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={
-                                    <span>
-                                        {translateContent('applicationMaster.label.description')}
-                                    </span>
-                                }
+                                description={<span>{translateContent('applicationMaster.label.description')}</span>}
                             ></Empty>
                         </div>
                     )}

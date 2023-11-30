@@ -79,6 +79,9 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDownload = () => {
+        if (!form.getFieldValue('stateCode')) {
+            return;
+        }
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
         };
@@ -87,17 +90,13 @@ const AddEditFormMain = (props) => {
             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: res, placement: 'bottomRight' });
         };
 
-        if (typeof form?.getFieldValue('stateCode') === 'undefined') {
-            fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, onSuccessAction, onErrorAction });
-        } else {
-            const extraParams = [
-                {
-                    key: 'stateCode',
-                    value: `${form.getFieldValue('stateCode')}`,
-                },
-            ];
-            fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, extraParams, onSuccessAction, onErrorAction });
-        }
+        const extraParams = [
+            {
+                key: 'stateCode',
+                value: `${form.getFieldValue('stateCode')}`,
+            },
+        ];
+        fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const selectProps = {
@@ -149,7 +148,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
 
-                                <Button type="primary" onClick={handleDownload}>
+                                <Button disabled={!form.getFieldValue('stateCode')} type="primary" onClick={handleDownload}>
                                     {translateContent('global.buttons.download')}
                                 </Button>
                             </Row>

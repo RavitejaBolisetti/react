@@ -275,7 +275,7 @@ const AssignUserRole = (props) => {
         setSelectedRoleId(roleId);
     };
 
-    const buttonProps = { ...props, buttonData, saveButtonName: userType === USER_TYPE_USER?.DEALER?.id ? 'Save & Next' : 'Save & Close' };
+    const buttonProps = { ...props, buttonData, saveButtonName: userType === USER_TYPE_USER?.DEALER?.id ? translateContent('global.buttons.saveAndNext') : translateContent('global.buttons.save') };
 
     const modalProps = {
         isLoading: isDlrAppLoding || isMnmAppLoding,

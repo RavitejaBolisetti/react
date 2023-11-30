@@ -39,7 +39,7 @@ const VehicleReceiptDetailCard = (props) => {
                             {translateContent('vehicleReceipt.heading.profileCard.grnNumber')}
                             <span className={styles.activeForm}>
                                 {selectedRecord?.grnNumber || 'New'}
-                                <CopytoClipboard text={selectedRecord?.grnNumber} />
+                                <CopytoClipboard buttonText={null} text={selectedRecord?.grnNumber} />
                             </span>
                         </div>
                     </>

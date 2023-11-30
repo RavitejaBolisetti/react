@@ -14,30 +14,36 @@ import AdvanceFilter from './AdvanceFilter';
 import { RSAMainConatiner } from './RSAMainConatiner';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { RSA_DOCUMENT_TYPE } from '../../Services/ShieldSchemeRegistartion/utils/rsaReportType';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { BASE_URL_SHIELD_REGISTRATION } from 'constants/routingApi';
-import { BASE_URL_GET_REGISTRATION_DETAILS as customeURL } from 'constants/routingApi';
+import { BASE_URL_GET_REGISTRATION_DETAILS as customeURL, BASE_URL_SCHEME_RSA_DESCRIPTION } from 'constants/routingApi';
 import { showGlobalNotification } from 'store/actions/notification';
 import { shieldSchemeSearchDataAction } from 'store/actions/data/services/shieldSchemeSearch';
 import { rsaRegistrationDataAction } from 'store/actions/data/sales/rsaRegistration';
 import { schemeDescriptionDataAction } from 'store/actions/data/services/schemeDescriptionLov';
 import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/employeeSearch';
+import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
+import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { ListDataTable } from 'utils/ListDataTable';
-import { QUERY_BUTTONS_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/ShieldRegistrationContant';
+import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Services/ShieldSchemeRegistartion/utils/ShieldRegistrationContant';
 import { AMC_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/AMCConstants';
 import { RSA_REGISTRATION_STATUS, RSA_REGISTRATION_STATUS_MNM_USER } from './utils/RSARegistrationStatus';
-import { AMC_REQUEST_TITLE_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/AMCRequestTitleConstant';
 import { CancelScheme } from 'components/Services/ShieldSchemeRegistartion/CancelScheme';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { AdvancedSearch } from './AdvancedSearch';
+import { VehicleReceiptFormButton } from 'components/Services/ShieldSchemeRegistartion/VehicleReceiptFormButton';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { validateRSAMenu } from './utils/validateRSAMenu';
+import { BASE_URL_APPLICATION_DEALER_LOCATION as customURL } from 'constants/routingApi';
 import { RSA_LEFTMENU_SECTION } from 'components/Sales/RSARegistration/constant/RSALeftMenuSection';
 import { drawerTitle } from 'utils/drawerTitle';
 import { translateContent } from 'utils/translateContent';
+import { ProductModelGroupsDataActions } from 'store/actions/data/VehicleModelTaxChargesCategory/productModelGroup';
+import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
+import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
+import { RSA_REQUEST_TITLE_CONSTANTS } from './utils/RSARequestTitleConstant';
 
 const mapStateToProps = (state) => {
     const {
@@ -53,6 +59,17 @@ const mapStateToProps = (state) => {
             },
             AMCRegistration: {
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
+                DealerLocations: { filteredListData: locations = [] },
+            },
+            DealerHierarchy: {
+                DealerParentsLov: { filteredListData: dealerParentsLovList },
+            },
+            ApplicationMaster: { dealerLocations = [] },
+            OTF: {
+                ModelFamily: { isLoaded: isModelFamilyDataLoaded = false, isLoading: isModelFamilyLoading, data: modelFamilyData = [] },
+            },
+            VehicleModelandTaxChargesCategory: {
+                ProductModelGroup: { isLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyDataLoading = false, data: ProductHierarchyData = [] },
             },
         },
         common: {
@@ -83,6 +100,16 @@ const mapStateToProps = (state) => {
         filterString,
         typeData,
         loginUserData,
+        isModelFamilyDataLoaded,
+        isModelFamilyLoading,
+        modelFamilyData,
+        isProductHierarchyDataLoaded,
+        isProductHierarchyDataLoading,
+        ProductHierarchyData,
+        dealerParentsLovList,
+        dealerLocations,
+
+        locations,
     };
     return returnValue;
 };
@@ -102,8 +129,24 @@ const mapDispatchToProps = (dispatch) => ({
 
             listEmployeeShowLoading: employeeSearchDataAction.listShowLoading,
             saveData: rsaRegistrationDataAction.saveData,
+            resetData: shieldSchemeSearchDataAction.reset,
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
             listShowLoading: shieldSchemeSearchDataAction.listShowLoading,
+
+            fetchModelList: ProductModelGroupsDataActions.fetchList,
+            listModelShowLoading: ProductModelGroupsDataActions.listShowLoading,
+            resetProductData: ProductModelGroupsDataActions.reset,
+
+            fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
+            listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
+            resetFamily: otfModelFamilyDetailDataActions.reset,
+
+            fetchLocationLovList: dealerLocationsDataAction.fetchFilteredList,
+            listLocationShowLoading: dealerLocationsDataAction.listShowLoading,
+
+            fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
+            fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
+
             showGlobalNotification,
         },
         dispatch
@@ -111,7 +154,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RSARegistrationMasterBase = (props) => {
-    const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
+    const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
+    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
+
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
 
@@ -121,13 +166,13 @@ export const RSARegistrationMasterBase = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [userType, setUserType] = useState(AMC_CONSTANTS?.DEALER?.key);
-    const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
+    const [rsaStatus, setRSAStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isRSA, setIsRSA] = useState(true);
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
+    const page = { pageSize: 10, current: 1 };
 
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
@@ -144,8 +189,10 @@ export const RSARegistrationMasterBase = (props) => {
     const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
     const [rejectRequest, setRejectRequest] = useState(false);
     const [requestPayload, setRequestPayload] = useState({ registrationDetails: {}, vehicleAndCustomerDetails: {} });
-    const [selectedStatusType, setSelectedStatusType] = useState();
     const [status, setStatus] = useState();
+    const [previousSection, setPreviousSection] = useState(1);
+    const [vehicleCustomerDetailsOnly, setVehicleCustomeDetailsOnly] = useState({});
+    const [selectedCardData, setSelectedCardData] = useState();
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -179,16 +226,34 @@ export const RSARegistrationMasterBase = (props) => {
     const [cancelSchemeForm] = Form.useForm();
 
     useEffect(() => {
-        if (loginUserData?.userType) {
-            if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
-                setSelectedStatusType(RSA_REGISTRATION_STATUS.PENDING.key);
-            } else {
-                setSelectedStatusType(RSA_REGISTRATION_STATUS_MNM_USER?.PENDING_FOR_APPROVAL);
-            }
+        if (rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily) {
+            const makeExtraParams = [
+                {
+                    key: 'familyCode',
+                    title: 'familyCode',
+                    value: rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily,
+                    name: 'familyCode',
+                },
+            ];
+            fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginUserData?.userType]);
+    }, [userId, rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily]);
+
+    useEffect(() => {
+        if (rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
+            const makeExtraParams = [
+                {
+                    key: 'modelGroupCode',
+                    title: 'modelGroupCode',
+                    value: rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup,
+                    name: 'modelGroupCode',
+                },
+            ];
+            fetchModelList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup]);
 
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -220,23 +285,39 @@ export const RSARegistrationMasterBase = (props) => {
                 filter: true,
             },
             {
+                key: 'dealerParent',
+                title: 'Dealer Parent',
+                value: filterString?.dealerParent,
+                name: dealerParentsLovList?.find((i) => i?.key === filterString?.dealerParent)?.value,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'dealerLocation',
+                title: 'Dealer Location',
+                value: filterString?.dealerLocation,
+                name: dealerLocations?.find((i) => i?.locationId === filterString?.dealerLocation)?.dealerLocationName,
+                canRemove: true,
+                filter: true,
+            },
+            {
                 key: 'status',
                 title: 'Status',
-                value: selectedStatusType,
+                value: filterString?.rsaStatus || rsaStatus,
                 canRemove: false,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize || page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
@@ -259,20 +340,20 @@ export const RSARegistrationMasterBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, selectedStatusType, filterString, page]);
+    }, [filterString, rsaStatus]);
 
     useEffect(() => {
         const defaultSection = RSA_LEFTMENU_SECTION.RSA_REGISTRATION_DETAILS.id;
@@ -281,6 +362,22 @@ export const RSARegistrationMasterBase = (props) => {
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (loginUserData?.userType) {
+            if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
+                setRSAStatus(RSA_REGISTRATION_STATUS.PENDING.key);
+                setUserType(AMC_CONSTANTS?.DEALER?.key);
+                setFilterString({ ...filterString, rsaStatus: RSA_REGISTRATION_STATUS.PENDING.key });
+            } else {
+                setRSAStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
+                setUserType(AMC_CONSTANTS?.MNM?.key);
+                setFilterString({ ...filterString, rsaStatus: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
+            }
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loginUserData?.userType]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -301,12 +398,27 @@ export const RSARegistrationMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && selectedStatusType) {
+        if (userId) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedStatusType, extraParams]);
+    }, [userId, filterString]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchDealerParentsLovList({ setIsLoading: listShowLoading, userId });
+
+            fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
+    const handleDealerParentChange = (value) => {
+        if (userId) {
+            fetchDealerLocations({ customURL: customURL + '?parentGroupCode=' + value, setIsLoading: listShowLoading, userId });
+        }
+    };
 
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -324,8 +436,10 @@ export const RSARegistrationMasterBase = (props) => {
     }, [userId, selectedOrderId]);
 
     const handleInvoiceTypeChange = (buttonName) => {
-        setAmcStatus(buttonName?.key);
+        const key = buttonName?.key;
         searchForm.resetFields();
+        setFilterString({ status: key, current: 1, pageSize: 10 });
+        setRSAStatus(key);
     };
 
     const handleChange = (e) => {
@@ -336,50 +450,53 @@ export const RSARegistrationMasterBase = (props) => {
         setFilterString({ ...filterString, searchParam: value });
         setSearchValue(value);
     };
-    const buttonHandler = ({ buttonAction, formActionType: { viewMode }, buttonData, defaultBtnVisiblity }) => {
-        switch (true) {
-            case buttonAction === NEXT_ACTION || buttonAction === VIEW_ACTION: {
-                if (viewMode) {
-                    return { ...buttonData, editBtn: false, cancelRSABtn: true, viewRSAHistoryBtn: true, closeBtn: true, nextBtn: true };
-                } else {
-                    return { ...buttonData, editBtn: false, cancelRSABtn: false };
-                }
-            }
-            default: {
-                return { ...btnVisiblity({ defaultBtnVisiblity, buttonAction }), editBtn: false };
-            }
-        }
-    };
+
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                setCurrentSection(defaultSection);
+                setPreviousSection(1);
                 setButtonData({ ...buttonData, saveAndNewBtn: true });
                 setIsFormVisible(true);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
+                setSelectedCardData(record);
                 record && setSelectedOrderId(record?.id);
                 defaultSection && setCurrentSection(defaultSection);
                 setIsFormVisible(true);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => validateRSAMenu({ item: i, formActionType }) && i.id > currentSection);
-
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
+                setPreviousSection(nextSection?.id);
                 break;
 
             default:
                 break;
         }
 
-        const tempActionType = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
         if (buttonAction !== NEXT_ACTION) {
-            setFormActionType(tempActionType);
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            if (buttonAction === EDIT_ACTION) {
+                setButtonData({ ...buttonData, nextBtn: true, editBtn: false, saveBtn: true });
+            } else {
+                const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
+                setButtonData(Visibility);
+                if (buttonAction === VIEW_ACTION) {
+                    if (userType === AMC_CONSTANTS?.DEALER?.key) {
+                        rsaStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, saveBtn: false, cancelSchemeBtn: true }) : rsaStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                    } else {
+                        rsaStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : rsaStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                    }
+                }
+            }
         }
-        setButtonData(buttonHandler({ buttonAction, formActionType: tempActionType, buttonData, defaultBtnVisiblity }));
     };
 
     const handleSaleTypeChange = (value) => {
@@ -394,7 +511,8 @@ export const RSARegistrationMasterBase = (props) => {
         setBookingNumber(value);
         if (value) {
             const onSuccessAction = (res) => {
-                setVinNumber(res?.data?.vehicleAndCustomerDetails?.shieldVehicleDetails?.vin);
+                setVehicleCustomeDetailsOnly(res?.data);
+                setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
             const extraParams = [
@@ -410,7 +528,22 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleVinSearch = (value) => {
+        const onSuccessAction = (res) => {
+            setVehicleCustomeDetailsOnly(res?.data);
+        };
         setVinNumber(value);
+        shieldDetailForm.setFieldsValue({
+            schemeDetails: {
+                schemeDescription: undefined,
+                schemeCode: '',
+                schemeAmount: '',
+                schemeDiscount: '',
+                schemeTaxAmount: '',
+                schemeStartDate: '',
+                schemeEndDate: '',
+                id: '',
+            },
+        });
         if (value) {
             const extraParams = [
                 {
@@ -434,26 +567,33 @@ export const RSARegistrationMasterBase = (props) => {
                     name: 'vin',
                 },
             ];
-            fetchSchemeDescription({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchSchemeDescription({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SCHEME_RSA_DESCRIPTION, extraParams, onSuccessAction, onErrorAction });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, vinNumber]);
 
-    const onFinish = () => {
+    const onFinish = ({ type = null }) => {
         const data = { ...requestPayload, rsaRegistrationDetails: { ...requestPayload?.registrationDetails, registrationInformation: { ...requestPayload?.registrationDetails?.registrationInformation, employeeCode: requestPayload?.registrationDetails?.registrationInformation?.employeeName, managerCode: requestPayload?.registrationDetails?.registrationInformation?.managerName } }, vehicleAndCustomerDetails: requestPayload?.vehicleAndCustomerDetails };
         delete data?.registrationDetails;
         delete data?.rsaRegistrationDetails?.registrationInformation?.employeeName;
         delete data?.rsaRegistrationDetails?.registrationInformation?.managerName;
         const onSuccess = (res) => {
+            console.log('🚀 ~ file: RSARegistrationMaster.js:580 ~ onSuccess ~ res:', res);
+
             form.resetFields();
+            shieldDetailForm.resetFields();
+            setBookingNumber();
+            setVinNumber();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
+            setSelectedCardData({ rsaRegistrationNumber: res?.data?.rsaRegistrationNumber, rsaRegistrationDate: res?.data?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, status: res?.data?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate?.rsaStatus });
+            setSelectedOrder({ ...selectedOrder, res });
+            setCurrentSection(RSA_LEFTMENU_SECTION?.THANK_YOU_PAGE?.id);
         };
 
-        const onError = (message) => {
+        const onError = (message, errorData, errorSection) => {
             showGlobalNotification({ message });
         };
 
@@ -472,21 +612,31 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
+        setSelectedCardData();
+
         resetDetail();
         form.resetFields();
+        setVinNumber();
+        setSelectedOrder();
+
+        // shieldDetailForm.setFieldsValue({ registrationForm: null, schemeForm: null });
+        // vehicleCustomerForm.setFieldsValue({ vehicleDetailForm: null, customerDetailForm: null });
+
+        cancelSchemeForm.resetFields();
+
         shieldDetailForm.resetFields();
-        registrationForm.resetFields();
-        schemeForm.resetFields();
+        // registrationForm.resetFields();
+        // schemeForm.resetFields();
         vehicleCustomerForm.resetFields();
         vehicleDetailForm.resetFields();
         customerDetailForm.resetFields();
-        cancelSchemeForm.resetFields();
         setSelectedOrderId();
 
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
 
         setSelectedOrder();
+        setBookingNumber();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         setRequestPayload();
@@ -495,23 +645,24 @@ export const RSARegistrationMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
-        setPage,
-        tableColumn: tableColumn({ handleButtonClick }),
+        setPage: setFilterString,
+        page: filterString,
+        tableColumn: tableColumn({ handleButtonClick, typeData, userType, locations }),
         tableData: data,
         showAddButton: true,
-        typeData,
+        filterString,
     };
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+
     const handleCancelScheme = () => {
-        const cancelRemarks = cancelSchemeForm.getFieldValue().cancelRemarks;
-        const reasonForRejection = cancelSchemeForm.getFieldValue().reasonForRejection;
-        const otherReason = cancelSchemeForm.getFieldValue().otherReason;
-        const data = { id: rsaDetails?.id, customerName: '', amcRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, approvedByOrRejectedBy: '', userId: userId, status: status, rsaStatus: status, cancelRemarks: cancelRemarks, otherReason: otherReason, reasonForRejection: reasonForRejection };
+        console.log('🚀 ~ file: RSARegistrationMaster.js:658 ~ handleCancelScheme ~ rsaDetails:', rsaDetails);
+        const data = { ...rsaDetails, requestDetails: { ...rsaDetails?.requestDetails, rsaStatus: status, ...cancelSchemeForm.getFieldsValue() }, id: rsaDetails?.id, customerName: '', rsaRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, userId: userId };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -520,6 +671,10 @@ export const RSARegistrationMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             setCancelSchemeVisible(false);
             setIsFormVisible(false);
+            cancelSchemeForm.resetFields();
+            setRejectRequest(false);
+            setIsMNMApproval(false);
+            setAmcWholeCancellation(false);
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -596,19 +751,26 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleCancelRequests = () => {
-        if (isMNMApproval) {
-            handleCancelScheme();
-        } else if (rejectRequest && amcWholeCancellation) {
-            handleCancelScheme();
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
-            handleCancelScheme();
-        } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
-            setRejectRequest(true);
-        } else if (amcWholeCancellation) {
-            setRejectRequest(true);
-        } else {
-            handleCancelScheme();
-        }
+        cancelSchemeForm
+            .validateFields()
+            .then(() => {
+                if (isMNMApproval) {
+                    handleCancelScheme();
+                } else if (rejectRequest && amcWholeCancellation) {
+                    handleCancelScheme();
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key && rejectRequest) {
+                    handleCancelScheme();
+                } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
+                    setRejectRequest(true);
+                } else if (amcWholeCancellation) {
+                    setRejectRequest(true);
+                } else {
+                    handleCancelScheme();
+                }
+            })
+            .catch(() => {
+                return;
+            });
     };
 
     const modalTitle = useMemo(() => {
@@ -616,24 +778,24 @@ export const RSARegistrationMasterBase = (props) => {
             case userType === AMC_CONSTANTS?.DEALER?.key: {
                 switch (true) {
                     case amcWholeCancellation: {
-                        return AMC_REQUEST_TITLE_CONSTANTS?.DEALER_AMC_CANCELLATION?.key;
+                        return RSA_REQUEST_TITLE_CONSTANTS?.DEALER_AMC_CANCELLATION?.key;
                     }
                     default:
-                        return AMC_REQUEST_TITLE_CONSTANTS?.DEALER_REQUEST_CANCELLATION?.key;
+                        return RSA_REQUEST_TITLE_CONSTANTS?.DEALER_REQUEST_CANCELLATION?.key;
                 }
             }
             case userType === AMC_CONSTANTS?.MNM?.key: {
                 switch (true) {
                     case isMNMApproval: {
-                        return AMC_REQUEST_TITLE_CONSTANTS?.MNM_REQUEST_APPROVAL?.key;
+                        return RSA_REQUEST_TITLE_CONSTANTS?.MNM_REQUEST_APPROVAL?.key;
                     }
                     default:
-                        return AMC_REQUEST_TITLE_CONSTANTS?.MNM_REQUEST_REJECTION?.key;
+                        return RSA_REQUEST_TITLE_CONSTANTS?.MNM_REQUEST_REJECTION?.key;
                 }
             }
 
             default:
-                return AMC_REQUEST_TITLE_CONSTANTS?.DEALER_AMC_CANCELLATION?.key;
+                return RSA_REQUEST_TITLE_CONSTANTS?.DEALER_AMC_CANCELLATION?.key;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cancelSchemeVisible]);
@@ -645,22 +807,51 @@ export const RSARegistrationMasterBase = (props) => {
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.id,
+                value: record?.id ? record?.id : record?.res?.data?.id,
             },
         ]);
+    };
+
+    const handleTaxChange = () => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
+        const onSuccessAction = (res) => {
+            shieldDetailForm.setFieldsValue({ schemeDetails: { igstAmount: res?.data?.rsaRegistrationDetails?.schemeDetails?.igstAmount, sgstAmount: res?.data?.rsaRegistrationDetails?.schemeDetails?.sgstAmount, cgstAmount: res?.data?.rsaRegistrationDetails?.schemeDetails?.cgstAmount, schemeTaxAmount: res?.data?.rsaRegistrationDetails?.schemeDetails?.schemeTaxAmount } });
+        };
+        const extraParams = [
+            {
+                key: 'saleType',
+                value: shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType,
+            },
+            {
+                key: 'discountAmount',
+                value: shieldDetailForm?.getFieldValue()?.schemeDetails?.schemeDiscount,
+            },
+            {
+                key: 'schemeCode',
+                value: shieldDetailForm?.getFieldValue()?.schemeDetails?.schemeCode,
+            },
+        ];
+        if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDiscount || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode) {
+            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            return false;
+        } else {
+            fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: customeURL, onErrorAction, onSuccessAction });
+        }
     };
 
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        amcStatus,
+        rsaStatus,
         invoiceStatusList,
         advanceFilter: true,
         otfFilter: true,
         filterString,
         setFilterString,
-        selectedStatusType,
-        setSelectedStatusType,
+        rsaStatus,
+        setRSAStatus,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
@@ -673,6 +864,7 @@ export const RSARegistrationMasterBase = (props) => {
         typeData,
         searchForm,
         showAddButton: userType === AMC_CONSTANTS?.DEALER?.key ? true : false,
+        userType,
     };
 
     const advanceFilterProps = {
@@ -690,6 +882,9 @@ export const RSARegistrationMasterBase = (props) => {
         typeData,
 
         userType,
+        handleDealerParentChange,
+        dealerParentsLovList,
+        dealerLocations,
     };
 
     const cancelModalProps = {
@@ -725,7 +920,7 @@ export const RSARegistrationMasterBase = (props) => {
         onFinalSubmit: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -734,6 +929,7 @@ export const RSARegistrationMasterBase = (props) => {
         requestPayload,
         setRequestPayload,
         handleCancelRequest,
+        vehicleCustomerForm,
         buttonData,
         setButtonData,
         handleButtonClick,
@@ -752,21 +948,27 @@ export const RSARegistrationMasterBase = (props) => {
         isLastSection,
         typeData,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        FormActionButton: VehicleReceiptFormButton,
         setLastSection,
 
         confirmRequest,
         setConfirmRequest,
         handleWholeSchemeCancellation,
         handleCancelScheme,
+        // showCancelSchemeConfirm,
+        handleTaxChange,
         saleType,
         rsaDetails,
         detailShieldData,
-        registrationDetails: rsaDetails?.registrationInformation || detailShieldData?.registrationInformation,
-        vehicleCustomerDetails: rsaDetails?.vehicleAndCustomerDetails || detailShieldData?.vehicleAndCustomerDetails,
+        registrationDetails: formActionType?.viewMode ? rsaDetails?.rsaRegistrationDetails : detailShieldData?.registrationInformation,
+        vehicleCustomerDetails: formActionType?.viewMode ? rsaDetails?.vehicleAndCustomerDetails : vehicleCustomerDetailsOnly?.vehicleAndCustomerDetails,
         requestDetails: rsaDetails?.requestDetails,
+        workflowDetails: rsaDetails?.workflowMasterDetails,
         handleSaleTypeChange,
         handleOtfSearch,
         handleVinSearch,
+        modelFamilyData,
+        ProductHierarchyData,
         vinNumber,
         setVinNumber,
         bookingNumber,
@@ -783,7 +985,14 @@ export const RSARegistrationMasterBase = (props) => {
         userId,
         isRSA,
         setIsRSA,
+        filterString,
+        rsaStatus,
         handlePrintDownload,
+        setRSAStatus,
+        setSection,
+        previousSection,
+        setPreviousSection,
+        selectedCardData,
     };
 
     useEffect(() => {

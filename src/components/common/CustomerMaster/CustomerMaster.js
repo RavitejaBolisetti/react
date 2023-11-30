@@ -33,7 +33,6 @@ import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 

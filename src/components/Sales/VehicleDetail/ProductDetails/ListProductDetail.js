@@ -107,7 +107,7 @@ const ProductDetailMasterMain = (props) => {
     const [tooltTipText, settooltTipText] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [itemOptions, setitemOptions] = useState();
-    const [makeOptions, setmakeOptions] = useState();
+    const [makeOptions, setmakeOptions] = useState([]);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const MakefieldNames = { label: 'value', value: 'key' };
     const ItemFieldNames = { label: 'value', value: 'key' };
@@ -218,7 +218,6 @@ const ProductDetailMasterMain = (props) => {
     useEffect(() => {
         if (isDataLoaded && ProductDetailsData) {
             setformData(ProductDetailsData);
-            console.log('ProductDetailsData', ProductDetailsData);
             fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams({ key: 'modelGroupCode', title: 'modelGroupCode', value: ProductDetailsData?.productAttributeDetail?.modelGroup, name: 'modelGroupCode' }) });
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams({ key: 'variantCode', title: 'variantCode', value: ProductDetailsData?.productAttributeDetail?.modelVariant, name: 'variantCode' }) });
             fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams({ key: 'familyCode', title: 'familyCode', value: ProductDetailsData?.productAttributeDetail?.modelFamily, name: 'familyCode' }) });
@@ -231,10 +230,8 @@ const ProductDetailMasterMain = (props) => {
 
     useEffect(() => {
         if (typeData) {
-            if (typeData[PARAM_MASTER?.VEH_MAKE?.id]) {
-                setmakeOptions(typeData[PARAM_MASTER?.VEH_MAKE?.id]);
-            }
             if (typeData[PARAM_MASTER?.VEH_ITEM?.id]) setitemOptions(typeData[PARAM_MASTER?.VEH_ITEM?.id]);
+            if (typeData[PARAM_MASTER?.VEH_MAKE?.id]) setmakeOptions(typeData[PARAM_MASTER?.VEH_MAKE?.id]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
@@ -310,6 +307,7 @@ const ProductDetailMasterMain = (props) => {
         modelData,
         modelFamilyData,
         variantData,
+        typeData,
     };
 
     const viewProps = {

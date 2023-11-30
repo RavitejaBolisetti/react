@@ -88,7 +88,7 @@ const baseAPICall = (params) => {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE, errorMessage: LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
                     } else if (error.code === 'ERR_NAME_NOT_RESOLVED') {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: LANGUAGE_EN.GENERAL.NETWORK_ERROR.MESSAGE });
                     } else {

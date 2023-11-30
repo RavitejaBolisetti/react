@@ -50,7 +50,7 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
-                {!(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
+                {!(formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('amcRegistration.label.vin')} name="vin">
@@ -74,24 +74,27 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.modelGroup')} name="modelGroup">
+                        <Form.Item label={translateContent('amcRegistration.label.modelGroup')} name="modelGroupDesc">
                             <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelGroup'))} />
                         </Form.Item>
+                        <Form.Item name="modelGroup" hidden />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.modelFamily')} name="modelFamily">
+                        <Form.Item label={translateContent('amcRegistration.label.modelFamily')} name="modelFamilyDesc">
                             <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelFamily'))} />
                         </Form.Item>
+                        <Form.Item name="modelFamily" hidden />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.modelDescription')} name="modelDescription">
+                        <Form.Item label={translateContent('amcRegistration.label.modelDescription')} name="productDescription">
                             <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelDescription'))} />
                         </Form.Item>
+                        <Form.Item name="modelDescription" hidden />
                     </Col>
                 </Row>
                 <VehicleListModal {...customerListProps} />
 
-                {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.saleType === AMC_CONSTANTS?.MNM_FOC?.key) && (
+                {!formActionType?.viewMode && !(formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) && (
                     <Row gutter={20} className={styles.marB20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
                             <Button onClick={onSaveFormData} type="primary">
