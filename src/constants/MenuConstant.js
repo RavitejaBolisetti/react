@@ -545,6 +545,30 @@ export const MenuConstant = {
         slug: 'vehicle-delivery-note-report',
     },
 
+    [getMenyKey('SRSR-09.02')]: {
+        key: 'SRSR-09.02',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SRSR-02.09',
+        slug: 'enrolment_transaction_report',
+    },
+
+    [getMenyKey('SRSR-03.01')]: {
+        key: 'SRSR-03.01',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SRSR-02.03',
+        slug: 'amc_report',
+    },
+
+    [getMenyKey('SACR-04.25')]: {
+        key: 'SACR-04.25',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'otf_so_not_mapped_report',
+    },
+
     [getMenyKey('SACR-05.16')]: {
         key: 'SACR-05.16',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
@@ -812,5 +836,12 @@ export const MenuConstant = {
         link: routing.ROUTING_SHIELD_SCHEME_REGISTER,
         icon: undefined,
         parentMenuId: 'SRST-1',
+    },
+    
+    [getMenyKey('SACT-06.10')]: {
+        key: 'SACT-06.10',
+        link: routing.CO_DEALER_INVOICE,
+        icon: undefined,
+        parentMenuId: 'OTD',
     },
 };
