@@ -579,8 +579,6 @@ export const RSARegistrationMasterBase = (props) => {
         delete data?.rsaRegistrationDetails?.registrationInformation?.employeeName;
         delete data?.rsaRegistrationDetails?.registrationInformation?.managerName;
         const onSuccess = (res) => {
-            console.log('🚀 ~ file: RSARegistrationMaster.js:580 ~ onSuccess ~ res:', res);
-
             form.resetFields();
             shieldDetailForm.resetFields();
             setBookingNumber();
@@ -657,10 +655,7 @@ export const RSARegistrationMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
     const handleCancelScheme = () => {
-        console.log('🚀 ~ file: RSARegistrationMaster.js:658 ~ handleCancelScheme ~ rsaDetails:', rsaDetails);
         const data = { ...rsaDetails, requestDetails: { ...rsaDetails?.requestDetails, rsaStatus: status, ...cancelSchemeForm.getFieldsValue() }, id: rsaDetails?.id, customerName: '', rsaRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, userId: userId };
 
         const onSuccess = (res) => {

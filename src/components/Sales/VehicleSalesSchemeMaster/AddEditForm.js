@@ -159,7 +159,6 @@ const AddEditFormMain = (props) => {
         let vehicleSchemeData = schemeData?.find((el) => el.schemeCode === value);
         addSchemeForm.setFieldsValue({ amountWithoutTax: vehicleSchemeData?.schemeAmount, amountWithTax: vehicleSchemeData?.schemeTaxAmount });
     };
-    console.log(saleService);
     const onFinishAddZoneDetails = (values) => {
         setOpenAccordian([2]);
 
@@ -299,9 +298,6 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
-
-    console.log(formData?.encash === "SL" ? true : false, ' checked')
-    console.log(formData, `formData`);
 
     return (
         <Form form={addSchemeForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">

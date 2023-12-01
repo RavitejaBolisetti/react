@@ -514,7 +514,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
                 setDisableAmountTaxField(!disabledAmountField);
         }
         setSchemeCategorySelect(value);
-        if(schemeCategorySelect){
+        if (schemeCategorySelect) {
             addSchemeForm.setFieldsValue({ schemeCategory: null });
         }
     };
@@ -584,8 +584,6 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         setIsViewDetailVisible(true);
     };
 
-    console.log(saleService);
-
     const handleZoneChange = (value) => {
         const extraParams = [
             {
@@ -595,7 +593,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         ];
         fetchAreaOfficeList({ setIsLoading: listAreaOfficeListShowLoading, userId, extraParams });
         setZone(value);
-        if(zone){
+        if (zone) {
             addZoneAreaForm.setFieldsValue({ area: null });
         }
     };
