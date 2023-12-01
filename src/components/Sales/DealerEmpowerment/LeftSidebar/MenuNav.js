@@ -8,11 +8,11 @@ import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'assets/sass/app.module.scss';
-import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
+import { CUSTOMER_EMPOWERMENT_SECTION } from 'constants/modules/CustomerEmpowerment/CustomerEmpowerment';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, previousSection } = props;
-    const vehicleSectionList = Object.values(DEALER_CORPORATE_SECTION);
+    const vehicleSectionList = Object.values(CUSTOMER_EMPOWERMENT_SECTION);
     const onHandle = (key) => {
         setCurrentSection(key);
     };

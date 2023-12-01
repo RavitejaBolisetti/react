@@ -46,6 +46,18 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label={'VDN ID' || translateContent('amcRegistration.label.customerCategory')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={'VDN Date' || translateContent('amcRegistration.label.customerCategory')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
                 </Descriptions>
+                <Divider/>
+                <Descriptions {...viewProps}>
+                <Descriptions.Item label={'Credit Note No.' || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'Credit Note Date.' || translateContent('amcRegistration.label.customerId')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'Credit Note Amount' || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
+                   
+                    <Descriptions.Item label={'Debit Note No.' || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'Debit Credit Note Date.' || translateContent('amcRegistration.label.customerId')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'Debit Note Amount' || translateContent('amcRegistration.label.customerName')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.state, isLoading)}</Descriptions.Item>
+                   
+                </Descriptions>
+
             </Card>
 
             <Card>

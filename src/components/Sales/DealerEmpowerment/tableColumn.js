@@ -13,12 +13,12 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
     const tableColumn = [
         tblPrepareColumns({
             title: 'Request ID',
-            dataIndex: 'employeeRequestId',
+            dataIndex: 'requestId',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Request Date',
-            dataIndex: 'r equestDate',
+            dataIndex: 'requestDate',
             width: '14%',
         }),
 
@@ -38,9 +38,14 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             dataIndex: 'status',
             width: '14%',
         }),
-       
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', ...actionButtonVisibility }),
+         tblPrepareColumns({
+            title: 'Claim Type',
+            dataIndex: 'claimType',
+            width: '14%',
+        }),
+
+        tblActionColumn({ handleButtonClick, styles, width: '8%' }),
     ];
 
     return tableColumn;

@@ -13,7 +13,7 @@ const LeftSidebar = (props) => {
 
     return (
         <>
-            <ClaimDetailCard {...props} />
+            {/* <ClaimDetailCard {...props} /> */}
             <MenuNav {...props} />
         </>
     );

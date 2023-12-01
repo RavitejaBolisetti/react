@@ -27,9 +27,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 import { drawerTitle } from 'utils/drawerTitle';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
-import { CLAIM_STATUS_BUTTONS } from 'constants/modules/DealerCorporateClaim/buttons';
-import { tableColumnPendingGeneration } from './tableColumnPendingGeneration';
+import { CUSTOMER_EMPOWERMENT_SECTION } from 'constants/modules/CustomerEmpowerment/CustomerEmpowerment';
 
 const mapStateToProps = (state) => {
     const {
@@ -230,9 +228,9 @@ export const DealerEmpowermentMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        const defaultSection = DEALER_CORPORATE_SECTION.CLAIM_DETAILS.id;
+        const defaultSection = CUSTOMER_EMPOWERMENT_SECTION.DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(DEALER_CORPORATE_SECTION);
+        setSetionName(CUSTOMER_EMPOWERMENT_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -403,7 +401,8 @@ export const DealerEmpowermentMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
+        title:'Dealer Empowerment',
+        // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
         data,
         otfSearchRules,
         setOtfSearchRules,

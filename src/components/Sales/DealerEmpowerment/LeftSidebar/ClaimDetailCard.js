@@ -35,13 +35,12 @@ const ClaimDetailCard = (props) => {
     const { ProfileData, isProductHierarchyLoading, record, isProfileDataLoading } = props;
     if (isProfileDataLoading || isProductHierarchyLoading) return <CardSkeleton />;
 
-
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        {'Claim Number'}
+                        {'Request ID'}
                         <span className={styles.detailCardText}>
                             {'N/A'}
                             <CopytoClipboard text={ProfileData?.checklistNumber} />
@@ -51,12 +50,12 @@ const ClaimDetailCard = (props) => {
                 key={1}
             >
                 <div className={styles.detailCardText}>
-                    Claim Type
+                    Dealer Name
                     <span>{record?.claimType}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {'Claim Date'}
+                    {'Dealer Branch'}
                     <span>{record?.claimDate}</span>
                 </div>
                 <Divider />
@@ -65,8 +64,9 @@ const ClaimDetailCard = (props) => {
                     <span>{record?.claimStatus}</span>
                 </div>
                 <Divider />
+
                 <div className={styles.detailCardText}>
-                    {'IRN Status'}
+                    {'Claim Type'}
                     <span>{record?.irnStatus}</span>
                 </div>
                 <Divider />

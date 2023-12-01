@@ -14,6 +14,7 @@ import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim
 import { ClaimDetailsMaster } from './ClaimDetails';
 import { ClaimApprovalRequestMaster } from './ClaimApprovalRequest/ClaimApprovalRequestMaster';
 import { SupportingDocumentMaster } from './SupportingDocument';
+import { CUSTOMER_EMPOWERMENT_SECTION } from 'constants/modules/CustomerEmpowerment/CustomerEmpowerment';
 
 const DealerCorporateClaimMasterMainContainerMain = (props) => {
     const { currentSection } = props;
@@ -23,13 +24,13 @@ const DealerCorporateClaimMasterMainContainerMain = (props) => {
 
     const renderElement = () => {
         switch (currentSection) {
-            case DEALER_CORPORATE_SECTION.CLAIM_DETAILS.id: {
+            case CUSTOMER_EMPOWERMENT_SECTION.DETAILS.id: {
                 return <ClaimDetailsMaster {...myProps} />;
             }
-            case DEALER_CORPORATE_SECTION.DOCUMENTS.id: {
+            case CUSTOMER_EMPOWERMENT_SECTION.DOCUMENTS.id: {
                 return <SupportingDocumentMaster {...myProps} />;
             }
-            case DEALER_CORPORATE_SECTION.APPROVAL_REQUEST.id: {
+            case CUSTOMER_EMPOWERMENT_SECTION.APPROVAL_REQUEST.id: {
                 return <ClaimApprovalRequestMaster {...myProps} />;
             }
             default: {
