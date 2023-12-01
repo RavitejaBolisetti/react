@@ -516,7 +516,7 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('chargerInstallationProcess.heading.titleOverride'),
 
         onCloseAction: onAdvanceSearchCloseAction,

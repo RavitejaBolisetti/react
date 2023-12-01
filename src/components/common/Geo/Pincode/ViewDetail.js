@@ -27,7 +27,9 @@ export const ViewDetail = ({ formData, styles }) => {
                     <Descriptions.Item label={translateContent('pincode.label.state')}>{formData?.stateName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.country')}>{formData?.countryName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.withIn50KmFromGpo')}>{formData?.withIn50KmFromGpo ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('global.label.status')}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>
+                    <span className={formData?.status ? styles.activeText : styles?.inactiveText}> {formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')} </span>
+                    </Descriptions.Item>
                     <Descriptions.Item label={translateContent('pincode.label.approvalStatus')}>{formData?.approvalStatus ? 'Approved' : 'Not Approved'}</Descriptions.Item>
                 </Descriptions>
             </div>

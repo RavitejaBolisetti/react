@@ -26,7 +26,11 @@ export const ViewManufacturerOrgtDetailMain = ({ viewTitle, selectedTreeData, st
                     <Descriptions.Item label={translateContent('manufacturerOrganisation.label.code')}>{selectedTreeData?.manufactureOrgCode}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('manufacturerOrganisation.label.shortDescription')}>{selectedTreeData?.manufactureOrgShrtName}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('manufacturerOrganisation.label.longDescription')}>{selectedTreeData?.manufactureOrgLongName}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('global.label.status')}>{selectedTreeData?.active === true ? translateContent('global.label.active') : translateContent('global.label.inActive')}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>
+                    <span className={selectedTreeData?.active ? styles.activeText : styles?.inactiveText}>
+                        {selectedTreeData?.active === true ? translateContent('global.label.active') : translateContent('global.label.inActive')}
+                    </span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>
