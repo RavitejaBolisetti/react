@@ -182,7 +182,6 @@ export const RSARegistrationMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [cancelSchemeVisible, setCancelSchemeVisible] = useState(false);
-    const [searchValue, setSearchValue] = useState();
     const [vinNumber, setVinNumber] = useState();
     const [saleType, setSaleType] = useState();
     const [bookingNumber, setBookingNumber] = useState();
