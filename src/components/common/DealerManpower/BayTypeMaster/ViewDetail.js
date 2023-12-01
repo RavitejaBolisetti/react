@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const ViewDetailBase = ({ formData, styles }) => {
     const viewOneColProps = {
@@ -19,7 +20,9 @@ const ViewDetailBase = ({ formData, styles }) => {
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Bay Type Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="Bay Type Name">{formData?.name}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label="Status">
+                        <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>
