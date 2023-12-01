@@ -12,6 +12,7 @@ import { preparePlaceholderSearch, preparePlaceholderSelect, preparePlaceholderT
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
@@ -356,6 +357,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item
                                             label={translateContent('partyMaster.label.pan')}
+                                            onInput={convertToUpperCase}
                                             initialValue={formData?.panNumber}
                                             rules={[
                                                 // validateRequiredInputField('PAN'),
