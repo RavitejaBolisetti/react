@@ -253,7 +253,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
@@ -267,20 +267,20 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, invoiceStatus, filterString, page]);
+    }, [searchValue, invoiceStatus, filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -288,7 +288,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, invoiceStatus, filterString, page]);
+    }, [userId, invoiceStatus, filterString]);
 
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
@@ -615,7 +615,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
     const handleResetFilter = () => {
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({ pageSize: 10, current: 1 });
         advanceFilterForm.resetFields();
     };
 
@@ -870,7 +870,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setFormActionType,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
