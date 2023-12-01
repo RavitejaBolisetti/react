@@ -41,8 +41,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(`headerData`, headerData);
-
     let returnValue = {
         userId,
         moduleTitle: translateContent('accountCategory.heading.pageTitle'),
