@@ -442,13 +442,8 @@ export const RSARegistrationMasterBase = (props) => {
         setRSAStatus(key);
     };
 
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
-    };
-
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
-        setSearchValue(value);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -849,7 +844,6 @@ export const RSARegistrationMasterBase = (props) => {
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleChange,
         handleSearch,
         handleInvoiceTypeChange,
         formActionType,
