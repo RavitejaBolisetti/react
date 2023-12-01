@@ -98,6 +98,8 @@ import { UnAuthozisedAccess } from 'components/UnAuthozisedAccess';
 import { withSpinner } from 'components/withSpinner';
 import CorporateSchemeRegistrationMasterPage from 'pages/Sales/CorporateSchemeRegistration';
 import DealerEmpowermentMasterPage from 'pages/Sales/DealerEmpowerment';
+import CorporateAdditionalDiscountRegistrationMasterPage from 'pages/Sales/CorporateAdditionalDiscountRegistration';
+// import CorporateAdditionalDiscountRegistrationMasterPage from 'pages/Sales/CorporateAdditionalDiscountRegistration';
 
 const mapStateToProps = (state) => {
     const {
@@ -274,6 +276,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_SCHEME_REGISTRATION} element={<CorporateSchemeRegistrationMasterPage />} exact />
+                <Route path={routing.ROUTING_CORPORATE_ADDITIONALDISCOUNT_REGISTRATION} element={<CorporateAdditionalDiscountRegistrationMasterPage />} exact />
 
                 <Route path={routing.ROUTING_DEALER_EMPOWERMENT_REQUEST} element={<DealerEmpowermentMasterPage />} exact />
                 <Route path={routing.ROUTING_CUSTOMER_EMPOWERMENT_REQUEST} element={<EmployeeEmpowermentMasterPage />} exact />
