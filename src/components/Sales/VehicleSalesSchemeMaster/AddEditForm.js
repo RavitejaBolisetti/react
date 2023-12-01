@@ -30,9 +30,7 @@ import { zoneAreaTableColumn } from './zoneAreaTableColumn';
 import { ZoneAreaModal } from './ZoneAreaModal';
 import { translateContent } from 'utils/translateContent';
 import { FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-import { ENCASH_CONSTANTS } from './constants/encashContants';
 import { DELETE_ACTION } from 'utils/btnVisiblity';
-import { salesConsultantLov } from 'store/reducers/data/otf/salesConsultant';
 
 const { Panel } = Collapse;
 
