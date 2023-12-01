@@ -493,7 +493,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const handleDealerParentChange = (value) => {
         if (userId) {
-            fetchDealerLocations({ customURL: customURL + '?parentGroupCode=' + value, setIsLoading: listShowLoading, userId });
+            fetchDealerLocations({ customURL: customURL + '?dealerParentCode=' + value, setIsLoading: listShowLoading, userId });
         }
     };
 
