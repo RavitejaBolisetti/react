@@ -7,8 +7,9 @@ import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/table
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { USER_TYPE } from 'constants/userType';
 
-export const tableColumn = (handleButtonClick) => {
+export const tableColumn = (handleButtonClick, userType) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -18,14 +19,14 @@ export const tableColumn = (handleButtonClick) => {
         }),
 
         tblPrepareColumns({
-            title:  translateContent('accountCategory.label.description'),
+            title: translateContent('accountCategory.label.description'),
             dataIndex: 'accountCategoryDescription',
             width: '20%',
         }),
 
         tblStatusColumn({ styles, width: '10%' }),
 
-        tblActionColumn({ handleButtonClick, styles })
+        tblActionColumn({ handleButtonClick, styles, canEdit: userType === USER_TYPE?.ADMIN?.key ? false : true })
     );
 
     return tableColumn;
