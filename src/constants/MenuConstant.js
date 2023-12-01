@@ -837,4 +837,11 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SRST-1',
     },
+    
+    [getMenyKey('SACT-06.10')]: {
+        key: 'SACT-06.10',
+        link: routing.CO_DEALER_INVOICE,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
 };
