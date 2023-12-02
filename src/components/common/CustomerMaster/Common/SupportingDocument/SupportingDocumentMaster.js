@@ -126,7 +126,6 @@ const SupportingDocumentBase = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        // setMandatoryFields(true);
     };
     const handleClearChange = () => {
         if (!form.getFieldValue('documentTypeId') && !form.getFieldValue('documentName')) {
@@ -288,7 +287,7 @@ const SupportingDocumentBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} buttonData={{ ...buttonData, nextBtn: false, formBtnActive: formActionType?.addMode}} />
+                    <CustomerFormButton {...myProps} buttonData={{ ...buttonData, nextBtn: false, formBtnActive: true }} />
                 </Col>
             </Row>
         </Form>
