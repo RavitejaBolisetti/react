@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MobileOtpVerificationBase = (props) => {
-    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, userId, mobNoVerificationData, sendOTP, validateOTP, showGlobalNotification, formData, selectedCustomer, form, defaultExtraParam, numbValidatedSuccess, setNumbValidatedSuccess, resetMobileNumber } = props;
+    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, userId, mobNoVerificationData, sendOTP, validateOTP, showGlobalNotification, formData, selectedCustomer, form, defaultExtraParam, numbValidatedSuccess, setNumbValidatedSuccess } = props;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inValidOTP, setInValidOTP] = useState(false);

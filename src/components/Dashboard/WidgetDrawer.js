@@ -59,9 +59,7 @@ const WidgetDrawerMain = (props) => {
     };
     const handleCollapse = () => {};
     const handleFormFieldChange = () => {};
-    const onFinishFailed = (error) => {
-        // console.log(error);
-    };
+    const onFinishFailed = (error) => {};
 
     return (
         <>

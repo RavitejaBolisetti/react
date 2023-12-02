@@ -154,7 +154,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RSARegistrationMasterBase = (props) => {
-    const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
+    const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
     const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
@@ -182,7 +182,6 @@ export const RSARegistrationMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [cancelSchemeVisible, setCancelSchemeVisible] = useState(false);
-    const [searchValue, setSearchValue] = useState();
     const [vinNumber, setVinNumber] = useState();
     const [saleType, setSaleType] = useState();
     const [bookingNumber, setBookingNumber] = useState();
@@ -442,13 +441,8 @@ export const RSARegistrationMasterBase = (props) => {
         setRSAStatus(key);
     };
 
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
-    };
-
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
-        setSearchValue(value);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -655,8 +649,6 @@ export const RSARegistrationMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
     const handleCancelScheme = () => {
         const data = { ...rsaDetails, requestDetails: { ...rsaDetails?.requestDetails, rsaStatus: status, ...cancelSchemeForm.getFieldsValue() }, id: rsaDetails?.id, customerName: '', rsaRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, userId: userId };
 
@@ -847,12 +839,10 @@ export const RSARegistrationMasterBase = (props) => {
         otfFilter: true,
         filterString,
         setFilterString,
-        rsaStatus,
         setRSAStatus,
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleChange,
         handleSearch,
         handleInvoiceTypeChange,
         formActionType,
@@ -926,7 +916,6 @@ export const RSARegistrationMasterBase = (props) => {
         requestPayload,
         setRequestPayload,
         handleCancelRequest,
-        vehicleCustomerForm,
         buttonData,
         setButtonData,
         handleButtonClick,

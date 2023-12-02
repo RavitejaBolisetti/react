@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ForgotPasswordBase = (props) => {
-    const { userId, verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading } = props;
+    const { verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading } = props;
 
     const [form] = Form.useForm();
     const navigate = useNavigate();
