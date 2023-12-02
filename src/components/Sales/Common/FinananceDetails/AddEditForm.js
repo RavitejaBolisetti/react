@@ -71,7 +71,7 @@ const AddEditFormMain = (props) => {
                                     <>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label={translateContent('commonModules.label.financeDetails.financeArrangedBy')} name="financier" placeholder={preparePlaceholderSelect(translateContent('commonModules.label.financeDetails.financeArrangedBy'))}>
+                                                <Form.Item label={translateContent('commonModules.label.financeDetails.financierName')} name="financier" placeholder={preparePlaceholderSelect(translateContent('commonModules.label.financeDetails.financierName'))}>
                                                     {customSelectBox({ data: FinanceLovData, onChange: handleDOChange })}
                                                 </Form.Item>
                                             </Col>

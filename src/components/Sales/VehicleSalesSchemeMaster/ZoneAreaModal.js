@@ -26,7 +26,6 @@ export const ZoneAreaModalForm = (props) => {
                                 <Option value={item?.zoneCode}>{item?.zoneDescription}</Option>
                             ))}
                         </Select>
-                        {/* {customSelectBox({ data: zoneMasterData, placeholder: preparePlaceholderSelect(translateContent('orderDeliveryVehicleAllotment.label.vehicleStatus')) })} */}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -36,7 +35,6 @@ export const ZoneAreaModalForm = (props) => {
                                 <Option value={item?.areaCode}>{item?.areaDescription}</Option>
                             ))}
                         </Select>
-                        {/* {customSelectBox({ placeholder: preparePlaceholderSelect(translateContent('orderDeliveryVehicleAllotment.label.vehicleStatus')) })} */}
                     </Form.Item>
                 </Col>
             </Row>
