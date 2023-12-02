@@ -4162,7 +4162,8 @@
                 "soNo": "So No",
                 "soDate": "So Date",
                 "soStatus": "So Status",
-                "sapStatus": "SAP Response Status"
+                "sapStatus": "SAP Response Status",
+                "sapRemarks": "SAP Response Remarks"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",
