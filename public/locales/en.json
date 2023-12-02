@@ -3324,7 +3324,8 @@
             "bookingNumber": "Booking Number:",
             "cancelledDate": "Cancelled Date",
             "cancelledBy": "Cancelled By",
-            "remarksForCancellation": "Remarks for Cancellation"
+            "remarksForCancellation": "Remarks for Cancellation",
+            "notGenerated": "NOT GENERATED"
         },
         "placeholder": {
             "select": "Select"

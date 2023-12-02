@@ -27,7 +27,7 @@ export const getSelectedMenuAttribute = ({ id, formActionType, currentSection })
                     break;
                 }
                 case id < currentSection: {
-                    activeClassName = styles.inActive;
+                    activeClassName = styles.successInActive;
                     menuNavIcon = <FaCheckCircle />;
                     break;
                 }
@@ -46,7 +46,7 @@ export const getSelectedMenuAttribute = ({ id, formActionType, currentSection })
                 }
 
                 default: {
-                    activeClassName = styles.inActive;
+                    activeClassName = styles.successInActive;
                     menuNavIcon = <FaCheckCircle />;
                     break;
                 }
