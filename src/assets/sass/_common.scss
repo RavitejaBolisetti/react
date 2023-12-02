@@ -621,24 +621,6 @@
         }
     }
 
-    .viewContainer {
-        border: none;
-
-        & :global {
-            .ant-descriptions {
-                .ant-descriptions-view {
-                    overflow-y: auto;
-                    height: auto;
-                    padding: 0;
-                }
-            }
-        }
-    }
-
-    &::-webkit-scrollbar-track {
-        background-color: $primaryWhite;
-    }
-
     & :global {
         .ant-table-wrapper {
             .ant-table-fixed-header {
@@ -664,21 +646,6 @@
                     }
                 }
             }
-        }
-    }
-
-    &::-webkit-scrollbar {
-        width: 8px;
-        background-color: $primaryWhite;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: $neutralGrey2;
-        border-radius: 10px;
-        border: 2px solid $primaryWhite;
-
-        &:hover {
-            border: 2px solid $neutralGrey2;
         }
     }
 }
@@ -1298,9 +1265,6 @@
             }
         }
     }
-}
-
-:global {
     .ant-table-wrapper {
         .ant-table {
             .ant-table-content {
@@ -1327,6 +1291,8 @@
         }
     }
 }
+
+
 
 /*--------------sub title Section Strat--------------*/
 .subTitle {
@@ -3041,6 +3007,30 @@
                 @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
             }
         }
+        & :global {
+            .ant-btn-icon {
+                margin-inline-end: 6px;
+                margin-left: -6px;
+
+                svg {
+                    margin-left: -24px;
+                    visibility: hidden;
+                }
+            }
+
+            .ant-btn-icon.ant-btn-loading-icon {
+                margin-inline-end: 6px;
+
+                .anticon {
+                    margin-left: -16px;
+
+                    svg {
+                        margin-left: 0;
+                        visibility: visible;
+                    }
+                }
+            }
+        }
     }
 
     .fielderror {
@@ -3239,32 +3229,7 @@
         }
     }
 
-    .button {
-        & :global {
-            .ant-btn-icon {
-                margin-inline-end: 6px;
-                margin-left: -6px;
-
-                svg {
-                    margin-left: -24px;
-                    visibility: hidden;
-                }
-            }
-
-            .ant-btn-icon.ant-btn-loading-icon {
-                margin-inline-end: 6px;
-
-                .anticon {
-                    margin-left: -16px;
-
-                    svg {
-                        margin-left: 0;
-                        visibility: visible;
-                    }
-                }
-            }
-        }
-    }
+    
 }
 
 .verifyUser {
