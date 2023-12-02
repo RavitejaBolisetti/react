@@ -260,7 +260,6 @@ export const CriticalityGroupMain = (props) => {
         advanceFilter: false,
         filterString,
         from: listFilterForm,
-
         onSearchHandle,
         handleClearInSearch,
         handleReferesh,

@@ -252,7 +252,7 @@ const AddEditFormMain = (props) => {
                                         </Collapse>
                                     );
                                 })}
-                                {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
+                                {!formData?.connectedVehicle?.length && <NoDataFound information={noDataTitle} />}
                             </Form>
                         </Panel>                     
                     </Collapse> */}

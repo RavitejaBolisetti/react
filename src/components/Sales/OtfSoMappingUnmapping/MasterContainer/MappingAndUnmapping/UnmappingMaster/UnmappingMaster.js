@@ -20,7 +20,8 @@ import { LANGUAGE_EN } from 'language/en';
 import { ListDataTable } from 'utils/ListDataTable';
 import { translateContent } from 'utils/translateContent';
 
-import { Form } from 'antd';
+import { Form, Row, Col } from 'antd';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -155,11 +156,16 @@ const MappingMasterMain = (props) => {
         setButtonData,
         saveButtonName: BUTTON_NAME?.UNMAP?.name,
         formData,
+        multipleForm: false,
     };
 
     return (
         <>
-            <ListDataTable {...tableProps} />
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ListDataTable {...tableProps} />
+                </Col>
+            </Row>
             <AddEditForm {...formProps} />
         </>
     );

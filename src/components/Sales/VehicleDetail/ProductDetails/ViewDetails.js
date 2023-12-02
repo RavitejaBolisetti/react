@@ -82,7 +82,7 @@ const ViewDetailMain = (props) => {
                                 </Collapse>
                             );
                         })}
-                        {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
+                        {!formData?.connectedVehicle?.length && <NoDataFound information={noDataTitle} />}
                     </div>
                 </Panel>
             </Collapse> */}

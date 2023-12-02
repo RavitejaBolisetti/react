@@ -4097,10 +4097,13 @@
             "resonCategoryCode": "Reason Category",
             "reasonDescriptionCode": "Reason Description",
 
+            "otfNumber": "Booking Number",
+
             "customerId": "Customer ID",
             "mobileNumber": "Mobile No.",
             "modelGroup": "Model Group",
-            "modelVariant": "Model Variant"
+            "modelVariant": "Model Variant",
+            "noInfoMessage": "Please Select from dropdown options to see details"
         },
         "placeholder": {
             "search": "Search Booking Number"

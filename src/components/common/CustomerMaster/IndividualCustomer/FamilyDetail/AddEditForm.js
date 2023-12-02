@@ -184,7 +184,7 @@ const AddEditFormMain = (props) => {
                             </Collapse>
                         ))
                     ) : !showForm && !editedMode ? (
-                        <NoDataFound informtion={VIEW_ACTION ? noDataTitle : addDataTitle} />
+                        <NoDataFound information={VIEW_ACTION ? noDataTitle : addDataTitle} />
                     ) : null}
                 </Card>
             ) : (

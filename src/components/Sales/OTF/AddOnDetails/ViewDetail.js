@@ -60,7 +60,7 @@ const ViewDetailMain = (props) => {
                                             </Collapse>
                                         );
                                     })}
-                                {!formData?.partDetailsResponses?.length && <NoDataFound informtion={translateContent('bookingManagement.validation.noAccessoriesDataFound')} />}
+                                {!formData?.partDetailsResponses?.length && <NoDataFound information={translateContent('bookingManagement.validation.noAccessoriesDataFound')} />}
                             </div>
                         </Panel>
                     </Collapse>

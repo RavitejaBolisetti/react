@@ -152,7 +152,7 @@ const ApplicationTreeMain = (props) => {
                             );
                         })
                     ) : (
-                        <NoDataFound informtion={noDataTitle} />
+                        <NoDataFound information={noDataTitle} />
                     )}
                 </div>
             </div>
