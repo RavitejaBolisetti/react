@@ -83,7 +83,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const { fetchChallanList, listChallanShowLoading } = props;
 
-    const { buttonData, setButtonData, codeSetName } = props;
+    const { buttonData, setButtonData, codeSetName,handleLocalFormChange } = props;
 
     const [formData, setFormData] = useState({});
 
@@ -229,7 +229,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange}  onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

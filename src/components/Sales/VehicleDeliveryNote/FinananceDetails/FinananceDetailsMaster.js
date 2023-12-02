@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { userId, financeData, setFormActionType, isFinanceLovLoading, FinanceLovData, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { userId, financeData, setFormActionType, isFinanceLovLoading, FinanceLovData, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading,handleLocalFormChange } = props;
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
     const { buttonData, setButtonData } = props;
@@ -141,7 +141,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleLocalFormChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
