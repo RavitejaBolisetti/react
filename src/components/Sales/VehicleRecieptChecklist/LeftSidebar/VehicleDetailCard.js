@@ -43,7 +43,7 @@ const VehicleDetailCard = (props) => {
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
                         {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistNumber')}
-                        <span className={styles.activeForm}>
+                        <span>
                             {ProfileData?.checklistNumber || 'New'}
                             <CopytoClipboard buttonText={null} text={ProfileData?.checklistNumber} />
                         </span>
@@ -87,7 +87,7 @@ const VehicleDetailCard = (props) => {
 
                     <span>
                         {record?.modelName ? record?.modelName : 'NA'}
-                        {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                        {addToolTip(tooltTipText, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                     </span>
                 </div>
             </Panel>

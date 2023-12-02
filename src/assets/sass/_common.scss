@@ -15,7 +15,7 @@
     padding: 8px;
     color: #ffffff;
     font-size: 14px;
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
 }
 
 .fullyCentered {
@@ -308,6 +308,8 @@
     & :global {
         .ant-tooltip-content {
             .ant-tooltip-inner {
+                color: $primaryBlack;
+                background: $primaryWhite !important;
                 p {
                     padding-left: 12px !important;
                 }
@@ -1328,6 +1330,8 @@
     }
 }
 
+
+
 /*--------------sub title Section Strat--------------*/
 .subTitle {
     margin-bottom: 20px;
@@ -1434,11 +1438,11 @@
 
     .advanceFilterItem {
         height: 30px;
-        border-radius: 20px;
+        border-radius: 2px;
         margin-top: 6px;
-        padding: 4px 10px;
-        border: solid 1px $primaryRed;
-        color: $primaryRed;
+        padding: 4px 8px;
+        border: solid 1px $neutralGrey2;
+        color: $neutralGrey4;
         line-height: 18px;
         margin-right: 12px;
 
@@ -1938,10 +1942,10 @@
         font-size: 12px;
         line-height: 20px;
         font-weight: 500;
-        // color: $neutralGrey4;
+        color: $neutralGrey4;
 
         span {
-            // color: $primaryBlack;
+            color: $primaryBlack;
             max-width: 9.5vw;
             word-wrap: break-word;
         }
@@ -3065,6 +3069,30 @@
                 border: 1px solid $neutralGrey2-dark !important;
                 opacity: 1;
                 @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
+            }
+        }
+        & :global {
+            .ant-btn-icon {
+                margin-inline-end: 6px;
+                margin-left: -6px;
+
+                svg {
+                    margin-left: -24px;
+                    visibility: hidden;
+                }
+            }
+
+            .ant-btn-icon.ant-btn-loading-icon {
+                margin-inline-end: 6px;
+
+                .anticon {
+                    margin-left: -16px;
+
+                    svg {
+                        margin-left: 0;
+                        visibility: visible;
+                    }
+                }
             }
         }
     }

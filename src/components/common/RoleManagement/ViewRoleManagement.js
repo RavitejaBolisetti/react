@@ -33,7 +33,9 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreeP
 
                     <Descriptions {...viewOneColProps}>
                         <Descriptions.Item label={translateContent('roleManagement.label.roleDescription')}>{formData?.roleDescription}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('global.label.status')}>{translateContent(formData?.status ? "global.label.active" : "global.label.inActive")}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('global.label.status')}>
+                        <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{translateContent(formData?.status ? "global.label.active" : "global.label.inActive" )}</span>
+                            </Descriptions.Item>
                     </Descriptions>
                 </div>
                 <div className={styles.subTitleSec}>{translateContent('roleManagement.label.roleDescription')}</div>
