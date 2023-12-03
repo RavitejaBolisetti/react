@@ -26,7 +26,7 @@ export default function EvrDetailsCapturingFilter(props) {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                     <Form autoComplete="off" form={searchForm} colon={false} className={styles.masterListSearchForm}>
-                        <Form.Item rules={validationRules} name="normalSearch">
+                        <Form.Item  name="normalSearch">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
                                     <QueryButtons currentItem={chargingStatusType} items={evrStatusList} onClick={handleChargingTypeChange} />

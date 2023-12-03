@@ -90,7 +90,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [modelCodeName, setModelCodeName] = useState();
     const [modelGroupProductData, setModelGroupProductData] = useState([]);
-    const [validationRules, setValidationRules] = useState([]);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -314,11 +313,9 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const handleSearch = (value) => {
         if (!value) {
-            setValidationRules([validateRequiredInputField(translateContent('global.label.input'))]);
             searchForm.validateFields();
             return false;
         }
-        setValidationRules([]);
         setFilterString({ ...filterString, modelDescription: value, advanceFilter: true, current: 1 });
         searchForm.resetFields();
     };
@@ -472,7 +469,6 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         searchForm,
         evrStatusList,
         handleClear,
-        validationRules,
     };
 
     const advanceFilterProps = {
