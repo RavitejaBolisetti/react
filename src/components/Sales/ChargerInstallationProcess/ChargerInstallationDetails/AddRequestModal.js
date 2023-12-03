@@ -44,7 +44,8 @@ export const AddRequestModalForm = (props) => {
                                 typeData?.CHRGR_INST_STG_TYPE?.flatMap((item) => {
                                     if (item?.key === chargerStatus) {
                                         return item;
-                                    }
+                                    } 
+                                    return undefined;
                                 }),
                             disableOptionsKey: 'key',
                         })}

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, DatePicker, Space, Card, Select } from 'antd';
+import { Col, Input, Form, Row, DatePicker, Space, Card } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -58,7 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
 const AddEditFormMain = (props) => {
     const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
     const { formData, form } = props;
-    const { Option } = Select;
 
     const onErrorAction = () => {};
 

@@ -81,7 +81,7 @@ export const VinBlockMasterBase = (props) => {
     const page = { current: 1, pageSize: 10 };
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const formActionType = defaultFormActionType;
     const [vinInfo, setvinInfo] = useState();
     const [isLoading, showLoading] = useState(true);
 
@@ -95,7 +95,6 @@ export const VinBlockMasterBase = (props) => {
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -173,7 +172,7 @@ export const VinBlockMasterBase = (props) => {
                 userId,
                 extraParams,
                 onErrorAction,
-                onSuccessAction: setShowDataLoading(false),
+                onSuccessAction,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -211,9 +210,7 @@ export const VinBlockMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-    const setPage = (page) => {
-        setFilterString({ ...filterString, ...page });
-    };
+
     const tableProps = {
         dynamicPagination,
         filterString,

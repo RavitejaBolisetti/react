@@ -78,12 +78,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const InvoiceDetailsMasterBase = (props) => {
     const { userId, vinData, listvinNumberShowLoading, listEngineNumberShowLoading, fetchvinNumber, selectedOrder, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
-
     const { typeData, form, selectedOrderId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, engineNumberData, chassisNoValue } = props;
-
     const { fetchChallanList, listChallanShowLoading } = props;
-
-    const { buttonData, setButtonData, codeSetName,handleLocalFormChange } = props;
+    const { buttonData, setButtonData, codeSetName } = props;
 
     const [formData, setFormData] = useState({});
 
@@ -229,7 +226,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange}  onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

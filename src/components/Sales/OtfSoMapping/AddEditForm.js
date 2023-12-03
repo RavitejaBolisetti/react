@@ -7,7 +7,6 @@ import React from 'react';
 import { Col, Input, Form, Row, Button } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
