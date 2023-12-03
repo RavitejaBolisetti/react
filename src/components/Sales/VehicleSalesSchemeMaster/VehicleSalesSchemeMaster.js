@@ -57,6 +57,9 @@ const mapStateToProps = (state) => {
             VehicleSalesSchemeMaster: { isLoaded: isVehicleSalesSchemeDataLoaded = false, isLoading: isVehicleSalesSchemeLoading = false, data, detailData: vehicleSalesSchemeDetails = [] },
             VehicleSalesSchemeMasterUpload: { isLoaded: isVehicleSalesSchemeUploadDataLoaded = false, isLoading: isVehicleSalesSchemeUploadDataLoading = false, data: vehicleSalesSchemeUploadData = [] },
         },
+        common: {
+            Header: { dealerLocationId },
+        },
     } = state;
     const moduleTitle = translateContent('vehicleSalesSchemeMaster.heading.moduleTitle');
     let returnValue = {
@@ -98,6 +101,7 @@ const mapStateToProps = (state) => {
         isAreaOfficeDataLoaded,
         isAreaOfficeLoading,
         areaOfficeData,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -152,7 +156,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleSalesSchemeMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, listShowLoading, showGlobalNotification, fetchDetail, amcSchemeCategoryData, shieldSchemeCategoryData } = props;
+    const { dealerLocationId, data, saveData, fetchList, userId, listShowLoading, showGlobalNotification, fetchDetail, amcSchemeCategoryData, shieldSchemeCategoryData } = props;
     const { isVehicleSalesSchemeDataLoaded, vehicleSalesSchemeData, schemeTypeData, encashTypeData, offerTypeData, rsaSchemeCategoryData } = props;
     const { typeData, resetViewData, fetchViewDocument, viewDocument, viewListShowLoading, isViewDataLoaded, isVehicleSalesSchemeUploadDataLoaded, isVehicleSalesSchemeUploadDataLoading, vehicleSalesSchemeUploadData, downloadFile, resetUploadSalesSchemeData, totalRecords, downloadShowLoading, manufacturerOrgHierarchyData, fetchAmcSchemeCategoryLovList, listAmcSchemeCategoryLovListShowLoading } = props;
     const { accessToken, resetDetailData, token, vehicleSalesSchemeDetails, fetchDocumentFileDocId, saveVehicleSalesSchemeData, vehicleSalesSchemelistShowLoading, manufacturerOrgFetchList, manufacturerOrgListShowLoading, fetchModelList, productHierarchyDataList, fetchRsaSchemeCategoryLovList, fetchShieldSchemeCategoryLovList, listRsaSchemeCategoryLovListShowLoading, listShieldSchemeCategoryLovListShowLoading, fetchZoneMasterList, listZoneMasterShowLoading, fetchAreaOfficeList, listAreaOfficeListShowLoading, zoneMasterData, areaOfficeData } = props;
@@ -254,7 +258,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     }, [isVehicleSalesSchemeDataLoaded, vehicleSalesSchemeDetails]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && dealerLocationId) {
             setFilterString({ ...filterString, pageSize: 10, current: 1 });
             manufacturerOrgFetchList({ setIsLoading: manufacturerOrgListShowLoading, userId, errorAction: onErrorAction });
             fetchZoneMasterList({ setIsLoading: listZoneMasterShowLoading, userId });
@@ -268,7 +272,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             fetchModelList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, dealerLocationId]);
 
     useEffect(() => {
         if (schemeCategoryList?.amc) {

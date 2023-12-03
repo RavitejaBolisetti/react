@@ -45,6 +45,9 @@ const mapStateToProps = (state) => {
                 vehicleAllotment: { isLoading: isVehicleDataLoading, isDetailLoading = false, detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString },
             },
         },
+        common: {
+            Header: { dealerLocationId },
+        },
     } = state;
 
     const moduleTitle = 'Vehicle Allotment';
@@ -65,6 +68,7 @@ const mapStateToProps = (state) => {
         isVehicleDataLoading,
         productHierarchyDataList: productHierarchyData,
         isDetailLoading,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -94,7 +98,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const { saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, totalOTFRecords, resetData } = props;
     const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, isVehicleDataLoading, resetOTFSearchedList, fetchModelList, productHierarchyDataList } = props;
     const { typeData, showGlobalNotification, resetDetail, isDetailLoading } = props;
-    const { filterString, setFilterString, otfStatusList, isOTFSearchLoading, listDetailShowLoading } = props;
+    const { dealerLocationId, filterString, setFilterString, otfStatusList, isOTFSearchLoading, listDetailShowLoading } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
@@ -159,7 +163,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId) {
+        if (userId && dealerLocationId) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -169,7 +173,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             fetchModelList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, dealerLocationId]);
 
     useEffect(() => {
         if (allotmentSummaryDetails) {
@@ -517,7 +521,9 @@ export const VehicleAllotmentMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent(toggleButton === VEHICLE_TYPE.ALLOTED.key ? 'orderDeliveryVehicleAllotment.heading.allotmentDetails' : 'orderDeliveryVehicleAllotment.heading.unAllotmentDetails')),
+        titleOverride: drawerTitle(formActionType)
+            .concat(' ')
+            .concat(translateContent(toggleButton === VEHICLE_TYPE.ALLOTED.key ? 'orderDeliveryVehicleAllotment.heading.allotmentDetails' : 'orderDeliveryVehicleAllotment.heading.unAllotmentDetails')),
         tableData: data,
         totalOTFRecords,
         buttonData,

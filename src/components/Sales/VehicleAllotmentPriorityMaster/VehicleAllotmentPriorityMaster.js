@@ -47,6 +47,9 @@ const mapStateToProps = (state) => {
                 DesignationMaster: { data },
             },
         },
+        common: {
+            Header: { dealerLocationId },
+        },
     } = state;
 
     const moduleTitle = translateContent('vehicleAllotmentPriorityMaster.heading.moduleTitle');
@@ -61,6 +64,7 @@ const mapStateToProps = (state) => {
         filterString,
         roleData,
         data,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -98,7 +102,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleAllotmentPriorityMasterMain = (props) => {
-    const { moduleTitle, userId, showGlobalNotification, typeData, taxChargeCategoryTypeData, totalRecords } = props;
+    const { dealerLocationId, moduleTitle, userId, showGlobalNotification, typeData, taxChargeCategoryTypeData, totalRecords } = props;
     const { fetchProductList, productHierarchyList, listShowLoading, listShowAllotLoading, saveDataAllot } = props;
     const { resetDataList, vehicleAllotData, fetchVehicleAllotList, fetchVehicleList, viewVehicleAllotData } = props;
     const { data, fetchList, roleData, fetchRoleLovList } = props;
@@ -155,11 +159,11 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && dealerLocationId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, dealerLocationId]);
 
     const matchDesignationList = [];
 
@@ -407,7 +411,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setFilterString,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
 
         ADD_ACTION,
         EDIT_ACTION,

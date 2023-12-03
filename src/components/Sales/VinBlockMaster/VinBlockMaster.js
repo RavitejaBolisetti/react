@@ -168,7 +168,13 @@ export const VinBlockMasterBase = (props) => {
     useEffect(() => {
         if (userId && extraParams) {
             setShowDataLoading(true);
-            fetchVinBlockList({ setIsLoading: listVinShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            fetchVinBlockList({
+                setIsLoading: listVinShowLoading,
+                userId,
+                extraParams,
+                onErrorAction,
+                onSuccessAction: setShowDataLoading(false),
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
@@ -276,7 +282,7 @@ export const VinBlockMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

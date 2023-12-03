@@ -44,6 +44,7 @@ const mapStateToProps = (state) => {
             },
         },
         common: {
+            Header: { dealerLocationId },
             LeftSideBar: { collapsed = false },
         },
     } = state;
@@ -69,6 +70,7 @@ const mapStateToProps = (state) => {
         ChangeHistoryTermsConditionsDataLoaded,
         ManufacturerData,
         manufacturerTncLoaded,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -95,7 +97,36 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHistoryTermsConditionsData, DealerTermsConditionsDataLoaded, ChangeHistoryTermsConditionsDataLoaded, DealerTermsConditionsData, changeHistoryData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, fetchManufacturerTermConditionDetail, listShowLoading, listShowChangeHistoryLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isLoadingOnSave, ManufacturerData, manufacturerTncLoaded }) => {
+const TncDealer = ({
+    dealerLocationId,
+    moduleTitle,
+    saveData,
+    userId,
+    fetchTermCondition,
+    ChangeHistoryTermsConditionsData,
+    DealerTermsConditionsDataLoaded,
+    ChangeHistoryTermsConditionsDataLoaded,
+    DealerTermsConditionsData,
+    changeHistoryData,
+    isDataLoaded,
+    resetData,
+    isDocumentTypeDataLoaded,
+    islanguageDataLoaded,
+    fetchProductList,
+    fetchDocumentTypeList,
+    fetchLanguageList,
+    fetchManufacturerTermConditionDetail,
+    listShowLoading,
+    listShowChangeHistoryLoading,
+    productHierarchyList,
+    documentTypeList,
+    languageList,
+    showGlobalNotification,
+    isLoading,
+    isLoadingOnSave,
+    ManufacturerData,
+    manufacturerTncLoaded,
+}) => {
     const [form] = Form.useForm();
     const [formActionType, setFormActionType] = useState('');
     const [formData, setFormData] = useState({});
@@ -137,13 +168,13 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     };
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (!isDataLoaded && userId && dealerLocationId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
             fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [islanguageDataLoaded, userId]);
+    }, [islanguageDataLoaded, userId, dealerLocationId]);
 
     useEffect(() => {
         if (userId) {
@@ -283,7 +314,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         isViewModeVisible,
         setIsFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
         setFormBtnDisable,
