@@ -209,6 +209,10 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         if (userId) {
             const extraParams = [
                 {
+                    key: 'manufactureOrgCode',
+                    value: 'LMM',
+                },
+                {
                     key: 'unit',
                     value: 'Sales',
                 },

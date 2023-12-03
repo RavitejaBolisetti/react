@@ -17,6 +17,7 @@ import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
 import { BASE_URL_PARTY_MASTER_LOV as customURL } from 'constants/routingApi';
 import { translateContent } from 'utils/translateContent';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const mapStateToProps = (state) => {
     const {
@@ -91,13 +92,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCompany')} name="insuranceCompany" initialValue={formData?.insuranceCompany}>
-                                    <Select placeholder={preparePlaceholderSelect(translateContent('commonModules.label.insuranceDetails.insuranceCompany'))}>
-                                        {insuranceCompanies?.map((item) => (
-                                            <Option value={item?.key} key={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
+                                    {customSelectBox({ data: insuranceCompanies, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.insuranceDetails.insuranceCompany')) })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
