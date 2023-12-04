@@ -33,7 +33,7 @@ import { validateOTFMenu } from './utils/validateOTFMenu';
 import { ChangeHistory } from './ChangeHistory';
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
+import { UnSaveDataConfirmation, handleUnSavedChange } from 'utils/UnSaveDataConfirmation';
 import { translateContent } from 'utils/translateContent';
 import LeftProfileCard from './LeftProfileCard';
 
@@ -149,7 +149,9 @@ export const OtfMasterBase = (props) => {
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
     const [nextCurentSection, setNextCurrentSection] = useState('');
     const [singleDisabled, setSingleDisabled] = useState(false);
-
+    const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
+        isVisible: false,
+    });
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
@@ -183,6 +185,8 @@ export const OtfMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [OtfSoMappingHistoryVisible, setOtfSoMappingHistoryVisible] = useState(false);
+
+    const handleUnSavedChangeFn = (successFn) => handleUnSavedChange({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn });
 
     const onCloseConfirmationModalAction = () => {
         setConfirmRequest({
@@ -391,14 +395,16 @@ export const OtfMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
-                if (buttonData?.formBtnActive && isNextBtnClick) {
-                    setIsUnsavedDataPopup(true);
-                    setNextCurrentSection(nextSection?.id);
-                } else {
-                    section && setCurrentSection(nextSection?.id);
-                    setLastSection(!nextSection?.id);
-                }
+                handleUnSavedChangeFn(() => {
+                    const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
+                    if (buttonData?.formBtnActive && isNextBtnClick) {
+                        setIsUnsavedDataPopup(true);
+                        setNextCurrentSection(nextSection?.id);
+                    } else {
+                        section && setCurrentSection(nextSection?.id);
+                        setLastSection(!nextSection?.id);
+                    }
+                });
 
                 break;
             case CANCEL_ACTION:
@@ -856,7 +862,7 @@ export const OtfMasterBase = (props) => {
             {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
-            <UnSaveDataConfirmation {...unsavedDataModalProps} />
+            <UnSaveDataConfirmation {...unSavedDataModalProps} />
         </>
     );
 };
