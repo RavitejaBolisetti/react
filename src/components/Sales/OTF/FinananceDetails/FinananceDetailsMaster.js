@@ -136,7 +136,7 @@ export const FinananceDetailsMasterBase = (props) => {
                 form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             };
 
             const requestData = {
