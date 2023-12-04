@@ -11,7 +11,7 @@ import { DealerEmpowermentMaster } from 'components/Sales/DealerEmpowerment';
 
 const DealerEmpowermentMasterBase = (props) => {
     
-    const pageTitle = 'Dealer Emppowerment';
+    const pageTitle = 'Customer Empowerment';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -21,7 +21,7 @@ const DealerEmpowermentMasterBase = (props) => {
         <>
             <PageHeader {...pageHeaderData} />
             <DealerEmpowermentMaster/>
-            {/* <>DealerEmpowermentRequestMasterPage</> */}
+
         </>
     );
 };

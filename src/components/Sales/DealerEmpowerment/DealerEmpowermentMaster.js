@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
-    const moduleTitle = 'Empowerment Detail';
+    const moduleTitle = 'Customer Empowerment';
 
     let returnValue = {
         userId,
@@ -401,7 +401,7 @@ export const DealerEmpowermentMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title:'Dealer Empowerment',
+        title:<span style={{whiteSpace: 'nowrap', marginRight: '20px'}}>{moduleTitle}</span>,
         // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
         data,
         otfSearchRules,

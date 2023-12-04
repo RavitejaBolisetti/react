@@ -405,7 +405,8 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: 'Employee Empowerment',
+        title:<span style={{whiteSpace: 'nowrap', marginRight: '20px'}}>{'Employee Empowerment'}</span>,
+        // title: 'Employee Empowerment',
         // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
         data,
         otfSearchRules,
@@ -418,7 +419,8 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         handleSearchChange,
         handleButtonClick,
         // saveButtonName: !isLastSection && 'Save'
-        saveButtonName:'Save'
+        saveButtonName:'Save',
+        
     };
 
     const containerProps = {

@@ -111,7 +111,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
         //     width: '14%',
         // }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%' }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%',  ...actionButtonVisibility}),
     ];
 
     return tableColumn;
