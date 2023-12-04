@@ -17,11 +17,11 @@ import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {
-    const { extraParams, handleButtonClick, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
+    const { extraParams, handleButtonClick, handleOnClickUpload, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     {filter && (
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
@@ -47,11 +47,30 @@ export default function AdvanceFilter(props) {
                         </Button>
                     </Col>
                 )}
-                <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                    <Button data-testid="addBtn" className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
-                                        {translateContent('global.buttons.add')}
-                                    </Button>
-                                </Col>
+                {/* <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                    <Button data-testid="addBtn" className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                        {translateContent('global.buttons.add')}
+                    </Button>
+                </Col> */}
+                <Col className={styles.buttonsGroupRight} xs={24} sm={12} md={6} lg={6} xl={6}>
+                    <Button className={styles.verticallyCentered} type="primary" onClick={handleOnClickUpload}>
+                        {translateContent('global.buttons.upload')}
+                    </Button>
+
+                    {/* <Button
+                                className={styles.verticallyCentered}
+                                icon={<FaHistory />}
+                                type="primary"
+                                onClick={() => {
+                                    setIsChangeHistoryVisible(true);
+                                }}
+                            >
+                                {translateContent('global.changeHistory.title')}
+                            </Button> */}
+                    <Button  icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                        {translateContent('global.buttons.add')}
+                    </Button>
+                </Col>
             </Row>
             {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

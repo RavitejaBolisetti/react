@@ -9,11 +9,11 @@ export const CORPORATE_ADDITIONAL_DISCOUNT_SECTION = {
         title: 'Additional Discount Details',
         displayOnList: true,
     },
-    DOCUMENTS: {
-        id: 2,
-        title: 'Supporting Document',
-        displayOnList: true,
-    },
+    // DOCUMENTS: {
+    //     id: 2,
+    //     title: 'Supporting Document',
+    //     displayOnList: true,
+    // },
     APPROVAL_REQUEST: {
         id: 3,
         title: 'Approval Request',

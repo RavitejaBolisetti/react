@@ -27,9 +27,9 @@ const CorporateAdditionalDiscountRegistrationContainerMain = (props) => {
             case CORPORATE_ADDITIONAL_DISCOUNT_SECTION.CLAIM_DETAILS.id: {
                 return <CorporateAdditionalDiscountDetailsMaster {...myProps} />;
             }
-            case CORPORATE_ADDITIONAL_DISCOUNT_SECTION.DOCUMENTS.id: {
-                return <SupportingDocumentMaster {...myProps} />;
-            }
+            // case CORPORATE_ADDITIONAL_DISCOUNT_SECTION.DOCUMENTS.id: {
+            //     return <SupportingDocumentMaster {...myProps} />;
+            // }
             case CORPORATE_ADDITIONAL_DISCOUNT_SECTION.APPROVAL_REQUEST.id: {
                 return <CorporateApprovalRequestMaster {...myProps} />;
             }

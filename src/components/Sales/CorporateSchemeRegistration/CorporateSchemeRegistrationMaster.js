@@ -29,6 +29,7 @@ import AdvanceFilter from './AdvanceFilter';
 import { AddEditForm } from './AddEditForm';
 import { CorporateSchemeRegistrationMainContainer } from './DealerCorporateClaimMasterMainContainer';
 import { DEALER_CORPORATE_SECTION } from 'constants/modules/CorporateSchemeRegistration/CorporateSchemeSection';
+import { SchemeRegistrationBulkUpload } from './SchemeRegistrationBulkUpload';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,7 +45,6 @@ const mapStateToProps = (state) => {
         moduleTitle,
         typeData,
         typedataMaster: typeData,
-
     };
     return returnValue;
 };
@@ -60,7 +60,7 @@ const tabledataOth = [
         totalAmount: '99',
         validFrom: '',
         validTo: '',
-        status: ''
+        status: '',
     },
 ];
 
@@ -136,6 +136,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
     const [rules, setrules] = useState({ ...rulesIntialstate });
+    const [isUploadDrawer, setIsUploadDrawer] = useState(false);
 
     const extraParams = useMemo(() => {
         return [
@@ -270,7 +271,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
         form.resetFields();
         switch (buttonAction) {
             case ADD_ACTION:
-                setFormActionType({addMode: true, editMode: false, viewMode: false})
+                setFormActionType({ addMode: true, editMode: false, viewMode: false });
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
                 setSelectedRecord(record);
@@ -280,7 +281,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
                 setFileList([]);
                 break;
             case EDIT_ACTION:
-                setFormActionType({addMode: false, editMode: true, viewMode: false})
+                setFormActionType({ addMode: false, editMode: true, viewMode: false });
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 openDefaultSection && setCurrentSection(defaultSection);
@@ -291,7 +292,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
 
                 break;
             case VIEW_ACTION:
-                setFormActionType({addMode: false, editMode: false, viewMode: true})
+                setFormActionType({ addMode: false, editMode: false, viewMode: true });
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 defaultSection && setCurrentSection(defaultSection);
@@ -320,6 +321,11 @@ export const CorporateSchemeRegistrationBase = (props) => {
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         }
         setIsFormVisible(true);
+    };
+
+    const handleOnClickUpload = () => {
+        setIsUploadDrawer(true);
+        setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true, editBtn: false });
     };
 
     const onFinishSearch = (values) => {};
@@ -375,7 +381,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
         onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -413,6 +419,26 @@ export const CorporateSchemeRegistrationBase = (props) => {
         setFileList,
     };
 
+    const uploadProps = {
+        ...props,
+        isVisible: isUploadDrawer,
+        titleOverride: 'Upload Scheme Registration Details',
+        onFinish,
+        setIsUploadDrawer,
+        showGlobalNotification,
+        onCloseAction: () => {
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            setIsUploadDrawer(false);
+        },
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+        setButtonData,
+
+        fileList,
+        setFileList,
+    };
 
     const advanceFilterResultProps = {
         extraParams,
@@ -426,7 +452,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
         onFinishFailed,
         // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
         // title: moduleTitle,
-        title: 'Product',
+        title: <span className={styles.marR20}>Product</span>,
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -438,13 +464,16 @@ export const CorporateSchemeRegistrationBase = (props) => {
         handleSearchChange,
         handleButtonClick,
         // saveButtonName: !isLastSection && 'Save'
-        saveButtonName:'Save',
+        saveButtonName: 'Save',
         showAddButton: true,
         addBtnVisible: true,
         showRefreshBtn: false,
+        handleOnClickUpload,
+        isUploadDrawer,
+        setIsUploadDrawer,
     };
+    console.log("🚀 ~ file: CorporateSchemeRegistrationMaster.js:479 ~ CorporateSchemeRegistrationBase ~ advanceFilterResultProps.isUploadDrawer:", advanceFilterResultProps.isUploadDrawer)
 
-    
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         titleOverride: 'Advance Filters',
@@ -465,18 +494,17 @@ export const CorporateSchemeRegistrationBase = (props) => {
 
     return (
         <>
-            {/* <AdvanceFilter {...advanceFilterResultProps} /> */}
+            <AdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
-            <AppliedAdvanceFilter {...advanceFilterResultProps} />
+            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} /> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-            {/* <AddEditForm {...containerProps}/> */}
             <CorporateSchemeRegistrationMainContainer {...containerProps} />
-
+            <SchemeRegistrationBulkUpload {...uploadProps} />
         </>
     );
 };
