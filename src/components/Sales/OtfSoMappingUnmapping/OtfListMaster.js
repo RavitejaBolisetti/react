@@ -413,7 +413,7 @@ export const OtfListMasterBase = (props) => {
         fetchDealerLocation({ setIsLoading: listDealerLocation, userId, extraParams: DealerParams });
     };
 
-    const ContainerProps = {
+    const containerProps = {
         selectedKey,
         typeData,
         SoForm,
@@ -448,7 +448,7 @@ export const OtfListMasterBase = (props) => {
                     </Col>
                 </Row>
             </div>
-            {MasterContainer({ ...ContainerProps })}
+            <MasterContainer {...containerProps} />
         </>
     );
 };

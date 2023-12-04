@@ -5,7 +5,7 @@
  */
 import { translateContent } from 'utils/translateContent';
 
-export const drawerTitle = (formActionType) => {
+export const drawerTitle = (formActionType = '') => {
     if (formActionType?.viewMode) {
         return translateContent('global.drawerTitle.view');
     } else if (formActionType?.editMode) {

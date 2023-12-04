@@ -26,8 +26,6 @@ import { chargerInstallationGuestDetailsDataActions } from 'store/actions/data/c
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-
-import { FilterIcon } from 'Icons';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import { translateContent } from 'utils/translateContent';
@@ -516,7 +514,7 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('chargerInstallationProcess.heading.titleOverride'),
 
         onCloseAction: onAdvanceSearchCloseAction,

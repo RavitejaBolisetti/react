@@ -171,9 +171,7 @@ const UnmappingAndCancellationMain = (props) => {
         buttonData,
         setButtonData,
         saveButtonName: buttonType === BUTTON_NAME?.UNMAP?.key ? BUTTON_NAME?.UNMAP?.key : BUTTON_NAME?.CANCEL?.name,
-        handleFormValueChange: (values) => {
-            setButtonData({ ...buttonData, formBtnActive: true });
-        },
+        handleFormValueChange: () => setButtonData({ ...buttonData, formBtnActive: true }),
         buttonType,
         formData,
     };

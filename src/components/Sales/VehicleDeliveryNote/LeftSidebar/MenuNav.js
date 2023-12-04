@@ -13,7 +13,7 @@ import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, sectionName, setSection } = props;
+    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer, setIsUnsavedDataPopup, localFormValueChange, setSection, setItemKey } = props;
     const deliveryNoteSectionList = Object.values(VEHICLE_DELIVERY_NOTE_SECTION);
 
     const className = (id) => {
@@ -22,8 +22,13 @@ const MenuNav = (props) => {
     };
 
     const onHandle = ({ key, item }) => {
-        selectedOrder && setCurrentSection(key);
-        selectedOrder && setSection(item);
+        if (localFormValueChange) {
+            setIsUnsavedDataPopup(true);
+            setItemKey(item);
+        } else {
+            selectedOrder && setCurrentSection(key);
+            selectedOrder && setSection(item);
+        }
     };
 
     const items = deliveryNoteSectionList

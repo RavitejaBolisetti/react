@@ -24,7 +24,6 @@ export default function AdvanceFilter(props) {
         optionType: typeData[PARAM_MASTER?.SCHEME_CODE?.id],
         defaultOption: 'schemeCode',
         setFilterString,
-        // allowClear: false,
     };
 
     return (
@@ -64,13 +63,6 @@ export default function AdvanceFilter(props) {
                         </Button>
                     )}
                 </Col>
-                {/* <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
-                    {showAddButton && (
-                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
-                        </Button>
-                    )}
-                </Col> */}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

@@ -11,31 +11,29 @@ import { UnMappingMaster } from './MappingAndUnmapping';
 import { UnmappingAndCancellation } from './CancellationAndUnmapping';
 import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
-const MasterContainerMain = (props) => {
+export const MasterContainer = (props) => {
     const { selectedKey } = props;
 
     switch (selectedKey) {
-        case SectionConstant?.SO_MAPPING?.key: {
+        case SectionConstant?.SO_MAPPING?.key:
             return <MappingMaster {...props} />;
-        }
-        case SectionConstant?.SO_UNMAPPING?.key: {
+
+        case SectionConstant?.SO_UNMAPPING?.key:
             return <UnMappingMaster {...props} />;
-        }
-        case SectionConstant?.SO_CANCELLATION?.key: {
+
+        case SectionConstant?.SO_CANCELLATION?.key:
             return <UnmappingAndCancellation {...props} />;
-        }
-        case SectionConstant?.NO_DATA?.key: {
+
+        case SectionConstant?.NO_DATA?.key:
             return (
-                <div className={styles.emptyContainer}>
-                    <NoDataFound information={'Please Select from dropdown options to see details'} />
+                <div className={styles?.emptyContainer}>
+                    <NoDataFound information={translateContent('bookingSoMappUnmapp.label.noInfoMessage')} />
                 </div>
             );
-        }
-        default: {
+
+        default:
             return <SoFormMaster {...props} />;
-        }
     }
 };
-
-export const MasterContainer = MasterContainerMain;

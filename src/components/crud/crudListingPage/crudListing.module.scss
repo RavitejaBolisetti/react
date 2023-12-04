@@ -31,7 +31,6 @@
             .ant-btn-default {
                 border-inline-end-width: 0px;
                 border-color: $transparentColor;
-                border-color: $transparentColor;
 
                 &:not(:disabled) {
                     &:active {
@@ -90,12 +89,10 @@
                             &:not(.ant-btn-primary) {
                                 background-color: $primaryWhite;
                                 border-left: $primaryWhite;
-                                background-color: $primaryWhite;
 
                                 &:disabled {
                                     background-color: $neutralGrey1;
                                     border-left: $neutralGrey1;
-                                    background-color: $neutralGrey1;
                                 }
 
                                 &:hover {
@@ -154,7 +151,6 @@
 
         .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
             &:hover {
-                background-color: $primaryRed;
                 background-color: $primaryRed;
             }
         }

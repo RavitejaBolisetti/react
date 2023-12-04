@@ -3326,7 +3326,8 @@
             "cancelledBy": "Cancelled By",
             "remarksForCancellation": "Remarks for Cancellation",
             "deliveryNoteChallanFromDate": "Delivery Challan From Date",
-            "deliveryNoteChallanToDate": "Delivery Challan To Date"
+            "deliveryNoteChallanToDate": "Delivery Challan To Date",
+            "notGenerated": "NOT GENERATED"
         },
         "placeholder": {
             "select": "Select"
@@ -4099,10 +4100,13 @@
             "resonCategoryCode": "Reason Category",
             "reasonDescriptionCode": "Reason Description",
 
+            "otfNumber": "Booking Number",
+
             "customerId": "Customer ID",
             "mobileNumber": "Mobile No.",
             "modelGroup": "Model Group",
-            "modelVariant": "Model Variant"
+            "modelVariant": "Model Variant",
+            "noInfoMessage": "Please Select from dropdown options to see details"
         },
         "placeholder": {
             "search": "Search Booking Number"
@@ -4161,7 +4165,8 @@
                 "soNo": "So No",
                 "soDate": "So Date",
                 "soStatus": "So Status",
-                "sapStatus": "SAP Response Status"
+                "sapStatus": "SAP Response Status",
+                "sapRemarks": "SAP Response Remarks"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",

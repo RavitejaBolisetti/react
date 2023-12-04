@@ -22,7 +22,9 @@ const ViewDetailMain = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label={translateContent('city.label.districtName')}>{formData?.districtName}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('city.label.cityCode')}>{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('city.label.cityName')}>{formData?.name}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('global.label.status')}>{formData?.status ? `${translateContent('global.label.active')}` : `${translateContent('global.label.inActive')}`}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>
+                    <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{formData?.status ? `${translateContent('global.label.active')}` : `${translateContent('global.label.inActive')}`}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>

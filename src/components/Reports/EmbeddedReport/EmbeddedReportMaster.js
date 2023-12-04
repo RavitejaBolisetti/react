@@ -103,7 +103,6 @@ export const EmbeddedReportMasterMain = (props) => {
                 embedUrl += param;
             }
 
-            console.log('embedUrl:', embedUrl);
             setReportConfig({
                 type: 'report',
                 id: data?.embedReports?.[0]?.reportId.substr(46, 92),

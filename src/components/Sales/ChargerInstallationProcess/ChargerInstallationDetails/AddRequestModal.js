@@ -44,7 +44,8 @@ export const AddRequestModalForm = (props) => {
                                 typeData?.CHRGR_INST_STG_TYPE?.flatMap((item) => {
                                     if (item?.key === chargerStatus) {
                                         return item;
-                                    }
+                                    } 
+                                    return undefined;
                                 }),
                             disableOptionsKey: 'key',
                         })}
@@ -73,13 +74,13 @@ export const AddRequestModalForm = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
+                <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     <Button onClick={onAdvanceSearchCloseAction} danger>
                         {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
 
-                <Col xs={24} m={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                <Col xs={24} m={24} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                     <Button htmlType="submit" type="primary">
                         {translateContent('global.buttons.add')}
                     </Button>

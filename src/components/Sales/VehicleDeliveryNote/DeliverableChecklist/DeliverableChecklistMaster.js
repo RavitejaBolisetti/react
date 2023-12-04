@@ -66,7 +66,7 @@ const DeliverableChecklistMain = (props) => {
     const { selectedOrder, setButtonData, buttonData } = props;
     const { fetchList, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, requestPayload, setRequestPayload } = props;
-    const { uniqueMatchKey } = props;
+    const { uniqueMatchKey,handleLocalFormChange } = props;
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
@@ -175,7 +175,7 @@ const DeliverableChecklistMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleLocalFormChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

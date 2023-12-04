@@ -11,11 +11,11 @@ import { UploadBoxIcon } from 'Icons';
 import styles from 'assets/sass/app.module.scss';
 
 export const NoDataFound = (props) => {
-    const { informtion = 'No Data Found' } = props;
+    const { information = 'No Data Found' } = props;
     return (
         <Space direction="vertical" align="center">
             <UploadBoxIcon />
-            <div className={styles.descriptionText}>{informtion}</div>
+            <div className={styles.descriptionText}>{information}</div>
         </Space>
     );
 };

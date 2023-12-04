@@ -157,7 +157,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [nextCurentSection, setNextCurrentSection] = useState('');
     const [isFormValueChange, setIsFormValueChange] = useState(false);
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {

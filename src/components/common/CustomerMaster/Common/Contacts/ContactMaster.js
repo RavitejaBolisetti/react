@@ -298,7 +298,7 @@ const ContactMain = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!contactData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? translateContent('global.generalMessage.noRecordsFoundAddNew') : addDataTitle} /> : <ViewContactList {...formProps} />}
+                                    {!contactData?.length && !isAdding ? <NoDataFound information={formActionType?.viewMode ? translateContent('global.generalMessage.noRecordsFoundAddNew') : addDataTitle} /> : <ViewContactList {...formProps} />}
                                 </>
                             )}
                         </Card>

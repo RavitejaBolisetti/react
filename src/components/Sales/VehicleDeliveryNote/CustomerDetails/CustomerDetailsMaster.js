@@ -61,7 +61,7 @@ export const CustomerDetailsMasterBase = (props) => {
     const { fetchList, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
     const { requestPayload, setRequestPayload } = props;
     const { typeData, form, soldByDealer, resetData, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setSelectedOrder, handleCustomerIdSearch } = props;
-    const { buttonData, setButtonData, resetKeys } = props;
+    const { buttonData, setButtonData, resetKeys,handleLocalFormChange } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -143,7 +143,7 @@ export const CustomerDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleLocalFormChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

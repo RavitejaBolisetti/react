@@ -163,6 +163,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [isLastSection, setLastSection] = useState(false);
     const [formValuesChanged, setFormValuesChanges] = useState(false);
     const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    const [localFormValueChange, setlocalFormValueChange] = useState(false);
+    const [itemKey, setItemKey] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -525,6 +527,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 section && setCurrentSection(nextSection?.id);
                 setSection(nextSection);
                 setLastSection(!nextSection?.id);
+                setlocalFormValueChange(false);
                 break;
 
             default:
@@ -625,6 +628,9 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setFormValuesChanges(true);
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+    const handleLocalFormChange = () => {
+        setlocalFormValueChange(true);
+    };
     const onCloseDrawer = () => {
         if (formValuesChanged) {
             setIsUnsavedDataPopup(true);
@@ -657,6 +663,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
         setFormValuesChanges(false);
         setIsUnsavedDataPopup(false);
+        setlocalFormValueChange(false);
     };
 
     const tableProps = {
@@ -878,6 +885,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         handleCustomerIdSearch,
         customerDetailsDataSearched,
         setSection,
+        handleLocalFormChange,
+        localFormValueChange,
+        setIsUnsavedDataPopup,
+        setItemKey,
     };
 
     const reportDetail = deliveryType === DELIVERY_TYPE?.NOTE?.key ? EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? EMBEDDED_REPORTS?.CHALLAN_DOCUMENT : null;
@@ -892,11 +903,20 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
     const handleCancelUnsaveDataModal = () => {
         setIsUnsavedDataPopup(false);
+        setItemKey();
     };
+    const handleLocalSaveClose = () => {
+        setIsUnsavedDataPopup(false);
+        setlocalFormValueChange(false);
+        setCurrentSection(itemKey?.id);
+        setSection(itemKey);
+        setItemKey();
+    };
+
     const unsavedDataModalProps = {
         isVisible: isUnsavedDataPopup,
         onCloseAction: handleCancelUnsaveDataModal,
-        onSubmitAction: onCloseAction,
+        onSubmitAction: itemKey?.id ? handleLocalSaveClose : onCloseAction,
     };
     return (
         <>

@@ -189,8 +189,6 @@ export const AMCRegistrationMasterBase = (props) => {
     const [customerForm] = Form.useForm();
     const [schemeForm] = Form.useForm();
 
-    const [searchValue, setSearchValue] = useState();
-
     const [selectedOrder, setSelectedOrder] = useState('');
     const [selectedOrderId, setSelectedOrderId] = useState('');
     const [selectedAMC, setSelectedAMC] = useState();
@@ -508,10 +506,6 @@ export const AMCRegistrationMasterBase = (props) => {
         searchForm.resetFields();
     };
 
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
-    };
-
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
     };
@@ -709,7 +703,6 @@ export const AMCRegistrationMasterBase = (props) => {
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleChange,
         handleSearch,
         handleInvoiceTypeChange,
 

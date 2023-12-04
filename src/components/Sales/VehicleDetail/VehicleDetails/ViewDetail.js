@@ -73,7 +73,7 @@ const ViewDetailMain = (props) => {
                     {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Registration Number Change Request" key="2">
                             <Divider />
-                            <NoDataFound informtion={noDataTitle} />
+                            <NoDataFound information={noDataTitle} />
                         </Panel>
                     </Collapse> */}
                 </Col>

@@ -27,7 +27,9 @@ const ViewDetailMain = ({ formData, styles, isLoading = false }) => {
                     <Descriptions.Item label={translateContent('tehsil.label.tehsilName')}>{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('tehsil.label.tehsilCategoryCode')}>{checkAndSetDefaultValue(formData?.tehsilCategoryName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('tehsil.label.includedOn')}>{checkAndSetDefaultValue(formData?.includedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('global.label.status')}>{checkAndSetDefaultValue(formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive'), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>
+                    <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{checkAndSetDefaultValue(formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive'), isLoading)}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>

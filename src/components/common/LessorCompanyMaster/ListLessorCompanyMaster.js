@@ -65,13 +65,11 @@ export const ListLessorCompanyMasterBase = (props) => {
 
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState(data);
     const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [page, setPage] = useState({});
 
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -156,32 +154,9 @@ export const ListLessorCompanyMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
-    useEffect(() => {
-        if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
+    
 
-    useEffect(() => {
-            setSearchdata(data);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
-
-    // useEffect(() => {
-    //     if (data?.length > 0 && userId) {
-    //         if (filterString) {
-    //             const keyword = filterString?.keyword;
-    //             const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
-    //             setSearchdata(filterDataItem);
-    //             setShowDataLoading(false);
-    //         } else {
-    //             setSearchdata(data);
-    //             setShowDataLoading(false);
-    //         }
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString, isDataLoaded, data, userId]);
+  
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -200,15 +175,14 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        // setPage({ ...page, current: 1 });
         if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: false, companyName: value });
+            setFilterString({ ...filterString,current : 1,pageSize : 10, advanceFilter: false, companyName: value });
         }
     };
 
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
-            setFilterString((prev) => ({ current: 1, pageSize: prev?.pageSize }));
+            setFilterString((prev) => ({ current: 1, pageSize: 10 }));
             listFilterForm.resetFields();
             setShowDataLoading(false);
         } else if (e.target.value.length > 2) {
@@ -272,7 +246,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
-        tableData: searchData,
+        tableData: data,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -286,8 +260,7 @@ export const ListLessorCompanyMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: searchData,
-        page: filterString,
+        tableData: data,
         setPage: setFilterString,
         filterString,
         totalRecords,
@@ -306,7 +279,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
-        tableData: searchData,
+        tableData: data,
     };
 
     return (
