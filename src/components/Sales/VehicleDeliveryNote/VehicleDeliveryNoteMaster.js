@@ -784,6 +784,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         typeData,
         onFinishSearch,
         deliveryStatus,
+        deliveryType,
     };
 
     const cancelModalCloseAction = () => {
