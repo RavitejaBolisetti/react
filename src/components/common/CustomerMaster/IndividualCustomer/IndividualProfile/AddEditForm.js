@@ -23,7 +23,7 @@ const AddEditFormMain = (props) => {
     const { isReadOnly = false } = props;
 
     const [isRead, setIsRead] = useState(false);
-    const [customer, setCustomer] = useState(false);
+    const [customer, setCustomer] = useState('');
     const [activeKey, setActiveKey] = useState([1]);
 
     useEffect(() => {

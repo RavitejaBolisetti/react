@@ -188,8 +188,6 @@ export const OtfBlockMasterMain = (props) => {
 
     const [formActionType, setFormActionType] = useState('');
 
-    const [selectedId, setSelectedId] = useState();
-
     const [formData, setFormData] = useState([]);
 
     const [selectedTreeData, setSelectedTreeData] = useState([]);
@@ -361,8 +359,6 @@ export const OtfBlockMasterMain = (props) => {
 
         setFormActionType(FROM_ACTION_TYPE.VIEW);
 
-        setSelectedId('');
-
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i?.data?.prodctCode);
 
@@ -445,16 +441,14 @@ export const OtfBlockMasterMain = (props) => {
 
                 setIsFormVisible(false);
 
-                setSelectedId(selectedId);
-
                 setOptions([]);
 
                 setFormData(res?.data);
             }
         };
 
-        const onError = (errorMessage) => {
-            showGlobalNotification({ message: errorMessage });
+        const onError = (message) => {
+            showGlobalNotification({ message });
         };
 
         const requestData = {

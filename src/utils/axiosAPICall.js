@@ -112,7 +112,7 @@ const baseAPICall = async (params) => {
 
 let axiosAPICall = baseAPICall;
 
-if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_API_CALL_USE_DEV_DELAY === true) {
+if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_API_CALL_USE_DEV_DELAY) {
     axiosAPICall = (...rest) => {
         setTimeout(() => {
             baseAPICall(...rest);

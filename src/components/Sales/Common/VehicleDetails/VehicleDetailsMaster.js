@@ -293,7 +293,7 @@ const VehicleDetailsMasterMain = (props) => {
             const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
             setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
 
-            setVehicleDetailData(vehicleDetailData);
+            setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });
         };
 

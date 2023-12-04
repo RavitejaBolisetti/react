@@ -195,8 +195,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const supportedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     const maxSize = 8;
 
-    const onErrorAction = (errorMessage) => {
-        showGlobalNotification({ message: errorMessage });
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
     };
 
     const makeExtraparms = (Params) => {
@@ -368,12 +368,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchDetailList({ setIsLoading: DetailLoading, extraParams: makeExtraparms([{ key: 'manufacturerAdminId', title: 'manufacturerAdminId', value: selectedId, name: 'manufacturerAdminId' }]), userId, onErrorAction });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), errorAction: onErrorAction });
-                setOrganizationId(organizationId);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
-                setSelectedId(selectedId);
             }
         };
 
