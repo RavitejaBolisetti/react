@@ -4,11 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export const EMPLOYEE_EMPOWERMENT_SECTION = {
-    // DEALER_CORPORATE_CLAIM: {
-    //     id: 1,
-    //     title: 'Dealer Corporate Claim',
-    //     displayOnList: true,
-    // },
     CLAIM_DETAILS: {
         id: 1,
         title: 'Employeement Details',

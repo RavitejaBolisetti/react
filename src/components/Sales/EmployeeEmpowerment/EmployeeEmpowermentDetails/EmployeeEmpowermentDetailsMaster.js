@@ -9,6 +9,7 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ViewDetail from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
 
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 import styles from 'assets/sass/app.module.scss';
@@ -42,6 +43,7 @@ const EmployeeEmpowermentDetailsMain = (props) => {
     const { isChecklistDataLoading } = props;
     const { showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, uniqueMatchKey } = props;
+    console.log("🚀 ~ file: EmployeeEmpowermentDetailsMaster.js:46 ~ EmployeeEmpowermentDetailsMain ~ formActionType:", formActionType)
 
     const pageIntialState = {
         pageSize: 10,
@@ -89,8 +91,10 @@ const EmployeeEmpowermentDetailsMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <ViewDetail />
-                    {/* <AddEditForm {...formProps} /> */}
+                    {
+                        formActionType.viewMode ? <ViewDetail /> : <AddEditForm {...formProps} />
+                    }
+                    
                 </Col>
             </Row>
             <Row>

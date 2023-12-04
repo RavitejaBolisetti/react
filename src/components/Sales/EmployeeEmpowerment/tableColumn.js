@@ -9,10 +9,10 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Employee Request Id',
+            title: 'Request ID',
             dataIndex: 'employeeRequestId',
             width: '14%',
         }),
@@ -38,80 +38,8 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             dataIndex: 'status',
             width: '14%',
         }),
-        // tblPrepareColumns({
-        //     title: 'Dealer Location',
-        //     dataIndex: 'dealerLocaton',
-        //     width: '14%',
-        // }),
 
-        // tblPrepareColumns({
-        //     title: 'Dealer Code',
-        //     dataIndex: 'dealerBranch',
-        //     width: '14%',
-        // }),
-        // tblPrepareColumns({
-        //     title: 'Employee Code',
-        //     dataIndex: 'claimType',
-        //     width: '14%',
-        // }),
-        // tblPrepareColumns({
-        //     title: 'Mile Code',
-        //     dataIndex: 'mileType',
-        //     width: '14%',
-        // }),
-        // tblPrepareColumns({
-        //     title: 'employee Name',
-        //     dataIndex: 'clameNo',
-        //     width: '14%',
-        // }),
-
-        // tblPrepareColumns({
-        //     title: 'Employee Status' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-        // tblPrepareColumns({
-        //     title: 'Designation' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-
-        // tblPrepareColumns({
-        //     title: 'Mobile No' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-
-        
-        // tblPrepareColumns({
-        //     title: 'PAN No' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-
-        // tblPrepareColumns({
-        //     title: 'Bank Name' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-
-        // tblPrepareColumns({
-        //     title: 'Bank Acc No' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-        // tblPrepareColumns({
-        //     title: 'IFSC Code' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-        // tblPrepareColumns({
-        //     title: 'Recognition Amount' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column3'),
-        //     dataIndex: 'modelName',
-        //     width: '14%',
-        // }),
-
-        tblActionColumn({ handleButtonClick, styles, width: '8%',  ...actionButtonVisibility}),
+        tblActionColumn({ handleButtonClick, styles, width: '8%' }),
     ];
 
     return tableColumn;

@@ -27,8 +27,6 @@ import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 import { drawerTitle } from 'utils/drawerTitle';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 // import { EMPLOYEE_EMPOWERMENT_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
-import { CLAIM_STATUS_BUTTONS } from 'constants/modules/DealerCorporateClaim/buttons';
-import { tableColumnPendingGeneration } from './tableColumnPendingGeneration';
 import { EmployeeEmpowermentMainContainer } from './EmployeeEmpowermentMainContainer';
 import { EMPLOYEE_EMPOWERMENT_SECTION } from 'constants/modules/EmployeeEmpowerment/employeeEmpowerment';
 
@@ -62,19 +60,9 @@ const tabledataOth = [
         claimType: 'Test Calim type',
         clameNo: 'CLM988',
         modelName: 'XUV700',
-        claimStatus: 'Pending For Approval'
+        claimStatus: 'Pending For Approval',
     },
 ];
-
-// const tabledataPFG = [
-//     {
-//         invoiceNuber : "Inv00987",
-//         invoiceDate: '07-12-1997',
-//         deliveryNoteNo: 'DNN933',
-//         deliveryNoteDate: '07-12-1997',
-
-//     },
-// ];
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
@@ -143,7 +131,7 @@ export const EmployeeEmpowermentMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
+    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.APPROVAL_PENDING?.key);
 
     const [page, setPage] = useState({ ...pageIntialState });
     const dynamicPagination = true;
@@ -152,7 +140,7 @@ export const EmployeeEmpowermentMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
     const [rules, setrules] = useState({ ...rulesIntialstate });
-    const [claimStatus, setClaimStatus] = useState('PFG');
+    const [btnStatus, setBtnStatus] = useState(QUERY_BUTTONS_CONSTANTS?.APPROVAL_PENDING?.key);
 
     const extraParams = useMemo(() => {
         return [
@@ -162,14 +150,6 @@ export const EmployeeEmpowermentMasterBase = (props) => {
                 value: buttonType,
                 canRemove: false,
                 filter: false,
-            },
-            {
-                key: 'grnNumber',
-                title: 'grnNumber',
-                value: filterString?.grnNumber,
-                name: filterString?.grnNumber ?? null,
-                canRemove: true,
-                filter: true,
             },
             {
                 key: 'fromDate',
@@ -372,8 +352,6 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         page,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        // tableColumn: claimStatus === 'PFG' ? tableColumnPendingGeneration({ handleButtonClick, actionButtonVisibility }) : tableColumn({ handleButtonClick, actionButtonVisibility }),
-        // tableData: claimStatus !== 'PFG' ? tabledataOth : tabledataPFG,
         tableData: tabledataOth,
         showAddButton: false,
         handleAdd: handleButtonClick,
@@ -391,8 +369,8 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         }
     };
 
-    const handleQuickFilter = (value) => {
-        setClaimStatus(value?.key);
+    const handleQuickFilterBtnClik = (item) => {
+        setBtnStatus(item?.key)
     };
 
     const advanceFilterResultProps = {
@@ -405,9 +383,10 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title:<span style={{whiteSpace: 'nowrap', marginRight: '20px'}}>{'Employee Empowerment'}</span>,
+        // title: <span style={{ whiteSpace: 'nowrap', marginRight: '20px' }}>{'Employee Empowerment'}</span>,
         // title: 'Employee Empowerment',
-        // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
+        title: <QueryButtons currentItem={btnStatus} items={QUERY_BUTTONS_CONSTANTS} onClick={handleQuickFilterBtnClik} />,
+        queryBtnData: QUERY_BUTTONS_CONSTANTS,
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -419,8 +398,9 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         handleSearchChange,
         handleButtonClick,
         // saveButtonName: !isLastSection && 'Save'
-        saveButtonName:'Save',
-        
+        saveButtonName: 'Save',
+        showAddButton: true,
+        showRefreshBtn: false,
     };
 
     const containerProps = {
@@ -498,6 +478,8 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         showAddButton: true,
         showRefreshBtn: false,
         tableData: [{}],
+        btnStatus,
+        setBtnStatus,
     };
 
     return (
@@ -505,7 +487,7 @@ export const EmployeeEmpowermentMasterBase = (props) => {
             <AdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
 
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} {...advanceFilterProps} /> */}
+            {/* <AppliedAdvanceFilter {...advanceFilterProps} /> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

@@ -25,29 +25,6 @@ const AddEditForm = (uploadProps) => {
         allowClear: true,
     };
 
-    const typedataTemp = [
-        {
-            key: 1,
-            value: 'Purchase Order Copy',
-        },
-        {
-            key: 2,
-            value: 'Latest salary slip or bonafied certificate fron HRD/Admin of company',
-        },
-        {
-            key: 3,
-            value: 'Employee ID Copy',
-        },
-        {
-            key: 4,
-            value: 'Copy of corporate advantage card',
-        },
-        {
-            key: 5,
-            value: "Copy on Corporate / BPO Vendor's letter head confirming buyers identity",
-        },
-    ];
-
     return (
         <>
             {/* <Row gutter={16}>

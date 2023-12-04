@@ -401,8 +401,7 @@ export const DealerEmpowermentMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title:<span style={{whiteSpace: 'nowrap', marginRight: '20px'}}>{moduleTitle}</span>,
-        // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
+        title:moduleTitle,
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -496,10 +495,10 @@ export const DealerEmpowermentMasterBase = (props) => {
 
     return (
         <>
-            <AdvanceFilter {...advanceFilterResultProps} />
+            {/* <AdvanceFilter {...advanceFilterResultProps} /> */}
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
 
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} {...advanceFilterProps} /> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
