@@ -3332,8 +3332,10 @@
         "placeholder": {
             "select": "Select"
         },
+
         "notificationError": {
-            "enterCustomerId": "Enter customer id to continue"
+            "enterCustomerId": "Enter customer id to continue",
+            "customerDetails": "Customer details not present"
         },
         "invoiceDetails": {
             "heading": {
