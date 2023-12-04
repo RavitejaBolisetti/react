@@ -14,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { SearchBox } from 'components/utils/SearchBox';
 
 export default function EvrDetailsCapturingFilter(props) {
-    const { extraParams, removeFilter, handleClear, advanceFilter, validationRules, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
+    const { extraParams, removeFilter, handleClear, advanceFilter, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
     const searchBoxProps = {
         placeholder: translateContent('evrDetailsCapturing.placeholder.headerSearch'),
         allowClear: false,

@@ -16,13 +16,11 @@ export const ChargerStatusBar = (props) => {
 
     const otfStatusList = Object.values(QUERY_BUTTONS_CONSTANTS);
     const currentStatusId = otfStatusList?.find((i) => i.key === status)?.id;
-    const chargerInstallationStatusList = otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id);
-    const chargerInstallationStatusListSite = otfStatusList.filter((i) => i.displayOnView && (i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id || i?.id === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id));
 
     if (status === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key) {
-        chargerInstallationStatusList;
+        return otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id);
     } else if (status === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.key) {
-        chargerInstallationStatusListSite;
+        return otfStatusList.filter((i) => i.displayOnView && (i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id || i?.id === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id));
     }
 
     return (

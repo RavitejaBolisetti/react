@@ -63,7 +63,6 @@ export const ListLessorCompanyMasterBase = (props) => {
     const [listFilterForm] = Form.useForm();
     const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
 
-
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
 
@@ -71,14 +70,12 @@ export const ListLessorCompanyMasterBase = (props) => {
     const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const dynamicPagination = true;
-
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -154,10 +151,6 @@ export const ListLessorCompanyMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
-    
-
-  
-
     const handleReferesh = () => {
         setShowDataLoading(true);
         setRefershData(!refershData);
@@ -176,7 +169,7 @@ export const ListLessorCompanyMasterBase = (props) => {
 
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString,current : 1,pageSize : 10, advanceFilter: false, companyName: value });
+            setFilterString({ ...filterString, current: 1, pageSize: 10, advanceFilter: false, companyName: value });
         }
     };
 
@@ -245,7 +238,7 @@ export const ListLessorCompanyMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
 
         ADD_ACTION,
@@ -255,7 +248,6 @@ export const ListLessorCompanyMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
-       
     };
 
     const tableProps = {
