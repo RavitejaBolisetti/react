@@ -259,7 +259,7 @@ export const VehicleDetailMasterBase = (props) => {
         setFilterString();
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, onSave = false }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -277,11 +277,20 @@ export const VehicleDetailMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                handleUnSavedChangeFn(() => {
+                const callMethod = () => {
                     const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                     section && setCurrentSection(nextSection?.id);
                     setLastSection(!nextSection?.id);
-                });
+                };
+
+                if (onSave) {
+                    callMethod();
+                } else {
+                    handleUnSavedChangeFn(() => {
+                        callMethod();
+                    });
+                }
+
                 break;
 
             default:

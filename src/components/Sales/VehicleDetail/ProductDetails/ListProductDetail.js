@@ -253,7 +253,7 @@ const ProductDetailMasterMain = (props) => {
             setformData();
             setIsReadOnly(false);
             form.resetFields();
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
         };
 
         const onError = (message) => {
