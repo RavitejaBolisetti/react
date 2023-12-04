@@ -509,7 +509,6 @@ export const OtfMasterBase = (props) => {
         handleUnSavedChangeFn(() => {
             form.resetFields();
             form.setFieldsValue();
-            setIsUnsavedDataPopup(false);
 
             advanceFilterForm.resetFields();
             advanceFilterForm.setFieldsValue();
@@ -706,14 +705,6 @@ export const OtfMasterBase = (props) => {
         selectedOrderId: selectedBookingId || selectedOrderId,
     };
 
-    const onCloseDrawer = () => {
-        if (buttonData?.formBtnActive) {
-            setIsUnsavedDataPopup(true);
-        } else {
-            onCloseAction();
-        }
-    };
-
     const filterActiveMenu = (items) => {
         return items?.filter((item) => validateOTFMenu({ item, status: selectedOrder?.orderStatus, otfData }));
     };
@@ -730,7 +721,7 @@ export const OtfMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
-        onCloseAction: onCloseDrawer,
+        onCloseAction,
         titleOverride: drawerTitle,
         tableData: data,
         ADD_ACTION,
