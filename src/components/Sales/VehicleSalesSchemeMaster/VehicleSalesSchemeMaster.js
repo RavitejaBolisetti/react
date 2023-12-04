@@ -12,7 +12,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
-import { ManufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchy';
 import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleSalesSchemeMasterUpload } from './VehicleSalesSchemeMasterUpload';
@@ -24,7 +23,6 @@ import { documentViewDataActions } from 'store/actions/data/customerMaster/docum
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { vehicleSalesSchemeMasterUpload } from 'store/actions/data/vehicleSalesSchemeMasterUpload';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
-import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
@@ -58,6 +56,9 @@ const mapStateToProps = (state) => {
             },
             VehicleSalesSchemeMaster: { isLoaded: isVehicleSalesSchemeDataLoaded = false, isLoading: isVehicleSalesSchemeLoading = false, data, detailData: vehicleSalesSchemeDetails = [] },
             VehicleSalesSchemeMasterUpload: { isLoaded: isVehicleSalesSchemeUploadDataLoaded = false, isLoading: isVehicleSalesSchemeUploadDataLoading = false, data: vehicleSalesSchemeUploadData = [] },
+        },
+        common: {
+            Header: { dealerLocationId },
         },
     } = state;
     const moduleTitle = translateContent('vehicleSalesSchemeMaster.heading.moduleTitle');
@@ -100,6 +101,7 @@ const mapStateToProps = (state) => {
         isAreaOfficeDataLoaded,
         isAreaOfficeLoading,
         areaOfficeData,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -108,12 +110,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchAdminList: ManufacturerAdminHierarchyDataActions.fetchList,
-            DetailLoading: ManufacturerAdminHierarchyDataActions.listShowLoading,
-
-            fetchProductList: productHierarchyDataActions.fetchList,
-            listProductMainShowLoading: productHierarchyDataActions.listShowLoading,
-
             fetchViewDocument: documentViewDataActions.fetchList,
             viewListShowLoading: documentViewDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
@@ -131,9 +127,6 @@ const mapDispatchToProps = (dispatch) => ({
             resetUploadSalesSchemeData: vehicleSalesSchemeMasterUpload.reset,
 
             fetchModelList: productHierarchyDataActions.fetchList,
-
-            fetchProductLovList: tncProductHierarchyDataActions.fetchList,
-            listProductShowLoading: tncProductHierarchyDataActions.listShowLoading,
 
             fetchAmcSchemeCategoryLovList: amcSchemeCategoryDataAction.fetchList,
             listAmcSchemeCategoryLovListShowLoading: amcSchemeCategoryDataAction.listShowLoading,
@@ -163,9 +156,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleSalesSchemeMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, fetchProductLovList, listShowLoading, showGlobalNotification, fetchDetail, amcSchemeCategoryData, shieldSchemeCategoryData } = props;
-    const { isVehicleSalesSchemeDataLoaded, listProductShowLoading, vehicleSalesSchemeData, schemeTypeData, encashTypeData, offerTypeData, rsaSchemeCategoryData } = props;
-    const { typeData, resetViewData, fetchViewDocument, viewDocument, viewListShowLoading, isViewDataLoaded, isVehicleSalesSchemeUploadDataLoaded, isVehicleSalesSchemeUploadDataLoading, vehicleSalesSchemeUploadData, downloadFile, resetUploadSalesSchemeData, totalRecords, downloadShowLoading, manufacturerOrgHierarchyData, DetailLoading, fetchAmcSchemeCategoryLovList, listAmcSchemeCategoryLovListShowLoading } = props;
+    const { dealerLocationId, data, saveData, fetchList, userId, listShowLoading, showGlobalNotification, fetchDetail, amcSchemeCategoryData, shieldSchemeCategoryData } = props;
+    const { isVehicleSalesSchemeDataLoaded, vehicleSalesSchemeData, schemeTypeData, encashTypeData, offerTypeData, rsaSchemeCategoryData } = props;
+    const { typeData, resetViewData, fetchViewDocument, viewDocument, viewListShowLoading, isViewDataLoaded, isVehicleSalesSchemeUploadDataLoaded, isVehicleSalesSchemeUploadDataLoading, vehicleSalesSchemeUploadData, downloadFile, resetUploadSalesSchemeData, totalRecords, downloadShowLoading, manufacturerOrgHierarchyData, fetchAmcSchemeCategoryLovList, listAmcSchemeCategoryLovListShowLoading } = props;
     const { accessToken, resetDetailData, token, vehicleSalesSchemeDetails, fetchDocumentFileDocId, saveVehicleSalesSchemeData, vehicleSalesSchemelistShowLoading, manufacturerOrgFetchList, manufacturerOrgListShowLoading, fetchModelList, productHierarchyDataList, fetchRsaSchemeCategoryLovList, fetchShieldSchemeCategoryLovList, listRsaSchemeCategoryLovListShowLoading, listShieldSchemeCategoryLovListShowLoading, fetchZoneMasterList, listZoneMasterShowLoading, fetchAreaOfficeList, listAreaOfficeListShowLoading, zoneMasterData, areaOfficeData } = props;
     const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
 
@@ -201,7 +194,6 @@ export const VehicleSalesSchemeMasterBase = (props) => {
 
     const [productAddMode, setProductAddMode] = useState(false);
     const [saleService, setSaleService] = useState({ sales: false, service: false });
-    const [page, setPage] = useState({});
     const [organizationId, setOrganizationId] = useState('');
     const [selectedTreeData, setSelectedTreeData] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
@@ -266,10 +258,9 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     }, [isVehicleSalesSchemeDataLoaded, vehicleSalesSchemeDetails]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && dealerLocationId) {
             setFilterString({ ...filterString, pageSize: 10, current: 1 });
             manufacturerOrgFetchList({ setIsLoading: manufacturerOrgListShowLoading, userId, errorAction: onErrorAction });
-            fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
             fetchZoneMasterList({ setIsLoading: listZoneMasterShowLoading, userId });
 
             const extraParams = [
@@ -281,7 +272,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             fetchModelList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, dealerLocationId]);
 
     useEffect(() => {
         if (schemeCategoryList?.amc) {
@@ -308,10 +299,10 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     useEffect(() => {
         if (userId && organizationId) {
             if (!organizationId) return;
-            manufacturerOrgFetchList({ setIsLoading: DetailLoading, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), userId, onErrorAction });
+            manufacturerOrgFetchList({ setIsLoading: manufacturerOrgListShowLoading, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), userId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [organizationId, userId]);
+    }, [userId]);
 
     const defaultExtraParam = useMemo(() => {
         return [
@@ -408,8 +399,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
@@ -431,10 +422,14 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             setUploadedFile();
             setUploadedFileName();
             resetUploadSalesSchemeData();
+            setShowDataLoading(false);
+
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onErrorAction = (res) => {
+            setShowDataLoading(false);
+
             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: res, placement: 'bottomRight' });
         };
 
@@ -514,35 +509,16 @@ export const VehicleSalesSchemeMasterBase = (props) => {
                 setDisableAmountTaxField(!disabledAmountField);
         }
         setSchemeCategorySelect(value);
-        if(schemeCategorySelect){
+        if (schemeCategorySelect) {
             addSchemeForm.setFieldsValue({ schemeCategory: null });
         }
     };
-
-    // const handleSchemeCategory = (value) => {
-    //     const disabledAmountField = value !== '';
-
-    //     if (value === SCHEME_TYPE_CONSTANTS?.AMC_FOC?.key) {
-    //         setSchemeCategoryList({ amc: true, rsa: false, shield: false });
-    //         setDisableAmountTaxField(disabledAmountField);
-    //     } else if (value === SCHEME_TYPE_CONSTANTS?.RSA_FOC?.key) {
-    //         setSchemeCategoryList({ amc: false, rsa: true, shield: false });
-    //         setDisableAmountTaxField(disabledAmountField);
-    //     } else if (value === SCHEME_TYPE_CONSTANTS?.SHIELD_FOC?.key) {
-    //         setSchemeCategoryList({ amc: false, rsa: false, shield: true });
-    //         setDisableAmountTaxField(disabledAmountField);
-    //     } else {
-    //         setDisableAmountTaxField(!disabledAmountField);
-    //     }
-    //     setSchemeCategorySelect(value);
-    // };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         addSchemeForm.resetFields();
         setOrganizationId([]);
         setTableDataItem([]);
         if (buttonAction === VIEW_ACTION || buttonAction === EDIT_ACTION) {
-            //setFormData([])
             const extraParams = [
                 {
                     key: 'id',
@@ -579,12 +555,9 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             setButtonData({ closeBtn: true });
         }
 
-        //setFormData(record);
         setIsFormVisible(true);
         setIsViewDetailVisible(true);
     };
-
-    console.log(saleService);
 
     const handleZoneChange = (value) => {
         const extraParams = [
@@ -595,23 +568,23 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         ];
         fetchAreaOfficeList({ setIsLoading: listAreaOfficeListShowLoading, userId, extraParams });
         setZone(value);
-        if(zone){
+        if (zone) {
             addZoneAreaForm.setFieldsValue({ area: null });
         }
     };
 
     const onSearchHandle = (value) => {
-        setPage({ ...page, current: 1 });
         setFilterString({ ...filterString, advanceFilter: true, searchParam: value });
         setSearchValue(value);
+        setShowDataLoading(false);
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString((prev) => ({ current: 1, pageSize: prev?.pageSize }));
-        setShowDataLoading(false);
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
     };
 
@@ -859,6 +832,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         totalRecords,
         dynamicPagination,
         filterString,
+        isLoading: showDataLoading,
     };
 
     const title = translateContent('vehicleSalesSchemeMaster.heading.title');
@@ -963,7 +937,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
+                    <ListDataTable {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

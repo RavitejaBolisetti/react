@@ -9,6 +9,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { FaHistory } from 'react-icons/fa';
 import { FilterIcon } from 'Icons';
 import styles from 'assets/sass/app.module.scss';
+import { USER_TYPE } from 'constants/userType';
 
 import { TfiReload } from 'react-icons/tfi';
 import { BsDownload } from 'react-icons/bs';
@@ -19,7 +20,7 @@ import { translateContent } from 'utils/translateContent';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, userType = true } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -81,7 +82,7 @@ export default function AppliedAdvanceFilter(props) {
                         {tableData?.length > 0 && (
                             <>
                                 <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
-                                {showAddButton && (
+                                {showAddButton && userType !== USER_TYPE?.ADMIN?.key && (
                                     <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         {translateContent('global.buttons.add')}
                                     </Button>

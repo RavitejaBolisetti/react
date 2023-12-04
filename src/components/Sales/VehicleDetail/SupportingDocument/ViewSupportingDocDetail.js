@@ -40,7 +40,7 @@ export const ViewSupportingDocDetail = (props) => {
                 </div>
             ) : (
                 // viewMode &&
-                viewMode && <NoDataFound informtion={translateContent('vehicleDetail.documents.label.noSupportingDocumentsFound')} />
+                viewMode && <NoDataFound information={translateContent('vehicleDetail.documents.label.noSupportingDocumentsFound')} />
             )}
         </div>
     );

@@ -81,7 +81,7 @@ export const VinBlockMasterBase = (props) => {
     const page = { current: 1, pageSize: 10 };
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const formActionType = defaultFormActionType;
     const [vinInfo, setvinInfo] = useState();
     const [isLoading, showLoading] = useState(true);
 
@@ -95,7 +95,6 @@ export const VinBlockMasterBase = (props) => {
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -168,7 +167,13 @@ export const VinBlockMasterBase = (props) => {
     useEffect(() => {
         if (userId && extraParams) {
             setShowDataLoading(true);
-            fetchVinBlockList({ setIsLoading: listVinShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            fetchVinBlockList({
+                setIsLoading: listVinShowLoading,
+                userId,
+                extraParams,
+                onErrorAction,
+                onSuccessAction,
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
@@ -205,9 +210,7 @@ export const VinBlockMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-    const setPage = (page) => {
-        setFilterString({ ...filterString, ...page });
-    };
+
     const tableProps = {
         dynamicPagination,
         filterString,
@@ -276,7 +279,7 @@ export const VinBlockMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
             },
         },
         common: {
-            Header: { data: loginUserData = [] },
+            Header: { data: loginUserData = [], dealerLocationId },
         },
     } = state;
 
@@ -55,6 +55,7 @@ const mapStateToProps = (state) => {
         dealerParentsLovList,
         viewVehiclePODetails,
         dealerLocationList,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -81,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
-    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
+    const { dealerLocationId, typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
     const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave, changeView } = props;
     const { productHierarchyDataArray } = props;

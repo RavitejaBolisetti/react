@@ -61,7 +61,7 @@ export const ComingSoonMasterBase = (props) => {
                         </Col>
                     </Row>
                     <Card>
-                        <NoDataFound informtion={noDataTitle} />
+                        <NoDataFound information={noDataTitle} />
                     </Card>
                 </Col>
             </Row>

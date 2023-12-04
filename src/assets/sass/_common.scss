@@ -15,7 +15,7 @@
     padding: 8px;
     color: #ffffff;
     font-size: 14px;
-    font-family: Lato
+    font-family: 'Lato', sans-serif;
 }
 
 .fullyCentered {
@@ -123,7 +123,7 @@
     margin-bottom: 20px;
 }
 
-.pad5{
+.pad5 {
     padding: 5px;
 }
 
@@ -298,7 +298,7 @@
     display: flex;
     align-items: center;
 
-    >svg {
+    > svg {
         margin-left: 5px;
         color: $semanticInfo;
     }
@@ -308,6 +308,8 @@
     & :global {
         .ant-tooltip-content {
             .ant-tooltip-inner {
+                color: $primaryBlack;
+                background: $primaryWhite !important;
                 p {
                     padding-left: 12px !important;
                 }
@@ -475,7 +477,7 @@
     .inActive {
         & :global {
             .ant-timeline-item-tail {
-                background-color: $semanticSuccess !important;
+                background-color: grey !important;
             }
         }
     }
@@ -740,8 +742,8 @@
         }
 
         .ant-input-search {
-            >.ant-input-group {
-                >.ant-input-group-addon {
+            > .ant-input-group {
+                > .ant-input-group-addon {
                     &:last-child {
                         .ant-input-search-button {
                             &:not(.ant-btn-primary) {
@@ -879,7 +881,7 @@
                 .ant-tabs-tab {
                     padding: 0 0 8px 0;
 
-                    +.ant-tabs-tab {
+                    + .ant-tabs-tab {
                         margin: 0 0 0 20px;
                     }
                 }
@@ -1328,6 +1330,8 @@
     }
 }
 
+
+
 /*--------------sub title Section Strat--------------*/
 .subTitle {
     margin-bottom: 20px;
@@ -1436,9 +1440,11 @@
         height: 30px;
         border-radius: 20px;
         margin-top: 6px;
-        padding: 4px 10px;
+        padding: 4px 8px;
         border: solid 1px $primaryRed;
         color: $primaryRed;
+         // border: solid 1px $neutralGrey2;
+        // color: $neutralGrey4;
         line-height: 18px;
         margin-right: 12px;
 
@@ -1551,11 +1557,11 @@
     & :global {
         .ant-descriptions {
             .ant-descriptions-row {
-                >th {
+                > th {
                     padding-bottom: 0px;
                 }
 
-                >td {
+                > td {
                     padding-bottom: 0px;
                 }
             }
@@ -1571,19 +1577,19 @@
             margin-bottom: 0px;
 
             .ant-form-item-label {
-                >label {
+                > label {
                     margin-right: 20px;
                     height: 36px;
                     color: $primaryBlack;
                 }
 
-                >label.ant-form-item-no-colon {
+                > label.ant-form-item-no-colon {
                     &::after {
                         display: none;
                     }
                 }
 
-                >label.ant-form-item-required {
+                > label.ant-form-item-required {
                     &:not(.ant-form-item-required-mark-optional) {
                         &::before {
                             margin-top: -3px;
@@ -1656,8 +1662,8 @@
         .ant-collapse {
             border: 0.5px solid $neutralGrey2;
 
-            >.ant-collapse-item {
-                >.ant-collapse-header {
+            > .ant-collapse-item {
+                > .ant-collapse-header {
                     padding: 12px 16px 16px;
 
                     .ant-collapse-header-text {
@@ -1713,7 +1719,7 @@
                         }
                     }
 
-                    >.ant-collapse-header-text {
+                    > .ant-collapse-header-text {
                         .ant-space-vertical {
                             display: inline-block;
                             width: 100%;
@@ -1759,7 +1765,7 @@
             }
 
             .ant-collapse-content {
-                >.ant-collapse-content-box {
+                > .ant-collapse-content-box {
                     padding: 0 16px 12px;
                     margin-bottom: 0;
 
@@ -1830,7 +1836,7 @@
             }
 
             .ant-timeline-item-last {
-                >.ant-timeline-item-content {
+                > .ant-timeline-item-content {
                     min-height: 32px;
                 }
             }
@@ -1838,7 +1844,7 @@
             .ant-timeline-item-tail {
                 inset-block-start: 9px;
                 height: calc(100% - 21px);
-                background-color: $semanticSuccess !important;
+                background-color: $semanticSuccess;
             }
 
             .ant-timeline-item-head-custom {
@@ -1920,6 +1926,13 @@
     .inActive {
         & :global {
             .ant-timeline-item-tail {
+                background-color: $neutralGrey3 !important;
+            }
+        }
+    }
+    .successInActive {
+        & :global {
+            .ant-timeline-item-tail {
                 background-color: $semanticSuccess !important;
             }
         }
@@ -1931,10 +1944,10 @@
         font-size: 12px;
         line-height: 20px;
         font-weight: 500;
-        // color: $neutralGrey4;
+        color: $neutralGrey4;
 
         span {
-            // color: $primaryBlack;
+            color: $primaryBlack;
             max-width: 9.5vw;
             word-wrap: break-word;
         }
@@ -1986,15 +1999,15 @@
 
         .ant-steps {
             .ant-steps-item-process {
-                >.ant-steps-item-container {
-                    >.ant-steps-item-tail {
+                > .ant-steps-item-container {
+                    > .ant-steps-item-tail {
                         &::after {
                             background-color: $neutralGrey2;
                         }
                     }
 
-                    >.ant-steps-item-content {
-                        >.ant-steps-item-title {
+                    > .ant-steps-item-content {
+                        > .ant-steps-item-title {
                             // color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;
@@ -2006,15 +2019,15 @@
             }
 
             .ant-steps-item-wait {
-                >.ant-steps-item-container {
-                    >.ant-steps-item-tail {
+                > .ant-steps-item-container {
+                    > .ant-steps-item-tail {
                         &::after {
                             background-color: $neutralGrey2;
                         }
                     }
 
-                    >.ant-steps-item-content {
-                        >.ant-steps-item-title {
+                    > .ant-steps-item-content {
+                        > .ant-steps-item-title {
                             // color: $primaryBlack;
                             font-size: 10px;
                             font-weight: 500;
@@ -2090,7 +2103,6 @@
         }
 
         .ant-table-wrapper {
-
             // table {
             //     border: 1px solid $neutralGrey2;
             //     background: $primaryWhite;
@@ -2135,7 +2147,7 @@
                     }
                 }
 
-                >.ant-collapse-content-box {
+                > .ant-collapse-content-box {
                     padding: 0 30px;
                     margin-bottom: 0;
 
@@ -2147,8 +2159,8 @@
                 }
             }
 
-            >.ant-collapse-item {
-                >.ant-collapse-header {
+            > .ant-collapse-item {
+                > .ant-collapse-header {
                     padding: 20px 30px;
 
                     .ant-collapse-header-text {
@@ -2173,8 +2185,8 @@
                 }
             }
 
-            >.ant-collapse-item-active {
-                >.ant-collapse-header {
+            > .ant-collapse-item-active {
+                > .ant-collapse-header {
                     padding: 20px 30px;
                 }
             }
@@ -2233,7 +2245,7 @@
 
         .ant-result-success {
             .ant-result-icon {
-                >.anticon-check-circle {
+                > .anticon-check-circle {
                     border: 47px solid $transparentSuccessL;
                     border-radius: 100px;
                 }
@@ -2316,8 +2328,8 @@
             }
 
             .ant-collapse {
-                >.ant-collapse-item {
-                    >.ant-collapse-header {
+                > .ant-collapse-item {
+                    > .ant-collapse-header {
                         padding: 20px 30px;
                     }
                 }
@@ -2701,7 +2713,6 @@
     }
 }
 
-
 /*--------------customer Name Section Strat--------------*/
 .customerName {
     border: 1px solid $neutralGrey1;
@@ -2989,7 +3000,7 @@
             color: $primaryBlack;
         }
 
-        >input {
+        > input {
             &:focus-visible {
                 margin-right: 10px;
             }
@@ -3062,6 +3073,30 @@
                 @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
             }
         }
+        & :global {
+            .ant-btn-icon {
+                margin-inline-end: 6px;
+                margin-left: -6px;
+
+                svg {
+                    margin-left: -24px;
+                    visibility: hidden;
+                }
+            }
+
+            .ant-btn-icon.ant-btn-loading-icon {
+                margin-inline-end: 6px;
+
+                .anticon {
+                    margin-left: -16px;
+
+                    svg {
+                        margin-left: 0;
+                        visibility: visible;
+                    }
+                }
+            }
+        }
     }
 
     .fielderror {
@@ -3090,7 +3125,7 @@
                 }
 
                 .ant-checkbox {
-                    &:not(.ant-checkbox-checked)+span {
+                    &:not(.ant-checkbox-checked) + span {
                         color: $neutralGrey3-dark !important;
 
                         p {
@@ -3100,7 +3135,7 @@
                 }
 
                 .ant-checkbox.ant-checkbox-checked {
-                    +span {
+                    + span {
                         color: $primaryRed-dark !important;
 
                         p {
@@ -3356,7 +3391,7 @@
             }
 
             .ant-collapse-content {
-                >.ant-collapse-content-box {
+                > .ant-collapse-content-box {
                     padding-top: 0px;
                 }
             }
@@ -3390,7 +3425,7 @@
             // }
 
             .ant-collapse-content {
-                >.ant-collapse-content-box {
+                > .ant-collapse-content-box {
                     padding-top: 0px;
                 }
             }
@@ -3549,7 +3584,7 @@
             }
 
             .ant-modal-confirm-body {
-                >.anticon {
+                > .anticon {
                     + {
                         .ant-modal-confirm-title {
                             + {
@@ -3576,7 +3611,7 @@
                 }
             }
 
-            .ant-tree-checkbox+span {
+            .ant-tree-checkbox + span {
                 &:hover {
                     color: $neutralGrey3;
                     cursor: not-allowed;
@@ -3584,7 +3619,7 @@
             }
 
             .ant-tree-checkbox {
-                &:hover+span {
+                &:hover + span {
                     color: $neutralGrey3;
                     cursor: not-allowed;
                 }
@@ -3613,7 +3648,7 @@
                 }
             }
 
-            .ant-tree-checkbox-checked+span {
+            .ant-tree-checkbox-checked + span {
                 &:hover {
                     color: $primaryRed;
 
@@ -3622,7 +3657,7 @@
             }
 
             .ant-tree-checkbox-checked {
-                &:hover+span {
+                &:hover + span {
                     color: $primaryRed;
 
                     cursor: not-allowed;
@@ -3641,7 +3676,7 @@
                 }
             }
 
-            .ant-tree-checkbox-indeterminate+span {
+            .ant-tree-checkbox-indeterminate + span {
                 &:hover {
                     color: $primaryBlack;
                     cursor: not-allowed;
@@ -3649,7 +3684,7 @@
             }
 
             .ant-tree-checkbox-indeterminate {
-                &:hover+span {
+                &:hover + span {
                     color: $primaryBlack;
                     cursor: not-allowed;
                 }

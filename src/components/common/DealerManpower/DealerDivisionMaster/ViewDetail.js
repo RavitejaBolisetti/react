@@ -21,7 +21,9 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label={translateContent('divisionMaster.label.divisionCode')}>{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('divisionMaster.label.divisionName')}>{formData?.divisionName}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('global.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>
+                        <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>

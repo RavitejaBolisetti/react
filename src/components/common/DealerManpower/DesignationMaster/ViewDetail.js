@@ -26,7 +26,9 @@ const ViewDetailBase = ({ formData, styles, typeData }) => {
                     <Descriptions.Item label={translateContent('designationMaster.label.designationType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.DESG_TYP_ASGN_TO, formData?.designationType))}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('designationMaster.label.designationName')}>{formData?.designationName}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('designationMaster.label.mileSkill')}>{formData?.mileSkillId}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('designationMaster.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('designationMaster.label.status')}>
+                        <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
+                    </Descriptions.Item>
                     <Descriptions.Item label={translateContent('designationMaster.label.manPowerRequired')}>{formData?.isManpowerIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('designationMaster.label.accountsData')}>{formData?.isAccountsDataIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('designationMaster.label.capability')}>{formData?.isCapabilityIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>

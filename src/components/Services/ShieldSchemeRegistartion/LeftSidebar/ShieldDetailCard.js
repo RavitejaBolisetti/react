@@ -30,7 +30,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ShieldDetailCard = (props) => {
-    const { record, isLoading, typeData, selectedCardData } = props;
+    const { isLoading, typeData, selectedCardData } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel

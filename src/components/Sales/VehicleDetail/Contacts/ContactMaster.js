@@ -246,7 +246,7 @@ const ContactMasterMain = (props) => {
                                     <Divider className={styles.marT20} />
                                     <div className={styles.headerBox}>
                                         {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                        {!contactData?.length && !isAdding ? <NoDataFound informtion={noDataTitle} /> : <ViewList {...formProps} />}
+                                        {!contactData?.length && !isAdding ? <NoDataFound information={noDataTitle} /> : <ViewList {...formProps} />}
                                     </div>
                                 </>
                             )}

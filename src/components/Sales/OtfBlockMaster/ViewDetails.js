@@ -24,7 +24,11 @@ export const ViewMain = (props) => {
                 <Descriptions.Item label={translateContent('bookingBlockMaster.label.productHierarchy')}>{checkAndSetDefaultValue(selectedProductName)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('bookingBlockMaster.label.manufacturerAdmin')}>{checkAndSetDefaultValue(formData?.hierarchyMstName)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('bookingBlockMaster.label.dealerCode')}>{checkAndSetDefaultValue(formData?.dealerCode)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('global.label.status')}>{checkAndSetDefaultValue(formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive'))}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('global.label.status')}>
+                <span className={formData?.status ? styles.activeText : styles?.inactiveText}>
+                    {checkAndSetDefaultValue(formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive'))}
+                </span>
+                </Descriptions.Item>
             </Descriptions>
         </div>
     );

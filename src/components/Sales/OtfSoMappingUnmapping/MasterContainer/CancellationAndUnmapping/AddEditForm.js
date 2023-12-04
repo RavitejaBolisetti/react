@@ -28,48 +28,48 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     return (
-        <div className={styles.drawerBodyNew}>
+        <div>
             <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFinish={onFinish}>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Row gutter={20} className={styles.drawerBody}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="soNumber" label={translateContent('bookingSoMappUnmapp.label.soNumber')}>
                             <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soNumber'))} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="poNumber" label={translateContent('bookingSoMappUnmapp.label.poNumber')}>
                             <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.poNumber'))} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="soDate" label={translateContent('bookingSoMappUnmapp.label.soDate')}>
                             <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soDate'))} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="modelDescription" label={translateContent('bookingSoMappUnmapp.label.modelDescription')}>
                             <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.modelDescription'))} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="chasisNumber" label={translateContent('bookingSoMappUnmapp.label.chassisNumber')}>
                             <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.chassisNumber'))} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="otfNumber" label={translateContent('bookingSoMappUnmapp.label.otfNumber')}>
                             <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.otfNumber'))} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="customerName" label={translateContent('bookingSoMappUnmapp.label.customerName')}>
                             <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.customerName'))} />
                         </Form.Item>
                     </Col>
                     {showFields && (
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="CancellationDate" label={translateContent('bookingSoMappUnmapp.label.CancellationDate')}>
-                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.CancellationDate'))} />
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="CancellationDate" label={translateContent('bookingSoMappUnmapp.label.cancellationDate')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.cancellationDate'))} />
                             </Form.Item>
                         </Col>
                     )}

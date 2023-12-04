@@ -30,9 +30,7 @@ import { zoneAreaTableColumn } from './zoneAreaTableColumn';
 import { ZoneAreaModal } from './ZoneAreaModal';
 import { translateContent } from 'utils/translateContent';
 import { FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-import { ENCASH_CONSTANTS } from './constants/encashContants';
 import { DELETE_ACTION } from 'utils/btnVisiblity';
-import { salesConsultantLov } from 'store/reducers/data/otf/salesConsultant';
 
 const { Panel } = Collapse;
 
@@ -300,10 +298,7 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    console.log(formData?.encash === "SL" ? true : false, ' checked')
-    console.log(formData, `formData`);
-
-    return (
+ return (
         <Form form={addSchemeForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
             {formActionType?.viewMode ? (
                 <ViewDetail {...viewProps} />
@@ -370,7 +365,7 @@ const AddEditFormMain = (props) => {
                                                 label={translateContent('vehicleSalesSchemeMaster.label.validityToDate')}
                                                 name="validityToDate"
                                                 rules={[
-                                                    validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityTodate')),
+                                                    validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityToDate')),
                                                     {
                                                         validator: (_, value) => {
                                                             return addSchemeForm.getFieldValue('validityFromDate') ? CheckDateEffectiveTo(value, addSchemeForm?.getFieldValue('validityFromDate')) : null;

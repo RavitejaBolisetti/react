@@ -12,7 +12,7 @@ import styles from 'assets/sass/app.module.scss';
 import { ProductModelHierarchy } from 'components/utils/ProductModelHierarchy';
 import { translateContent } from 'utils/translateContent';
 
-export const ProductHierarchyModalFrom = (props) => {
+export const ProductHierarchyModalForm = (props) => {
     const { onCloseAction, productHierarchyForm, onFinishAddProductDetails, productHierarchyDataList, selectedTreeSelectKey, filterString, handleSelectTreeClick, editingData } = props;
     useEffect(() => {
         productHierarchyForm.setFieldsValue({ ...editingData, toggleStatus: editingData?.toggleStatus });
@@ -38,7 +38,7 @@ export const ProductHierarchyModalFrom = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={productHierarchyForm} onFinish={onFinishAddProductDetails}>
             <Row gutter={24}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <ProductModelHierarchy {...treeSelectFieldProps} />
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -64,4 +64,4 @@ export const ProductHierarchyModalFrom = (props) => {
     );
 };
 
-export const ProductHierarchyModal = withModal(ProductHierarchyModalFrom, { width: 500 });
+export const ProductHierarchyModal = withModal(ProductHierarchyModalForm, { width: 500 });
