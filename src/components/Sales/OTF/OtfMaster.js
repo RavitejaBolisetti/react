@@ -30,18 +30,16 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL, BASE_URL_OTF_CANCELLATION_WF as customURLCancelWF } from 'constants/routingApi';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
-
 import { ChangeHistory } from './ChangeHistory';
-
-import styles from 'assets/sass/app.module.scss';
-
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
 import { translateContent } from 'utils/translateContent';
+import LeftProfileCard from './LeftProfileCard';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { confirm } = Modal;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -167,7 +165,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: false,
-        otfSoMappingHistoryBtn: false,
+        otfSoMappingHistoryBtn: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -393,7 +391,7 @@ export const OtfMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => validateOTFMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
+                const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
                 if (buttonData?.formBtnActive && isNextBtnClick) {
                     setIsUnsavedDataPopup(true);
                     setNextCurrentSection(nextSection?.id);
@@ -704,6 +702,7 @@ export const OtfMasterBase = (props) => {
         selectedRecordId,
         selectedBookingId,
     };
+
     const OtfSoMappingChangeHistoryProps = {
         isVisible: OtfSoMappingHistoryVisible,
         onCloseAction: () => {
@@ -715,6 +714,7 @@ export const OtfMasterBase = (props) => {
         buttonData,
         otfSoMappingChangeHistoryTitle,
         selectedRecordId,
+        selectedOrderId: selectedBookingId || selectedOrderId,
     };
 
     const onCloseDrawer = () => {
@@ -725,7 +725,15 @@ export const OtfMasterBase = (props) => {
         }
     };
 
+    const filterActiveMenu = (items) => {
+        return items?.filter((item) => validateOTFMenu({ item, status: selectedOrder?.orderStatus, otfData }));
+    };
+
+    const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
+
     const containerProps = {
+        MenuCard: LeftProfileCard,
+        menuItem: filterActiveSection,
         record: selectedOrder,
         form,
         formActionType,

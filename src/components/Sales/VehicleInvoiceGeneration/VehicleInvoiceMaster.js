@@ -14,7 +14,7 @@ import { CancelInvoice } from './CancelInvoice';
 import { AdvancedSearch } from './AdvancedSearch';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import VehicleInvoiceFilter from './VehicleInvoiceFilter';
-import { validateInvoiceMenu } from './LeftProfileCard/MenuNav';
+import { validateInvoiceMenu } from './LeftProfileCard/validateInvoiceMenu';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
 import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';

@@ -5,36 +5,25 @@
  */
 import React from 'react';
 import { Collapse, Space, Button, Avatar, Typography, Divider } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { DATA_TYPE } from 'constants/dataType';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+
+import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
+
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { addToolTip } from 'utils/customMenuLink';
 import { getCodeValue } from 'utils/getCodeValue';
-import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
-import { PARAM_MASTER } from 'constants/paramMaster';
-
 import { ConfirmationModal } from 'utils/ConfirmationModal';
-import { IRN_STATUS } from 'constants/IRNStatus';
 import { translateContent } from 'utils/translateContent';
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
+
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { IRN_STATUS } from 'constants/IRNStatus';
+import { DATA_TYPE } from 'constants/dataType';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
-
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
 
 const LeftProfileCard = (props) => {
     const { profileCardData: selectedOrder, formActionType, typeData, handleIRNGeneration, isLoading } = props;
@@ -62,7 +51,7 @@ const LeftProfileCard = (props) => {
     };
 
     return (
-        <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>
