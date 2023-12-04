@@ -894,6 +894,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         isInVoiceMasterDetailDataLoaded,
         salesConsultantLovData,
         resetDetailData,
+        handleUnSavedChangeFn,
     };
 
     const cancelInvoiceProps = {

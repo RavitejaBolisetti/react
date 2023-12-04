@@ -146,8 +146,6 @@ export const OtfMasterBase = (props) => {
     const [otfTransferForm] = Form.useForm();
     const [otfCancellationForm] = Form.useForm();
     const [otfAllotmentForm] = Form.useForm();
-    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
-    const [nextCurentSection, setNextCurrentSection] = useState('');
     const [singleDisabled, setSingleDisabled] = useState(false);
     const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
         isVisible: false,
@@ -358,18 +356,6 @@ export const OtfMasterBase = (props) => {
         updateVehicleAllotmentStatus(requestData);
     };
 
-    const handleOkUnsavedModal = () => {
-        if (nextCurentSection) {
-            setIsUnsavedDataPopup(false);
-            setCurrentSection(nextCurentSection);
-            section && setLastSection(!nextCurentSection);
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setNextCurrentSection('');
-        } else {
-            onCloseAction();
-        }
-    };
-
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, isNextBtnClick = false }) => {
         buttonAction !== NEXT_ACTION && form.resetFields();
         form.setFieldsValue(undefined);
@@ -397,13 +383,8 @@ export const OtfMasterBase = (props) => {
             case NEXT_ACTION:
                 handleUnSavedChangeFn(() => {
                     const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
-                    if (buttonData?.formBtnActive && isNextBtnClick) {
-                        setIsUnsavedDataPopup(true);
-                        setNextCurrentSection(nextSection?.id);
-                    } else {
-                        section && setCurrentSection(nextSection?.id);
-                        setLastSection(!nextSection?.id);
-                    }
+                    section && setCurrentSection(nextSection?.id);
+                    setLastSection(!nextSection?.id);
                 });
 
                 break;
@@ -525,17 +506,19 @@ export const OtfMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        form.resetFields();
-        form.setFieldsValue();
-        setIsUnsavedDataPopup(false);
+        handleUnSavedChangeFn(() => {
+            form.resetFields();
+            form.setFieldsValue();
+            setIsUnsavedDataPopup(false);
 
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
+            advanceFilterForm.resetFields();
+            advanceFilterForm.setFieldsValue();
+            setAdvanceSearchVisible(false);
 
-        setSelectedOrder();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
+            setSelectedOrder();
+            setIsFormVisible(false);
+            setButtonData({ ...defaultBtnVisiblity });
+        });
     };
 
     const setPage = (page) => {
@@ -783,8 +766,7 @@ export const OtfMasterBase = (props) => {
         handleOtfSoMappingHistory,
         refreshData,
         setRefreshData,
-        setIsUnsavedDataPopup,
-        setNextCurrentSection,
+        handleUnSavedChangeFn,
     };
 
     const onCancelCloseAction = () => {
@@ -833,17 +815,6 @@ export const OtfMasterBase = (props) => {
         setRefreshData,
         setIsFormVisible,
         setShowDataLoading,
-    };
-
-    const handleCancelUnsaveDataModal = () => {
-        setIsUnsavedDataPopup(false);
-        setNextCurrentSection('');
-    };
-
-    const unsavedDataModalProps = {
-        isVisible: isUnsavedDataPopup,
-        onCloseAction: handleCancelUnsaveDataModal,
-        onSubmitAction: handleOkUnsavedModal,
     };
 
     return (
