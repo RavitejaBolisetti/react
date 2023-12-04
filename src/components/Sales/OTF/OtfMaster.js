@@ -794,6 +794,7 @@ export const OtfMasterBase = (props) => {
         TRANSFER_ACTION,
         isVisible: isTransferVisible,
         onCloseAction: onCancelCloseAction,
+        handleButtonClick,
     };
 
     const allotOTFProps = {
