@@ -16,6 +16,7 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { RSARegistrationStatusTag } from 'components/Sales/RSARegistration/utils/RSARegistrationStatusTag';
 
 const ViewDetail = (props) => {
     const { screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowDetails, typeData } = props;
@@ -49,7 +50,7 @@ const ViewDetail = (props) => {
                             {translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(formData?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
                         </Typography>
                     </Row>
-                    {SchemeStatusTag(selectedOrder?.status)}
+                    {screenType === 'RSA' ? RSARegistrationStatusTag(selectedOrder?.status) : SchemeStatusTag(selectedOrder?.status)}
                 </Row>
                 <Row type="flex" align="middle" className={selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>

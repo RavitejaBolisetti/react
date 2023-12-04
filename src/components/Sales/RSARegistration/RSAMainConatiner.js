@@ -21,7 +21,6 @@ import { ThankYouMaster } from 'components/Services/ShieldSchemeRegistartion/Tha
 import styles from 'assets/sass/app.module.scss';
 const RSAMainConatinerMain = (props) => {
     const { currentSection } = props;
-    const [workFlowDetails, setWorkFlowDetails] = useState({});
 
     const myProps = {
         ...props,
@@ -29,16 +28,6 @@ const RSAMainConatinerMain = (props) => {
 
     const renderElement = () => {
         switch (currentSection) {
-            // case RSA_LEFTMENU_SECTION.RSA_REGISTRATION_DETAILS.id: {
-            //     return <RSARegistrationDetailMaster {...myProps} />;
-            // }
-            // case RSA_LEFTMENU_SECTION.VEHICLE_AND_CUSTOMER_DETAILS.id: {
-            //     return <VehicleAndCustomerDetailsMaster {...myProps} />;
-            // }
-            // default: {
-            //     return;
-            // }
-
             case SHIELD_REGISTRATION_SECTION.SHIELD_REGISTRATION_DETAILS.id: {
                 return <ShieldRegistrationDetailMaster {...myProps} />;
             }

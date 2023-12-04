@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
             VehicleDeliveryNote: {
                 VehicleDeliveryNoteSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded: isDeliveryDataLoaded = false, detailData: deliveryNoteMasterData = [] },
                 VehicleDetailsChallan: { data: vehicleChallanData = {} },
-                CustomerDetailsDeliveryNote: { data: customerDetailsDataSearched = {} },
+                CustomerDetailsDeliveryNote: { data: customerDetailsDataSearched = {}, isLoading: isCustomerLoading = false },
             },
         },
     } = state;
@@ -70,6 +70,8 @@ const mapStateToProps = (state) => {
 
         vehicleChallanData,
         customerDetailsDataSearched,
+
+        isCustomerLoading,
     };
     return returnValue;
 };
@@ -107,7 +109,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, resetCheckListData } = props;
     const { fetchDeliveryNoteMasterData, resetDeliveryNoteMasterData, deliveryNoteMasterData, isDeliveryDataLoaded, vehicleChallanData, resetChallanData } = props;
-    const { fetchCustomerListData, listCustomerListLoading, resetCustomerdata, customerDetailsDataSearched } = props;
+    const { fetchCustomerListData, listCustomerListLoading, resetCustomerdata, customerDetailsDataSearched, isCustomerLoading } = props;
 
     const defaultRequestPayload = {
         deliveryNoteInvoiveDetails: {},
@@ -373,7 +375,11 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const onSuccessAction = (res) => {
             setSelectedOrder((prev) => ({ ...prev, customerName: res?.data?.customerName, customerId: res?.data?.customerId }));
             setButtonData({ ...buttonData, formBtnActive: true });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            if (res?.data?.customerId && res?.data?.customerName) {
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                showGlobalNotification({ message: translateContent('vehicleDeliveryNote.notificationError.customerDetails') });
+            }
         };
 
         const searchParams = [
@@ -386,7 +392,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         ];
         fetchCustomerListData({ setIsLoading: listCustomerListLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
     };
-
+    console.log('isCustomerLoading', isCustomerLoading);
     const handleDeliveryNoteTypeChange = (buttonName) => {
         const buttonKey = buttonName?.key;
         setShowDataLoading(true);
@@ -791,6 +797,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         typeData,
         onFinishSearch,
         deliveryStatus,
+        deliveryType,
     };
 
     const cancelModalCloseAction = () => {
@@ -888,6 +895,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         localFormValueChange,
         setIsUnsavedDataPopup,
         setItemKey,
+        isCustomerLoading,
     };
 
     const reportDetail = deliveryType === DELIVERY_TYPE?.NOTE?.key ? EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? EMBEDDED_REPORTS?.CHALLAN_DOCUMENT : null;

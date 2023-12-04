@@ -159,7 +159,6 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         filterString,
         amcStatus,
         ...props,
-        // formData: detailShieldData?.shieldRegistrationDetails,
     };
 
     return (
