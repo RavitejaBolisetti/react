@@ -5,32 +5,20 @@
  */
 import React from 'react';
 import { Collapse, Space, Avatar, Divider, Typography } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
+import styles from 'assets/sass/app.module.scss';
+
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
-
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
 
 const ProfileDetailCard = (props) => {
     const { selectedRecord, formData } = props;
     const fullName = formData?.manufacturerUserName?.split(' ') || formData?.userName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
-
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} accordion={true} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} defaultActiveKey={[1]} accordion={true} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>
