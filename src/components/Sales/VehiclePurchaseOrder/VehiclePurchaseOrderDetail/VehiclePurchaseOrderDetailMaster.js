@@ -160,8 +160,10 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const onFinish = (values) => {
         const recordId = viewVehiclePODetails?.id || '';
         const onSuccess = (res) => {
+            setModelCode('');
+            form.resetFields();
+            form.setFieldsValue('model', '');
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-
             fetchListView({ setIsLoading: listShowLoading, userId, extraParams: extraParamsAfterSave, onErrorAction });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             setIsFormVisible(false);
