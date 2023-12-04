@@ -3,14 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { RSA_LEFTMENU_SECTION } from 'components/Sales/RSARegistration/constant/RSALeftMenuSection';
-
 import { LeftSidebar } from './LeftSidebar';
-// import { RSARegistrationDetailMaster } from 'components/Sales/RSARegistration/RSARegistrationDetails';
-// import { VehicleAndCustomerDetailsMaster } from 'components/Sales/RSARegistration/VehicleAndCustomerDetails';
 
 import { SHIELD_REGISTRATION_SECTION } from 'constants/ShieldSchemeRegistrationSection';
 import { ShieldRegistrationDetailMaster } from 'components/Services/ShieldSchemeRegistartion/ShieldRegistrationDetail';

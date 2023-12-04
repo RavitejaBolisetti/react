@@ -21,7 +21,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, typeData, screenType, handleTaxChange } = props;
+    const { formData, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, typeData, handleTaxChange } = props;
     const { activeKey, setActiveKey } = props;
 
     useEffect(() => {
