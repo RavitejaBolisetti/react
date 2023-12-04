@@ -14,7 +14,7 @@ import styles from 'assets/sass/app.module.scss';
 import { SearchBox } from 'components/utils/SearchBox';
 
 export default function EvrDetailsCapturingFilter(props) {
-    const { extraParams, removeFilter, handleClear, advanceFilter, validationRules, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
+    const { extraParams, removeFilter, handleClear, advanceFilter, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
     const searchBoxProps = {
         placeholder: translateContent('evrDetailsCapturing.placeholder.headerSearch'),
         allowClear: false,
@@ -26,7 +26,7 @@ export default function EvrDetailsCapturingFilter(props) {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                     <Form autoComplete="off" form={searchForm} colon={false} className={styles.masterListSearchForm}>
-                        <Form.Item  name="normalSearch">
+                        <Form.Item name="normalSearch">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
                                     <QueryButtons currentItem={chargingStatusType} items={evrStatusList} onClick={handleChargingTypeChange} />

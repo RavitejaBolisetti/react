@@ -38,6 +38,7 @@ const MenuNav = (props) => {
             setCurrentSection(key);
         }
     };
+    
     const className = (id) => {
         return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
     };

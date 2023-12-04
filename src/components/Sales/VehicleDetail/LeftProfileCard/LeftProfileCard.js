@@ -26,10 +26,10 @@ const expandIcon = ({ isActive }) =>
         </>
     );
 
-const VehicleDetailCard = (props) => {
+const LeftProfileCard = (props) => {
     const { selectedRecord, selectedRecordId } = props;
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
@@ -71,4 +71,4 @@ const VehicleDetailCard = (props) => {
     );
 };
 
-export default VehicleDetailCard;
+export default LeftProfileCard;

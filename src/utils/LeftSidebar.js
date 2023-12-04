@@ -4,14 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import MenuNav from './MenuNav';
-import VehicleDetailCard from './VehicleDetailCard';
+import MenuNav from 'utils/MenuNav';
 
 const LeftSidebar = (props) => {
+    const { MenuCard, ...rest } = props;
     return (
         <>
-            <VehicleDetailCard {...props} />
-            <MenuNav {...props} />
+            <MenuCard {...props} />
+            <MenuNav {...rest} />
         </>
     );
 };

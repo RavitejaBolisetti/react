@@ -14,10 +14,11 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { IRN_STATUS } from 'constants/IRNStatus';
 import { translateContent } from 'utils/translateContent';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -35,7 +36,7 @@ const expandIcon = ({ isActive }) =>
         </>
     );
 
-const VehicleInvoiceCard = (props) => {
+const LeftProfileCard = (props) => {
     const { profileCardData: selectedOrder, formActionType, typeData, handleIRNGeneration, isLoading } = props;
     const { confirmRequest, setConfirmRequest } = props;
 
@@ -177,4 +178,4 @@ const VehicleInvoiceCard = (props) => {
     );
 };
 
-export default VehicleInvoiceCard;
+export default LeftProfileCard;

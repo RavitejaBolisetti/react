@@ -14,7 +14,7 @@ import { CancelInvoice } from './CancelInvoice';
 import { AdvancedSearch } from './AdvancedSearch';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import VehicleInvoiceFilter from './VehicleInvoiceFilter';
-import { validateInvoiceMenu } from './LeftSidebar/MenuNav';
+import { validateInvoiceMenu } from './LeftProfileCard/MenuNav';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
 import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
@@ -36,6 +36,7 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import LeftProfileCard from './LeftProfileCard';
 
 const mapStateToProps = (state) => {
     const {
@@ -860,6 +861,9 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const containerProps = {
         ...props,
+        // menuItem: Object.values(VEHICLE_INVOICE_SECTION),
+        menuItem: filterActiveSection,
+        MenuCard: LeftProfileCard,
         selectedOtfId,
         profileCardData,
         record: selectedOrder,
