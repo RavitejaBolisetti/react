@@ -125,7 +125,7 @@ const ApplicationTreeMain = (props) => {
                                                 {el?.label}
                                                 {allowedAccess?.length > 0 && (
                                                     <Tag color="default" className={styles.marL20}>
-                                                        {allowedAccess?.length >= 2 ? allowedAccess?.length + ' ' + translateContent('userManagement.label.accessesProvided') : allowedAccess?.length + ' ' + translateContent('userManagement.label.accessProvided')}
+                                                        {allowedAccess?.length >= 2 ? allowedAccess?.length + ' ' + translateContent('userManagement.label.accessProvided') : allowedAccess?.length + ' ' + translateContent('userManagement.label.accessProvided')}
                                                     </Tag>
                                                 )}
                                             </>
