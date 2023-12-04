@@ -26,11 +26,11 @@ import { CoDealerSearchDataActions, CoDealerVinNumberDataActions } from 'store/a
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDateTime, convertDateTimedayjs, dateFormat, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { convertDateTime, convertDateTimedayjs, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATE_CONSTANTS } from './constants/DateConstants';
 import { validateRequiredSelectField } from 'utils/validation';
-import { BASE_URL_CO_DEALER_DETAILS, BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_LIST, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD } from 'constants/routingApi';
+import { BASE_URL_CO_DEALER_DETAILS, BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD } from 'constants/routingApi';
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { CancelInvoice } from '../VehicleInvoiceGeneration/CancelInvoice';
@@ -126,8 +126,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CoDealerInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData = {}, userId = undefined,  saveData = () => {} } = props;
-    const { typeData, receiptType = undefined, partySegmentType = undefined,  moduleTitle = '', totalRecords = 0, showGlobalNotification = () => {} } = props;
+    const { data, receiptDetailData = {}, userId = undefined, saveData = () => {} } = props;
+    const { typeData, receiptType = undefined, partySegmentType = undefined, moduleTitle = '', totalRecords = 0, showGlobalNotification = () => {} } = props;
     const { filterString, setFilterString, coDealerInvoiceStatusList = Object?.values(CO_DEALER_QUERY_BUTTONS) } = props;
     const { fetchCoDealerInvoice, isCoDealerLoaded, listShowCoDealerLoading } = props;
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;

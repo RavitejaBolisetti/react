@@ -368,17 +368,15 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchDetailList({ setIsLoading: DetailLoading, extraParams: makeExtraparms([{ key: 'manufacturerAdminId', title: 'manufacturerAdminId', value: selectedId, name: 'manufacturerAdminId' }]), userId, onErrorAction });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), errorAction: onErrorAction });
-                setOrganizationId(organizationId);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
-                setSelectedId(selectedId);
             }
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
+        const onError = (errorMessage) => {
+            showGlobalNotification({ message: errorMessage });
         };
 
         const requestData = {
@@ -424,7 +422,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         onCloseAction: () => setIsFormVisible(false),
         handleResetBtn,
         buttonData,
-        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(' ').concat(moduleTitle),
 
         isFormBtnActive,
         setFormBtnActive,
@@ -651,11 +649,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     imageStyle={{
                                         height: 60,
                                     }}
-                                    description={
-                                        <span>
-                                            {translateContent('adminHierarchy.label.description')}
-                                        </span>
-                                    }
+                                    description={<span>{translateContent('adminHierarchy.label.description')}</span>}
                                 ></Empty>
                             </div>
                         )

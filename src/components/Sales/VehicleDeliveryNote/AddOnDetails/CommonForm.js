@@ -69,7 +69,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                             <Button className={styles.marB20} type="primary" onClick={() => onSingleFormFinish(formKey, addOnForm)}>
                                 {!formData ? translateContent('global.buttons.register') : translateContent('global.buttons.save')}
                             </Button>
-                            {formData && Object?.values(formData)?.length && (
+                            {formData && Object?.values(formData)?.length > 0 && (
                                 <Button onClick={() => handleCancelRegister(disableKey)} className={styles.marL20} danger>
                                     {translateContent('global.buttons.cancel')}
                                 </Button>

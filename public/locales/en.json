@@ -3325,13 +3325,17 @@
             "cancelledDate": "Cancelled Date",
             "cancelledBy": "Cancelled By",
             "remarksForCancellation": "Remarks for Cancellation",
+            "deliveryNoteChallanFromDate": "Delivery Challan From Date",
+            "deliveryNoteChallanToDate": "Delivery Challan To Date",
             "notGenerated": "NOT GENERATED"
         },
         "placeholder": {
             "select": "Select"
         },
+
         "notificationError": {
-            "enterCustomerId": "Enter customer id to continue"
+            "enterCustomerId": "Enter customer id to continue",
+            "customerDetails": "Customer details not present"
         },
         "invoiceDetails": {
             "heading": {

@@ -234,7 +234,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     useEffect(() => {
         const isPresent = activeKey?.includes(keyValue);
-        if (isPresent & (keyValue !== 3 && keyValue !== 4)) {
+        if (isPresent && keyValue !== 3 && keyValue !== 4) {
             setActiveKey([]);
             setButtonData({ ...buttonData, saveBtn: true, formBtnActive: true });
         } else if (keyValue === 2) {

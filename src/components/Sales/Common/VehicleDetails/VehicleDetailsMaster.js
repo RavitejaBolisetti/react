@@ -288,12 +288,12 @@ const VehicleDetailsMasterMain = (props) => {
         };
 
         const onErrorAction = (message) => {
-            showGlobalNotification({ message: message });
+            showGlobalNotification({ message });
 
             const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
             setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
 
-            setVehicleDetailData(vehicleDetailData);
+            setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });
         };
 

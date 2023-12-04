@@ -298,7 +298,7 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
- return (
+    return (
         <Form form={addSchemeForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
             {formActionType?.viewMode ? (
                 <ViewDetail {...viewProps} />

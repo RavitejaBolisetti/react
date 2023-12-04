@@ -224,7 +224,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     const onClose = () => {
         setisVisible(false);
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
-            setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation: accessibleLocation?.map(i=> ({...i, status: true}))  });
+        setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation: accessibleLocation?.map((i) => ({ ...i, status: true })) });
         applicationForm.resetFields();
         forceUpdate();
         setIsBtnDisabled(false);
@@ -292,7 +292,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                                     </span>
                                 }
                             >
-                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd()}>
                                     {translateContent('global.buttons.add')}
                                 </Button>
                             </Empty>
