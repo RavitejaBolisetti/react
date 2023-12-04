@@ -11,7 +11,6 @@ import { UploadUtil } from 'utils/Upload';
 import { translateContent } from 'utils/translateContent';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
-import { UploadBoxIcon } from 'Icons';
 
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -67,35 +66,39 @@ const AddEditForm = (uploadProps) => {
 
             <Card>
                 <Descriptions
-                // {...uploadProps}
                 >
                     <Descriptions.Item label={'Document Name' || translateContent('amcRegistration.label.customerCategory')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'Required' || translateContent('amcRegistration.label.customerCategory')}>{'Yes'||checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={'File Name' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={''}>
                         <Dragger
                         className={styles.uploadDraggerStrip}
-                        // className{styles.uploadDraggerBox}
-                        //  key={key} className={fileList?.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps} disabled={draggerDisable ? draggerDisable : false}
                          >
                             <Space direction="vertical">
-                                {/* <UploadBoxIcon /> */}
                                 <div>
                                     <Title level={5}>{'Click or drop your file here to upload'}</Title>
-                                    {/* <Text>{'validationText'}</Text> */}
                                 </div>
-                                {/* <Space>
-                                    <Button disabled={false} type="primary">
-                                        Upload File
-                                    </Button>
-                                    {'isReplacing' && (
-                                        <Button 
-                                        onClick={()=>console.log('replace')}
-                                        // onClick={onCancelReplace}
-                                         danger>
-                                            {translateContent('global.buttons.cancel')}
-                                        </Button>
-                                    )}
-                                </Space> */}
+                              
+                            </Space>
+                        </Dragger>
+                    </Descriptions.Item>
+                </Descriptions>
+            </Card>
+            <Card>
+                <Descriptions
+                >
+                    <Descriptions.Item label={'Document Name' || translateContent('amcRegistration.label.customerCategory')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'Required' || translateContent('amcRegistration.label.customerCategory')}>{'No'||checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerCity, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={'File Name' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={''}>
+                        <Dragger
+                        className={styles.uploadDraggerStrip}
+                         >
+                            <Space direction="vertical">
+                                <div>
+                                    <Title level={5}>{'Click or drop your file here to upload'}</Title>
+                                </div>
+                              
                             </Space>
                         </Dragger>
                     </Descriptions.Item>
