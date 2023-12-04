@@ -3,15 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
-
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
-
- *   All rights reserved.
-
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
-
- */
 
 import React, { useEffect, useReducer, useState } from 'react';
 
@@ -462,8 +453,8 @@ export const OtfBlockMasterMain = (props) => {
             }
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
+        const onError = (errorMessage) => {
+            showGlobalNotification({ message: errorMessage });
         };
 
         const requestData = {
@@ -550,7 +541,7 @@ export const OtfBlockMasterMain = (props) => {
 
         buttonData,
 
-        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(' ').concat(moduleTitle),
 
         isFormBtnActive,
 
@@ -742,11 +733,7 @@ export const OtfBlockMasterMain = (props) => {
                                     imageStyle={{
                                         height: 60,
                                     }}
-                                    description={
-                                        <span>
-                                            {translateContent('bookingBlockMaster.label.viewHierarchyText')}
-                                        </span>
-                                    }
+                                    description={<span>{translateContent('bookingBlockMaster.label.viewHierarchyText')}</span>}
                                 ></Empty>
                             </div>
                         )

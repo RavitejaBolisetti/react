@@ -2006,6 +2006,7 @@
             "unmapped": "Unmapped",
             "role": "Role",
             "accessProvided": "Access provided",
+            "accessesProvided": "Accesses provided",
             "device": "device"
         },
         "placeholder": {

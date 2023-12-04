@@ -287,8 +287,8 @@ const VehicleDetailsMasterMain = (props) => {
             productModelCode && form.setFieldValue('modalCode', productModelCode);
         };
 
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message: message });
+        const onErrorAction = (errorMessage) => {
+            showGlobalNotification({ message: errorMessage });
 
             const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
             setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });

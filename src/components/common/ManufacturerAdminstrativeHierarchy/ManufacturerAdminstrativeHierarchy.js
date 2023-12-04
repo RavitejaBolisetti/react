@@ -195,8 +195,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const supportedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     const maxSize = 8;
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+    const onErrorAction = (errorMessage) => {
+        showGlobalNotification({ message: errorMessage });
     };
 
     const makeExtraparms = (Params) => {
@@ -377,8 +377,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             }
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
+        const onError = (errorMessage) => {
+            showGlobalNotification({ message: errorMessage });
         };
 
         const requestData = {
@@ -424,7 +424,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         onCloseAction: () => setIsFormVisible(false),
         handleResetBtn,
         buttonData,
-        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(' ').concat(moduleTitle),
 
         isFormBtnActive,
         setFormBtnActive,
@@ -651,11 +651,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     imageStyle={{
                                         height: 60,
                                     }}
-                                    description={
-                                        <span>
-                                            {translateContent('adminHierarchy.label.description')}
-                                        </span>
-                                    }
+                                    description={<span>{translateContent('adminHierarchy.label.description')}</span>}
                                 ></Empty>
                             </div>
                         )
