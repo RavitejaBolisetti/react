@@ -373,10 +373,9 @@ export const AccountCategoryMain = (props) => {
         page,
         setPage,
         isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(handleButtonClick, userType),
         tableData: accountCategoryData,
         handleButtonClick: () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD }),
-        userType,
     };
 
     const advanceFilterResultProps = {

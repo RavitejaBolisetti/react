@@ -20,6 +20,7 @@ export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 export const APPLICATION_ON_SAVE_DATA_SHOW_LOADING = 'APPLICATION_ON_SAVE_DATA_SHOW_LOADING';
 export const APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING = 'APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING';
 export const APPLICATION_LOCATION_DATA = 'APPLICATION_LOCATION_DATA';
+export const RESET_DEALER_LOCATIONS = 'RESET_DEALER_LOCATIONS';
 
 const receiveApplicationDetailsData = (data) => ({
     type: APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED,
@@ -51,6 +52,11 @@ const receiveParametersData = (data) => ({
     isLoaded: true,
     data,
 });
+const resetLocation = (data) => ({
+    type: RESET_DEALER_LOCATIONS,
+    isLoaded: true,
+    data,
+});
 
 const applicationMasterDataActions = {};
 
@@ -73,6 +79,10 @@ applicationMasterDataActions.locationDataLoding = (isLoading) => ({
     type: APPLICATION_LOCATION_DATA,
     isLoading,
 });
+
+applicationMasterDataActions.resetLocations = () => (dispatch) => {
+    dispatch(resetLocation());
+};
 
 applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, id } = params;

@@ -4,28 +4,28 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Tag } from 'antd';
-import { RSA_REGISTRATION_STATUS, RSA_REGISTRATION_STATUS_MNM_USER } from './RSARegistrationStatus';
+import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons/AMCQueryButtons';
 
 export const RSARegistrationStatusTag = (status) => {
     let tag = '';
     switch (status) {
-        case RSA_REGISTRATION_STATUS.PENDING.key:
-            tag = <Tag color="warning">{RSA_REGISTRATION_STATUS.PENDING.title}</Tag>;
+        case QUERY_BUTTONS_CONSTANTS.PENDING.key:
+            tag = <Tag color="warning">{QUERY_BUTTONS_CONSTANTS.PENDING.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.key:
-            tag = <Tag color="warning">{RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.title}</Tag>;
+        case QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key:
+            tag = <Tag color="warning">{QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.key:
-            tag = <Tag color="warning">{RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.title}</Tag>;
+        case QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key:
+            tag = <Tag color="warning">{QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS.APPROVED.key:
-            tag = <Tag color="success">{RSA_REGISTRATION_STATUS.APPROVED.title}</Tag>;
+        case QUERY_BUTTONS_CONSTANTS.APPROVED.key:
+            tag = <Tag color="success">{QUERY_BUTTONS_CONSTANTS.APPROVED.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS.REJECTED.key:
-            tag = <Tag color="error">{RSA_REGISTRATION_STATUS.REJECTED.title}</Tag>;
+        case QUERY_BUTTONS_CONSTANTS.REJECTED.key:
+            tag = <Tag color="error">{QUERY_BUTTONS_CONSTANTS.REJECTED.title}</Tag>;
             break;
-        case RSA_REGISTRATION_STATUS.CANCELLED.key:
-            tag = <Tag color="error">{RSA_REGISTRATION_STATUS.CANCELLED.title}</Tag>;
+        case QUERY_BUTTONS_CONSTANTS.CANCELLED.key:
+            tag = <Tag color="error">{QUERY_BUTTONS_CONSTANTS.CANCELLED.title}</Tag>;
             break;
 
         default:
@@ -36,23 +36,23 @@ export const RSARegistrationStatusTag = (status) => {
 export const RSAStatusValues = (status) => {
     let value = '';
     switch (status) {
-        case RSA_REGISTRATION_STATUS.PENDING.key:
-            value = RSA_REGISTRATION_STATUS.PENDING.title;
+        case QUERY_BUTTONS_CONSTANTS.PENDING.key:
+            value = QUERY_BUTTONS_CONSTANTS.PENDING.title;
             break;
-        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.key:
-            value = RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_APPROVAL.title;
+        case QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key:
+            value = QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.title;
             break;
-        case RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.key:
-            value = RSA_REGISTRATION_STATUS_MNM_USER.PENDING_FOR_CANCELLATION.title;
+        case QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key:
+            value = QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.title;
             break;
-        case RSA_REGISTRATION_STATUS.APPROVED.key:
-            value = RSA_REGISTRATION_STATUS.APPROVED.title;
+        case QUERY_BUTTONS_CONSTANTS.APPROVED.key:
+            value = QUERY_BUTTONS_CONSTANTS.APPROVED.title;
             break;
-        case RSA_REGISTRATION_STATUS.REJECTED.key:
-            value = RSA_REGISTRATION_STATUS.REJECTED.title;
+        case QUERY_BUTTONS_CONSTANTS.REJECTED.key:
+            value = QUERY_BUTTONS_CONSTANTS.REJECTED.title;
             break;
-        case RSA_REGISTRATION_STATUS.CANCELLED.key:
-            value = RSA_REGISTRATION_STATUS.CANCELLED.title;
+        case QUERY_BUTTONS_CONSTANTS.CANCELLED.key:
+            value = QUERY_BUTTONS_CONSTANTS.CANCELLED.title;
             break;
 
         default:
