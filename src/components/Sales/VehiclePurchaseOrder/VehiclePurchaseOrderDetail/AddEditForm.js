@@ -35,13 +35,13 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const handleChangeOrderType = (value) => {
-        if (value === 'CDLR') {
-            setDealerFlag(value);
-        } else {
-            setDealerFlag();
-        }
-    };
+    // const handleChangeOrderType = (value) => {
+    //     if (value === 'CDLR') {
+    //         setDealerFlag(value);
+    //     } else {
+    //         setDealerFlag();
+    //     }
+    // };
     useEffect(() => {
         if (formData?.orderTypeCode === 'CDLR') {
             setDealerFlag(formData?.orderTypeCode);
@@ -147,7 +147,7 @@ const AddEditFormMain = (props) => {
                                     {/* <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')} name="model" data-testid="model">
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Form.Item> */}
-                                    
+
                                     <ProductModelTree {...treeSelectFieldProps} />
                                 </Col>
                                 {/* <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
