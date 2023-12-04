@@ -464,7 +464,7 @@ export const CorporateAdditionalDiscountRegistrationBase = (props) => {
 
     return (
         <>
-            {/* <AdvanceFilter {...advanceFilterResultProps} /> */}
+            <AdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
 

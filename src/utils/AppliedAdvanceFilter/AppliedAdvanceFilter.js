@@ -20,11 +20,12 @@ import TreeSelectField from 'components/common/TreeSelectField';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true,showRefreshBtn=true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
-    const { addBtnVisible=false } = props;
+    const { tableData = [], showAddButton = true, showRefreshBtn = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { addBtnVisible = false } = props;
+    const { uploadBtn, treeSearch = false, handleOnClickUpload } = props;
 
-    const treeSelectFieldProps = {...props}
-    
+    const treeSelectFieldProps = { ...props };
+
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -47,8 +48,8 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                         {/* <TreeSelectField {...treeSelectFieldProps} /> */}
-                                        <Search placeholder={translateContent('global.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
+                                        {treeSearch && <TreeSelectField {...treeSelectFieldProps} />}
+                                        {!treeSearch && <Search placeholder={translateContent('global.placeholder.search')} allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />}
                                     </Form.Item>
                                 </Form>
                             </Col>
@@ -83,8 +84,13 @@ export default function AppliedAdvanceFilter(props) {
                                 {translateContent('global.buttons.download')}
                             </Button>
                         )}
+                        {uploadBtn && (
+                            <Button type="primary" onClick={handleOnClickUpload} danger>
+                                {translateContent('global.buttons.upload')}
+                            </Button>
+                        )}
 
-                        {(tableData?.length > 0 || addBtnVisible)  && (
+                        {(tableData?.length > 0 || addBtnVisible) && (
                             <>
                                 {showRefreshBtn && <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />}
                                 {showAddButton && (

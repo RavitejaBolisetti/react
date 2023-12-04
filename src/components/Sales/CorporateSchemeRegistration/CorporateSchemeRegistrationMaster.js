@@ -450,9 +450,8 @@ export const CorporateSchemeRegistrationBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        // title:<QueryButtons currentItem={claimStatus} items={CLAIM_STATUS_BUTTONS} onClick={handleQuickFilter} />,
-        // title: moduleTitle,
-        title: <span className={styles.marR20}>Product</span>,
+        title: 'Product',
+        // title: <span className={styles.marR20}>Product</span>,
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -468,11 +467,12 @@ export const CorporateSchemeRegistrationBase = (props) => {
         showAddButton: true,
         addBtnVisible: true,
         showRefreshBtn: false,
+        uploadBtn: true,
         handleOnClickUpload,
         isUploadDrawer,
         setIsUploadDrawer,
+        treeSearch: true,
     };
-    console.log("🚀 ~ file: CorporateSchemeRegistrationMaster.js:479 ~ CorporateSchemeRegistrationBase ~ advanceFilterResultProps.isUploadDrawer:", advanceFilterResultProps.isUploadDrawer)
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
@@ -494,9 +494,9 @@ export const CorporateSchemeRegistrationBase = (props) => {
 
     return (
         <>
-            <AdvanceFilter {...advanceFilterResultProps} />
+            {/* <AdvanceFilter {...advanceFilterResultProps} /> */}
             <AdvancedSearch {...advanceFilterProps} />
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} /> */}
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
