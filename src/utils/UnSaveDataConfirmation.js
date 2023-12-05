@@ -8,7 +8,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { ConfirmationModal } from './ConfirmationModal';
 import { translateContent } from './translateContent';
 
-export const handleUnSavedChange = ({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn = undefined, formActionType }) => {
+export const handleUnSavedChange = ({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn = undefined, formActionType = undefined }) => {
     const onCloseAction = () => setUnSavedModelVisible(false);
     const onSubmitAction = () => {
         successFn && successFn();

@@ -253,7 +253,7 @@ export const RSARegistrationMasterBase = (props) => {
             fetchModelList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, vehicleCustomerDetailsOnly?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup, rsaDetails, dealerLocationId]);
+    }, [userId, vehicleCustomerDetailsOnly?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup, rsaDetails]);
 
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
