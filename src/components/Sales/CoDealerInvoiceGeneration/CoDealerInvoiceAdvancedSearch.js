@@ -3,14 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Col, Form, Row, Button, DatePicker, Select } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import dayjs from 'dayjs';
-import { calendarDateFormat, dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { calendarDateFormat, dateFormat, formatDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import styles from 'assets/sass/app.module.scss';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -20,7 +20,7 @@ import { DATE_CONSTANTS } from './constants/DateConstants';
 import { CO_DEALER_QUERY_BUTTONS } from './constants';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData, isReadonly = true, indentToDealerData, handleDateChange, CoDealerInvoiceStateMaster, isVisible } = props;
+    const { setAdvanceSearchVisible, typeData, isReadonly = true, indentToDealerData, handleDateChange, CoDealerInvoiceStateMaster } = props;
     const disabledProps = { disabled: isReadonly };
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
@@ -49,7 +49,7 @@ export const AdvancedSearchFrom = (props) => {
             return { fromDate: translateContent('vehicleDeliveryNote.label.invoiceFromDate'), toDate: translateContent('vehicleDeliveryNote.label.invoiceToDate') };
         }
     }, [CoDealerInvoiceStateMaster?.currentQuery]);
-    
+
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
@@ -89,14 +89,11 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
                     <Button onClick={() => handleResetFilter(false)} danger>
                         {translateContent('global.buttons.reset')}
                     </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
+                    <Button htmlType="submit" type="primary" className={styles.marL10}>
                         {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>

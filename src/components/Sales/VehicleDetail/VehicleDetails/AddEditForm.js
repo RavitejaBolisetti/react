@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Select, DatePicker, Input, Checkbox, Switch, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredSelectField } from 'utils/validation';
 import { disablePastDate } from 'utils/disableDate';
@@ -65,7 +66,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.manufactureKM} label={translateContent('vehicleDetail.vehicledetails.label.manufactureKM')} name="manufactureKM">
-                                <Input {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('Expiry KM'))} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -90,18 +91,18 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="averageRun" label={translateContent('vehicleDetail.vehicledetails.label.averageRun')} initialValue={formData?.averageRun}>
-                                <Input maxLength={50} {...disabledProps} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('Average Run'))} maxLength={50} {...disabledProps} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="nextDueService" label={translateContent('vehicleDetail.vehicledetails.label.nextDueService')} initialValue={formData?.nextDueService}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('Next Due Service'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="relationshipManager" label={translateContent('vehicleDetail.vehicledetails.label.relationshipManager')} initialValue={formData?.relationshipManager}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('Relationship Manager'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -122,18 +123,18 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="customerCategorySsi" label={translateContent('vehicleDetail.vehicledetails.label.customerCategorySsi')} initialValue={formData?.customerCategorySsi}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('Customer Category-SSI'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="customerCategoryCsi" label={translateContent('vehicleDetail.vehicledetails.label.customerCategoryCsi')} initialValue={formData?.customerCategoryCsi}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('Customer Category-CSI'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="customerCategoryIqs" label={translateContent('vehicleDetail.vehicledetails.label.customerCategoryIqs')} initialValue={formData?.customerCategoryIqs}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('Customer Category-IQS'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

@@ -326,7 +326,7 @@ const VehicleDetailsMasterMain = (props) => {
                     form.resetFields();
                     resetData();
                     setRefreshData(!refreshData);
-                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
                     setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
                 };
 
