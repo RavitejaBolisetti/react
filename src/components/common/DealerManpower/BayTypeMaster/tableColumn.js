@@ -13,13 +13,13 @@ export const tableColumn = (handleButtonClick) => {
     tableColumn.push(
         tblPrepareColumns({
             title: translateContent('bayTypeMaster.label.bayTypeCode'),
-            dataIndex: 'code',
+            dataIndex: 'bayTypecode',
             width: '20%',
         }),
 
         tblPrepareColumns({
             title: translateContent('bayTypeMaster.label.bayTypeName'),
-            dataIndex: 'name',
+            dataIndex: 'bayTypename',
             width: '30%',
         }),
 

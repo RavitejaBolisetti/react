@@ -15,7 +15,7 @@ export const withSpinner = (InputComponent, wideSpiner = false) => {
         const { isLoading = false } = props;
         return (
             <div className={styles.spinner}>
-                <Spin spinning={isLoading} indicator={spinIndicator} key={'spin'} wrapper ClassName={wideSpiner ? styles.fullWidth : ''}>
+                <Spin spinning={isLoading} indicator={spinIndicator} key={'spin'} wrapper className={wideSpiner ? styles.fullWidth : ''}>
                     <InputComponent {...props} />
                 </Spin>
             </div>

@@ -31,11 +31,13 @@ import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
+        auth: { userId },
         data: {
             ForgotPassword: { isLoading },
         },
     } = state;
     return {
+        userId,
         isLoading,
     };
 };
@@ -101,7 +103,7 @@ const ForgotPasswordBase = (props) => {
     };
 
     const onError = (message) => {
-        showGlobalNotification({ title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
+        showGlobalNotification({ notificationType: 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
         if (otpInput?.length === 6) {
             setCounter(0);
         }

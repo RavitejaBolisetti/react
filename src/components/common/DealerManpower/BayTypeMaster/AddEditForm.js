@@ -52,16 +52,17 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.code} label="Bay Type Code" name="code" rules={[validateRequiredInputField('Bay Type Code')]}>
+                                    <Form.Item initialValue={formData?.bayTypecode} label="Bay Type Code" name="bayTypecode" rules={[validateRequiredInputField('Bay Type Code')]}>
                                         <Input placeholder={preparePlaceholderText('Bay Type Code')} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Bay Type Name" initialValue={formData?.name} rules={[validateRequiredInputField('Bay Type Name')]} name="name">
+                                    <Form.Item label="Bay Type Name" initialValue={formData?.bayTypename} rules={[validateRequiredInputField('Bay Type Name')]} name="bayTypename">
                                         <Input placeholder={preparePlaceholderText('Bay Type Name')} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                             </Row>
+                            <Form.Item initialValue={formData?.id || ''} name="id" hidden />
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">

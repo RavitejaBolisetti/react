@@ -284,7 +284,7 @@ export const EMBEDDED_REPORTS = {
     Sale_Register_Report: {
         id: 41,
         key: 'Sale_Register_Report',
-        title: 'Sale Registe Report ',
+        title: 'Sale Register Report ',
         type: 'Report',
         slug: 'sale_register_report',
     },
@@ -293,5 +293,12 @@ export const EMBEDDED_REPORTS = {
         key: 'Referral_Scheme_Registration_Document',
         title: 'Referral Scheme Registration Document ',
         type: 'Document',
+    },
+    AMC_REPORT: {
+        id: 43,
+        key: 'AMC_Report',
+        title: 'AMC Report ',
+        type: 'Report',
+        slug: 'amc_report',
     },
 };

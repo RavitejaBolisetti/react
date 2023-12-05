@@ -14,10 +14,10 @@ import { CancelInvoice } from './CancelInvoice';
 import { AdvancedSearch } from './AdvancedSearch';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import VehicleInvoiceFilter from './VehicleInvoiceFilter';
-import { validateInvoiceMenu } from './LeftSidebar/MenuNav';
+import { validateInvoiceMenu } from './LeftProfileCard/validateInvoiceMenu';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
-import { UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
+import { UnSaveDataConfirmation, handleUnSavedChange } from 'utils/UnSaveDataConfirmation';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
@@ -36,6 +36,7 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import LeftProfileCard from './LeftProfileCard';
 
 const mapStateToProps = (state) => {
     const {
@@ -153,11 +154,10 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [confirmRequest, setConfirmRequest] = useState();
     const [previousSection, setPreviousSection] = useState(1);
     const [profileCardData, setProfileCardData] = useState();
-    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
-    const [nextCurentSection, setNextCurrentSection] = useState('');
-    const [isFormValueChange, setIsFormValueChange] = useState(false);
+    const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
+        isVisible: false,
+    });
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -189,6 +189,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const handleUnSavedChangeFn = (successFn) => handleUnSavedChange({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn });
 
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -253,7 +255,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
@@ -267,20 +269,20 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, invoiceStatus, filterString, page]);
+    }, [searchValue, invoiceStatus, filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -288,7 +290,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             fetchList({ customURL: BASE_URL_VEHICLE_INVOICE_LIST, setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, invoiceStatus, filterString, page]);
+    }, [userId, invoiceStatus, filterString]);
 
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
@@ -580,15 +582,11 @@ export const VehicleInvoiceMasterBase = (props) => {
                 handleBookingNumberSearch(record?.otfNumber, record?.id);
                 break;
             case NEXT_ACTION:
-                const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
-                setIsFormValueChange(false);
-                if (buttonData?.formBtnActive && isNextBtnClick) {
-                    setIsUnsavedDataPopup(true);
-                    setNextCurrentSection(nextSection?.id);
-                } else {
+                handleUnSavedChangeFn(() => {
+                    const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
                     section && setCurrentSection(nextSection?.id);
                     setLastSection(!nextSection?.id);
-                }
+                });
                 break;
 
             default:
@@ -615,7 +613,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
     const handleResetFilter = () => {
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({ pageSize: 10, current: 1 });
         advanceFilterForm.resetFields();
     };
 
@@ -655,9 +653,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         };
         saveData(requestData);
     };
+
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        setIsFormValueChange(true);
     };
 
     const resetInvoiceData = () => {
@@ -682,8 +680,9 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        resetInvoiceData();
-        setIsUnsavedDataPopup(false);
+        handleUnSavedChangeFn(() => {
+            resetInvoiceData();
+        });
     };
 
     const tableProps = {
@@ -784,41 +783,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onCloseDrawer = () => {
-        if (buttonData?.formBtnActive) {
-            setIsUnsavedDataPopup(true);
-        } else {
-            onCloseAction();
-        }
-    };
-
-    const handleOkUnsavedModal = () => {
-        setIsFormValueChange(false);
-
-        if (nextCurentSection) {
-            setIsUnsavedDataPopup(false);
-            setCurrentSection(nextCurentSection);
-            section && setLastSection(!nextCurentSection);
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setNextCurrentSection('');
-        } else {
-            onCloseAction();
-        }
-    };
-
-    const handleCancelUnsaveDataModal = () => {
-        setIsUnsavedDataPopup(false);
-        setNextCurrentSection('');
-    };
-
-    const unsavedDataModalProps = {
-        isVisible: isUnsavedDataPopup,
-        onCloseAction: handleCancelUnsaveDataModal,
-        onSubmitAction: handleOkUnsavedModal,
-    };
-
     const title = 'Invoice Generation';
-
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -861,6 +826,9 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const containerProps = {
         ...props,
+        // menuItem: Object.values(VEHICLE_INVOICE_SECTION),
+        menuItem: filterActiveSection,
+        MenuCard: LeftProfileCard,
         selectedOtfId,
         profileCardData,
         record: selectedOrder,
@@ -869,8 +837,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         formActionType,
         setFormActionType,
         isVisible: isFormVisible,
-        onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
+        onCloseAction,
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(translateContent('vehicleInvoiceGeneration.heading.drawerTitleMaster')),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -926,10 +894,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         isInVoiceMasterDetailDataLoaded,
         salesConsultantLovData,
         resetDetailData,
-        setIsUnsavedDataPopup,
-        setNextCurrentSection,
-        isFormValueChange,
-        setIsFormValueChange,
+        handleUnSavedChangeFn,
     };
 
     const cancelInvoiceProps = {
@@ -963,7 +928,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             <VehicleInvoiceMainConatiner {...containerProps} />
             <CancelInvoice {...cancelInvoiceProps} />
             <ReportModal {...reportProps} reportDetail={reportDetail} />
-            <UnSaveDataConfirmation {...unsavedDataModalProps} />
+            <UnSaveDataConfirmation {...unSavedDataModalProps} />
         </>
     );
 };

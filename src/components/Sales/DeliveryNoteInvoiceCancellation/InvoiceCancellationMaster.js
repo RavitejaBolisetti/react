@@ -251,7 +251,6 @@ export const InvoiceCancellationMasterBase = (props) => {
             ...confirmRequest,
             isVisible: false,
         });
-        form.resetFields();
     };
 
     const handleCancelRequest = () => {

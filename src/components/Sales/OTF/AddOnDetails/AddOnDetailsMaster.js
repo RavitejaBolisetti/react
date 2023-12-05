@@ -212,7 +212,7 @@ export const AddOnDetailsMasterMain = (props) => {
             setFormData();
             accessoryForm.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
         };
 
         const onError = (message) => {

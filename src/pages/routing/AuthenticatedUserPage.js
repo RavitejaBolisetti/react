@@ -135,10 +135,10 @@ const AuthenticatedUserPageMain = (props) => {
 
     const location = useLocation();
     const pagePath = location.pathname;
-    const canViewPage = true || flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
+    const canViewPage = flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (!isDataLoaded && userId) { 
             fetchMenuList({
                 setIsLoading: listShowMenuLoading,
                 userId,
@@ -151,7 +151,8 @@ const AuthenticatedUserPageMain = (props) => {
     }, [isDataLoaded, userId]);
 
     const routeExclusion = [routing?.ROUTING_HOME, routing?.ROUTING_DASHBOARD];
-    const authorized = canViewPage || routeExclusion?.includes(pagePath);
+    const authorized = true || canViewPage || routeExclusion?.includes(pagePath);
+
     return !isLoading ? (
         authorized ? (
             <Routes>

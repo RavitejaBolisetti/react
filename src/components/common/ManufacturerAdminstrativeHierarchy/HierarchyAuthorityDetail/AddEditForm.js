@@ -74,7 +74,7 @@ const AuthorityFormMin = (props) => {
         setErrorMessage(message);
     };
 
-    const onSearchHandle = () => (data) => {
+    const onSearchHandle = (data) => {
         setFormType(isMainForm);
         const extraParams = [
             {
@@ -97,7 +97,7 @@ const AuthorityFormMin = (props) => {
         data && searchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
     };
 
-    const onChangeHandle = (recordId) => (e) => {
+    const onChangeHandle = () => {
         setFormType(isMainForm);
         resetData();
         setErrorMessage();
@@ -115,7 +115,7 @@ const AuthorityFormMin = (props) => {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label={translateContent('adminHierarchy.label.token')} name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField(translateContent('adminHierarchy.validation.tokenRequired')), { validator: (rule, value) => duplicateValidator(value, 'authorityEmployeeTokenNo', documentTypesList, record?.authorityEmployeeTokenNo) }]}>
-                        <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText(translateContent('adminHierarchy.placeholder.token'))} />
+                        <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle()} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText(translateContent('adminHierarchy.placeholder.token'))} />
                     </Form.Item>
                 </Col>
                 {formType === isMainForm && errorMessage && (
@@ -136,7 +136,10 @@ const AuthorityFormMin = (props) => {
                 <Row gutter={20}>
                     {tokenValidationData?.manufacturerUserName && (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
-                            <Text strong>{translateContent('adminHierarchy.label.employeeText')}{tokenValidationData?.manufacturerUserName} </Text>
+                            <Text strong>
+                                {translateContent('adminHierarchy.label.employeeText')}
+                                {tokenValidationData?.manufacturerUserName}
+                            </Text>
                         </Col>
                     )}
 

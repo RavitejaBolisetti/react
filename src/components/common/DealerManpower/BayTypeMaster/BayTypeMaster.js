@@ -157,7 +157,7 @@ export const BayTypeMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        let data = { ...values, id: values?.id || '' };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -207,7 +207,7 @@ export const BayTypeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat('Bay Type'),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat('Bay Type'),
         tableData: searchData,
 
         ADD_ACTION,

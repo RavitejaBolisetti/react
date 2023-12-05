@@ -30,6 +30,9 @@ const mapStateToProps = (state) => {
             },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
         },
+        common: {
+            Header: { dealerLocationId },
+        },
     } = state;
 
     const moduleTitle = translateContent('commonModules.label.vehicleDetails.vehicleDetails');
@@ -52,6 +55,7 @@ const mapStateToProps = (state) => {
         isProductDataLoading: !isProductDataLoaded,
         productHierarchyDataList: productHierarchyData,
         productCode,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -86,7 +90,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
-    const { fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
+    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
@@ -162,7 +166,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productHierarchyDataList]);
 
     useEffect(() => {
-        if (isOTFModule && userId && selectedOrder?.modelCode) {
+        if (isOTFModule && userId && selectedOrder?.modelCode && dealerLocationId) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -182,7 +186,7 @@ const VehicleDetailsMasterMain = (props) => {
             setButtonData({ ...buttonData, formBtnActive: !formActionType.viewMode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder]);
+    }, [userId, selectedOrder, dealerLocationId]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -284,12 +288,12 @@ const VehicleDetailsMasterMain = (props) => {
         };
 
         const onErrorAction = (message) => {
-            showGlobalNotification({ message: message });
+            showGlobalNotification({ message });
 
             const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
             setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
 
-            setVehicleDetailData(vehicleDetailData);
+            setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });
         };
 

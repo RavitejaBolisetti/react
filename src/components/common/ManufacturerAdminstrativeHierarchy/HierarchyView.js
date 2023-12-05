@@ -31,7 +31,11 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, authTypeDrop
                     <Descriptions.Item label={translateContent('adminHierarchy.label.code')}>{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminCode, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('adminHierarchy.label.shortDescription')}>{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminShortName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('adminHierarchy.label.longDescription')}>{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminLongName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('global.label.status')}>{checkAndSetDefaultValue(status, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('global.label.status')}>
+                    <span className={selectedTreeData?.status ? styles.activeText : styles?.inactiveText}>
+                        {checkAndSetDefaultValue(status, isLoading)}
+                        </span>
+                    </Descriptions.Item>
                     <Space direction="vertical" size="small">
                         {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel viewMode={viewMode} selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} authTypeDropdownData={authTypeDropdownData} />}
                     </Space>

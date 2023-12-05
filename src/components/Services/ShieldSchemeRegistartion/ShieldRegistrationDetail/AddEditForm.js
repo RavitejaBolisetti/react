@@ -21,7 +21,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, typeData, screenType, handleTaxChange } = props;
+    const { formData, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, typeData, handleTaxChange } = props;
     const { activeKey, setActiveKey } = props;
 
     useEffect(() => {
@@ -58,7 +58,7 @@ const AddEditFormMain = (props) => {
     };
 
     const isDiscountLessThanAmount = (value) => {
-        if (Number(shieldDetailForm.getFieldValue()?.schemeDetails?.schemeBasicAmount) < Number(value)) {   
+        if (Number(shieldDetailForm.getFieldValue()?.schemeDetails?.schemeBasicAmount) < Number(value)) {
             return Promise.reject(translateContent('amcRegistration.validation.discoutGreaterThanScheme'));
         } else {
             return Promise.resolve();
@@ -85,13 +85,6 @@ const AddEditFormMain = (props) => {
                                 </Col>
                             </>
 
-                            {saleType === SALE_TYPE?.PAID?.key && (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
-                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.availableFunds'))} disabled={true} />
-                                    </Form.Item>
-                                </Col>
-                            )}
                             {saleType !== SALE_TYPE?.PAID?.key && (
                                 <>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -113,6 +106,13 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             )}
+                            {saleType === SALE_TYPE?.PAID?.key && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.availableFunds'))} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                            )}
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -122,26 +122,20 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
-                                    {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Search onSearch={handleEmployeeSearch} onChange={handleOnClear} placeholder={preparePlaceholderText('Employee Name')} loading={isEmployeeDataLoading} type="text" allowClear />
-                                    </AutoComplete> */}
                                     {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.employeeName')) })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.managerName} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerName']}>
-                                    {/* <Input placeholder={preparePlaceholderText('Manager Name')} disabled={true} /> */}
                                     {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')) })}
                                 </Form.Item>
                             </Col>
                         </Row>
-                        {/* </Form> */}
                     </Panel>
                 </Collapse>
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header={translateContent('shieldSchemeRegistration.heading.schemeDetails')} key="2">
                         <Divider />
-                        {/* <Form layout="vertical" autoComplete="off" form={schemeForm} onFieldsChange={handleFormValueChange}> */}
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.schemeDescription} label={translateContent('shieldSchemeRegistration.label.schemeDescription')} name={['schemeDetails', 'schemeDescription']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.schemeDescription'))]}>

@@ -5,35 +5,21 @@
  */
 import React from 'react';
 import { Collapse, Divider } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
-
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
-
 const VehicleReceiptDetailCard = (props) => {
     const { receiptDetailData, isLoading, typeData } = props;
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>
@@ -44,9 +30,6 @@ const VehicleReceiptDetailCard = (props) => {
                                 <span>
                                     <CopytoClipboard buttonText={null} text={receiptDetailData?.receiptsDetails?.receiptNumber} />
                                 </span>
-                                {/* <a className={`${styles.verticallyCentered} ${styles.marL5}`}>
-                                    <FiCopy className={styles.activeForm} />
-                                </a> */}
                             </span>
                         </div>
                     </>

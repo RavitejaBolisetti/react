@@ -128,5 +128,5 @@ export const AMC_CONSTANTS = {
 
 export const REQUEST_CONSTANT = {
     REG: 'Registration Request',
-    CNCL: 'Cancellation Request',
+    CAN: 'Cancellation Request',
 };

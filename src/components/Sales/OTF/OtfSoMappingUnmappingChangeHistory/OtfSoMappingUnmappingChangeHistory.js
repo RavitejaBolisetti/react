@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedRecordId }) => {
+const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedOrderId, selectedRecordId }) => {
     useEffect(() => {
         if (selectedRecordId) {
             const extraParams = [
@@ -106,7 +106,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <h4 className={styles.marT0}>
-                        {translateContent('commonModules.label.bookingDetails.bookingNumber')}: {selectedRecordId}
+                        {translateContent('commonModules.label.bookingDetails.bookingNumber')}: {selectedOrderId}
                     </h4>
                     <DataTable {...tableProps} />
                 </Col>

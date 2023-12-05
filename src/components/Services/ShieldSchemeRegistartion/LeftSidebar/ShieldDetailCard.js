@@ -30,7 +30,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ShieldDetailCard = (props) => {
-    const { record, isLoading, typeData, selectedCardData } = props;
+    const { isLoading, typeData, selectedCardData } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -41,9 +41,8 @@ const ShieldDetailCard = (props) => {
                             <span>
                                 {selectedCardData?.schemeNumber}
                                 {selectedCardData?.schemeNumber && (
-                                    <a className={styles.marL5}>
+                                    <a className={styles.marL5} href="javascript.void(0)">
                                         <CopytoClipboard buttonText={null} text={selectedCardData?.schemeNumber} />
-                                        {/* <FiCopy className={styles.activeForm} /> */}
                                     </a>
                                 )}
                             </span>

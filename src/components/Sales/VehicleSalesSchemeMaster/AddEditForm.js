@@ -30,7 +30,6 @@ import { zoneAreaTableColumn } from './zoneAreaTableColumn';
 import { ZoneAreaModal } from './ZoneAreaModal';
 import { translateContent } from 'utils/translateContent';
 import { FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-import { ENCASH_CONSTANTS } from './constants/encashContants';
 import { DELETE_ACTION } from 'utils/btnVisiblity';
 
 const { Panel } = Collapse;
@@ -64,18 +63,18 @@ const AddEditFormMain = (props) => {
         return Promise.reject(new Error(translateContent('vehicleSalesSchemeMaster.text.dateError')));
     };
 
-    useEffect(() => {
-        if (saleService?.sales && saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.ALL?.key });
-        } else if (saleService?.sales && !saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SALES?.key });
-        } else if (!saleService?.sales && saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SERVICE?.key });
-        } else if (!saleService?.sales && !saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.NO?.key });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [saleService]);
+    // useEffect(() => {
+    //     if (saleService?.sales && saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.ALL?.key });
+    //     } else if (saleService?.sales && !saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SALES?.key });
+    //     } else if (!saleService?.sales && saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SERVICE?.key });
+    //     } else if (!saleService?.sales && !saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.NO?.key });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [saleService]);
 
     const handleSales = (props) => {
         setSaleService({ sales: props, service: saleService?.service });
@@ -127,7 +126,7 @@ const AddEditFormMain = (props) => {
             if (isPresent && Object?.keys(isPresent)?.length > 0) {
                 showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.text.errorMessageText1') });
             } else {
-                setTableDataItem((prev) => [ { ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true },...prev]);
+                setTableDataItem((prev) => [{ ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true }, ...prev]);
             }
         }
         setEditingData({});
@@ -158,7 +157,7 @@ const AddEditFormMain = (props) => {
         let vehicleSchemeData = schemeData?.find((el) => el.schemeCode === value);
         addSchemeForm.setFieldsValue({ amountWithoutTax: vehicleSchemeData?.schemeAmount, amountWithTax: vehicleSchemeData?.schemeTaxAmount });
     };
-
+    console.log(saleService);
     const onFinishAddZoneDetails = (values) => {
         setOpenAccordian([2]);
 
@@ -366,7 +365,7 @@ const AddEditFormMain = (props) => {
                                                 label={translateContent('vehicleSalesSchemeMaster.label.validityToDate')}
                                                 name="validityToDate"
                                                 rules={[
-                                                    validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityTodate')),
+                                                    validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityToDate')),
                                                     {
                                                         validator: (_, value) => {
                                                             return addSchemeForm.getFieldValue('validityFromDate') ? CheckDateEffectiveTo(value, addSchemeForm?.getFieldValue('validityFromDate')) : null;
@@ -406,13 +405,13 @@ const AddEditFormMain = (props) => {
                                             <Form.Item initialValue={formData?.encash} name="encash" label={translateContent('vehicleSalesSchemeMaster.label.encash')} />
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item name="sales" initialValue={saleService ? formData?.encash : ''} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnSales')}>
+                                            <Form.Item name="sales" initialValue={formActionType?.editMode ? saleService?.sales === true : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnSales')}>
                                                 <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={handleSales} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item name="service" initialValue={saleService ? formData?.encash : ''} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnService')}>
-                                                <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={handleServices} defaultChecked={false} />
+                                            <Form.Item name="service" initialValue={formActionType?.editMode ? saleService?.service === true : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnService')}>
+                                                <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={handleServices} />
                                             </Form.Item>
                                         </Col>
 

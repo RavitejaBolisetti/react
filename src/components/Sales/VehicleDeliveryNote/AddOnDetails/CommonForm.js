@@ -34,13 +34,13 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                     </Col>
                 )}
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.schemeDescription} label={translateContent('vehicleDeliveryNote.addOnDetails.label.schemeDescription')} name="schemeDescription" rules={[validateRequiredSelectField('vehicleDeliveryNote.addOnDetails.label.schemeDescription')]}>
+                    <Form.Item initialValue={formData?.schemeDescription} label={translateContent('vehicleDeliveryNote.addOnDetails.label.schemeDescription')} name="schemeDescription" rules={[validateRequiredSelectField(translateContent('vehicleDeliveryNote.addOnDetails.label.schemeDescription'))]}>
                         {customSelectBox({ data: schemeDescriptionDatamain[openAccordian], fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.schemeDescription')), onChange: handleChange, ...disableProps })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} label={translateContent('vehicleDeliveryNote.addOnDetails.label.saleType')} name="saleType" rules={[validateRequiredInputField(translateContent('vehicleDeliveryNote.addOnDetails.label.saleType'))]}>
-                        {customSelectBox({ data: typeData['DLVR_SALE_TYP'], placeholder: preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.saleType')), ...disableProps })}
+                        {customSelectBox({ data: typeData?.['DLVR_SALE_TYP'], placeholder: preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.saleType')), ...disableProps })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -69,7 +69,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                             <Button className={styles.marB20} type="primary" onClick={() => onSingleFormFinish(formKey, addOnForm)}>
                                 {!formData ? translateContent('global.buttons.register') : translateContent('global.buttons.save')}
                             </Button>
-                            {formData && Object?.values(formData)?.length && (
+                            {formData && Object?.values(formData)?.length > 0 && (
                                 <Button onClick={() => handleCancelRegister(disableKey)} className={styles.marL20} danger>
                                     {translateContent('global.buttons.cancel')}
                                 </Button>

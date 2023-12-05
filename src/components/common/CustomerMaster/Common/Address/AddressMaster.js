@@ -278,7 +278,7 @@ const AddressMasterBase = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!addressData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewAddressList {...formProps} />}
+                                    {!addressData?.length && !isAdding ? <NoDataFound information={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewAddressList {...formProps} />}
                                 </>
                             )}
                         </Card>

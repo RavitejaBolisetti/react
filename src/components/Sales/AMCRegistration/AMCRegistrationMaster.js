@@ -43,6 +43,9 @@ import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
+import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 
 const mapStateToProps = (state) => {
     const {
@@ -57,7 +60,11 @@ const mapStateToProps = (state) => {
             },
             OTF: {
                 OtfSearchList: { isLoaded: isOTFDataLoaded = false, isLoading: isOTFSearchLoading, data: otfData = [] },
+                LoyaltyModelGroup: { isLoading: isLoyaltyLoading, filteredListData: modelGroupData = [] },
+                ModelFamily: { isLoading: isModelLoading, data: modelFamilyData = [] },
             },
+            ProductHierarchy: { isLoading: isProductLoading, filteredListData: productAttributeData = [] },
+
             DealerHierarchy: {
                 DealerParent: { filteredListData: dealerParentsLovList },
             },
@@ -96,9 +103,16 @@ const mapStateToProps = (state) => {
         isLoginDataLoading,
 
         dealerParentsLovList,
-        dealerLocations: dealerLocations.filter((value) => value?.locationCode && value?.dealerLocationName),
+        dealerLocations: dealerLocations.filter((value) => value?.locationId && value?.dealerLocationName),
 
         locations,
+
+        modelGroupData,
+        modelFamilyData,
+        productAttributeData,
+        isLoyaltyLoading,
+        isModelLoading,
+        isProductLoading,
     };
     return returnValue;
 };
@@ -136,7 +150,16 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             locationDataLoding: applicationMasterDataActions.locationDataLoding,
+            resetLocationData: applicationMasterDataActions.resetLocations,
 
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
+            listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
+
+            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            listProductShowLoading: productHierarchyDataActions.listShowLoading,
+
+            fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
+            listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -150,7 +173,10 @@ export const AMCRegistrationMasterBase = (props) => {
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
     const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, fetchManagerList, managerData, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
     const { fetchOTFSearchedList, listOTFShowLoading, otfData, fetchDealerLocations, locationDataLoding, dealerLocations } = props;
-    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList } = props;
+    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList, resetLocationData } = props;
+    const { modelGroupData, modelFamilyData, productAttributeData } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchModelFamilyLovList, listFamilyShowLoading } = props;
+    const { fetchProductLovCode, listProductShowLoading, isLoyaltyLoading, isModelLoading, isProductLoading } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
@@ -163,8 +189,6 @@ export const AMCRegistrationMasterBase = (props) => {
     const [cancelAMCForm] = Form.useForm();
     const [customerForm] = Form.useForm();
     const [schemeForm] = Form.useForm();
-
-    const [searchValue, setSearchValue] = useState();
 
     const [selectedOrder, setSelectedOrder] = useState('');
     const [selectedOrderId, setSelectedOrderId] = useState('');
@@ -225,7 +249,23 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [amcRegistrationDetailData]);
 
     const handleDealerParentChange = (parentGroupCode) => {
-        fetchDealerLocations({ customURL: customLocationURL + '?parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
+        if (!parentGroupCode) {
+            advanceFilterForm.resetFields(['dealerLocation']);
+            resetLocationData();
+            return;
+        }
+        fetchDealerLocations({ customURL: customLocationURL + '?dealerParentCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
+    };
+    const handleModelData = ({ modelCode = null, modelFamily = null, modelGroup = null }) => {
+        const modelParams = [
+            {
+                key: 'prodctCode',
+                value: modelCode,
+            },
+        ];
+        fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: [{ key: 'modelGroupCode', title: 'modelGroupCode', value: modelGroup, name: 'modelGroupCode' }] });
+        fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: [{ key: 'familyCode', title: 'familyCode', value: modelFamily, name: 'familyCode' }] });
+        fetchProductLovCode({ setIsLoading: listProductShowLoading, userId, extraParams: modelParams, onErrorAction });
     };
 
     const defaultBtnVisiblity = {
@@ -472,10 +512,6 @@ export const AMCRegistrationMasterBase = (props) => {
         searchForm.resetFields();
     };
 
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
-    };
-
     const handleSearch = (value) => {
         setFilterString({ ...filterString, searchParam: value });
     };
@@ -532,9 +568,9 @@ export const AMCRegistrationMasterBase = (props) => {
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
                     if (userType === AMC_CONSTANTS?.DEALER?.key) {
-                        amcStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, cancelAMCBtn: true }) : amcStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        amcStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, cancelAMCBtn: true }) : setButtonData({ ...Visibility });
                     } else {
-                        amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        setButtonData({ ...Visibility });
                     }
                 }
             }
@@ -673,7 +709,6 @@ export const AMCRegistrationMasterBase = (props) => {
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleChange,
         handleSearch,
         handleInvoiceTypeChange,
 
@@ -862,6 +897,14 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsPendingForCancellation,
         handlePrintDownload,
         schemeList,
+
+        modelGroupData,
+        modelFamilyData,
+        productAttributeData,
+        handleModelData,
+        isLoyaltyLoading,
+        isModelLoading,
+        isProductLoading,
         fetchDetail,
         listShowLoading,
     };

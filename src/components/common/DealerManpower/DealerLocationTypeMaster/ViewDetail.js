@@ -21,7 +21,9 @@ const ViewDetailBase = ({ formData, styles }) => {
                     <Descriptions.Item label={translateContent('locationTypeMaster.label.locationTypeCode')}>{formData?.locationCode}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('locationTypeMaster.label.locationTypeName')}>{formData?.locationDescription}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('locationTypeMaster.label.applicationTo')}>{formData?.applicableTo}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('locationTypeMaster.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('locationTypeMaster.label.status')}>
+                        <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>

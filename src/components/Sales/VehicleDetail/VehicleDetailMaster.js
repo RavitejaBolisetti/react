@@ -22,10 +22,13 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
+import LeftProfileCard from './LeftProfileCard';
+
 import { translateContent } from 'utils/translateContent';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { drawerTitle } from 'utils/drawerTitle';
+import { handleUnSavedChange, UnSaveDataConfirmation } from 'utils/UnSaveDataConfirmation';
 
 const mapStateToProps = (state) => {
     const {
@@ -92,6 +95,9 @@ export const VehicleDetailMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
+        isVisible: false,
+    });
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -119,6 +125,8 @@ export const VehicleDetailMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField(translateContent('vehicleDetail.validation.searchParameter'))] });
+
+    const handleUnSavedChangeFn = (successFn) => handleUnSavedChange({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn });
 
     const onSuccessAction = (res) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -251,7 +259,7 @@ export const VehicleDetailMasterBase = (props) => {
         setFilterString();
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, onSave = false }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
@@ -269,9 +277,20 @@ export const VehicleDetailMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-                section && setCurrentSection(nextSection?.id);
-                setLastSection(!nextSection?.id);
+                const callMethod = () => {
+                    const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                    section && setCurrentSection(nextSection?.id);
+                    setLastSection(!nextSection?.id);
+                };
+
+                if (onSave) {
+                    callMethod();
+                } else {
+                    handleUnSavedChangeFn(() => {
+                        callMethod();
+                    });
+                }
+
                 break;
 
             default:
@@ -328,11 +347,13 @@ export const VehicleDetailMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        form.resetFields();
-        form.setFieldsValue();
-        setSelectedRecord();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
+        handleUnSavedChangeFn(() => {
+            form.resetFields();
+            form.setFieldsValue();
+            setSelectedRecord();
+            setIsFormVisible(false);
+            setButtonData({ ...defaultBtnVisiblity });
+        });
     };
 
     const tableProps = {
@@ -381,6 +402,8 @@ export const VehicleDetailMasterBase = (props) => {
     };
 
     const containerProps = {
+        menuItem: Object.values(VEHICLE_DETAIL_SECTION),
+        MenuCard: LeftProfileCard,
         record: selectedRecord,
         form,
         formActionType,
@@ -389,7 +412,7 @@ export const VehicleDetailMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -415,6 +438,7 @@ export const VehicleDetailMasterBase = (props) => {
         typeData,
         vehicleDetailData,
         saveButtonName: isLastSection ? translateContent('global.buttons.submit') : translateContent('global.buttons.saveAndNext'),
+        handleUnSavedChangeFn,
     };
 
     return (
@@ -426,6 +450,7 @@ export const VehicleDetailMasterBase = (props) => {
                 </Col>
             </Row>
             <VehicleDetailMainContainer {...containerProps} />
+            <UnSaveDataConfirmation {...unSavedDataModalProps} />
         </>
     );
 };

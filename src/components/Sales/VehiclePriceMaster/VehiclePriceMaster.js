@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         common: {
-            Header: { data: loginUserData = [] },
+            Header: { data: loginUserData = [], dealerLocationId },
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -100,6 +100,7 @@ const mapStateToProps = (state) => {
         vehiclePriceData: vehiclePriceData?.vehicleSearch,
         totalRecords: vehiclePriceData?.totalRecords,
         productHierarchyDataList: productHierarchyData,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -134,7 +135,7 @@ export const VehiclePriceMasterBase = (props) => {
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData, productHierarchyDataList, fetchModelList } = props;
-    const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading, userType } = props;
+    const { dealerLocationId, resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading, userType } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -183,7 +184,6 @@ export const VehiclePriceMasterBase = (props) => {
     const onErrorAction = (res) => {
         showGlobalNotification({ message: res });
         setShowDataLoading(false);
-
     };
 
     const paramMasterId = 'VH_PRC_SRCH';
@@ -201,7 +201,7 @@ export const VehiclePriceMasterBase = (props) => {
     }, [productHierarchyDataList]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && dealerLocationId) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -211,7 +211,7 @@ export const VehiclePriceMasterBase = (props) => {
             fetchModelList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, dealerLocationId]);
 
     const extraParams = useMemo(() => {
         return [
@@ -232,7 +232,7 @@ export const VehiclePriceMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'modelValue',
+                key: 'modelCode',
                 title: translateContent('vehiclePriceMaster.label.model'),
                 value: filterString?.model,
                 //name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
@@ -649,7 +649,7 @@ export const VehiclePriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: translateContent('global.drawerTitle.view').concat(" ").concat(moduleTitle),
+        titleOverride: translateContent('global.drawerTitle.view').concat(' ').concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

@@ -12,7 +12,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
+    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer, isCustomerLoading } = props;
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData });
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
                                                     <Input placeholder={preparePlaceholderText('Customer ID')} disabled={true} />
                                                 </>
                                             ) : (
-                                                <Search onChange={handleOnChange} onSearch={handleCustomerIdSearch} placeholder={preparePlaceholderText('Customer ID')} allowClear />
+                                                <Search loading={isCustomerLoading} onChange={handleOnChange} onSearch={handleCustomerIdSearch} placeholder={preparePlaceholderText('Customer ID')} allowClear />
                                             )}
                                         </Form.Item>
                                     </Col>

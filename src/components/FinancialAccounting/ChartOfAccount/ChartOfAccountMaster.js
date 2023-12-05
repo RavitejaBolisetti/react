@@ -358,7 +358,7 @@ export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, fetchCha
         formActionType,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit' : 'Add').concat(" ").concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit' : 'Add').concat(' ').concat(moduleTitle),
         onFinish,
         isFormBtnActive,
         setFormBtnActive,

@@ -16,15 +16,15 @@
     .ant-dropdown {
         .ant-dropdown-menu {
             .ant-dropdown-menu-title-content {
-                &>a {
+                & > a {
                     &:hover {
                         text-decoration: none;
                     }
                 }
             }
-            .ant-dropdown-menu-submenu-title{
-                .ant-dropdown-menu-submenu-expand-icon{
-                    top:6px;
+            .ant-dropdown-menu-submenu-title {
+                .ant-dropdown-menu-submenu-expand-icon {
+                    top: 6px;
                 }
             }
         }
@@ -35,7 +35,6 @@
                 border-radius: 6px;
                 box-shadow: none;
                 margin-top: 16px;
-                box-shadow: none;
 
                 .ant-dropdown-menu-item {
                     &:not(:last-child) {
@@ -63,7 +62,6 @@
             }
         }
     }
-    
 }
 
 .headerRight {
@@ -706,7 +704,7 @@
             }
 
             .ant-tabs.ant-tabs-top {
-                >.ant-tabs-nav {
+                > .ant-tabs-nav {
                     padding: 0 16px;
                     margin-bottom: 0;
 

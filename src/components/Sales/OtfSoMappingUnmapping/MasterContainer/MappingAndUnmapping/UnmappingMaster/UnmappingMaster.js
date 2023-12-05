@@ -1,13 +1,14 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
+*   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+*   All rights reserved.
+*   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+*/
 import React, { useState } from 'react';
-import { tableColumnUnMapping } from './tableColumnUnmapping';
-import { connect } from 'react-redux';
-
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Form, Row, Col } from 'antd';
+import { tableColumnUnMapping } from './tableColumnUnmapping';
+
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { otfSoMappingDataActions } from 'store/actions/data/otfSoMappingUnmapping';
@@ -20,7 +21,6 @@ import { LANGUAGE_EN } from 'language/en';
 import { ListDataTable } from 'utils/ListDataTable';
 import { translateContent } from 'utils/translateContent';
 
-import { Form } from 'antd';
 
 const mapStateToProps = (state) => {
     const {
@@ -155,11 +155,16 @@ const MappingMasterMain = (props) => {
         setButtonData,
         saveButtonName: BUTTON_NAME?.UNMAP?.name,
         formData,
+        multipleForm: false,
     };
 
     return (
         <>
-            <ListDataTable {...tableProps} />
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ListDataTable {...tableProps} />
+                </Col>
+            </Row>
             <AddEditForm {...formProps} />
         </>
     );

@@ -31,7 +31,6 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
 import { IssueIndentMaster } from 'components/Sales/StockTransferIndent/IssueIndent';
-import { ISSUE_ACTION_LIST } from './constants';
 import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { defaultPageProps } from 'utils/defaultPageProps';
@@ -490,7 +489,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-       // setRecordType(record?.issueStatus);
+        // setRecordType(record?.issueStatus);
         setReportVisible(true);
         setAdditionalReportParams([
             {
@@ -501,7 +500,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        setReportDetail(toggleButton === STOCK_TRANSFER?.RAISED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT : toggleButton === STOCK_TRANSFER?.RECEIVED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT : null);
+        setReportDetail(toggleButton === STOCK_TRANSFER?.RAISED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT : toggleButton === STOCK_TRANSFER?.RECEIVED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT : null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [toggleButton]);
 

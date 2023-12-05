@@ -10,18 +10,19 @@ import { validateRequiredInputField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
+import { SCHEME_TYPE } from '../constant';
 
 const { Search } = Input;
 
 const EnrolmentAdd = (props) => {
-    const { typeData, onHandleRegistrationNumber, isSearchLoading } = props;
+    const { typeData, onHandleRegistrationNumber, isSearchLoading, onSchemeChange, schemeType } = props;
 
     return (
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('crmSchemeEnrolment.label.schemeType')} name="schemeType" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.schemeType'))]}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.CRM_SCHEME_TYPE?.id], placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.schemeType')) })}
+                        {customSelectBox({ data: typeData[PARAM_MASTER?.CRM_SCHEME_TYPE?.id], placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.schemeType')), onChange: onSchemeChange })}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -29,12 +30,14 @@ const EnrolmentAdd = (props) => {
                         <Search placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'), false)} allowClear onSearch={onHandleRegistrationNumber} loading={isSearchLoading} />
                     </Form.Item>
                 </Col>
-                {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label={translateContent('crmSchemeEnrolment.label.bookletNumber')} name="bookletNumber">
-                        
-                        <Input placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.bookletNumber'), false)} />
-                    </Form.Item>
-                </Col> */}
+                {schemeType !== SCHEME_TYPE?.REFERRAL?.key && (
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label={translateContent('crmSchemeEnrolment.label.bookletNumber')} name="bookletNumber" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.bookletNumber'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.bookletNumber'), false)} />
+                        </Form.Item>
+                    </Col>
+                )}
+
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('crmSchemeEnrolment.label.enrolledBy')} name="enrolledBy" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.enrolledBy'))]}>
                         {customSelectBox({ data: typeData[PARAM_MASTER?.ENROLLED_BY?.id], placeholder: preparePlaceholderSelect(translateContent('crmSchemeEnrolment.label.enrolledBy')) })}

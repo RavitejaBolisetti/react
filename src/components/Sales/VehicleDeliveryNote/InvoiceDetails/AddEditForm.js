@@ -62,7 +62,7 @@ const AddEditFormMain = (props) => {
             if (value !== REASON_FOR_DELAY?.OTHER?.key) {
                 setReasonForDelayRules({ rules: [], showField: false });
             } else {
-                setReasonForDelayRules({ rules: [validateRequiredInputField('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks')], showField: true });
+                setReasonForDelayRules({ rules: [validateRequiredInputField(translateContent('vehicleDeliveryNote.invoiceDetails.label.reasonForDelayRemarks'))], showField: true });
             }
         }
     };

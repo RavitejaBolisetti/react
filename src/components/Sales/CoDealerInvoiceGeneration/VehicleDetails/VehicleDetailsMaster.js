@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
-
+    const NO_DATA = '-';
     let returnValue = {
         userId,
         typeData,
@@ -38,6 +38,7 @@ const mapStateToProps = (state) => {
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
         productAttributeData,
+        NO_DATA,
     };
     return returnValue;
 };
@@ -60,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMain = (props) => {
-    const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType, setButtonData, resetProductData } = props;
+    const { CoDealerInvoiceStateMaster, form, NO_DATA, section, formActionType, resetProductData } = props;
     const { fetchData, listShowLoading, userId, coDealerOnFinish, listProductShowLoading, fetchProductLovCode, isProductHierarchyDataLoaded, productAttributeData } = props;
     const [formData, setFormData] = useState();
     const [collapseActiveKey, setcollapseActiveKey] = useState([1]);
@@ -90,7 +91,7 @@ const VehicleDetailsMain = (props) => {
                 },
                 {
                     key: 'discountAmount',
-                    value: discountAmount ?? "0",
+                    value: discountAmount ?? '0',
                 },
 
                 {
@@ -140,19 +141,19 @@ const VehicleDetailsMain = (props) => {
             setToolTipContent(
                 <div>
                     <p>
-                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']?.['color'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']?.['seatingCapacity'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']?.['fuel'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']?.['variant'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']?.['name'] ?? NO_DATA}</span>
                     </p>
                 </div>
             );

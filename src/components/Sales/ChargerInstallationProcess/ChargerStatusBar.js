@@ -18,9 +18,9 @@ export const ChargerStatusBar = (props) => {
     const currentStatusId = otfStatusList?.find((i) => i.key === status)?.id;
 
     if (status === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key) {
-        otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id);
+        return otfStatusList.filter((i) => i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id);
     } else if (status === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.key) {
-        otfStatusList.filter((i) => (i.displayOnView && i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id) || QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id);
+        return otfStatusList.filter((i) => i.displayOnView && (i?.id === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.id || i?.id === QUERY_BUTTONS_CONSTANTS.SITE_VALIDATION.id));
     }
 
     return (

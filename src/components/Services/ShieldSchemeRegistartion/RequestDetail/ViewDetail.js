@@ -16,11 +16,10 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
-const { Text } = Typography;
+import { RSARegistrationStatusTag } from 'components/Sales/RSARegistration/utils/RSARegistrationStatusTag';
 
 const ViewDetail = (props) => {
-    const { screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowMasterDetails, typeData } = props;
+    const { screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowDetails, typeData } = props;
 
     const viewProps = {
         bordered: false,
@@ -51,7 +50,7 @@ const ViewDetail = (props) => {
                             {translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(formData?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
                         </Typography>
                     </Row>
-                    {SchemeStatusTag(selectedOrder?.status)}
+                    {screenType === 'RSA' ? RSARegistrationStatusTag(selectedOrder?.status) : SchemeStatusTag(selectedOrder?.status)}
                 </Row>
                 <Row type="flex" align="middle" className={selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>
@@ -78,24 +77,15 @@ const ViewDetail = (props) => {
                         )}
 
                         <Row gutter={20} className={styles.marB20}>
-                            {/* <Col xs={8} sm={8} md={8} lg={8}>
-                                            <Button type="primary" onClick={handleMNMApproval}>
-                                                {translateContent('global.buttons.approve')}
-                                            </Button>
-
-                                            <span className={styles.marL5}>
-                                                <Button danger onClick={handleMNMRejection}>
-                                                    {translateContent('global.buttons.reject')}
-                                                </Button>
-                                            </span>
-                                        </Col> */}
-                            {workflowMasterDetails?.allowedActions?.map((element, i) => {
-                                return (
-                                    <Button onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
-                                        {element?.actionName}
-                                    </Button>
-                                );
-                            })}
+                            <Col xs={8} sm={8} md={8} lg={8}>
+                                {workflowDetails?.allowedActions?.map((element, i) => {
+                                    return (
+                                        <Button className={i && styles.marL5} onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
+                                            {element?.actionName}
+                                        </Button>
+                                    );
+                                })}
+                            </Col>
                         </Row>
                     </>
                 ) : (

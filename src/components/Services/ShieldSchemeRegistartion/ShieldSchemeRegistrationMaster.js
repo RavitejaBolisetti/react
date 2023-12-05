@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
             },
         },
         common: {
-            Header: { data: loginUserData = [] },
+            Header: { data: loginUserData = [], dealerLocationId },
         },
     } = state;
     const moduleTitle = translateContent('shieldSchemeRegistration.heading.moduleTitle');
@@ -88,7 +88,7 @@ const mapStateToProps = (state) => {
         employeeData,
         managerData,
         dealerParentsLovList,
-        dealerLocations,
+        dealerLocations: dealerLocations.filter((value) => value?.locationId && value?.dealerLocationName),
         schemeDetail,
         filterString,
         isModelFamilyDataLoaded,
@@ -99,6 +99,7 @@ const mapStateToProps = (state) => {
         ProductHierarchyData,
 
         locations,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -119,6 +120,8 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
+            resetLocationData: applicationMasterDataActions.resetLocations,
+
             saveData: shieldSchemeSearchDataAction.saveData,
             resetData: shieldSchemeSearchDataAction.reset,
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
@@ -144,8 +147,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
-    const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
+    const { dealerLocationId, userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
+    const { resetLocationData, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -423,7 +426,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily]);
 
     useEffect(() => {
-        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup && dealerLocationId) {
             const makeExtraParams = [
                 {
                     key: 'modelGroupCode',
@@ -435,7 +438,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             fetchModelList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup]);
+    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup, dealerLocationId]);
 
     const handleInvoiceTypeChange = (buttonName) => {
         const key = buttonName?.key;
@@ -492,8 +495,13 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleDealerParentChange = (value) => {
+        if (!value) {
+            advanceFilterForm.resetFields(['dealerLocation']);
+            resetLocationData();
+            return;
+        }
         if (userId) {
-            fetchDealerLocations({ customURL: customURL + '?parentGroupCode=' + value, setIsLoading: listShowLoading, userId });
+            fetchDealerLocations({ customURL: customURL + '?dealerParentCode=' + value, setIsLoading: listShowLoading, userId });
         }
     };
 

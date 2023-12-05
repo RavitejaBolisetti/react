@@ -7,517 +7,494 @@
 @import 'assets/sass/app.module.scss';
 
 .allowedTiming {
-	background: $neutralGrey0;
-	border-radius: 8px;
-	flex-direction: column;
-	align-items: flex-start;
-	padding: 20px 0px 20px 20px;
-	gap: 20px;
-	margin-bottom: 20px;
+    background: $neutralGrey0;
+    border-radius: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 0px 20px 20px;
+    gap: 20px;
+    margin-bottom: 20px;
 
-	& :global {
-		.ant-picker-input {
-			>input {
-				&:placeholder-shown {
-					font-size: 14px;
-				}
+    & :global {
+        .ant-picker-input {
+            > input {
+                &:placeholder-shown {
+                    font-size: 14px;
+                }
 
-				font-size: 14px;
-			}
-		}
+                font-size: 14px;
+            }
+        }
 
-		.ant-btn-default.ant-btn-dangerous.ant-btn-icon-only {
-			&:hover {
-				color: $primaryRed !important;
-			}
-		}
-	}
+        .ant-btn-default.ant-btn-dangerous.ant-btn-icon-only {
+            &:hover {
+                color: $primaryRed !important;
+            }
+        }
+    }
 }
 
-
 .viewMode {
-	.allowedTiming {
-		background: $neutralGrey0;
-		border-radius: 8px;
-		flex-direction: column;
-		align-items: flex-start;
-		padding: 20px 0px 0px 20px;
-		gap: 20px;
-		margin-bottom: 20px;
-	}
+    .allowedTiming {
+        background: $neutralGrey0;
+        border-radius: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 0px 0px 20px;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
 
-	& :global(.ant-switch.ant-switch-checked) {
-		background: $neutralGrey2 !important;
-		color: $neutralGrey2;
-	}
+    & :global(.ant-switch.ant-switch-checked) {
+        background: $neutralGrey2 !important;
+        color: $neutralGrey2;
+    }
 
-	// & :global(.ant-form-item {
-	// 	.ant-form-item-label {
-	// 		>label.ant-form-item-required:not(.ant-form-item-required-mark-optional) {
-	// 			&::before) {
-	// 				color: $primaryBlack;
-	// 				display: none;
-	// 			}
-	// 		}
-	// 	}
-	// }
-	// & :global(.ant-input-disabled {
-	// 	.ant-input[disabled]) {
-	// 		background-color: $colorNone !important;
-	// 	}
-	// }
-	& :global {
-		input[type='text'] {
-			&:disabled {
-				background-color: $primaryWhite !important;
-				border-color: $transparentColor !important;
-				padding-left: 0px !important;
-				font-weight: 700;
-				font-size: 16px;
-				line-height: 0px;
-				cursor: default;
-			}
-		}
+    // & :global(.ant-form-item {
+    // 	.ant-form-item-label {
+    // 		>label.ant-form-item-required:not(.ant-form-item-required-mark-optional) {
+    // 			&::before) {
+    // 				color: $primaryBlack;
+    // 				display: none;
+    // 			}
+    // 		}
+    // 	}
+    // }
+    // & :global(.ant-input-disabled {
+    // 	.ant-input[disabled]) {
+    // 		background-color: $colorNone !important;
+    // 	}
+    // }
+    & :global {
+        input[type='text'] {
+            &:disabled {
+                background-color: $primaryWhite !important;
+                border-color: $transparentColor !important;
+                padding-left: 0px !important;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 0px;
+                cursor: default;
+            }
+        }
 
-		.ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-			background: $transparentColor;
-		}
+        .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+            background: $transparentColor;
+        }
 
-		.ant-drawer.ant-drawer-body.ant-form-item {
-			padding-bottom: 0px !important;
-		}
-	}
+        .ant-drawer.ant-drawer-body.ant-form-item {
+            padding-bottom: 0px !important;
+        }
+    }
 
-	// & :global(.ant-switch.ant-switch-checked {
-	// 	.ant-switch-inner {
-	// 		.ant-switch-inner-checked) {
-	// 			color: $primaryBlack !important;
-	// 			font-size: 16px !important;
-	// 			font-weight: 700 !important;
-	// 		}
-	// 	}
-	// }
-	// & :global(.ant-switch {
-	// 	.ant-switch-inner {
-	// 		.ant-switch-inner-unchecked) {
-	// 			color: $primaryBlack !important;
-	// 			font-size: 16px !important;
-	// 			font-weight: 700 !important;
-	// 		}
-	// 	}
-	// }
+    // & :global(.ant-switch.ant-switch-checked {
+    // 	.ant-switch-inner {
+    // 		.ant-switch-inner-checked) {
+    // 			color: $primaryBlack !important;
+    // 			font-size: 16px !important;
+    // 			font-weight: 700 !important;
+    // 		}
+    // 	}
+    // }
+    // & :global(.ant-switch {
+    // 	.ant-switch-inner {
+    // 		.ant-switch-inner-unchecked) {
+    // 			color: $primaryBlack !important;
+    // 			font-size: 16px !important;
+    // 			font-weight: 700 !important;
+    // 		}
+    // 	}
+    // }
 }
 
 .cancelBtn {
-	float: left !important;
+    float: left !important;
 
-	&:disabled {
-		background-color: $neutralGrey2;
-		color: $primaryWhite;
-		border-color: $primaryWhite;
-	}
+    &:disabled {
+        background-color: $neutralGrey2;
+        color: $primaryWhite;
+        border-color: $primaryWhite;
+    }
 }
 
 .saveBtn {
-	Button {
-		margin-left: 10px !important;
-		float: right !important;
-	}
+    Button {
+        margin-left: 10px !important;
+        float: right !important;
+    }
 
-	&:disabled {
-		background-color: $primaryRed;
-		color: $primaryWhite;
-		border-color: $primaryWhite;
-	}
+    &:disabled {
+        background-color: $primaryRed;
+        color: $primaryWhite;
+        border-color: $primaryWhite;
+    }
 }
 
 .deleteBtn {
-	&:disabled {
-		background-color: $primaryWhite;
-		color: $neutralGrey2;
-		border-color: $primaryWhite;
-	}
+    &:disabled {
+        background-color: $primaryWhite;
+        color: $neutralGrey2;
+        border-color: $primaryWhite;
+    }
 
-	background-color: $primaryWhite;
-	color: $neutralGrey2;
-	border-color: none !important;
-	border: none !important;
+    background-color: $primaryWhite;
+    color: $neutralGrey2;
+    border-color: none !important;
+    border: none !important;
 }
 
 .addTimeBtn {
-	position: relative;
-	top: -28px;
-	margin-bottom: -10px;
-	text-align: right;
-	color: $primaryRed;
+    position: relative;
+    top: -28px;
+    margin-bottom: -10px;
+    text-align: right;
+    color: $primaryRed;
 
-	button {
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 22px;
-		padding-right: 0px;
-	}
+    button {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+        padding-right: 0px;
+    }
 }
 
 .viewAllowedTiming {
-	button {
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 22px;
-		padding-right: 0px;
-	}
+    button {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+        padding-right: 0px;
+    }
 }
 
 .timingHeader {
-	background-color: $neutralGrey0;
-	padding: 10px;
-	margin-bottom: 10px;
-	border-radius: 7px;
-	font-size: 14px;
-	color: $primaryBlack;
-	border-radius: 8px;
-	background-color: $neutralGrey0;
-	padding: 10px;
-	margin-bottom: 1px;
-	border-radius: 0;
-	border-top-left-radius: 8px !important;
-	border-top-right-radius: 8px !important;
-	font-size: 14px;
-	color: $primaryBlack;
+    background-color: $neutralGrey0;
+    padding: 10px;
+    font-size: 14px;
+    color: $primaryBlack;
+    margin-bottom: 1px;
+    border-radius: 0;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
 }
-
-
 
 .drawerCriticalityGrp {
-	& :global {
-		.ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-			border: none;
-			padding-top: 0px;
-			box-shadow: none !important;
-		}
+    & :global {
+        .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+            border: none;
+            padding-top: 0px;
+            box-shadow: none !important;
+        }
 
-		.ant-btn-default.ant-btn-dangerous {
-			&:disabled {
-				background-color: $transparentColor !important;
-				color: $neutralGrey2 !important;
+        .ant-btn-default.ant-btn-dangerous {
+            &:disabled {
+                background-color: $transparentColor !important;
+                color: $neutralGrey2 !important;
 
-				svg {
-					color: $neutralGrey2 !important;
-				}
-			}
+                svg {
+                    color: $neutralGrey2 !important;
+                }
+            }
 
-			svg {
-				margin-right: 0px;
-				padding-top: 8px;
-				padding-left: 20px;
-				color: $primaryRed;
-			}
-		}
+            svg {
+                margin-right: 0px;
+                padding-top: 8px;
+                padding-left: 20px;
+                color: $primaryRed;
+            }
+        }
 
-		.ant-drawer-wrapper-body {
-			.ant-drawer-footer {
-				box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
-				padding: 10px 20px;
-			}
-		}
-	}
+        .ant-drawer-wrapper-body {
+            .ant-drawer-footer {
+                box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
+                padding: 10px 20px;
+            }
+        }
+    }
 
-	.allowedTiming {
-		& :global {
-			.ant-space-item {
-				.ant-form-item {
-					margin-bottom: 0px !important;
-				}
-			}
-		}
-	}
+    .allowedTiming {
+        & :global {
+            .ant-space-item {
+                .ant-form-item {
+                    margin-bottom: 0px !important;
+                }
+            }
+        }
+    }
 }
-
 
 .contentHeaderBackground {
-	& :global {
-		.ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-			padding-left: 0px !important;
-		}
+    & :global {
+        .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+            padding-left: 0px !important;
+        }
 
-		.ant-input-search {
-			>.ant-input-group {
-				>.ant-input-group-addon {
-					&:last-child {
-						.ant-input-search-button {
-							&:not(.ant-btn-primary) {
-								background-color: $primaryWhite;
-								border-left: $primaryWhite;
+        .ant-input-search {
+            > .ant-input-group {
+                > .ant-input-group-addon {
+                    &:last-child {
+                        .ant-input-search-button {
+                            &:not(.ant-btn-primary) {
+                                background-color: $primaryWhite;
+                                border-left: $primaryWhite;
 
-								&:hover {
-									border-left: $primaryRed;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                                &:hover {
+                                    border-left: $primaryRed;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	background-color: $neutralGrey0;
-	padding: 10px;
-	margin-bottom: 20px;
-	border-radius: 7px;
+    background-color: $neutralGrey0;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 7px;
 
-	.buttonsGroupRight {
-		button {
-			margin-bottom: 0px !important;
-			margin-left: 10px;
-		}
-	}
+    .buttonsGroupRight {
+        button {
+            margin-bottom: 0px !important;
+            margin-left: 10px;
+        }
+    }
 }
-
 
 .ant-drawer {
-	.ant-drawer-body {
-		.allowedTiming {
-			.ant-space-item {
-				.ant-form-item {
-					margin-bottom: 0px !important;
-					padding-bottom: 0px !important;
-				}
-			}
-		}
-	}
+    .ant-drawer-body {
+        .allowedTiming {
+            .ant-space-item {
+                .ant-form-item {
+                    margin-bottom: 0px !important;
+                    padding-bottom: 0px !important;
+                }
+            }
+        }
+    }
 }
 
-
-
 .refreshBtn {
-	background-color: $transparentColor;
-	font-size: 18px;
-	line-height: 18px;
-	width: 60px !important;
+    background-color: $transparentColor;
+    font-size: 18px;
+    line-height: 18px;
+    width: 60px !important;
 
-	svg {
-		margin-right: 0px !important;
-	}
+    svg {
+        margin-right: 0px !important;
+    }
 
-	& :global {
-		.ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-			&:not(:disabled) {
-				&:hover {
-					color: $primaryWhite;
-					background-color: $primaryRed;
-					border-color: $primaryRed;
-				}
-			}
-		}
-	}
+    & :global {
+        .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+            &:not(:disabled) {
+                &:hover {
+                    color: $primaryWhite;
+                    background-color: $primaryRed;
+                    border-color: $primaryRed;
+                }
+            }
+        }
+    }
 }
 
 .srchbtn {
-	& :global {
-		.ant-btn-default {
-			background-color: $primaryWhite;
-		}
-	}
+    & :global {
+        .ant-btn-default {
+            background-color: $primaryWhite;
+        }
+    }
 }
 
 .drawerConfigParam {
-	& :global {
-		.ant-drawer-wrapper-body {
-			.ant-drawer-body {
-				.ant-form-item {
-					padding-bottom: 0 !important;
-				}
-			}
-		}
-	}
+    & :global {
+        .ant-drawer-wrapper-body {
+            .ant-drawer-body {
+                .ant-form-item {
+                    padding-bottom: 0 !important;
+                }
+            }
+        }
+    }
 }
 
 :global {
-	.ant-picker-time-panel-column {
-		&::-webkit-scrollbar-thumb {
-			background-color: $neutralGrey2 !important;
-			border-radius: 10px;
-			border: 2px solid $primaryWhite;
+    .ant-picker-time-panel-column {
+        &::-webkit-scrollbar-thumb {
+            background-color: $neutralGrey2 !important;
+            border-radius: 10px;
+            border: 2px solid $primaryWhite;
 
-			&:hover {
-				border: 2px solid $neutralGrey2;
-			}
-		}
+            &:hover {
+                border: 2px solid $neutralGrey2;
+            }
+        }
 
-		&::-webkit-scrollbar {
-			width: 8px;
-			background-color: $primaryWhite;
-		}
+        &::-webkit-scrollbar {
+            width: 8px;
+            background-color: $primaryWhite;
+        }
 
-		&::-webkit-scrollbar-track {
-			background-color: $primaryWhite;
-		}
-	}
+        &::-webkit-scrollbar-track {
+            background-color: $primaryWhite;
+        }
+    }
 }
 
 :global {
-	.ant-picker {
-		.ant-picker-input {
-			span.ant-picker-suffix {
-				.anticon.anticon-clock-circle {
-					color: $primaryRed;
-				}
-			}
-		}
-	}
+    .ant-picker {
+        .ant-picker-input {
+            span.ant-picker-suffix {
+                .anticon.anticon-clock-circle {
+                    color: $primaryRed;
+                }
+            }
+        }
+    }
 
-	.ant-picker-focused {
-		.ant-picker-input {
-			span.ant-picker-suffix {
-				.anticon.anticon-clock-circle {
-					color: $primaryRed;
-				}
-			}
-		}
-	}
+    .ant-picker-focused {
+        .ant-picker-input {
+            span.ant-picker-suffix {
+                .anticon.anticon-clock-circle {
+                    color: $primaryRed;
+                }
+            }
+        }
+    }
 }
-
 
 :global {
-	.ant-form-item-explain-error {
-		font-size: 11px !important;
-	}
+    .ant-form-item-explain-error {
+        font-size: 11px !important;
+    }
 }
-
 
 :global {
-	.ant-collapse {
-		>.ant-collapse-item {
-			>.ant-collapse-header {
-				.ant-collapse-header-texts {
-					font-weight: 600;
-					font-size: 16px;
-				}
-			}
-		}
-	}
+    .ant-collapse {
+        > .ant-collapse-item {
+            > .ant-collapse-header {
+                .ant-collapse-header-texts {
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
 }
-
-
-
 
 /**********allowed Timing Alignment********************/
 .allowedTimingAlignment {
-	border-top: 1px solid $neutralGrey1;
-	padding-top: 24px;
-	padding-left: 0 !important;
-	font-size: 14px;
-	line-height: 20px;
-	font-weight: 700;
+    border-top: 1px solid $neutralGrey1;
+    padding-top: 24px;
+    padding-left: 0 !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
 }
 
-
 .searchAndLabelAlign {
-	display: flex;
-	align-items: center;
-	margin-left: 10px;
-	padding-right: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    padding-right: 20px;
 }
 
 .hideInViewMode {
-	visibility: hidden;
+    visibility: hidden;
 }
 
 .timingHeaderBackground {
-	border-radius: 8px;
+    border-radius: 8px;
 }
 
 .activeText {
-	color: $semanticSuccess;
+    color: $semanticSuccess;
 }
 
 .InactiveText {
-	color: $neutralGrey3;
+    color: $neutralGrey3;
 }
 
 .modalIconAlert {
-	color: $semanticWarning;
-	padding-right: 8px;
+    color: $semanticWarning;
+    padding-right: 8px;
 }
 
 .tableIcons {
-	border: none;
-	padding: 0px;
-	box-shadow: $transparentColor !important;
-	width: 18px !important;
+    border: none;
+    padding: 0px;
+    box-shadow: $transparentColor !important;
+    width: 18px !important;
 }
 
 .paddingLeft {
-	padding-left: 10px;
+    padding-left: 10px;
 }
 
 .paddingLeft2 {
-	padding-left: 10px;
+    padding-left: 10px;
 }
 
 .addMoreRomColumnTitle {
-	padding-left: 10px;
-	font-size: 14px;
-	font-weight: 400;
+    padding-left: 10px;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .subheading {
-	font-size: 16px;
-	color: $primaryBlack;
-	padding-right: 0px !important;
-	padding-left: 0px !important;
-	display: flex;
-	justify-content: flex-start;
+    font-size: 16px;
+    color: $primaryBlack;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .buttonsGroupRight {
-	display: flex;
-	justify-content: right;
+    display: flex;
+    justify-content: right;
 }
 
 .inputViewText {
-	color: $neutralGrey5-dark;
-	text-align: left;
-	left: 0px;
+    color: $neutralGrey5-dark;
+    text-align: left;
+    left: 0px;
 }
 
 .viewModeText {
-	background-color: $primaryWhite !important;
-	border-color: $transparentColor !important;
-	padding-left: 0px !important;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 24px;
-	cursor: default;
-	margin-top: 10px !important;
-	color: rgba(0, 0, 0, 0.25);
-	word-wrap: break-word;
+    background-color: $primaryWhite !important;
+    border-color: $transparentColor !important;
+    padding-left: 0px !important;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: default;
+    margin-top: 10px !important;
+    color: rgba(0, 0, 0, 0.25);
+    word-wrap: break-word;
 }
-
 
 .accordianHeader {
-	color: $brandColor !important;
+    color: $brandColor !important;
 }
 
-
 .viewMode :global(.ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before) {
-	color: $primaryBlack;
-	display: none;
+    color: $primaryBlack;
+    display: none;
 }
 
 .viewMode :global(.ant-input-disabled .ant-input[disabled]) {
-	background-color: none !important;
+    background-color: none !important;
 }
 
-
 .viewMode :global(.ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked) {
-	color: $neutralGrey2 !important;
-	font-size: 16px !important;
-	font-weight: 700 !important;
+    color: $neutralGrey2 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
 }
 
 .viewMode :global(.ant-switch .ant-switch-inner .ant-switch-inner-unchecked) {
-	color: $neutralGrey2 !important;
-	font-size: 16px !important;
-	font-weight: 700 !important;
+    color: $neutralGrey2 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
 }
