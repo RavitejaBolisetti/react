@@ -20,7 +20,7 @@ import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-import { EmployeeEmpowermentFormButton } from '../EmployeeEmpowermentFormButton';
+import { EmployeeEmpowermentFormButton } from '../EmployeeEmpowermentFormButton/EmployeeEmpowermentFormButton';
 
 const mapStateToProps = (state) => {
     const {
