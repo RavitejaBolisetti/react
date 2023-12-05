@@ -605,7 +605,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true }) : setButtonData({ ...Visibility });
                 }
             }
         }
