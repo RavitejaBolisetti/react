@@ -260,6 +260,11 @@ const AddEditFormMain = (props) => {
                                                 <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.soStatus'))} />
                                             </Form.Item>
                                         </Col>
+                                        <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.sapResonseRemarks')} name="sapResonseRemarks">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.sapResonseRemarks'))} />
+                                            </Form.Item>
+                                        </Col>
                                     </>
                                 )}
 
@@ -295,6 +300,11 @@ const AddEditFormMain = (props) => {
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vehicleAmount'))} />
                                     </Form.Item>
                                 </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')} name="tcsAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.tcsAmount'))} />
+                                    </Form.Item>
+                                </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -319,6 +329,16 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')} name="consumerSchemeWithTax">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax'))} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmCashBenefitAmountWithTax')} name="mnmCashBenefitAmountWithTax">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.mnmCashBenefitAmountWithTax'), true, false)} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')} name="mnmNonCashBenefitAmountWithTax">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax'), true, false)} />
                                     </Form.Item>
                                 </Col>
                                 {showPrintDiscount && (
@@ -351,7 +371,7 @@ const AddEditFormMain = (props) => {
                             }
                             key="3"
                         >
-                            {isReadOnly && (    
+                            {isReadOnly && (
                                 <>
                                     <Divider />
                                     <OptionServicesForm {...OptionServicesFormProps} />
