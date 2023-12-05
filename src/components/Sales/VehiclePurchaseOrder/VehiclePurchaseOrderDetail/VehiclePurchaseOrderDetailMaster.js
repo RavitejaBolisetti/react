@@ -69,6 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             listShowLoadingOnLoad: dealerParentLovDataActions.listShowLoading,
             fetchList: viewVPODataActions.fetchList,
+            listPoLoading: viewVPODataActions.listShowLoading,
+            resetViewVehiclePO: viewVPODataActions.reset,
             fetchListView: vehiclePurchaseOrderDataActions.fetchList,
 
             saveData: saveVPODataActions.saveData,
@@ -84,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const { dealerLocationId, typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
-    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave, changeView } = props;
+    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave, changeView, resetViewVehiclePO, listPoLoading } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [dealerLocation, setDealerLocation] = useState();
 
@@ -134,7 +136,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedRecordId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchList({ setIsLoading: listPoLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId, changeView]);
@@ -216,6 +218,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         showDataLoading,
         setDealerLocation,
         dealerLocation,
+        resetViewVehiclePO,
     };
 
     return (
