@@ -40,10 +40,10 @@ const ViewDetailMain = (props) => {
                 </Descriptions>
             </Card>
 
-            <h4 className={styles.marB5}> Product Details</h4>
+            <h4 className={styles.marB5}>Product Details</h4>
             <Card className={styles.ExchangeCard1}>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.modal')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.modal')}>{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.quantity')}>{checkAndSetDefaultValue(formData?.quantity, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
