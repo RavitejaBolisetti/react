@@ -19,15 +19,15 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, mnmCtcVehicleFlag, setMnmCtcVehicleFlag, isReadOnly = true, userType } = props;
+    const { form, formData, typeData, mnmCtcVehicleFlag, setMnmCtcVehicleFlag, isReadOnly = true, userType } = props;
     const disabledProps = { disabled: isReadOnly };
 
     const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
         if (formData) {
-            // setMnmCtcVehicleFlag(formData?.mnmCtcVehicle);
-            // form.setFieldsValue({ ...formData, mnfcWarrEndDate: formattedCalendarDate(formData?.mnfcWarrEndDate), deliveryDate: formattedCalendarDate(formData?.deliveryDate), saleDate: formattedCalendarDate(formData?.saleDate), nextServiceDueDate: formattedCalendarDate(formData?.nextServiceDueDate), pucExpiryDate: formattedCalendarDate(formData?.pucExpiryDate), insuranceExpiryDate: formattedCalendarDate(formData?.insuranceExpiryDate) });
+            setMnmCtcVehicleFlag(formData?.mnmCtcVehicle);
+            form.setFieldsValue({ ...formData, mnfcWarrEndDate: formattedCalendarDate(formData?.mnfcWarrEndDate), deliveryDate: formattedCalendarDate(formData?.deliveryDate), saleDate: formattedCalendarDate(formData?.saleDate), nextServiceDueDate: formattedCalendarDate(formData?.nextServiceDueDate), pucExpiryDate: formattedCalendarDate(formData?.pucExpiryDate), insuranceExpiryDate: formattedCalendarDate(formData?.insuranceExpiryDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
