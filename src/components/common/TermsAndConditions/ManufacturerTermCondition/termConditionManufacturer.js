@@ -132,7 +132,7 @@ const TncManufacturer = ({ dealerLocationId, moduleTitle, saveData, userId, fetc
         setShowDataLoading(false);
     };
     useEffect(() => {
-        if (!isDataLoaded && userId && dealerLocationId) {
+        if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
             fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
             fetchLanguageList({ setIsLoading: listShowLoading, userId });

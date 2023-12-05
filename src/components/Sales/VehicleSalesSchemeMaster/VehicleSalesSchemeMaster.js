@@ -258,7 +258,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     }, [isVehicleSalesSchemeDataLoaded, vehicleSalesSchemeDetails]);
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             setFilterString({ ...filterString, pageSize: 10, current: 1 });
             manufacturerOrgFetchList({ setIsLoading: manufacturerOrgListShowLoading, userId, errorAction: onErrorAction });
             fetchZoneMasterList({ setIsLoading: listZoneMasterShowLoading, userId });

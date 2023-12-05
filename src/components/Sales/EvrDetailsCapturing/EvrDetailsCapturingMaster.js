@@ -208,7 +208,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     }, [chargingStatusType, filterString]);
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'manufactureOrgCode',

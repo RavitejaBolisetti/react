@@ -119,7 +119,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
