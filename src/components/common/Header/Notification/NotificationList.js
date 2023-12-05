@@ -142,7 +142,7 @@ const NotificationListMaster = (props) => {
                         split={false}
                         dataSource={data}
                         renderItem={(item) => (
-                            <List.Item style={{ background: item?.isRead ? '#F2F2F2' : '#ffffff' }} key={item?.id}>
+                            <List.Item onClick={() => !item?.isRead && handleActionButton(item, NOTIFICATION_STATUS.READ.key)} style={{ background: item?.isRead ? '#F2F2F2' : '#ffffff' }} key={item?.id}>
                                 <List.Item.Meta
                                     avatar={!item?.isRead ? <RxDotFilled size={30} color="#ff3e5b" /> : <span style={{ width: '12px', marginRight: '32px' }}></span>}
                                     title={item?.title}
