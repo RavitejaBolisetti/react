@@ -47,6 +47,7 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
+        ...props,
         isVisible: isViewModeVisible,
         formData,
         styles,
