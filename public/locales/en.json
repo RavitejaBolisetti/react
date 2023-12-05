@@ -1791,7 +1791,8 @@
     "vehicleDetail": {
         "heading": {
             "mainTitle": "Vehicle Details",
-            "title": "Search Vehicle"
+            "title": "Search Vehicle",
+            "mnmUserOnly": "Below Fields to be shown for Mahindra users only"
         },
         "label": {
             "vin": "VIN",
