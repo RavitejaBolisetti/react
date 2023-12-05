@@ -19,7 +19,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, typeData, mnmCtcVehicleFlag, setMnmCtcVehicleFlag, isReadOnly = true, userType } = props;
+    const { formData, typeData, mnmCtcVehicleFlag, setMnmCtcVehicleFlag, isReadOnly = true, userType } = props;
     const disabledProps = { disabled: isReadOnly };
 
     const [activeKey, setactiveKey] = useState([1]);
