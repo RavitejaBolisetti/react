@@ -21,6 +21,22 @@ const AddEditFormMain = (props) => {
     const disabledProps = { disabled: isReadOnly };
     const [openAccordian, setOpenAccordian] = useState(1);
 
+    const financialYrData = [
+        {
+            key: '1',
+            value: '2024 - 2025',
+        },
+        {
+            key: '2',
+            value: '2023 - 2024',
+        },
+        {
+            key: '3',
+            value: '2022 - 2023',
+        },
+    ];
+    const month = [{key: 'Jan', value: 'Jan'}, {key:'Feb', value: 'Feb'}, {key: 'Mar', 'Mar' : 'Mar'}, {key:'Apr', value: 'Apr'}, {key:'May', value: 'Apr'}, {key: 'Jun', value: 'Jun'}, {key:'Jul', value: 'Jul'}, {key: 'Aug', value: 'Aug'}, {key: 'Sep', value:'Sep'}, {key: 'Oct', value: 'Oct'}, {key:'Nov', value: 'Nov'}, {key:'Dec', value: 'Dec'}];
+
     const handleCollapse = (key) => {
         setOpenAccordian(key);
     };
@@ -33,12 +49,16 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
                             <Form.Item name="financialYear" label={'Financial Year'} initialValue={formData?.invoiceNo}>
-                                <DatePicker placeholder={preparePlaceholderSelect('Financial Year')} format={dateFormat} picker="year" className={styles.fullWidth} {...disabledProps} />
+                                {customSelectBox({ data: financialYrData, placeholder: preparePlaceholderSelect('Financial Year' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+
+                                {/* <DatePicker placeholder={preparePlaceholderSelect('Financial Year')} format={dateFormat} picker="year" className={styles.fullWidth} {...disabledProps} /> */}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
                             <Form.Item name="month" label={'Month'} initialValue={formData?.invoiceNo}>
-                                <DatePicker placeholder={preparePlaceholderSelect('Month')} format={dateFormat} picker="month" className={styles.fullWidth} {...disabledProps} />
+                                {customSelectBox({ data: month, placeholder: preparePlaceholderSelect('Month' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+
+                                {/* <DatePicker placeholder={preparePlaceholderSelect('Month')} format={dateFormat} picker="month" className={styles.fullWidth} {...disabledProps} /> */}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
@@ -136,7 +156,7 @@ const AddEditFormMain = (props) => {
                                             <Input placeholder={preparePlaceholderText('IFSC Code')} maxLength={50} disabled={true} />
                                         </Form.Item>
                                     </Col>
-{/*  */}
+                                    {/*  */}
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item name="financierName" label={'Recognition Amount'} initialValue={formData?.financierName}>
                                             <Input placeholder={preparePlaceholderText('Recognition Amount')} maxLength={50} {...disabledProps} />
@@ -145,7 +165,6 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={24} sm={18} md={18} lg={18} xl={18} xxl={18}>
                                         <Form.Item name="dealerShareAmount" label={'Recognition Comments'} initialValue={formData?.financierName}>
-                                            
                                             <Input placeholder={preparePlaceholderText('Recognition Comment')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col>

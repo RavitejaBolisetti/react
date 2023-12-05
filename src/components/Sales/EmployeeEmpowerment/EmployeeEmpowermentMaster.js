@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
@@ -25,8 +25,6 @@ import { LANGUAGE_EN } from 'language/en';
 
 import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 import { drawerTitle } from 'utils/drawerTitle';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-// import { EMPLOYEE_EMPOWERMENT_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
 import { EmployeeEmpowermentMainContainer } from './EmployeeEmpowermentMainContainer';
 import { EMPLOYEE_EMPOWERMENT_SECTION } from 'constants/modules/EmployeeEmpowerment/employeeEmpowerment';
 
@@ -73,6 +71,21 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
+
+const statusFilter = [
+    {
+        key: 1,
+        value: ' Pending For Approval',
+    },
+    {
+        key: 2,
+        value: 'Approved',
+    },
+    {
+        key: 3,
+        value: 'Rejected',
+    },
+];
 
 export const EmployeeEmpowermentMasterBase = (props) => {
     const { userId, data, totalRecords, moduleTitle } = props;
@@ -480,6 +493,7 @@ export const EmployeeEmpowermentMasterBase = (props) => {
         tableData: [{}],
         btnStatus,
         setBtnStatus,
+        statusFilter,
     };
 
     return (

@@ -23,6 +23,7 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm: { resetFields },
         rules,
         setrules,
+        statusFilter
     } = props;
 
     const onFinish = (values) => {
@@ -115,9 +116,8 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={"Request "+ translateContent('designationMaster.label.status')}>
-                    <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Requested Status')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
-
+                    <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={'Request ' + translateContent('designationMaster.label.status')}>
+                        <Select optionFilterProp="children" options={statusFilter || []} placeholder={preparePlaceholderSelect('Requested Status')} fieldNames={{ label: 'value', value: 'key' }} loading={isModelDataLoading} allowClear showSearch  />
                     </Form.Item>
                 </Col>
             </Row>
