@@ -82,7 +82,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [selectedId, setSelectedId] = useState();
     const [finalData, setFinalData] = useState([]);
     const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
@@ -163,9 +162,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     useEffect(() => {
         const defaultSection = GST_IRN_SECTION.BRANCH_ACCESSIBLE.id;
-        setDefaultSection(defaultSection);
         setSetionName(GST_IRN_SECTION);
         setSection(defaultSection);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {

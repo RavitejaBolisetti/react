@@ -3,17 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import { CO_DEALER_QUERY_BUTTONS } from './constants';
+import { DATA_TYPE } from 'constants/dataType';
+
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { StatusTag } from 'utils/StatusTag';
-import { convertDateMonthYear } from 'utils/formatDateTime';
-import { NO_DATA_AVALAIBLE, CO_DEALER_QUERY_BUTTONS } from './constants';
-
-import styles from 'assets/sass/app.module.scss';
-import { Tag, Typography } from 'antd';
-import { DATA_TYPE } from 'constants/dataType';
 import { ShowDataBox } from 'utils/showDataBox';
 import { translateContent } from 'utils/translateContent';
-const { Text } = Typography;
+
+import styles from 'assets/sass/app.module.scss';
 
 const handleTableColumn = (currentQuery) => {
     switch (currentQuery) {

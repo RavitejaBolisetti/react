@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GstIRNTransactionMain = (props) => {
     const { userId, typeData, showGlobalNotification, saveData } = props;
-    const { fetchList, listShowLoading, data, filterString, setFilterString, isDataLoading } = props;
+    const { fetchList, listShowLoading, data, filterString, setFilterString } = props;
     const { fetchGSTINList } = props;
     const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -71,9 +71,6 @@ export const GstIRNTransactionMain = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isGSTINListLoading, setIsGSTINListLoading] = useState(false);
     const [gSTINList, setGSTINList] = useState([]);
-    const [refreshData, setRefreshData] = useState(false);
-    // const [selectedStatusType, setSelectedStatusType] = useState(GST_IRN_TRANSACTION_STATUS.PENDING.key);
-
     const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
@@ -165,7 +162,7 @@ export const GstIRNTransactionMain = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, extraParams, refreshData]);
+    }, [userId, extraParams]);
 
     useEffect(() => {
         const onSuccessActionFetchGSTIN = (resp) => {
@@ -250,7 +247,7 @@ export const GstIRNTransactionMain = (props) => {
         filterString,
         totalRecords: data?.totalRecords,
         setPage: setCurrentPage,
-        isLoading: isDataLoading,
+        isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data?.paginationData,
         showAddButton: false,
@@ -274,8 +271,6 @@ export const GstIRNTransactionMain = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        // selectedStatusType,
-        // setSelectedStatusType,
     };
 
     const advanceFilterProps = {

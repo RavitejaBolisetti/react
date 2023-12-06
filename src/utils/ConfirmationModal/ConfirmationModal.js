@@ -15,7 +15,7 @@ import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 const ConfirmationModalMain = (props) => {
-    const { onCloseAction, onSubmitAction, submitText = 'Submit', showField = false, text = '', content = '' } = props;
+    const { onCloseAction, onSubmitAction, submitText = 'Submit', showField = false, text = '', content = '', showCancelButton = true } = props;
 
     const [form] = Form.useForm();
     const onFinish = (values) => {
@@ -47,10 +47,12 @@ const ConfirmationModalMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Button onClick={() => onCloseAction()} danger className={`${styles.modalButton} ${styles.btnLeft}`}>
-                        {translateContent('global.yesNo.no')}
-                    </Button>
-                    <Button htmlType="submit" type="primary" className={`${styles.modalButton} ${styles.btnRight}`}>
+                    {showCancelButton && (
+                        <Button onClick={() => onCloseAction()} danger className={`${styles.modalButton} ${styles.btnLeft}`}>
+                            {translateContent('global.yesNo.no')}
+                        </Button>
+                    )}
+                    <Button htmlType="submit" type="primary" className={`${showCancelButton ? styles.modalButton : styles.modalFullWidthButton} ${styles.btnRight}`}>
                         {submitText}
                     </Button>
                 </Col>

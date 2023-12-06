@@ -22,7 +22,6 @@ export const validateAMCRegistrationMenu = ({ item, status, formActionType }) =>
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, selectedOrder: { orderStatus = false } = {}, previousSection = 1 } = props;
 
-
     const onHandle = (key) => {
         setCurrentSection(key);
     };
@@ -37,10 +36,7 @@ const MenuNav = (props) => {
                 validateAMCRegistrationMenu({ item, status: orderStatus, formActionType }) && {
                     dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
                     children: (
-                        <div
-                            className={className(item?.id)}
-                            onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) && currentSection !== AMC_REGISTRATION_SECTION.THANK_YOU_PAGE.id ? onHandle(item?.id) : '')}
-                        >
+                        <div className={className(item?.id)} onClick={() => !formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection && currentSection !== AMC_REGISTRATION_SECTION.THANK_YOU_PAGE.id ? onHandle(item?.id) : '')}>
                             {item.title}
                         </div>
                     ),
