@@ -45,7 +45,6 @@ const CoDealerCard = (props) => {
                         showIrnGenrationButton = false;
                     } else {
                         showInfo = false;
-                        showIrnGenrationButton = false;
                     }
                 }
                 gstInPresent = true;
