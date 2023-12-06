@@ -38,7 +38,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
-                        <Panel header={translateContent('commonModules.label.vehicleDetails.vehicleDetails')} key="1">
+                        <Panel header={translateContent('commonModules.label.vehicleDetails.vehicleInformation')} key="1">
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={24} sm={16} md={16} lg={16} xl={16}>

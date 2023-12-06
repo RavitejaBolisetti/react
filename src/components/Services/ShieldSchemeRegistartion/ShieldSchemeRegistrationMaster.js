@@ -1038,6 +1038,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         amcStatus,
         handleTaxChange,
         selectedCardData,
+        userType,
     };
 
     useEffect(() => {

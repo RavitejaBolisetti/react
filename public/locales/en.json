@@ -249,6 +249,7 @@
             "bookingCustomerAndBillingCustomer.sameAsBookingCustomer": "Same as Booking Customer",
 
             "vehicleDetails.vehicleDetails": "Vehicle Details",
+            "vehicleDetails.vehicleInformation": "Vehicle Information",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
