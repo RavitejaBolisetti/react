@@ -88,7 +88,7 @@ const mapStateToProps = (state) => {
         employeeData,
         managerData,
         dealerParentsLovList,
-        dealerLocations,
+        dealerLocations: dealerLocations.filter((value) => value?.locationId && value?.dealerLocationName),
         schemeDetail,
         filterString,
         isModelFamilyDataLoaded,
@@ -120,6 +120,8 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
+            resetLocationData: applicationMasterDataActions.resetLocations,
+
             saveData: shieldSchemeSearchDataAction.saveData,
             resetData: shieldSchemeSearchDataAction.reset,
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
@@ -146,7 +148,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
     const { dealerLocationId, userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
+    const { resetLocationData, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -424,7 +426,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily]);
 
     useEffect(() => {
-        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup && dealerLocationId) {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
             const makeExtraParams = [
                 {
                     key: 'modelGroupCode',
@@ -493,6 +495,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleDealerParentChange = (value) => {
+        if (!value) {
+            advanceFilterForm.resetFields(['dealerLocation']);
+            resetLocationData();
+            return;
+        }
         if (userId) {
             fetchDealerLocations({ customURL: customURL + '?dealerParentCode=' + value, setIsLoading: listShowLoading, userId });
         }

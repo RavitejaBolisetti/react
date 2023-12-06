@@ -163,7 +163,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -180,23 +180,6 @@ export const VehicleAllotmentMasterBase = (props) => {
             setSelectedOrderOTFDetails();
             allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
             setButtonData(toggleButton === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: false, closeBtn: true, allotBtn: false, unAllot: true } : { cancelBtn: false, allotBtn: true, unAllot: false, closeBtn: true });
-            // switch (allotmentSummaryDetails?.allotmentStatus) {
-            //     case VEHICLE_TYPE.ALLOTED.key: {
-            //         setButtonData({ cancelBtn: true, unAllot: true });
-            //         break;
-            //     }
-            //     case VEHICLE_TYPE.UNALLOTED.key: {
-            //         setButtonData({ cancelBtn: true, allotBtn: true });
-            //         break;
-            //     }
-            //     case OTF_STATUS.INVOICED.key: {
-            //         setButtonData({ cancelBtn: true });
-            //         break;
-            //     }
-            //     default: {
-            //         setButtonData({ cancelBtn: true });
-            //     }
-            // }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails, toggleButton]);
@@ -274,12 +257,12 @@ export const VehicleAllotmentMasterBase = (props) => {
         });
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
             case ALLOT:
-                handleVehicleAllotment(record, buttonAction);
+                handleVehicleAllotment(buttonAction);
                 break;
             case UNALLOT:
                 setConfirmRequest({
@@ -288,7 +271,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                     closable: true,
                     icon: false,
                     onCloseAction: onCloseConfirmationModalAction,
-                    onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
+                    onSubmitAction: () => handleVehicleAllotment(buttonAction),
                     submitText: 'Yes',
                     text: translateContent('orderDeliveryVehicleAllotment.label.unallotBooking'),
                     content: selectedOTFDetails ? selectedOTFDetails?.bookingNumber || selectedOTFDetails?.otfNumber : '',
@@ -345,7 +328,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         }
     };
 
-    const handleVehicleAllotment = (req, buttonAction) => {
+    const handleVehicleAllotment = (buttonAction) => {
         if (!selectedOTFDetails) {
             showGlobalNotification({ message: translateContent('orderDeliveryVehicleAllotment.validation.selectBooking') });
             return false;

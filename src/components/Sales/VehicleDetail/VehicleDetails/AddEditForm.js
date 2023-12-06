@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Select, DatePicker, Input, Checkbox, Switch, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredSelectField } from 'utils/validation';
 import { disablePastDate } from 'utils/disableDate';
@@ -65,7 +66,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.manufactureKM} label={translateContent('vehicleDetail.vehicledetails.label.manufactureKM')} name="manufactureKM">
-                                <Input {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.manufactureKM'))} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -80,28 +81,28 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="soldBy" label={translateContent('vehicleDetail.vehicledetails.label.soldBy')} initialValue={formData?.soldBy}>
-                                <Input maxLength={50} {...disabledProps} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.soldBy'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="lastOdometerReading" label={translateContent('vehicleDetail.vehicledetails.label.lastOdometerReading')} initialValue={formData?.lastOdometerReading}>
-                                <Input maxLength={50} {...disabledProps} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.lastOdometerReading'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="averageRun" label={translateContent('vehicleDetail.vehicledetails.label.averageRun')} initialValue={formData?.averageRun}>
-                                <Input maxLength={50} {...disabledProps} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.averageRun'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="nextDueService" label={translateContent('vehicleDetail.vehicledetails.label.nextDueService')} initialValue={formData?.nextDueService}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.nextDueService'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="relationshipManager" label={translateContent('vehicleDetail.vehicledetails.label.relationshipManager')} initialValue={formData?.relationshipManager}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.relationshipManager'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -110,11 +111,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
 
-                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formattedCalendarDate(formData?.pucExpiryDate)} label="PUC Expiry Date" name="pucExpiryDate">
-                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
-                            </Form.Item>
-                        </Col> */}
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.insuranceExpiryDate)} label={translateContent('vehicleDetail.vehicledetails.label.insuranceExpiryDate')} name="insuranceExpiryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
@@ -122,70 +118,65 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="customerCategorySsi" label={translateContent('vehicleDetail.vehicledetails.label.customerCategorySsi')} initialValue={formData?.customerCategorySsi}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.customerCategorySsi'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="customerCategoryCsi" label={translateContent('vehicleDetail.vehicledetails.label.customerCategoryCsi')} initialValue={formData?.customerCategoryCsi}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.customerCategoryCsi'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="customerCategoryIqs" label={translateContent('vehicleDetail.vehicledetails.label.customerCategoryIqs')} initialValue={formData?.customerCategoryIqs}>
-                                <Input maxLength={50} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.customerCategoryIqs'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="taxiOrNonTaxi" label="Taxi/Non Taxi" initialValue={formData?.taxiOrNonTaxi}>
-                                <Input maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col> */}
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.taxiOrNonTaxiKey} name="taxiOrNonTaxiKey" label={translateContent('vehicleDetail.vehicledetails.label.taxiOrNonTaxiKey')}>
-                                <Select placeholder={translateContent('vehicleDetail.placeholder.select')} showSearch allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} {...disabledProps} />
+                                <Select placeholder={preparePlaceholderSelect(translateContent('vehicleDetail.vehicledetails.label.taxiOrNonTaxiKey'))} showSearch allowClear options={typeData?.['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formData?.oemPrivilegeCustomer} valuePropName="checked" name="oemPrivilegeCustomer">
-                                <Checkbox>OEM Privileged Customer</Checkbox>
+                                <Checkbox>{translateContent('vehicleDetail.vehicledetails.label.oemPrivilegeCustomer')}</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formData?.keyAccountVehicle} valuePropName="checked" name="keyAccountVehicle">
-                                <Checkbox disabled>Key Account Vehicle</Checkbox>
+                                <Checkbox disabled>{translateContent('vehicleDetail.vehicledetails.label.keyAccountVehicle')}</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formData?.refurbished} valuePropName="checked" name="refurbished">
-                                <Checkbox {...disabledProps}>Refurbished</Checkbox>
+                                <Checkbox {...disabledProps}>{translateContent('vehicleDetail.vehicledetails.label.refurbished')}</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formData?.theftVehicle} valuePropName="checked" name="theftVehicle">
-                                <Checkbox {...disabledProps}>Theft Vehicle</Checkbox>
+                                <Checkbox {...disabledProps}>{translateContent('vehicleDetail.vehicledetails.label.theftVehicle')}</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formData?.pdiDone} valuePropName="checked" name="pdiDone">
                                 <Checkbox value={true} {...disabledProps}>
-                                    PDI Done
+                                    {translateContent('vehicleDetail.vehicledetails.label.pdiDone')}
                                 </Checkbox>
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formData?.govtVehicle} valuePropName="checked" name="govtVehicle">
-                                <Checkbox {...disabledProps}>Government Vehicle</Checkbox>
+                                <Checkbox {...disabledProps}>{translateContent('vehicleDetail.vehicledetails.label.govtVehicle')}</Checkbox>
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formData?.mnmCtcVehicle} valuePropName="checked" name="mnmCtcVehicle">
-                                <Checkbox onClick={handleOnChange}>M&M CTC Vehicle</Checkbox>
+                                <Checkbox onClick={handleOnChange}>{translateContent('vehicleDetail.vehicledetails.label.mnmCtcVehicle')}</Checkbox>
                             </Form.Item>
                         </Col>
 
@@ -200,7 +191,7 @@ const AddEditFormMain = (props) => {
                     {userType === USER_TYPE?.ADMIN?.key && (
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <h4 className={styles.customHeading}> Below Fields to be shown for Mahindra users only</h4>
+                                <h4 className={styles.customHeading}>{translateContent('vehicleDetail.heading.mnmUserOnly')}</h4>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item initialValue={formData?.warrantyBlocked} labelAlign="left" wrapperCol={{ span: 24 }} name="warrantyBlocked" label="Warranty Blocked" valuePropName="checked">
@@ -209,7 +200,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item name="carePlus" label={translateContent('vehicleDetail.vehicledetails.label.carePlus')} initialValue={formData?.carePlus}>
-                                    <Input maxLength={50} {...disabledProps} />
+                                    <Input maxLength={50} placeholder={preparePlaceholderText(translateContent('vehicleDetail.vehicledetails.label.carePlus'))} {...disabledProps} />
                                 </Form.Item>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -226,12 +217,6 @@ const AddEditFormMain = (props) => {
                     )}
                 </Panel>
             </Collapse>
-            {/* <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
-                <Panel header="Registration Number Change Request" key="2">
-                    <Divider />
-                    <div className={styles.marB20}>Coming Soon</div>
-                </Panel>
-            </Collapse> */}
         </>
     );
 };

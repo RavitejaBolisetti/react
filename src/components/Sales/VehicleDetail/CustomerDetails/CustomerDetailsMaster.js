@@ -255,7 +255,7 @@ export const CustomerDetailsMain = (props) => {
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
         };
 
         const onError = (message) => {

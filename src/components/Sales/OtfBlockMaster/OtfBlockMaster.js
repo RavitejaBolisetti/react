@@ -3,15 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
-
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
-
- *   All rights reserved.
-
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
-
- */
 
 import React, { useEffect, useReducer, useState } from 'react';
 
@@ -197,8 +188,6 @@ export const OtfBlockMasterMain = (props) => {
 
     const [formActionType, setFormActionType] = useState('');
 
-    const [selectedId, setSelectedId] = useState();
-
     const [formData, setFormData] = useState([]);
 
     const [selectedTreeData, setSelectedTreeData] = useState([]);
@@ -370,8 +359,6 @@ export const OtfBlockMasterMain = (props) => {
 
         setFormActionType(FROM_ACTION_TYPE.VIEW);
 
-        setSelectedId('');
-
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i?.data?.prodctCode);
 
@@ -453,8 +440,6 @@ export const OtfBlockMasterMain = (props) => {
                 setFormBtnActive(false);
 
                 setIsFormVisible(false);
-
-                setSelectedId(selectedId);
 
                 setOptions([]);
 
@@ -550,7 +535,7 @@ export const OtfBlockMasterMain = (props) => {
 
         buttonData,
 
-        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(" ").concat(moduleTitle),
+        titleOverride: (formData?.id ? translateContent('global.drawerTitle.edit') : translateContent('global.drawerTitle.add')).concat(' ').concat(moduleTitle),
 
         isFormBtnActive,
 
@@ -742,11 +727,7 @@ export const OtfBlockMasterMain = (props) => {
                                     imageStyle={{
                                         height: 60,
                                     }}
-                                    description={
-                                        <span>
-                                            {translateContent('bookingBlockMaster.label.viewHierarchyText')}
-                                        </span>
-                                    }
+                                    description={<span>{translateContent('bookingBlockMaster.label.viewHierarchyText')}</span>}
                                 ></Empty>
                             </div>
                         )

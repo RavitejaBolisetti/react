@@ -23,7 +23,7 @@ import { InvoiceDetailsMaster } from 'components/Sales/OTF/InvoiceDetails';
 
 import { ThankYouMaster } from 'components/Sales/OTF/ThankYou';
 
-import { LeftSidebar } from './LeftSidebar';
+import LeftSidebar from 'utils/LeftSidebar';
 import { OTFFormButton } from './OTFFormButton';
 import { OTFStatusBar } from './utils/OTFStatusBar';
 import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';

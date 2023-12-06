@@ -5,33 +5,19 @@
  */
 import React from 'react';
 import { Collapse, Divider } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
 import { translateContent } from 'utils/translateContent';
 import { VOUCHER_TYPE } from 'constants/VoucherType';
 
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
 import styles from 'assets/sass/app.module.scss';
-
 const { Panel } = Collapse;
-
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
 
 const VoucherCard = (props) => {
     const { selectedRecord } = props;
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>

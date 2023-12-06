@@ -154,7 +154,7 @@
             "delete": "Delete",
             "cancelBooking": "Cancel Booking",
             "transferBooking": "Transfer Booking",
-            "bookingMappingHistory": "Booking Mapping History",
+            "bookingMappingHistory": "SO Mapping History",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
             "seeLess": "See less",
@@ -249,6 +249,7 @@
             "bookingCustomerAndBillingCustomer.sameAsBookingCustomer": "Same as Booking Customer",
 
             "vehicleDetails.vehicleDetails": "Vehicle Details",
+            "vehicleDetails.vehicleInformation": "Vehicle Information",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
@@ -258,6 +259,8 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.mnmCashBenefitAmountWithTax": "M&M Cash Benefits with TAX",
+            "vehicleDetails.mnmNonCashBenefitAmountWithTax": "M&M Non-Cash Benefits with TAX",
             "vehicleDetails.printDiscount": "Print Discount?",
             "vehicleDetails.taxCalculation": "Tax Calculation",
             "vehicleDetails.availableStock": "Available Stock",
@@ -266,6 +269,7 @@
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
+            "vehicleDetails.sapResonseRemarks": "Model Code Response",
             "vehicleDetails.model": "Model",
             "vehicleDetails.totalTaxAmount": "Total Tax Amount",
             "vehicleDetails.tcsAmount": "TCS Amount",
@@ -1791,7 +1795,8 @@
     "vehicleDetail": {
         "heading": {
             "mainTitle": "Vehicle Details",
-            "title": "Search Vehicle"
+            "title": "Search Vehicle",
+            "mnmUserOnly": "Below Fields to be shown for Mahindra users only"
         },
         "label": {
             "vin": "VIN",
@@ -1856,11 +1861,13 @@
                 }
             }
         },
+
         "productDetails": {
             "heading": {
                 "moduleTitle": "Product Details",
                 "attributeTitle": "Product Attribute Details",
-                "aggregateTitle": "Aggregates"
+                "aggregateTitle": "Aggregates",
+                "noProductDataFound": "No product Attribute Details Present"
             },
             "label": {
                 "productDivision": "Product Division",
@@ -1871,7 +1878,8 @@
                 "model": "Model ",
                 "item": "Item",
                 "make": "Make",
-                "serialNo": "Serial No."
+                "serialNo": "Serial No.",
+                "attributeDetailsNotPresent": "No product Attribute Details Present"
             }
         },
         "customerDetails": {
@@ -3325,13 +3333,17 @@
             "cancelledDate": "Cancelled Date",
             "cancelledBy": "Cancelled By",
             "remarksForCancellation": "Remarks for Cancellation",
+            "deliveryNoteChallanFromDate": "Delivery Challan From Date",
+            "deliveryNoteChallanToDate": "Delivery Challan To Date",
             "notGenerated": "NOT GENERATED"
         },
         "placeholder": {
             "select": "Select"
         },
+
         "notificationError": {
-            "enterCustomerId": "Enter customer id to continue"
+            "enterCustomerId": "Enter customer id to continue",
+            "customerDetails": "Customer details not present"
         },
         "invoiceDetails": {
             "heading": {

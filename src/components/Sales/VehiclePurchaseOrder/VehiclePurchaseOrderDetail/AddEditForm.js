@@ -23,7 +23,7 @@ const { Option } = Select;
 const { Search } = Input;
 const AddEditFormMain = (props) => {
     const { productHierarchyDataArray, buttonData, setButtonData, formActionType, onFinish, getDealerlocation, setDealerLocation, dealerLocation } = props;
-    const { form, formData, typeData, isReadOnly = true, modelCode, setModelCode } = props;
+    const { form, formData, typeData, isReadOnly = true, modelCode, setModelCode, resetViewVehiclePO } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
 
@@ -35,22 +35,24 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    // const handleChangeOrderType = (value) => {
-    //     if (value === 'CDLR') {
-    //         setDealerFlag(value);
-    //     } else {
-    //         setDealerFlag();
-    //     }
-    // };
+    useEffect(() => {
+        return () => {
+            resetViewVehiclePO();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     useEffect(() => {
         if (formData?.orderTypeCode === 'CDLR') {
             setDealerFlag(formData?.orderTypeCode);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     const handleOnClear = (e) => {
-        if (!e.target.value) {
-            setDealerLocation(undefined);
+        const value = e.target.value;
+        if (!value) {
+            setDealerLocation();
         }
     };
     const selectProps = {
@@ -58,6 +60,7 @@ const AddEditFormMain = (props) => {
         showSearch: true,
         allowClear: true,
     };
+
     const handleSelectTreeClick = (value) => {
         setModelCode(value);
         form.setFieldValue('model', value);
@@ -138,23 +141,13 @@ const AddEditFormMain = (props) => {
                                     </>
                                 )}
                             </Row>
-
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <h3> {translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.heading.productDetails')} </h3>
                                 </Col>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                    {/* <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelDescription')} name="model" data-testid="model">
-                                        <TreeSelectField {...treeSelectFieldProps} />
-                                    </Form.Item> */}
-
                                     <ProductModelTree {...treeSelectFieldProps} />
                                 </Col>
-                                {/* <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
-                                    <Form.Item name="modelCode" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.modelDescription')} initialValue={formData?.modelCode} rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.validation.modelDescription'))]}>
-                                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect(translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.placeholder.modelDescription')) })}
-                                    </Form.Item>
-                                </Col> */}
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
                                     <Form.Item name="quantity" label={translateContent('vehiclePurchaseOrder.VehiclePurchaseOrderDetail.label.quantity')} initialValue={'1'} rules={[validateOnlyPositiveNumber('Quantity')]}>
                                         <InputNumber />

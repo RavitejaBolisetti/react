@@ -157,15 +157,15 @@ const ProductDetailMasterMain = (props) => {
     const makeExtraParams = ({ key, title, value, name }) => {
         const params = [
             {
-                key: key,
-                title: title,
-                value: value,
-                name: name,
+                key,
+                title,
+                value,
+                name,
             },
         ];
         return params;
     };
-    const bindCodeValue = (value, item) => {
+    const bindCodeValue = (value, item, record = undefined) => {
         switch (item) {
             case ITEM_TYPE?.ITEM: {
                 const codeVal = itemOptions?.find((element) => {
@@ -178,14 +178,16 @@ const ProductDetailMasterMain = (props) => {
                 return '-';
             }
             case ITEM_TYPE?.MAKE: {
-                const codeVal = makeOptions?.find((element) => {
-                    if (element?.value === value || element?.key === value) {
-                        return element;
+                let codeVal = {};
+                if (record && record?.type) {
+                    codeVal = typeData?.[PARAM_MASTER?.[record?.type]?.id]?.find((element) => element?.value === value || element?.key === value);
+                } else {
+                    const findVehItem = typeData?.[PARAM_MASTER?.VEH_ITEM?.id]?.find((item) => item?.key === record?.item)?.type;
+                    if (findVehItem) {
+                        codeVal = typeData?.[PARAM_MASTER?.[findVehItem]?.id]?.find((element) => element?.value === value || element?.key === value);
                     }
-                    return false;
-                });
-
-                if (codeVal) return codeVal?.value;
+                }
+                if (codeVal && codeVal instanceof Object && Object?.keys(codeVal)?.length > 0 && codeVal?.value) return codeVal?.value;
                 return '-';
             }
             default: {
@@ -253,7 +255,7 @@ const ProductDetailMasterMain = (props) => {
             setformData();
             setIsReadOnly(false);
             form.resetFields();
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
         };
 
         const onError = (message) => {

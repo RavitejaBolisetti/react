@@ -5,18 +5,19 @@
  */
 
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Card, Button } from 'antd';
+import { Col, Input, Form, Row, Button } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT } from 'constants/routingApi';
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { STATUS } from 'constants/modelVariant';
+
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, onModelSubmit, setOnModelSubmit } = props;

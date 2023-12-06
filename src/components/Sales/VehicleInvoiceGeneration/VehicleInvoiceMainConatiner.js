@@ -8,7 +8,7 @@ import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
-import { LeftSidebar } from './LeftSidebar';
+import LeftSidebar from 'utils/LeftSidebar';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 
 import { InsuranceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/InsuranceDetails';

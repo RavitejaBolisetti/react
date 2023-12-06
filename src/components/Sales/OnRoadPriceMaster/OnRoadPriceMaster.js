@@ -384,7 +384,7 @@ export const OnRoadPriceMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         isCityDataLoaded,
         cityData,
         filterString,
@@ -483,7 +483,7 @@ export const OnRoadPriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,

@@ -182,7 +182,7 @@ const ReferralsMasterBase = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION , onSave: true });
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction: onError, userId });
             };
 

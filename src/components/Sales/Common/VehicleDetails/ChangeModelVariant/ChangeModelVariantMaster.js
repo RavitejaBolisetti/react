@@ -69,7 +69,6 @@ const ChangeModelVariantMasterBase = (props) => {
 
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [modelStatus, setModelStatus] = useState(STATUS?.PENDING?.key);
-    const [statusDescription, setStatusDescription] = useState();
     const [modelChangeItemList, setModelChangeItemList] = useState([]);
 
     const onErrorAction = (message) => {
@@ -148,9 +147,9 @@ const ChangeModelVariantMasterBase = (props) => {
                         showGlobalNotification({ notificationType: 'success', title: 'Request Generated Successfully', message: 'Model Change Request has been submitted successfully' });
                     }
                     if (res?.data?.sapStatusResponseCode === STATUS?.REJECTED?.key) {
-                        setStatusDescription(res?.data?.sapStatusResponse);
                         setConfirmRequest({
                             isVisible: true,
+                            showCancelButton: false,
                             titleOverride: 'Failed Request',
                             closable: true,
                             icon: false,
@@ -170,8 +169,7 @@ const ChangeModelVariantMasterBase = (props) => {
                             submitText: 'Okay',
                             text: (
                                 <>
-                                    Requested Change Model is blocked for dealer
-                                    <br /> Please try again with different model
+                                    <p>{res?.data?.sapResonseRemarks}</p>
                                 </>
                             ),
                         });

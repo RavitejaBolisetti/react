@@ -73,16 +73,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const IrnTransactionListMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
-    const { form, selectedId, onFinish, applicationMasterDataShowLoading } = props;
+    const { userId, section, fetchList } = props;
+    const { form, onFinish, applicationMasterDataShowLoading } = props;
     const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading, fetchListGstIrnTree, listShowLoadingTree } = props;
     const { gstIrnTreeData } = props;
-
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
-    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    // const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
@@ -125,19 +119,17 @@ const IrnTransactionListMasterBase = (props) => {
         setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
             applicationCall(keys[0]);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            // setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
         }
     };
     const myProps = {
-        isTreeViewVisible,
-        // handleTreeViewVisiblity,
         selectedTreeKey,
         selectedTreeSelectKey,
         setSelectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: gstIrnTreeData, //menuData,
+        treeData: gstIrnTreeData,
         setSearchValue,
         searchValue,
         callOnForm: true,

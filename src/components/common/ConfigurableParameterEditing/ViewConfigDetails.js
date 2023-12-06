@@ -7,8 +7,10 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { translateContent } from 'utils/translateContent';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
-const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
+const ViewConfigDetailsMain = ({ formData, styles, parameterType, typeData }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -19,10 +21,10 @@ const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label={translateContent('configurableParameter.label.controlId')}>{formData?.controlId}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('configurableParameter.label.controlId')}>{getCodeValue(typeData[PARAM_MASTER.CFG_PARAM.id], formData?.controlId)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('configurableParameter.label.controlDescription')}>{formData?.controlDescription}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('configurableParameter.label.controlGroup')}>{formData?.controlGroup}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('configurableParameter.label.configurableParameterType')}>{parameterType}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('configurableParameter.label.controlGroup')}>{getCodeValue(typeData[PARAM_MASTER.CTRL_GRP.id], formData?.controlGroup)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('configurableParameter.label.configurableParameterType')}>{getCodeValue(typeData[PARAM_MASTER.CFG_PARAM_TYPE.id], parameterType)}</Descriptions.Item>
 
                     {parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
                         <Descriptions.Item label={translateContent('configurableParameter.label.configurableParameterValues')}>{formData?.textValue}</Descriptions.Item>

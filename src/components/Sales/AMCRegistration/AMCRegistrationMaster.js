@@ -150,6 +150,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             locationDataLoding: applicationMasterDataActions.locationDataLoding,
+            resetLocationData: applicationMasterDataActions.resetLocations,
 
             fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
@@ -172,7 +173,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
     const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, fetchManagerList, managerData, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
     const { fetchOTFSearchedList, listOTFShowLoading, otfData, fetchDealerLocations, locationDataLoding, dealerLocations } = props;
-    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList } = props;
+    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList, resetLocationData } = props;
     const { modelGroupData, modelFamilyData, productAttributeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchModelFamilyLovList, listFamilyShowLoading } = props;
     const { fetchProductLovCode, listProductShowLoading, isLoyaltyLoading, isModelLoading, isProductLoading } = props;
@@ -248,6 +249,11 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [amcRegistrationDetailData]);
 
     const handleDealerParentChange = (parentGroupCode) => {
+        if (!parentGroupCode) {
+            advanceFilterForm.resetFields(['dealerLocation']);
+            resetLocationData();
+            return;
+        }
         fetchDealerLocations({ customURL: customLocationURL + '?dealerParentCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
     };
     const handleModelData = ({ modelCode = null, modelFamily = null, modelGroup = null }) => {

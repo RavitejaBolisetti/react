@@ -27,7 +27,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
-import { validateRequiredInputField } from 'utils/validation';
 
 const mapStateToProps = (state) => {
     const {
@@ -209,7 +208,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     }, [chargingStatusType, filterString]);
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'manufactureOrgCode',

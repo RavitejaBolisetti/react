@@ -509,4 +509,12 @@ export const PARAM_MASTER = {
         id: 'DEL_NOTE_CANCL_STATS',
         title: 'Delivery Note Cancellation',
     },
+    TYRE_MAKE: {
+        id: 'TYRE_MAKE',
+        title: 'Product Details Tyre Make',
+    },
+    BATTERY_MAKE: {
+        id: 'BATTERY_MAKE',
+        title: 'Product Details Battery Make',
+    },
 };

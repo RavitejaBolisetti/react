@@ -3,14 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { RSA_LEFTMENU_SECTION } from 'components/Sales/RSARegistration/constant/RSALeftMenuSection';
-
 import { LeftSidebar } from './LeftSidebar';
-// import { RSARegistrationDetailMaster } from 'components/Sales/RSARegistration/RSARegistrationDetails';
-// import { VehicleAndCustomerDetailsMaster } from 'components/Sales/RSARegistration/VehicleAndCustomerDetails';
 
 import { SHIELD_REGISTRATION_SECTION } from 'constants/ShieldSchemeRegistrationSection';
 import { ShieldRegistrationDetailMaster } from 'components/Services/ShieldSchemeRegistartion/ShieldRegistrationDetail';
@@ -21,7 +17,6 @@ import { ThankYouMaster } from 'components/Services/ShieldSchemeRegistartion/Tha
 import styles from 'assets/sass/app.module.scss';
 const RSAMainConatinerMain = (props) => {
     const { currentSection } = props;
-    const [workFlowDetails, setWorkFlowDetails] = useState({});
 
     const myProps = {
         ...props,
@@ -29,16 +24,6 @@ const RSAMainConatinerMain = (props) => {
 
     const renderElement = () => {
         switch (currentSection) {
-            // case RSA_LEFTMENU_SECTION.RSA_REGISTRATION_DETAILS.id: {
-            //     return <RSARegistrationDetailMaster {...myProps} />;
-            // }
-            // case RSA_LEFTMENU_SECTION.VEHICLE_AND_CUSTOMER_DETAILS.id: {
-            //     return <VehicleAndCustomerDetailsMaster {...myProps} />;
-            // }
-            // default: {
-            //     return;
-            // }
-
             case SHIELD_REGISTRATION_SECTION.SHIELD_REGISTRATION_DETAILS.id: {
                 return <ShieldRegistrationDetailMaster {...myProps} />;
             }

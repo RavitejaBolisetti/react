@@ -5,40 +5,27 @@
  */
 import React from 'react';
 import { Collapse, Divider } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 const { Panel } = Collapse;
 
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
-
-const VehicleDetailCard = (props) => {
+const LeftProfileCard = (props) => {
     const { selectedRecord, selectedRecordId } = props;
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>
                         <div className={styles.detailCardText} style={{ fontSize: '14px' }}>
-                        {translateContent('vehicleDetail.profileCard.vin')} <span>{selectedRecordId || 'NA'}</span>
+                            {translateContent('vehicleDetail.profileCard.vin')} <span>{selectedRecordId || 'NA'}</span>
                         </div>
                         <Divider />
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        {translateContent('vehicleDetail.profileCard.regNo')} <span>{selectedRecord?.registrationNumber || 'NA'}</span>
+                            {translateContent('vehicleDetail.profileCard.regNo')} <span>{selectedRecord?.registrationNumber || 'NA'}</span>
                         </div>
                     </>
                 }
@@ -47,28 +34,29 @@ const VehicleDetailCard = (props) => {
                 <Divider />
                 {selectedRecord?.customerCode && (
                     <div className={styles.detailCardText}>
-                         {translateContent('vehicleDetail.profileCard.customerId')} <span>{selectedRecord?.customerCode}</span>
+                        {translateContent('vehicleDetail.profileCard.customerId')} <span>{selectedRecord?.customerCode}</span>
                     </div>
                 )}
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('vehicleDetail.profileCard.mobileNo')} <span>{selectedRecord?.mobileNumber || 'NA'}</span>
+                    {translateContent('vehicleDetail.profileCard.mobileNo')} <span>{selectedRecord?.mobileNumber || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('vehicleDetail.profileCard.model')} <span>{selectedRecord?.model || 'NA'}</span>
+                    {translateContent('vehicleDetail.profileCard.model')} <span>{selectedRecord?.model || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('vehicleDetail.profileCard.color')}<span>{selectedRecord?.color || 'NA'}</span>
+                    {translateContent('vehicleDetail.profileCard.color')}
+                    <span>{selectedRecord?.color || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('vehicleDetail.profileCard.mfgWarrenty')} <span>{selectedRecord?.mfgWarranty === 'Expired' ? selectedRecord?.mfgWarranty : convertDateTime(selectedRecord?.mfgWarranty, dateFormatView) || 'NA'}</span>
+                    {translateContent('vehicleDetail.profileCard.mfgWarrenty')} <span>{selectedRecord?.mfgWarranty === 'Expired' ? selectedRecord?.mfgWarranty : convertDateTime(selectedRecord?.mfgWarranty, dateFormatView) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>
     );
 };
 
-export default VehicleDetailCard;
+export default LeftProfileCard;

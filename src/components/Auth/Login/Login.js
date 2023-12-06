@@ -183,7 +183,7 @@ const Login = (props) => {
             btn: btn,
             duration: 0,
             onClose: handleSkip,
-            className: notificationStyles.warning,
+            className: notificationStyles.warningBeforeLogin,
         });
     };
 
@@ -194,6 +194,7 @@ const Login = (props) => {
         const shandleSkipForNow = () => {
             status === 'A' && handleSkipUpdatePassword(data);
         };
+
         const btn = (data) => (
             <Space>
                 {status === 'A' && (
@@ -214,7 +215,7 @@ const Login = (props) => {
             btn: btn(data),
             duration: 0,
             onClose: shandleSkipForNow,
-            className: status === 'E' ? notificationStyles.error : notificationStyles.warning,
+            className: status === 'E' ? notificationStyles.errorBeforeLogin : notificationStyles.warningBeforeLogin,
         });
     };
 

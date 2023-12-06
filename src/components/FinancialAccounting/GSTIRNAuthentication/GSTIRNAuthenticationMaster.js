@@ -17,15 +17,15 @@ import { UploadUtil } from 'utils/Upload';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
-// import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { gstIrnLoginAction } from 'store/actions/data/financialAccounting/gstIrnLoginAction';
 import { selectGstToDocAction } from 'store/actions/data/financialAccounting/selectGstToDocAction';
 import { BASE_URL_GST_DOCID_NAME as customURL } from 'constants/routingApi';
 
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -82,7 +82,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [selectedId, setSelectedId] = useState();
     const [finalData, setFinalData] = useState([]);
     const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
@@ -163,9 +162,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     useEffect(() => {
         const defaultSection = GST_IRN_SECTION.BRANCH_ACCESSIBLE.id;
-        setDefaultSection(defaultSection);
         setSetionName(GST_IRN_SECTION);
         setSection(defaultSection);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {

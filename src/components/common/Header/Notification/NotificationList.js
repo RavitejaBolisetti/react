@@ -132,17 +132,17 @@ const NotificationListMaster = (props) => {
     return (
         <div id="scrollableDiv" className={styles.notificationList}>
             {isLoading && !data?.length ? (
-                <div style={{ minHeight: '400px' }}>
+                <div style={{ minHeight: '400px' }} className={styles.notificationComponent}>
                     <NotificationSkeleton border={'none'} count={5} color={'#e2dfdf'} />
                 </div>
             ) : (
-                <InfiniteScroll height={400} dataLength={page?.totalRecords || 0} next={loadMoreData} hasMore={hasMore} loader={isLoading && <NotificationSkeleton border={'none'} count={1} color={'#e2dfdf'} />} endMessage={page?.totalRecords > 0 && <Divider plain>It is all, nothing more </Divider>} scrollableTarget="scrollableDiv">
+                <InfiniteScroll height={400} className={styles.notificationComponent} dataLength={page?.totalRecords || 0} next={loadMoreData} hasMore={hasMore} loader={isLoading && <NotificationSkeleton border={'none'} count={1} color={'#e2dfdf'} />} endMessage={page?.totalRecords > 0 && <Divider plain>It is all, nothing more </Divider>} scrollableTarget="scrollableDiv">
                     <List
                         bordered={false}
                         split={false}
                         dataSource={data}
                         renderItem={(item) => (
-                            <List.Item style={{ background: item?.isRead ? '#F2F2F2' : '#ffffff' }} key={item?.id}>
+                            <List.Item onClick={() => !item?.isRead && handleActionButton(item, NOTIFICATION_STATUS.READ.key)} style={{ background: item?.isRead ? '#F2F2F2' : '#ffffff' }} key={item?.id}>
                                 <List.Item.Meta
                                     avatar={!item?.isRead ? <RxDotFilled size={30} color="#ff3e5b" /> : <span style={{ width: '12px', marginRight: '32px' }}></span>}
                                     title={item?.title}

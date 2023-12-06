@@ -20,8 +20,6 @@ import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
 import { BASE_URL_APPROVAL_CANCEL_REQUEST_URL as approvalCancelURL, BASE_URL_RSM_ASM_APPROVAL_DETAILS } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
-
-import { FilterIcon } from 'Icons';
 import { rsmAsmApprovalSearchDataAction } from 'store/actions/data/rsmAsmApproval/rsmAsmApprovalSearch';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
@@ -377,7 +375,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,

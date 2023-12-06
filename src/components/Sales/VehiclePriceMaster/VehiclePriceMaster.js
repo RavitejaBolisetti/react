@@ -201,7 +201,7 @@ export const VehiclePriceMasterBase = (props) => {
     }, [productHierarchyDataList]);
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',
