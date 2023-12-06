@@ -14,29 +14,30 @@ export const ModalButtons = ({ reset, submit, handleResetFilter, submitName, res
     return (
         <div className={styles.modalFooter}>
             <Row gutter={20}>
-                {/* <Col xs={24} sm={20} md={20} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    
-                </Col> */}
-                {!hideSaveBtn && (
-                    <>
-                        {htmltype ? (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonsGroupRight}>
-                                <Button disabled={resetDisabled} danger onClick={handleResetFilter} data-testid="reset" className={styles.marR10}>
-                                    {BUTTON_CONSTANTS?.RESET?.name}
-                                </Button>
-                                <Button disabled={saveDisabled} htmlType="submit" type="primary" data-testid="apply">
-                                    {BUTTON_CONSTANTS?.SUBMIT?.name}
-                                </Button>
-                            </Col>
-                        ) : (
-                            <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
-                                <Button disabled={saveDisabled} onClick={onClickAction} type="primary">
-                                    {BUTTON_CONSTANTS?.SUBMIT?.name}
-                                </Button>
-                            </Col>
-                        )}
-                    </>
-                )}
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonsGroupRight}>
+                    <span>
+                        <Button disabled={resetDisabled} danger onClick={handleResetFilter} data-testid="reset" className={styles.marR10}>
+                            {BUTTON_CONSTANTS?.RESET?.name}
+                        </Button>
+                    </span>
+                    {!hideSaveBtn && (
+                        <>
+                            {htmltype ? (
+                                <span>
+                                    <Button disabled={saveDisabled} htmlType="submit" type="primary" data-testid="apply">
+                                        {BUTTON_CONSTANTS?.SUBMIT?.name}
+                                    </Button>
+                                </span>
+                            ) : (
+                                <span>
+                                    <Button disabled={saveDisabled} onClick={onClickAction} type="primary">
+                                        {BUTTON_CONSTANTS?.SUBMIT?.name}
+                                    </Button>
+                                </span>
+                            )}
+                        </>
+                    )}
+                </Col>
             </Row>
         </div>
     );
