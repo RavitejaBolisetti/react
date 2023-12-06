@@ -150,6 +150,6 @@ export const ROUTING_CORPORATE_MASTER = ROUTING_SALES.concat('corporate-master')
 export const ROUTING_CORPORATE_SCHEME_REGISTRATION = ROUTING_SALES.concat('corporate-scheme-registration');
 export const ROUTING_CORPORATE_ADDITIONALDISCOUNT_REGISTRATION = ROUTING_SALES.concat('corporate-additional-discount-registration');
 
-export const ROUTING_DEALER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('dealer-empowerment');
+export const ROUTING_DEALER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('customer-empowerment');
 export const ROUTING_CUSTOMER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('employee-empowerment');
 //

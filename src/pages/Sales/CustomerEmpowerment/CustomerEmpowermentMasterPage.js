@@ -6,11 +6,9 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { DealerEmpowermentMaster } from 'components/Sales/DealerEmpowerment';
+import CustomerEmpowermentMaster from 'components/Sales/CustomerEmpowerment';
 
-
-const DealerEmpowermentMasterBase = (props) => {
-    
+const CustomerEmpowermentMasterBase = (props) => {
     const pageTitle = 'Customer Empowerment';
     const pageHeaderData = {
         pageTitle,
@@ -20,10 +18,9 @@ const DealerEmpowermentMasterBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <DealerEmpowermentMaster/>
-
+            <CustomerEmpowermentMaster />
         </>
     );
 };
 
-export const DealerEmpowermentMasterPage = withLayoutMaster(DealerEmpowermentMasterBase);
+export const CustomerEmpowermentMasterPage = withLayoutMaster(CustomerEmpowermentMasterBase);

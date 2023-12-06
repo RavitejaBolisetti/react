@@ -20,8 +20,7 @@ import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-import { DealerCorporateClaimFormButton } from '../CorporateClaimFormButton';
-// import { DealerCorporateClaimFormButton } from '../DealerCorporateClaimFormButton';
+import { CustomerEmpowermentFormButton } from '../CustomerEmpowermentFormButton';
 
 const mapStateToProps = (state) => {
     const {
@@ -289,7 +288,7 @@ const SupportingDocumentBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <DealerCorporateClaimFormButton {...props} />
+                    <CustomerEmpowermentFormButton {...props} />
                 </Col>
             </Row>
         </Form>

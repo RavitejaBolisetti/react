@@ -21,7 +21,6 @@ import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { DealerCorporateClaimFormButton } from '../CorporateClaimFormButton';
-// import { DealerCorporateClaimFormButton } from '../DealerCorporateClaimFormButton';
 
 const mapStateToProps = (state) => {
     const {
