@@ -7,9 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { translateContent } from 'utils/translateContent';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
@@ -17,10 +16,10 @@ import styles from 'assets/sass/app.module.scss';
 
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
-    const { handleCancel, handleFormValueChange, optionalServices, typeData, setOptionalServices, aggregateForm } = props;
+    const { handleCancel, handleFormValueChange, optionalServices, setOptionalServices, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames, page, setmakeOptions, setPage } = props;
+    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames, setPage } = props;
     const [filteredMakeoptions, setfilteredMakeoptions] = useState([...makeOptions]);
     useEffect(() => {
         if (AdvanceformData && isVisible) {

@@ -94,8 +94,8 @@ const SupportingDocumentBase = (props) => {
         if (supportingData && supportingData?.length) {
             const showSupportingdata = supportingData?.filter((element, index) => {
                 const found = deletedUpload?.find((item, index) => item?.documentId === element?.documentId);
-
                 if (!found) return element;
+                return undefined;
             });
             setviewSupportingData([...showSupportingdata]);
         }

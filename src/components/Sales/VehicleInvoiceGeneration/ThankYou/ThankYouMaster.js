@@ -14,7 +14,7 @@ import { translateContent } from 'utils/translateContent';
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData, section } = props;
+    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData } = props;
 
     const myProps = {
         ...props,
@@ -27,6 +27,7 @@ export const ThankYouMaster = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    
     return (
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>
