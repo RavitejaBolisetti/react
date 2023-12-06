@@ -264,7 +264,7 @@ const AddEditFormMain = (props) => {
                                         <Text strong>{translateContent('vehicleDetail.productDetails.heading.aggregateTitle')}</Text>
 
                                         {addToolTip(
-                                            !formData?.productAttributeDetail && isDataLoaded ? 'No product Attribute Details Present' : '',
+                                            !formData?.productAttributeDetail && isDataLoaded ? translateContent('vehicleDetail.productDetails.label.attributeDetailsNotPresent') : '',
                                             'bottom'
                                         )(
                                             <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>

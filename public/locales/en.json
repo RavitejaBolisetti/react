@@ -1860,6 +1860,7 @@
                 }
             }
         },
+
         "productDetails": {
             "heading": {
                 "moduleTitle": "Product Details",
@@ -1875,7 +1876,8 @@
                 "model": "Model ",
                 "item": "Item",
                 "make": "Make",
-                "serialNo": "Serial No."
+                "serialNo": "Serial No.",
+                "attributeDetailsNotPresent": "No product Attribute Details Present"
             }
         },
         "customerDetails": {
