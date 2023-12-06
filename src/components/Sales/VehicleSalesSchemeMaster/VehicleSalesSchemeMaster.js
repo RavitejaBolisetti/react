@@ -581,13 +581,14 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        const { pageSize } = filterString;
-        if (filterString) {
-            setShowDataLoading(true);
-        }
-        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
     };
+
+    const handleReset = () => {
+        advanceFilterForm.resetFields();
+        const { pageSize } = filterString;
+        setFilterString({ pageSize, current: 1 });
+    }
 
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
@@ -681,13 +682,9 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            }
+            setIsFormVisible(false);
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            setZoneTableDataItem([]);
         };
 
         const onError = (message) => {
@@ -743,8 +740,8 @@ export const VehicleSalesSchemeMasterBase = (props) => {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'toDate' || key === 'fromDate') {
-            setFilterString();
-            advanceFilterForm.resetFields();
+            const { toDate, fromDate, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -843,6 +840,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
+        handleReset,
         filterString,
         setFilterString,
         searchForm,
@@ -872,6 +870,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         title,
         data,
         handleOnClick,
+        handleReset,
         typeData,
         schemeTypeData,
         encashTypeData,

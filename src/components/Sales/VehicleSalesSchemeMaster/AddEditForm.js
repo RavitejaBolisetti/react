@@ -187,6 +187,7 @@ const AddEditFormMain = (props) => {
     const onCloseZoneDetails = () => {
         setAddZoneArea(false);
         addZoneAreaForm.resetFields();
+        setZoneTableDataItem([]);
     };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
