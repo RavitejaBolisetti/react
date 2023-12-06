@@ -813,7 +813,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         receiptType,
         partySegmentType,
 
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,

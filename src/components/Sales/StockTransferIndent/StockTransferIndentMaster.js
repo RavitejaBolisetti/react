@@ -500,7 +500,9 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        setReportDetail(toggleButton === STOCK_TRANSFER?.RAISED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT : toggleButton === STOCK_TRANSFER?.RECEIVED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT : null);
+        if (toggleButton === STOCK_TRANSFER?.RAISED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+        else if (toggleButton === STOCK_TRANSFER?.RECEIVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT);
+        else setReportDetail(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [toggleButton]);
 

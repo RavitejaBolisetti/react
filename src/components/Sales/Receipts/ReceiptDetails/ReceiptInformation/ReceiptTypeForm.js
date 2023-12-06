@@ -18,7 +18,7 @@ const ReceiptTypeFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={receiptData?.totalApportionAmount} label={translateContent('receipts.label.receiptDetails.totalApportionAmount')} name="totalApportionAmount">
+                    <Form.Item initialValue={receiptData?.totalApportionAmount} label={translateContent('receipts.label.receiptDetails.totalApportionedAmount')} name="totalApportionAmount">
                         <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.totalApportionedAmount'))} disabled={true} />
                     </Form.Item>
                 </Col>

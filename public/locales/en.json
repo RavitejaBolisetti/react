@@ -249,6 +249,7 @@
             "bookingCustomerAndBillingCustomer.sameAsBookingCustomer": "Same as Booking Customer",
 
             "vehicleDetails.vehicleDetails": "Vehicle Details",
+            "vehicleDetails.vehicleInformation": "Vehicle Information",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
@@ -1864,7 +1865,8 @@
             "heading": {
                 "moduleTitle": "Product Details",
                 "attributeTitle": "Product Attribute Details",
-                "aggregateTitle": "Aggregates"
+                "aggregateTitle": "Aggregates",
+                "noProductDataFound": "No product Attribute Details Present"
             },
             "label": {
                 "productDivision": "Product Division",

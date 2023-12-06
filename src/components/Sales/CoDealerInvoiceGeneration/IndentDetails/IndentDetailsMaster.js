@@ -13,12 +13,10 @@ import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleD
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-
 import { CoDealerFormButton } from '../CoDealerFormButton';
-
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
+import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

@@ -175,14 +175,8 @@ export const GstIRNTransactionMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        switch (buttonAction) {
-            case UPLOAD_ACTION:
-                handleIRNGeneration(record);
-                break;
-            default:
-                break;
-        }
+    const handleButtonClick = ({ record = null }) => {
+        handleIRNGeneration(record);
     };
 
     const handleIRNGeneration = (record) => {
