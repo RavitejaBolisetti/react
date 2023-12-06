@@ -43,6 +43,7 @@ import { ProductModelGroupsDataActions } from 'store/actions/data/VehicleModelTa
 import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 import { RSA_REQUEST_TITLE_CONSTANTS } from './utils/RSARequestTitleConstant';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 const mapStateToProps = (state) => {
     const {
@@ -148,6 +149,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             resetLocationData: applicationMasterDataActions.resetLocations,
 
+            downloadFile: supportingDocumentDataActions.downloadFile,
+
             showGlobalNotification,
         },
         dispatch
@@ -156,7 +159,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const RSARegistrationMasterBase = (props) => {
     const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
-    const { resetLocationData,  fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
+    const { resetLocationData, downloadFile, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -241,7 +244,7 @@ export const RSARegistrationMasterBase = (props) => {
     }, [userId, vehicleCustomerDetailsOnly?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily, rsaDetails]);
 
     useEffect(() => {
-        if ((vehicleCustomerDetailsOnly?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup || rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup)) {
+        if (vehicleCustomerDetailsOnly?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup || rsaDetails?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
             const makeExtraParams = [
                 {
                     key: 'modelGroupCode',
@@ -490,9 +493,9 @@ export const RSARegistrationMasterBase = (props) => {
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
                     if (userType === AMC_CONSTANTS?.DEALER?.key) {
-                        rsaStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, saveBtn: false, cancelSchemeBtn: true }) : rsaStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        rsaStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, saveBtn: false, cancelSchemeBtn: true }) : setButtonData({ ...Visibility });
                     } else {
-                        rsaStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : rsaStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        setButtonData({ ...Visibility });
                     }
                 }
             }
@@ -528,7 +531,7 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleVinSearch = (value) => {
-        const onSuccessAction = (res) => {  
+        const onSuccessAction = (res) => {
             setVehicleCustomeDetailsOnly(res?.data);
 
             const extraParams = [
@@ -585,7 +588,7 @@ export const RSARegistrationMasterBase = (props) => {
     }, [userId, vinNumber]);
 
     const onFinish = ({ type = null }) => {
-        const data = { ...requestPayload, rsaRegistrationDetails: { ...requestPayload?.registrationDetails, registrationInformation: { ...requestPayload?.registrationDetails?.registrationInformation, employeeCode: requestPayload?.registrationDetails?.registrationInformation?.employeeName, managerCode: requestPayload?.registrationDetails?.registrationInformation?.managerName } }, vehicleAndCustomerDetails: requestPayload?.vehicleAndCustomerDetails };
+        const data = { ...requestPayload, rsaRegistrationDetails: { ...requestPayload?.registrationDetails, registrationInformation: { ...requestPayload?.registrationDetails?.registrationInformation, employeeCode: requestPayload?.registrationDetails?.registrationInformation?.employeeName, managerCode: requestPayload?.registrationDetails?.registrationInformation?.managerName, otfNumber: bookingNumber } }, vehicleAndCustomerDetails: requestPayload?.vehicleAndCustomerDetails };
         delete data?.registrationDetails;
         delete data?.rsaRegistrationDetails?.registrationInformation?.employeeName;
         delete data?.rsaRegistrationDetails?.registrationInformation?.managerName;
@@ -847,6 +850,18 @@ export const RSARegistrationMasterBase = (props) => {
         }
     };
 
+    const handleDownloadFile = (key) => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: key,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+    };
+
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -996,6 +1011,8 @@ export const RSARegistrationMasterBase = (props) => {
         previousSection,
         setPreviousSection,
         selectedCardData,
+        userType,
+        handleDownloadFile,
     };
 
     useEffect(() => {

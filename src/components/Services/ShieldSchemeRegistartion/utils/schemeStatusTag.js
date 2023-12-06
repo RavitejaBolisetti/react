@@ -6,6 +6,7 @@
 import { Tag } from 'antd';
 import { QUERY_BUTTONS_CONSTANTS } from './ShieldRegistrationContant';
 import { QUERY_BUTTONS_MNM_USER } from './ShieldRegistrationContant';
+import { AMC_CONSTANTS } from './AMCConstants';
 
 export const SchemeStatusTag = (status) => {
     let tag = '';
@@ -21,6 +22,9 @@ export const SchemeStatusTag = (status) => {
             break;
         case QUERY_BUTTONS_CONSTANTS.CANCELLED.key:
             tag = <Tag color="error">{QUERY_BUTTONS_CONSTANTS.CANCELLED.title}</Tag>;
+            break;
+        case AMC_CONSTANTS.UNDER_PROGRESS.key:
+            tag = <Tag color="warning">{AMC_CONSTANTS.UNDER_PROGRESS.title}</Tag>;
             break;
         case QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key:
             tag = <Tag color="warning">{QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.title}</Tag>;

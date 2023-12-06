@@ -16,7 +16,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
 
 export default function AdvanceFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, showAddButton = true, handleButtonClick, handleOnClick, record } = props;
+    const { extraParams, removeFilter, handleReset, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, showAddButton = true, handleButtonClick, handleOnClick, record } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -87,7 +87,7 @@ export default function AdvanceFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={() => handleReset()} danger>
                                     {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>

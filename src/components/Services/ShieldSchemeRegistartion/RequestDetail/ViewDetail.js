@@ -9,7 +9,6 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from '../utils/ShieldRegistrationContant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { SchemeStatusTag } from '../utils/schemeStatusTag';
 import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
 
@@ -50,7 +49,7 @@ const ViewDetail = (props) => {
                             {translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(formData?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
                         </Typography>
                     </Row>
-                    {screenType === 'RSA' ? RSARegistrationStatusTag(selectedOrder?.status) : SchemeStatusTag(selectedOrder?.status)}
+                    {RSARegistrationStatusTag(selectedOrder?.status)}
                 </Row>
                 <Row type="flex" align="middle" className={selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>
