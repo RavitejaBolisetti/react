@@ -170,7 +170,7 @@ const LoyaltySchemeMasterMain = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION , onSave: true });
             };
 
             const requestData = {

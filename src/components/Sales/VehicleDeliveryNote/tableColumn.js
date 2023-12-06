@@ -57,7 +57,7 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
         }),
         tblPrepareColumns({
             title: translateContent('vehicleDeliveryNote.label.modelGroup'),
-            dataIndex: 'modelGroup',
+            dataIndex: 'modelGroupDescription',
             width: '14%',
         }),
 

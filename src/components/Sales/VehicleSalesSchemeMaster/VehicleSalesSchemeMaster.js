@@ -16,7 +16,7 @@ import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleSalesSchemeMasterUpload } from './VehicleSalesSchemeMasterUpload';
 import { vehicleSalesSchemeMaster } from 'store/actions/data/vehicleSalesSchemeMaster';
-import { convertDateTime, dateFormatView, formattedCalendarDate } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, formatDateToEndOfDayDate } from 'utils/formatDateTime';
 import { BASE_URL_VEHICLE_SALES_SCHEME_MASTER_DETAILS as customURL, BASE_URL_VEHICLE_SALES_SCHEME_MASTER_UPLOAD as customUploadURL } from 'constants/routingApi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
@@ -242,7 +242,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         if (isVehicleSalesSchemeDataLoaded) {
             setFormData(vehicleSalesSchemeDetails);
             setOrganizationId(vehicleSalesSchemeDetails?.moHierarchyMstId);
-            vehicleSalesSchemeDetails && addSchemeForm.setFieldsValue({ ...vehicleSalesSchemeDetails, validityFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityFromDate), validityToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.validityToDate), vehicleInvoiceFromDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceFromDate), vehicleInvoiceToDate: formattedCalendarDate(vehicleSalesSchemeDetails?.vehicleInvoiceToDate) });
+            vehicleSalesSchemeDetails && addSchemeForm.setFieldsValue({ ...vehicleSalesSchemeDetails, validityFromDate: formatDateToEndOfDayDate(vehicleSalesSchemeDetails?.validityFromDate), validityToDate: formatDateToEndOfDayDate(vehicleSalesSchemeDetails?.validityToDate), vehicleInvoiceFromDate: formatDateToEndOfDayDate(vehicleSalesSchemeDetails?.vehicleInvoiceFromDate), vehicleInvoiceToDate: formatDateToEndOfDayDate(vehicleSalesSchemeDetails?.vehicleInvoiceToDate) });
             setSchemeCategorySelect(vehicleSalesSchemeDetails?.schemeType);
             handleSchemeCategory(vehicleSalesSchemeDetails?.schemeType);
             vehicleSalesSchemeDetails?.offerType && setTaxField(vehicleSalesSchemeDetails?.offerType);
@@ -258,7 +258,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
     }, [isVehicleSalesSchemeDataLoaded, vehicleSalesSchemeDetails]);
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             setFilterString({ ...filterString, pageSize: 10, current: 1 });
             manufacturerOrgFetchList({ setIsLoading: manufacturerOrgListShowLoading, userId, errorAction: onErrorAction });
             fetchZoneMasterList({ setIsLoading: listZoneMasterShowLoading, userId });
@@ -518,6 +518,7 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         addSchemeForm.resetFields();
         setOrganizationId([]);
         setTableDataItem([]);
+        console.log(record,`record`)
         if (buttonAction === VIEW_ACTION || buttonAction === EDIT_ACTION) {
             const extraParams = [
                 {

@@ -8,7 +8,7 @@ import { ConfigProvider, notification } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle, AiOutlineWarning } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineWarning } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 
 import { MainPage } from './components/MainPage';

@@ -159,7 +159,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -22,7 +22,7 @@ const { Option } = Select;
 const { Search } = Input;
 const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, formActionType, onFinish, productHierarchyList, getDealerlocation, setDealerLocation, dealerLocation } = props;
-    const { form, formData, typeData, isReadOnly = true } = props;
+    const { form, formData, typeData, isReadOnly = true, resetViewVehiclePO } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
 
@@ -33,23 +33,23 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
-    const handleChangeOrderType = (value) => {
-        if (value === 'CDLR') {
-            setDealerFlag(value);
-        } else {
-            setDealerFlag();
-        }
-    };
+    useEffect(() => {
+        return () => {
+            resetViewVehiclePO();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     useEffect(() => {
         if (formData?.orderTypeCode === 'CDLR') {
             setDealerFlag(formData?.orderTypeCode);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     const handleOnClear = (e) => {
-        if (!e.target.value) {
-            setDealerLocation(undefined);
+        const value = e.target.value;
+        if (!value) {
+            setDealerLocation();
         }
     };
     const selectProps = {
@@ -57,6 +57,7 @@ const AddEditFormMain = (props) => {
         showSearch: true,
         allowClear: true,
     };
+
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>

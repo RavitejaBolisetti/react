@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h4>{translateContent('hoPriceMapping.heading.dealerList')}</h4>
+                                        <h2 className={styles.marT0}>{translateContent('hoPriceMapping.heading.dealerList')}</h2>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
@@ -112,7 +112,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h4>{translateContent('hoPriceMapping.heading.modelDetails')}</h4>
+                                        <h2>{translateContent('hoPriceMapping.heading.modelDetails')}</h2>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>

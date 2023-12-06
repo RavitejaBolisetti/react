@@ -7,11 +7,14 @@ import React from 'react';
 import MenuNav from 'utils/MenuNav';
 
 const LeftSidebar = (props) => {
-    const { MenuCard, ...rest } = props;
+    const { setPreviousSection, previousSection, currentSection, MenuCard } = props;
+    if (setPreviousSection instanceof Function && previousSection && currentSection > previousSection) {
+        setPreviousSection(currentSection);
+    }
     return (
         <>
             <MenuCard {...props} />
-            <MenuNav {...rest} />
+            <MenuNav {...props} />
         </>
     );
 };

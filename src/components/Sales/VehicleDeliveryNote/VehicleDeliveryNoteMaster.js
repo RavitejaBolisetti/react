@@ -613,6 +613,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             const Number = soldByDealer ? res?.responseMessage?.split('. ')?.[1] : messageList[messageList?.length - 1];
             setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage, vehicleDeliveryNote: Number, deliveryNoteDate: dayjs()?.format(dateFormatView), deliveryNoteStatus: 'D' }));
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
+            setFormValuesChanges(false);
+            setlocalFormValueChange(false);
         };
         const onError = (message) => {
             showGlobalNotification({ message });

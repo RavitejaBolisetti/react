@@ -21,7 +21,7 @@ export const DELIVERY_NOTE_STATUS = {
     },
     PENDING_CANCELLATION: {
         id: 4,
-        key: 'PND',
+        key: 'PEND',
         title: 'Pending for Cancellation',
     },
 };

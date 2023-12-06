@@ -154,7 +154,7 @@
             "delete": "Delete",
             "cancelBooking": "Cancel Booking",
             "transferBooking": "Transfer Booking",
-            "bookingMappingHistory": "Booking Mapping History",
+            "bookingMappingHistory": "SO Mapping History",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
             "seeLess": "See less",
@@ -258,6 +258,8 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.mnmCashBenefitAmountWithTax": "M&M Cash Benefits with TAX",
+            "vehicleDetails.mnmNonCashBenefitAmountWithTax": "M&M Non-Cash Benefits with TAX",
             "vehicleDetails.printDiscount": "Print Discount?",
             "vehicleDetails.taxCalculation": "Tax Calculation",
             "vehicleDetails.availableStock": "Available Stock",
@@ -266,6 +268,7 @@
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
+            "vehicleDetails.sapResonseRemarks": "Model Code Response",
             "vehicleDetails.model": "Model",
             "vehicleDetails.totalTaxAmount": "Total Tax Amount",
             "vehicleDetails.tcsAmount": "TCS Amount",
@@ -1791,7 +1794,8 @@
     "vehicleDetail": {
         "heading": {
             "mainTitle": "Vehicle Details",
-            "title": "Search Vehicle"
+            "title": "Search Vehicle",
+            "mnmUserOnly": "Below Fields to be shown for Mahindra users only"
         },
         "label": {
             "vin": "VIN",

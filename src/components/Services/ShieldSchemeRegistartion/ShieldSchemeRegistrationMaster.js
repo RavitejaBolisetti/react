@@ -426,7 +426,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily]);
 
     useEffect(() => {
-        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup && dealerLocationId) {
+        if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup) {
             const makeExtraParams = [
                 {
                     key: 'modelGroupCode',

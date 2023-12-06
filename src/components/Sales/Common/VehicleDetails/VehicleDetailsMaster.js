@@ -288,12 +288,12 @@ const VehicleDetailsMasterMain = (props) => {
         };
 
         const onErrorAction = (message) => {
-            showGlobalNotification({ message: message });
+            showGlobalNotification({ message });
 
             const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
             setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
 
-            setVehicleDetailData(vehicleDetailData);
+            setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });
         };
 
@@ -326,7 +326,7 @@ const VehicleDetailsMasterMain = (props) => {
                     form.resetFields();
                     resetData();
                     setRefreshData(!refreshData);
-                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
                     setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
                 };
 

@@ -66,30 +66,27 @@ const AddEditFormMain = (props) => {
     };
 
     const handleAddApportion = () => {
-        apportionForm
-            .validateFields()
-            .then(() => {
-                const values = apportionForm.getFieldsValue();
+        apportionForm.validateFields().then(() => {
+            const values = apportionForm.getFieldsValue();
 
-                if (!isEditing) {
-                    const data = { ...values, id: '' };
-                    setApportionList([data, ...apportionList]);
-                    apportionForm.resetFields();
-                    setModalApportionVisible(false);
-                } else {
-                    const data = { ...values, id: '' };
-                    const newarr = [...apportionList];
+            if (!isEditing) {
+                const data = { ...values, id: '' };
+                setApportionList([data, ...apportionList]);
+                apportionForm.resetFields();
+                setModalApportionVisible(false);
+            } else {
+                const data = { ...values, id: '' };
+                const newarr = [...apportionList];
 
-                    newarr[apportionTableFormData?.index] = data;
-                    setApportionList(newarr);
-                    setModalApportionVisible(false);
-                    setisEditing(false);
-                }
-                handleFormValueChange();
-                setApportionTableFormData();
-                setShowApportionForm();
-            })
-          
+                newarr[apportionTableFormData?.index] = data;
+                setApportionList(newarr);
+                setModalApportionVisible(false);
+                setisEditing(false);
+            }
+            handleFormValueChange();
+            setApportionTableFormData();
+            setShowApportionForm();
+        });
     };
 
     const handleCancel = () => {
@@ -129,7 +126,7 @@ const AddEditFormMain = (props) => {
             {/* <Collapse expandIcon={expandIcon} expandIconPosition="end" collapsible="icon"> */}
             {/* <Panel
                 header={ */}
-            <Row gutter={20}>
+            <Row gutter={20} className={styles.marB10}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Text strong>{translateContent('receipts.label.apportionDetails.apportionDetailsText')}</Text>
                     {parseFloat(totalApportionAmount) < parseFloat(totalReceivedAmount) && (

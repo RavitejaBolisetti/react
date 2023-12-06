@@ -356,7 +356,7 @@ export const OtfMasterBase = (props) => {
         updateVehicleAllotmentStatus(requestData);
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, isNextBtnClick = false }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, isNextBtnClick = false, onSave = undefined }) => {
         buttonAction !== NEXT_ACTION && form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
@@ -381,13 +381,21 @@ export const OtfMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                handleUnSavedChangeFn(() => {
+                const callMethod = () => {
                     const nextSection = filterActiveSection?.find((i) => i.id > currentSection);
                     section && setCurrentSection(nextSection?.id);
                     setLastSection(!nextSection?.id);
-                });
+                };
 
+                if (onSave) {
+                    callMethod();
+                } else {
+                    handleUnSavedChangeFn(() => {
+                        callMethod();
+                    });
+                }
                 break;
+
             case CANCEL_ACTION:
                 setIsCancelVisible(true);
                 break;
@@ -794,6 +802,7 @@ export const OtfMasterBase = (props) => {
         TRANSFER_ACTION,
         isVisible: isTransferVisible,
         onCloseAction: onCancelCloseAction,
+        handleButtonClick,
     };
 
     const allotOTFProps = {
