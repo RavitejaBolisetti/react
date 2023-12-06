@@ -20,8 +20,11 @@ export const AdvanceForm = (props) => {
     const { handleCancel, handleFormValueChange, optionalServices, typeData, setOptionalServices, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames, page, setmakeOptions, setPage } = props;
-    const [filteredMakeoptions, setfilteredMakeoptions] = useState([...makeOptions]);
+    const { itemOptions, setitemOptions, MakefieldNames, ItemFieldNames, setPage } = props;
+
+    const [filteredMakeoptions, setfilteredMakeoptions] = useState([]);
+    const [saveBtnDisabled, setsaveBtnDisabled] = useState(true);
+
     useEffect(() => {
         if (AdvanceformData && isVisible) {
             aggregateForm.setFieldsValue({
@@ -30,10 +33,20 @@ export const AdvanceForm = (props) => {
                 serialNo: AdvanceformData?.serialNo ?? '',
                 id: AdvanceformData?.id ?? '',
             });
-            !AdvanceformData?.item && setfilteredMakeoptions([]);
+            if (AdvanceformData?.item) {
+                handleItemChange(AdvanceformData?.item, { type: AdvanceformData?.type }, false);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AdvanceformData, isVisible]);
+
+    useEffect(() => {
+        return () => {
+            setfilteredMakeoptions([]);
+            setsaveBtnDisabled(true);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     useEffect(() => {
         const arr = [];
         if (itemOptions && itemOptions?.length) {
@@ -77,50 +90,63 @@ export const AdvanceForm = (props) => {
                 }
                 setAdvanceformData();
                 handleFormValueChange();
+                setsaveBtnDisabled(true);
             })
-            .catch((err) => {});
+            .catch((err) => {
+                console.error(err);
+            });
     };
-    const handleItemChange = (selectedKey) => {
+    const handleItemChange = (selectedKey, selectedObj, reset = true) => {
         if (!selectedKey) {
             setfilteredMakeoptions([]);
         } else {
-            setfilteredMakeoptions([...makeOptions]);
+            if (selectedObj?.type) {
+                aggregateForm.setFieldValue('type', selectedObj?.type);
+                const optionsSet = typeData?.[PARAM_MASTER?.[selectedObj?.type]?.id] || typeData?.[selectedObj?.type];
+                setfilteredMakeoptions([...optionsSet]);
+            } else {
+                setfilteredMakeoptions([]);
+            }
         }
-        aggregateForm.resetFields(['make']);
+        reset && aggregateForm.resetFields(['make']);
+    };
+    const handleFormBtn = () => {
+        setsaveBtnDisabled(false);
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={aggregateForm}>
+        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleFormBtn}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item name="item" label={translateContent('vehicleDetail.productDetails.label.item')} rules={[validateRequiredSelectField('Item')]}>
-                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.item'))} onChange={handleItemChange} options={itemOptions} fieldNames={ItemFieldNames} />
+                                <Select allowClear placeholder={preparePlaceholderSelect(translateContent('vehicleDetail.productDetails.label.item'))} onChange={handleItemChange} options={itemOptions} fieldNames={ItemFieldNames} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label={translateContent('vehicleDetail.productDetails.label.make')} name="make" rules={[validateRequiredInputField('Make')]}>
-                                <Select allowClear placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.make'))} fieldNames={MakefieldNames} options={filteredMakeoptions} />
+                                <Select allowClear placeholder={preparePlaceholderSelect(translateContent('vehicleDetail.productDetails.label.make'))} fieldNames={MakefieldNames} options={filteredMakeoptions} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label={translateContent('vehicleDetail.productDetails.label.serialNo')} name="serialNo" rules={[validateRequiredInputField('Srl no'), validationFieldLetterAndNumber('Srl no')]}>
                                 <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.serialNo'))} />
                             </Form.Item>
-                            <Form.Item name="id" hidden></Form.Item>
+                            <Form.Item name="id" hidden />
+                            <Form.Item name="type" hidden />
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
                             <Button onClick={handleCancel} danger>
-                                Cancel
+                                {translateContent('global.buttons.cancel')}
                             </Button>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                            <Button onClick={onFinish} type="primary">
-                                Save
+                            <Button disabled={saveBtnDisabled} onClick={onFinish} type="primary">
+                                {translateContent('global.buttons.save')}
                             </Button>
                         </Col>
                     </Row>

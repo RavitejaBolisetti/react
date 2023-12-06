@@ -28,7 +28,7 @@ const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
-    const { itemOptions, setitemOptions, makeOptions, setmakeOptions, modelData, modelFamilyData, variantData } = props;
+    const { itemOptions, setitemOptions, makeOptions, setmakeOptions, modelData, modelFamilyData, variantData, isDataLoaded } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionalServices, setOptionalServices, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue, ITEM_TYPE } = props;
     const { collapseProps, disabledProps, bindStatus } = props;
@@ -40,7 +40,6 @@ const AddEditFormMain = (props) => {
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
     const AggregateModuleTitle = `Aggregates`;
-
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
@@ -61,7 +60,7 @@ const AddEditFormMain = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData,modelData, modelFamilyData, variantData, formActionType,formData]);
+    }, [formData, modelData, modelFamilyData, variantData, formActionType]);
 
     const addContactHandeler = (e) => {
         aggregateForm.resetFields();
@@ -86,6 +85,7 @@ const AddEditFormMain = (props) => {
         handleFormValueChange,
         MakefieldNames,
         ItemFieldNames,
+        isDataLoaded,
     };
     const advanceFilterProps = {
         ...AggregateFormProps,
@@ -262,18 +262,13 @@ const AddEditFormMain = (props) => {
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <Text strong>{translateContent('vehicleDetail.productDetails.heading.aggregateTitle')}</Text>
-                                        {!formData?.productAttributeDetail &&
-                                            addToolTip(
-                                                'No product Attribute Details Present',
-                                                'bottom'
-                                            )(
-                                                <Button className={styles.marL10} data-testid="addBtn" onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
-                                                    Add
-                                                </Button>
-                                            )}
-                                        {formData?.productAttributeDetail && (
+
+                                        {addToolTip(
+                                            !formData?.productAttributeDetail && isDataLoaded ? 'No product Attribute Details Present' : '',
+                                            'bottom'
+                                        )(
                                             <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
                                     </Col>
@@ -283,7 +278,6 @@ const AddEditFormMain = (props) => {
                         >
                             <Divider />
                             <ListDataTable {...ListDatatableProps} />
-                            {/* <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue, ITEM_TYPE })} tableData={optionalServices} pagination={false} /> */}
                         </Panel>
                     </Collapse>
                 </Col>

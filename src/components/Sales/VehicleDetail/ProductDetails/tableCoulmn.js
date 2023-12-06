@@ -15,13 +15,13 @@ export const tableColumn = (props) => {
             title: translateContent('vehicleDetail.productDetails.label.item'),
             dataIndex: 'item',
             width: '20%',
-            render: (text, record, index) => bindCodeValue(text, ITEM_TYPE?.ITEM),
+            render: (text) => bindCodeValue(text, ITEM_TYPE?.ITEM),
         }),
         tblPrepareColumns({
             title: translateContent('vehicleDetail.productDetails.label.make'),
             dataIndex: 'make',
             width: '20%',
-            render: (text, record, index) => bindCodeValue(text, ITEM_TYPE?.MAKE),
+            render: (text,record) => bindCodeValue(text, ITEM_TYPE?.MAKE,record),
         }),
 
         tblPrepareColumns({
