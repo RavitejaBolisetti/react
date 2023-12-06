@@ -105,7 +105,12 @@ export const AdvanceForm = (props) => {
                 const optionsSet = typeData?.[PARAM_MASTER?.[selectedObj?.type]?.id] || typeData?.[selectedObj?.type];
                 setfilteredMakeoptions([...optionsSet]);
             } else {
-                setfilteredMakeoptions([]);
+                const findVehItem = typeData?.[PARAM_MASTER?.VEH_ITEM?.id]?.find((item) => item?.key === selectedKey)?.type;
+                if (findVehItem) {
+                    setfilteredMakeoptions(typeData?.[PARAM_MASTER?.[findVehItem]?.id]);
+                } else {
+                    setfilteredMakeoptions([]);
+                }
             }
         }
         reset && aggregateForm.resetFields(['make']);

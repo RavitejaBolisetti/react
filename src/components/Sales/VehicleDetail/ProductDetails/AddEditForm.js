@@ -261,7 +261,7 @@ const AddEditFormMain = (props) => {
                             header={
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong>{translateContent('vehicleDetail.productDetails.heading.noProductDataFound')}</Text>
+                                        <Text strong>{translateContent('vehicleDetail.productDetails.heading.aggregateTitle')}</Text>
 
                                         {addToolTip(
                                             !formData?.productAttributeDetail && isDataLoaded ? translateContent('vehicleDetail.productDetails.heading.noProductDataFound') : '',
