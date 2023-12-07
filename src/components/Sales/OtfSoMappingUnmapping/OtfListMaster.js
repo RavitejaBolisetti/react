@@ -94,7 +94,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const OtfListMasterBase = (props) => {
     const { userId, typeData } = props;
-
     const { DealerParentData, fetchDealerParentLov, listDealerParentLoading, resetDealerParentData } = props;
     const { isLocationLoading, LocationData, fetchDealerLocation, listDealerLocation, resetDealerLocationData } = props;
     const { isOtfSoMappingLoaded, isOtfSoMappingLoading, otfSomappingData, resetData, fetchList, listShowLoading, saveData, showGlobalNotification } = props;
@@ -161,6 +160,7 @@ export const OtfListMasterBase = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -198,12 +198,14 @@ export const OtfListMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
     useEffect(() => {
         if (extraParams && filterString && Object?.keys(filterString)?.length) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [extraParams]);
+
     useEffect(() => {
         if (otfSomappingData && typeof otfSomappingData === 'object' && Object?.keys(otfSomappingData)?.length && isOtfSoMappingLoaded && !otfSomappingData?.hasOwnProperty('paginationData')) {
             SoForm.setFieldsValue({ [filterString?.formType]: { ...otfSomappingData, otfDate: converDateDayjs(otfSomappingData?.otfDate), soDate: converDateDayjs(otfSomappingData?.soDate) } });
@@ -214,39 +216,40 @@ export const OtfListMasterBase = (props) => {
     }, [otfSomappingData, isOtfSoMappingLoaded]);
 
     const MappingUnmapping = (key) => {
-        const SOParams = [
-            {
-                key: 'mapStatusCode',
-                title: 'mapStatusCode',
-                value: key,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-            },
-        ];
-
-        userId && SOParams && fetchList({ setIsLoading: listShowLoading, userId, extraParams: SOParams, onSuccessAction, onErrorAction, customURL: CustomSearchUrl });
+        if (key) {
+            const SOParams = [
+                {
+                    key: 'mapStatusCode',
+                    title: 'mapStatusCode',
+                    value: key,
+                },
+                {
+                    key: 'pageSize',
+                    title: 'Value',
+                    value: page?.pageSize,
+                    canRemove: true,
+                },
+                {
+                    key: 'pageNumber',
+                    title: 'Value',
+                    value: page?.current,
+                    canRemove: true,
+                },
+                {
+                    key: 'sortBy',
+                    title: 'Sort By',
+                    value: page?.sortBy,
+                    canRemove: true,
+                },
+                {
+                    key: 'sortIn',
+                    title: 'Sort Type',
+                    value: page?.sortType,
+                    canRemove: true,
+                },
+            ];
+            userId && SOParams && fetchList({ setIsLoading: listShowLoading, userId, extraParams: SOParams, onSuccessAction, onErrorAction, customURL: CustomSearchUrl });
+        }
     };
 
     useEffect(() => {
@@ -287,18 +290,20 @@ export const OtfListMasterBase = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedKey]);
+    }, [selectedKey, page]);
 
     const handleClear = () => {
         SoForm.resetFields();
         resetDealerLocationData();
         setfilterString();
     };
+
     const handleCancel = () => {
         setselectedKey(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.NO_DATA?.key);
         SoForm.resetFields();
         form.resetFields();
     };
+
     const ClearAllData = () => {
         SoForm.resetFields();
         setfilterString();
@@ -311,9 +316,11 @@ export const OtfListMasterBase = (props) => {
             ClearAllData();
             return;
         }
+        setPage({ ...pageIntialState });
         ClearAllData();
         setselectedKey(key);
     };
+
     const handleSearchChange = (value, type) => {
         if (!value) return;
         SoForm?.validateFields(['parentGroupCode', 'locationCode'])
@@ -340,6 +347,7 @@ export const OtfListMasterBase = (props) => {
             }
         }
     };
+
     const handleNullcheck = (obj1, obj2, exception = false) => {
         let f1 = false;
         let f2 = false;
@@ -414,6 +422,7 @@ export const OtfListMasterBase = (props) => {
     };
 
     const containerProps = {
+        dynamicPagination: true,
         selectedKey,
         typeData,
         SoForm,

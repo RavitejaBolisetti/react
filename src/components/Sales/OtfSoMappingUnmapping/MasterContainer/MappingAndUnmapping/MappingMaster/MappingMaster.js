@@ -73,16 +73,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MappingMasterMain = (props) => {
-    const { dynamicPagination = true, showGlobalNotification, moduleTitle, page, setPage, selectedKey } = props;
-
+    const { dynamicPagination, showGlobalNotification, moduleTitle, page, setPage, selectedKey } = props;
     const { userId, listShowLoading, fetchList, OtfNumberSearchLoading } = props;
-
     const { otfSomappingData, isOtfSoMappingLoading, OtfNumberSearchData, resetData, saveData, MappingUnmapping } = props;
-
     const [form] = Form.useForm();
-
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
-
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState('');
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: true };
@@ -176,7 +171,7 @@ const MappingMasterMain = (props) => {
         buttonType: 'primary',
     };
     const SearchTableProps = {
-        dynamicPagination: false,
+        dynamicPagination,
         totalRecords: 1,
         pagination: false,
         showAddButton: false,

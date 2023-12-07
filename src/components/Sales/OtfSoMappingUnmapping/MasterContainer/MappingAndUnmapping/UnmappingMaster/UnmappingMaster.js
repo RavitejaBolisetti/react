@@ -1,8 +1,8 @@
 /*
-*   Copyright (c) 2023 Mahindra & Mahindra Ltd.
-*   All rights reserved.
-*   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
-*/
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,7 +20,6 @@ import { LANGUAGE_EN } from 'language/en';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { translateContent } from 'utils/translateContent';
-
 
 const mapStateToProps = (state) => {
     const {
@@ -71,18 +70,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MappingMasterMain = (props) => {
-    const { otfSomappingData, userId, dynamicPagination = true, showGlobalNotification, moduleTitle, isOtfSoMappingLoading, selectedKey } = props;
+    const { dynamicPagination, page, setPage, otfSomappingData, userId, showGlobalNotification, moduleTitle, isOtfSoMappingLoading, selectedKey } = props;
     const { listShowLoading, MappingUnmapping, resetData, saveData } = props;
     const [form] = Form.useForm();
 
-    const pageIntialState = {
-        pageSize: 10,
-        current: 1,
-    };
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
-
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [page, setPage] = useState({ ...pageIntialState });
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [formData, setFormData] = useState('');
