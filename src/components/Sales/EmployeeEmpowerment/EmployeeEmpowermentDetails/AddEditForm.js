@@ -68,8 +68,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-                            <Form.Item name="financialYear" label={'Requester ID'} initialValue={formData?.invoiceNo}>
-                                {customSelectBox({ data: requesterData, placeholder: preparePlaceholderSelect('Requester ID' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+                            <Form.Item name="financialYear" label={'Approver ID'} initialValue={formData?.invoiceNo}>
+                                {customSelectBox({ data: requesterData, placeholder: preparePlaceholderSelect('Approver ID' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
 
                                 {/* <DatePicker placeholder={preparePlaceholderSelect('Financial Year')} format={dateFormat} picker="year" className={styles.fullWidth} {...disabledProps} /> */}
                             </Form.Item>

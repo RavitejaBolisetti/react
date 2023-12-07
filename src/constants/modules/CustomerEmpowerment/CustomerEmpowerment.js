@@ -6,7 +6,7 @@
 export const CUSTOMER_EMPOWERMENT_SECTION = {
     DETAILS: {
         id: 1,
-        title: 'Customer Details',
+        title: 'Empowerment Details',
         displayOnList: true,
     },
     DOCUMENTS: {

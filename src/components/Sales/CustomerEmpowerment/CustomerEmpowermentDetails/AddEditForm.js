@@ -57,46 +57,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
-                <Panel header={'Credit/Debit Detail' || translateContent('applicationMaster.text.applicationActions')} key="1">
-                    <Divider />
-                    <Row gutter={20}>
-                        
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="dealerShareAmount" label={'Credit Note No'} initialValue={formData?.financierName}>
-                                <Input placeholder={preparePlaceholderText('Credit Note No')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="dealerShareAmount" label={'Credit Note Date'} initialValue={formData?.financierName}>
-                                <Input placeholder={preparePlaceholderText('Credit Note Date')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="dealerShareAmount" label={'Credit Note Amount'} initialValue={formData?.financierName}>
-                                <Input placeholder={preparePlaceholderText('Credit Note Amount')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="dealerShareAmount" label={'Debit Note No'} initialValue={formData?.financierName}>
-                                <Input placeholder={preparePlaceholderText('Debit Note No')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="dealerShareAmount" label={'Debit Note Date'} initialValue={formData?.financierName}>
-                                <Input placeholder={preparePlaceholderText('Debit Note Date')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="dealerShareAmount" label={'Debit Note Amount'} initialValue={formData?.financierName}>
-                                <Input placeholder={preparePlaceholderText('Debit Note Amount')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                       
-                    </Row>
-                </Panel>
-            </Collapse>
-            <Collapse onChange={() => handleCollapse(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
-                <Panel header={'Customer Details' || translateContent('applicationMaster.text.applicationActions')} key="2">
+                <Panel header={'Request Details' || translateContent('applicationMaster.text.applicationActions')} key="1">
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -117,11 +78,12 @@ const AddEditFormMain = (props) => {
                                             <Input placeholder={preparePlaceholderText('Request Status')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col> */}
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                    {/* <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item name="customerCategory" label={'Reason for Delay'}>
                                             <Input placeholder={preparePlaceholderText('Reason for Delay')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
-                                    </Col>
+                                    </Col> */}
+
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item name="chassisNumber" label={'Invoice ID'} initialValue={formData?.chassisNumber}>
                                             <Input placeholder={preparePlaceholderText('Invoice ID')} maxLength={50} {...disabledProps} />
@@ -137,6 +99,20 @@ const AddEditFormMain = (props) => {
                                             <DatePicker placeholder={preparePlaceholderSelect('Invoice Status')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
+
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item name="vdnDate" label={'VDN ID'} initialValue={formData?.financierName}>
+                                            <Input placeholder={preparePlaceholderText('VDN Date')} maxLength={50} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item name="vdnDate" label={'VDN Date'} initialValue={formData?.financierName}>
+                                            <Input placeholder={preparePlaceholderText('VDN Date')} maxLength={50} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>
+
+
+
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item name="insPremiumValue" label={'Segment'} initialValue={formData?.insPremiumValue}>
                                             <Input placeholder={preparePlaceholderText('Segment')} maxLength={50} {...disabledProps} />
@@ -152,6 +128,8 @@ const AddEditFormMain = (props) => {
                                             <Input placeholder={preparePlaceholderText('Chassis No')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
+
+
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item name="customerName" label={'Customer Name'} initialValue={formData?.financierName}>
                                             <Input placeholder={preparePlaceholderText('Customer Name')} maxLength={50} {...disabledProps} />
@@ -162,20 +140,68 @@ const AddEditFormMain = (props) => {
                                             <Input placeholder={preparePlaceholderText('Requested Amount')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Form.Item name="vdnDate" label={'VDN Date'} initialValue={formData?.financierName}>
-                                            <Input placeholder={preparePlaceholderText('VDN Date')} maxLength={50} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
                                     <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                                         <Form.Item name="remarks" label={'Dealer remarks'} initialValue={formData?.financierName}>
                                             <Input placeholder={preparePlaceholderText('Dealer remarks')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
-
-                                  
                                 </Row>
                             </Space>
+                        </Col>
+                    </Row>
+                </Panel>
+            </Collapse>
+            <Collapse onChange={() => handleCollapse(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
+                <Panel header={'Credit/Debit Detail' || translateContent('applicationMaster.text.applicationActions')} key="2">
+                    <Divider />
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'Credit Note No'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('Credit Note No')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'Credit Note Amount'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('Credit Note Amount')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'Credit Note Date'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('Credit Note Date')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'Debit Note No'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('Debit Note No')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'Debit Note Amount'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('Debit Note Amount')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'Debit Note Date'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('Debit Note Date')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+
+
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'IRN Number'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('IRN Number')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'IRN Status'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('IRN Status')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                            <Form.Item name="dealerShareAmount" label={'IRN Desc'} initialValue={formData?.financierName}>
+                                <Input placeholder={preparePlaceholderText('IRN Desc')} maxLength={50} {...disabledProps} />
+                            </Form.Item>
                         </Col>
                     </Row>
                 </Panel>
