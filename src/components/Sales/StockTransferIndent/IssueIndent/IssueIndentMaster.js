@@ -113,7 +113,7 @@ const IssueIndentMasterMain = (props) => {
 
     const onFinish = (values) => {
         if (!values?.engineNumber) {
-            showGlobalNotification({ message: translateContent('stockTransferIndent.isueIndent.validation.searchVinToContinue') });
+            showGlobalNotification({ message: translateContent('stockTransferIndent.issueIndent.validation.searchVinToContinue') });
             return;
         }
         const { invoiceDate, invoiceNumber, ...rest } = values;
@@ -214,15 +214,15 @@ const IssueIndentMasterMain = (props) => {
                                                         <Space size="small" direction="vertical">
                                                             <div>
                                                                 <Text>
-                                                                    {translateContent('stockTransferIndent.isueIndent.label.stIssueNo')} : {element?.issueNumber ? element?.issueNumber : 'NA'}
+                                                                    {translateContent('stockTransferIndent.issueIndent.label.stIssueNo')} : {element?.issueNumber ? element?.issueNumber : 'NA'}
                                                                 </Text>
                                                                 <Text>|</Text>
                                                                 <Text>
-                                                                    {translateContent('stockTransferIndent.isueIndent.label.vin')}: {element?.vin ? element?.vin : 'NA'}
+                                                                    {translateContent('stockTransferIndent.issueIndent.label.vin')}: {element?.vin ? element?.vin : 'NA'}
                                                                 </Text>
                                                             </div>
                                                             <Text type="secondary">
-                                                                {translateContent('stockTransferIndent.isueIndent.label.status')} : {typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value}
+                                                                {translateContent('stockTransferIndent.issueIndent.label.status')} : {typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value}
                                                             </Text>
                                                         </Space>
                                                         {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (

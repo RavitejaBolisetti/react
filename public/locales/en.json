@@ -2355,7 +2355,7 @@
         }
     },
     "stockTransferIndent": {
-        "isueIndent": {
+        "issueIndent": {
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
