@@ -99,6 +99,7 @@ import { withSpinner } from 'components/withSpinner';
 import CorporateSchemeRegistrationMasterPage from 'pages/Sales/CorporateSchemeRegistration';
 import CorporateAdditionalDiscountRegistrationMasterPage from 'pages/Sales/CorporateAdditionalDiscountRegistration';
 import CustomerEmpowermentMasterPage from 'pages/Sales/CustomerEmpowerment';
+import CsdCpcClaimMasterPage from 'pages/Sales/CsdCpcClaim';
 // import CorporateAdditionalDiscountRegistrationMasterPage from 'pages/Sales/CorporateAdditionalDiscountRegistration';
 
 const mapStateToProps = (state) => {
@@ -281,6 +282,7 @@ const AuthenticatedUserPageMain = (props) => {
 
                 <Route path={routing.ROUTING_DEALER_EMPOWERMENT_REQUEST} element={<CustomerEmpowermentMasterPage />} exact />
                 <Route path={routing.ROUTING_CUSTOMER_EMPOWERMENT_REQUEST} element={<EmployeeEmpowermentMasterPage />} exact />
+                <Route path={routing.ROUTING_CSD_CPC_CLAIM} element={<CsdCpcClaimMasterPage />} exact />
                 {/*  */}
             </Routes>
         ) : (
