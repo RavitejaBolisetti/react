@@ -2371,7 +2371,8 @@
             },
             "validation": {
                 "vin": "vin",
-                "issueCharges": "Issue Charges"
+                "issueCharges": "Issue Charges",
+                "searchVinToContinue": "Search VIN to continue"
             },
             "viewDetails": {
                 "label": {

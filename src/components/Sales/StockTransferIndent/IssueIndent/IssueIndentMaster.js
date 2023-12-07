@@ -113,7 +113,7 @@ const IssueIndentMasterMain = (props) => {
 
     const onFinish = (values) => {
         if (!values?.engineNumber) {
-            showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Search VIN to continue' });
+            showGlobalNotification({ message: translateContent('stockTransferIndent.isueIndent.validation.searchVinToContinue') });
             return;
         }
         const { invoiceDate, invoiceNumber, ...rest } = values;
