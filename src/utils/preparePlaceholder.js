@@ -21,6 +21,6 @@ export const prepareDatePickerText = (name, prefix = true) => {
     return name;
 };
 
-export const preparePlaceholderSearch = (name = '') => {
-    return translateContent('global.placeholder.search') + name?.toLowerCase();
+export const preparePlaceholderSearch = (name = '', prefix = true, lowercase = true) => {
+    return prefix ? translateContent('global.placeholder.search').concat(lowercase ? name?.toLowerCase() : name) : name;
 };
