@@ -49,12 +49,6 @@ export const AdvancedSearchFrom = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label={'Scheme Type' || translateContent('city.label.countryCode')} name="countryCode" rules={[validateRequiredSelectField('corporate category' || translateContent('city.validation.country'))]}>
-                    {customSelectBox({ data: schemeTypeData, placeholder: preparePlaceholderSelect('Scheme Type' || translateContent('amcRegistration.label.priceType')) })}
-                       
-                    </Form.Item>
-                </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
@@ -64,16 +58,31 @@ export const AdvancedSearchFrom = (props) => {
                         //  rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}
                     >
                         <DatePicker
+                            placeholder={'Effective From' || preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
+                            format={dateFormat}
+                            className={styles.fullWidth}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        label={'Effective To' || translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')}
+                        name="fromDate"
+                        className={styles?.datePicker}
+                        //  rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}
+                    >
+                        <DatePicker
                             placeholder={'Effective to' || preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
                             format={dateFormat}
                             className={styles.fullWidth}
-                            // disabledDate={(current) => current > new Date()}
-                            // onChange={(event) => {
-                            //     advanceFilterForm.setFieldsValue({ toDate: undefined });
-                            //     if (event && Object?.keys(event)?.length) setrules({ fromdate: true, todate: true });
-                            //     else if (!event) setrules({ fromdate: false, todate: false });
-                            // }}
+
                         />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item initialValue={defaultCountry} label={'Scheme Type' || translateContent('city.label.countryCode')} name="countryCode" rules={[validateRequiredSelectField('corporate category' || translateContent('city.validation.country'))]}>
+                    {customSelectBox({ data: schemeTypeData, placeholder: preparePlaceholderSelect('Scheme Type' || translateContent('amcRegistration.label.priceType')) })}
+                       
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.pad5}>
