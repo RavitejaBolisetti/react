@@ -7,16 +7,17 @@ import { Tag } from 'antd';
 import { ONROAD_PRICE_MASTER_STATUS } from 'constants/OnRoadPriceMasterStatus';
 
 export const OnRoadPriceStatusTag = (status) => {
-    let tag = '';
-    switch (status) {
-        case ONROAD_PRICE_MASTER_STATUS.ACTIONED.title:
+    let tag = '-';
+    switch (true) {
+        case status===ONROAD_PRICE_MASTER_STATUS.ACTIONED.key || status===ONROAD_PRICE_MASTER_STATUS.ACTIONED.key2 :
             tag = <Tag color="success">{ONROAD_PRICE_MASTER_STATUS.ACTIONED.title}</Tag>;
             break;
-        case ONROAD_PRICE_MASTER_STATUS.UNACTIONED.title:
+        case status===ONROAD_PRICE_MASTER_STATUS.UNACTIONED.key || status===ONROAD_PRICE_MASTER_STATUS.UNACTIONED.key2 :
             tag = <Tag color="error">{ONROAD_PRICE_MASTER_STATUS.UNACTIONED.title}</Tag>;
             break;
 
         default:
+            return tag;
     }
     return tag;
 };
