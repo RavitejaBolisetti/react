@@ -27,6 +27,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label={'Requested Date' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={'Status' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={'Action Date' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={'Approved Amount' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={'Remarks' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
@@ -39,8 +40,12 @@ const ViewDetailMain = (props) => {
             <Descriptions.Item label={'Requested Date' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
             <Descriptions.Item label={'Status' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
         </Descriptions>
-        <Row gutter={20} className={styles.marB20}>
-            <Col xs={12} sm={12} md={12} lg={12}>
+        <Row gutter={20} className={styles.marB20} justify={'space-between'}>
+        <Col xs={6} sm={6} md={6} lg={6}>
+                <label>Approved Amount</label>
+               <Input ></Input>
+            </Col>
+            <Col xs={16} sm={16} md={16} lg={16}>
                 <label>Remarks</label>
                 <TextArea
                     autoSize={{

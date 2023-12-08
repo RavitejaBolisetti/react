@@ -143,7 +143,6 @@ export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('
 export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');
 export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
 
-
 // UI-Screens
 export const ROUTING_DEALER_CORPORATE_CLAIM = ROUTING_SALES.concat('dealer-corporate-claim');
 export const ROUTING_CORPORATE_MASTER = ROUTING_SALES.concat('corporate-master');
@@ -153,4 +152,5 @@ export const ROUTING_CORPORATE_ADDITIONALDISCOUNT_REGISTRATION = ROUTING_SALES.c
 export const ROUTING_DEALER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('customer-empowerment');
 export const ROUTING_CUSTOMER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('employee-empowerment');
 export const ROUTING_CSD_CPC_CLAIM = ROUTING_SALES.concat('csd-cpc-claim');
+export const ROUTING_ADDITIONAL_CDC_CPC_CLAIM = ROUTING_SALES.concat('addional-csd-cpc-claim');
 //

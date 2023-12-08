@@ -100,7 +100,7 @@ import CorporateSchemeRegistrationMasterPage from 'pages/Sales/CorporateSchemeRe
 import CorporateAdditionalDiscountRegistrationMasterPage from 'pages/Sales/CorporateAdditionalDiscountRegistration';
 import CustomerEmpowermentMasterPage from 'pages/Sales/CustomerEmpowerment';
 import CsdCpcClaimMasterPage from 'pages/Sales/CsdCpcClaim';
-// import CorporateAdditionalDiscountRegistrationMasterPage from 'pages/Sales/CorporateAdditionalDiscountRegistration';
+import AdditionalCsdCpcClaimPage from 'pages/Sales/AdditionalCsdCpcClaim';
 
 const mapStateToProps = (state) => {
     const {
@@ -139,7 +139,7 @@ const AuthenticatedUserPageMain = (props) => {
     const canViewPage = flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
 
     useEffect(() => {
-        if (!isDataLoaded && userId) { 
+        if (!isDataLoaded && userId) {
             fetchMenuList({
                 setIsLoading: listShowMenuLoading,
                 userId,
@@ -274,7 +274,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
                 <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
 
-            {/* UI-Screens */}
+                {/* UI-Screens */}
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_SCHEME_REGISTRATION} element={<CorporateSchemeRegistrationMasterPage />} exact />
@@ -283,6 +283,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_DEALER_EMPOWERMENT_REQUEST} element={<CustomerEmpowermentMasterPage />} exact />
                 <Route path={routing.ROUTING_CUSTOMER_EMPOWERMENT_REQUEST} element={<EmployeeEmpowermentMasterPage />} exact />
                 <Route path={routing.ROUTING_CSD_CPC_CLAIM} element={<CsdCpcClaimMasterPage />} exact />
+                <Route path={routing.ROUTING_ADDITIONAL_CDC_CPC_CLAIM} element={<AdditionalCsdCpcClaimPage />} exact />
                 {/*  */}
             </Routes>
         ) : (
