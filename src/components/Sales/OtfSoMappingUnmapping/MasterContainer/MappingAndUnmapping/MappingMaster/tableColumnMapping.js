@@ -19,7 +19,7 @@ export const tableColumnMapping = ({ handleButtonClick, actionButtonVisibility, 
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.poNumber'),
             dataIndex: 'poNumber',
-            width: '20%',
+            width: '10%',
         }),
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.soDate'),
@@ -27,13 +27,11 @@ export const tableColumnMapping = ({ handleButtonClick, actionButtonVisibility, 
             width: '14%',
             render: (text) => converDateDayjs(text),
         }),
-
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.modelDescription'),
             dataIndex: 'modelDescription',
-            width: '10%',
+            width: '20%',
         }),
-
         tblActionColumn({ handleButtonClick, ...actionButtonVisibility, customButtonProperties, styles, width: '12%' })
     );
 
