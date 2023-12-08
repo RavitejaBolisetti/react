@@ -49,7 +49,7 @@ export const AdvancedSearchFrom = (props) => {
         reset: true,
         submit: true,
         resetName: translateContent('global.buttons.reset'),
-        submitName: translateContent('global.buttons.search'),
+        submitName: translateContent('global.buttons.apply'),
         handleResetFilter,
     };
 

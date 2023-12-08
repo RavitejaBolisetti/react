@@ -169,8 +169,8 @@ export const RSARegistrationMasterBase = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-    const [userType, setUserType] = useState(AMC_CONSTANTS?.DEALER?.key);
-    const [rsaStatus, setRSAStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
+    const [userType, setUserType] = useState('');
+    const [rsaStatus, setRSAStatus] = useState();
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isRSA, setIsRSA] = useState(true);
@@ -659,7 +659,7 @@ export const RSARegistrationMasterBase = (props) => {
         totalRecords,
         setPage: setFilterString,
         page: filterString,
-        tableColumn: tableColumn({ handleButtonClick, typeData, userType, locations }),
+        tableColumn: tableColumn({ handleButtonClick, typeData, userType: loginUserData?.userId, locations }),
         tableData: data,
         showAddButton: true,
         filterString,
