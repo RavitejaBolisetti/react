@@ -101,6 +101,7 @@ import CorporateAdditionalDiscountRegistrationMasterPage from 'pages/Sales/Corpo
 import CustomerEmpowermentMasterPage from 'pages/Sales/CustomerEmpowerment';
 import CsdCpcClaimMasterPage from 'pages/Sales/CsdCpcClaim';
 import AdditionalCsdCpcClaimPage from 'pages/Sales/AdditionalCsdCpcClaim';
+import OverRiderClaimPage from 'pages/Sales/OverRiderClaim';
 
 const mapStateToProps = (state) => {
     const {
@@ -284,6 +285,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_CUSTOMER_EMPOWERMENT_REQUEST} element={<EmployeeEmpowermentMasterPage />} exact />
                 <Route path={routing.ROUTING_CSD_CPC_CLAIM} element={<CsdCpcClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_ADDITIONAL_CDC_CPC_CLAIM} element={<AdditionalCsdCpcClaimPage />} exact />
+                <Route path={routing.ROUTING_OVER_RIDER_CLAIM} element={<OverRiderClaimPage />} exact />
                 {/*  */}
             </Routes>
         ) : (

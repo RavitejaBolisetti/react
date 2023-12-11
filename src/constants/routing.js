@@ -151,6 +151,8 @@ export const ROUTING_CORPORATE_ADDITIONALDISCOUNT_REGISTRATION = ROUTING_SALES.c
 
 export const ROUTING_DEALER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('customer-empowerment');
 export const ROUTING_CUSTOMER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('employee-empowerment');
+
 export const ROUTING_CSD_CPC_CLAIM = ROUTING_SALES.concat('csd-cpc-claim');
 export const ROUTING_ADDITIONAL_CDC_CPC_CLAIM = ROUTING_SALES.concat('addional-csd-cpc-claim');
+export const ROUTING_OVER_RIDER_CLAIM = ROUTING_SALES.concat('over-rider-claim');
 //
