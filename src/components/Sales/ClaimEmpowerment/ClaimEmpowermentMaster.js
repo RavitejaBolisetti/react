@@ -9,15 +9,14 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import ReceiptFilter from './ReceiptFilter';
+import ClaimEmpowermentFilter from './ClaimEmpowermentFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
-import { ReceiptMainConatiner } from './ReceiptMainConatiner';
+import { ClaimEmpowermentMainContainer } from './ClaimEmpowermentMainContainer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
-import { RECEIPT_SECTION } from 'constants/ReceiptSection';
+import { CLAIMEMPOWERMENT_SECTION } from 'constants/ClaimEmpowerSection';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
@@ -31,78 +30,75 @@ import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Receipt: {
-                ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-                ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
-            },
-        },
-    } = state;
-    const moduleTitle = translateContent('receipts.heading.drawerTitleMain');
-    const page = { pageSize: 10, current: 1 };
+// const mapStateToProps = (state) => {
+//     const {
+//         auth: { userId },
+//         data: {
+//             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+//             Receipt: {
+//                 ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+//                 ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
+//             },
+//         },
+//     } = state;
+//     const moduleTitle = translateContent('receipts.heading.drawerTitleMain');
+//     const page = { pageSize: 10, current: 1 };
 
-    let returnValue = {
-        userId,
-        typeData,
-        receiptType: typeData[PARAM_MASTER.RECPT_TYPE.id],
-        partySegmentType: typeData[PARAM_MASTER.PARTY_CATEG.id],
-        paymentModeType: typeData[PARAM_MASTER.RECPT_PAYMNT_MODE.id],
-        documentType: typeData[PARAM_MASTER.RECPT_DOC_TYPE.id],
-        data: data?.paginationData,
-        totalRecords: data?.totalRecords || [],
-        receiptStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
-        receiptDetailData,
-        isLoading,
-        moduleTitle,
-        isSearchLoading,
-        isSearchDataLoaded,
-        isDetailedDataLoaded,
-        filterString,
-        page,
-    };
-    return returnValue;
-};
+//     let returnValue = {
+//         userId,
+//         typeData,
+//         receiptType: typeData[PARAM_MASTER.RECPT_TYPE.id],
+//         partySegmentType: typeData[PARAM_MASTER.PARTY_CATEG.id],
+//         paymentModeType: typeData[PARAM_MASTER.RECPT_PAYMNT_MODE.id],
+//         documentType: typeData[PARAM_MASTER.RECPT_DOC_TYPE.id],
+//         data: data?.paginationData,
+//         totalRecords: data?.totalRecords || [],
+//         receiptStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
+//         receiptDetailData,
+//         isLoading,
+//         moduleTitle,
+//         isSearchLoading,
+//         isSearchDataLoaded,
+//         isDetailedDataLoaded,
+//         filterString,
+//         page,
+//     };
+//     return returnValue;
+// };
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchReceiptDetails: receiptDetailDataActions.fetchList,
-            saveData: receiptDetailDataActions.saveData,
-            setFilterString: receiptDataActions.setFilter,
-            resetData: receiptDetailDataActions.reset,
-            fetchList: receiptDataActions.fetchList,
-            cancelReceipt: cancelReceiptDataActions.saveData,
-            listShowLoading: receiptDataActions.listShowLoading,
+// const mapDispatchToProps = (dispatch) => ({
+//     dispatch,
+//     ...bindActionCreators(
+//         {
+//             fetchReceiptDetails: receiptDetailDataActions.fetchList,
+//             saveData: receiptDetailDataActions.saveData,
+//             setFilterString: receiptDataActions.setFilter,
+//             resetData: receiptDetailDataActions.reset,
+//             fetchList: receiptDataActions.fetchList,
+//             cancelReceipt: cancelReceiptDataActions.saveData,
+//             listShowLoading: receiptDataActions.listShowLoading,
 
-            //resetPartyDetailData: partyDetailDataActions.reset,
+//             resetPartyDetailData: partyDetailDataActions.reset,
 
-            showGlobalNotification,
-        },
-        dispatch
-    ),
-});
+//             showGlobalNotification,
+//         },
+//         dispatch
+//     ),
+// });
 
-export const ReceiptMasterBase = (props) => {
+export const ClaimEmpowermentMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, resetPartyDetailData, data, receiptDetailData, resetData, cancelReceipt } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification, page } = props;
-    const { filterString, setFilterString, receiptStatusList } = props;
+    const { receiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [receiptStatus, setReceiptStatus] = useState(QUERY_BUTTONS_CONSTANTS.OPENED.key);
+    const [receiptStatus, setReceiptStatus] = useState(QUERY_BUTTONS_CONSTANTS.TAGA.key);
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
 
     const [listFilterForm] = Form.useForm();
     const [cancelReceiptForm] = Form.useForm();
-
     const [searchValue, setSearchValue] = useState();
-
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
-
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
@@ -112,12 +108,10 @@ export const ReceiptMasterBase = (props) => {
     const [totalReceivedAmount, setTotalReceivedAmount] = useState(0.0);
 
     const [apportionList, setApportionList] = useState([]);
-
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [partyDetailForm] = Form.useForm();
-
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelReceiptVisible, setCancelReceiptVisible] = useState(false);
@@ -125,9 +119,9 @@ export const ReceiptMasterBase = (props) => {
     const [partyId, setPartyId] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
+    const [filterString, setFilterString] = useState({});
 
     const dynamicPagination = true;
-
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
@@ -143,7 +137,6 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
@@ -159,129 +152,129 @@ export const ReceiptMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: filterString?.current ?? page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: filterString?.pageSize ?? page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'searchType',
-                title: 'Value',
-                value: 'receiptNumber',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'searchParam',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'fromDate',
-                title: 'Start Date',
-                value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'End Date',
-                value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'receiptStatus',
-                title: 'Receipt Status',
-                value: receiptStatus,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'receiptType',
-                title: 'Receipt Type',
-                value: filterString?.receiptType,
-                name: receiptType?.find((i) => i?.key === filterString?.receiptType)?.value,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'partySegment',
-                title: 'Party Segment',
-                value: filterString?.partySegment,
-                name: partySegmentType?.find((i) => i?.key === filterString?.partySegment)?.value,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: filterString?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: filterString?.sortType,
-                canRemove: true,
-                filter: false,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, receiptStatus, filterString, page]);
+    // const extraParams = useMemo(() => {
+    //     return [
+    //         {
+    //             key: 'pageNumber',
+    //             title: 'Value',
+    //             value: filterString?.current ?? page?.current,
+    //             canRemove: true,
+    //             filter: false,
+    //         },
+    //         {
+    //             key: 'pageSize',
+    //             title: 'Value',
+    //             value: filterString?.pageSize ?? page?.pageSize,
+    //             canRemove: true,
+    //             filter: false,
+    //         },
+    //         {
+    //             key: 'searchType',
+    //             title: 'Value',
+    //             value: 'receiptNumber',
+    //             canRemove: false,
+    //             filter: false,
+    //         },
+    //         {
+    //             key: 'searchParam',
+    //             title: 'searchParam',
+    //             value: filterString?.searchParam,
+    //             name: filterString?.searchParam,
+    //             canRemove: true,
+    //             filter: true,
+    //         },
+    //         {
+    //             key: 'fromDate',
+    //             title: 'Start Date',
+    //             value: filterString?.fromDate,
+    //             name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
+    //             canRemove: true,
+    //             filter: true,
+    //         },
+    //         {
+    //             key: 'toDate',
+    //             title: 'End Date',
+    //             value: filterString?.toDate,
+    //             name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
+    //             canRemove: true,
+    //             filter: true,
+    //         },
+    //         {
+    //             key: 'receiptStatus',
+    //             title: 'Receipt Status',
+    //             value: receiptStatus,
+    //             canRemove: false,
+    //             filter: false,
+    //         },
+    //         {
+    //             key: 'receiptType',
+    //             title: 'Receipt Type',
+    //             value: filterString?.receiptType,
+    //             name: receiptType?.find((i) => i?.key === filterString?.receiptType)?.value,
+    //             canRemove: true,
+    //             filter: true,
+    //         },
+    //         {
+    //             key: 'partySegment',
+    //             title: 'Party Segment',
+    //             value: filterString?.partySegment,
+    //             name: partySegmentType?.find((i) => i?.key === filterString?.partySegment)?.value,
+    //             canRemove: true,
+    //             filter: true,
+    //         },
+    //         {
+    //             key: 'sortBy',
+    //             title: 'Sort By',
+    //             value: filterString?.sortBy,
+    //             canRemove: true,
+    //             filter: false,
+    //         },
+    //         {
+    //             key: 'sortIn',
+    //             title: 'Sort Type',
+    //             value: filterString?.sortType,
+    //             canRemove: true,
+    //             filter: false,
+    //         },
+    //     ];
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [searchValue, receiptStatus, filterString, page]);
+
+    // useEffect(() => {
+    //     return () => {
+    //         resetData();
+    //         setFilterString();
+    //     };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
+
+    // useEffect(() => {
+    //     if (userId) {
+    //         setShowDataLoading(true);
+    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, receiptStatus, filterString]);
+
+    // useEffect(() => {
+    //     if (userId && selectedOrderId) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'id',
+    //                 title: 'id',
+    //                 value: selectedOrderId,
+    //                 name: 'id',
+    //             },
+    //         ];
+    //         fetchReceiptDetails({ setIsLoading: listShowLoading, userId, extraParams });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedOrderId]);
 
     useEffect(() => {
-        return () => {
-            resetData();
-            setFilterString();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (userId) {
-            setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptStatus, filterString]);
-
-    useEffect(() => {
-        if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'id',
-                    title: 'id',
-                    value: selectedOrderId,
-                    name: 'id',
-                },
-            ];
-            fetchReceiptDetails({ setIsLoading: listShowLoading, userId, extraParams });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
-
-    useEffect(() => {
-        const defaultSection = RECEIPT_SECTION.PARTY_DETAILS.id;
+        const defaultSection = CLAIMEMPOWERMENT_SECTION.EMPREQUEST_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(RECEIPT_SECTION);
+        setSetionName(CLAIMEMPOWERMENT_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -385,16 +378,15 @@ export const ReceiptMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage + translateContent('receipts.heading.profileCard.receiptNumber') + res?.data?.receiptsDetails?.receiptNumber });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
             onCloseAction();
         };
 
         const sectionKey = {
-            partyDetails: RECEIPT_SECTION.PARTY_DETAILS.id,
-            receiptsDetails: RECEIPT_SECTION.RECEIPT_DETAILS.id,
-            apportionDetails: RECEIPT_SECTION.APPORTION_DETAILS.id,
+            emprequestDetails: CLAIMEMPOWERMENT_SECTION.EMPREQUEST_DETAILS.id,
+            uploadDetails: CLAIMEMPOWERMENT_SECTION.UPLOAD_DETAILS.id,
         };
 
         const onError = (message, errorData, errorSection) => {
@@ -421,7 +413,7 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        resetData();
+        // resetData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
@@ -442,13 +434,19 @@ export const ReceiptMasterBase = (props) => {
         setRequestPayload();
     };
 
+    const staticData = [
+        { requestId: '14000002', requestDate: '7/8/22', claimType: 'Loyalty Claim', dealerName: 'Dev Kumar Jain', dealerBranch: 'Nerul', requeststatus: 'Pending' },
+        { requestId: '14000002', requestDate: '8/2/22', claimType: 'Corporate Claim', dealerName: 'Praveen Patil', dealerBranch: 'Warli(E)', requeststatus: 'Pending' },
+        { requestId: '14000002', requestDate: '9/1/21', claimType: 'Exchange Claim', dealerName: 'Ashish Verma', dealerBranch: 'Andheri', requeststatus: 'Pending' },
+    ];
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
         page: filterString,
         setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: data,
+        tableData: staticData,
         showAddButton: false,
         typeData,
         filterString,
@@ -493,7 +491,7 @@ export const ReceiptMasterBase = (props) => {
         const onSuccess = (res) => {
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
             setCancelReceiptVisible(false);
@@ -518,7 +516,7 @@ export const ReceiptMasterBase = (props) => {
     const title = translateContent('receipts.heading.mainTitle');
 
     const advanceFilterResultProps = {
-        extraParams,
+        // extraParams,
         removeFilter,
         receiptStatus,
         receiptStatusList,
@@ -540,6 +538,16 @@ export const ReceiptMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
+        optionType: [
+            {
+                key: 1,
+                value: 'Claim Empowerment',
+            },
+            {
+                key: 2,
+                value: 'Customer Empowerment',
+            },
+        ],
     };
 
     const advanceFilterProps = {
@@ -568,7 +576,7 @@ export const ReceiptMasterBase = (props) => {
         receiptOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -635,18 +643,17 @@ export const ReceiptMasterBase = (props) => {
 
     return (
         <>
-            <ReceiptFilter {...advanceFilterResultProps} />
+            <ClaimEmpowermentFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleButtonClick={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable handleButtonClick={handleButtonClick} isLoading={false} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <ReceiptMainConatiner {...containerProps} />
-            <CancelReceipt {...cancelReceiptProps} />
+            <ClaimEmpowermentMainContainer {...containerProps} />
             <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
-
-export const ReceiptMaster = connect(mapStateToProps, mapDispatchToProps)(ReceiptMasterBase);
+//export const ClaimEmpowermentMaster = connect()(ClaimEmpowermentBase);
+export const ClaimEmpowermentMaster = ClaimEmpowermentMasterBase;

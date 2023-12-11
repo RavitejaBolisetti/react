@@ -2942,6 +2942,77 @@
             "cancelReceipt": "Cancel Receipt"
         }
     },
+
+    "claimEmpowerment": {
+        "tableColumn": {
+            "requestId": "Request Id",
+            "requestDate": "Request Date",
+            "claimType": "Claim Type",
+            "dealerName": "Dealer Name",
+            "dealerBranch": "Dealer Branch",
+            "requeststatus": "Request Status"
+        },
+        "placeholder": {
+            "requestId": "Request Id",
+            "requestDate": "Request Date",
+            "requestStatus": "Request Status",
+            "claimType": "Claim Type",
+            "invoiceID": "Invoice ID",
+            "invoiceDate": "Invoice Date",
+            "coDealerInvoice": "Co-Dealer Invoice",
+            "chassisNo": "Chassis No",
+            "customerName": "Customer Name",
+            "invoiceStatus": "Invoice status",
+            "segment": "Segment",
+            "requested Amount": "Requested Amount",
+            "model Description": "Model Description",
+            "vDNID": "VDN ID",
+            "vDNDate": "VDN Date",
+            "reasonforDelay": "Reason for Delay",
+            "documentUpload": "Document Upload"
+        },
+        "label": {
+            "empowerDetails": {
+                "requestId": "Request ID",
+                "requestDate": "Request Date",
+                "requestStatus": "Request Status",
+                "claimType": "Claim Type",
+                "invoiceID": "Invoice ID",
+                "invoiceDate": "Invoice Date",
+                "coDealerInvoice": "Co-Dealer Invoice",
+                "chassisNo": "Chassis No",
+                "customerName": "Customer Name",
+                "invoiceStatus": "Invoice status",
+                "segment": "Segment",
+                "requested Amount": "Requested Amount",
+                "model Description": "Model Description",
+                "vDNID": "VDN ID",
+                "vDNDate": "VDN Date",
+                "reasonforDelay": "Reason for Delay",
+                "documentUpload": "Document Upload"
+            }
+        },
+        "heading": {
+            "mainTitle": "Empowerment Request",
+            "drawerTitleMain": "Empowerment Request",
+            "cancellationTitle": "Receipt Cancellation",
+            "sections": {
+                "section1": "Empower Request Details",
+                "section2": "Upload Details"
+            },
+            "collapse": {
+                "receiptInformation": "Receipt Information",
+                "paymentDetails": "Payment Details",
+                "apportionDetails": "Apportion Details"
+            },
+            "profileCard": {
+                "receiptNumber": "Receipt No.:",
+                "receiptDate": "Receipt Date: ",
+                "status": "Status: "
+            }
+        }
+    },
+
     "configurableParameter": {
         "heading": {
             "pageTitle": "Configurable Parameter Editing",
