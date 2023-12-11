@@ -887,7 +887,7 @@ export const RSARegistrationMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        showAddButton: userType === AMC_CONSTANTS?.DEALER?.key ? true : false,
+        showAddButton: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? true : false,
         userType,
     };
 
