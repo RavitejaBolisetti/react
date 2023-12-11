@@ -25,7 +25,8 @@ import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehi
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
-
+import { dateFormat } from '../../../utils/formatDateTime';
+import dayjs from 'dayjs';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -307,7 +308,8 @@ export const VehicleReceiptMasterBase = (props) => {
     const changeObjtoArr = (data) => {
         const FinalArr = [];
         Object?.entries(data)?.map(([key, value]) => {
-            FinalArr.push(value);
+            FinalArr.push({ ...value, mfgDate: dayjs(value?.mfgDate, dateFormat)?.format(dateFormat) });
+
             return undefined;
         });
         return FinalArr;
@@ -462,7 +464,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,  
+        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,
@@ -485,7 +487,7 @@ export const VehicleReceiptMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

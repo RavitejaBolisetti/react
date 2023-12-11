@@ -164,7 +164,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [vehicleCustomerDetailsOnly, setVehicleCustomeDetailsOnly] = useState({});
 
-    const page = { pageSize: 10, current: 1 };
     const dynamicPagination = true;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -284,14 +283,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current || page?.current,
+                value: filterString?.current ?? 1,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize || page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
@@ -314,20 +313,20 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, amcStatus, filterString, page]);
+    }, [searchValue, amcStatus, filterString]);
 
     useEffect(() => {
         const defaultSection = SHIELD_REGISTRATION_SECTION.SHIELD_REGISTRATION_DETAILS.id;
@@ -336,6 +335,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -365,7 +369,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId && filterString?.amcStatus) {
+        if (userId) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -809,7 +813,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleCancelScheme = () => {
-        const data = { id: detailShieldData?.id, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, status: status, requestDetails: { ...requestPayload?.requestDetails, userId: userId, ...cancelSchemeForm.getFieldsValue() } };
+        const data = { id: detailShieldData?.id, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, userId: userId, status: status, ...cancelSchemeForm.getFieldsValue() };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
