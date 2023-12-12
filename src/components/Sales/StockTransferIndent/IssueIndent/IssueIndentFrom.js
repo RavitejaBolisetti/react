@@ -70,7 +70,7 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="issueCharges" label={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} rules={[validateRequiredInputField(translateContent('stockTransferIndent.issueIndent.validation.issueCharges')), validateNumberWithTwoDecimalPlaces(translateContent('stockTransferIndent.issueIndent.validation.issueCharges')), { validator: (_, value) => isIssuePriceValid(value, issueForm.getFieldValue('netDealerPrice')) }]}>
+                        <Form.Item name="issueCharges" label={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} rules={[validateNumberWithTwoDecimalPlaces(translateContent('stockTransferIndent.issueIndent.validation.issueCharges')), { validator: (_, value) => issueForm.getFieldValue('netDealerPrice') && isIssuePriceValid(value, issueForm.getFieldValue('netDealerPrice')) }]}>
                             <Input placeholder={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} maxLength={50} />
                         </Form.Item>
                     </Col>

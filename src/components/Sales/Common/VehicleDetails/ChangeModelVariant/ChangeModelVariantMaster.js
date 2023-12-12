@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ChangeModelVariantMasterBase = (props) => {
     const { typeData, setCustomerNameList, selectedRecordId, setButtonData, buttonData, setFormData } = props;
     const {
-        formActionType: { addMode, editMode, viewMode },
+        formActionType: { editMode, viewMode },
         formData,
         userId,
         showGlobalNotification,
