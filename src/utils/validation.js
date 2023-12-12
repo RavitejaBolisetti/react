@@ -88,7 +88,7 @@ export const validationFieldLetteNumberandPeriod = (fieldName, lowercase = true)
 
 export const validationNumber = (fieldName, lowercase = true) => ({
     pattern: /^\d+$/,
-    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+    message: 'Please enter numeric value in ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
 export const validateOnlyPositiveNumber = (fieldName, lowercase = true) => ({

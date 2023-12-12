@@ -10,8 +10,8 @@ import { withModal } from 'components/withModal';
 import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { dateFormat } from 'utils/formatDateTime';
-import { disableFutureDate } from 'utils/disableDate';
+import { dateTimeFormat } from 'utils/formatDateTime';
+import { disablePastDate } from 'utils/disableDate';
 
 import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
@@ -53,19 +53,19 @@ export const AddRequestModalForm = (props) => {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate1')} name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                        <DatePicker showTime placeholder={preparePlaceholderSelect('')} format={dateTimeFormat} className={styles.fullWidth} disabledDate={disablePastDate} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate2')} name="visitTimeSlotTwo" className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                        <DatePicker showTime placeholder={preparePlaceholderSelect('')} format={dateTimeFormat} className={styles.fullWidth} disabledDate={disablePastDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate3')} name="visitTimeSlotThree" className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                        <DatePicker showTime placeholder={preparePlaceholderSelect('')} format={dateTimeFormat} className={styles.fullWidth} disabledDate={disablePastDate} />
                     </Form.Item>
                 </Col>
                 <Form.Item initialValue={CHARGER_STATUS?.IN_PROGRESS?.key} name="response">
