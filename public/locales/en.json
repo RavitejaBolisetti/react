@@ -3505,7 +3505,8 @@
             "voucherType": "Voucher Type",
             "partySegment": "Party Segment",
             "fromDate": "From Date",
-            "toDate": "To Date"
+            "toDate": "To Date",
+            "apportionDetailMissing": "Apportion Details are missing"
         },
         "leftSideBar": {
             "label": {

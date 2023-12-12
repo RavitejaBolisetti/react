@@ -9,7 +9,7 @@ import { FiPlus } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validationNumber, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DataTable } from 'utils/dataTable';
@@ -343,12 +343,12 @@ const AddEditFormMain = (props) => {
                                         {taxField === OFFER_TYPE_CONSTANTS?.DISCOUNT?.key && (
                                             <>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item initialValue={formData?.amountWithoutTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
+                                                    <Form.Item initialValue={formData?.amountWithoutTax} rules={[validationNumber(translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax'))]} label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithoutTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item initialValue={formData?.amountWithTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
+                                                    <Form.Item initialValue={formData?.amountWithTax} rules={[validationNumber(translateContent('vehicleSalesSchemeMaster.label.amountWithTax'))]} label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>

@@ -360,15 +360,20 @@ export const CreditDebitNoteMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
+    
     const handlePrintDownload = (record) => {
-        setReportVisible(true);
-
-        setAdditionalReportParams([
-            {
-                key: 'fn_vc_debit_credit_note_hdr_id',
-                value: record?.id,
-            },
-        ]);
+        const message = translateContent('creditDebitNote.validation.apportionDetailMissing');
+        if (Object.keys?.(selectedVoucher?.data?.apportionDetailsDto)?.length <= 0) {
+            showGlobalNotification({ message });
+        } else {
+            setReportVisible(true);
+            setAdditionalReportParams([
+                {
+                    key: 'fn_vc_debit_credit_note_hdr_id',
+                    value: record?.id,
+                },
+            ]);
+        }
     };
 
     const onFinish = () => {
@@ -497,7 +502,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
