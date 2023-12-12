@@ -20,8 +20,8 @@ import { STATUS } from 'constants/modelVariant';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, toolTipContent, onModelSubmit, setOnModelSubmit } = props;
-    const { form, modelChangeItemList, setModelChangeItemList, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, revisedModelInformation, onModelSubmit, setOnModelSubmit } = props;
+    const { getProductAttributeDetail, setRevisedProductAttributeData, form, modelChangeItemList, setModelChangeItemList, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
     const [selectedTreeKey, setSelectedTreeKey] = useState(formData?.model);
     const [modelChange, setModelChange] = useState(true);
     const formType = editMode ? 'New' : '';
@@ -47,14 +47,14 @@ const AddEditFormMain = (props) => {
                     };
                     const onSuccess = (res) => {
                         setOnModelSubmit(true);
-                        setModelStatus(STATUS?.PENDING?.key);
-                        if (res?.data?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
+                        setModelStatus(res?.data?.status);
+                        if (res?.data?.status === STATUS?.SUCCESS?.key) {
                             setButtonData({ ...buttonData, formBtnActive: true });
                         } else {
                             setButtonData({ ...buttonData, formBtnActive: false });
+                            setRefreshData(!refreshData);
+                            showGlobalNotification({ notificationType: res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error', title: STATUS?.[res?.data?.status]?.title, message: res.responseMessage });
                         }
-                        setRefreshData(!refreshData);
-                        showGlobalNotification({ notificationType: 'warning', title: 'Pending for SAP Confirmation', message: 'Change model request approval is pending from SAP' });
                     };
                     const requestData = {
                         data: data,
@@ -74,9 +74,9 @@ const AddEditFormMain = (props) => {
     const handleCollapse = (formType) => {
         setConfirmRequest({
             isVisible: true,
-            titleOverride: 'Cancel Request',
-            text: 'Are you sure you want to Cancel change model request? ',
-            submitText: 'Yes',
+            titleOverride: translateContent('bookingManagement.modelVariant.label.cancelRequest'),
+            text: translateContent('bookingManagement.modelVariant.heading.cancelChangeRequest'),
+            submitText: translateContent('bookingManagement.modelVariant.button.yes'),
             onCloseAction: onCloseAction,
             onSubmitAction: onSubmitAction,
         });
@@ -103,7 +103,7 @@ const AddEditFormMain = (props) => {
     const handleSelectTreeClick = (value) => {
         setConfirmRequest({
             isVisible: true,
-            titleOverride: 'Confirmation',
+            titleOverride: translateContent('bookingManagement.modelVariant.label.confirmation'),
             closable: true,
             icon: false,
             onCloseAction: () => {
@@ -113,12 +113,12 @@ const AddEditFormMain = (props) => {
                 });
             },
             onSubmitAction: () => {
+                getProductAttributeDetail(value, setRevisedProductAttributeData);
                 setModelChange(false);
                 const finalData = { ...filterVehicleData, productModelCode: value };
                 handleVehicleDetailChange(finalData);
                 form.setFieldsValue({ ['modelCode' + formType]: finalData?.productModelCode });
                 setSelectedTreeKey(finalData?.productModelCode);
-                // form.setFieldsValue({ ['model' + formType]: finalData?.productModelCode });
                 handleFormValueChange(false);
                 setButtonData({ ...buttonData, formBtnActive: false });
                 setConfirmRequest({
@@ -126,8 +126,8 @@ const AddEditFormMain = (props) => {
                     isVisible: false,
                 });
             },
-            submitText: 'Yes',
-            text: 'If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?',
+            submitText: translateContent('bookingManagement.modelVariant.button.yes'),
+            text: translateContent('bookingManagement.modelVariant.heading.modelChange'),
         });
     };
 
@@ -141,7 +141,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: selectedTreeKey,
         handleSelectTreeClick,
         treeExpandedKeys: [formData?.model],
-        placeholder: preparePlaceholderSelect('Model'),
+        placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
         // loading: !viewOnly ? isProductDataLoading : false,
         treeDisabled: onModelSubmit,
     };
@@ -149,10 +149,10 @@ const AddEditFormMain = (props) => {
         <div className={styles.cardInnerBox}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelDescription')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.model')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
-                    {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
+                    {revisedModelInformation && <div className={styles.modelTooltip}>{addToolTip(revisedModelInformation, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                 </Col>
                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                     <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>

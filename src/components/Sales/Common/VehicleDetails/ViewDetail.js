@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Collapse, Descriptions, Divider } from 'antd';
+import { Row, Col, Collapse, Descriptions, Divider, Typography, Button } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -18,10 +18,15 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
+import { STATUS as MODEL_VARIANT } from 'constants/modelVariant';
+import { ChangeModelVariantMaster } from './ChangeModelVariant';
+import { TbRefresh } from 'react-icons/tb';
 
+const { Text } = Typography;
 const { Panel } = Collapse;
+
 const ViewDetailMain = (props) => {
-    const { typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
+    const { handleOtfSoMappingHistory, typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -38,7 +43,17 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
-                        <Panel header={translateContent('commonModules.label.vehicleDetails.vehicleInformation')} key="1">
+                        <Panel
+                            header={
+                                <Row type="flex" align="middle">
+                                    <Text strong> {translateContent('commonModules.label.vehicleDetails.vehicleInformation')}</Text>
+                                    <Button onClick={handleOtfSoMappingHistory} type="link">
+                                        {translateContent('global.buttons.bookingMappingHistory')}
+                                    </Button>
+                                </Row>
+                            }
+                            key="1"
+                        >
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={24} sm={16} md={16} lg={16} xl={16}>
@@ -58,6 +73,13 @@ const ViewDetailMain = (props) => {
                                 </Col>
                             </Row>
                             <Divider />
+                            {formData?.sapStatusResponseCode !== MODEL_VARIANT?.SUCCESS?.key && (
+                                <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <ChangeModelVariantMaster {...props} />
+                                    </Col>
+                                </Row>
+                            )}
                             <Descriptions {...viewProps}>
                                 {isOTFModule ? (
                                     <>

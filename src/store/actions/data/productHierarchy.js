@@ -305,6 +305,7 @@ productHierarchyDataActions.fetchAttributeNameList = withAuthToken((params) => (
 
     axiosAPICall(apiCallParams);
 });
+
 productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, extraParams } = params;
     setIsLoading(true);
@@ -330,6 +331,47 @@ productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ tok
         method: 'get',
         url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + sExtraParamsString,
         // url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + (extraparams ? '?' + extraparams['0']['key'] + '=' + extraparams['0']['value'] : ''),
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError(LANGUAGE_EN.REQUEST_TIMEOUT),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+productHierarchyDataActions.fetchProductAttribiteDetail = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, data, extraParams, onSuccessAction, onErrorAction } = params;
+    setIsLoading(true);
+
+    const onError = (errorMessage) => {
+        onErrorAction(errorMessage);
+    };
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            onSuccessAction(res?.data);
+        } else {
+            onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
+        }
+    };
+
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + sExtraParamsString,
         token,
         accessToken,
         userId,

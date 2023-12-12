@@ -36,8 +36,8 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, changeModel, setChangeModel, onModelSubmit, setOnModelSubmit } = props;
-    const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, changeModel, setChangeModel, onModelSubmit, setOnModelSubmit } = props;
+    const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -187,6 +187,7 @@ const AddEditFormMain = (props) => {
 
     const handleChangeModel = () => {
         setChangeModel(true);
+        setRevisedModelInformation({ ...toolTipContent });
     };
 
     return (
@@ -194,7 +195,17 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.vehicleInformation')} key="1">
+                        <Panel
+                            header={
+                                <Row type="flex" align="middle">
+                                    <Text strong> {translateContent('commonModules.label.vehicleDetails.vehicleInformation')}</Text>
+                                    <Button onClick={handleOtfSoMappingHistory} type="link">
+                                        {translateContent('global.buttons.bookingMappingHistory')}
+                                    </Button>
+                                </Row>
+                            }
+                            key="1"
+                        >
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
@@ -226,7 +237,6 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                             )}
-
                             <Row gutter={20}>
                                 {isOTFModule && (
                                     <>

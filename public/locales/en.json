@@ -1657,16 +1657,27 @@
             "selectPart": "Select Part"
         },
         "modelVariant": {
+            "heading": {
+                "modelChange": "If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?",
+                "cancelChangeRequest": "Are you sure you want to Cancel change model request?"
+            },
             "label": {
+                "model": "Model",
                 "modelDescription": "Revised Model Description",
-                "modelCode": "Revised Model Code"
+                "modelCode": "Revised Model Code",
+                "confirmation": "Confirmation",
+                "cancelRequest": "Cancel Request"
             },
             "validation": {
                 "model": "Model",
                 "modelCode": "Model Code"
             },
             "placeholder": {
+                "model": "Model",
                 "modelCode": "Model Code"
+            },
+            "button": {
+                "yes": "Yes"
             }
         }
     },
@@ -2642,7 +2653,7 @@
             }
         },
         "label": {
-            "receiptNumber":" Receipt Number",
+            "receiptNumber": " Receipt Number",
             "checklistDetails": {
                 "remarks": "Remarks",
                 "details": "Details"
