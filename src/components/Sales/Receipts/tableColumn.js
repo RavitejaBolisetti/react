@@ -5,10 +5,9 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
-import { CopytoClipboard } from 'utils/CopytoClipboard';
+import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
@@ -16,16 +15,6 @@ export const tableColumn = (handleButtonClick) => {
             title: translateContent('receipts.tableColumn.receiptNo'),
             dataIndex: 'receiptNumber',
             width: '20%',
-            render: (text) => {
-                return (
-                    <p>
-                        {text}
-                        <span>
-                            <CopytoClipboard text={text} />
-                        </span>
-                    </p>
-                );
-            },
         }),
 
         tblPrepareColumns({

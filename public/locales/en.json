@@ -3848,7 +3848,7 @@
             "clientId": "Client Id",
             "parent": "parent",
             "secretId": "Secret Id",
-            "password": "password",
+            "password": "Password",
             "dealerName": "Dealer Name",
             "gstin": "Select GSTIN"
         },

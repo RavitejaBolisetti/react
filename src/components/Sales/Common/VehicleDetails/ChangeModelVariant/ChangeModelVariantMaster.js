@@ -186,7 +186,8 @@ const ChangeModelVariantMasterBase = (props) => {
         }
     };
     return (
-        !viewMode && (
+        !viewMode &&
+        modelStatus === STATUS?.PENDING?.key && (
             <div className={`${styles.cardInsideBox} ${styles.pad10}`}>
                 <Row justify="space-between" className={styles.fullWidth}>
                     <div className={styles.marB10}>
