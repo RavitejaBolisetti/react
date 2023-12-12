@@ -9,7 +9,7 @@ export const ISSUE_STATUS = {
         key: 'I',
     },
     RECEIEVED: {
-        name: 'Cancel',
+        name: 'Recieved',
         key: 'REC',
     },
 
