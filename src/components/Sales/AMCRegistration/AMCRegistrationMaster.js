@@ -46,6 +46,7 @@ import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/de
 import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 const mapStateToProps = (state) => {
     const {
@@ -160,6 +161,9 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
             listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
+
+            downloadFile: supportingDocumentDataActions.downloadFile,
+
             showGlobalNotification,
         },
         dispatch
@@ -176,7 +180,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList, resetLocationData } = props;
     const { modelGroupData, modelFamilyData, productAttributeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchModelFamilyLovList, listFamilyShowLoading } = props;
-    const { fetchProductLovCode, listProductShowLoading, isLoyaltyLoading, isModelLoading, isProductLoading } = props;
+    const { fetchProductLovCode, listProductShowLoading, isLoyaltyLoading, isModelLoading, isProductLoading, downloadFile } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
@@ -389,6 +393,18 @@ export const AMCRegistrationMasterBase = (props) => {
         setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key, pageSize: 10, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleDownloadFile = (key) => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: key,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+    };
 
     useEffect(() => {
         if (userId) {
@@ -818,6 +834,8 @@ export const AMCRegistrationMasterBase = (props) => {
         cancelAMCForm.resetFields();
     };
 
+    console.log('🚀 ~ file: AMCRegistrationMaster.js:838 ~ AMCRegistrationMasterBase ~ selectedOrder:', selectedOrder);
+
     const containerProps = {
         record: selectedOrder,
         form,
@@ -907,6 +925,7 @@ export const AMCRegistrationMasterBase = (props) => {
         isProductLoading,
         fetchDetail,
         listShowLoading,
+        handleDownloadFile,
     };
     const cancelModalProps = {
         isVisible: isRejectModalVisible,

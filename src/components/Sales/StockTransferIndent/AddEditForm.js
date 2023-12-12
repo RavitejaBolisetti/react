@@ -28,8 +28,8 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { formData, toggleButton, productHierarchyData } = props;
     const { addIndentDetailsForm, onFinish, indentLocationList, isLoadingDealerLoc, requestedByDealerList, openAccordian, setOpenAccordian } = props;
-    const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem, defaultDealerLocationCode } = props;
-    const { handleButtonClick, handleChangeLocation } = props;
+    const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem, defaultDealerLocationCode, dealerParentsLovList } = props;
+    const { handleButtonClick, handleChangeLocation, handleDealerParentChange } = props;
 
     const [addVehicleDetailsForm] = Form.useForm();
     const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);
@@ -130,6 +130,15 @@ const AddEditFormMain = (props) => {
                         <Card>
                             <Row gutter={24}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label={translateContent('stockTransferIndent.label.indentToParent')} name="indentToParent" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentToParent'))]}>
+                                        {customSelectBox({
+                                            data: dealerParentsLovList,
+                                            placeholder: preparePlaceholderSelect(''),
+                                            onChange: handleDealerParentChange,
+                                        })}
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('stockTransferIndent.label.indentToLocation')} name="indentToLocation" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentToLocation'))]}>
                                         {customSelectBox({
                                             data: indentLocationList?.filter((i) => {
@@ -152,7 +161,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item name="remarks" label={translateContent('stockTransferIndent.label.remark')}>
-                                        <TextArea maxLength={90} placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.remark'))} showCount data-testid="remark"/>
+                                        <TextArea maxLength={90} placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.remark'))} showCount data-testid="remark" />
                                     </Form.Item>
                                 </Col>
                             </Row>

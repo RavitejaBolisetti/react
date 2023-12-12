@@ -2378,12 +2378,14 @@
                 "grnNo": "GRN No",
                 "issueCharge": "Issue Charge",
                 "netDealerPrice": "Net Dealer Price",
-                "status": "Status"
+                "status": "Status",
+                "indentToParent": "Indent To Parent"
             },
             "validation": {
                 "vin": "vin",
                 "issueCharges": "Issue Charges",
-                "searchVinToContinue": "Search VIN to continue"
+                "searchVinToContinue": "Search VIN to continue",
+                "indentToParent": "Indent To Parent"
             },
             "viewDetails": {
                 "label": {
@@ -2439,6 +2441,8 @@
             "editVehicleDetails": "Edit Vehicle Details",
             "indentStatus": "Indent Status",
             "indentToParent": "Indent To Parent",
+            "indentFromParent": "Indent From Parent",
+
             "indentToLocation": "Indent To Location",
             "remark": "Remark",
             "modelDescription": "Model Description",

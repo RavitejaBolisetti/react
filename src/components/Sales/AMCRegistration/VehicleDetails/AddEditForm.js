@@ -90,6 +90,7 @@ const AddEditForm = (props) => {
                             <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelDescription'))} />
                         </Form.Item>
                         <Form.Item name="modelDescription" hidden />
+                        <Form.Item name="chasisNumber" hidden />
                     </Col>
                 </Row>
                 <VehicleListModal {...customerListProps} />

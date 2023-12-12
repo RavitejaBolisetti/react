@@ -81,7 +81,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded: true,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
         invoiceStatusList: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? Object.values(QUERY_BUTTONS_CONSTANTS) : Object.values(QUERY_BUTTONS_MNM_USER),
@@ -176,7 +175,6 @@ export const RSARegistrationMasterBase = (props) => {
     const [isRSA, setIsRSA] = useState(true);
 
     const dynamicPagination = true;
-    const page = { pageSize: 10, current: 1 };
 
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
@@ -306,21 +304,21 @@ export const RSARegistrationMasterBase = (props) => {
             {
                 key: 'status',
                 title: 'Status',
-                value: filterString?.rsaStatus || rsaStatus,
+                value: filterString?.status ?? loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS?.PENDING?.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key,
                 canRemove: false,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current || page?.current,
+                value: filterString?.current ?? 1,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize || page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
@@ -359,6 +357,11 @@ export const RSARegistrationMasterBase = (props) => {
     }, [filterString, rsaStatus]);
 
     useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         const defaultSection = RSA_LEFTMENU_SECTION.RSA_REGISTRATION_DETAILS.id;
         setDefaultSection(defaultSection);
         setSetionName(RSA_LEFTMENU_SECTION);
@@ -371,11 +374,11 @@ export const RSARegistrationMasterBase = (props) => {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
                 setRSAStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
                 setUserType(AMC_CONSTANTS?.DEALER?.key);
-                setFilterString({ ...filterString, rsaStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key });
+                setFilterString({ ...filterString, status: QUERY_BUTTONS_CONSTANTS.PENDING.key });
             } else {
                 setRSAStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
                 setUserType(AMC_CONSTANTS?.MNM?.key);
-                setFilterString({ ...filterString, rsaStatus: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
+                setFilterString({ ...filterString, status: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
             }
         }
 
@@ -403,6 +406,7 @@ export const RSARegistrationMasterBase = (props) => {
     useEffect(() => {
         if (userId) {
             setShowDataLoading(true);
+
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -659,10 +663,11 @@ export const RSARegistrationMasterBase = (props) => {
         totalRecords,
         setPage: setFilterString,
         page: filterString,
+        filterString,
+
         tableColumn: tableColumn({ handleButtonClick, typeData, userType: loginUserData?.userId, locations }),
         tableData: data,
         showAddButton: true,
-        filterString,
     };
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -882,7 +887,7 @@ export const RSARegistrationMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        showAddButton: userType === AMC_CONSTANTS?.DEALER?.key ? true : false,
+        showAddButton: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? true : false,
         userType,
     };
 

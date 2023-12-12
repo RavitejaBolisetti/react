@@ -36,6 +36,7 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { defaultPageProps } from 'utils/defaultPageProps';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
+import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,6 +57,9 @@ const mapStateToProps = (state) => {
             },
             OTF: {
                 VehicleDetailsLov: { filteredListData: productHierarchyData },
+            },
+            DealerHierarchy: {
+                DealerParent: { filteredListData: dealerParentsLovList },
             },
             Report: {
                 Reports: { data: reportData },
@@ -87,6 +91,7 @@ const mapStateToProps = (state) => {
         indentIssueDataLoaded,
 
         vehicleVinDataLoading,
+        dealerParentsLovList,
 
         reportData,
     };
@@ -122,6 +127,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchReportDetail: reportDataActions.fetchData,
             listReportShowLoading: reportDataActions.listShowLoading,
 
+            fetchDealerParentsLovList: dealerParentDataActions.fetchFilteredList,
+            listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -130,7 +138,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const StockTransferIndentMasterBase = (props) => {
     const { data, DEFAULT_PAGINATION, resetData, isFetchDataLoading, dealerLocations } = props;
-    const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
+    const { userId, typeData, showGlobalNotification, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
     const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
@@ -201,19 +209,12 @@ export const StockTransferIndentMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && parentGroupCode) {
-            const extraParamData = [
-                {
-                    key: 'parentGroupCode',
-                    value: parentGroupCode,
-                },
-            ];
-
+        if (userId) {
             fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
-            fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
+            fetchDealerParentsLovList({ setIsLoading: listDealerParentShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, parentGroupCode]);
+    }, [userId]);
 
     useEffect(() => {
         if (userId && selectedRecord?.indentNumber) {
@@ -450,6 +451,17 @@ export const StockTransferIndentMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const handleDealerParentChange = (parentGroupCode) => {
+        const extraParamData = [
+            {
+                key: 'parentGroupCode',
+                value: parentGroupCode,
+            },
+        ];
+
+        fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
+    };
+
     const handleVinSearch = (vinNumber) => {
         if (!vinNumber) return;
         const extraParams = [
@@ -512,9 +524,10 @@ export const StockTransferIndentMasterBase = (props) => {
         totalRecords: data?.totalRecords,
         setPage: setFilterString,
         isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick, toggleButton),
+        tableColumn: tableColumn({ handleButtonClick, toggleButton, dealerParentsLovList }),
         tableData: data?.paginationData,
         showAddButton: false,
+        scroll: { x: 1800 },
     };
 
     const advanceFilterProps = {
@@ -546,9 +559,13 @@ export const StockTransferIndentMasterBase = (props) => {
         setAdvanceSearchVisible,
         indentLocationList,
         searchList: typeData[PARAM_MASTER?.INDENT.id],
+        dealerParentsLovList,
+        handleDealerParentChange,
     };
 
     const addNewIndentProps = {
+        handleDealerParentChange,
+        dealerParentsLovList,
         toggleButton,
         isVisible: isAddNewIndentVisible,
         titleOverride: translateContent('stockTransferIndent.heading.addIndentDetails'),

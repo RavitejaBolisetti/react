@@ -20,7 +20,7 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, searchList, indentLocationList } = props;
+    const { setAdvanceSearchVisible, searchList, indentLocationList, dealerParentsLovList, handleDealerParentChange } = props;
     const {
         filterString,
         setFilterString,
@@ -76,6 +76,15 @@ export const AdvancedSearchFrom = (props) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.indent} label={translateContent('stockTransferIndent.label.indent')} name="indent">
                         {customSelectBox({ data: indentSaerchList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(placeHold.place) })}
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label={toggleButton === STOCK_TRANSFER?.RAISED.key ? translateContent('stockTransferIndent.label.indentToParent') : translateContent('stockTransferIndent.label.indentFromParent')} name="indentToParent" rules={[validateRequiredSelectField(toggleButton === STOCK_TRANSFER?.RAISED.key ? translateContent('stockTransferIndent.label.indentToParent') : translateContent('stockTransferIndent.label.indentFromParent'))]}>
+                        {customSelectBox({
+                            data: dealerParentsLovList,
+                            placeholder: preparePlaceholderSelect(''),
+                            onChange: handleDealerParentChange,
+                        })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>

@@ -78,6 +78,8 @@ const AddEditFormMain = (props) => {
                                                 </Option>
                                             ))}
                                         </Select>
+                                        <Form.Item name="chasisNumber" hidden />
+
                                         {/* <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true} /> */}
                                     </Form.Item>
                                 </Col>
