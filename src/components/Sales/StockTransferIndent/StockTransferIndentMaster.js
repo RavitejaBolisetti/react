@@ -22,6 +22,7 @@ import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAll
 import { reportDataActions } from 'store/actions/data/report/reports';
 import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL, BASE_URL_VEHICLE_ALLOTMENT as customURLVINSearch } from 'constants/routingApi';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
+import { ISSUE_STATUS } from './constants/IssueStatus'
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -162,7 +163,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
     const [refershIndentData, setRefershIndentData] = useState();
-    // const [recordType, setRecordType] = useState();
+    const [recordType, setRecordType] = useState();
     const [reportDetail, setReportDetail] = useState();
     const defaultDealerLocationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
 
@@ -501,7 +502,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-        // setRecordType(record?.issueStatus);
+        setRecordType(record?.issueStatus);
         setReportVisible(true);
         setAdditionalReportParams([
             {
@@ -511,12 +512,19 @@ export const StockTransferIndentMasterBase = (props) => {
         ]);
     };
 
+    // useEffect(() => {
+    //     if (toggleButton === STOCK_TRANSFER?.RAISED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+    //     else if (toggleButton === STOCK_TRANSFER?.RECEIVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT);
+    //     else setReportDetail(null);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [toggleButton]);
+
     useEffect(() => {
-        if (toggleButton === STOCK_TRANSFER?.RAISED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
-        else if (toggleButton === STOCK_TRANSFER?.RECEIVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT);
+        if (recordType === ISSUE_STATUS?.ISSUED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+        else if (recordType === ISSUE_STATUS?.RECEIEVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT);
         else setReportDetail(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [toggleButton]);
+    }, [recordType]);
 
     const tableProps = {
         dynamicPagination,
