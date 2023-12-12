@@ -20,7 +20,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, employeeData, managerData, typeData, handlePrintDownload, record } = props;
+    const { formData, isLoading, employeeData, managerData, typeData, handlePrintDownload, selectedAMC, handleDownloadFile } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -94,7 +94,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label={translateContent('amcRegistration.label.schemeTaxAmount')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeTaxAmount, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('amcRegistration.label.schemeEndDate')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeEndDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 </Descriptions>
-                                {formData?.amcRegistration?.priceType !== AMC_CONSTANTS?.MNM_FOC?.key && record?.status === AMC_CONSTANTS?.APPROVED?.key && (
+                                {formData?.amcRegistration?.priceType !== AMC_CONSTANTS?.MNM_FOC?.key && selectedAMC?.status === AMC_CONSTANTS?.APPROVED?.key && (
                                     <>
                                         <Card>
                                             <Row>
@@ -105,8 +105,10 @@ const ViewDetailMain = (props) => {
                                                 </Col>
                                                 <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                                     <div className={styles.floatRight}>
-                                                        <Popover content={'Coming Soon'} trigger="hover">
-                                                            <Button danger>{translateContent('global.buttons.print/download')}</Button>
+                                                        <Popover trigger="hover">
+                                                            <Button onClick={() => handleDownloadFile(formData?.amcRegistration?.documentId)} danger>
+                                                                {translateContent('global.buttons.print/download')}
+                                                            </Button>
                                                         </Popover>
                                                     </div>
                                                 </Col>
@@ -139,7 +141,7 @@ const ViewDetailMain = (props) => {
                                                 </Col>
                                                 <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                                     <div className={styles.floatRight}>
-                                                        <Button onClick={() => handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value })} danger>
+                                                        <Button onClick={() => handlePrintDownload({ ...selectedAMC, typeselectedAMC: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value })} danger>
                                                             {translateContent('global.buttons.print/download')}
                                                         </Button>
                                                     </div>

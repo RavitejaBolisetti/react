@@ -40,6 +40,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleReceiptFormButton } from './VehicleReceiptFormButton';
 import { drawerTitle } from 'utils/drawerTitle';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 const mapStateToProps = (state) => {
     const {
@@ -140,6 +141,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchLocationLovList: dealerLocationsDataAction.fetchFilteredList,
             listLocationShowLoading: dealerLocationsDataAction.listShowLoading,
 
+            downloadFile: supportingDocumentDataActions.downloadFile,
+
             showGlobalNotification,
         },
         dispatch
@@ -148,7 +151,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
     const { dealerLocationId, userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { resetLocationData, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
+    const { downloadFile, resetLocationData, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -335,6 +338,19 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+    const handleDownloadFile = (key) => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: key,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+    };
 
     useEffect(() => {
         setFilterString({ ...filterString, pageSize: 10, current: 1 });
@@ -1042,6 +1058,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         amcStatus,
         handleTaxChange,
         selectedCardData,
+        handleDownloadFile
     };
 
     useEffect(() => {
