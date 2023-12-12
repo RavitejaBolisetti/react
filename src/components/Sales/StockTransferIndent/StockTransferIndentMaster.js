@@ -647,6 +647,7 @@ export const StockTransferIndentMasterBase = (props) => {
         handlePrintDownload,
         refershIndentData,
         setRefershIndentData,
+        setReportDetail,
     };
 
     const reportProps = {

@@ -23,7 +23,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const IssueIndentMasterMain = (props) => {
-    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload } = props;
+    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload, setReportDetail } = props;
 
     const defaultVisibility = {
         canCancel: true,
@@ -226,7 +226,7 @@ const IssueIndentMasterMain = (props) => {
                                                             </Text>
                                                         </Space>
                                                         {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
-                                                            <Button danger icon={<FiDownload />} onClick={() => handlePrintDownload(element)}>
+                                                            <Button danger icon={<FiDownload />} onClick={() => {setReportDetail();  handlePrintDownload(element)}}>
                                                                 {BUTTON_NAME_CONSTANTS?.PRINT?.name}
                                                             </Button>
                                                         )}
