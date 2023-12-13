@@ -214,18 +214,18 @@ export const MenuConstant = {
         parentMenuId: 'COMN-11',
     },
 
-    [getMenyKey('SRST-2.2')]: {
-        key: 'SRST-2.2',
+    [getMenyKey('SRST-02.02')]: {
+        key: 'SRST-02.02',
         link: routing.ROUTING_RSA_REGISTRATION,
         icon: undefined,
-        parentMenuId: 'SRST-2',
+        parentMenuId: 'SRST-02',
     },
 
-    [getMenyKey('SRST-3.3')]: {
-        key: 'SRST-3.3',
+    [getMenyKey('SRST-03.03')]: {
+        key: 'SRST-03.03',
         link: routing.ROUTING_AMC_REGISTRATION,
         icon: undefined,
-        parentMenuId: 'SRST-3',
+        parentMenuId: 'SRST-03',
     },
     [getMenyKey('SACT-03.04')]: {
         key: 'SACT-03.04',
@@ -834,11 +834,11 @@ export const MenuConstant = {
         parentMenuId: 'SACT-06.06',
     },
 
-    [getMenyKey('SRST-1.2')]: {
-        key: 'SRST-1.2',
+    [getMenyKey('SRST-01.02')]: {
+        key: 'SRST-01.02',
         link: routing.ROUTING_SHIELD_SCHEME_REGISTER,
         icon: undefined,
-        parentMenuId: 'SRST-1',
+        parentMenuId: 'SRST-01',
     },
 
     [getMenyKey('SACT-06.09')]: {

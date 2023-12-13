@@ -8,9 +8,9 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { convertDateTimedayjs } from 'utils/formatDateTime';
+import { convertDateTimedayjs, dateTimeFormat } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
-
+import dayjs from 'dayjs';
 import styles from 'assets/sass/app.module.scss';
 
 const ChargerInstallatioDetailsMasterBase = (props) => {
@@ -21,7 +21,6 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
 
     const [activeKey, setActiveKey] = useState([]);
     const [addRequestVisible, setAddRequestVisible] = useState(false);
-    
     const onModalFinish = (value) => {
         setAddRequestVisible(false);
         setActiveKey([1]);
@@ -30,7 +29,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
             .then(() => {
                 addRequestData?.length > 0 ? setAddRequestData((prev) => [value, ...prev]) : setAddRequestData([value]);
                 const values = addRequestForm.getFieldsValue();
-                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: values?.visitTimeSlotOne, visitTimeSlotTwo: values?.visitTimeSlotTwo, visitTimeSlotThree: values?.visitTimeSlotThree }] } }));
+                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: dayjs(values?.visitTimeSlotOne).format(dateTimeFormat), visitTimeSlotTwo: dayjs(values?.visitTimeSlotTwo).format(dateTimeFormat), visitTimeSlotThree: dayjs(values?.visitTimeSlotThree).format(dateTimeFormat) }] } }));
                 handleFormValueChange();
             })
             .catch(() => {
