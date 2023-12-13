@@ -356,7 +356,7 @@ const AddEditFormMain = (props) => {
                                         )}
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formatDateToEndOfDayDate(filterString?.validityFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.validityFromDate')} name="validityFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityFromDate'))]} className={styles?.datePicker}>
-                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disablePastDate} className={styles.fullWidth} />
+                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} />
                                             </Form.Item>
                                         </Col>
 
@@ -380,7 +380,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formatDateToEndOfDayDate(formData?.vehicleInvoiceFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.vehicleInvoiceFromDate')} name="vehicleInvoiceFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.vehicleInvoiceFromDate'))]} className={styles?.datePicker}>
-                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disablePastDate} onChange={() => addSchemeForm.setFieldsValue({ toDate: undefined })} />
+                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth}  onChange={() => addSchemeForm.setFieldsValue({ toDate: undefined })} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
