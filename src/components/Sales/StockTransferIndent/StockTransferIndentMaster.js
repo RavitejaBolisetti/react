@@ -147,6 +147,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [advanceFilterForm] = Form.useForm();
     const [addIndentDetailsForm] = Form.useForm();
 
+    const [ change, setChange ] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
     const [isViewIndentVisible, setIsViewIndentVisible] = useState(false);
@@ -503,6 +504,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const handlePrintDownload = (record) => {
         setRecordType(record?.issueStatus);
+        setChange(() => !change);
         setReportVisible(true);
         setAdditionalReportParams([
             {
@@ -521,10 +523,10 @@ export const StockTransferIndentMasterBase = (props) => {
 
     useEffect(() => {
         if (recordType === ISSUE_STATUS?.ISSUED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
-        else if (recordType === ISSUE_STATUS?.RECEIEVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT);
+        else if (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || ISSUE_STATUS?.RECEIEVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT);
         else setReportDetail(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [recordType]);
+    }, [recordType, change]);
 
     const tableProps = {
         dynamicPagination,

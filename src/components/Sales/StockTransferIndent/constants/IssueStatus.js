@@ -12,5 +12,8 @@ export const ISSUE_STATUS = {
         name: 'Recieved',
         key: 'REC',
     },
-
+    PARTIALLY_RECEIEVED: {
+        name: 'Partially Recieved',
+        key: 'PR',
+    },
 };
