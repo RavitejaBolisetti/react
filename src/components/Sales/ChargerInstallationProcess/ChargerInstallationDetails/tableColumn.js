@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
-import { convertDateMonthYear,  convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
+import { convertDateMonthYear, convertDateTime, dateFormatView, timeFormatView, formatTime } from 'utils/formatDateTime';
 import { ChargerStatusTag } from '../ChargerStatusTag';
 import { FiEye } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -29,7 +29,7 @@ export const addRequestColumns = (typeData) => {
                 <div>
                     {convertDateTime(record?.visitTimeSlotOne, dateFormatView)}
                     <br />
-                    {convertDateTime(record?.visitTimeSlotOne, timeFormatView)}
+                    {formatTime(record?.visitTimeSlotOne, timeFormatView)}
                 </div>,
             ],
         }),
@@ -41,7 +41,7 @@ export const addRequestColumns = (typeData) => {
                 <div>
                     {convertDateTime(record?.visitTimeSlotTwo, dateFormatView)}
                     <br />
-                    {convertDateTime(record?.visitTimeSlotTwo, timeFormatView)}
+                    {formatTime(record?.visitTimeSlotTwo, timeFormatView)}
                 </div>,
             ],
         }),
@@ -53,7 +53,7 @@ export const addRequestColumns = (typeData) => {
                 <div>
                     {convertDateTime(record?.visitTimeSlotThree, dateFormatView)}
                     <br />
-                    {convertDateTime(record?.visitTimeSlotThree, timeFormatView)}
+                    {formatTime(record?.visitTimeSlotThree, timeFormatView)}
                 </div>,
             ],
         }),
