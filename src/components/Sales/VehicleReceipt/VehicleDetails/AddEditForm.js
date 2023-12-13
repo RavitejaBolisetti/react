@@ -207,7 +207,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.mfgdate ? dayjs(item?.mfgdate, mmYYYYFormat) : null} label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')} name={[index, 'mfgDate']}>
+                                        <Form.Item initialValue={item?.mfgdate ? dayjs(item?.mfgdate, mmYYYYFormat) : null} label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')} name={[index, 'mfgdate']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>

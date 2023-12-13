@@ -84,7 +84,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             },
         ];
         if (!registrationForm?.getFieldValue('saleType') || !schemeForm?.getFieldValue('schemeDiscount') || !schemeForm?.getFieldValue('schemeCode')) {
-            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
             schemeForm

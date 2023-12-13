@@ -308,7 +308,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const changeObjtoArr = (data) => {
         const FinalArr = [];
         Object?.entries(data)?.map(([key, value]) => {
-            FinalArr.push({ ...value, mfgDate: dayjs(value?.mfgDate, dateFormat)?.format(dateFormat) });
+            FinalArr.push({ ...value, mfgdate: dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) });
 
             return undefined;
         });

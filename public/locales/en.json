@@ -899,7 +899,7 @@
             "moduleTitle": "AMC Registration Details"
         },
         "validation": {
-            "noSchemeVIN": "No Schemes present for this VIN",
+            "noSchemeVIN": "No Schemes present for this AMC Type",
             "noVINFound": "No VIN found for searched Booking Number",
             "noEmployeesFound": "No employees found for searched name",
             "incorrectEmployeeName": "Employee name is not correct",
@@ -2782,7 +2782,7 @@
                 "model": "Model",
                 "modelName": "Model Name",
                 "color": "Color",
-                "seatingCapacity:": "Seating Capacity",
+                "seatingCapacity": "Seating Capacity",
                 "fuel": "Fuel",
                 "variants": "Variants",
                 "modelDescription": "Model Description",

@@ -167,9 +167,6 @@ const VehicleDetailsMasterBase = (props) => {
                 if (checkDuplicate(value?.vehicleRegistrationNumber)) {
                     showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.duplicateVehicle') });
                     return false;
-                } else if (!value?.vehicleRegistrationNumber) {
-                    showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.vehicleRegistrationNoMandatory') });
-                    return false;
                 } else {
                     const newArr = [...contactData, value];
                     setRequestPayload({ ...requestPayload, amcVehicleDetails: newArr || { vin: requestPayload?.amcRegistration?.vin } });
