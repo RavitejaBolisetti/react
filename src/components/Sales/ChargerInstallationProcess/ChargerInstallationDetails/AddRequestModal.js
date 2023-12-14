@@ -52,7 +52,7 @@ export const AddRequestModalForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate1')} name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField('fromDate')]}>
+                    <Form.Item label={translateContent('chargerInstallationDetails.label.preferredDate1')} name="visitTimeSlotOne" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('chargerInstallationDetails.label.preferredDate1'))]}>
                         <DatePicker showTime placeholder={preparePlaceholderSelect('')} format={dateTimeFormat} className={styles.fullWidth} disabledDate={disablePastDate} />
                     </Form.Item>
                 </Col>

@@ -71,28 +71,25 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.vehicleDetails?.modelGroup} label={translateContent('shieldSchemeRegistration.label.modelGroup')} name="modelGroup">
-                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.modelFamily'))} disabled={true}>
+                                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true}>
                                             {ProductHierarchyData?.map((item) => (
-                                                <Option key={'dv' + item.key} value={item.modelGroupCode}>
+                                                <Option key={'dv' + item.modelGroupCode} value={item.modelGroupCode}>
                                                     {item.modelGroupDescription}
                                                 </Option>
                                             ))}
                                         </Select>
-                                        <Form.Item name="chasisNumber" hidden />
-
-                                        {/* <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.modelGroup'))} disabled={true} /> */}
                                     </Form.Item>
+                                    <Form.Item name="chasisNumber" hidden />
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.vehicleDetails?.modelFamily} label={translateContent('shieldSchemeRegistration.label.modelFamily')} name="modelFamily">
                                         <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.modelFamily'))} disabled={true}>
                                             {modelFamilyData?.map((item) => (
-                                                <Option key={'dv' + item.key} value={item.familyCode}>
+                                                <Option key={'dv' + item.familyCode} value={item.familyCode}>
                                                     {item.familyDescription}
                                                 </Option>
                                             ))}
                                         </Select>
-                                        {/* <Input placeholder={preparePlaceholderText('Model Family')} disabled={true} /> */}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

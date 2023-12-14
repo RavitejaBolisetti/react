@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Sales: {
-                RSARegistration: { data, detailData: rsaDetails, filter: filterString },
+                RSARegistration: { isLoading: isRSAloading, data, detailData: rsaDetails, filter: filterString },
             },
             ShieldSchemeRegistration: {
                 ShieldSchemeSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, detailData: detailShieldData = [] },
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
             },
         },
         common: {
-            Header: { data: loginUserData = [], dealerLocationId },
+            Header: { data: loginUserData = [], dealerLocationId, isLoading: isLoginDataLoading = false },
         },
     } = state;
 
@@ -107,9 +107,11 @@ const mapStateToProps = (state) => {
         ProductHierarchyData,
         dealerParentsLovList,
         dealerLocations: dealerLocations.filter((value) => value?.locationId && value?.dealerLocationName),
+        isLoginDataLoading,
 
         locations,
         dealerLocationId,
+        isRSAloading,
     };
     return returnValue;
 };
@@ -157,8 +159,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RSARegistrationMasterBase = (props) => {
-    const { userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
-    const { resetLocationData, downloadFile, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
+    const { isLoginDataLoading, userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
+    const { isRSAloading, resetLocationData, downloadFile, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -304,7 +306,7 @@ export const RSARegistrationMasterBase = (props) => {
             {
                 key: 'status',
                 title: 'Status',
-                value: filterString?.status ?? loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS?.PENDING?.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key,
+                value: filterString?.status,
                 canRemove: false,
                 filter: false,
             },
@@ -354,12 +356,14 @@ export const RSARegistrationMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, rsaStatus]);
+    }, [filterString]);
 
     useEffect(() => {
-        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        if (loginUserData?.userType) {
+            setFilterString({ ...filterString, pageSize: 10, current: 1, status: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS?.PENDING?.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [loginUserData]);
 
     useEffect(() => {
         const defaultSection = RSA_LEFTMENU_SECTION.RSA_REGISTRATION_DETAILS.id;
@@ -397,16 +401,8 @@ export const RSARegistrationMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userType !== AMC_CONSTANTS?.DEALER?.key) {
-            setUserType(AMC_CONSTANTS?.MNM?.key);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (userId) {
+        if (userId && loginUserData?.userType) {
             setShowDataLoading(true);
-
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1048,7 +1044,7 @@ export const RSARegistrationMasterBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable isLoading={isLoginDataLoading || showDataLoading || isRSAloading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <RSAMainConatiner {...containerProps} />
