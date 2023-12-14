@@ -5,23 +5,57 @@
  */
 import React, { Fragment, useState } from 'react';
 import { Row, Col, Button, Space, Divider, Tag, Typography } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import * as IMAGES from 'assets';
+
 import DashboardActionItems from './DashboardActionItems';
+import { DashboardKPIMaster } from './DashboardKPI/DashboardKPIMaster';
+
+import { showGlobalNotification } from 'store/actions/notification';
+
 import { dateTimeDuration } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 
 import styles from './Dashboard.module.scss';
+import { USER_TYPE } from 'constants/userType';
 
 const { Text, Title } = Typography;
 
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        common: {
+            LeftSideBar: { collapsed = false },
+            Header: { data: loginUserData = [] },
+        },
+    } = state;
+
+    return {
+        userId,
+        collapsed,
+        loginUserData,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 const keyHightliteData = [
-    { shortDescription: 'GST Update', longDescription: "GSTR 1 due date is 10th Oct'23", createdDate: '2023-10-14 12:45:00' },
-    { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Oct'23", createdDate: '2023-10-16 17:45:00' },
+    { shortDescription: 'GST Update', longDescription: "GSTR 2 due date is 20th Dec'23", createdDate: '2023-12-14 17:45:00' },
 ];
 
 const DashboardBase = (props) => {
+    const { loginUserData } = props;
     const [highlightsTextIndex, setHighlightsTextIndex] = useState(0);
+    const { userType = undefined } = loginUserData;
 
     const handleButtonClick = (direction) => {
         if (direction === 'next') {
@@ -38,7 +72,6 @@ const DashboardBase = (props) => {
             }
         }
     };
-
     return (
         <div className={styles.dashboardContainer}>
             <Row gutter={20}>
@@ -94,8 +127,9 @@ const DashboardBase = (props) => {
                     </div>
                 </Col>
             </Row>
+            {userType === USER_TYPE?.DEALER?.key && <DashboardKPIMaster styles={styles} />}
         </div>
     );
 };
 
-export const Dashboard = DashboardBase;
+export const Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardBase);

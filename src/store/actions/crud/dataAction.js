@@ -21,9 +21,10 @@ export const dataActions = (params) => {
         isLoading,
     });
 
-    const recieveData = (data) => ({
+    const recieveData = (data, dealerLocationId) => ({
         type: RECEIVE_DATA_ACTION_CONSTANT,
         data,
+        dealerLocationId,
     });
 
     const recieveChangeHistoryData = (data) => ({
@@ -66,7 +67,7 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [], resetOnError = true } = params;
+            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [], resetOnError = true, dealerLocationId = undefined } = params;
             setIsLoading(true);
 
             const onError = (message) => {
@@ -77,7 +78,7 @@ export const dataActions = (params) => {
             const onSuccess = (res) => {
                 if (res?.data) {
                     onSuccessAction && onSuccessAction(res);
-                    dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
+                    dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data, dealerLocationId));
                 } else {
                     resetOnError && dispatch(recieveData([]));
                     // onErrorAction(res?.responseMessage || LANGUAGE_EN.INTERNAL_SERVER_ERROR);
