@@ -234,8 +234,7 @@ export const VehiclePriceMasterBase = (props) => {
             {
                 key: 'modelCode',
                 title: translateContent('vehiclePriceMaster.label.model'),
-                value: filterString?.model,
-                //name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
+                value: FindProductName(productHierarchyData, filterString?.model,'oemModelCode'),
                 name: FindProductName(productHierarchyData, filterString?.model),
                 canRemove: true,
                 filter: true,
