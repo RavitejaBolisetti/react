@@ -136,17 +136,16 @@ export const EMBEDDED_REPORTS = {
         title: 'Delivery Note Document',
         type: 'Document',
     },
-
     FORM_21_DOCUMENT: {
         id: 19,
         key: 'Form21',
         title: 'Form 21 Document',
         type: 'Document',
     },
-    STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT: {
+    STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT: {
         id: 20,
         key: 'Stock_Transfer_Receipt_Note',
-        title: 'Stock Transfer Recieve Note Document',
+        title: 'Stock Transfer Receive Note Document',
         type: 'Document',
     },
     CO_DEALER_INVOICE_REPORT: {
@@ -218,7 +217,7 @@ export const EMBEDDED_REPORTS = {
     Enrolment_Transaction_Report: {
         id: 31,
         key: 'Enrolment_Transaction_Report',
-        title: 'Enrolment Transaction Report ',
+        title: 'Enrollment Transaction Report ',
         type: 'Report',
         slug: 'enrolment_transaction_report',
     },

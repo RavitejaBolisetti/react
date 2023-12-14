@@ -36,6 +36,8 @@ const PaymentFormContainer = (props) => {
 
     const handlePayment = (value) => {
         setPaymentMode(value);
+        paymentForm.resetFields();
+        paymentForm.setFieldsValue({ paymentMode: value });
     };
 
     const RenderPaymentForm = (formInstance) => {

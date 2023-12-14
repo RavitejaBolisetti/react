@@ -70,16 +70,16 @@ const ViewDetailMain = (props) => {
                             <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end" collapsible="icon">
-                        <Panel header={translateContent('bookingManagement.label.amc')} key={'Amc'}>
-                            <Divider />
-                            <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
-                        </Panel>
-                    </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end" collapsible="icon">
                         <Panel header={translateContent('bookingManagement.label.rsa')} key={'Rsa'}>
                             <Divider />
                             <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end" collapsible="icon">
+                        <Panel header={translateContent('bookingManagement.label.amc')} key={'Amc'}>
+                            <Divider />
+                            <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                         </Panel>
                     </Collapse>
                     {/* <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end" collapsible="icon">
