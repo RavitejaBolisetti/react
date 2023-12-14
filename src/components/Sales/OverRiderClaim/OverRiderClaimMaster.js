@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
-    const moduleTitle = 'Employee Empowerment';
+    const moduleTitle = 'Over Riding Commission Claim';
 
     let returnValue = {
         userId,
@@ -398,8 +398,6 @@ const statusFilter = [
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        // title: <span style={{ whiteSpace: 'nowrap', marginRight: '20px' }}>{'Employee Empowerment'}</span>,
-        // title: 'Employee Empowerment',
         title: <QueryButtons currentItem={btnStatus} items={QUERY_BUTTONS_CONSTANTS} onClick={handleQuickFilterBtnClik} />,
         queryBtnData: QUERY_BUTTONS_CONSTANTS,
         data,
@@ -414,8 +412,8 @@ const statusFilter = [
         handleButtonClick,
         // saveButtonName: !isLastSection && 'Save'
         saveButtonName: 'Save',
-        showAddButton: true,
         showRefreshBtn: false,
+        showAddButton: true
     };
 
     const containerProps = {

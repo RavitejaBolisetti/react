@@ -6,11 +6,7 @@
 import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { CopytoClipboard } from 'utils/CopytoClipboard';
-import dayjs from 'dayjs';
-import { addToolTip } from 'utils/customMenuLink';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { dateFormatView } from 'utils/formatDateTime';
+import { CopytoClipboard } from 'utils/CopytoClipboard';    
 
 import styles from 'assets/sass/app.module.scss';
 import { CardSkeleton } from 'components/common/Skeleton';
@@ -35,13 +31,12 @@ const ClaimDetailCard = (props) => {
     const { ProfileData, isProductHierarchyLoading, record, isProfileDataLoading } = props;
     if (isProfileDataLoading || isProductHierarchyLoading) return <CardSkeleton />;
 
-
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        {'Request ID'}
+                        {'Claim No'}
                         <span className={styles.detailCardText}>
                             {'N/A'}
                             <CopytoClipboard text={ProfileData?.checklistNumber} />
@@ -51,20 +46,26 @@ const ClaimDetailCard = (props) => {
                 key={1}
             >
                 <div className={styles.detailCardText}>
-                    {'Request Date'}
+                    {'Claim Date'}
                     <span>{record?.claimDate}</span>
                 </div>
-                <Divider />
-                <div className={styles.detailCardText}>
-                   {'Dealer Name'}
-                    <span>{record?.claimType}</span>
-                </div>
+
                 <Divider />
                 <div className={styles.detailCardText}>
                     {'Status'}
                     <span>{record?.irnStatus}</span>
                 </div>
                 <Divider />
+{/* for mnm user only */}
+                <div className={styles.detailCardText}>
+                    {'Dealer Name'}
+                    <span>{record?.claimType}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    {'Dealer Location'}
+                    <span>{record?.claimType}</span>
+                </div>
             </Panel>
         </Collapse>
     );

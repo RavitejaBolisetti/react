@@ -13,7 +13,6 @@ import styles from 'assets/sass/app.module.scss';
 import { ClaimApprovalRequestMaster } from './ClaimApprovalRequest/ClaimApprovalRequestMaster';
 import { SupportingDocumentMaster } from './SupportingDocument';
 import { EmployeeEmpowermentDetailsMaster } from './EmployeeEmpowermentDetails/EmployeeEmpowermentDetailsMaster';
-import { DeliveryChallanNvrDetailsMaster } from './deliveryChallanNvrDetails';
 import { OVER_RIDER_CLAIM_SECTION } from 'constants/modules/OverRiderClaim/OverRiderClaimSection';
 
 const EmployeeEmpowermentMainContainerMain = (props) => {
@@ -26,9 +25,6 @@ const EmployeeEmpowermentMainContainerMain = (props) => {
         switch (currentSection) {
             case OVER_RIDER_CLAIM_SECTION.CLAIM_DETAILS.id: {
                 return <EmployeeEmpowermentDetailsMaster {...myProps} />;
-            }
-            case OVER_RIDER_CLAIM_SECTION.DELIVERY_CHALLAN_NVR_DETAIL.id: {
-                return <DeliveryChallanNvrDetailsMaster {...myProps} />;
             }
             case OVER_RIDER_CLAIM_SECTION.DOCUMENTS.id: {
                 return <SupportingDocumentMaster {...myProps} />;

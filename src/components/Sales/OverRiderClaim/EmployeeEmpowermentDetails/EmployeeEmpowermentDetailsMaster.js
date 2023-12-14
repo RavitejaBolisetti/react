@@ -92,7 +92,7 @@ const EmployeeEmpowermentDetailsMain = (props) => {
                         </Col>
                     </Row>
                     {
-                        formActionType.viewMode ? <ViewDetail /> : <AddEditForm {...formProps} />
+                        formActionType.viewMode ? <ViewDetail  {...formProps} /> : <AddEditForm {...formProps} />
                     }
                     
                 </Col>

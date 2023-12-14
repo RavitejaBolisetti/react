@@ -9,18 +9,13 @@ export const OVER_RIDER_CLAIM_SECTION = {
         title: 'Claim Details',
         displayOnList: true,
     },
-    DELIVERY_CHALLAN_NVR_DETAIL:{
-        id: 2,
-        title: 'Delivery Note/NVR Details',
-        displayOnList: true,
-    },
     DOCUMENTS: {
-        id: 3,
+        id: 2,
         title: 'Supporting Document',
         displayOnList: true,
     },
     APPROVAL_REQUEST: {
-        id: 4,
+        id: 3,
         title: 'Approval Request',
         displayOnList: true,
     },
