@@ -11,14 +11,15 @@ import { translateContent } from 'utils/translateContent';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 import { CardSkeleton } from 'components/common/Skeleton';
+import { getCodeValue } from 'utils/getCodeValue';
 
 export const AddEditForm = (props) => {
-    const { formData, isReadOnly = true, form } = props;
+    const { formData, isReadOnly = true, form ,stateData,cityData} = props;
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
         if (formData) {
-            form.setFieldsValue({ ...formData, indentDate: convertDateTimedayjs(formData?.indentDate, dateFormatView) });
+            form.setFieldsValue({ ...formData, city: getCodeValue(cityData, formData?.city, 'name', false, 'code'), state: getCodeValue(stateData, formData?.state), indentDate: convertDateTimedayjs(formData?.indentDate, dateFormatView) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);

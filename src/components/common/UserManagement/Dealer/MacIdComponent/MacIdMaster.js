@@ -74,7 +74,7 @@ const MacIdMasterMain = (props) => {
         {
             key: 'userId',
             title: 'userId',
-            value: formData?.employeeCode,
+            value: formData?.userName,
             name: 'userId',
         },
     ];

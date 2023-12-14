@@ -7,8 +7,7 @@ import React from 'react';
 import { Bar } from '@ant-design/plots';
 import { colorCode } from 'constants/modules/colorCode';
 
-export const StatusBar = ({title = '', data}) => {
-
+export const StatusBar = ({ title = '', data }) => {
     const config = {
         appendPadding: 4,
         data,
@@ -23,7 +22,7 @@ export const StatusBar = ({title = '', data}) => {
         seriesField: 'type',
         legend: false,
         height: data?.length <= 8 ? 270 : undefined,
-        autoHeight: data?.length > 8 ? true : false,   
+        autoHeight: data?.length > 8 ? true : false,
         meta: {
             type: {
                 alias: 'sales',

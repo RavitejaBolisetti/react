@@ -494,16 +494,19 @@
             "subTitleAddWidget": "Add Widget",
             "keyHighlights": "Key Highlights",
             "actionItems": "Action Items",
-            "dashboardKpi": "Dashboard KPI",
+            "dashboardKpi": "KPI's",
             "latestNews": "Latest News",
             "birthdayCalendar": "Birthday Calendar",
             "todayBirthday": "Today's Birthday",
-            "upcomingBirthdays": "Upcoming Birthdays"
+            "upcomingBirthdays": "Upcoming Birthdays",
+            "billing": "Billing",
+            "retail": "Retail",
+            "stockInDays": "Stock Aging(in days)"
         },
         "label": {
             "billing": "Billing",
             "retail": "Retail",
-            "stockInDays": "Stock in days"
+            "stockInDays": "Stock Aging(in days)"
         },
         "placeholder": {},
         "validation": {},

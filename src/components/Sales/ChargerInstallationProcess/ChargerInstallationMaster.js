@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchCustomerVehicleList: crmCustomerVehicleDataActions.fetchList,
             listCustomerVehicleShowLoading: crmCustomerVehicleDataActions.listShowLoading,
+            resetCustomerVehicleData: crmCustomerVehicleDataActions.reset,
 
             fetchList: chargerInstallationDataActions.fetchList,
             fetchChargerDetails: chargerInstallationDataActions.fetchDetail,
@@ -90,7 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ChargerInstallationMasterBase = (props) => {
     const { data, userId, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
+    const { resetCustomerVehicleData, filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
     const [requestPayload, setRequestPayload] = useState({ chargerInstDetails: {}, chargerInstAddressDetails: {} });
@@ -416,6 +417,7 @@ export const ChargerInstallationMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
+            resetCustomerVehicleData();
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -536,7 +538,7 @@ export const ChargerInstallationMasterBase = (props) => {
         onChargerInstallationFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,

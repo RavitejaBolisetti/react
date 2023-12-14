@@ -121,6 +121,7 @@ const IssueIndentMasterMain = (props) => {
         const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.oemInvoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
 
         const onSuccess = (res) => {
+            console.log(`res`, res);
             issueForm.resetFields();
             setIssueModal(false);
             resetVinDetails();

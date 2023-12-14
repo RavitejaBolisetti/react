@@ -20,7 +20,7 @@ export const FindprodctCode = (node, prodctCode, key) => {
     return foundduplicate;
 };
 
-export const FindProductName = (node, prodctCode, key) => {
+export const FindProductName = (node, prodctCode, key='prodctShrtName') => {
     let prodctNm = undefined;
     function datas(node, prodctCode, key) {
         if (prodctNm) return;
@@ -29,7 +29,7 @@ export const FindProductName = (node, prodctCode, key) => {
                 break;
             }
             if (node[i]?.prodctCode === prodctCode) {
-                prodctNm = node[i]?.prodctShrtName;
+                prodctNm = node[i]?.[key];
                 break;
             }
             if (node[i]?.subProdct && node[i]?.subProdct.length) {

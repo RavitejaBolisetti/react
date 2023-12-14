@@ -1,0 +1,77 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useEffect } from 'react';
+import { Card } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { PieChart } from './PieChart';
+import { showGlobalNotification } from 'store/actions/notification';
+import { stockDataActions } from 'store/actions/data/dashboard/stocks';
+
+import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
+
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        common: {
+            Header: { dealerLocationId },
+            LeftSideBar: { collapsed = false },
+        },
+        data: {
+            Dashboard: {
+                Stock: { data, isLoaded, isLoading, dealerLocationId: dataDealerLoactionId },
+            },
+        },
+    } = state;
+
+    return {
+        userId,
+        dealerLocationId,
+        collapsed,
+
+        isLoaded: isLoaded && dealerLocationId === dataDealerLoactionId,
+        isLoading,
+        stockData: data?.records || [],
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchStockList: stockDataActions.fetchList,
+            stockListShowLoading: stockDataActions.listShowLoading,
+
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+
+const StockMasterBase = (props) => {
+    const { dealerLocationId, userId, fetchStockList, stockListShowLoading, isLoaded, stockData } = props;
+
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
+    };
+
+    useEffect(() => {
+        if (userId && !isLoaded) {
+            fetchStockList({ setIsLoading: stockListShowLoading, userId, onErrorAction, dealerLocationId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isLoaded, dealerLocationId]);
+
+    return (
+        <Card title={translateContent('dashboard.heading.stockInDays')}>
+            <PieChart data={stockData} />
+        </Card>
+    );
+};
+
+export const StockMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(StockMasterBase));

@@ -50,7 +50,7 @@ const BranchMapping = (props) => {
                 {
                     key: 'employeeCode',
                     title: 'employeeCode',
-                    value: formData?.employeeCode,
+                    value: formData?.userName,
                     name: 'employeeCode',
                 },
             ];
