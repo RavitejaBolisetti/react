@@ -144,6 +144,9 @@ export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration')
 export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
 
 // UI-Screens
+
+
+//Corporate Scheme
 export const ROUTING_DEALER_CORPORATE_CLAIM = ROUTING_SALES.concat('dealer-corporate-claim');
 export const ROUTING_CORPORATE_MASTER = ROUTING_SALES.concat('corporate-master');
 export const ROUTING_CORPORATE_SCHEME_REGISTRATION = ROUTING_SALES.concat('corporate-scheme-registration');
@@ -152,7 +155,17 @@ export const ROUTING_CORPORATE_ADDITIONALDISCOUNT_REGISTRATION = ROUTING_SALES.c
 export const ROUTING_DEALER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('customer-empowerment');
 export const ROUTING_CUSTOMER_EMPOWERMENT_REQUEST = ROUTING_SALES.concat('employee-empowerment');
 
+//CSD CPC Claim
 export const ROUTING_CSD_CPC_CLAIM = ROUTING_SALES.concat('csd-cpc-claim');
 export const ROUTING_ADDITIONAL_CDC_CPC_CLAIM = ROUTING_SALES.concat('addional-csd-cpc-claim');
 export const ROUTING_OVER_RIDER_CLAIM = ROUTING_SALES.concat('over-rider-claim');
+
+//Exchange loyalty Scheme & Registration
+export const ROUTING_EXCHANGE_LOYALTY_CAPPING_MASTER = ROUTING_SALES.concat('exchange-loyalty-capping-master');
+export const ROUTING_EXCHANGE_LOYALTY_DOCUMENT_MASTER = ROUTING_SALES.concat('exchange-loyalty-document-master');
+export const ROUTING_EXCHANGE_LOYALTY_SCHEME_MASTER = ROUTING_SALES.concat('exchange-loyalty-scheme-master');
+export const ROUTING_EXCHANGE_LOYALTY_INCENTIVE_MASTER = ROUTING_SALES.concat('exchange-loyalty-incentive-master');
+export const ROUTING_EXCHANGE_LOYALTY_RECLAIM_REQUEST = ROUTING_SALES.concat('exchange-loyalty-incentive-master');
+export const ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('exchange-loyalty-claim-generation');
+
 //

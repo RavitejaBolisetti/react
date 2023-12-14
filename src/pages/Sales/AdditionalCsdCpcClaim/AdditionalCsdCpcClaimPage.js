@@ -6,9 +6,9 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { AdditionalCsdCpcClaimMaster } from 'components/Sales/AdditionalCsdCpcClaim';
+import AdditionalCsdCpcClaimMaster from 'components/Sales/AdditionalCsdCpcClaim';
 
-const AdditionalCsdCpcClaimBase = (props) => {
+const AdditionalCsdCpcClaimBase = () => {
     const pageTitle = 'Additional CSD/CPC Incentive Scheme Registration';
     const pageHeaderData = {
         pageTitle,
