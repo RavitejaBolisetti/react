@@ -25,17 +25,22 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.partySegment')}>{checkAndSetDefaultValue(getCodeValue(partySegmentType, formData?.partySegment, isLoading))}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.partyId')}>{checkAndSetDefaultValue(formData?.partyId, isLoading)}</Descriptions.Item>
-                </Descriptions>
-                <Divider />
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.partyName')}>{checkAndSetDefaultValue(formData?.customerName || formData?.partyName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.address')}>{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.city')}>{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.state')}>{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.phone')}>{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('receipts.label.partyDetails.mitraType')}>{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.claimType')}>{checkAndSetDefaultValue(getCodeValue(partySegmentType, formData?.partySegment, isLoading))}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.invoiceID')}>{checkAndSetDefaultValue(formData?.partyId, isLoading)}</Descriptions.Item>
+             
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.invoiceDate')}>{checkAndSetDefaultValue(formData?.customerName || formData?.partyName, isLoading)}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.chassisNo')}>{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.segment')}>{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.modelDescription')}>{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.vDNID')}>{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.vDNDate')}>{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.customerName')}>{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('claimEmpowerment.label.empowerDetails.reasonforDelay')}>{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
+
+
                 </Descriptions>
             </Card>
         </div>

@@ -37,7 +37,8 @@ import AMCRegistrationMasterPage from './AMCRegistration';
 import RsmAsmApprovalPage from './RsmAsmApproval';
 import RSARegistrationPage from './RSARegistration';
 import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
-import AdditonalClaimPage from './ClaimEmpowerment';
+import ClaimEmpowermentPage from './ClaimEmpowerment';
+import LoyaltyDocumentMasterPage from './LoyaltyDocument';
 
 export {
     OTFMasterPage,
@@ -70,5 +71,6 @@ export {
     AMCRegistrationMasterPage,
     RSARegistrationPage,
     CoDealerInvoiceGenerationPage,
-    AdditonalClaimPage
+    ClaimEmpowermentPage,
+    LoyaltyDocumentMasterPage
 };

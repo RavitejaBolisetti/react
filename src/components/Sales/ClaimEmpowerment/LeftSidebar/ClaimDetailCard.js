@@ -38,12 +38,14 @@ const VehicleReceiptDetailCard = (props) => {
                 header={
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            {translateContent('receipts.heading.profileCard.receiptNumber')}
+                            {translateContent('claimEmpowerment.heading.profileCard.requestId')}
                             <span className={styles.verticallyCentered}>
                                 {receiptDetailData?.receiptsDetails?.receiptNumber}
                                 <span>
                                     <CopytoClipboard text={receiptDetailData?.receiptsDetails?.receiptNumber} />
                                 </span>
+
+                               
                                 {/* <a className={`${styles.verticallyCentered} ${styles.marL5}`}>
                                     <FiCopy className={styles.activeForm} />
                                 </a> */}
@@ -55,7 +57,10 @@ const VehicleReceiptDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                {translateContent('receipts.heading.profileCard.receiptDate')} <span>{checkAndSetDefaultValue(receiptDetailData?.receiptsDetails?.receiptDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                {translateContent('claimEmpowerment.heading.profileCard.requestDate')} <span>{checkAndSetDefaultValue(receiptDetailData?.receiptsDetails?.receiptDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                </div>
+                <div className={styles.detailCardText}>
+                {translateContent('claimEmpowerment.heading.profileCard.status')} <span>{checkAndSetDefaultValue(receiptDetailData?.receiptsDetails?.receiptDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
                 <Divider />
                 {/* <div className={styles.detailCardText}>

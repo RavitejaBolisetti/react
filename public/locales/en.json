@@ -94,7 +94,7 @@
         },
 
         "advanceFilter": {
-            "title": "Advance Filters",
+            "title": "Advance Filter",
             "appliedAdvanceFilter": "Applied Advance Filters :"
         },
         "toolTip": {
@@ -172,7 +172,7 @@
             "unAllot": "Un-Allot",
             "invoice": "Invoice",
             "deliveryNote": " Delivery Note",
-            "advancedFilter": "Advance Filters",
+            "advancedFilter": "Advance Filter",
             "viewHistory": "View History",
             "uploadFile": "Upload File",
             "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order",
@@ -612,7 +612,7 @@
         "heading": {
             "title": "Role Name",
             "pageTitle": "Dealer Role Master",
-            "titleOverride": "Advance Filters"
+            "titleOverride": "Advance Filter"
         },
 
         "tableColHeading": {
@@ -1464,7 +1464,7 @@
         "heading": {
             "mainTitle": "Designation Master",
             "drawerTitle": "Designation",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "title": "Designation Name "
         },
         "label": {
@@ -1667,7 +1667,7 @@
     "chargerInstallationProcess": {
         "heading": {
             "title": "Charger Installation",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "mainTitle": "Charger Installation",
             "chargerDetailsTitle": "Charger Installation Details",
             "addressDetailsTitle": "Installation Address Details",
@@ -1950,7 +1950,7 @@
         "heading": {
             "mainTitle": "RSM/ASM Approval",
             "title": "RSM Approval Summary",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters :"
         },
         "label": {
@@ -2024,7 +2024,7 @@
     },
     "state": {
         "title": {
-            "advanceFilters": "Advance Filters"
+            "advanceFilters": "Advance Filter"
         },
         "heading": {
             "moduleTitle": "State",
@@ -2087,7 +2087,7 @@
             "state": "State",
             "district": "District",
             "keyword": "keyword",
-            "advanceFilters": "Advance Filters",
+            "advanceFilters": "Advance Filter",
             "cityName": "City Name",
             "cityCode": "City Code",
             "districtName": "District Name",
@@ -2123,7 +2123,7 @@
             "country": "Country",
             "state": "State",
             "district": "District",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "districtName": "District Name",
             "districtCode": "District Code",
             "stateName": "State Name"
@@ -2321,7 +2321,7 @@
             "pageTitle": "HO Price Upload Mapping for Dealer",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "dealerList": "Dealer List",
             "modelDetails": "Model Details",
             "advancedFilter": "Advanced Filter",
@@ -2394,7 +2394,7 @@
             "pageTitle": "Vehicle Inventory Management",
             "title": "HO Price Upload Mapping for Dealer",
             "drawerTitleHeading": "HO Price Upload Mapping",
-            "titleOverride": "Advance Filters",
+            "titleOverride": "Advance Filter",
             "dealerList": "Dealer List",
             "modelDetails": "Model Details",
             "vehicleDetails": "Vehicle Details",
@@ -2700,7 +2700,7 @@
             "pricingCity": "Pricing City",
             "endDate": "End Date",
             "downloadHere": "Download Here",
-            "advanceFilters": "Advance Filters",
+            "advanceFilters": "Advance Filter",
             "uploadVehicle": "Upload Vehicle Price Master Form",
             "uploadButtonName": "Upload Price Master",
             "messageText": "Click or drop your file here to upload",
@@ -2964,12 +2964,16 @@
             "customerName": "Customer Name",
             "invoiceStatus": "Invoice status",
             "segment": "Segment",
-            "requested Amount": "Requested Amount",
-            "model Description": "Model Description",
+            "requestedAmount": "Requested Amount",
+            "modelDescription": "Model Description",
             "vDNID": "VDN ID",
             "vDNDate": "VDN Date",
             "reasonforDelay": "Reason for Delay",
-            "documentUpload": "Document Upload"
+            "documentUpload": "Document Upload",
+            "zone":"Zone",           
+            "areaOffice":"Area Office",  
+            "dealerName":"Dealer Name",
+            "locationName":"Location Name"  
         },
         "label": {
             "empowerDetails": {
@@ -2984,17 +2988,23 @@
                 "customerName": "Customer Name",
                 "invoiceStatus": "Invoice status",
                 "segment": "Segment",
-                "requested Amount": "Requested Amount",
-                "model Description": "Model Description",
+                "requestedAmount": "Requested Amount",
+                "modelDescription": "Model Description",
                 "vDNID": "VDN ID",
                 "vDNDate": "VDN Date",
                 "reasonforDelay": "Reason for Delay",
-                "documentUpload": "Document Upload"
+                "documentUpload": "Document Upload",
+                "zone":"Zone",           
+                "areaOffice":"Area Office",  
+                "dealerName":"Dealer Name",
+                "locationName":"Location Name",
+                "fromDate": "Claim From Date",
+                "toDate":"Claim To Date"  
             }
         },
         "heading": {
             "mainTitle": "Empowerment Request",
-            "drawerTitleMain": "Empowerment Request",
+            "drawerTitleMain": "Claim Empowerment Request",
             "cancellationTitle": "Receipt Cancellation",
             "sections": {
                 "section1": "Empower Request Details",
@@ -3006,10 +3016,33 @@
                 "apportionDetails": "Apportion Details"
             },
             "profileCard": {
-                "receiptNumber": "Receipt No.:",
-                "receiptDate": "Receipt Date: ",
-                "status": "Status: "
+                "requestId": "Request ID:",
+                "requestDate": "Request Date:",
+                "status": " Request Status: "
             }
+            
+        }
+    },
+
+    "LoyaltyDocumentMaster": {
+        "heading": {
+            "pageTitle": "Exchange/Loyalty Document Master",
+            "title": "Exchange/Loyalty Document"
+        },
+        "label": {
+            "documentId": "Document ID",
+            "documentName": "Document Name",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "placeholder": {
+            "documentId": "Document ID",
+            "documentName": "Document Name"
+        },
+        "validation": {
+            "documentId": "Document ID",
+            "document Name": "Document Name"
         }
     },
 

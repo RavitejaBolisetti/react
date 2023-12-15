@@ -9,7 +9,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { ClaimEmpowermentButtonForm } from './ClaimEmpowermentFormButton';
+// import { ClaimEmpowermentButtonForm } from './ClaimEmpowermentFormButton';
 //import { ReceiptTypeForm } from './ReceiptInformation/ReceiptTypeForm';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
 import { translateContent } from 'utils/translateContent';

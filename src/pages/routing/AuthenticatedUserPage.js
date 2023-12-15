@@ -77,7 +77,8 @@ import {
     AMCRegistrationMasterPage,
     RSARegistrationPage,
     CoDealerInvoiceGenerationPage,
-    AdditonalClaimPage,
+    LoyaltyDocumentMasterPage,
+    ClaimEmpowermentPage
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -94,8 +95,6 @@ import { DealerCompanyPage } from 'pages/common/Dealer';
 import { VehicleSalesSchemeMasterPage } from 'pages/Sales/VehicleSalesSchemeMaster/VehicleSalesSchemeMasterPage';
 import { UnAuthozisedAccess } from 'components/UnAuthozisedAccess';
 import { withSpinner } from 'components/withSpinner';
-import ClaimEmpowermentPage from 'pages/Sales/ClaimEmpowerment';
-// import ClaimEmpowermentPage from 'pages/Sales/ClaimEmpowerment';
 
 const mapStateToProps = (state) => {
     const {
@@ -253,6 +252,8 @@ const AuthenticatedUserPageMain = (props) => {
 
                 <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
                 <Route path={routing.CLAIM_EMPOWERMENT} element={<ClaimEmpowermentPage />} exact />
+                <Route path={routing.LOYALTY_DOCUMENT} element={<LoyaltyDocumentMasterPage />} exact />
+               
                 <Route path={routing.ROUTING_EVR_DETAILS_CAPTURING} element={<EvrDetailsCapturingMasterPage />} exact />
                 <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
 

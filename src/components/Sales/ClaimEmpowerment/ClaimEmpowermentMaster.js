@@ -17,15 +17,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { CLAIMEMPOWERMENT_SECTION } from 'constants/ClaimEmpowerSection';
-import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
-import { showGlobalNotification } from 'store/actions/notification';
-import { receiptDataActions } from 'store/actions/data/receipt/receipt';
-import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
-import { cancelReceiptDataActions } from 'store/actions/data/receipt/cancelReceipt';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -41,7 +34,7 @@ import { drawerTitle } from 'utils/drawerTitle';
 //             },
 //         },
 //     } = state;
-//     const moduleTitle = translateContent('receipts.heading.drawerTitleMain');
+// const moduleTitle = translateContent('receipts.heading.drawerTitleMain');
 //     const page = { pageSize: 10, current: 1 };
 
 //     let returnValue = {
@@ -53,7 +46,7 @@ import { drawerTitle } from 'utils/drawerTitle';
 //         documentType: typeData[PARAM_MASTER.RECPT_DOC_TYPE.id],
 //         data: data?.paginationData,
 //         totalRecords: data?.totalRecords || [],
-//         receiptStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
+//         claimStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
 //         receiptDetailData,
 //         isLoading,
 //         moduleTitle,
@@ -84,15 +77,15 @@ import { drawerTitle } from 'utils/drawerTitle';
 //         },
 //         dispatch
 //     ),
-// });
 
 export const ClaimEmpowermentMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, resetPartyDetailData, data, receiptDetailData, resetData, cancelReceipt } = props;
-    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification, page } = props;
-    const { receiptStatusList } = props;
+    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, totalRecords, showGlobalNotification, page } = props;
+    const { claimStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [receiptStatus, setReceiptStatus] = useState(QUERY_BUTTONS_CONSTANTS.TAGA.key);
+    const [claimStatus, setClaimStatus] = useState(QUERY_BUTTONS_CONSTANTS.TAGA.key);
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
+    const moduleTitle = translateContent('claimEmpowerment.heading.drawerTitleMain');
 
     const [listFilterForm] = Form.useForm();
     const [cancelReceiptForm] = Form.useForm();
@@ -200,9 +193,9 @@ export const ClaimEmpowermentMasterBase = (props) => {
     //             filter: true,
     //         },
     //         {
-    //             key: 'receiptStatus',
+    //             key: 'claimStatus',
     //             title: 'Receipt Status',
-    //             value: receiptStatus,
+    //             value: claimStatus,
     //             canRemove: false,
     //             filter: false,
     //         },
@@ -238,7 +231,7 @@ export const ClaimEmpowermentMasterBase = (props) => {
     //         },
     //     ];
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [searchValue, receiptStatus, filterString, page]);
+    // }, [searchValue, claimStatus, filterString, page]);
 
     // useEffect(() => {
     //     return () => {
@@ -254,7 +247,7 @@ export const ClaimEmpowermentMasterBase = (props) => {
     //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     //     }
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, receiptStatus, filterString]);
+    // }, [userId, claimStatus, filterString]);
 
     // useEffect(() => {
     //     if (userId && selectedOrderId) {
@@ -292,7 +285,7 @@ export const ClaimEmpowermentMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleReceiptTypeChange = (buttonName) => {
-        setReceiptStatus(buttonName?.key);
+        setClaimStatus(buttonName?.key);
         setFilterString({ current: 1 });
         searchForm.resetFields();
     };
@@ -308,10 +301,13 @@ export const ClaimEmpowermentMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+        console.log('buttonAction>>>>>>>>>>>>>>', buttonAction);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 partyDetailForm.resetFields();
+                setSelectedOrder(record);
+                record && setSelectedOrderId(record?.id);
                 setApportionList([]);
                 break;
             case EDIT_ACTION:
@@ -342,15 +338,17 @@ export const ClaimEmpowermentMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            if (buttonAction === EDIT_ACTION) {
-                setButtonData({ ...buttonData, nextBtn: true, editBtn: false, saveBtn: true });
-            } else {
-                const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
-                setButtonData(Visibility);
-                if (buttonAction === VIEW_ACTION) {
-                    receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
-                }
-            }
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn:buttonAction !== VIEW_ACTION  }));
+
+            // if (buttonAction === EDIT_ACTION) {
+            // setButtonData({ ...buttonData, nextBtn: true, closeBtn: true, editBtn: false, saveBtn: !formActionType?.viewMode ||  buttonAction !== VIEW_ACTION });
+            // } else {
+            //     const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
+            //     setButtonData(Visibility);
+            //     if (buttonAction === VIEW_ACTION) {
+            //         claimStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : claimStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
+            //     }
+            // }
         }
         setIsFormVisible(true);
     };
@@ -372,44 +370,39 @@ export const ClaimEmpowermentMasterBase = (props) => {
     };
 
     const onFinish = (receiptData) => {
-        const data = { ...requestPayload, apportionDetails: receiptData.hasOwnProperty('receiptType') ? [] : apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
-
-        const onSuccess = (res) => {
-            form.resetFields();
-            setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage + translateContent('receipts.heading.profileCard.receiptNumber') + res?.data?.receiptsDetails?.receiptNumber });
-            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
-            onCloseAction();
-        };
-
-        const sectionKey = {
-            emprequestDetails: CLAIMEMPOWERMENT_SECTION.EMPREQUEST_DETAILS.id,
-            uploadDetails: CLAIMEMPOWERMENT_SECTION.UPLOAD_DETAILS.id,
-        };
-
-        const onError = (message, errorData, errorSection) => {
-            showGlobalNotification({ message });
-            if (errorSection) {
-                errorSection && setCurrentSection(sectionKey?.[errorSection]);
-            }
-        };
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            errorData: true,
-            onSuccess,
-        };
-
-        saveData(requestData);
+        // const data = { ...requestPayload, apportionDetails: receiptData.hasOwnProperty('receiptType') ? [] : apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
+        // const onSuccess = (res) => {
+        //     form.resetFields();
+        //     setShowDataLoading(true);
+        // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage + translateContent('claimEmpowerment.heading.profileCard.requestId') + res?.data?.receiptsDetails?.receiptNumber });
+        // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+        //     setButtonData({ ...buttonData, formBtnActive: false });
+        //     setIsFormVisible(false);
+        //     onCloseAction();
+        // };
+        // const sectionKey = {
+        //     emprequestDetails: CLAIMEMPOWERMENT_SECTION.EMPREQUEST_DETAILS.id,
+        //     uploadDetails: CLAIMEMPOWERMENT_SECTION.UPLOAD_DETAILS.id,
+        // };
+        // const onError = (message, errorData, errorSection) => {
+        //     showGlobalNotification({ message });
+        //     if (errorSection) {
+        //         errorSection && setCurrentSection(sectionKey?.[errorSection]);
+        //     }
+        // };
+        // const requestData = {
+        //     data: data,
+        //     method: 'post',
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     errorData: true,
+        //     onSuccess,
+        // };
+        // saveData(requestData);
     };
     const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+        // setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onCloseAction = () => {
@@ -435,9 +428,9 @@ export const ClaimEmpowermentMasterBase = (props) => {
     };
 
     const staticData = [
-        { requestId: '14000002', requestDate: '7/8/22', claimType: 'Loyalty Claim', dealerName: 'Dev Kumar Jain', dealerBranch: 'Nerul', requeststatus: 'Pending' },
+        { requestId: '14000001', requestDate: '7/8/22', claimType: 'Loyalty Claim', dealerName: 'Dev Kumar Jain', dealerBranch: 'Nerul', requeststatus: 'Pending' },
         { requestId: '14000002', requestDate: '8/2/22', claimType: 'Corporate Claim', dealerName: 'Praveen Patil', dealerBranch: 'Warli(E)', requeststatus: 'Pending' },
-        { requestId: '14000002', requestDate: '9/1/21', claimType: 'Exchange Claim', dealerName: 'Ashish Verma', dealerBranch: 'Andheri', requeststatus: 'Pending' },
+        { requestId: '14000003', requestDate: '9/1/21', claimType: 'Exchange Claim', dealerName: 'Ashish Verma', dealerBranch: 'Andheri', requeststatus: 'Pending' },
     ];
 
     const tableProps = {
@@ -445,7 +438,7 @@ export const ClaimEmpowermentMasterBase = (props) => {
         totalRecords,
         page: filterString,
         setPage: setFilterString,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn({ handleButtonClick, claimStatus }),
         tableData: staticData,
         showAddButton: false,
         typeData,
@@ -492,7 +485,7 @@ export const ClaimEmpowermentMasterBase = (props) => {
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
+            // setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
             setCancelReceiptVisible(false);
         };
@@ -518,8 +511,8 @@ export const ClaimEmpowermentMasterBase = (props) => {
     const advanceFilterResultProps = {
         // extraParams,
         removeFilter,
-        receiptStatus,
-        receiptStatusList,
+        claimStatus,
+        claimStatusList,
         advanceFilter: true,
         otfFilter: true,
         filterString,
@@ -538,16 +531,17 @@ export const ClaimEmpowermentMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        optionType: [
-            {
-                key: 1,
-                value: 'Claim Empowerment',
-            },
-            {
-                key: 2,
-                value: 'Customer Empowerment',
-            },
-        ],
+        singleField: true,
+        // optionType: [
+        //     {
+        //         key: 1,
+        //         value: 'Claim Empowerment',
+        //     },
+        //     {
+        //         key: 2,
+        //         value: 'Customer Empowerment',
+        //     },
+        // ],
     };
 
     const advanceFilterProps = {
@@ -562,7 +556,7 @@ export const ClaimEmpowermentMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        receiptStatusList,
+        claimStatusList,
         typeData,
         searchForm,
     };
@@ -590,7 +584,7 @@ export const ClaimEmpowermentMasterBase = (props) => {
         setRequestPayload,
         receipt,
         setReceipt,
-        receiptStatus,
+        claimStatus,
         totalReceivedAmount,
         setTotalReceivedAmount,
 
@@ -655,5 +649,4 @@ export const ClaimEmpowermentMasterBase = (props) => {
         </>
     );
 };
-//export const ClaimEmpowermentMaster = connect()(ClaimEmpowermentBase);
 export const ClaimEmpowermentMaster = ClaimEmpowermentMasterBase;

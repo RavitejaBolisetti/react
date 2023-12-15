@@ -5,11 +5,11 @@
  */
 import React from 'react';
 import MenuNav from './MenuNav';
-import ReceiptDetailCard from './ReceiptDetailCard';
+import ClaimDetailCard from '././ClaimDetailCard';
 const LeftSidebar = (props) => {
     return (
         <>
-            <ReceiptDetailCard {...props} />
+            <ClaimDetailCard {...props} />
             <MenuNav {...props} />
         </>
     );

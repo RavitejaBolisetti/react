@@ -144,3 +144,4 @@ export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('
 export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');
 export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
 export const CLAIM_EMPOWERMENT = ROUTING_SALES.concat('claim-empowerment');
+export const LOYALTY_DOCUMENT = ROUTING_SALES.concat('loyalty-document');

@@ -9,7 +9,6 @@ import { Form, Row, Col } from 'antd';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { PartySegment } from 'components/Sales/Receipts/utils/partySegment';
-import { ClaimEmpowermentFormButton} from '../ClaimEmpowermentDetails/ClaimEmpowermentFormButton';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -21,6 +20,7 @@ import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { ClaimEmpowermentFormButton } from '../ClaimEmpowermentFormButton';
 
 const mapStateToProps = (state) => {
     const {
@@ -76,13 +76,13 @@ const EmpowerDetailMasterBase = (props) => {
 
     const handleChange = (e) => {
         setPartyId(e.target.value);
-        setButtonData({ ...buttonData, formBtnActive: false });
+        // setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const handleSearch = () => {
         if (partySegment && partyId) {
             const onSuccessAction = (res) => {
-                setButtonData({ ...buttonData, formBtnActive: true });
+                // setButtonData({ ...buttonData, formBtnActive: true });
             };
             if (partySegment === PartySegment.CUSTOMER.key) {
                 const extraParams = [
@@ -114,7 +114,7 @@ const EmpowerDetailMasterBase = (props) => {
         const partyDetails = { ...values, id: '' };
         setRequestPayload({ ...requestPayload, partyDetails: partyDetails });
         handleButtonClick({ buttonAction: NEXT_ACTION });
-        setButtonData({ ...buttonData, formBtnActive: false });
+        // setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const formProps = {
@@ -126,7 +126,6 @@ const EmpowerDetailMasterBase = (props) => {
         handleChange,
         handleSearch,
         formActionType,
-
         userId,
         isDataLoaded,
         formData: 

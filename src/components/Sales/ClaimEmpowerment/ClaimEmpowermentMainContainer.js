@@ -13,9 +13,10 @@ import { withDrawer } from 'components/withDrawer';
 import { LeftSidebar } from './LeftSidebar';
 import styles from 'assets/sass/app.module.scss';
 // import { CLAIMEMPOWERMENT_SECTION } from 'constants/ClaimEmpowerSection';
-import { ClaimEmpowermentDetailMaster } from './ClaimEmpowermentDetails';
 import { EmpowerDetailMaster } from './EmpowerDetails/EmpowerDetailMaster';
 import { CLAIMEMPOWERMENT_SECTION } from 'constants/ClaimEmpowerSection';
+import { SupportingDocumentMaster } from './SupportingDocument';
+import { ClaimApprovalRequestMaster } from './ApprovalDetails';
 
 const ClaimEmpowermentMainContainerMain = (props) => {
     const { currentSection } = props;
@@ -30,7 +31,10 @@ const ClaimEmpowermentMainContainerMain = (props) => {
                 return <EmpowerDetailMaster {...myProps} />;
             }
             case CLAIMEMPOWERMENT_SECTION.UPLOAD_DETAILS.id: {
-                return <ClaimEmpowermentDetailMaster {...myProps} />;
+                return <SupportingDocumentMaster {...myProps} />;
+            }
+            case CLAIMEMPOWERMENT_SECTION.APPROVAL_DETAILS.id: {
+                return <ClaimApprovalRequestMaster {...myProps} />;
             }
             default: {
                 return <EmpowerDetailMaster {...myProps} />;

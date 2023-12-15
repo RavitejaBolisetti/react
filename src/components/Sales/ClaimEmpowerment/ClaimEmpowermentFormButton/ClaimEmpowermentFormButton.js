@@ -9,6 +9,8 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+
+
 export const ClaimEmpowermentFormButton = ({ formActionType, record, onCloseAction, onCancelReceipt, handlePrintDownload, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
@@ -52,8 +54,8 @@ export const ClaimEmpowermentFormButton = ({ formActionType, record, onCloseActi
                         </Button>
                     )}
 
-                    {buttonData?.saveBtn && (!formActionType?.editMode || isLastSection || formActionType?.addMode) && (
-                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    {buttonData?.saveBtn && (!formActionType?.viewMode || isLastSection || formActionType?.addMode) && (
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} htmlType="submit" type="primary">
                             {saveButtonName}
                         </Button>
                     )}

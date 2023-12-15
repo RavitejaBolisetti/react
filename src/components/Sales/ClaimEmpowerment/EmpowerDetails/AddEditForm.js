@@ -4,104 +4,124 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, Card, Divider, Select } from 'antd';
+import { Row, Col, Input, Form, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
-import { validateRequiredSelectField } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
-const { Search } = Input;
-const { Option } = Select;
+import { customSelectBox } from 'utils/customSelectBox';
+
+const claimTypetData = [
+    { key: 1, value: 'Corporate Claim' },
+    { key: 2, value: 'Exchange Claim' },
+    { key: 3, value: 'Loyalty Claim' },
+    { key: 4, value: 'All' },
+];
+
+const reasonData = [
+    { key: 1, value: 'Forgot to punch/Manpower issue' },
+    { key: 2, value: 'Kit was not available for generating VDN' },
+    { key: 3, value: 'Loyalty ClaimNegligence in claim generations' },
+        { key: 3, value: 'Required Docs missing' },
+        { key: 4, value: 'Others' },
+];
+
 
 const AddEditFormMain = (props) => {
-    const { formData, buttonData, setButtonData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
+    const { buttonData, setButtonData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType, selectedOrder } = props;
     const { isLoading } = props;
+
+    console.log('selectedOrder', selectedOrder);
+
     useEffect(() => {
         partyDetailForm.setFieldsValue({
-            ...formData,
+            ...selectedOrder,
         });
         partyDetailForm.setFieldsValue({
-            partyName: formData?.partyName ?? formData?.customerName,
-            address: formData?.address,
-            city: formData?.city,
-            state: formData?.state,
-            mobileNumber: formData?.mobileNumber,
-            mitraType: formData?.mitraType,
+            partyName: selectedOrder?.partyName ?? selectedOrder?.customerName,
+            address: selectedOrder?.address,
+            city: selectedOrder?.city,
+            state: selectedOrder?.state,
+            mobileNumber: selectedOrder?.mobileNumber,
+            mitraType: selectedOrder?.mitraType,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [selectedOrder]);
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-    };
-
-    const handleCustomer = (value) => {
-        setPartySegment(value);
-        setButtonData({ ...buttonData, formBtnActive: false });
-    };
 
     return (
         <Card>
-            <Row gutter={16}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.requestId} label={translateContent('claimEmpowerment.label.empowerDetails.requestId')} name="requestId" rules={[validateRequiredSelectField(translateContent('claimEmpowerment.label.empowerDetails.requestId'))]}>
-                        <Select {...selectProps} placeholder={preparePlaceholderSelect(translateContent('claimEmpowerment.placeholder.requestId'))} onChange={handleCustomer} disabled={!formActionType?.addMode}>
-                            {partySegmentType?.map((item) => (
-                                <Option key={'dv' + item.key} value={item.key}>
-                                    {item.value}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.requestDate} label={translateContent('claimEmpowerment.label.empowerDetails.requestDate')} name="requestDate" rules={[validateRequiredSelectField(translateContent('claimEmpowerment.label.empowerDetails.requestDate'))]}>
-                        {formActionType?.addMode ? <Search allowClear onChange={handleChange} onSearch={handleSearch} placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.requestDate'))} disabled={!formActionType?.addMode} /> : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.requestDate'))} disabled={true} />}
-                    </Form.Item>
-                </Col>
-            </Row>
-            {formData && (
-                <>
-                    <Divider />
-                    <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.requestStatus} label={translateContent('claimEmpowerment.label.empowerDetails.requestStatus')} name="requestStatus">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.requestStatus'))} disabled={true} />}
-                            </Form.Item>
+
+                <Row gutter={20}>
+               
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.claimType} label={translateContent('claimEmpowerment.label.empowerDetails.claimType')} name="claimType">
+                          {customSelectBox({ disabled: formActionType?.viewMode, disableOptionsKey: 'claimType', data: claimTypetData, fieldNames: { value: 'value', key: 'key' }, placeholder: preparePlaceholderSelect(translateContent('claimEmpowerment.label.empowerDetails.claimType')) })}                       
+                        </Form.Item>  
+                    </Col>
+
+                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.invoiceID} label={translateContent('claimEmpowerment.label.empowerDetails.invoiceID')} name="invoiceID">
+                            {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.invoiceID'))}/>}
+                        </Form.Item>
                         </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.address} label={translateContent('receipts.label.partyDetails.address')}name="address">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.address'))} disabled={true} />}
-                            </Form.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.city} label={translateContent('receipts.label.partyDetails.city')} name="city">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.city'))} disabled={true} />}
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.state} label={translateContent('receipts.label.partyDetails.state')} name="state">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.state'))} disabled={true} />}
-                            </Form.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mobileNumber} label={translateContent('receipts.label.partyDetails.phone')} name="mobileNumber">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.phone'))} disabled={true} />}
-                            </Form.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mitraType} label={translateContent('receipts.label.partyDetails.mitraType')} name="mitraType">
-                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.mitraType'))} disabled={true} />}
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </>
-            )}
+
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.invoiceDate} label={translateContent('claimEmpowerment.label.empowerDetails.invoiceDate')} name="invoiceDate">
+                            {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.invoiceDate'))} disabled={true} />}
+                        </Form.Item>
+                    </Col>   
+                </Row>
+
+                <Row gutter={20}> 
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.chassisNo} label={translateContent('claimEmpowerment.label.empowerDetails.chassisNo')} name="chassisNo">
+                            {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.chassisNo'))} disabled={true} />}
+                        </Form.Item>
+                    </Col>  
+
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.segment} label={translateContent('claimEmpowerment.label.empowerDetails.segment')} name="segment">
+                        {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.segment'))} disabled={true} />}
+                        
+                       
+                           
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.modelDescription} label={translateContent('claimEmpowerment.label.empowerDetails.modelDescription')} name="modelDescription">
+                            {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.modelDescription'))} disabled={true} />}
+                        </Form.Item>
+                    </Col>                   
+                </Row>
+                 <Row gutter={20}>                 
+                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                 <Form.Item initialValue={selectedOrder?.vDNID} label={translateContent('claimEmpowerment.label.empowerDetails.vDNID')} name="vDNID">
+                 {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.vDNID'))} disabled={true} />}
+                </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.vDNDate} label={translateContent('claimEmpowerment.label.empowerDetails.vDNDate')} name="vDNDate">
+                            {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.vDNDate'))} disabled={true} />}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={selectedOrder?.customerName} label={translateContent('claimEmpowerment.label.empowerDetails.customerName')} name="customerName">
+                            {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('claimEmpowerment.placeholder.customerName'))} disabled={true} />}
+                        </Form.Item>
+                    </Col>
+
+                </Row>
+
+                <Row gutter={20}>
+                  
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} >
+                        <Form.Item initialValue={selectedOrder?.reasonforDelay} label={translateContent('claimEmpowerment.label.empowerDetails.reasonforDelay')} name="reasonforDelay">
+                          {customSelectBox({ disabled: formActionType?.viewMode, disableOptionsKey: 'reasonforDelay', data: reasonData, fieldNames: { value: 'value', key: 'key' }, placeholder: preparePlaceholderSelect(translateContent('claimEmpowerment.label.empowerDetails.reasonforDelay')) })}
+                            </Form.Item>                                            
+                    </Col>                 
+                </Row>
+           
         </Card>
     );
 };

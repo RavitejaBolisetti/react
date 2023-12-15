@@ -20,17 +20,17 @@ import { preparePlaceholderSearch } from 'utils/preparePlaceholder';
 const { Search } = Input;
 
 export default function ClaimEmpowermentFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, handleReceiptTypeChange, filterString, setAdvanceSearchVisible, handleButtonClick, handleSearch, receiptStatus, handleChange, searchForm } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, handleReceiptTypeChange, filterString, setAdvanceSearchVisible, handleButtonClick, handleSearch, claimStatus, handleChange, searchForm } = props;
     const { title, otfFilter } = props;
 
-    const receiptStatusList = Object.values(QUERY_BUTTONS_CONSTANTS);
+    const claimStatusList = Object.values(QUERY_BUTTONS_CONSTANTS);
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                     <Row gutter={20}>
                         <Col xs={24} sm={22} md={22} lg={22} xl={22} className={styles.verticallyCentered}>
-                            <QueryButtons currentItem={receiptStatus} items={receiptStatusList} onClick={handleReceiptTypeChange} />
+                            <QueryButtons currentItem={claimStatus} items={claimStatusList} onClick={handleReceiptTypeChange} />
                             <div className={styles.masterListSearchForm}>
                                 {/* <Form autoComplete="off" layout="vertical" form={searchForm}>
                                     <Form.Item label="" name={translateContent('global.label.search')}>
@@ -39,7 +39,7 @@ export default function ClaimEmpowermentFilter(props) {
                                 </Form> */}
 
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
-                                    <Form.Item label={!receiptStatusList?.length ? title : '' }>
+                                    <Form.Item label={!claimStatusList?.length ? title : '' }>
                                         <Row gutter={20}>
                                             {otfFilter && (
                                                 <Col xs={24} sm={24} md={20} lg={20} xl={20}>

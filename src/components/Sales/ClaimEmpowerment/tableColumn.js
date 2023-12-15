@@ -9,11 +9,13 @@ import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 
-export const tableColumn = (handleButtonClick) => {
+export const tableColumn = ({ handleButtonClick, claimStatus }) => {
+    const isPending = claimStatus === QUERY_BUTTONS_CONSTANTS.TAGA.key
     const tableColumn = [
         tblPrepareColumns({
-            title:  translateContent('claimEmpowerment.tableColumn.requestId'),
+            title: translateContent('claimEmpowerment.tableColumn.requestId'),
             dataIndex: 'requestId',
             width: '14%',
             // render: (text) => {
@@ -36,8 +38,13 @@ export const tableColumn = (handleButtonClick) => {
         }),
 
         tblPrepareColumns({
+            title: translateContent('claimEmpowerment.tableColumn.requeststatus'),
+            dataIndex: 'requeststatus',
+            width: '14%',
+        }),
+        tblPrepareColumns({
             title: translateContent('claimEmpowerment.tableColumn.claimType'),
-           dataIndex: 'claimType',
+            dataIndex: 'claimType',
             width: '14%',
         }),
 
@@ -51,15 +58,11 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'dealerBranch',
             width: '20%',
         }),
-        tblPrepareColumns({
-            title: translateContent('claimEmpowerment.tableColumn.requeststatus'),
-            dataIndex: 'requeststatus',
-            width: '32%',
-        }),
+      
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%' }),
+        tblActionColumn({ handleButtonClick, styles, width: '16%', canEdit: isPending, canView: true}),
+        // tblActionColumn({ handleButtonClick, styles, width: '8%',   }),
     ];
 
     return tableColumn;
 };
-

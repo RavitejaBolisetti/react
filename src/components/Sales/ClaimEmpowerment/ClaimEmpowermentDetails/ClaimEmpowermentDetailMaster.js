@@ -16,7 +16,7 @@ import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 
 import { ViewDetail } from './ViewDetail';
 
-import { ClaimEmpowermentFormButton } from './ClaimEmpowermentFormButton';
+import { ClaimEmpowermentFormButton } from '../ClaimEmpowermentFormButton';
 import styles from 'assets/sass/app.module.scss';
 
 import PaymentAddEdit from './PaymentAddEdit';
@@ -164,7 +164,7 @@ const ClaimEmpowermentDetailMasterBase = (props) => {
                 setIsListEditing(false);
                 setEditingListData({});
                 paymentForm.resetFields();
-                setButtonData({ ...buttonData, formBtnActive: true });
+                // setButtonData({ ...buttonData, formBtnActive: true });
                 setTotalReceivedAmount(parseFloat(totalReceivedAmount) + parseFloat(value.receivedAmount));
             })
             .catch((err) => {
@@ -195,7 +195,7 @@ const ClaimEmpowermentDetailMasterBase = (props) => {
                     setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
                     handleButtonClick({ buttonAction: NEXT_ACTION });
                 }
-                setButtonData({ ...buttonData, formBtnActive: false });
+                // setButtonData({ ...buttonData, formBtnActive: false });
             })
             .catch((err) => console.error(err));
     };
