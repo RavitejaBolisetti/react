@@ -54,29 +54,29 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const RetailMasterBase = (props) => {
-    // const { dealerLocationId, userId, fetchRetailList, retailListShowLoading, isLoaded, retailData } = props;
+    const { dealerLocationId, userId, fetchRetailList, retailListShowLoading, isLoaded, retailData } = props;
 
-    // const onErrorAction = (message) => {
-    //     showGlobalNotification(message);
-    // };
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
+    };
 
-    // useEffect(() => {
-    //     if (userId && !isLoaded) {
-    //         fetchRetailList({ setIsLoading: retailListShowLoading, userId, onErrorAction, dealerLocationId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, isLoaded, dealerLocationId]);
+    useEffect(() => {
+        if (userId && !isLoaded) {
+            fetchRetailList({ setIsLoading: retailListShowLoading, userId, onErrorAction, dealerLocationId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isLoaded, dealerLocationId]);
 
-    const retailData = [
-        { type: 'Scorpio', sales: 30 },
-        { type: 'XUV700', sales: 90 },
-        { type: 'Thar', sales: 70 },
-        { type: 'XUV300', sales: 30 },
-        { type: 'Marazzo', sales: 5 },
-        { type: 'Bolero Neo', sales: 75 },
-        { type: 'Bolero', sales: 75 },
-        { type: 'Scarpio Classic', sales: 113 },
-    ];
+    // const retailData = [
+    //     { type: 'Scorpio', sales: 30 },
+    //     { type: 'XUV700', sales: 90 },
+    //     { type: 'Thar', sales: 70 },
+    //     { type: 'XUV300', sales: 30 },
+    //     { type: 'Marazzo', sales: 5 },
+    //     { type: 'Bolero Neo', sales: 75 },
+    //     { type: 'Bolero', sales: 75 },
+    //     { type: 'Scarpio Classic', sales: 113 },
+    // ];
 
     return (
         <Card title={translateContent('dashboard.heading.retail')}>

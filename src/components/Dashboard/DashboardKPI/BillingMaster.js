@@ -54,29 +54,29 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const BillingMasterBase = (props) => {
-    // const { dealerLocationId, userId, isLoaded, billingData, fetchBillingList, billingListShowLoading, showGlobalNotification } = props;
+    const { dealerLocationId, userId, isLoaded, billingData, fetchBillingList, billingListShowLoading, showGlobalNotification } = props;
 
-    // const onErrorAction = (message) => {
-    //     showGlobalNotification(message);
-    // };
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
+    };
 
-    // useEffect(() => {
-    //     if (userId && !isLoaded) {
-    //         fetchBillingList({ setIsLoading: billingListShowLoading, userId, onErrorAction, dealerLocationId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, isLoaded, dealerLocationId]);
+    useEffect(() => {
+        if (userId && !isLoaded) {
+            fetchBillingList({ setIsLoading: billingListShowLoading, userId, onErrorAction, dealerLocationId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isLoaded, dealerLocationId]);
 
-    const billingData = [
-        { type: 'Scorpio', sales: 60 },
-        { type: 'XUV700', sales: 120 },
-        { type: 'Thar', sales: 80 },
-        { type: 'XUV300', sales: 50 },
-        { type: 'Marazzo', sales: 10 },
-        { type: 'Bolero Neo', sales: 75 },
-        { type: 'Bolero', sales: 120 },
-        { type: 'Scarpio Classic', sales: 50 },
-    ];
+    // const billingData = [
+    //     { type: 'Scorpio', sales: 60 },
+    //     { type: 'XUV700', sales: 120 },
+    //     { type: 'Thar', sales: 80 },
+    //     { type: 'XUV300', sales: 50 },
+    //     { type: 'Marazzo', sales: 10 },
+    //     { type: 'Bolero Neo', sales: 75 },
+    //     { type: 'Bolero', sales: 120 },
+    //     { type: 'Scarpio Classic', sales: 50 },
+    // ];
 
     return (
         <Card title={translateContent('dashboard.heading.billing')}>
