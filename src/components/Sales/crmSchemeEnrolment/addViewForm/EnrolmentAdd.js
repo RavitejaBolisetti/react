@@ -26,7 +26,7 @@ const EnrolmentAdd = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label={translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber')} name="vin" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'))]}>
+                    <Form.Item label={translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber')} name="registrationNumber" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'))]}>
                         <Search placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'), false)} allowClear onSearch={onHandleRegistrationNumber} loading={isSearchLoading} />
                     </Form.Item>
                 </Col>
