@@ -517,4 +517,8 @@ export const PARAM_MASTER = {
         id: 'BATTERY_MAKE',
         title: 'Product Details Battery Make',
     },
+    OTF_SO_MAPPING_UNMAPPING_SER: {
+        id: 'OTF_SO_MAPPING_UNMAPPING_SER',
+        title: 'Otf so Mapping and unmapping Search',
+    },
 };

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { tableColumnUnMapping } from './tableColumnUnmapping';
 import { connect } from 'react-redux';
 
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const UnmappingAndCancellationMain = (props) => {
-    const { userId, dynamicPagination = true, listShowLoading, showGlobalNotification, otfSomappingData, selectedKey, MappingUnmapping, saveData, isOtfSoMappingLoading } = props;
+    const { userId, dynamicPagination = true, listShowLoading, showGlobalNotification, otfSomappingData, selectedKey, MappingUnmapping, saveData, isOtfSoMappingLoading, advanceFilterString, setadvanceFilterString } = props;
     const [form] = Form.useForm();
 
     const pageIntialState = {
@@ -87,6 +87,10 @@ const UnmappingAndCancellationMain = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [buttonType, setButtonType] = useState(BUTTON_NAME?.UNMAP?.key);
     const [formData, setFormData] = useState('');
+
+    useEffect(() => {
+        MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key, advanceFilterString);
+    }, [advanceFilterString]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         record && setFormData({ ...record, buttonAction });

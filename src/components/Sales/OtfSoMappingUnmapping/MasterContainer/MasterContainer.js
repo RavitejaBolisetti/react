@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { memo } from 'react';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS as SectionConstant } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 import { SoFormMaster } from './SoForms';
 import { MappingMaster } from './MappingAndUnmapping';
@@ -13,7 +13,7 @@ import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const MasterContainer = (props) => {
+export const MasterContainer = memo((props) => {
     const { selectedKey } = props;
 
     switch (selectedKey) {
@@ -36,4 +36,4 @@ export const MasterContainer = (props) => {
         default:
             return <SoFormMaster {...props} />;
     }
-};
+});

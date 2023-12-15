@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { tableColumnMapping } from './tableColumnMapping';
 import { SearchtableColumnMapping } from './searchtableColumn';
 import { connect } from 'react-redux';
@@ -75,13 +75,17 @@ const mapDispatchToProps = (dispatch) => ({
 const MappingMasterMain = (props) => {
     const { dynamicPagination, showGlobalNotification, moduleTitle, page, setPage, selectedKey } = props;
     const { userId, listShowLoading, fetchList, OtfNumberSearchLoading } = props;
-    const { otfSomappingData, isOtfSoMappingLoading, OtfNumberSearchData, resetData, saveData, MappingUnmapping } = props;
+    const { otfSomappingData, isOtfSoMappingLoading, OtfNumberSearchData, resetData, saveData, MappingUnmapping, advanceFilterString, setadvanceFilterString } = props;
     const [form] = Form.useForm();
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState('');
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    useEffect(() => {
+        MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING?.key, advanceFilterString);
+    }, [advanceFilterString]);
 
     const handleButtonClick = ({ record = null }) => {
         record && setFormData(record);
