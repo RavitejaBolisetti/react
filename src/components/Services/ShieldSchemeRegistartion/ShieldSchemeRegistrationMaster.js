@@ -339,7 +339,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
     const handleDownloadFile = (key) => {
         const extraParams = [
             {
@@ -624,6 +623,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleVinSearch = (value) => {
         const onSuccessAction = (res) => {
             setVehicleCustomeDetailsOnly(res?.data);
+            shieldDetailForm.setFieldsValue({
+                registrationInformation: {
+                    availableFund: res?.data?.registrationDetails?.registrationInformation?.availableFund,
+                },
+            });
         };
         setVinNumber(value);
         resetSchemeDetail();
@@ -1058,7 +1062,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         amcStatus,
         handleTaxChange,
         selectedCardData,
-        handleDownloadFile
+        handleDownloadFile,
     };
 
     useEffect(() => {
