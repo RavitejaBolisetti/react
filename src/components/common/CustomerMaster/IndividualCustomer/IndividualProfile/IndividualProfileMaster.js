@@ -310,6 +310,8 @@ const IndividualProfileBase = (props) => {
         handleOnClick,
         isLoading,
         downloadFileFromButton,
+        setSubApplication,
+        subApplication,
     };
 
     return (
