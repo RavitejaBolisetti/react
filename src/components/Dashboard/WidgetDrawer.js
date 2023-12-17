@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { withDrawer } from 'components/withDrawer';
+import { withDrawer } from 'components/withDrawer'; 
 import { Row, Col, Collapse, Space, Typography, Form } from 'antd';
 import LeftPanel from 'components/common/LeftPanel';
 import styles from 'assets/sass/app.module.scss';

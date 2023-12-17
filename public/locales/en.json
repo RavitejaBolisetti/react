@@ -506,7 +506,8 @@
         "label": {
             "billing": "Billing",
             "retail": "Retail",
-            "stockInDays": "Stock Aging(in days)"
+            "stockInDays": "Stock Aging(in days)",
+            "noDataFound":"No data found"
         },
         "placeholder": {},
         "validation": {},

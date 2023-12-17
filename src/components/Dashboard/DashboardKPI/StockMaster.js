@@ -15,6 +15,8 @@ import { stockDataActions } from 'store/actions/data/dashboard/stocks';
 import { translateContent } from 'utils/translateContent';
 import { withSpinner } from 'components/withSpinner';
 
+import styles from './DashboardKPI.module.scss';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -85,11 +87,8 @@ const StockMasterBase = (props) => {
     //         value: 27,
     //     },
     // ];
-    return (
-        <Card title={translateContent('dashboard.heading.stockInDays')}>
-            <PieChart data={stockData} />
-        </Card>
-    );
+
+    return <Card title={translateContent('dashboard.heading.stockInDays')}>{isLoaded && (stockData?.length > 0 ? <PieChart data={stockData} /> : <div className={styles.cardAlignCenter}>{translateContent('dashboard.label.noDataFound')}</div>)}</Card>;
 };
 
 export const StockMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(StockMasterBase));

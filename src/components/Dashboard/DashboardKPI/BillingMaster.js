@@ -16,6 +16,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
 import { withSpinner } from 'components/withSpinner';
 
+import styles from './DashboardKPI.module.scss';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -36,7 +38,7 @@ const mapStateToProps = (state) => {
         dataDealerLoactionId,
         collapsed,
         isLoaded: isLoaded && dealerLocationId === dataDealerLoactionId,
-        isLoading: isLoading,
+        isLoading,
         billingData: data?.records || [],
     };
 };
@@ -78,11 +80,7 @@ const BillingMasterBase = (props) => {
     //     { type: 'Scarpio Classic', sales: 50 },
     // ];
 
-    return (
-        <Card title={translateContent('dashboard.heading.billing')}>
-            <StatusBar data={billingData} />
-        </Card>
-    );
+    return <Card title={translateContent('dashboard.heading.billing')}>{isLoaded && (billingData?.length > 0 ? <StatusBar data={billingData} /> : <div className={styles.cardAlignCenter}>{translateContent('dashboard.label.noDataFound')}</div>)}</Card>;
 };
 
 export const BillingMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(BillingMasterBase));

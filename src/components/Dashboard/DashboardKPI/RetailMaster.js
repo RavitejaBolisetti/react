@@ -15,6 +15,7 @@ import { retailDataActions } from 'store/actions/data/dashboard/retail';
 import { translateContent } from 'utils/translateContent';
 import { withSpinner } from 'components/withSpinner';
 
+import styles from './DashboardKPI.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -78,11 +79,7 @@ const RetailMasterBase = (props) => {
     //     { type: 'Scarpio Classic', sales: 113 },
     // ];
 
-    return (
-        <Card title={translateContent('dashboard.heading.retail')}>
-            <StatusBar data={retailData} />
-        </Card>
-    );
+    return <Card title={translateContent('dashboard.heading.retail')}>{isLoaded && (retailData?.length > 0 ? <StatusBar data={retailData} /> : <div className={styles.cardAlignCenter}>{translateContent('dashboard.label.noDataFound')}</div>)}</Card>;
 };
 
 export const RetailMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(RetailMasterBase));
