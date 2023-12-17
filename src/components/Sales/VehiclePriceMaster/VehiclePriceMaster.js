@@ -138,7 +138,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehiclePriceMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification } = props;
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData, productHierarchyDataList, fetchModelList } = props;
     const { dealerLocationId, resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading, userType } = props;
     const [form] = Form.useForm();
