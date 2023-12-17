@@ -44,6 +44,8 @@ import styles from 'assets/sass/app.module.scss';
 
 import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
+import { zoneMasterDataAction } from 'store/actions/data/zoneMaster';
+import { areaOfficeDataAction } from 'store/actions/data/areaOfficeLov';
 
 const { Search } = Input;
 
@@ -63,6 +65,9 @@ const mapStateToProps = (state) => {
             ManufacturerAdmin: {
                 ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, isLoading: ManufacturerAdminHierarchyLoading, data: manufacturerAdminHierarchyData = [] },
             },
+            ZoneMaster: { isLoaded: isZoneMasterDataLoaded = false, isLoading: isZoneMasterLoading, data: zoneMasterData = [] },
+            AreaOffice: { isLoaded: isAreaOfficeDataLoaded = false, isLoading: isAreaOfficeLoading, data: areaOfficeData = [] },
+            DealerBlockMaster: { isLoaded: isDealerDataLoaded = false, isLoading: dealerBlockLoading, data: dealerBlockData = [] },
 
             ProductHierarchy: { isLoaded: isProductDataLoaded = false, data: productHierarchyData = [], organizationId = '' },
         },
@@ -116,6 +121,17 @@ const mapStateToProps = (state) => {
         isOtfBlockDataLoading,
 
         otfBlockMasterData,
+        isZoneMasterDataLoaded,
+        isZoneMasterLoading,
+        zoneMasterData,
+
+        isAreaOfficeDataLoaded,
+        isAreaOfficeLoading,
+        areaOfficeData,
+
+        isDealerDataLoaded,
+        dealerBlockLoading,
+        dealerBlockData,
     };
 
     return returnValue;
@@ -152,6 +168,12 @@ const mapDispatchToProps = (dispatch) => ({
 
             listOTFBlockShowLoading: otfBlockMasterDataAction.listShowLoading,
 
+            fetchZoneMasterList: zoneMasterDataAction.fetchList,
+            listZoneMasterShowLoading: zoneMasterDataAction.listShowLoading,
+
+            fetchAreaOfficeList: areaOfficeDataAction.fetchList,
+            listAreaOfficeListShowLoading: areaOfficeDataAction.listShowLoading,
+
             showGlobalNotification,
         },
 
@@ -160,9 +182,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfBlockMasterMain = (props) => {
-    const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading } = props;
+    const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading, dealerBlockData } = props;
 
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
+
+    const { fetchZoneMasterList, fetchAreaOfficeList, listAreaOfficeListShowLoading, listZoneMasterShowLoading, zoneMasterData, areaOfficeData } = props;
 
     const { detailData, userId, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
@@ -197,6 +221,9 @@ export const OtfBlockMasterMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [searchValue, setSearchValue] = useState('');
+
+    const [zone, setZone] = useState();
+    const [area, setArea] = useState();
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: false, siblingBtn: false, enable: false };
 
@@ -265,6 +292,7 @@ export const OtfBlockMasterMain = (props) => {
     useEffect(() => {
         if (organizationId && userId) {
             fetchProductDataList({ setIsLoading: listProductLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: organizationId }] });
+            fetchZoneMasterList({ setIsLoading: listZoneMasterShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -378,6 +406,20 @@ export const OtfBlockMasterMain = (props) => {
         }
     };
 
+    const handleZoneChange = (value) => {
+        const extraParams = [
+            {
+                key: 'zone',
+                value: value,
+            },
+        ];
+        fetchAreaOfficeList({ setIsLoading: listAreaOfficeListShowLoading, userId, extraParams });
+        setZone(value);
+        if (zone) {
+            form.setFieldsValue({ area: null });
+        }
+    };
+
     const handleSelectTreeClick = (value) => {
         form.setFieldsValue({ hierarchyMstId: value });
 
@@ -417,7 +459,7 @@ export const OtfBlockMasterMain = (props) => {
     const onFinish = (values) => {
         const recordId = formData?.id || '';
 
-        const data = { ...values, id: recordId, modelGroupCode: selectedProductCode, hierarchyMstId: formData?.id ? selectedTreeSelectKey[0] : selectedTreeSelectKey };
+        const data = { ...values, id: recordId, modelGroupCode: selectedProductCode };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -570,6 +612,12 @@ export const OtfBlockMasterMain = (props) => {
         setOptions,
 
         options,
+        areaOfficeData,
+        zoneMasterData,
+        handleZoneChange,
+        zone,
+        area,
+        setArea,
     };
 
     const viewProps = {
@@ -606,6 +654,9 @@ export const OtfBlockMasterMain = (props) => {
         isLoading: ManufacturerAdminHierarchyDetailLoading,
 
         forceUpdate,
+        areaOfficeData,
+        zoneMasterData,
+        dealerBlockData,
     };
 
     const leftCol = productHierarchyData?.length > 0 && organizationId ? 14 : 24;
