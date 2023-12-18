@@ -61,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfSoMappingDataActions.fetchList,
             listShowLoading: otfSoMappingDataActions.listShowLoading,
             saveData: otfSoMappingDataActions.saveData,
-            resetData: otfSoMappingDataActions.reset,
 
             showGlobalNotification,
         },
@@ -70,8 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MappingMasterMain = (props) => {
-    const { dynamicPagination, page, setPage, otfSomappingData, userId, showGlobalNotification, moduleTitle, isOtfSoMappingLoading, selectedKey } = props;
-    const { listShowLoading, MappingUnmapping, resetData, saveData, advanceFilterString, setadvanceFilterString } = props;
+    const { dynamicPagination, otfSomappingData, userId, showGlobalNotification, moduleTitle, isOtfSoMappingLoading, selectedKey } = props;
+    const { listShowLoading, saveData, advanceFilterString, setadvanceFilterString } = props;
     const [form] = Form.useForm();
 
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
@@ -81,8 +80,12 @@ const MappingMasterMain = (props) => {
     const [formData, setFormData] = useState('');
 
     useEffect(() => {
-        MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key, advanceFilterString);
-    }, [advanceFilterString]);
+        setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key });
+        return () => {
+            setadvanceFilterString({});
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         record && setFormData({ ...record, buttonAction });
@@ -105,12 +108,11 @@ const MappingMasterMain = (props) => {
     const onFinish = () => {
         const data = { otfNumber: formData?.otfNumber, soNumber: formData?.soNumber || '', action: formData?.buttonAction, cancellationRemarks: '', mapStatusCode: selectedKey };
         const onSuccess = (res) => {
-            MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key);
+            setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key });
             setFormData();
             setIsFormVisible(false);
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            resetData();
         };
 
         const onError = (message) => {
@@ -133,13 +135,14 @@ const MappingMasterMain = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords: otfSomappingData?.totalRecords || 'NA',
-        page,
-        setPage,
         tableColumn: tableColumnUnMapping({ handleButtonClick, actionButtonVisibility, customButtonProperties }),
         tableData: otfSomappingData?.paginationData,
         showAddButton: false,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         isLoading: isOtfSoMappingLoading,
+        filterString: advanceFilterString,
+        page: advanceFilterString,
+        setPage: setadvanceFilterString,
     };
     const formProps = {
         form,

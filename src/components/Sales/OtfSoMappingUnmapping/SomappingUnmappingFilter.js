@@ -13,7 +13,8 @@ import { translateContent } from 'utils/translateContent';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS } from './Constants';
 
 const SomappingUnmappingFilter = (props) => {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, selectBoxkey, searchBoxProps, selectBoxProps, filterString, status } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, selectBoxkey, searchBoxProps, selectBoxProps, status } = props;
+    const { filterString } = searchBoxProps;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
@@ -63,7 +64,7 @@ const SomappingUnmappingFilter = (props) => {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
                                     {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>

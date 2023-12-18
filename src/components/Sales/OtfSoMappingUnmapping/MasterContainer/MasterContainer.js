@@ -26,14 +26,11 @@ export const MasterContainer = memo((props) => {
         case SectionConstant?.SO_CANCELLATION?.key:
             return <UnmappingAndCancellation {...props} />;
 
-        case SectionConstant?.NO_DATA?.key:
+        default:
             return (
                 <div className={styles?.emptyContainer}>
                     <NoDataFound information={translateContent('bookingSoMappUnmapp.label.noInfoMessage')} />
                 </div>
             );
-
-        default:
-            return <SoFormMaster {...props} />;
     }
 });

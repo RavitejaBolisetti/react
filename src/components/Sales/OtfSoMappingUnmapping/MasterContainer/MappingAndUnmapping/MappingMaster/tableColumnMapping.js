@@ -31,6 +31,7 @@ export const tableColumnMapping = ({ handleButtonClick, actionButtonVisibility, 
             title: translateContent('bookingSoMappUnmapp.label.modelDescription'),
             dataIndex: 'modelDescription',
             width: '20%',
+            sorter: false,
         }),
         tblActionColumn({ handleButtonClick, ...actionButtonVisibility, customButtonProperties, styles, width: '12%' })
     );

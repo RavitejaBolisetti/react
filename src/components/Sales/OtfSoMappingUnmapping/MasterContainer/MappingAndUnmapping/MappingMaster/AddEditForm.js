@@ -17,7 +17,7 @@ import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { isReadOnly = true, formData, form, handleOtfSearch, SearchTableProps } = props;
+    const { isReadOnly = true, formData, form, handleOtfSearch, SearchTableProps, OtfNumberSearchLoading } = props;
     const disableProps = { disabled: isReadOnly };
     useEffect(() => {
         if (formData) {
@@ -52,23 +52,23 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                </Form>
-                <Divider />
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Card>
-                            <Row gutter={20}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('bookingSoMappUnmapp.placeholder.search')}>
-                                        <Search placeholder={translateContent('bookingSoMappUnmapp.placeholder.search')} onSearch={handleOtfSearch} type="text" allowClear />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                    <Divider />
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Card>
+                                <Row gutter={20}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item name="searchOtf" label={translateContent('bookingSoMappUnmapp.placeholder.search')}>
+                                            <Search placeholder={translateContent('bookingSoMappUnmapp.placeholder.search')} onSearch={handleOtfSearch} loading={OtfNumberSearchLoading} type="text" allowClear />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
 
-                            <ListDataTable {...SearchTableProps} className={styles.marT20} />
-                        </Card>
-                    </Col>
-                </Row>
+                                <ListDataTable {...SearchTableProps} className={styles.marT20} />
+                            </Card>
+                        </Col>
+                    </Row>
+                </Form>
             </div>
             <DrawerFormButton {...props} />
         </>
