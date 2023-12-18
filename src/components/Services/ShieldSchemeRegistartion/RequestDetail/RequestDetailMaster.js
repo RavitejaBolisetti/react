@@ -16,7 +16,7 @@ const RequestDetailMasterBase = (props) => {
     const { typeData, workflowDetails, handleMNMApproval, handleMNMRejection, handleRequest } = props;
     const { userType, buttonData, setButtonData, section, isLoading } = props;
     const { partyDetailForm, handleFormValueChange, handleCancelRequest, NEXT_ACTION, handleButtonClick } = props;
-    const { requestPayload, setRequestPayload, requestDetails, selectedOrder, showCancelConfirm, confirmRequest, setConfirmRequest } = props;
+    const { requestPayload, setRequestPayload, requestDetails, selectedOrder, showCancelConfirm, confirmRequest, setConfirmRequest, screenType } = props;
 
     const onFinish = (values) => {
         const partyDetails = { ...values, id: '' };
@@ -42,6 +42,7 @@ const RequestDetailMasterBase = (props) => {
         handleMNMRejection,
         handleRequest,
         workflowDetails,
+        screenType,
     };
 
     return (
