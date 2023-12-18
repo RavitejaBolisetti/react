@@ -16,6 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { RSARegistrationStatusTag } from 'components/Sales/RSARegistration/utils/RSARegistrationStatusTag';
+import { REQUEST_CONSTANT } from 'components/Sales/AMCRegistration/utils/AMCConstants';
 
 const ViewDetail = (props) => {
     const { screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowDetails, typeData } = props;
@@ -46,7 +47,7 @@ const ViewDetail = (props) => {
                 <Row type="flex" justify="space-between" align="middle" size="large">
                     <Row type="flex" justify="space-around" align="middle">
                         <Typography>
-                            {translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(formData?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
+                            {REQUEST_CONSTANT?.[formData?.requestType] || translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(formData?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
                         </Typography>
                     </Row>
                     {RSARegistrationStatusTag(selectedOrder?.status)}

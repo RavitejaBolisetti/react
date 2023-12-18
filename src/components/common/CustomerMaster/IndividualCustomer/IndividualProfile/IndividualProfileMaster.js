@@ -97,6 +97,7 @@ const IndividualProfileBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [subApplication, setSubApplication] = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -195,6 +196,7 @@ const IndividualProfileBase = (props) => {
             customerId: selectedCustomerId,
             dateOfBirth: formatDate(values?.dateOfBirth),
             weddingAnniversary: formatDate(values?.weddingAnniversary),
+            categoryType: subApplication,
             // keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
             // authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
@@ -293,6 +295,8 @@ const IndividualProfileBase = (props) => {
         uploadedConsentFileName,
         setUploadedConsentFileName,
         handleFormValueChange,
+        subApplication,
+        setSubApplication,
     };
 
     const viewProps = {
@@ -306,6 +310,8 @@ const IndividualProfileBase = (props) => {
         handleOnClick,
         isLoading,
         downloadFileFromButton,
+        setSubApplication,
+        subApplication,
     };
 
     return (

@@ -17,9 +17,20 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, formData, form } = props;
-    const { setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory } = props;
+    const { subApplication, setSubApplication, setAppSubCategory, customerCategory, setCustomerCategory } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
+
+    const USAGE_APPLICATION_CONSTANT = {
+        CPTV: {
+            id: 1,
+            key: 'CPTV',
+        },
+        FLEET: {
+            id: 2,
+            key: 'FLT',
+        },
+    };
 
     useEffect(() => {
         form?.setFieldsValue({
@@ -35,6 +46,12 @@ const AddEditFormMain = (props) => {
         setCustomerCategory(formData?.customerCategory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+
+    useEffect(() => {
+        setSubApplication(appCategoryData?.APP_CAT?.find((item) => item?.key === formData?.applicationCategorization)?.type);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.applicationCategorization]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -53,16 +70,20 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const handleAppCategoryChange = (value) => {
-        setAppCustomerCategory(value);
-    };
-
     const handleAppSubCategoryChange = (value) => {
         setAppSubCategory(value);
     };
 
-    const handleCategoryChange = (value) => {
+    const handleCategoryChange = (value, record) => {
         setCustomerCategory(value);
+    };
+
+    const handleUsageApplicationChange = (values, record) => {
+        if (values === USAGE_APPLICATION_CONSTANT?.CPTV?.key) {
+            setSubApplication(record?.type);
+        } else {
+            setSubApplication(record?.type);
+        }
     };
 
     return (
@@ -88,9 +109,9 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.Categorization')} initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                        <Select maxLength={50} onChange={handleAppCategoryChange} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.category'))}>
+                                        <Select maxLength={50} onChange={handleUsageApplicationChange} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.category'))}>
                                             {appCategoryData.APP_CAT?.map((item) => (
-                                                <Option key={'ap' + item.key} value={item.key}>
+                                                <Option key={'ap' + item.key} value={item.key} type={item?.type}>
                                                     {item.value}
                                                 </Option>
                                             ))}
@@ -101,7 +122,7 @@ const AddEditFormMain = (props) => {
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.SubCategory')} initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
                                         <Select maxLength={50} onChange={handleAppSubCategoryChange} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.subCategory'))}>
-                                            {appCategoryData.APP_SUB_CAT?.map((item) => (
+                                            {appCategoryData[subApplication]?.map((item) => (
                                                 <Option key={'sc' + item.key} value={item.key}>
                                                     {item.value}
                                                 </Option>
@@ -113,8 +134,8 @@ const AddEditFormMain = (props) => {
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label={translateContent('customerMaster.label.customerCategory')} initialValue={formData?.customerCategory} name="customerCategory">
                                         <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.cusCategory'))}>
-                                            {appCategoryData.CUS_CAT?.map((item) => (
-                                                <Option key={'ct' + item.key} value={item?.key}>
+                                            {appCategoryData.APP_CUST_CAT?.map((item) => (
+                                                <Option key={'ct' + item.key} value={item?.key} parentKey={item?.parentKey}>
                                                     {item?.value}
                                                 </Option>
                                             ))}
@@ -122,7 +143,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            {customerCategory === 'CUS_CAT_2' && (
+                            {customerCategory === USAGE_APPLICATION_CONSTANT?.FLEET?.key && (
                                 <>
                                     <Divider />
                                     <Row gutter={20}>

@@ -221,15 +221,15 @@ export const PARAM_MASTER = {
         title: 'Vehicle Price Search',
     },
     LTC: {
-        id: 'LTC',
+        id: '012',
         title: 'Lost to Competition',
     },
     PROCAN: {
-        id: 'PROCAN',
+        id: '013',
         title: 'Product Change',
     },
     LOMMD: {
-        id: 'LOMMD',
+        id: '010',
         title: 'Lost other M&M Dealer',
     },
     SALE_TYPE: {

@@ -22,13 +22,13 @@ export const DashboardKPIMaster = ({ styles }) => {
                 <Divider />
                 <div className={`${styles.marB20} ${styles.dashboardPieChart}`}>
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <BillingMaster />
                         </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <RetailMaster />
                         </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <StockMaster />
                         </Col>
                     </Row>

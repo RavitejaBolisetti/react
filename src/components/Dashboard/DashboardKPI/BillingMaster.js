@@ -16,6 +16,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
 import { withSpinner } from 'components/withSpinner';
 
+import styles from './DashboardKPI.module.scss';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -36,7 +38,7 @@ const mapStateToProps = (state) => {
         dataDealerLoactionId,
         collapsed,
         isLoaded: isLoaded && dealerLocationId === dataDealerLoactionId,
-        isLoading: isLoading,
+        isLoading,
         billingData: data?.records || [],
     };
 };
@@ -54,35 +56,31 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const BillingMasterBase = (props) => {
-    // const { dealerLocationId, userId, isLoaded, billingData, fetchBillingList, billingListShowLoading, showGlobalNotification } = props;
+    const { dealerLocationId, userId, isLoaded, billingData, fetchBillingList, billingListShowLoading, showGlobalNotification } = props;
 
-    // const onErrorAction = (message) => {
-    //     showGlobalNotification(message);
-    // };
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
+    };
 
-    // useEffect(() => {
-    //     if (userId && !isLoaded) {
-    //         fetchBillingList({ setIsLoading: billingListShowLoading, userId, onErrorAction, dealerLocationId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, isLoaded, dealerLocationId]);
+    useEffect(() => {
+        if (userId && !isLoaded) {
+            fetchBillingList({ setIsLoading: billingListShowLoading, userId, onErrorAction, dealerLocationId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isLoaded, dealerLocationId]);
 
-    const billingData = [
-        { type: 'Scorpio', sales: 60 },
-        { type: 'XUV700', sales: 120 },
-        { type: 'Thar', sales: 80 },
-        { type: 'XUV300', sales: 50 },
-        { type: 'Marazzo', sales: 10 },
-        { type: 'Bolero Neo', sales: 75 },
-        { type: 'Bolero', sales: 120 },
-        { type: 'Scarpio Classic', sales: 50 },
-    ];
+    // const billingData = [
+    //     { type: 'Scorpio', sales: 60 },
+    //     { type: 'XUV700', sales: 120 },
+    //     { type: 'Thar', sales: 80 },
+    //     { type: 'XUV300', sales: 50 },
+    //     { type: 'Marazzo', sales: 10 },
+    //     { type: 'Bolero Neo', sales: 75 },
+    //     { type: 'Bolero', sales: 120 },
+    //     { type: 'Scarpio Classic', sales: 50 },
+    // ];
 
-    return (
-        <Card title={translateContent('dashboard.heading.billing')}>
-            <StatusBar data={billingData} />
-        </Card>
-    );
+    return <Card title={translateContent('dashboard.heading.billing')}>{isLoaded && (billingData?.length > 0 ? <StatusBar data={billingData} /> : <div className={styles.cardAlignCenter}>{translateContent('dashboard.label.noDataFound')}</div>)}</Card>;
 };
 
 export const BillingMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(BillingMasterBase));

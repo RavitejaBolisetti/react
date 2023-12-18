@@ -15,6 +15,8 @@ import { stockDataActions } from 'store/actions/data/dashboard/stocks';
 import { translateContent } from 'utils/translateContent';
 import { withSpinner } from 'components/withSpinner';
 
+import styles from './DashboardKPI.module.scss';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -54,42 +56,39 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const StockMasterBase = (props) => {
-    // const { dealerLocationId, userId, fetchStockList, stockListShowLoading, isLoaded, stockData } = props;
+    const { dealerLocationId, userId, fetchStockList, stockListShowLoading, isLoaded, stockData } = props;
 
-    // const onErrorAction = (message) => {
-    //     showGlobalNotification(message);
-    // };
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
+    };
 
-    // useEffect(() => {
-    //     if (userId && !isLoaded) {
-    //         fetchStockList({ setIsLoading: stockListShowLoading, userId, onErrorAction, dealerLocationId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, isLoaded, dealerLocationId]);
+    useEffect(() => {
+        if (userId && !isLoaded) {
+            fetchStockList({ setIsLoading: stockListShowLoading, userId, onErrorAction, dealerLocationId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isLoaded, dealerLocationId]);
 
-    const stockData = [
-        {
-            type: '0-30',
-            value: 27,
-        },
-        {
-            type: '30-60',
-            value: 25,
-        },
-        {
-            type: '60-90',
-            value: 18,
-        },
-        {
-            type: '>90',
-            value: 27,
-        },
-    ];
-    return (
-        <Card title={translateContent('dashboard.heading.stockInDays')}>
-            <PieChart data={stockData} />
-        </Card>
-    );
+    // const stockData = [
+    //     {
+    //         type: '0-30',
+    //         value: 27,
+    //     },
+    //     {
+    //         type: '30-60',
+    //         value: 25,
+    //     },
+    //     {
+    //         type: '60-90',
+    //         value: 18,
+    //     },
+    //     {
+    //         type: '>90',
+    //         value: 27,
+    //     },
+    // ];
+
+    return <Card title={translateContent('dashboard.heading.stockInDays')}>{isLoaded && (stockData?.length > 0 ? <PieChart data={stockData} /> : <div className={styles.cardAlignCenter}>{translateContent('dashboard.label.noDataFound')}</div>)}</Card>;
 };
 
 export const StockMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(StockMasterBase));

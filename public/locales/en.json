@@ -506,7 +506,8 @@
         "label": {
             "billing": "Billing",
             "retail": "Retail",
-            "stockInDays": "Stock Aging(in days)"
+            "stockInDays": "Stock Aging(in days)",
+            "noDataFound":"No data found"
         },
         "placeholder": {},
         "validation": {},
@@ -3761,7 +3762,8 @@
             "viewHierarchyText": "Please select product from left side hierarchy to view “Hierarchy Details”.",
             "productHierarchy": "Product Hierarchy",
             "manufacturerAdmin": "Manufacturer Administrative Hierarchy",
-            "dealerCode": "Dealer Code"
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",
