@@ -80,6 +80,8 @@ import {
     DealerCorporateClaimMasterPage,
     CorporateMasterPage,
     EmployeeEmpowermentMasterPage,
+    ExchangeLoyaltyIncentiveMasterPage,
+    MitraBrokerRegistrationMasterPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -102,6 +104,7 @@ import CustomerEmpowermentMasterPage from 'pages/Sales/CustomerEmpowerment';
 import CsdCpcClaimMasterPage from 'pages/Sales/CsdCpcClaim';
 import AdditionalCsdCpcClaimPage from 'pages/Sales/AdditionalCsdCpcClaim';
 import OverRiderClaimPage from 'pages/Sales/OverRiderClaim';
+import ExchangeLoyalityClaimMasterPage from 'pages/Sales/ExchangeLoyalityClaim';
 
 const mapStateToProps = (state) => {
     const {
@@ -286,6 +289,12 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_CSD_CPC_CLAIM} element={<CsdCpcClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_ADDITIONAL_CDC_CPC_CLAIM} element={<AdditionalCsdCpcClaimPage />} exact />
                 <Route path={routing.ROUTING_OVER_RIDER_CLAIM} element={<OverRiderClaimPage />} exact />
+
+                <Route path={routing.ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION} element={<ExchangeLoyalityClaimMasterPage />} exact />
+                <Route path={routing.ROUTING_EXCHANGE_LOYALTY_INCENTIVE_MASTER} element={<ExchangeLoyaltyIncentiveMasterPage />} exact />
+                
+                <Route path={routing.ROUTING_MITRA_BROKER_REGISTRATION} element={<MitraBrokerRegistrationMasterPage />} exact />
+
                 {/*  */}
             </Routes>
         ) : (

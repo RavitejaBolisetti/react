@@ -161,11 +161,15 @@ export const ROUTING_ADDITIONAL_CDC_CPC_CLAIM = ROUTING_SALES.concat('addional-c
 export const ROUTING_OVER_RIDER_CLAIM = ROUTING_SALES.concat('over-rider-claim');
 
 //Exchange loyalty Scheme & Registration
-export const ROUTING_EXCHANGE_LOYALTY_CAPPING_MASTER = ROUTING_SALES.concat('exchange-loyalty-capping-master');
-export const ROUTING_EXCHANGE_LOYALTY_DOCUMENT_MASTER = ROUTING_SALES.concat('exchange-loyalty-document-master');
-export const ROUTING_EXCHANGE_LOYALTY_SCHEME_MASTER = ROUTING_SALES.concat('exchange-loyalty-scheme-master');
+// export const ROUTING_EXCHANGE_LOYALTY_CAPPING_MASTER = ROUTING_SALES.concat('exchange-loyalty-capping-master');
+// export const ROUTING_EXCHANGE_LOYALTY_DOCUMENT_MASTER = ROUTING_SALES.concat('exchange-loyalty-document-master');
+// export const ROUTING_EXCHANGE_LOYALTY_SCHEME_MASTER = ROUTING_SALES.concat('exchange-loyalty-scheme-master');
 export const ROUTING_EXCHANGE_LOYALTY_INCENTIVE_MASTER = ROUTING_SALES.concat('exchange-loyalty-incentive-master');
-export const ROUTING_EXCHANGE_LOYALTY_RECLAIM_REQUEST = ROUTING_SALES.concat('exchange-loyalty-incentive-master');
-export const ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('exchange-loyalty-claim-generation');
+// export const ROUTING_EXCHANGE_LOYALTY_RECLAIM_REQUEST = ROUTING_SALES.concat('exchange-loyalty-incentive-master');
+export const ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('exchange-loyalty-claim-generation');//need discussion
+
+// /Incentive scheme and claim
+export const ROUTING_MITRA_BROKER_REGISTRATION = ROUTING_SALES.concat('mitra-broker-registration');
+
 
 //

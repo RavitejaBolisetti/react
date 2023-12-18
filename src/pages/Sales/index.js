@@ -39,7 +39,9 @@ import RSARegistrationPage from './RSARegistration';
 import DealerCorporateClaimMasterPage from './DealerCorporateClaim';
 import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
 import CorporateMasterPage from './CorporateMaster';
-import EmployeeEmpowermentMasterPage from './EmployeeEmpowerment'
+import EmployeeEmpowermentMasterPage from './EmployeeEmpowerment';
+import ExchangeLoyaltyIncentiveMasterPage from './ExchangeLoyaltyIncentiveMaster'
+import MitraBrokerRegistrationMasterPage from './MitraBrokerRegistrationMaster'
 
 
 
@@ -76,5 +78,7 @@ export {
     CoDealerInvoiceGenerationPage,
     DealerCorporateClaimMasterPage,
     CorporateMasterPage,
-    EmployeeEmpowermentMasterPage
+    EmployeeEmpowermentMasterPage,
+    ExchangeLoyaltyIncentiveMasterPage,
+    MitraBrokerRegistrationMasterPage     
 };
