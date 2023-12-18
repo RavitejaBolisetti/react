@@ -23,7 +23,7 @@ const SomappingUnmappingFilter = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20} className={styles.verticallyCentered}>
-                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <Col xs={8} sm={6} md={6} lg={6} xl={6}>
                                         <div className={`${styles.userManagement}`}>
                                             <Form.Item name={selectBoxkey}>
                                                 <Select {...selectBoxProps} />
@@ -31,7 +31,7 @@ const SomappingUnmappingFilter = (props) => {
                                         </div>
                                     </Col>
                                     {[OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING?.key]?.includes(status?.key) && (
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                        <Col xs={12} sm={8} md={8} lg={8} xl={8}>
                                             <SearchBox {...searchBoxProps} />
                                         </Col>
                                     )}
