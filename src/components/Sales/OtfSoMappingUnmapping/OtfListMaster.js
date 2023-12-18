@@ -351,6 +351,7 @@ export const OtfListMasterBase = (props) => {
     };
 
     const handleSelect = (key) => {
+        console.log('key', key);
         if (!key) {
             setselectedKey();
             ClearAllData();

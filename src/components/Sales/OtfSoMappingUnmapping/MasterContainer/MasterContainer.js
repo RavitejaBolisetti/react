@@ -13,18 +13,21 @@ import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const MasterContainer = memo((props) => {
+export const MasterContainer = (props) => {
     const { selectedKey } = props;
 
-    switch (selectedKey) {
-        case SectionConstant?.SO_MAPPING?.key:
+    switch (true) {
+        case selectedKey === SectionConstant?.SO_MAPPING?.key:
             return <MappingMaster {...props} />;
 
-        case SectionConstant?.SO_UNMAPPING?.key:
+        case selectedKey === SectionConstant?.SO_UNMAPPING?.key:
             return <UnMappingMaster {...props} />;
 
-        case SectionConstant?.SO_CANCELLATION?.key:
+        case selectedKey === SectionConstant?.SO_CANCELLATION?.key:
             return <UnmappingAndCancellation {...props} />;
+
+        case [SectionConstant?.BILLED_TO_BILLED?.key, SectionConstant?.BILLED_TO_LIVE?.key, SectionConstant?.LIVE_TO_LIVE?.key, SectionConstant?.RESERVE_QUOTA?.key]?.includes(selectedKey):
+            return <SoFormMaster {...props} />;
 
         default:
             return (
@@ -33,4 +36,4 @@ export const MasterContainer = memo((props) => {
                 </div>
             );
     }
-});
+};

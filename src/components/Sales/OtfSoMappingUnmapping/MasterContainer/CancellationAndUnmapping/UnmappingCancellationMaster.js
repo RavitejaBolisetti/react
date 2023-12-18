@@ -90,6 +90,7 @@ const UnmappingAndCancellationMain = (props) => {
     }, []);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
+        console.log('buttonAction', buttonAction, record);
         record && setFormData({ ...record, buttonAction });
         buttonAction && setButtonType(buttonAction);
         buttonAction === BUTTON_NAME?.UNMAP?.key && setButtonData({ ...buttonData, formBtnActive: true });
