@@ -351,7 +351,6 @@ export const OtfListMasterBase = (props) => {
     };
 
     const handleSelect = (key) => {
-        console.log('key', key);
         if (!key) {
             setselectedKey();
             ClearAllData();
@@ -368,7 +367,7 @@ export const OtfListMasterBase = (props) => {
             .then((formValues) => {
                 setfilterString({ otfNumber: formValues[type]?.otfNumber, soNumber: formValues[type]?.soNumber, soStatusCode: type === FORM_TYPE_CONSTANSTS?.FORM_1?.id ? status?.CRD_1 : status?.CRD_2, parentGroupCode: formValues?.parentGroupCode, dealerLocationCode: formValues?.locationCode, formType: type });
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {});
     };
     const handleResetData = (type, exception = undefined) => {
         switch (type) {

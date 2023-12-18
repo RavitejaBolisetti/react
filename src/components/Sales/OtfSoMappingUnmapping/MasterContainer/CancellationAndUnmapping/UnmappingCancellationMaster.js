@@ -21,6 +21,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { ListDataTable } from 'utils/ListDataTable';
 
 import { Form } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -88,9 +89,13 @@ const UnmappingAndCancellationMain = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
+    const showErrorMessageCancleSo = (buttonAction, record) => {
+        if (buttonAction === BUTTON_NAME?.CANCEL?.key && record?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.CRD_1 && record?.otfNumber) {
+            showGlobalNotification({ message: translateContent('bookingSoMapping.validation.mappedSoCancel') });
+        }
+    };
     const handleButtonClick = ({ record = null, buttonAction }) => {
-        console.log('buttonAction', buttonAction, record);
+        showErrorMessageCancleSo(buttonAction, record);
         record && setFormData({ ...record, buttonAction });
         buttonAction && setButtonType(buttonAction);
         buttonAction === BUTTON_NAME?.UNMAP?.key && setButtonData({ ...buttonData, formBtnActive: true });
@@ -127,6 +132,10 @@ const UnmappingAndCancellationMain = (props) => {
     };
 
     const onFinish = (values) => {
+        if (buttonType === BUTTON_NAME?.CANCEL?.key && formData?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.CRD_1 && formData?.otfNumber) {
+            showGlobalNotification({ message: translateContent('bookingSoMapping.validation.mappedSoCancel') });
+        }
+        showErrorMessageCancleSo(buttonType,)
         const data = { otfNumber: values?.otfNumber, soNumber: values?.soNumber || '', action: formData?.buttonAction, cancellationRemarks: values?.cancellationRemarks, mapStatusCode: selectedKey };
         const onSuccess = (res) => {
             setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key });
