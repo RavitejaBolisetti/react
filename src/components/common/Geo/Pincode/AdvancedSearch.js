@@ -40,7 +40,7 @@ export const AdvancedSearchFrom = (props) => {
         reset: true,
         submit: true,
         resetName: translateContent('global.buttons.reset'),
-        submitName: translateContent('global.buttons.search'),
+        submitName: translateContent('global.buttons.apply'),
         handleResetFilter,
     };
 
@@ -62,7 +62,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={translateContent('pincode.label.state')}initialValue={filterString?.stateCode} rules={[validateRequiredInputField(translateContent('pincode.validation.state'))]} name="stateCode">
+                    <Form.Item label={translateContent('pincode.label.state')} initialValue={filterString?.stateCode} rules={[validateRequiredInputField(translateContent('pincode.validation.state'))]} name="stateCode">
                         <Select placeholder={translateContent('global.placeholder.select')} {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>

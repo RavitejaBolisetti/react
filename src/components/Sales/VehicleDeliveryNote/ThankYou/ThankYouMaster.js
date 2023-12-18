@@ -17,7 +17,7 @@ import { translateContent } from 'utils/translateContent';
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { handlePrintDownload, record, selectedOrder } = props;
+    const { handlePrintDownload, record, selectedOrder, defaultBtnVisiblity } = props;
     const messageList = selectedOrder?.responseMessage?.split(' ');
     const message = selectedOrder?.responseMessage?.split('.')?.[0];
 
@@ -36,26 +36,9 @@ export const ThankYouMaster = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder]);
 
-    const defaultBtnVisiblity = {
-        editBtn: false,
-        saveBtn: false,
-        cancelBtn: false,
-        saveAndNewBtn: false,
-        saveAndNewBtnClicked: false,
-        closeBtn: true,
-        formBtnActive: false,
-        cancelOTFBtn: false,
-        transferOTFBtn: false,
-        allotBtn: false,
-        unAllotBtn: false,
-        invoiceBtn: false,
-        deliveryNote: false,
-        changeHistory: false,
-        otfSoMappingHistoryBtn: false,
-    };
     const thankProp = {
         ...props,
-        buttonData: { ...defaultBtnVisiblity },
+        buttonData: { ...defaultBtnVisiblity, closeBtn: true },
     };
 
     return (

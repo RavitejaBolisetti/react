@@ -10,14 +10,14 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { translateContent } from 'utils/translateContent';
 import { getCodeValue } from 'utils/getCodeValue';
-import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+import { formattedCalendarDate, dateFormat, mmYYYYFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { GRN_TYPE_CONSTANT } from '../utils/GrnTypeConstant';
-
+import dayjs from 'dayjs';
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
@@ -207,12 +207,12 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')} name={[index, 'mfgDate']}>
+                                        <Form.Item initialValue={item?.mfgdate ? dayjs(item?.mfgdate, mmYYYYFormat) : null} label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')} name={[index, 'mfgdate']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label={translateContent('vehicleReceipt.label.vehicleDetails.receivedOn')} name={[index, 'receivedOn']}>
+                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn, dateFormat)} label={translateContent('vehicleReceipt.label.vehicleDetails.receivedOn')} name={[index, 'receivedOn']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
@@ -281,6 +281,9 @@ const AddEditFormMain = (props) => {
                                         <Input />
                                     </Form.Item>
                                     <Form.Item hidden initialValue={item?.modelCode} name={[index, 'modelCode']}>
+                                        <Input />
+                                    </Form.Item>
+                                    <Form.Item hidden initialValue={item?.engineNumber} name={[index, 'engineNumber']}>
                                         <Input />
                                     </Form.Item>
                                 </Row>

@@ -190,7 +190,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const handleUnSavedChangeFn = (successFn) => handleUnSavedChange({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn });
+    const handleUnSavedChangeFn = (successFn) => handleUnSavedChange({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn, formActionType });
 
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -605,7 +605,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true }) : setButtonData({ ...Visibility });
                 }
             }
         }
@@ -813,7 +813,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         receiptType,
         partySegmentType,
 
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -894,7 +894,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         isInVoiceMasterDetailDataLoaded,
         salesConsultantLovData,
         resetDetailData,
-        handleUnSavedChangeFn,
+        setReportDetail,
     };
 
     const cancelInvoiceProps = {

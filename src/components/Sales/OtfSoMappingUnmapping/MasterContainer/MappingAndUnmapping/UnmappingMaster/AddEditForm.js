@@ -23,10 +23,10 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     return (
-        <>
-            <div>
-                <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish}>
-                    <Row gutter={20} className={styles.drawerBody}>
+        <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish}>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                             <Form.Item name="soNumber" label={translateContent('bookingSoMappUnmapp.label.soNumber')}>
                                 <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soNumber'))} />
@@ -66,11 +66,10 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
-                    <DrawerFormButton {...props} />
-                </Form>
-            </div>
-        </>
+                </Col>
+            </Row>
+            <DrawerFormButton {...props} />
+        </Form>
     );
 };
 

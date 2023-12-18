@@ -154,7 +154,7 @@
             "delete": "Delete",
             "cancelBooking": "Cancel Booking",
             "transferBooking": "Transfer Booking",
-            "bookingMappingHistory": "Booking Mapping History",
+            "bookingMappingHistory": "SO Mapping History",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
             "seeLess": "See less",
@@ -249,6 +249,7 @@
             "bookingCustomerAndBillingCustomer.sameAsBookingCustomer": "Same as Booking Customer",
 
             "vehicleDetails.vehicleDetails": "Vehicle Details",
+            "vehicleDetails.vehicleInformation": "Vehicle Information",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
@@ -258,6 +259,8 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.mnmCashBenefitAmountWithTax": "M&M Cash Benefits with TAX",
+            "vehicleDetails.mnmNonCashBenefitAmountWithTax": "M&M Non-Cash Benefits with TAX",
             "vehicleDetails.printDiscount": "Print Discount?",
             "vehicleDetails.taxCalculation": "Tax Calculation",
             "vehicleDetails.availableStock": "Available Stock",
@@ -266,6 +269,7 @@
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
+            "vehicleDetails.sapResonseRemarks": "Model Code Response",
             "vehicleDetails.model": "Model",
             "vehicleDetails.totalTaxAmount": "Total Tax Amount",
             "vehicleDetails.tcsAmount": "TCS Amount",
@@ -490,16 +494,20 @@
             "subTitleAddWidget": "Add Widget",
             "keyHighlights": "Key Highlights",
             "actionItems": "Action Items",
-            "dashboardKpi": "Dashboard KPI",
+            "dashboardKpi": "KPI's",
             "latestNews": "Latest News",
             "birthdayCalendar": "Birthday Calendar",
             "todayBirthday": "Today's Birthday",
-            "upcomingBirthdays": "Upcoming Birthdays"
+            "upcomingBirthdays": "Upcoming Birthdays",
+            "billing": "Billing",
+            "retail": "Retail",
+            "stockInDays": "Stock Aging(in days)"
         },
         "label": {
             "billing": "Billing",
             "retail": "Retail",
-            "stockInDays": "Stock in days"
+            "stockInDays": "Stock Aging(in days)",
+            "noDataFound": "No data found"
         },
         "placeholder": {},
         "validation": {},
@@ -895,7 +903,7 @@
             "moduleTitle": "AMC Registration Details"
         },
         "validation": {
-            "noSchemeVIN": "No Schemes present for this VIN",
+            "noSchemeVIN": "No Schemes present for this AMC Type",
             "noVINFound": "No VIN found for searched Booking Number",
             "noEmployeesFound": "No employees found for searched name",
             "incorrectEmployeeName": "Employee name is not correct",
@@ -1653,16 +1661,27 @@
             "selectPart": "Select Part"
         },
         "modelVariant": {
+            "heading": {
+                "modelChange": "If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?",
+                "cancelChangeRequest": "Are you sure you want to Cancel change model request?"
+            },
             "label": {
+                "model": "Model",
                 "modelDescription": "Revised Model Description",
-                "modelCode": "Revised Model Code"
+                "modelCode": "Revised Model Code",
+                "confirmation": "Confirmation",
+                "cancelRequest": "Cancel Request"
             },
             "validation": {
                 "model": "Model",
                 "modelCode": "Model Code"
             },
             "placeholder": {
+                "model": "Model",
                 "modelCode": "Model Code"
+            },
+            "button": {
+                "yes": "Yes"
             }
         }
     },
@@ -1791,7 +1810,8 @@
     "vehicleDetail": {
         "heading": {
             "mainTitle": "Vehicle Details",
-            "title": "Search Vehicle"
+            "title": "Search Vehicle",
+            "mnmUserOnly": "Below Fields to be shown for Mahindra users only"
         },
         "label": {
             "vin": "VIN",
@@ -1856,11 +1876,13 @@
                 }
             }
         },
+
         "productDetails": {
             "heading": {
                 "moduleTitle": "Product Details",
                 "attributeTitle": "Product Attribute Details",
-                "aggregateTitle": "Aggregates"
+                "aggregateTitle": "Aggregates",
+                "noProductDataFound": "No product Attribute Details Present"
             },
             "label": {
                 "productDivision": "Product Division",
@@ -1871,7 +1893,8 @@
                 "model": "Model ",
                 "item": "Item",
                 "make": "Make",
-                "serialNo": "Serial No."
+                "serialNo": "Serial No.",
+                "attributeDetailsNotPresent": "No product Attribute Details Present"
             }
         },
         "customerDetails": {
@@ -2347,7 +2370,7 @@
         }
     },
     "stockTransferIndent": {
-        "isueIndent": {
+        "issueIndent": {
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
@@ -2359,11 +2382,14 @@
                 "grnNo": "GRN No",
                 "issueCharge": "Issue Charge",
                 "netDealerPrice": "Net Dealer Price",
-                "status": "Status"
+                "status": "Status",
+                "indentToParent": "Indent To Parent"
             },
             "validation": {
                 "vin": "vin",
-                "issueCharges": "Issue Charges"
+                "issueCharges": "Issue Charges",
+                "searchVinToContinue": "Search VIN to continue",
+                "indentToParent": "Indent To Parent"
             },
             "viewDetails": {
                 "label": {
@@ -2419,6 +2445,8 @@
             "editVehicleDetails": "Edit Vehicle Details",
             "indentStatus": "Indent Status",
             "indentToParent": "Indent To Parent",
+            "indentFromParent": "Indent From Parent",
+
             "indentToLocation": "Indent To Location",
             "remark": "Remark",
             "modelDescription": "Model Description",
@@ -2620,7 +2648,6 @@
             "drawerTitleMain": "Vehicle Receipt Checklist",
             "section1": "Checklist Details",
             "section2": "Supporting Documents",
-
             "collapse": {},
             "profileCard": {
                 "checklistNumber": "CheckList Number:",
@@ -2634,6 +2661,7 @@
             }
         },
         "label": {
+            "receiptNumber": " Receipt Number",
             "checklistDetails": {
                 "remarks": "Remarks",
                 "details": "Details"
@@ -2758,7 +2786,7 @@
                 "model": "Model",
                 "modelName": "Model Name",
                 "color": "Color",
-                "seatingCapacity:": "Seating Capacity",
+                "seatingCapacity": "Seating Capacity",
                 "fuel": "Fuel",
                 "variants": "Variants",
                 "modelDescription": "Model Description",
@@ -3263,6 +3291,7 @@
             "termsconditiondescription": "Description"
         }
     },
+
     "bookingSoMapping": {
         "heading": {
             "moduleTitle": "Booking SO Mapping Control",
@@ -3282,7 +3311,8 @@
         "validation": {
             "variantCode": "Variant Code",
             "productVariant": "Product Variant",
-            "userForMappingUnmapping": "User for Mapping/Unmapping"
+            "userForMappingUnmapping": "User for Mapping/Unmapping",
+            "mappedSoCancel": "SO already mapped kindly unmap & then Cancel"
         }
     },
     "vehicleDeliveryNote": {
@@ -3485,7 +3515,8 @@
             "voucherType": "Voucher Type",
             "partySegment": "Party Segment",
             "fromDate": "From Date",
-            "toDate": "To Date"
+            "toDate": "To Date",
+            "apportionDetailMissing": "Apportion Details are missing"
         },
         "leftSideBar": {
             "label": {
@@ -3733,7 +3764,8 @@
             "viewHierarchyText": "Please select product from left side hierarchy to view “Hierarchy Details”.",
             "productHierarchy": "Product Hierarchy",
             "manufacturerAdmin": "Manufacturer Administrative Hierarchy",
-            "dealerCode": "Dealer Code"
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",
@@ -3823,7 +3855,7 @@
             "clientId": "Client Id",
             "parent": "parent",
             "secretId": "Secret Id",
-            "password": "password",
+            "password": "Password",
             "dealerName": "Dealer Name",
             "gstin": "Select GSTIN"
         },

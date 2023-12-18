@@ -81,6 +81,7 @@ const CompanyProfileBase = (props) => {
 
     const [appCategory, setAppCustomerCategory] = useState();
     const [appSubCategory, setAppSubCategory] = useState();
+    const [subApplication, setSubApplication] = useState();
     const [customerCategory, setCustomerCategory] = useState();
     const [fileList, setFileList] = useState([]);
     const [uploadedFile, setUploadedFile] = useState();
@@ -90,7 +91,7 @@ const CompanyProfileBase = (props) => {
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     useEffect(() => {
-        if ( userId && selectedCustomer?.customerId) {
+        if (userId && selectedCustomer?.customerId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -142,6 +143,7 @@ const CompanyProfileBase = (props) => {
             customerFormDocId: uploadedFile ? uploadedFile : values?.customerFormDocId,
             customerConsent: values.customerConsent,
             id: recordId,
+            categoryType: subApplication,
         };
         // customerId: customerId
 
@@ -259,6 +261,8 @@ const CompanyProfileBase = (props) => {
         setEmptyList,
         uploadedFileName,
         setUploadedFileName,
+        subApplication,
+        setSubApplication,
     };
 
     const viewProps = {
@@ -268,6 +272,8 @@ const CompanyProfileBase = (props) => {
         formData: customerProfileData,
         handleOnClick,
         viewDocument,
+        setSubApplication,
+        subApplication,
     };
 
     const handleFormValueChange = () => {

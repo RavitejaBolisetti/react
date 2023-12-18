@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
-import { convertDateMonthYear, converDateDayjs, convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
+import { convertDateMonthYear, dateFormatView, timeFormatView, convertDateTimedayjs } from 'utils/formatDateTime';
 import { ChargerStatusTag } from '../ChargerStatusTag';
 import { FiEye } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -25,19 +25,37 @@ export const addRequestColumns = (typeData) => {
             title: translateContent('chargerInstallationDetailsTableColumn.label.visitTimeSlot1'),
             dataIndex: 'visitTimeSlotOne',
             width: '25%',
-            render: (_, record) => (record?.visitTimeSlotOne ? converDateDayjs(record?.visitTimeSlotOne) : ''),
+            render: (_, record) => (
+                <div>
+                    {convertDateTimedayjs(record?.visitTimeSlotOne, dateFormatView, '-')}
+                    <br />
+                    {convertDateTimedayjs(record?.visitTimeSlotOne, timeFormatView, '-')}
+                </div>
+            ),
         }),
         tblPrepareColumns({
             title: translateContent('chargerInstallationDetailsTableColumn.label.visitTimeSlot2'),
             dataIndex: 'visitTimeSlotTwo',
             width: '25%',
-            render: (_, record) => (record?.visitTimeSlotTwo ? converDateDayjs(record?.visitTimeSlotTwo) : ''),
+            render: (_, record) => [
+                <div>
+                    {convertDateTimedayjs(record?.visitTimeSlotTwo, dateFormatView, '-')}
+                    <br />
+                    {convertDateTimedayjs(record?.visitTimeSlotTwo, timeFormatView, '-')}
+                </div>,
+            ],
         }),
         tblPrepareColumns({
             title: translateContent('chargerInstallationDetailsTableColumn.label.visitTimeSlot3'),
             dataIndex: 'visitTimeSlotThree',
             width: '25%',
-            render: (_, record) => (record?.visitTimeSlotThree ? converDateDayjs(record?.visitTimeSlotThree) : ''),
+            render: (_, record) => [
+                <div>
+                    {convertDateTimedayjs(record?.visitTimeSlotThree, dateFormatView, '-')}
+                    <br />
+                    {convertDateTimedayjs(record?.visitTimeSlotThree, timeFormatView, '-')}
+                </div>,
+            ],
         }),
         tblPrepareColumns({
             title: translateContent('global.label.status'),
@@ -72,9 +90,9 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             width: '180px',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, dateFormatView)}
+                    {convertDateTimedayjs(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, timeFormatView)}
+                    {convertDateTimedayjs(text, timeFormatView, '-')}
                 </div>,
             ],
         }),
@@ -85,9 +103,9 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             width: '180px',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, dateFormatView)}
+                    {convertDateTimedayjs(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, timeFormatView)}
+                    {convertDateTimedayjs(text, timeFormatView, '-')}
                 </div>,
             ],
         }),
@@ -98,9 +116,9 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             width: '180px',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, dateFormatView)}
+                    {convertDateTimedayjs(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, timeFormatView)}
+                    {convertDateTimedayjs(text, timeFormatView, '-')}
                 </div>,
             ],
         }),

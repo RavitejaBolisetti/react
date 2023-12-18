@@ -37,12 +37,13 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ChargerInstallation: {
-                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [] },
+                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [], isDetailLoading = false },
                 ChargerInstallationGuestDetails: { isLoaded: isGuestDataLoaded = false, isLoading: isGuestLoading, data: chargerInstallationGuestDetailsData = [] },
             },
-            CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isCRMCustomerLoading, data: crmCustomerVehicleData = [] },
+            CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isLoading: isChargerSearchLoading, data: crmCustomerVehicleData = [] },
         },
     } = state;
+   
     const moduleTitle = translateContent('chargerInstallationProcess.heading.mainTitle');
     let returnValue = {
         userId,
@@ -56,11 +57,12 @@ const mapStateToProps = (state) => {
         filterString,
         chargerInstallationMasterData,
         isCRMCustomerDataLoaded,
-        isCRMCustomerLoading,
         crmCustomerVehicleData,
         isGuestDataLoaded,
         isGuestLoading,
         chargerInstallationGuestDetailsData,
+        isDetailLoading,
+        isChargerSearchLoading,
     };
     return returnValue;
 };
@@ -71,10 +73,13 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchCustomerVehicleList: crmCustomerVehicleDataActions.fetchList,
             listCustomerVehicleShowLoading: crmCustomerVehicleDataActions.listShowLoading,
+            resetCustomerVehicleData: crmCustomerVehicleDataActions.reset,
 
             fetchList: chargerInstallationDataActions.fetchList,
-            fetchChargerDetails: chargerInstallationDataActions.fetchDetail,
             listShowLoading: chargerInstallationDataActions.listShowLoading,
+            fetchChargerDetails: chargerInstallationDataActions.fetchDetail,
+            listDetailShowLoading: chargerInstallationDataActions.listDetailShowLoading,
+            resetDetailData: chargerInstallationDataActions.resetDetail,
             setFilterString: chargerInstallationDataActions.setFilter,
             saveData: chargerInstallationDataActions.saveData,
 
@@ -88,9 +93,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ChargerInstallationMasterBase = (props) => {
-    const { data, userId, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
+    const { data, userId, isChargerSearchLoading, isDetailLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
+    const { resetCustomerVehicleData, filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
     const [requestPayload, setRequestPayload] = useState({ chargerInstDetails: {}, chargerInstAddressDetails: {} });
@@ -143,7 +148,7 @@ export const ChargerInstallationMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -242,20 +247,25 @@ export const ChargerInstallationMasterBase = (props) => {
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
     const filterActiveMenu = (items) => {
         return items;
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
+
     useEffect(() => {
-        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageStatus === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
-            setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
-        }
-        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
-            setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
+        if (chargerInstallationMasterData && !formActionType?.addMode) {
+            if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageStatus === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
+                setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
+            }
+            if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
+                setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chargerInstallationMasterData]);
+
     useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
@@ -279,7 +289,7 @@ export const ChargerInstallationMasterBase = (props) => {
                     name: 'Id',
                 },
             ];
-            fetchChargerDetails({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchChargerDetails({ customURL, setIsLoading: listDetailShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -299,7 +309,6 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const handleBookingNumberSearch = (otfNumber) => {
         if (!otfNumber) return false;
-        setSelectedOtfNumber(otfNumber);
         const extraParams = [
             {
                 key: 'otfNumber',
@@ -310,23 +319,33 @@ export const ChargerInstallationMasterBase = (props) => {
         ];
         const onSuccesscustomerAction = (res) => {
             chargerInstallationForm.setFieldsValue({ otfNumber: otfNumber });
-            chargerInstallationForm.setFieldsValue({ bookingStatus: getCodeValue(typeData?.ORDR_STATS, crmCustomerVehicleData?.otfDetails?.orderStatus) });
             if (!(res?.data?.otfDetails?.orderStatus === OTF_STATUS?.CANCELLED?.key || res?.data?.otfDetails?.orderStatus === OTF_STATUS?.DELIVERED?.key) && res?.data?.vehicleDetails?.fuel === FUEL_TYPE?.ELECTR?.key) {
                 setChargerDetails(true);
                 setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                chargerInstallationForm.setFieldsValue({ bookingStatus: getCodeValue(typeData?.ORDR_STATS, crmCustomerVehicleData?.otfDetails?.orderStatus) });
+                setSelectedOtfNumber(otfNumber);
             } else {
                 showGlobalNotification({ message: translateContent('chargerInstallationProcess.notification.globalNotification') });
+                resetCustomerVehicleData();
+                setChargerDetails(false);
+                setAddRequestData([]);
+                setTimeout(() => {
+                    resetCustomerVehicleData();
+                }, 100);
             }
         };
         fetchCustomerVehicleList({ setIsLoading: listCustomerVehicleShowLoading, userId, extraParams, onSuccessAction: onSuccesscustomerAction, onErrorAction });
     };
 
-    const handleBookingChange = () => {
+    const handleBookingChange = (e) => {
         setSelectedOtfNumber('');
-        chargerInstallationForm.setFieldValue();
         setSelectedOrder('');
         setChargerDetails(false);
         setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+        chargerInstallationForm.setFieldsValue();
+        setAddRequestData([]);
+        resetCustomerVehicleData();
+        // chargerInstallationForm.resetFields();
     };
 
     const handleChargerTypeChange = (buttonName) => {
@@ -416,6 +435,7 @@ export const ChargerInstallationMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
+            resetCustomerVehicleData();
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -454,6 +474,8 @@ export const ChargerInstallationMasterBase = (props) => {
         setAddRequestData([]);
         setOptions();
         setButtonData({ ...defaultBtnVisiblity });
+        resetDetailData();
+        resetCustomerVehicleData();
     };
     const tableProps = {
         dynamicPagination,
@@ -536,7 +558,7 @@ export const ChargerInstallationMasterBase = (props) => {
         onChargerInstallationFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -586,6 +608,8 @@ export const ChargerInstallationMasterBase = (props) => {
         setModal,
         onHandleModal,
         chargerInstallationGuestDetailsData,
+        isLoading: isDetailLoading,
+        isChargerSearchLoading,
     };
 
     return (

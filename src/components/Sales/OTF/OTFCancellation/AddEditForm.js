@@ -235,7 +235,7 @@ const AddEditFormMain = (props) => {
 
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="reasonForCancellation" label={translateContent('bookingManagement.label.reasonForCancellation')} rules={[validateRequiredSelectField(translateContent('bookingManagement.label.reasonForCancellation'))]}>
+                                <Form.Item name="reasonForCancellation" label={translateContent('bookingManagement.label.reasonForCancellation')} rules={typeData[reasonTypeChange]?.length > 0 && [validateRequiredSelectField(translateContent('bookingManagement.label.reasonForCancellation'))]}>
                                     <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData[reasonTypeChange]} placeholder={preparePlaceholderSelect(translateContent('bookingManagement.label.reasonForCancellation'))} />
                                 </Form.Item>
                             </Col>

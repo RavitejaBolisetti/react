@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { tableColumnMapping } from './tableColumnMapping';
 import { SearchtableColumnMapping } from './searchtableColumn';
 import { connect } from 'react-redux';
@@ -73,20 +73,23 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MappingMasterMain = (props) => {
-    const { dynamicPagination = true, showGlobalNotification, moduleTitle, page, setPage, selectedKey } = props;
-
+    const { dynamicPagination, showGlobalNotification, moduleTitle, selectedKey } = props;
     const { userId, listShowLoading, fetchList, OtfNumberSearchLoading } = props;
-
-    const { otfSomappingData, isOtfSoMappingLoading, OtfNumberSearchData, resetData, saveData, MappingUnmapping } = props;
-
+    const { otfSomappingData, isOtfSoMappingLoading, OtfNumberSearchData, resetData, saveData, advanceFilterString, setadvanceFilterString } = props;
     const [form] = Form.useForm();
-
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
-
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState('');
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    useEffect(() => {
+        setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING?.key });
+        return () => {
+            setadvanceFilterString({});
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleButtonClick = ({ record = null }) => {
         record && setFormData(record);
@@ -97,7 +100,7 @@ const MappingMasterMain = (props) => {
         const data = { otfNumber: record?.otfNumber, soNumber: formData?.soNumber || '', action: buttonAction, cancellationRemarks: '', mapStatusCode: selectedKey };
 
         const onSuccess = (res) => {
-            MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING?.key);
+            setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING?.key });
             setFormData();
             setIsFormVisible(false);
             form.resetFields();
@@ -136,6 +139,7 @@ const MappingMasterMain = (props) => {
         resetData();
     };
     const onSuccessAction = (res) => {
+        form.resetFields(['searchOtf']);
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
@@ -152,19 +156,21 @@ const MappingMasterMain = (props) => {
                 value: otfKey,
             },
         ];
+
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const tableProps = {
         dynamicPagination,
         totalRecords: otfSomappingData?.totalRecords || 'NA',
-        page,
-        setPage,
         tableColumn: tableColumnMapping({ handleButtonClick, actionButtonVisibility, customButtonProperties }),
         tableData: otfSomappingData?.paginationData || [],
         showAddButton: false,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         isLoading: isOtfSoMappingLoading,
+        filterString: advanceFilterString,
+        page: advanceFilterString,
+        setPage: setadvanceFilterString,
     };
 
     const searchCustomButtonProperties = {
@@ -176,12 +182,11 @@ const MappingMasterMain = (props) => {
         buttonType: 'primary',
     };
     const SearchTableProps = {
-        dynamicPagination: false,
+        dynamicPagination,
         totalRecords: 1,
         pagination: false,
         showAddButton: false,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
-        isLoading: OtfNumberSearchLoading,
         tableColumn: SearchtableColumnMapping({ handleButtonClick, actionButtonVisibility, customButtonProperties: searchCustomButtonProperties }),
         tableData: Object?.keys(OtfNumberSearchData)?.length ? [OtfNumberSearchData] : [],
     };
@@ -198,6 +203,7 @@ const MappingMasterMain = (props) => {
         formData,
         buttonData,
         setButtonData,
+        OtfNumberSearchLoading,
     };
 
     return (

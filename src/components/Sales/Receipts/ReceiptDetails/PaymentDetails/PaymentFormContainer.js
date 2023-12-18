@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useEffect } from 'react';
-import { Button, Form, Row, Col, Select, Divider } from 'antd';
+import { Button, Form, Row, Col, Select } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 
@@ -36,6 +36,8 @@ const PaymentFormContainer = (props) => {
 
     const handlePayment = (value) => {
         setPaymentMode(value);
+        paymentForm.resetFields();
+        paymentForm.setFieldsValue({ paymentMode: value });
     };
 
     const RenderPaymentForm = (formInstance) => {
@@ -73,7 +75,6 @@ const PaymentFormContainer = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label={translateContent('receipts.label.receiptDetails.paymentMode')} name="paymentMode" rules={[validateRequiredSelectField(translateContent('receipts.label.receiptDetails.paymentMode'))]}>
-                            {/* {customSelectBox({ data: paymentModeType, placeholder: preparePlaceholderSelect('Payment Mode'), onChange: { handlePayment } })} */}
                             <Select maxLength={50} placeholder={preparePlaceholderSelect(translateContent('receipts.label.receiptDetails.paymentMode'))} onChange={handlePayment} {...selectProps}>
                                 {paymentModeType?.map((item) => (
                                     <Option key={'dv' + item.key} value={item.key}>
@@ -84,7 +85,7 @@ const PaymentFormContainer = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                <Divider />
+
                 {RenderPaymentForm(formData?.paymentMode || paymentMode)}
 
                 {!formActionType?.viewMode && paymentMode && (

@@ -461,6 +461,7 @@
                                 &:last-child {
                                     button {
                                         margin-right: 0;
+                                        vertical-align: middle;
                                     }
                                 }
                             }
@@ -1124,7 +1125,7 @@
 
     .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper {
         margin-bottom: 20px;
-
+        
         > textarea.ant-input {
             padding: 6px 12px;
         }
@@ -1132,7 +1133,9 @@
         .ant-input-suffix {
             transform: scaleX(1);
             line-height: 26px;
+           
         }
+        
     }
     /* AntD Form Items & Input/Select Design End*/
 
@@ -1376,6 +1379,28 @@
                 margin-right: 8px;
                 width: 20px;
                 height: 20px;
+            }
+        }
+        .ant-table-body{
+            overflow: hidden;
+            &::-webkit-scrollbar-track {
+                background-color: $primaryWhite;
+            }
+        
+            &::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+                background-color: $primaryWhite;
+            }
+        
+            &::-webkit-scrollbar-thumb {
+                background-color: $neutralGrey2;
+                border-radius: 10px;
+                border: 2px solid $primaryWhite;
+        
+                &:hover {
+                    border: 2px solid $neutralGrey2;
+                }
             }
         }
     }

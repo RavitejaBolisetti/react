@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoice, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
+export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoice, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21, setReportDetail }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -30,13 +30,25 @@ export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoic
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.printForm21Btn && (
-                        <Button onClick={() => onPrintForm21(record)} danger>
+                        <Button
+                            onClick={() => {
+                                setReportDetail();
+                                onPrintForm21(record);
+                            }}
+                            danger
+                        >
                             {translateContent('global.buttons.printForm21')}
                         </Button>
                     )}
-                    
+
                     {buttonData?.printInvoiceBtn && (
-                        <Button onClick={() => onPrintInvoice(record)} danger>
+                        <Button
+                            onClick={() => {
+                                setReportDetail();
+                                onPrintInvoice(record);
+                            }}
+                            danger
+                        >
                             {translateContent('global.buttons.printInvoice')}
                         </Button>
                     )}

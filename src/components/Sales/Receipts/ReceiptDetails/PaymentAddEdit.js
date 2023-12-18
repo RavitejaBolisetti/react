@@ -71,7 +71,6 @@ const PaymentAddEdit = (props) => {
                                 <PaymentFormContainer {...props} />
                             </>
                         )}
-                        <Divider />
                         <ViewList {...props} />
                     </>
                 </Panel>

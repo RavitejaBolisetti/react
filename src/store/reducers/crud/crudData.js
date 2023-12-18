@@ -30,6 +30,7 @@ const recieveDataCF = (state, action) => ({
     ...state,
     isLoaded: true,
     data: action.data,
+    dealerLocationId: action.dealerLocationId || undefined,
     updatedAt: moment().toDate(),
 });
 

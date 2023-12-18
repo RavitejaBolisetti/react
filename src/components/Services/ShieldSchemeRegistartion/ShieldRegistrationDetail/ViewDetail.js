@@ -10,7 +10,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { SHIELD_REPORT_DOCUMENT_TYPE } from '../utils/shieldReportDocumentType';
 import { RSA_DOCUMENT_TYPE } from '../utils/rsaReportType';
-import { QUERY_BUTTONS_CONSTANTS } from '../utils/ShieldRegistrationContant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { translateContent } from 'utils/translateContent';
@@ -22,7 +21,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, amcStatus, employeeData, managerData, handlePrintDownload, isLoading, rsaDetails, detailShieldData, screenType, typeData } = props;
+    const { formData, employeeData, managerData, handlePrintDownload, isLoading, rsaDetails, detailShieldData, screenType, typeData, handleDownloadFile } = props;
 
     const [activeKey, setactiveKey] = useState([]);
 
@@ -59,7 +58,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.registrationInformation?.priceType), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYP'], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
 
-                        {formData?.registrationInformation?.priceType !== SALE_TYPE?.PAID?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>}
+                        {formData?.registrationInformation?.priceType !== SALE_TYPE?.PAID?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(screenType === 'RSA' ? formData?.registrationInformation?.otfNumber : formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>}
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, screenType === 'RSA' ? formData?.registrationInformation?.employeeCode : formData?.registrationInformation?.employeeName), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, screenType === 'RSA' ? formData?.registrationInformation?.managerCode : formData?.registrationInformation?.managerName), isLoading)}</Descriptions.Item>
@@ -75,103 +74,103 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.debitNoteAmount')}>{checkAndSetDefaultValue(formData?.registrationInformation?.debitNoteAmount, isLoading)}</Descriptions.Item>
                     </Descriptions>
                     {/* {formData?.registrationInformation?.shieldIncentiveClaim && ( */}
-                    {amcStatus === QUERY_BUTTONS_CONSTANTS?.APPROVED?.key && (
-                        <>
-                            <Card>
-                                <Row>
-                                    <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                        <Text strong>
-                                            {props?.screenType === 'RSA' ? 'RSA Incentive Claim' : translateContent('shieldSchemeRegistration.label.schemeIncentiveClaim')}:{checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
-                                        </Text>
-                                    </Col>
-                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                        <div className={styles.floatRight}>
-                                            <Popover content={'Coming Soon'} trigger="hover">
-                                                <Button danger>{translateContent('global.buttons.print/download')}</Button>
-                                            </Popover>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row className={styles.marB10}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.invoiceDate')}:{checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
-                                        </Text>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
-                                        </Text>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
-                                        </Text>
-                                    </Col>
-                                </Row>
-                            </Card>
-                            {/* )}
+
+                    <>
+                        <Card>
+                            <Row>
+                                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                    <Text strong>
+                                        {props?.screenType === 'RSA' ? 'RSA Incentive Claim' : translateContent('shieldSchemeRegistration.label.schemeIncentiveClaim')}:{checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
+                                    </Text>
+                                </Col>
+                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <div className={styles.floatRight}>
+                                        <Popover content={'Coming Soon'} trigger="hover">
+                                            <Button danger>{translateContent('global.buttons.print/download')}</Button>
+                                        </Popover>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row className={styles.marB10}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Text type="secondary">
+                                        {translateContent('shieldSchemeRegistration.label.invoiceDate')}:{checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
+                                    </Text>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Text type="secondary">
+                                        {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
+                                    </Text>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Text type="secondary">
+                                        {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
+                                    </Text>
+                                </Col>
+                            </Row>
+                        </Card>
+                        {/* )}
                     {formData?.registrationInformation?.shieldCertificateNumber && ( */}
-                            <Card>
-                                <Row>
-                                    <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                        <Text strong>
-                                            {props?.screenType === 'RSA' ? 'RSA Certificate Number' : translateContent('shieldSchemeRegistration.label.schemeCertificateNo')} : {checkAndSetDefaultValue(formData?.registrationInformation?.shieldCertificateNumber, isLoading)}
-                                        </Text>
-                                    </Col>
-                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                        <div className={styles.floatRight}>
-                                            <Button onClick={() => handlePrintDownload(props?.screenType === 'RSA' ? { ...rsaDetails, typeRecord: RSA_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_RSA?.value } : { ...detailShieldData, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value })} danger>
-                                                {translateContent('global.buttons.print/download')}
-                                            </Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row className={styles.marB10}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
-                                        </Text>
-                                    </Col>
-                                </Row>
-                            </Card>
-                            {/* )}
+                        <Card>
+                            <Row>
+                                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                    <Text strong>
+                                        {props?.screenType === 'RSA' ? 'RSA Certificate Number' : translateContent('shieldSchemeRegistration.label.schemeCertificateNo')} : {checkAndSetDefaultValue(formData?.registrationInformation?.shieldCertificateNumber, isLoading)}
+                                    </Text>
+                                </Col>
+                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <div className={styles.floatRight}>
+                                        <Button onClick={() => handlePrintDownload(props?.screenType === 'RSA' ? { ...rsaDetails, typeRecord: RSA_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_RSA?.value } : { ...detailShieldData, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value })} danger>
+                                            {translateContent('global.buttons.print/download')}
+                                        </Button>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row className={styles.marB10}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Text type="secondary">
+                                        {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
+                                    </Text>
+                                </Col>
+                            </Row>
+                        </Card>
+                        {/* )}
                     {formData?.registrationInformation?.invoiceNumber && ( */}
-                            <Card>
-                                <Row>
-                                    <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                        <Text strong>
-                                            {translateContent('shieldSchemeRegistration.label.invoiceNo')}:{checkAndSetDefaultValue(formData?.registrationInformation?.invoiceNumber, isLoading)}
-                                        </Text>
-                                    </Col>
-                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                        <div className={styles.floatRight}>
-                                            <Button onClick={() => handlePrintDownload(props?.screenType === 'RSA' ? { ...rsaDetails, typeRecord: RSA_DOCUMENT_TYPE?.INVOICE_RSA?.value } : { ...detailShieldData, typeRecord: SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value })} danger>
-                                                {translateContent('global.buttons.print/download')}
-                                            </Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row className={styles.marB10}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
-                                        </Text>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
-                                        </Text>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
-                                        </Text>
-                                    </Col>
-                                </Row>
-                            </Card>
-                        </>
-                    )}
+                        <Card>
+                            <Row>
+                                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                    <Text strong>
+                                        {translateContent('shieldSchemeRegistration.label.invoiceNo')}:{checkAndSetDefaultValue(formData?.registrationInformation?.invoiceNumber, isLoading)}
+                                    </Text>
+                                </Col>
+                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <div className={styles.floatRight}>
+                                        <Button onClick={() => handleDownloadFile(formData?.registrationInformation?.documentId)} danger>
+                                            {translateContent('global.buttons.print/download')}
+                                        </Button>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row className={styles.marB10}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Text type="secondary">
+                                        {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
+                                    </Text>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Text type="secondary">
+                                        {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
+                                    </Text>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Text type="secondary">
+                                        {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
+                                    </Text>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </>
+
                     {/* )} */}
                 </Panel>
             </Collapse>

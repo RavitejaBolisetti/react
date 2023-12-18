@@ -5,10 +5,9 @@
  */
 import React from 'react';
 import { Timeline } from 'antd';
-
 import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
-import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
+
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {

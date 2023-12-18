@@ -168,7 +168,6 @@ export const AdvancedSearchFrom = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        // className: styles.headerSelectField,
     };
     const modalProps = {
         reset: true,
@@ -182,16 +181,6 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <ProductModelHierarchy {...treeSelectFieldProps} />
-                    {/* <Form.Item label="Model Description" name="modelCode" rules={[validateRequiredSelectField('model')]}>
-                    
-                        <Select showSearch placeholder="Select" allowClear>
-                            {productHierarchyList?.map((item) => (
-                                <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
-                                    {item.prodctShrtName}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item> */}
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -207,7 +196,7 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
-                                <Option value={item?.key}>{item?.value}</Option>
+                                <Option value={item?.code}>{item?.name}</Option>
                             ))}
                         </Select>
                     </Form.Item>

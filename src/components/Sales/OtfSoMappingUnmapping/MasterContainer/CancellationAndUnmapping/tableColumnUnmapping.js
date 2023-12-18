@@ -20,6 +20,7 @@ export const tableColumnUnMapping = ({ handleButtonClick, actionButtonVisibility
             title: translateContent('bookingSoMappUnmapp.label.soStatus'),
             dataIndex: 'soStatus',
             width: '10%',
+            sorter: false,
         }),
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.poNumber'),
@@ -37,6 +38,7 @@ export const tableColumnUnMapping = ({ handleButtonClick, actionButtonVisibility
             title: translateContent('bookingSoMappUnmapp.label.modelDescription'),
             dataIndex: 'modelDescription',
             width: '10%',
+            sorter: false,
         }),
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.bookingNumber'),
@@ -47,6 +49,7 @@ export const tableColumnUnMapping = ({ handleButtonClick, actionButtonVisibility
             title: translateContent('bookingSoMappUnmapp.label.customerName'),
             dataIndex: 'customerName',
             width: '10%',
+            sorter: false,
         }),
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.chassisNumber'),

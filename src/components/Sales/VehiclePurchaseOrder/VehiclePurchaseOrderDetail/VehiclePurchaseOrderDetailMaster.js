@@ -69,6 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             listShowLoadingOnLoad: dealerParentLovDataActions.listShowLoading,
             fetchList: viewVPODataActions.fetchList,
+            listPoLoading: viewVPODataActions.listShowLoading,
+            resetViewVehiclePO: viewVPODataActions.reset,
             fetchListView: vehiclePurchaseOrderDataActions.fetchList,
 
             saveData: saveVPODataActions.saveData,
@@ -82,11 +84,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
-    const { dealerLocationId, typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
+    const { typeData, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
-    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave, changeView } = props;
+    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave, changeView, resetViewVehiclePO, listPoLoading  } = props;
+    const { productHierarchyDataArray } = props;
+   
     const [activeKey, setactiveKey] = useState([1]);
     const [dealerLocation, setDealerLocation] = useState();
+    const [modelCode, setModelCode] = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -119,13 +124,6 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
-            fetchProductList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, dealerLocationId]);
-
-    useEffect(() => {
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listShowLoading, userId });
         }
@@ -134,7 +132,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedRecordId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchList({ setIsLoading: listPoLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId, changeView]);
@@ -158,10 +156,11 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = viewVehiclePODetails?.id || '';
-
         const onSuccess = (res) => {
+            setModelCode('');
+            form.resetFields();
+            form.setFieldsValue('model', '');
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-
             fetchListView({ setIsLoading: listShowLoading, userId, extraParams: extraParamsAfterSave, onErrorAction });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             setIsFormVisible(false);
@@ -176,7 +175,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
                 id: recordId,
                 orderTypeCode: values?.orderTypeCode,
                 dealerParentCode: values?.dealerParentCode,
-                modelCode: values?.modelCode,
+                modelCode: modelCode,
                 quantity: values?.quantity,
                 purchaseOrderDate: values?.purchaseOrderDate?.format('YYYY-MM-DD'),
                 purchaseOrderNumber: '',
@@ -216,6 +215,10 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         showDataLoading,
         setDealerLocation,
         dealerLocation,
+        modelCode,
+        setModelCode,
+        productHierarchyDataArray,
+        resetViewVehiclePO,
     };
 
     return (

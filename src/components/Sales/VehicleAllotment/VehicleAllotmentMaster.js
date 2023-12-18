@@ -163,7 +163,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',

@@ -22,6 +22,7 @@ import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAll
 import { reportDataActions } from 'store/actions/data/report/reports';
 import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL, BASE_URL_VEHICLE_ALLOTMENT as customURLVINSearch } from 'constants/routingApi';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
+import { ISSUE_STATUS } from './constants/IssueStatus'
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -36,6 +37,7 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { defaultPageProps } from 'utils/defaultPageProps';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
+import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,6 +58,9 @@ const mapStateToProps = (state) => {
             },
             OTF: {
                 VehicleDetailsLov: { filteredListData: productHierarchyData },
+            },
+            DealerHierarchy: {
+                DealerParent: { filteredListData: dealerParentsLovList },
             },
             Report: {
                 Reports: { data: reportData },
@@ -87,6 +92,7 @@ const mapStateToProps = (state) => {
         indentIssueDataLoaded,
 
         vehicleVinDataLoading,
+        dealerParentsLovList,
 
         reportData,
     };
@@ -122,6 +128,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchReportDetail: reportDataActions.fetchData,
             listReportShowLoading: reportDataActions.listShowLoading,
 
+            fetchDealerParentsLovList: dealerParentDataActions.fetchFilteredList,
+            listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -130,7 +139,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const StockTransferIndentMasterBase = (props) => {
     const { data, DEFAULT_PAGINATION, resetData, isFetchDataLoading, dealerLocations } = props;
-    const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
+    const { userId, typeData, showGlobalNotification, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
     const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
@@ -138,6 +147,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [advanceFilterForm] = Form.useForm();
     const [addIndentDetailsForm] = Form.useForm();
 
+    const [ change, setChange ] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
     const [isViewIndentVisible, setIsViewIndentVisible] = useState(false);
@@ -154,7 +164,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
     const [refershIndentData, setRefershIndentData] = useState();
-    // const [recordType, setRecordType] = useState();
+    const [recordType, setRecordType] = useState();
     const [reportDetail, setReportDetail] = useState();
     const defaultDealerLocationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
 
@@ -201,19 +211,12 @@ export const StockTransferIndentMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && parentGroupCode) {
-            const extraParamData = [
-                {
-                    key: 'parentGroupCode',
-                    value: parentGroupCode,
-                },
-            ];
-
+        if (userId) {
             fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
-            fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
+            fetchDealerParentsLovList({ setIsLoading: listDealerParentShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, parentGroupCode]);
+    }, [userId]);
 
     useEffect(() => {
         if (userId && selectedRecord?.indentNumber) {
@@ -450,6 +453,17 @@ export const StockTransferIndentMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const handleDealerParentChange = (parentGroupCode) => {
+        const extraParamData = [
+            {
+                key: 'parentGroupCode',
+                value: parentGroupCode,
+            },
+        ];
+
+        fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
+    };
+
     const handleVinSearch = (vinNumber) => {
         if (!vinNumber) return;
         const extraParams = [
@@ -489,7 +503,8 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-        // setRecordType(record?.issueStatus);
+        setRecordType(record?.issueStatus);
+        setChange(() => !change);
         setReportVisible(true);
         setAdditionalReportParams([
             {
@@ -499,10 +514,19 @@ export const StockTransferIndentMasterBase = (props) => {
         ]);
     };
 
+    // useEffect(() => {
+    //     if (toggleButton === STOCK_TRANSFER?.RAISED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+    //     else if (toggleButton === STOCK_TRANSFER?.RECEIVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT);
+    //     else setReportDetail(null);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [toggleButton]);
+
     useEffect(() => {
-        setReportDetail(toggleButton === STOCK_TRANSFER?.RAISED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT : toggleButton === STOCK_TRANSFER?.RECEIVED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT : null);
+        if (recordType === ISSUE_STATUS?.ISSUED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+        else if (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || ISSUE_STATUS?.RECEIEVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT);
+        else setReportDetail(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [toggleButton]);
+    }, [recordType, change]);
 
     const tableProps = {
         dynamicPagination,
@@ -510,9 +534,10 @@ export const StockTransferIndentMasterBase = (props) => {
         totalRecords: data?.totalRecords,
         setPage: setFilterString,
         isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick, toggleButton),
+        tableColumn: tableColumn({ handleButtonClick, toggleButton, dealerParentsLovList }),
         tableData: data?.paginationData,
         showAddButton: false,
+        scroll: { x: 1800 },
     };
 
     const advanceFilterProps = {
@@ -544,9 +569,13 @@ export const StockTransferIndentMasterBase = (props) => {
         setAdvanceSearchVisible,
         indentLocationList,
         searchList: typeData[PARAM_MASTER?.INDENT.id],
+        dealerParentsLovList,
+        handleDealerParentChange,
     };
 
     const addNewIndentProps = {
+        handleDealerParentChange,
+        dealerParentsLovList,
         toggleButton,
         isVisible: isAddNewIndentVisible,
         titleOverride: translateContent('stockTransferIndent.heading.addIndentDetails'),
@@ -620,6 +649,7 @@ export const StockTransferIndentMasterBase = (props) => {
         handlePrintDownload,
         refershIndentData,
         setRefershIndentData,
+        setReportDetail,
     };
 
     const reportProps = {

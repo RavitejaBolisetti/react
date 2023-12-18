@@ -8,9 +8,8 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { convertDateTimedayjs } from 'utils/formatDateTime';
+import { convertDateTimedayjs, dateTimeFormat } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
-
 import styles from 'assets/sass/app.module.scss';
 
 const ChargerInstallatioDetailsMasterBase = (props) => {
@@ -29,7 +28,7 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
             .then(() => {
                 addRequestData?.length > 0 ? setAddRequestData((prev) => [value, ...prev]) : setAddRequestData([value]);
                 const values = addRequestForm.getFieldsValue();
-                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne), visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo, 'YYYY-MM-DD HH:mm:ss', true), visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree, 'YYYY-MM-DD HH:mm:ss', true) }] } }));
+                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne, dateTimeFormat, '-'), visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo, dateTimeFormat, '-'), visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree, dateTimeFormat, '-') }] } }));
                 handleFormValueChange();
             })
             .catch(() => {

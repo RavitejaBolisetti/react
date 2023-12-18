@@ -62,8 +62,12 @@ const mapStateToProps = (state) => {
     const finalDistrictData = districtData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
+    const finalCityData = cityData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
     const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     const findDistrictCode = finalDistrictData && finalDistrictData?.find((i) => i.default)?.districtCode;
+    const findCityCode = finalCityData && finalCityData?.find((i) => i.default)?.cityCode;
     let returnValue = {
         userId,
         accessToken,
@@ -101,6 +105,7 @@ const mapStateToProps = (state) => {
         totalRecords: vehiclePriceData?.totalRecords,
         productHierarchyDataList: productHierarchyData,
         dealerLocationId,
+        findCityCode,
     };
     return returnValue;
 };
@@ -133,7 +138,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehiclePriceMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification } = props;
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData, productHierarchyDataList, fetchModelList } = props;
     const { dealerLocationId, resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading, userType } = props;
     const [form] = Form.useForm();
@@ -201,7 +206,7 @@ export const VehiclePriceMasterBase = (props) => {
     }, [productHierarchyDataList]);
 
     useEffect(() => {
-        if (userId && dealerLocationId) {
+        if (userId) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -234,20 +239,12 @@ export const VehiclePriceMasterBase = (props) => {
             {
                 key: 'modelCode',
                 title: translateContent('vehiclePriceMaster.label.model'),
-                value: filterString?.model,
-                //name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
+                value: FindProductName(productHierarchyData, filterString?.model, 'oemModelCode'),
                 name: FindProductName(productHierarchyData, filterString?.model),
                 canRemove: true,
                 filter: true,
             },
-            // {
-            //     key: 'oemModelCode',
-            //     title: translateContent('vehiclePriceMaster.label.model'),
-            //     value: filterString?.modelCode,
-            //     name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.modelCode)?.prodctShrtName,
-            //     canRemove: true,
-            //     filter: true,
-            // },
+
             {
                 key: 'stateCode',
                 title: translateContent('vehiclePriceMaster.label.state'),
@@ -257,18 +254,10 @@ export const VehiclePriceMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'districtCode',
-                title: translateContent('vehiclePriceMaster.label.district'),
-                value: filterString?.districtCode,
-                name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
-                canRemove: false,
-                filter: false,
-            },
-            {
                 key: 'cityCode',
                 title: translateContent('vehiclePriceMaster.label.city'),
                 value: filterString?.cityCode,
-                name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
+                name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
                 canRemove: true,
                 filter: true,
             },
@@ -377,7 +366,7 @@ export const VehiclePriceMasterBase = (props) => {
                         setFilteredDistrictData();
                         setFilteredCityData();
                         advanceFilterForm.setFieldsValue({ stateCode: undefined });
-                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        //advanceFilterForm.setFieldsValue({ districtCode: undefined });
                         advanceFilterForm.setFieldsValue({ cityCode: undefined });
 
                         break;
@@ -385,17 +374,12 @@ export const VehiclePriceMasterBase = (props) => {
                     case 'stateCode': {
                         setFilteredDistrictData();
                         setFilteredCityData();
-                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        //advanceFilterForm.setFieldsValue({ districtCode: undefined });
                         advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                        //advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
                         break;
                     }
-                    case 'districtCode': {
-                        setFilteredCityData();
-                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-                        break;
-                    }
+
                     case 'cityCode': {
                         break;
                     }
@@ -405,6 +389,7 @@ export const VehiclePriceMasterBase = (props) => {
                 }
                 return;
             }
+
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'countryCode') {
@@ -415,13 +400,8 @@ export const VehiclePriceMasterBase = (props) => {
             }
 
             if (name === 'stateCode') {
-                setFilteredCityData(districtData?.filter((i) => i?.parentKey === filterValue));
+                setFilteredCityData(cityData?.filter((i) => i?.stateCode === filterValue));
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                advanceFilterForm.setFieldsValue({ cityCode: undefined });
-            }
-
-            if (name === 'districtCode') {
-                setFilteredCityData(cityData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
             }
 

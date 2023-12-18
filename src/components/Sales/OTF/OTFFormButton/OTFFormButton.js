@@ -37,11 +37,11 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                         </Button>
                     )}
 
-                    {buttonData?.otfSoMappingHistoryBtn && (
+                    {/* {buttonData?.otfSoMappingHistoryBtn && (
                         <Button onClick={handleOtfSoMappingHistory} type="primary">
                             {translateContent('global.buttons.bookingMappingHistory')}
                         </Button>
-                    )}
+                    )} */}
 
                     {buttonData?.allotBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">

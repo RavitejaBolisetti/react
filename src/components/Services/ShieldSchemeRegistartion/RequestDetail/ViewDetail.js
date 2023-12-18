@@ -9,7 +9,6 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from '../utils/ShieldRegistrationContant';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { SchemeStatusTag } from '../utils/schemeStatusTag';
 import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
 
@@ -17,6 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { RSARegistrationStatusTag } from 'components/Sales/RSARegistration/utils/RSARegistrationStatusTag';
+import { REQUEST_CONSTANT } from 'components/Sales/AMCRegistration/utils/AMCConstants';
 
 const ViewDetail = (props) => {
     const { screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowDetails, typeData } = props;
@@ -47,10 +47,10 @@ const ViewDetail = (props) => {
                 <Row type="flex" justify="space-between" align="middle" size="large">
                     <Row type="flex" justify="space-around" align="middle">
                         <Typography>
-                            {translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(formData?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
+                            {REQUEST_CONSTANT?.[formData?.requestType] || translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(formData?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
                         </Typography>
                     </Row>
-                    {screenType === 'RSA' ? RSARegistrationStatusTag(selectedOrder?.status) : SchemeStatusTag(selectedOrder?.status)}
+                    {RSARegistrationStatusTag(selectedOrder?.status)}
                 </Row>
                 <Row type="flex" align="middle" className={selectedOrder?.status === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                     <Col xs={24} sm={24} md={24} lg={24}>

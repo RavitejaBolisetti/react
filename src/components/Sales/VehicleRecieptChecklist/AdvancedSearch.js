@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Form, Row, Select, DatePicker } from 'antd';
+import { Col, Form, Row, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -16,7 +16,7 @@ import { translateContent } from 'utils/translateContent';
 import TreeSelectField from 'components/common/TreeSelectField';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading, setSelectedTreeSelectKey } = props;
+    const { setAdvanceSearchVisible, setSelectedTreeSelectKey } = props;
     const { productHierarchyData, formData, handleSelectTreeClick, selectedTreeSelectKey, isProductDataLoading } = props;
     const {
         filterString,

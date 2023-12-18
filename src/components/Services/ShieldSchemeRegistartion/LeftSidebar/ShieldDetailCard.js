@@ -41,7 +41,7 @@ const ShieldDetailCard = (props) => {
                             <span>
                                 {selectedCardData?.schemeNumber}
                                 {selectedCardData?.schemeNumber && (
-                                    <a className={styles.marL5} href="javascript.void(0)">
+                                    <a className={styles.marL5} href="javascript.void(0)" onClick={(e) => e.preventDefault()}>
                                         <CopytoClipboard buttonText={null} text={selectedCardData?.schemeNumber} />
                                     </a>
                                 )}

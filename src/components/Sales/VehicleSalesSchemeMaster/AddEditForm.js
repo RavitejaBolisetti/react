@@ -9,11 +9,11 @@ import { FiPlus } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validationNumber, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DataTable } from 'utils/dataTable';
-import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formatDateToEndOfDayDate } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
@@ -187,6 +187,7 @@ const AddEditFormMain = (props) => {
     const onCloseZoneDetails = () => {
         setAddZoneArea(false);
         addZoneAreaForm.resetFields();
+        setZoneTableDataItem([]);
     };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -342,26 +343,26 @@ const AddEditFormMain = (props) => {
                                         {taxField === OFFER_TYPE_CONSTANTS?.DISCOUNT?.key && (
                                             <>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item initialValue={formData?.amountWithoutTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
+                                                    <Form.Item initialValue={formData?.amountWithoutTax} rules={[validationNumber(translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax'))]} label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithoutTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item initialValue={formData?.amountWithTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
+                                                    <Form.Item initialValue={formData?.amountWithTax} rules={[validationNumber(translateContent('vehicleSalesSchemeMaster.label.amountWithTax'))]} label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>
                                             </>
                                         )}
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formatDateToCalenderDate(filterString?.validityFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.validityFromDate')} name="validityFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityFromDate'))]} className={styles?.datePicker}>
-                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disablePastDate} className={styles.fullWidth} onChange={() => addSchemeForm.setFieldValue({ toDate: undefined })} />
+                                            <Form.Item initialValue={formatDateToEndOfDayDate(filterString?.validityFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.validityFromDate')} name="validityFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityFromDate'))]} className={styles?.datePicker}>
+                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} />
                                             </Form.Item>
                                         </Col>
 
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Form.Item
-                                                initialValue={formatDateToCalenderDate(filterString?.validityToDate)}
+                                                initialValue={formatDateToEndOfDayDate(filterString?.validityToDate)}
                                                 label={translateContent('vehicleSalesSchemeMaster.label.validityToDate')}
                                                 name="validityToDate"
                                                 rules={[
@@ -378,13 +379,13 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formatDateToCalenderDate(formData?.vehicleInvoiceFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.vehicleInvoiceFromDate')} name="vehicleInvoiceFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.vehicleInvoiceFromDate'))]} className={styles?.datePicker}>
-                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disablePastDate} onChange={() => addSchemeForm.setFieldsValue({ toDate: undefined })} />
+                                            <Form.Item initialValue={formatDateToEndOfDayDate(formData?.vehicleInvoiceFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.vehicleInvoiceFromDate')} name="vehicleInvoiceFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.vehicleInvoiceFromDate'))]} className={styles?.datePicker}>
+                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth}  onChange={() => addSchemeForm.setFieldsValue({ toDate: undefined })} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Form.Item
-                                                initialValue={formatDateToCalenderDate(formData?.vehicleInvoiceToDate)}
+                                                initialValue={formatDateToEndOfDayDate(formData?.vehicleInvoiceToDate)}
                                                 label={translateContent('vehicleSalesSchemeMaster.label.vehicleInvoiceToDate')}
                                                 name="vehicleInvoiceToDate"
                                                 rules={[

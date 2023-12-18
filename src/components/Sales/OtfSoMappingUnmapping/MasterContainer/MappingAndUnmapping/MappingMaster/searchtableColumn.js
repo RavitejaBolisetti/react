@@ -19,7 +19,7 @@ export const SearchtableColumnMapping = ({ handleButtonClick, actionButtonVisibi
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.bookingDate'),
             dataIndex: 'otfDate',
-            width: '20%',
+            width: '10%',
             render: (text) => converDateDayjs(text),
         }),
         tblPrepareColumns({
@@ -34,6 +34,7 @@ export const SearchtableColumnMapping = ({ handleButtonClick, actionButtonVisibi
             width: '10%',
             render: (text) => converDateDayjs(text),
         }),
+        
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.chassisNumber'),
             dataIndex: 'chassisNumber',

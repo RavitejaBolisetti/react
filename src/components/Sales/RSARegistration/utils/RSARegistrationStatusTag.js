@@ -5,6 +5,7 @@
  */
 import { Tag } from 'antd';
 import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons/AMCQueryButtons';
+import { RSA_CONSTANTS } from './RSA_CONSTANT';
 
 export const RSARegistrationStatusTag = (status) => {
     let tag = '';
@@ -26,6 +27,9 @@ export const RSARegistrationStatusTag = (status) => {
             break;
         case QUERY_BUTTONS_CONSTANTS.CANCELLED.key:
             tag = <Tag color="error">{QUERY_BUTTONS_CONSTANTS.CANCELLED.title}</Tag>;
+            break;
+        case RSA_CONSTANTS.UNDER_PROGRESS.key:
+            tag = <Tag color="warning">{RSA_CONSTANTS.UNDER_PROGRESS.title}</Tag>;
             break;
 
         default:
@@ -53,6 +57,9 @@ export const RSAStatusValues = (status) => {
             break;
         case QUERY_BUTTONS_CONSTANTS.CANCELLED.key:
             value = QUERY_BUTTONS_CONSTANTS.CANCELLED.title;
+            break;
+        case RSA_CONSTANTS.UNDER_PROGRESS.key:
+            value = RSA_CONSTANTS.UNDER_PROGRESS.title;
             break;
 
         default:

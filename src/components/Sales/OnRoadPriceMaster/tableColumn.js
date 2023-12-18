@@ -66,7 +66,7 @@ export const tableColumn = (handleButtonClick) => {
             title: translateContent('onRoadPriceMaster.label.status'),
             dataIndex: 'status',
             width: '15%',
-            render: (_, record) => OnRoadPriceStatusTag(record.status),
+            render: (status) => OnRoadPriceStatusTag(status),
         }),
 
         tblActionColumn({ handleButtonClick, styles }),

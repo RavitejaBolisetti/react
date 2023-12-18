@@ -4,8 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { withDrawer } from 'components/withDrawer';
-import { Row, Col, Input, Collapse, Space, Typography, Button, Form } from 'antd';
+import { withDrawer } from 'components/withDrawer'; 
+import { Row, Col, Collapse, Space, Typography, Form } from 'antd';
 import LeftPanel from 'components/common/LeftPanel';
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -13,7 +13,6 @@ import { DrawerFormButton } from 'components/common/Button';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
-const { Search } = Input;
 const fieldNames = { title: 'label', key: 'key' };
 
 let data = [
@@ -34,9 +33,6 @@ const WidgetDrawerMain = (props) => {
     const onCheck = (keys) => {
         setCheckedKeys(keys);
         setButtonData({ ...defaultBtnVisiblity, formBtnActive: true });
-    };
-    const handleSearchValue = (event) => {
-        setSearchValue(event.target.value);
     };
 
     const myProps = {

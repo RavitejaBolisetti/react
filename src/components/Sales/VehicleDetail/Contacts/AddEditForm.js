@@ -5,8 +5,9 @@
  */
 
 import { Button, Form, Row, Col, Select, Input, TimePicker } from 'antd';
+
 import { validateLettersWithWhitespaces, validateRequiredEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
 

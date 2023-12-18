@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { memo } from 'react';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS as SectionConstant } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 import { SoFormMaster } from './SoForms';
 import { MappingMaster } from './MappingAndUnmapping';
@@ -16,24 +16,24 @@ import { translateContent } from 'utils/translateContent';
 export const MasterContainer = (props) => {
     const { selectedKey } = props;
 
-    switch (selectedKey) {
-        case SectionConstant?.SO_MAPPING?.key:
+    switch (true) {
+        case selectedKey === SectionConstant?.SO_MAPPING?.key:
             return <MappingMaster {...props} />;
 
-        case SectionConstant?.SO_UNMAPPING?.key:
+        case selectedKey === SectionConstant?.SO_UNMAPPING?.key:
             return <UnMappingMaster {...props} />;
 
-        case SectionConstant?.SO_CANCELLATION?.key:
+        case selectedKey === SectionConstant?.SO_CANCELLATION?.key:
             return <UnmappingAndCancellation {...props} />;
 
-        case SectionConstant?.NO_DATA?.key:
+        case [SectionConstant?.BILLED_TO_BILLED?.key, SectionConstant?.BILLED_TO_LIVE?.key, SectionConstant?.LIVE_TO_LIVE?.key, SectionConstant?.RESERVE_QUOTA?.key]?.includes(selectedKey):
+            return <SoFormMaster {...props} />;
+
+        default:
             return (
                 <div className={styles?.emptyContainer}>
                     <NoDataFound information={translateContent('bookingSoMappUnmapp.label.noInfoMessage')} />
                 </div>
             );
-
-        default:
-            return <SoFormMaster {...props} />;
     }
 };

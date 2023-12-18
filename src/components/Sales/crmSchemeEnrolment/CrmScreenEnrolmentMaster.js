@@ -263,7 +263,7 @@ export const CrmScreenEnrolmentBase = (props) => {
     const onHandleRegistrationNumber = (value) => {
         const extraParams = [
             {
-                key: 'vin',
+                key: 'registrationNumber',
                 value: value,
             },
         ];

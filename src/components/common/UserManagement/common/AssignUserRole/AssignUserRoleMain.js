@@ -83,7 +83,7 @@ const AssignUserRole = (props) => {
             {
                 key: 'employeeCode',
                 title: 'employeeCode',
-                value: formData?.employeeCode,
+                value: formData?.userName,
                 name: 'employeeCode',
             },
             {
@@ -151,7 +151,7 @@ const AssignUserRole = (props) => {
             {
                 key: 'employeeCode',
                 title: 'employeeCode',
-                value: formData?.employeeCode,
+                value: userType === USER_TYPE_USER?.DEALER?.id ? formData?.userName : formData?.employeeCode,
                 name: 'employeeCode',
             },
         ];
@@ -159,12 +159,12 @@ const AssignUserRole = (props) => {
     };
 
     useEffect(() => {
-        if (userId && formData?.employeeCode) {
+        if (userId && (formData?.userName || formData?.employeeCode)) {
             fetchUserRoleFn();
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, formData]);
+    }, [userId, formData?.userName, formData?.employeeCode]);
 
     const handleSaveUserRoleAppliactions = () => {
         const onSuccess = (res) => {
@@ -187,7 +187,7 @@ const AssignUserRole = (props) => {
 
         const request = {
             id: dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null' ? dlrAppList?.role?.id : mnmAppList?.role?.id && mnmAppList?.role?.id !== 'null' ? mnmAppList?.role?.id : '',
-            employeeCode: formData?.employeeCode,
+            employeeCode: userType === USER_TYPE_USER?.DEALER?.id ? formData?.userName : formData?.employeeCode ,
             roleId: record?.roleId || selectedRoleId,
             status: true,
             applications: {

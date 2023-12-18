@@ -34,7 +34,7 @@
         }
 
         .ant-tabs.ant-tabs-top {
-            >.ant-tabs-nav {
+            > .ant-tabs-nav {
                 padding: 0 16px;
                 margin-bottom: 0;
 
@@ -48,30 +48,33 @@
     .notificationList {
         // min-height: 20vh;
         // max-height: 60vh;
-        height: 400;
+        height: 400px;
 
         // overflow-y: auto;
-        &::-webkit-scrollbar-track {
-            background-color: $primaryWhite;
-        }
-
-        &::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-            background-color: $primaryWhite;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background-color: $neutralGrey2;
-            border-radius: 10px;
-            border: 2px solid $primaryWhite;
-
-            &:hover {
-                border: 2px solid $neutralGrey2;
+        .notificationComponent {
+            &::-webkit-scrollbar-track {
+                background-color: $primaryWhite;
+            }
+        
+            &::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+                background-color: $primaryWhite;
+            }
+        
+            &::-webkit-scrollbar-thumb {
+                background-color: $neutralGrey2;
+                border-radius: 10px;
+                border: 2px solid $primaryWhite;
+        
+                &:hover {
+                    border: 2px solid $neutralGrey2;
+                }
             }
         }
-
+        
         & :global {
+            
             .ant-list {
                 .ant-list-item {
                     align-items: flex-start;
@@ -158,8 +161,8 @@
             }
         }
     }
+    
 }
-
 
 .notificationActionButtons {
     width: auto;

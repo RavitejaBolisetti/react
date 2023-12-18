@@ -124,7 +124,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productHierarchyDataList]);
 
     useEffect(() => {
-        if (userId && (!isProductDataLoaded || productCode !== selectedOrder?.modelCode) && selectedOrder?.modelCode && dealerLocationId) {
+        if (userId && (!isProductDataLoaded || productCode !== selectedOrder?.modelCode) && selectedOrder?.modelCode) {
             const extraParams = [
                 {
                     key: 'unit',

@@ -714,7 +714,7 @@ export const OtfMasterBase = (props) => {
     };
 
     const filterActiveMenu = (items) => {
-        return items?.filter((item) => item?.displayOnList && validateOTFMenu({ item, status: selectedOrder?.orderStatus, otfData }));
+        return items?.filter((item) => validateOTFMenu({ item, status: selectedOrder?.orderStatus, otfData }));
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));

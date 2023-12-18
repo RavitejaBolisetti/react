@@ -301,6 +301,7 @@
     > svg {
         margin-left: 5px;
         color: $semanticInfo;
+        width:25px;
     }
 }
 
@@ -313,8 +314,6 @@
                 p {
                     padding-left: 12px !important;
                 }
-
-                color: $primaryBlack;
             }
 
             border: 1px solid $semanticInfo !important;
@@ -2296,21 +2295,10 @@
                     line-height: 44px;
                     font-size: 30px;
                     background-color: $semanticSuccess;
-                    width: 40px;
-                    height: 40px;
-                    line-height: 44px;
-                    font-size: 30px;
-                    background-color: $semanticSuccess;
                 }
 
                 .ant-space-item {
                     h5 {
-                        margin-top: 0;
-                        margin-bottom: 0;
-                        color: $primaryBlack;
-                        font-weight: 500;
-                        font-size: 14px;
-                        line-height: 23px;
                         margin-top: 0;
                         margin-bottom: 0;
                         color: $primaryBlack;
@@ -2545,14 +2533,6 @@
         .customerName {
             & :global {
                 .ant-tag-success {
-                    margin-left: 22px;
-                    padding: 0 8px;
-                    vertical-align: bottom;
-                    border-radius: 2px;
-                    font-size: 12px;
-                    font-weight: 400;
-                    line-height: 20px;
-                    text-align: center;
                     margin-left: 22px;
                     padding: 0 8px;
                     vertical-align: bottom;
@@ -3346,8 +3326,9 @@
                         background: $neutralGrey0;
                     }
                 }
+                
             }
-        }
+        }        
     }
 }
 

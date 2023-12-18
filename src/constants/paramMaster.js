@@ -221,15 +221,15 @@ export const PARAM_MASTER = {
         title: 'Vehicle Price Search',
     },
     LTC: {
-        id: 'LTC',
+        id: '012',
         title: 'Lost to Competition',
     },
     PROCAN: {
-        id: 'PROCAN',
+        id: '013',
         title: 'Product Change',
     },
     LOMMD: {
-        id: 'LOMMD',
+        id: '010',
         title: 'Lost other M&M Dealer',
     },
     SALE_TYPE: {
@@ -508,5 +508,17 @@ export const PARAM_MASTER = {
     DEL_NOTE_CANCL_STATS: {
         id: 'DEL_NOTE_CANCL_STATS',
         title: 'Delivery Note Cancellation',
+    },
+    TYRE_MAKE: {
+        id: 'TYRE_MAKE',
+        title: 'Product Details Tyre Make',
+    },
+    BATTERY_MAKE: {
+        id: 'BATTERY_MAKE',
+        title: 'Product Details Battery Make',
+    },
+    OTF_SO_MAPPING_UNMAPPING_SER: {
+        id: 'OTF_SO_MAPPING_UNMAPPING_SER',
+        title: 'Otf so Mapping and unmapping Search',
     },
 };

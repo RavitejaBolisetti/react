@@ -137,7 +137,7 @@ const OtfDetailsMasterBase = (props) => {
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION , onSave: true });
             fetchOTFDetail({ customURL, fetchOTFDetail, setIsLoading: listShowLoading, userId, extraParams });
         };
 

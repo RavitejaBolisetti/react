@@ -32,7 +32,7 @@ const responseMessageHandler = (message) => {
     return '-';
 };
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, handlePrintDownload, record } = props;
+    const { FormActionButton, handlePrintDownload, record, handleDownloadFile } = props;
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -82,7 +82,7 @@ export const ThankYouMaster = (props) => {
                                     {record?.res?.data?.registrationDetails?.registrationInformation?.saleType === SALE_TYPE?.PAID?.key
                                         ? shieldDocName?.map((type) => (
                                               <Popover content={'Coming Soon'} trigger={type?.id === 3 ? 'hover' : 'none'}>
-                                                  <Button onClick={() => (type?.id !== 3 ? handlePrintDownload({ ...record, typeRecord: type?.id === 1 ? SHIELD_REPORT_DOCUMENT_TYPE?.INVOICE_SHIELD?.value : type?.id === 2 ? SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value : null }) : null)} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
+                                                  <Button onClick={() => (type?.id === 1 ? handleDownloadFile(record?.res?.data?.registrationDetails?.registrationInformation?.documentId) : handlePrintDownload({ ...record, typeRecord: type?.id === 2 ? SHIELD_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_SHIELD?.value : null }))} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
                                                       {type?.name}
                                                   </Button>
                                               </Popover>

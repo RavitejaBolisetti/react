@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
                 VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
                 VehicleDetailsServiceLov: { isFilteredListLoaded: isVehicleServiceLoaded = false, isLoading: isVehicleServiceLoading, filteredListData: vehicleServiceData },
             },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
         },
         common: {
             Header: { dealerLocationId },
@@ -43,7 +43,6 @@ const mapStateToProps = (state) => {
         otfVehicleDetailData: vehicleDetailData,
         isLoading,
         moduleTitle,
-        productAttributeData,
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
 
@@ -73,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductList: productHierarchyDataActions.fetchList,
             ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
             fetchProductDetail: productHierarchyDataActions.fetchDetail,
-            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            fetchProductAttribiteDetail: productHierarchyDataActions.fetchProductAttribiteDetail,
 
             fetchServiceLov: otfvehicleDetailsServiceLovDataActions.fetchFilteredList,
             serviceLoading: otfvehicleDetailsServiceLovDataActions.listShowLoading,
@@ -85,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, productAttributeData, fetchProductLovCode, isLoading, saveData } = props;
+    const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, fetchProductAttribiteDetail, isLoading, saveData } = props;
     const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
@@ -98,6 +97,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [openAccordian, setOpenAccordian] = useState('1');
 
     const [toolTipContent, setToolTipContent] = useState();
+    const [revisedModelInformation, setRevisedModelInformation] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
     const [vehicleDetailData, setVehicleDetailData] = useState();
@@ -107,6 +107,9 @@ const VehicleDetailsMasterMain = (props) => {
     const [confirmRequest, setConfirmRequest] = useState();
     const [changeModel, setChangeModel] = useState(false);
     const [onModelSubmit, setOnModelSubmit] = useState(false);
+    const [productAttributeData, setProductAttributeData] = useState(false);
+    const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
+    
     const onSuccessAction = () => {
         return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -211,45 +214,60 @@ const VehicleDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resetData]);
 
+    const getProductAttributeDetail = (value, fnSetData) => {
+        const extraParams = [
+            {
+                key: 'prodctCode',
+                value,
+            },
+        ];
+
+        const onSuccessAction = (res) => {
+            fnSetData(res?.[0]);
+        };
+
+        fetchProductAttribiteDetail({ setIsLoading: () => {}, userId, onErrorAction, onSuccessAction, extraParams });
+    };
+
+    const refactorProductAttributeData = (productData) => {
+        return (
+            <div>
+                <p>
+                    {translateContent('commonModules.toolTip.color')} - <span>{productData['color'] ?? 'NA'}</span>
+                </p>
+                <p>
+                    {translateContent('commonModules.toolTip.seating')} - <span>{productData['seatingCapacity'] ?? 'NA'}</span>
+                </p>
+                <p>
+                    {translateContent('commonModules.toolTip.fuel')} - <span>{productData['fuel'] ?? 'NA'}</span>
+                </p>
+                <p>
+                    {translateContent('commonModules.toolTip.variant')} - <span>{productData['variant'] ?? 'NA'}</span>
+                </p>
+                <p>
+                    {translateContent('commonModules.toolTip.name')} - <span>{productData['name'] ?? 'NA'}</span>
+                </p>
+            </div>
+        );
+    };
+
     useEffect(() => {
-        if (userId && isProductHierarchyDataLoaded && productAttributeData?.length > 0) {
-            setToolTipContent(
-                <div>
-                    <p>
-                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
-                    </p>
-                </div>
-            );
+        if (productAttributeData) {
+            setToolTipContent(refactorProductAttributeData(productAttributeData));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
+    }, [productAttributeData]);
+
+    useEffect(() => {
+        if (revisedProductAttributeData) {
+            setRevisedModelInformation(refactorProductAttributeData(revisedProductAttributeData));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [revisedProductAttributeData]);
 
     useEffect(() => {
         if (vehicleDetailData?.modelCode && !isProductHierarchyDataLoaded) {
-            const lovExtraParams = [
-                {
-                    key: 'prodctCode',
-                    value: vehicleDetailData?.modelCode,
-                },
-            ];
-
-            const onErrorActionProduct = () => {
-                // resetProductLov();
-            };
-
-            fetchProductLovCode({ setIsLoading: () => {}, userId, onErrorAction: onErrorActionProduct, extraParams: lovExtraParams });
+            getProductAttributeDetail(vehicleDetailData?.modelCode, setProductAttributeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -326,7 +344,7 @@ const VehicleDetailsMasterMain = (props) => {
                     form.resetFields();
                     resetData();
                     setRefreshData(!refreshData);
-                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
                     setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
                 };
 
@@ -419,6 +437,10 @@ const VehicleDetailsMasterMain = (props) => {
         setRefreshData,
         refreshData,
         setFormData,
+        revisedModelInformation,
+        setRevisedModelInformation,
+        getProductAttributeDetail,
+        setRevisedProductAttributeData,
     };
 
     const viewProps = {
@@ -429,12 +451,15 @@ const VehicleDetailsMasterMain = (props) => {
         onChange,
         styles,
         formData,
-        toolTipContent,
-        setToolTipContent,
+
         typeData,
         isLoading,
         isOTFModule,
         showOptionalService,
+
+        toolTipContent,
+        setToolTipContent,
+        revisedModelInformation,
     };
 
     return (

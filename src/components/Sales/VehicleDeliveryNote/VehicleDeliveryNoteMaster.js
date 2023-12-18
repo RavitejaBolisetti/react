@@ -373,6 +373,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             return false;
         }
         const onSuccessAction = (res) => {
+
             setSelectedOrder((prev) => ({ ...prev, customerName: res?.data?.customerName, customerId: res?.data?.customerId }));
             setButtonData({ ...buttonData, formBtnActive: true });
             if (res?.data?.customerId && res?.data?.customerName) {
@@ -392,7 +393,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         ];
         fetchCustomerListData({ setIsLoading: listCustomerListLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
     };
-    console.log('isCustomerLoading', isCustomerLoading);
     const handleDeliveryNoteTypeChange = (buttonName) => {
         const buttonKey = buttonName?.key;
         setShowDataLoading(true);
@@ -611,8 +611,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             const messageList = res?.responseMessage?.split(' ');
             const Number = soldByDealer ? res?.responseMessage?.split('. ')?.[1] : messageList[messageList?.length - 1];
-            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage, vehicleDeliveryNote: Number, deliveryNoteDate: dayjs()?.format(dateFormatView), deliveryNoteStatus: 'D' }));
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage, vehicleDeliveryNote: Number, deliveryNoteDate: dayjs()?.format(dateFormatView), deliveryNoteStatus: 'D', deliveryHdrId: res?.data?.deliveryHdrId }));
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
+            setFormValuesChanges(false);
+            setlocalFormValueChange(false);
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -925,6 +927,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         onCloseAction: handleCancelUnsaveDataModal,
         onSubmitAction: itemKey?.id ? handleLocalSaveClose : onCloseAction,
     };
+
     return (
         <>
             <VehicleDeliveryNoteFilter {...advanceFilterResultProps} />

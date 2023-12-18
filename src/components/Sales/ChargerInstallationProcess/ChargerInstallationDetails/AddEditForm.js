@@ -23,7 +23,7 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, disabled, setDisabled, chargerInstallationMasterData, isLoading, formActionType, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
+    const { isChargerSearchLoading, formData, typeData, disabled, setDisabled, chargerInstallationMasterData, isLoading, formActionType, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
 
     const viewProps = {
         bordered: false,
@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={18}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formData?.bookingNumber || formData?.otfNumber} label={translateContent('chargerInstallationDetails.label.bookingNumber')} name="otfNumber" rules={[validateRequiredInputField(translateContent('chargerInstallationDetails.validation.bookingNumber'))]}>
-                                                <Search maxLength={50} placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingNumber'))} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
+                                                <Search maxLength={50} placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingNumber'))} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} loading={isChargerSearchLoading} />
                                             </Form.Item>
                                         </Col>
                                         {chargerDetails && (

@@ -23,7 +23,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const IssueIndentMasterMain = (props) => {
-    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload } = props;
+    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload, setReportDetail } = props;
 
     const defaultVisibility = {
         canCancel: true,
@@ -113,7 +113,7 @@ const IssueIndentMasterMain = (props) => {
 
     const onFinish = (values) => {
         if (!values?.engineNumber) {
-            showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Search VIN to continue' });
+            showGlobalNotification({ message: translateContent('stockTransferIndent.issueIndent.validation.searchVinToContinue') });
             return;
         }
         const { invoiceDate, invoiceNumber, ...rest } = values;
@@ -121,6 +121,7 @@ const IssueIndentMasterMain = (props) => {
         const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.oemInvoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
 
         const onSuccess = (res) => {
+            console.log(`res`, res);
             issueForm.resetFields();
             setIssueModal(false);
             resetVinDetails();
@@ -214,19 +215,19 @@ const IssueIndentMasterMain = (props) => {
                                                         <Space size="small" direction="vertical">
                                                             <div>
                                                                 <Text>
-                                                                    {translateContent('stockTransferIndent.isueIndent.label.stIssueNo')} : {element?.issueNumber ? element?.issueNumber : 'NA'}
+                                                                    {translateContent('stockTransferIndent.issueIndent.label.stIssueNo')} : {element?.issueNumber ? element?.issueNumber : 'NA'}
                                                                 </Text>
                                                                 <Text>|</Text>
                                                                 <Text>
-                                                                    {translateContent('stockTransferIndent.isueIndent.label.vin')}: {element?.vin ? element?.vin : 'NA'}
+                                                                    {translateContent('stockTransferIndent.issueIndent.label.vin')}: {element?.vin ? element?.vin : 'NA'}
                                                                 </Text>
                                                             </div>
                                                             <Text type="secondary">
-                                                                {translateContent('stockTransferIndent.isueIndent.label.status')} : {typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value}
+                                                                {translateContent('stockTransferIndent.issueIndent.label.status')} : {typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value}
                                                             </Text>
                                                         </Space>
                                                         {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
-                                                            <Button danger icon={<FiDownload />} onClick={() => handlePrintDownload(element)}>
+                                                            <Button danger icon={<FiDownload />} onClick={() => {setReportDetail();  handlePrintDownload(element)}}>
                                                                 {BUTTON_NAME_CONSTANTS?.PRINT?.name}
                                                             </Button>
                                                         )}

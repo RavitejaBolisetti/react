@@ -7,11 +7,13 @@ export const ONROAD_PRICE_MASTER_STATUS = {
     ACTIONED: {
         id: 1,
         key: 'APV',
+        key2:'Approved',
         title: 'Actioned',
     },
     UNACTIONED: {
         id: 2,
-        key: 'NA',
+        key: 'U',
+        key2:'Unapproved',
         title: 'UnActioned',
     },
     

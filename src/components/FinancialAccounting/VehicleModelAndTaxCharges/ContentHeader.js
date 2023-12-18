@@ -9,7 +9,6 @@ import styles from 'assets/sass/app.module.scss';
 
 import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { translateContent } from 'utils/translateContent';
 
