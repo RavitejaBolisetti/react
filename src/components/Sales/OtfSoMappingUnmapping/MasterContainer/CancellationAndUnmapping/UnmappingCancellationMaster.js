@@ -92,7 +92,9 @@ const UnmappingAndCancellationMain = (props) => {
     const showErrorMessageCancleSo = (buttonAction, record) => {
         if (buttonAction === BUTTON_NAME?.CANCEL?.key && record?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.CRD_1 && record?.otfNumber) {
             showGlobalNotification({ message: translateContent('bookingSoMapping.validation.mappedSoCancel') });
+            return true;
         }
+        return false;
     };
     const handleButtonClick = ({ record = null, buttonAction }) => {
         showErrorMessageCancleSo(buttonAction, record);
@@ -132,10 +134,7 @@ const UnmappingAndCancellationMain = (props) => {
     };
 
     const onFinish = (values) => {
-        if (buttonType === BUTTON_NAME?.CANCEL?.key && formData?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.CRD_1 && formData?.otfNumber) {
-            showGlobalNotification({ message: translateContent('bookingSoMapping.validation.mappedSoCancel') });
-        }
-        showErrorMessageCancleSo(buttonType,)
+        if (showErrorMessageCancleSo(buttonType, formData)) return false;
         const data = { otfNumber: values?.otfNumber, soNumber: values?.soNumber || '', action: formData?.buttonAction, cancellationRemarks: values?.cancellationRemarks, mapStatusCode: selectedKey };
         const onSuccess = (res) => {
             setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key });
