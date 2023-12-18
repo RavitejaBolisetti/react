@@ -18,15 +18,13 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
-import { STATUS as MODEL_VARIANT } from 'constants/modelVariant';
 import { ChangeModelVariantMaster } from './ChangeModelVariant';
-import { TbRefresh } from 'react-icons/tb';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { handleOtfSoMappingHistory, typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
+    const { showChangeModel, handleOtfSoMappingHistory, typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -73,7 +71,7 @@ const ViewDetailMain = (props) => {
                                 </Col>
                             </Row>
                             <Divider />
-                            {formData?.sapStatusResponseCode !== MODEL_VARIANT?.SUCCESS?.key && (
+                            {showChangeModel && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <ChangeModelVariantMaster {...props} />

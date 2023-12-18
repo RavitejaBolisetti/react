@@ -19,6 +19,7 @@ import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 import styles from 'assets/sass/app.module.scss';
 import { withSpinner } from 'components/withSpinner';
 import { translateContent } from 'utils/translateContent';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -105,11 +106,13 @@ const VehicleDetailsMasterMain = (props) => {
     const [customerNameList, setCustomerNameList] = useState({});
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
-    const [changeModel, setChangeModel] = useState(false);
+    const [showChangeModel, setShowChangeModel] = useState(false);
     const [onModelSubmit, setOnModelSubmit] = useState(false);
     const [productAttributeData, setProductAttributeData] = useState(false);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
-    
+
+    console.log('showChangeModel', showChangeModel);
+
     const onSuccessAction = () => {
         return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -140,6 +143,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (vehicleDetailData) {
             setFormData(vehicleDetailData);
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
+            setShowChangeModel(!!vehicleDetailData?.revisedModel && vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -427,8 +431,8 @@ const VehicleDetailsMasterMain = (props) => {
         setNameChangeRequested,
         confirmRequest,
         setConfirmRequest,
-        changeModel,
-        setChangeModel,
+        showChangeModel,
+        setShowChangeModel,
         isVehicleServiceLoaded,
         fetchServiceLov,
         serviceLoading,
@@ -460,6 +464,10 @@ const VehicleDetailsMasterMain = (props) => {
         toolTipContent,
         setToolTipContent,
         revisedModelInformation,
+        getProductAttributeDetail,
+        revisedProductAttributeData,
+        setRevisedProductAttributeData,
+        showChangeModel,
     };
 
     return (

@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ChangeModelVariantMasterBase = (props) => {
     const { typeData, setCustomerNameList, selectedRecordId, setButtonData, buttonData, setFormData } = props;
     const {
-        formActionType: { editMode, viewMode },
+        formActionType: { addMode, editMode, viewMode },
         formData,
         userId,
         showGlobalNotification,
@@ -63,9 +63,11 @@ const ChangeModelVariantMasterBase = (props) => {
         filterVehicleData,
         confirmRequest,
         setConfirmRequest,
+        getProductAttributeDetail,
+        setRevisedProductAttributeData,
     } = props;
 
-    const { selectedCustomerId, setChangeModel } = props;
+    const { selectedCustomerId, setShowChangeModel } = props;
     const vehicleModelChangeRequest = formData?.vehicleModelChangeRequest || false;
 
     const [uploadedFileName, setUploadedFileName] = useState('');
@@ -75,6 +77,13 @@ const ChangeModelVariantMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
     };
+
+    useEffect(() => {
+        if (formData?.revisedModel) {
+            getProductAttributeDetail(formData?.revisedModel, setRevisedProductAttributeData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.revisedModel]);
 
     const nameChangeHistoryItem = useMemo(() => {
         const vehicleModelItem = [
@@ -144,7 +153,7 @@ const ChangeModelVariantMasterBase = (props) => {
                         setButtonData({ ...buttonData, formBtnActive: true });
                         setOnModelSubmit(false);
                         setFormData(res?.data);
-                        setChangeModel(false);
+                        setShowChangeModel(false);
                         showGlobalNotification({ notificationType: 'success', title: 'Request Generated Successfully', message: 'Model Change Request has been submitted successfully' });
                     }
                     if (res?.data?.sapStatusResponseCode === STATUS?.REJECTED?.key) {
@@ -185,9 +194,9 @@ const ChangeModelVariantMasterBase = (props) => {
             }
         }
     };
+
     return (
-        !viewMode &&
-        modelStatus === STATUS?.PENDING?.key && (
+        <>
             <div className={`${styles.cardInsideBox} ${styles.pad10}`}>
                 <Row justify="space-between" className={styles.fullWidth}>
                     <div className={styles.marB10}>
@@ -224,7 +233,7 @@ const ChangeModelVariantMasterBase = (props) => {
                     })
                 )}
             </div>
-        )
+        </>
     );
 };
 export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(ChangeModelVariantMasterBase);
