@@ -140,8 +140,9 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData) {
             setFormData(vehicleDetailData);
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: null });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
-            setShowChangeModel(!!vehicleDetailData?.revisedModel && vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
+            vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -374,13 +375,6 @@ const VehicleDetailsMasterMain = (props) => {
                 break;
         }
     };
-
-    // const handlePriceTypeChange = (value, option) => {
-    //     setPriceType(value);
-    //     if (option?.type === 'D') {
-    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This value has been deprecated. Please select another value' });
-    //     }
-    // };
 
     const formProps = {
         ...props,
