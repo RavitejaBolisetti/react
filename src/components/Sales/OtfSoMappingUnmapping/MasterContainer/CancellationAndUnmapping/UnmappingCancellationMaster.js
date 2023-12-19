@@ -89,15 +89,16 @@ const UnmappingAndCancellationMain = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const showErrorMessageCancleSo = (buttonAction, record) => {
+    const showErrorMessageCancleSo = ({ record = null, buttonAction }) => {
         if (buttonAction === BUTTON_NAME?.CANCEL?.key && record?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.CRD_1 && record?.otfNumber) {
             showGlobalNotification({ message: translateContent('bookingSoMapping.validation.mappedSoCancel') });
             return true;
         }
         return false;
     };
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        showErrorMessageCancleSo(buttonAction, record);
+    const handleButtonClick = (props) => {
+        const { record = null, buttonAction } = props;
+        if (showErrorMessageCancleSo({ ...props })) return false;
         record && setFormData({ ...record, buttonAction });
         buttonAction && setButtonType(buttonAction);
         buttonAction === BUTTON_NAME?.UNMAP?.key && setButtonData({ ...buttonData, formBtnActive: true });
@@ -134,7 +135,6 @@ const UnmappingAndCancellationMain = (props) => {
     };
 
     const onFinish = (values) => {
-        if (showErrorMessageCancleSo(buttonType, formData)) return false;
         const data = { otfNumber: values?.otfNumber, soNumber: values?.soNumber || '', action: formData?.buttonAction, cancellationRemarks: values?.cancellationRemarks, mapStatusCode: selectedKey };
         const onSuccess = (res) => {
             setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key });
