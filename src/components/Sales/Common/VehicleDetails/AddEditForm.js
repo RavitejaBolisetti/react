@@ -36,7 +36,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, changeModel, setChangeModel, onModelSubmit, setOnModelSubmit } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, showChangeModel, setShowChangeModel, onModelSubmit, setOnModelSubmit } = props;
     const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
 
     const [optionForm] = Form.useForm();
@@ -57,6 +57,7 @@ const AddEditFormMain = (props) => {
                 vehicleUsageType: findUsageType(formData?.vehicleUsageType),
                 vehicleAllocatedStatus: getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'),
             });
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -131,7 +132,7 @@ const AddEditFormMain = (props) => {
         onModelSubmit,
         setOnModelSubmit,
         setFilterVehicleData,
-        setChangeModel,
+        setShowChangeModel,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -186,7 +187,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeModel = () => {
-        setChangeModel(true);
+        setShowChangeModel(true);
         setRevisedModelInformation({ ...toolTipContent });
     };
 
@@ -230,7 +231,7 @@ const AddEditFormMain = (props) => {
                                 )}
                             </Row>
                             <Divider />
-                            {changeModel && (
+                            {showChangeModel && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <ChangeModelVariantMaster {...myProp} />
