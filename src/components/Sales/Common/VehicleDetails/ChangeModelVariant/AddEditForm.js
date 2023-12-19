@@ -49,6 +49,7 @@ const AddEditFormMain = (props) => {
         const onSuccess = (res) => {
             setModelStatus(res?.data?.status);
             setProductDetailRefresh(!productDetailRefresh);
+            setShowChangeModel(false);
             onSuccessAction && onSuccessAction();
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
                 setRefreshData(!refreshData);
@@ -111,7 +112,6 @@ const AddEditFormMain = (props) => {
     };
 
     const onSuccessAction = () => {
-        setShowChangeModel(false);
         form.setFieldsValue({ ['model' + formType]: formData?.model });
         form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
     };
