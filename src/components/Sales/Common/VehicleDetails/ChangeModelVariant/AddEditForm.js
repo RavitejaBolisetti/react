@@ -53,7 +53,7 @@ const AddEditFormMain = (props) => {
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
                 setShowChangeModel(false);
                 setRefreshData(!refreshData);
-                setButtonData({ ...buttonData, formBtnActive: true });
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
             } else {
                 setButtonData({ ...buttonData, formBtnActive: false });
                 showGlobalNotification({ notificationType: res?.data?.status ? (res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error') : 'success', title: res?.data?.status ? STATUS?.[res?.data?.status]?.title : 'SUCCESS', message: res.responseMessage });
@@ -111,7 +111,7 @@ const AddEditFormMain = (props) => {
         });
     };
 
-    const onSuccessAction = () => {        
+    const onSuccessAction = () => {
         setShowChangeModel(false);
         form.setFieldsValue({ ['model' + formType]: formData?.model });
         form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
