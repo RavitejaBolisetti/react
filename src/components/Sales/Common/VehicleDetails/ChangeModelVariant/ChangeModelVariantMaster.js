@@ -71,19 +71,20 @@ const ChangeModelVariantMasterBase = (props) => {
     const vehicleModelChangeRequest = formData?.vehicleModelChangeRequest || false;
 
     const [uploadedFileName, setUploadedFileName] = useState('');
-    const [modelStatus, setModelStatus] = useState(formData?.sapStatusResponseCode || STATUS?.PENDING?.key);
     const [modelChangeItemList, setModelChangeItemList] = useState([]);
+    const [modelStatus, setModelStatus] = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message: message });
     };
 
     useEffect(() => {
+        formData?.sapStatusResponseCode && setModelStatus(formData?.sapStatusResponseCode);
         if (formData?.revisedModel) {
             getProductAttributeDetail(formData?.revisedModel, setRevisedProductAttributeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.revisedModel]);
+    }, [formData]);
 
     const nameChangeHistoryItem = useMemo(() => {
         const vehicleModelItem = [
@@ -194,7 +195,7 @@ const ChangeModelVariantMasterBase = (props) => {
             }
         }
     };
-    const isReviedModelPending = [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
     return (
         <>
             <div className={`${styles.cardInsideBox} ${styles.pad10}`}>

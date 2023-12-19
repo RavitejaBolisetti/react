@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Button } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -42,9 +42,11 @@ const AddEditFormMain = (props) => {
                         modelCode: vehicleModelChangeRequest?.modelCode,
                         otfId: selectedRecordId,
                     };
+
                     const onError = (message) => {
                         showGlobalNotification({ message });
                     };
+
                     const onSuccess = (res) => {
                         setOnModelSubmit(true);
                         setModelStatus(res?.data?.status);
@@ -56,6 +58,7 @@ const AddEditFormMain = (props) => {
                             showGlobalNotification({ notificationType: res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error', title: STATUS?.[res?.data?.status]?.title, message: res.responseMessage });
                         }
                     };
+
                     const requestData = {
                         data: data,
                         customURL: BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT,
@@ -142,21 +145,21 @@ const AddEditFormMain = (props) => {
         handleSelectTreeClick,
         treeExpandedKeys: [revisedProductAttributeData?.model],
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
-        // loading: !viewOnly ? isProductDataLoading : false,
-        treeDisabled: [STATUS?.PENDING?.key]?.includes(modelStatus),
+        treeDisabled: formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus),
     };
-    const isReviedModelPending = [STATUS?.PENDING?.key]?.includes(modelStatus);
+    
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key]?.includes(modelStatus);
     return (
         <div className={styles.cardInnerBox}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.model')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.model')} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                     {revisedModelInformation && <div className={styles.modelTooltip}>{addToolTip(revisedModelInformation, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                 </Col>
                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.revisedModel || formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -165,11 +168,11 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
                         {modelStatus === STATUS?.REJECTED?.key ? (
-                            <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
+                            <Button type="primary" form="myNameForm" onClick={onHandleSave}>
                                 {translateContent('global.buttons.retry')}
                             </Button>
                         ) : (
-                            <Button type="primary" form="myNameForm" onClick={onHandleSave} /*disabled={modelChange}*/>
+                            <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
                                 {translateContent('global.buttons.submit')}
                             </Button>
                         )}

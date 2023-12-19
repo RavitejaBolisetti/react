@@ -25,7 +25,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { modelStatus, handleOtfSoMappingHistory, typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
+    const { handleOtfSoMappingHistory, typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -37,8 +37,8 @@ const ViewDetailMain = (props) => {
         ...viewProps,
         column: { xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 },
     };
-    
-    const isReviedModelPending = [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
+
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
     return (
         <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
