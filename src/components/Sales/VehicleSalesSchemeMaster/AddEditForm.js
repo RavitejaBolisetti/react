@@ -22,7 +22,6 @@ import { productTableColumn } from './productTableColumn';
 import { ProductHierarchyModal } from './ProductHierarchyModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { ViewDetail } from './ViewDetail';
-import { disablePastDate } from 'utils/disableDate';
 import { DrawerFormButton } from 'components/common/Button';
 import { OFFER_TYPE_CONSTANTS } from './constants/offerTypeCodeConstants';
 import { SCHEME_TYPE_CONSTANTS } from './constants/schemeTypeConstants';
@@ -157,7 +156,7 @@ const AddEditFormMain = (props) => {
         let vehicleSchemeData = schemeData?.find((el) => el.schemeCode === value);
         addSchemeForm.setFieldsValue({ amountWithoutTax: vehicleSchemeData?.schemeAmount, amountWithTax: vehicleSchemeData?.schemeTaxAmount });
     };
-    console.log(saleService);
+
     const onFinishAddZoneDetails = (values) => {
         setOpenAccordian([2]);
 

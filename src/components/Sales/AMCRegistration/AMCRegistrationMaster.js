@@ -834,8 +834,6 @@ export const AMCRegistrationMasterBase = (props) => {
         cancelAMCForm.resetFields();
     };
 
-    console.log('🚀 ~ file: AMCRegistrationMaster.js:838 ~ AMCRegistrationMasterBase ~ selectedOrder:', selectedOrder);
-
     const containerProps = {
         record: selectedOrder,
         form,

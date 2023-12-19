@@ -110,6 +110,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [onModelSubmit, setOnModelSubmit] = useState(false);
     const [productAttributeData, setProductAttributeData] = useState(false);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
+    const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
     const onSuccessAction = () => {
         return false;
@@ -140,9 +141,12 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData) {
             setFormData(vehicleDetailData);
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: null });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911' });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
             vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
+            // vehicleDetailData?.sapStatusResponseCode && setSapStatusResponseCode(vehicleDetailData?.sapStatusResponseCode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -164,7 +168,7 @@ const VehicleDetailsMasterMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedRecordId, isVehicleServiceLoaded]);
+    }, [userId, selectedRecordId, isVehicleServiceLoaded, productDetailRefresh]);
 
     useEffect(() => {
         setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
@@ -437,6 +441,8 @@ const VehicleDetailsMasterMain = (props) => {
         setRevisedModelInformation,
         getProductAttributeDetail,
         setRevisedProductAttributeData,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     const viewProps = {
@@ -447,12 +453,10 @@ const VehicleDetailsMasterMain = (props) => {
         onChange,
         styles,
         formData,
-
         typeData,
         isLoading,
         isOTFModule,
         showOptionalService,
-
         toolTipContent,
         setToolTipContent,
         revisedModelInformation,
@@ -460,6 +464,8 @@ const VehicleDetailsMasterMain = (props) => {
         revisedProductAttributeData,
         setRevisedProductAttributeData,
         showChangeModel,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     return (

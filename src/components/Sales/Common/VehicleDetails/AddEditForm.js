@@ -224,7 +224,7 @@ const AddEditFormMain = (props) => {
 
                                 {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
                                     <Col xs={24} sm={24} md={3} lg={3} xl={3} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={onModelSubmit}>
+                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={showChangeModel}>
                                             Change
                                         </Button>
                                     </Col>

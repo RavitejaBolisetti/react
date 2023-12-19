@@ -20,12 +20,55 @@ import { STATUS } from 'constants/modelVariant';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { revisedProductAttributeData, formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setShowChangeModel, revisedModelInformation, onModelSubmit, setOnModelSubmit } = props;
-    const { getProductAttributeDetail, setRevisedProductAttributeData, form, modelChangeItemList, setModelChangeItemList, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
-    const [selectedTreeKey, setSelectedTreeKey] = useState(revisedProductAttributeData?.model || formData?.model);
+    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setShowChangeModel, revisedModelInformation } = props;
+    const { productDetailRefresh, setProductDetailRefresh, getProductAttributeDetail, setRevisedProductAttributeData, form, modelChangeItemList, setModelChangeItemList, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const [selectedTreeKey, setSelectedTreeKey] = useState();
     const [modelChange, setModelChange] = useState(true);
     const formType = editMode ? 'New' : '';
     const modelChangeField = ['model' + formType, 'modelCode' + formType];
+
+    useEffect(() => {
+        if (formData?.revisedModel) {
+            form.setFieldsValue({ ['model' + formType]: formData?.revisedModel });
+            form.setFieldsValue({ ['modelCode' + formType]: formData?.revisedModel });
+            setSelectedTreeKey(formData?.revisedModel);
+        } else {
+            form.setFieldsValue({ ['model' + formType]: undefined, ['modelCode' + formType]: undefined });
+            form.setFieldsValue({ ['model' + formType]: formData?.model });
+            form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
+            setSelectedTreeKey(formData?.model);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const onError = (message) => {
+        showGlobalNotification({ message });
+    };
+
+    const modelChangeService = (data) => {
+        const onSuccess = (res) => {
+            setModelStatus(res?.data?.status);
+            setProductDetailRefresh(!productDetailRefresh);
+            if (res?.data?.status === STATUS?.SUCCESS?.key) {
+                setRefreshData(!refreshData);
+                setButtonData({ ...buttonData, formBtnActive: true });
+            } else {
+                setButtonData({ ...buttonData, formBtnActive: false });
+                showGlobalNotification({ notificationType: res?.data?.status ? (res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error') : 'success', title: res?.data?.status ? STATUS?.[res?.data?.status]?.title : 'SUCCESS', message: res.responseMessage });
+            }
+        };
+
+        const requestData = {
+            data: data,
+            customURL: BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
+    };
 
     const onHandleSave = () => {
         form?.validateFields(modelChangeField)
@@ -39,36 +82,10 @@ const AddEditFormMain = (props) => {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
                 } else {
                     const data = {
-                        modelCode: vehicleModelChangeRequest?.modelCode,
                         otfId: selectedRecordId,
+                        modelCode: vehicleModelChangeRequest?.modelCode,
                     };
-
-                    const onError = (message) => {
-                        showGlobalNotification({ message });
-                    };
-
-                    const onSuccess = (res) => {
-                        setOnModelSubmit(true);
-                        setModelStatus(res?.data?.status);
-                        if (res?.data?.status === STATUS?.SUCCESS?.key) {
-                            setButtonData({ ...buttonData, formBtnActive: true });
-                        } else {
-                            setButtonData({ ...buttonData, formBtnActive: false });
-                            setRefreshData(!refreshData);
-                            showGlobalNotification({ notificationType: res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error', title: STATUS?.[res?.data?.status]?.title, message: res.responseMessage });
-                        }
-                    };
-
-                    const requestData = {
-                        data: data,
-                        customURL: BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT,
-                        method: 'put',
-                        setIsLoading: listShowLoading,
-                        userId,
-                        onError,
-                        onSuccess,
-                    };
-                    saveData(requestData);
+                    modelChangeService(data);
                 }
             })
             .catch((err) => console.error(err));
@@ -96,11 +113,25 @@ const AddEditFormMain = (props) => {
     };
 
     const onSubmitAction = () => {
-        setConfirmRequest({
-            ...confirmRequest,
-            isVisible: false,
-        });
-        setShowChangeModel(false);
+        if (formData?.revisedModel) {
+            setConfirmRequest({
+                ...confirmRequest,
+                isVisible: false,
+            });
+
+            const data = {
+                status: 'CNCL',
+                otfId: selectedRecordId,
+            };
+
+            modelChangeService(data);
+        } else {
+            setConfirmRequest({
+                ...confirmRequest,
+                isVisible: false,
+            });
+            setShowChangeModel(false);
+        }
     };
 
     const handleSelectTreeClick = (value) => {
@@ -143,11 +174,11 @@ const AddEditFormMain = (props) => {
         defaultParent: false,
         selectedTreeSelectKey: selectedTreeKey,
         handleSelectTreeClick,
-        treeExpandedKeys: [revisedProductAttributeData?.model],
+        treeExpandedKeys: [selectedTreeKey],
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
         treeDisabled: formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus),
     };
-    
+
     const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key]?.includes(modelStatus);
     return (
         <div className={styles.cardInnerBox}>
@@ -159,7 +190,7 @@ const AddEditFormMain = (props) => {
                     {revisedModelInformation && <div className={styles.modelTooltip}>{addToolTip(revisedModelInformation, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                 </Col>
                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.revisedModel || formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
                     </Form.Item>
                 </Col>

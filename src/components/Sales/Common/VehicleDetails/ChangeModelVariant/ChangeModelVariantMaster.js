@@ -42,22 +42,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeModelVariantMasterBase = (props) => {
-    const { typeData, setCustomerNameList, selectedRecordId, setButtonData, buttonData, setFormData } = props;
+    const { typeData, setCustomerNameList, selectedRecordId } = props;
     const {
-        formActionType: { addMode, editMode, viewMode },
+        formActionType: { editMode, viewMode },
         formData,
         userId,
-        showGlobalNotification,
-        fetchList,
         listShowLoading,
-        isVehicleServiceLoaded,
-        isOTFModule,
-        fetchServiceLov,
-        serviceLoading,
         data,
-        onModelSubmit,
-        setOnModelSubmit,
-        isLoading,
         handleFormValueChange,
         handleVehicleDetailChange,
         filterVehicleData,
@@ -65,18 +56,15 @@ const ChangeModelVariantMasterBase = (props) => {
         setConfirmRequest,
         getProductAttributeDetail,
         setRevisedProductAttributeData,
+        productDetailRefresh,
+        setProductDetailRefresh,
     } = props;
 
-    const { selectedCustomerId, setShowChangeModel } = props;
+    const { selectedCustomerId } = props;
     const vehicleModelChangeRequest = formData?.vehicleModelChangeRequest || false;
 
-    const [uploadedFileName, setUploadedFileName] = useState('');
     const [modelChangeItemList, setModelChangeItemList] = useState([]);
     const [modelStatus, setModelStatus] = useState();
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message: message });
-    };
 
     useEffect(() => {
         formData?.sapStatusResponseCode && setModelStatus(formData?.sapStatusResponseCode);
@@ -121,13 +109,9 @@ const ChangeModelVariantMasterBase = (props) => {
         data,
         typeData,
         selectedCustomerId,
-        setUploadedFileName,
-        uploadedFileName,
         vehicleModelChangeRequest,
         modelChangeItemList,
         setModelChangeItemList,
-        onModelSubmit,
-        setOnModelSubmit,
         setCustomerNameList,
         handleFormValueChange,
         handleVehicleDetailChange,
@@ -140,60 +124,7 @@ const ChangeModelVariantMasterBase = (props) => {
     };
 
     const handleRefresh = () => {
-        if (userId && selectedRecordId) {
-            if (isOTFModule && !isLoading) {
-                const extraParams = [
-                    {
-                        key: 'otfId',
-                        value: selectedRecordId,
-                    },
-                ];
-                const onSuccessAction = (res) => {
-                    setModelStatus(res?.data?.sapStatusResponseCode);
-                    if (res?.data?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
-                        setButtonData({ ...buttonData, formBtnActive: true });
-                        setOnModelSubmit(false);
-                        setFormData(res?.data);
-                        setShowChangeModel(false);
-                        showGlobalNotification({ notificationType: 'success', title: 'Request Generated Successfully', message: 'Model Change Request has been submitted successfully' });
-                    }
-                    if (res?.data?.sapStatusResponseCode === STATUS?.REJECTED?.key) {
-                        setConfirmRequest({
-                            isVisible: true,
-                            showCancelButton: false,
-                            titleOverride: 'Failed Request',
-                            closable: true,
-                            icon: false,
-                            onCloseAction: () => {
-                                setConfirmRequest({
-                                    ...confirmRequest,
-                                    isVisible: false,
-                                });
-                            },
-                            onSubmitAction: () => {
-                                setOnModelSubmit(false);
-                                setConfirmRequest({
-                                    ...confirmRequest,
-                                    isVisible: false,
-                                });
-                            },
-                            submitText: 'Okay',
-                            text: (
-                                <>
-                                    <p>{res?.data?.sapResonseRemarks}</p>
-                                </>
-                            ),
-                        });
-                    }
-                };
-
-                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
-            }
-
-            if (!isVehicleServiceLoaded) {
-                fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
-            }
-        }
+        setProductDetailRefresh(!productDetailRefresh);
     };
     const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
     return (
@@ -223,15 +154,11 @@ const ChangeModelVariantMasterBase = (props) => {
                 {viewMode ? (
                     <ViewDetail {...formProps} />
                 ) : (
-                    modelChangeItemList?.map((item) => {
-                        return (
-                            <>
-                                <Divider />
-                                <AddEditForm {...formProps} />
-                                <ConfirmationModal {...confirmRequest} />
-                            </>
-                        );
-                    })
+                    <>
+                        <Divider />
+                        <AddEditForm {...formProps} />
+                        <ConfirmationModal {...confirmRequest} />
+                    </>
                 )}
             </div>
         </>
