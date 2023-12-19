@@ -58,7 +58,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={translateContent('LoyaltyDocumentMaster.label.documentName')} initialValue={formData?.documentcompanyName} rules={[validateRequiredInputField(translateContent('LoyaltyDocumentMaster.validation.documentName'))]} name="documentName">
+                                    <Form.Item label={translateContent('LoyaltyDocumentMaster.label.documentName')} initialValue={formData?.documentName} rules={[validateRequiredInputField(translateContent('LoyaltyDocumentMaster.validation.documentName'))]} name="documentName">
                                         <Input placeholder={preparePlaceholderText(translateContent('LoyaltyDocumentMaster.placeholder.documentName'))} maxLength={250} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>

@@ -39,6 +39,7 @@ import RSARegistrationPage from './RSARegistration';
 import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
 import ClaimEmpowermentPage from './ClaimEmpowerment';
 import LoyaltyDocumentMasterPage from './LoyaltyDocument';
+import ExchangeLoyaltyCappingMasterPage from './ExchangeLoyaltyCappingMaster';
 
 export {
     OTFMasterPage,
@@ -72,5 +73,6 @@ export {
     RSARegistrationPage,
     CoDealerInvoiceGenerationPage,
     ClaimEmpowermentPage,
-    LoyaltyDocumentMasterPage
+    LoyaltyDocumentMasterPage,
+    ExchangeLoyaltyCappingMasterPage
 };

@@ -3042,9 +3042,65 @@
         },
         "validation": {
             "documentId": "Document ID",
-            "document Name": "Document Name"
+            "documentName": "Document Name"
         }
     },
+
+"ExchangeLoyaltyCappingMaster": {
+    "heading": {
+        "pageTitle": "Exchange/Loyalty Capping Master",
+        "title": "Exchange/Loyalty Capping"
+    },
+    "label": {
+        "modelGroup": "Model Group",
+        "modelVariant": "Model Variant",
+        "zone": "Zone",
+        "areaOffice": "Area Office",
+        "dealerCode": "Dealer Code",
+        "dealerName": "Dealer Name",
+        "capping": "Capping %",
+        "retailSlabFrom": "Retail Slab From",
+        "retailSlabTo": "Retail Slab To",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive"
+    },
+    "placeholder": {
+        "modelGroup": "Model Group",
+        "modelVariant": "Model Variant",
+        "zone": "Zone",
+        "areaOffice": "Area Office",
+        "dealerCode": "Dealer Code",
+        "dealerName": "Dealer Name",
+        "capping": "Capping %",
+        "retailSlabFrom": "Retail Slab From",
+        "retailSlabTo": "Retail Slab To",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive"
+    },
+    "validation": {
+        "modelGroup": "Model Group",
+        "modelVariant": "Model Variant",
+        "zone": "Zone",
+        "areaOffice": "Area Office",
+        "dealerCode": "Dealer Code",
+        "dealerName": "Dealer Name",
+        "capping": "Capping %",
+        "retailSlabFrom": "Retail Slab From",
+        "retailSlabTo": "Retail Slab To",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive"
+    }
+},
+
 
     "configurableParameter": {
         "heading": {

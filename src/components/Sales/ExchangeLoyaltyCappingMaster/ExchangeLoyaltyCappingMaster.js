@@ -23,6 +23,10 @@ import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { AdvancedSearch } from './AdvancedSearch';
+
+
+
 
 const mapStateToProps = (state) => {
     const {
@@ -32,7 +36,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('LoyaltyDocumentMaster.heading.pageTitle');
+    const moduleTitle = translateContent('ExchangeLoyaltyCappingMaster.heading.pageTitle');
 
     let returnValue = {
         userId,
@@ -58,10 +62,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const LoyaltyDocumentMasterBase = (props) => {
+export const ExchangeLoyaltyCappingMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, totalRecords } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
+    const [advanceFilterForm] = Form.useForm();
+    const [searchForm] = Form.useForm();
+
     const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
 
 
@@ -73,7 +80,7 @@ export const LoyaltyDocumentMasterBase = (props) => {
     const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [page, setPage] = useState({});
-
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -254,11 +261,23 @@ export const LoyaltyDocumentMasterBase = (props) => {
 
         saveData(requestData);
     };
+    const handleResetFilter = () => {
+        setShowDataLoading(false);
+        setFilterString();
+        advanceFilterForm.resetFields();
+    };
 
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+    };
+    
+    const onAdvanceSearchCloseAction = () => {
+        form.resetFields();
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
+        setAdvanceSearchVisible(false);
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
@@ -293,15 +312,17 @@ export const LoyaltyDocumentMasterBase = (props) => {
         filterString,
         totalRecords,
         dynamicPagination,
+      
+            
     };
 
-    const title = translateContent('LoyaltyDocumentMaster.heading.title');
+    const title = translateContent('ExchangeLoyaltyCappingMaster.heading.title');
 
     const advanceFilterResultProps = {
-        advanceFilter: false,
+        advanceFilter: true,
         filterString,
         from: listFilterForm,
-
+        setAdvanceSearchVisible,
         onSearchHandle,
         handleClearInSearch,
         handleReferesh,
@@ -309,14 +330,34 @@ export const LoyaltyDocumentMasterBase = (props) => {
         title,
         tableData: searchData,
     };
+    
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+       
+        titleOverride: translateContent('global.advanceFilter.title'),
+
+        onCloseAction: onAdvanceSearchCloseAction,
+        handleResetFilter,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        setAdvanceSearchVisible,
+        // claimStatusList,
+        // typeData,
+        searchForm,
+    };
+
+
+
 
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
+            <AdvancedSearch {...advanceFilterProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd}/>
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
@@ -324,4 +365,4 @@ export const LoyaltyDocumentMasterBase = (props) => {
     );
 };
 
-export const LoyaltyDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(LoyaltyDocumentMasterBase);
+export const ExchangeLoyaltyCappingMaster = connect(mapStateToProps, mapDispatchToProps)(ExchangeLoyaltyCappingMasterBase);

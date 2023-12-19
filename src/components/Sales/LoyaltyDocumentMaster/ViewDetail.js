@@ -12,15 +12,15 @@ const ViewDetailBase = ({ formData, styles }) => {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
+        column: { xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 2 },
     };
     return (
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label={translateContent('LessorCompanyMaster.label.companyCode')}>{formData?.companyCode}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('LessorCompanyMaster.label.companyName')}>{formData?.companyName}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('LessorCompanyMaster.label.status')}>{formData?.status ? translateContent('LessorCompanyMaster.label.active') : translateContent('LessorCompanyMaster.label.inactive')}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('LoyaltyDocumentMaster.label.documentId')}>{formData?.documentId}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('LoyaltyDocumentMaster.label.documentName')}>{formData?.documentName}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('LoyaltyDocumentMaster.label.status')}>{formData?.status ? translateContent('LoyaltyDocumentMaster.label.active') : translateContent('LoyaltyDocumentMaster.label.inactive')}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>
