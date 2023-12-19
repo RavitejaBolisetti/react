@@ -143,8 +143,9 @@ const AddEditFormMain = (props) => {
         treeExpandedKeys: [revisedProductAttributeData?.model],
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
         // loading: !viewOnly ? isProductDataLoading : false,
-        treeDisabled: onModelSubmit,
+        treeDisabled: [STATUS?.PENDING?.key]?.includes(modelStatus),
     };
+    const isReviedModelPending = [STATUS?.PENDING?.key]?.includes(modelStatus);
     return (
         <div className={styles.cardInnerBox}>
             <Row gutter={20}>
@@ -160,26 +161,24 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {editMode && !onModelSubmit && (
-                <>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
-                            {modelStatus !== STATUS?.PENDING?.key ? (
-                                <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
-                                    {translateContent('global.buttons.retry')}
-                                </Button>
-                            ) : (
-                                <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
-                                    {translateContent('global.buttons.submit')}
-                                </Button>
-                            )}
-                            <Button onClick={() => handleCollapse(formType)} danger>
-                                {translateContent('global.buttons.cancel')}
+            {!isReviedModelPending && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
+                        {modelStatus === STATUS?.REJECTED?.key ? (
+                            <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
+                                {translateContent('global.buttons.retry')}
                             </Button>
-                            <ConfirmationModal {...confirmRequest} />
-                        </Col>
-                    </Row>
-                </>
+                        ) : (
+                            <Button type="primary" form="myNameForm" onClick={onHandleSave} /*disabled={modelChange}*/>
+                                {translateContent('global.buttons.submit')}
+                            </Button>
+                        )}
+                        <Button onClick={() => handleCollapse(formType)} danger>
+                            {translateContent('global.buttons.cancel')}
+                        </Button>
+                        <ConfirmationModal {...confirmRequest} />
+                    </Col>
+                </Row>
             )}
         </div>
     );

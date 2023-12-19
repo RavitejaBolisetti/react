@@ -194,7 +194,7 @@ const ChangeModelVariantMasterBase = (props) => {
             }
         }
     };
-
+    const isReviedModelPending = [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
     return (
         <>
             <div className={`${styles.cardInsideBox} ${styles.pad10}`}>
@@ -202,9 +202,9 @@ const ChangeModelVariantMasterBase = (props) => {
                     <div className={styles.marB10}>
                         <Text strong>Change Model</Text>
                     </div>
-                    {onModelSubmit && (
+                    {isReviedModelPending && (
                         <div className={styles.verticallyCentered}>
-                            {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">Pending for SAP Confirmation</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="error">Failed for SAP Confirmation</Tag>}
+                            {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">{STATUS?.PENDING?.title}</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">{STATUS?.SUCCESS?.title}</Tag> : <Tag color="error">{STATUS?.REJECTED?.title}</Tag>}
                             {modelStatus && (
                                 <Button
                                     onClick={handleRefresh}

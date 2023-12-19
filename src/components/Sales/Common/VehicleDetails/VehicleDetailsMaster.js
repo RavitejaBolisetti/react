@@ -111,8 +111,6 @@ const VehicleDetailsMasterMain = (props) => {
     const [productAttributeData, setProductAttributeData] = useState(false);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
 
-    console.log('showChangeModel', showChangeModel);
-
     const onSuccessAction = () => {
         return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
