@@ -741,7 +741,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     useEffect(() => {
-        setReportDetail(reportType === DOCUMENT_CONSTANTS?.INVOICE?.key ? EMBEDDED_REPORTS?.INVOICE_DOCUMENT : reportType === `Form_21` ? EMBEDDED_REPORTS?.FORM_21_DOCUMENT : null);
+        setReportDetail(reportType === DOCUMENT_CONSTANTS?.INVOICE?.key ? EMBEDDED_REPORTS?.INVOICE_DOCUMENT : reportType === DOCUMENT_CONSTANTS?.FORM_21?.key ? EMBEDDED_REPORTS?.FORM_21_DOCUMENT : null);
     }, [reportType, change]);
 
     const handleCloseReceipt = () => {
