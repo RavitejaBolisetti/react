@@ -45,10 +45,11 @@ const AddEditFormMain = (props) => {
         showGlobalNotification({ message });
     };
 
-    const modelChangeService = (data) => {
+    const modelChangeService = (data, onSuccessAction) => {
         const onSuccess = (res) => {
             setModelStatus(res?.data?.status);
             setProductDetailRefresh(!productDetailRefresh);
+            onSuccessAction && onSuccessAction();
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
                 setRefreshData(!refreshData);
                 setButtonData({ ...buttonData, formBtnActive: true });
@@ -91,7 +92,7 @@ const AddEditFormMain = (props) => {
             .catch((err) => console.error(err));
     };
 
-    const handleCollapse = () => {
+    const handleCollapse = (formType) => {
         setConfirmRequest({
             isVisible: true,
             titleOverride: translateContent('bookingManagement.modelVariant.label.cancelRequest'),
@@ -100,9 +101,6 @@ const AddEditFormMain = (props) => {
             onCloseAction: onCloseAction,
             onSubmitAction: onSubmitAction,
         });
-        // setModelChangeItemList(modelChangeItemList?.map((i) => ({ ...i, changeAllowed: false })));
-        // form.setFieldsValue({ ['model' + formType]: formData?.model });
-        // form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
     };
 
     const onCloseAction = () => {
@@ -110,6 +108,12 @@ const AddEditFormMain = (props) => {
             ...confirmRequest,
             isVisible: false,
         });
+    };
+
+    const onSuccessAction = () => {
+        setShowChangeModel(false);
+        form.setFieldsValue({ ['model' + formType]: formData?.model });
+        form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
     };
 
     const onSubmitAction = () => {
@@ -123,14 +127,14 @@ const AddEditFormMain = (props) => {
                 status: 'CNCL',
                 otfId: selectedRecordId,
             };
-
-            modelChangeService(data);
+            modelChangeService(data, onSuccessAction);
         } else {
             setConfirmRequest({
                 ...confirmRequest,
                 isVisible: false,
             });
             setShowChangeModel(false);
+            onSuccessAction();
         }
     };
 
