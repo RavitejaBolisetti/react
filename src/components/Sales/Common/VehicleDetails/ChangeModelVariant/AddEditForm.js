@@ -21,7 +21,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setShowChangeModel, revisedModelInformation } = props;
-    const { productDetailRefresh, setProductDetailRefresh, getProductAttributeDetail, setRevisedProductAttributeData, form, modelChangeItemList, setModelChangeItemList, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const { productDetailRefresh, setProductDetailRefresh, getProductAttributeDetail, setRevisedProductAttributeData, form, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
     const [selectedTreeKey, setSelectedTreeKey] = useState();
     const [modelChange, setModelChange] = useState(true);
     const formType = editMode ? 'New' : '';
@@ -91,7 +91,7 @@ const AddEditFormMain = (props) => {
             .catch((err) => console.error(err));
     };
 
-    const handleCollapse = (formType) => {
+    const handleCollapse = () => {
         setConfirmRequest({
             isVisible: true,
             titleOverride: translateContent('bookingManagement.modelVariant.label.cancelRequest'),
@@ -100,9 +100,9 @@ const AddEditFormMain = (props) => {
             onCloseAction: onCloseAction,
             onSubmitAction: onSubmitAction,
         });
-        setModelChangeItemList(modelChangeItemList?.map((i) => ({ ...i, changeAllowed: false })));
-        form.setFieldsValue({ ['model' + formType]: formData?.model });
-        form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
+        // setModelChangeItemList(modelChangeItemList?.map((i) => ({ ...i, changeAllowed: false })));
+        // form.setFieldsValue({ ['model' + formType]: formData?.model });
+        // form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
     };
 
     const onCloseAction = () => {
