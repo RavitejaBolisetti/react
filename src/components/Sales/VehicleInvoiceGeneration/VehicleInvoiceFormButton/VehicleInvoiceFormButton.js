@@ -9,8 +9,9 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { DOCUMENT_CONSTANTS } from '../Constants'
 
-export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoice, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21, setReportDetail }) => {
+export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoice, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.saveAndNext'), handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21, setReportDetail, onPrintDocument }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -33,7 +34,7 @@ export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoic
                         <Button
                             onClick={() => {
                                 setReportDetail();
-                                onPrintForm21(record);
+                                onPrintDocument({ ...record, reportType: DOCUMENT_CONSTANTS?.FORM_21?.key });
                             }}
                             danger
                         >
@@ -45,7 +46,7 @@ export const VehicleInvoiceFormButton = ({ record, onCloseAction, onCancelInvoic
                         <Button
                             onClick={() => {
                                 setReportDetail();
-                                onPrintInvoice(record);
+                                onPrintDocument({ ...record, reportType: DOCUMENT_CONSTANTS?.INVOICE?.key });
                             }}
                             danger
                         >
