@@ -654,10 +654,14 @@ export const RSARegistrationMasterBase = (props) => {
         setRequestPayload();
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         page: filterString,
         filterString,
 
@@ -712,8 +716,9 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({ current: 1, pageSize, status: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS?.PENDING?.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
         advanceFilterForm.resetFields();
     };
 

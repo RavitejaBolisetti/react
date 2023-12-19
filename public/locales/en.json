@@ -507,7 +507,7 @@
             "billing": "Billing",
             "retail": "Retail",
             "stockInDays": "Stock Aging(in days)",
-            "noDataFound":"No data found"
+            "noDataFound": "No data found"
         },
         "placeholder": {},
         "validation": {},
@@ -3291,6 +3291,7 @@
             "termsconditiondescription": "Description"
         }
     },
+
     "bookingSoMapping": {
         "heading": {
             "moduleTitle": "Booking SO Mapping Control",
@@ -3310,7 +3311,8 @@
         "validation": {
             "variantCode": "Variant Code",
             "productVariant": "Product Variant",
-            "userForMappingUnmapping": "User for Mapping/Unmapping"
+            "userForMappingUnmapping": "User for Mapping/Unmapping",
+            "mappedSoCancel": "SO already mapped kindly unmap & then Cancel"
         }
     },
     "vehicleDeliveryNote": {

@@ -732,10 +732,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setRequestPayload();
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         page: filterString,
         tableColumn: tableColumn({ handleButtonClick, userType, locations }),
         tableData: data,
@@ -757,8 +761,9 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         setShowDataLoading(false);
-        setFilterString({ amcStatus: filterString?.amcStatus });
+        setFilterString({ amcStatus: filterString?.amcStatus, pageSize });
         advanceFilterForm.resetFields();
     };
 

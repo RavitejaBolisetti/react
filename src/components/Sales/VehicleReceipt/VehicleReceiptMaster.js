@@ -77,7 +77,6 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const [listFilterForm] = Form.useForm();
     const [receiptType, setReceiptType] = useState(VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key);
-    const [searchValue, setSearchValue] = useState();
 
     const tableActions = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: true };
     const tableActionsFalse = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: false };
@@ -100,6 +99,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [parameterName, setParameterName] = useState('grnNumber');
 
     const dynamicPagination = true;
 
@@ -129,8 +129,8 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
+        // searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
+        // searchForm.resetFields();
         setShowDataLoading(false);
     };
 
@@ -156,11 +156,21 @@ export const VehicleReceiptMasterBase = (props) => {
                 canRemove: false,
                 filter: false,
             },
+
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
                 value: filterString?.grnNumber,
                 name: filterString?.grnNumber,
+                // searchValue
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'supplierInvoiceNumber',
+                title: 'Supplier Invoice Number',
+                value: filterString?.supplierInvoiceNumber,
+                name: filterString?.supplierInvoiceNumber,
                 // searchValue
                 canRemove: true,
                 filter: true,
@@ -219,7 +229,7 @@ export const VehicleReceiptMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [receiptType, searchValue, filterString]);
+    }, [receiptType, filterString]);
 
     useEffect(() => {
         return () => {
@@ -302,6 +312,10 @@ export const VehicleReceiptMasterBase = (props) => {
         const { pageSize } = filterString;
         setShowDataLoading(false);
         setFilterString({ pageSize, current: 1 });
+        searchForm.resetFields();
+        setParameterName('grnNumber');
+        searchForm.setFieldValue('searchType', 'grnNumber');
+
         advanceFilterForm.resetFields();
     };
 
@@ -366,12 +380,14 @@ export const VehicleReceiptMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
     const tableProps = {
         dynamicPagination,
         filterString,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         tableColumn: tableColumn({ handleButtonClick, tableIconsVisibility }),
         tableData: data,
         showAddButton: false,
@@ -428,13 +444,26 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const handleChange = (e) => {
-        setSearchValue(e.target.value);
+        const { pageSize } = filterString;
+        if (!e?.target?.value) {
+            setFilterString({ current: 1, pageSize });
+            setParameterName('grnNumber');
+            searchForm.resetFields();
+            searchForm.setFieldValue('searchType', 'grnNumber');
+        }
     };
 
-    const handleSearch = (value) => {
-        setFilterString({ ...filterString, grnNumber: value, advanceFilter: true, current: 1 });
-        setSearchValue(value);
-        searchForm.resetFields();
+    const handleSearch = () => {
+        const { pageSize } = filterString;
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setFilterString({ ...values, advanceFilter: true, current: 1, pageSize });
+                searchForm.resetFields();
+            })
+            .catch(() => {
+                return;
+            });
     };
     const advanceFilterResultProps = {
         extraParams,
@@ -460,6 +489,8 @@ export const VehicleReceiptMasterBase = (props) => {
         handleSearch,
         currentItem,
         setCurrentItem,
+        parameterName,
+        setParameterName,
     };
 
     const advanceFilterProps = {
