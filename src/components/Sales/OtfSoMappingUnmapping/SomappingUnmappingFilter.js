@@ -13,13 +13,13 @@ import { translateContent } from 'utils/translateContent';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS } from './Constants';
 
 const SomappingUnmappingFilter = (props) => {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, selectBoxkey, searchBoxProps, selectBoxProps, status } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, selectBoxkey, searchBoxProps, selectBoxProps, status, form } = props;
     const { filterString } = searchBoxProps;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                    <Form form={form} autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20} className={styles.verticallyCentered}>

@@ -29,6 +29,7 @@ import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
+import { DOCUMENT_CONSTANTS } from './Constants';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
@@ -124,6 +125,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [cancelInvoiceForm] = Form.useForm();
     const [CustomerForm] = Form.useForm();
 
+    const [change, setChange] = useState(false);
     const [searchValue, setSearchValue] = useState();
 
     const [selectedOrder, setSelectedOrder] = useState();
@@ -725,21 +727,10 @@ export const VehicleInvoiceMasterBase = (props) => {
         setCancelInvoiceVisible(true);
     };
 
-    const onPrintInvoice = () => {
-        setReportType(`Invoice`);
+    const onPrintDocument = (type) => {
+        setReportType(type?.reportType);
         setReportVisible(true);
-
-        setAdditionalReportParams([
-            {
-                key: 'sa_od_invoice_hdr_id',
-                value: selectedRecordId,
-            },
-        ]);
-    };
-
-    const onPrintForm21 = () => {
-        setReportType(`Form_21`);
-        setReportVisible(true);
+        setChange(() => !change);
 
         setAdditionalReportParams([
             {
@@ -750,8 +741,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     useEffect(() => {
-        setReportDetail(reportType === `Invoice` ? EMBEDDED_REPORTS?.INVOICE_DOCUMENT : reportType === `Form_21` ? EMBEDDED_REPORTS?.FORM_21_DOCUMENT : null);
-    }, [reportType]);
+        setReportDetail(reportType === DOCUMENT_CONSTANTS?.INVOICE?.key ? EMBEDDED_REPORTS?.INVOICE_DOCUMENT : reportType === DOCUMENT_CONSTANTS?.FORM_21?.key ? EMBEDDED_REPORTS?.FORM_21_DOCUMENT : null);
+    }, [reportType, change]);
 
     const handleCloseReceipt = () => {
         setCancelInvoiceVisible(false);
@@ -882,8 +873,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         handleBookingNumberSearch,
         isVehicleInvoiceDataLoading,
         handleBookingChange,
-        onPrintInvoice,
-        onPrintForm21,
+        // onPrintInvoice,
+        // onPrintForm21,
+        onPrintDocument,
         confirmRequest,
         setConfirmRequest,
         previousSection,

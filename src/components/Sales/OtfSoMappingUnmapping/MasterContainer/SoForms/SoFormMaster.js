@@ -96,8 +96,8 @@ const SoFormMasterMain = (props) => {
                                     </Row>
                                     <Row gutter={20} className={styles.marB20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupRight}>
-                                            <Button onClick={handleCancel}>Cancel</Button>
-                                            <Button onClick={handleClear}>Clear</Button>
+                                            <Button onClick={handleCancel}>{translateContent('global.buttons.cancel')}</Button>
+                                            <Button onClick={handleClear}>{translateContent('global.buttons.clear')}</Button>
                                             <Button htmlType="submit" type="primary">
                                                 {translateContent('global.buttons.submit')}
                                             </Button>

@@ -178,7 +178,6 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
         treeDisabled: formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus),
     };
-
     const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key]?.includes(modelStatus);
     return (
         <div className={styles.cardInnerBox}>
