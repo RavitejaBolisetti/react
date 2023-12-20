@@ -170,6 +170,7 @@ export const ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('e
 
 // /Incentive scheme and claim
 export const ROUTING_MITRA_BROKER_REGISTRATION = ROUTING_SALES.concat('mitra-broker-registration');
+export const ROUTING_INCENTIVE_SCHEME_MASTER = ROUTING_SALES.concat('incentive-scheme-master');
 
 
 //

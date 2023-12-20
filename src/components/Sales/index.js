@@ -25,6 +25,7 @@ import { EvrDetailsCapturingMaster } from './EvrDetailsCapturing';
 import { VehicleChecklistMaster } from './VehicleChecklistMaster';
 import { RsmAsmApprovalMaster } from './RsmAsmApproval';
 import { CrmScreenEnrolmentMaster } from './crmSchemeEnrolment';
-import  ExchangeLoyaltyIncentiveMaster  from './ExchangeLoyaltyIncentiveMaster'
+import ExchangeLoyaltyIncentiveMaster from './ExchangeLoyaltyIncentiveMaster';
+import IncentiveSchemeMaster from './IncentiveSchemeMaster';
 
-export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster, VehicleChecklistMaster, CrmScreenEnrolmentMaster, RsmAsmApprovalMaster, ExchangeLoyaltyIncentiveMaster };
+export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster, VehicleChecklistMaster, CrmScreenEnrolmentMaster, RsmAsmApprovalMaster, ExchangeLoyaltyIncentiveMaster, IncentiveSchemeMaster };

@@ -107,8 +107,28 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label={'Scheme Type' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Scheme Type' || translateContent('city.validation.cityName'))]} name="schemeType">
+                                        <Select optionFilterProp="children" options={ []} placeholder={preparePlaceholderSelect('Scheme Type')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={'Scheme Name' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Scheme Name' || translateContent('city.validation.cityName'))]} name="name">
                                         <Select optionFilterProp="children" options={ []} placeholder={preparePlaceholderSelect('Scheme Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label={'Validity For' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Validity For' || translateContent('city.validation.cityName'))]} name="name">
+                                        <Select optionFilterProp="children" options={ []} placeholder={preparePlaceholderSelect('Validity For')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label={'Model Group' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Model Group' || translateContent('city.validation.cityName'))]} name="name">
+                                        <Select optionFilterProp="children" options={ []} placeholder={preparePlaceholderSelect('Model Group')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label={'Model Varient' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Model Varient' || translateContent('city.validation.cityName'))]} name="name">
+                                        <Select optionFilterProp="children" options={ []} placeholder={preparePlaceholderSelect('Model Varient')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                     </Form.Item>
                                 </Col>
                                 {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>

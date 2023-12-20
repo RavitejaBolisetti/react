@@ -41,7 +41,7 @@ const ClaimDetailCard = (props) => {
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        {'Request ID'}
+                        {'Assosiate ID'}
                         <span className={styles.detailCardText}>
                             {'N/A'}
                             <CopytoClipboard text={ProfileData?.checklistNumber} />
@@ -51,12 +51,12 @@ const ClaimDetailCard = (props) => {
                 key={1}
             >
                 <div className={styles.detailCardText}>
-                    {'Request Date'}
+                    {'Assosiate Type    '}
                     <span>{record?.claimDate}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                   {'Dealer Name'}
+                   {'Assosiate Name'}
                     <span>{record?.claimType}</span>
                 </div>
                 <Divider />

@@ -20,7 +20,7 @@ import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-import { EmployeeEmpowermentFormButton } from '../EmployeeEmpowermentFormButton/EmployeeEmpowermentFormButton';
+import { MitraBrokerRegistrationMasterFormButton } from '../MitraBrokerRegistrationMasterFormButton';
 
 const mapStateToProps = (state) => {
     const {
@@ -288,7 +288,7 @@ const SupportingDocumentBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <EmployeeEmpowermentFormButton {...props} />
+                    <MitraBrokerRegistrationMasterFormButton {...props} />
                 </Col>
             </Row>
         </Form>

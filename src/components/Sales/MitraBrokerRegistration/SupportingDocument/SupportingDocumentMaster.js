@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { LANGUAGE_EN } from 'language/en';
-
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form, Card } from 'antd';
 
@@ -20,7 +19,7 @@ import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-import { MitraBrokerRegistrationMasterFormButton } from '../MitraBrokerRegistrationMasterFormButton';
+import { EmployeeEmpowermentFormButton } from 'components/Sales/EmployeeEmpowerment/EmployeeEmpowermentFormButton';
 
 const mapStateToProps = (state) => {
     const {
@@ -288,7 +287,7 @@ const SupportingDocumentBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <MitraBrokerRegistrationMasterFormButton {...props} />
+                    <EmployeeEmpowermentFormButton {...props} />
                 </Col>
             </Row>
         </Form>

@@ -68,6 +68,26 @@ const AddEditFormMain = (props) => {
                             <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item initialValue={formData?.assosiateType} label={'Assosiate Type'} name="assosiateType" className={styles?.datePicker}>
+                                            {customSelectBox({ data: assosiateType, placeholder: preparePlaceholderSelect('Assosiate Type' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+                                        </Form.Item>
+                                    </Col>
+                                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                            <Form.Item name="assosiateName" label={'Assosiate Name'} initialValue={formData?.financierName}>
+                                                <Input placeholder={preparePlaceholderText('Assosiate Name')} maxLength={50} {...disabledProps} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                            <Form.Item name="assosiateContactNo" label={'Assosiate Contact No'} initialValue={formData?.assosiateContacNo}>
+                                                <Input placeholder={preparePlaceholderText('Assosiate Contact No')} maxLength={50} {...disabledProps} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="isQualified" label={'Status' || translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
+                                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item name="aadharNo" label={'Aadhar No'} initialValue={formData?.financierName}>
                                             <Input placeholder={preparePlaceholderText('Aadhar No')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
@@ -78,36 +98,17 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Form.Item initialValue={formData?.assosiateType} label={'Assosiate Type'} name="assosiateType" className={styles?.datePicker}>
-                                            {customSelectBox({ data: assosiateType, placeholder: preparePlaceholderSelect('Assosiate Type' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item initialValue={formData?.assosiateType} label={'MMT Type'} name="mmtType" className={styles?.datePicker}>
                                             {customSelectBox({ data: mmtType, placeholder: preparePlaceholderSelect('MMT Type' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Form.Item initialValue={formData?.assosiateType} label={'Segment'} name="segment" className={styles?.datePicker}>
-                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Segment' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
-                                        </Form.Item>
-                                    </Col>
+                                  
                                     {/* generate post submittion */}
                                     {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item name="Assosiate ID" label={'Assosiate ID'} initialValue={formData?.financierName}>
                                             <Input placeholder={preparePlaceholderText('Assosiate ID')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col> */}
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Form.Item name="assosiateName" label={'Assosiate Name'} initialValue={formData?.financierName}>
-                                            <Input placeholder={preparePlaceholderText('Assosiate Name')} maxLength={50} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Form.Item name="assosiateContactNo" label={'Assosiate Contact No'} initialValue={formData?.assosiateContacNo}>
-                                            <Input placeholder={preparePlaceholderText('Assosiate Contact No')} maxLength={50} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item initialValue={formData?.assosiateType} label={'State'} name="state" className={styles?.datePicker}>
                                             {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('State' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
@@ -143,11 +144,11 @@ const AddEditFormMain = (props) => {
                                         <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                                         </Form.Item>
                                     </Col> */}
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                    {/* <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item initialValue={formData?.modalGroup} label={'Active'} name="modalGroup" className={styles?.datePicker}>
                                             {customSelectBox({ data: activeStatusData, placeholder: preparePlaceholderSelect('Active' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
                                         </Form.Item>
-                                    </Col>
+                                    </Col> */}
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="isQualified" label={'Qualified' || translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
                                             <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
@@ -166,6 +167,11 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item name="Vehicle Registration No" label={'Vehicle Registration No'} initialValue={formData?.financierName}>
                                             <Input placeholder={preparePlaceholderText('Vehicle Registration No')} maxLength={50} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item initialValue={formData?.assosiateType} label={'Segment'} name="segment" className={styles?.datePicker}>
+                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Segment' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
