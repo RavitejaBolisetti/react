@@ -12,7 +12,7 @@ import { ExchangeLoyaltyIncentiveMaster } from 'components/Sales';
 
 const ExchangeLoyaltyIncentiveMasterPageBase = (props) => {
     
-    const pageTitle = 'Exchange/Loyalty Claim Master';
+    const pageTitle = 'Exchange/Loyalty Incentive Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

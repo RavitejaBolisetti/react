@@ -12,53 +12,80 @@ export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Zone'|| `${translateContent('city.title.cityCode')}`,
+            title: 'Scheme Type'|| `${translateContent('city.title.cityCode')}`,
+            dataIndex: 'corporateCode',
+            width: '15%',
+        }),
+            tblPrepareColumns({
+            title: 'Scheme Name'|| `${translateContent('city.title.cityCode')}`,
+            dataIndex: 'corporateCode',
+            width: '15%',
+        }),
+            tblPrepareColumns({
+            title: 'Validity For'|| `${translateContent('city.title.cityCode')}`,
+            dataIndex: 'corporateCode',
+            width: '15%',
+        }),
+            tblPrepareColumns({
+            title: 'Modal Group'|| `${translateContent('city.title.cityCode')}`,
+            dataIndex: 'corporateCode',
+            width: '15%',
+        }),
+            tblPrepareColumns({
+            title: 'Modal Varient'|| `${translateContent('city.title.cityCode')}`,
             dataIndex: 'corporateCode',
             width: '15%',
         }),
 
-        tblPrepareColumns({
-            title: 'Area Office' ||`${translateContent('city.title.cityName')}`,
-            dataIndex: 'corporateName',
-            width: '15%',
-        }),
 
-        tblPrepareColumns({
-            title: 'Dealer Code & Name' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'corporateCategory',
-            width: '15%',
-        }),
+    //     tblPrepareColumns({
+    //         title: 'Zone'|| `${translateContent('city.title.cityCode')}`,
+    //         dataIndex: 'corporateCode',
+    //         width: '15%',
+    //     }),
 
-        tblPrepareColumns({
-            title: 'Scheme Name' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'type',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Dealer Amt' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'OEM Amt' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Total Sch Amt' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Valid From' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Valid To' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
-        }),
+    //     tblPrepareColumns({
+    //         title: 'Area Office' ||`${translateContent('city.title.cityName')}`,
+    //         dataIndex: 'corporateName',
+    //         width: '15%',
+    //     }),
+
+    //     tblPrepareColumns({
+    //         title: 'Dealer Code & Name' || `${translateContent('city.title.districtName')}`,
+    //         dataIndex: 'corporateCategory',
+    //         width: '15%',
+    //     }),
+
+    //     tblPrepareColumns({
+    //         title: 'Scheme Name' || `${translateContent('city.title.districtName')}`,
+    //         dataIndex: 'type',
+    //         width: '15%',
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Dealer Amt' || `${translateContent('city.title.districtName')}`,
+    //         dataIndex: 'stateName',
+    //         width: '15%',
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'OEM Amt' || `${translateContent('city.title.districtName')}`,
+    //         dataIndex: 'stateName',
+    //         width: '15%',
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Total Sch Amt' || `${translateContent('city.title.districtName')}`,
+    //         dataIndex: 'stateName',
+    //         width: '15%',
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Valid From' || `${translateContent('city.title.districtName')}`,
+    //         dataIndex: 'stateName',
+    //         width: '15%',
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Valid To' || `${translateContent('city.title.districtName')}`,
+    //         dataIndex: 'stateName',
+    //         width: '15%',
+    //     }),
 
         tblStatusColumn({ styles }),
 

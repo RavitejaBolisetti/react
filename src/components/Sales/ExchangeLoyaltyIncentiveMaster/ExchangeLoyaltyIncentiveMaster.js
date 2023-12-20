@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Claim';
+    const moduleTitle = 'Exchange/Loyality Incentive';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });

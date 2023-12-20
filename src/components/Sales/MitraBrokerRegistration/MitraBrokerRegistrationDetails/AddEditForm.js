@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
     ];
 
     const handleCollapse = (key) => {
-        setOpenAccordian(prev => prev === key ? "" : key);
+        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     return (
@@ -113,7 +113,6 @@ const AddEditFormMain = (props) => {
                                             {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('State' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
                                         </Form.Item>
                                     </Col>
-
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item initialValue={formData?.assosiateType} label={'District'} name="district" className={styles?.datePicker}>
                                             {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('District' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
@@ -139,30 +138,52 @@ const AddEditFormMain = (props) => {
                                             <Input placeholder={preparePlaceholderText('Longitude')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
+                                    {/* <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="isPrimaryDealer" label={'Primary Dealer' || translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
+                                        </Form.Item>
+                                    </Col> */}
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item initialValue={formData?.modalGroup} label={'Active'} name="modalGroup" className={styles?.datePicker}>
+                                            {customSelectBox({ data: activeStatusData, placeholder: preparePlaceholderSelect('Active' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+                                        </Form.Item>
+                                    </Col>
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                         <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="isQualified" label={'Qualified' || translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
                                             <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="isPrimaryDealer" label={'Primary Dealer' || translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
-                                            <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
+                                        <Form.Item name="Qualification" label={'Qualification'} initialValue={formData?.financierName}>
+                                            <Input placeholder={preparePlaceholderText('Qualification')} maxLength={50} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>{' '}
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item name="Occupation" label={'Occupation'} initialValue={formData?.financierName}>
+                                            <Input placeholder={preparePlaceholderText('Occupation')} maxLength={50} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>{' '}
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item name="Vehicle Registration No" label={'Vehicle Registration No'} initialValue={formData?.financierName}>
+                                            <Input placeholder={preparePlaceholderText('Vehicle Registration No')} maxLength={50} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Form.Item initialValue={formData?.modalGroup} label={'Active'} name="modalGroup" className={styles?.datePicker}>
-                                            {customSelectBox({ data: activeStatusData, placeholder: preparePlaceholderSelect('Active' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+                                        <Form.Item initialValue={formData?.modalGroup} label={'Modal Group'} name="modalGroup" className={styles?.datePicker}>
+                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Modal Group' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
                                         </Form.Item>
                                     </Col>
-                                   
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Form.Item initialValue={formData?.modalGroup} label={'Model'} name="model" className={styles?.datePicker}>
+                                            {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('Model' || translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
+                                        </Form.Item>
+                                    </Col>
                                 </Row>
                             </Space>
                         </Col>
                     </Row>
                 </Panel>
             </Collapse>
-
-            
         </>
     );
 };

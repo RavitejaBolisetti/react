@@ -15,6 +15,7 @@ import { SupportingDocumentMaster } from './SupportingDocument';
 import { MitraBrokerRegistrationMasterDetailsMaster } from './MitraBrokerRegistrationDetails/MitraBrokerRegistrationDetailsMaster';
 import { MITRA_BROKER_REGISTRATION_SECTION } from 'constants/modules/IncentiveSchemeAndClaim/MitraBrokerRegistrationSections';
 import { AccountDetailsMaster } from './AccountDetails/AccountDetailsMaster';
+import  DealerAssosiationDetailsMaster  from './DealerAssosiationDetails';
 
 const MitraBrokerRegistrationMasterContainerMain = (props) => {
     const { currentSection } = props;
@@ -31,7 +32,7 @@ const MitraBrokerRegistrationMasterContainerMain = (props) => {
                 return <AccountDetailsMaster {...myProps} />;
             }
             case MITRA_BROKER_REGISTRATION_SECTION.ASSOSIATION_DETAILS.id: {
-                return <AccountDetailsMaster {...myProps} />;
+                return <DealerAssosiationDetailsMaster {...myProps} />;
             }
             case MITRA_BROKER_REGISTRATION_SECTION.DOCUMENTS.id: {
                 return <SupportingDocumentMaster {...myProps} />;
