@@ -22,6 +22,7 @@ import { GstIrnTransactionDetails } from './gstIrnTransactionDetails';
 // import { ChartOfAccount } from './chartOfAccount/chartOfAccount';
 import { ChartOfAccountMaster } from './chartOfAccount';
 import { GstIRNTransaction } from './gstIRNTransactionPending/gstIRNTransaction';
+import { InvoiceDetails } from './invoiceDetails';
 
 import { GstToDocDetails } from './selectGstToDocDetails';
 export const FinancialAccounting = combineReducers({
@@ -44,4 +45,5 @@ export const FinancialAccounting = combineReducers({
     ChartOfAccountMaster,
     GstIRNTransaction,
     GstToDocDetails,
+    InvoiceDetails,
 });

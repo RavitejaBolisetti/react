@@ -311,7 +311,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, transactionType = 'credit' }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, voucherType = VOUCHER_TYPE?.CREDIT_TYPE?.type }) => {
         setVoucherType(record?.voucherType);
         form.resetFields();
         form.setFieldsValue(undefined);
@@ -319,20 +319,18 @@ export const CreditDebitNoteMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 setPreviousSection(1);
-                setRequestPayload({ ...requestPayload, voucherType: transactionType === 'credit' ? VOUCHER_TYPE?.CREDIT_TYPE?.type : VOUCHER_TYPE?.DEBIT_TYPE?.type });
+                setRequestPayload({ ...requestPayload, voucherType });
                 setSelectedRecord({
-                    voucherType: transactionType === 'debit' ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type,
+                    voucherType,
                 });
                 break;
             case EDIT_ACTION:
                 setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type });
-
                 setSelectedVoucher();
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord({ ...record, voucherType: record?.voucherType === VOUCHER_TYPE?.DEBIT_TYPE?.key ? VOUCHER_TYPE?.DEBIT_TYPE?.type : VOUCHER_TYPE?.CREDIT_TYPE?.type });
-
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -342,7 +340,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 break;
 
             default:
-                break;
+                return false;
         }
 
         if (buttonAction !== NEXT_ACTION) {
@@ -360,7 +358,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         }
         setIsFormVisible(true);
     };
-    
+
     const handlePrintDownload = (record) => {
         const message = translateContent('creditDebitNote.validation.apportionDetailMissing');
         if (Object.keys?.(selectedVoucher?.data?.apportionDetailsDto)?.length <= 0) {

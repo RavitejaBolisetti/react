@@ -19,10 +19,10 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { isReadOnly, setIsReadOnly } = props;
+    const { isReadOnly, setIsReadOnly, record } = props;
     const { itemOptions, setitemOptions, styles } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, openAccordian, setOpenAccordian, handleFormValueChange } = props;
-    const { collapseProps, fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData, documentTypeData, isDocumentTypeLoading, typeData, documentTypeOptions, setDocumentTypeOptions } = props;
+    const { collapseProps, fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData, documentTypeData, isDocumentTypeLoading, typeData, documentTypeOptions, setDocumentTypeOptions, isApportionDetailsLoading } = props;
 
     const [apportionForm] = Form.useForm();
 
@@ -52,6 +52,8 @@ const AddEditFormMain = (props) => {
         setOpenAccordian,
         addContactHandeler,
         handleFormValueChange,
+        record,
+        isApportionDetailsLoading,
     };
     const advanceFilterProps = {
         ...apportionFormProps,
@@ -75,6 +77,7 @@ const AddEditFormMain = (props) => {
         typeData,
         documentTypeOptions,
         setDocumentTypeOptions,
+        record,
     };
 
     const handleEdit = ({ record, index }) => {

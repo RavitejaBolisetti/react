@@ -400,3 +400,4 @@ export const BASE_URL_DEALER_LOCATIONS = BASE_URL + 'dealer/location';
 export const BASE_URL_SCHEME_RSA_DESCRIPTION = BASE_URL_VEHICLE + 'scheme/rsa/lov';
 export const BASE_URL_CO_DEALER_VIN_DETAILS = BASE_URL_VEHICLE_ALLOTMENT + '/search';
 export const BASE_URL_TAX_CALCULATION = BASE_URL_OTF + 'codealerinvoice/taxdetails';
+export const BASE_URL_APPORTION_DETAILS_SEARCH = BASE_URL_FINANCE + 'documentdetails';
