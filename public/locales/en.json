@@ -2891,6 +2891,7 @@
                 "editApportion": "Edit Apportion Details",
                 "addApportion": "Add Apportion Details",
                 "apportionDetailsText": "Apportion Details",
+                "totalReceivedAmountText": "total received amount",
                 "totalApportionAmountText": "The entire paid amount has been apportioned. Cannot be apportioned further."
             },
             "receiptFromDate": "Receipt From Date",
