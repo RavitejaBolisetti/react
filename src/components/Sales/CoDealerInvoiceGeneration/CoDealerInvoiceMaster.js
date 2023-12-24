@@ -602,7 +602,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         resetCoDealerDetailData();
         resetVinData();
         resetTaxDetails();
-        setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: [], indentDetails: {}, vehicleDetailRequest: {}, selectedOrder: {} }));
+        setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: [], indentDetails: undefined, vehicleDetailRequest: undefined, selectedOrder: {} }));
         restCancellationData();
     };
 

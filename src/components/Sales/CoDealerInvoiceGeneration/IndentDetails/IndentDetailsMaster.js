@@ -70,7 +70,7 @@ const IndentDetailsMain = (props) => {
             setFormData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CoDealerInvoiceStateMaster?.indentDetails, form, section?.id]);
+    }, [CoDealerInvoiceStateMaster?.indentDetails, section?.id]);
 
     const formProps = {
         stateData,
