@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ApportionDetailsMasterMain = (props) => {
     const { isLoading, userId, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
     const { fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData } = props;
-    const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, requestPayload, showGlobalNotification, isApportionDetailsLoading } = props;
+    const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, requestPayload, showGlobalNotification } = props;
 
     const [form] = Form.useForm();
     const [activeKey, setActiveKey] = useState([]);

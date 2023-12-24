@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -15,15 +15,10 @@ const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
     const { tableData, styles, bindCodeValue, collapseProps, formActionType } = props;
-    const [openAccordian, setOpenAccordian] = useState([]);
-
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" {...collapseProps}>
+            <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={[1]} expandIconPosition="end" {...collapseProps}>
                 <Panel header={translateContent('creditDebitNote.ApportionDetails.heading.title')} key="1">
                     <Divider />
                     <DataTable scroll={{ x: 1000 }} tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={tableData} pagination={false} />

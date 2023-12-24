@@ -3659,7 +3659,8 @@
             "message": {
                 "successMessage": "Account Head validated successfully",
                 "errorMessage": "Write-off and apportion amount cannot exceed balance amount",
-                "documentInvalid": "Document Number is invalid"
+                "documentInvalid": "Document Number is invalid",
+                "duplicateDocumentNumber": "Duplicate document number is invalid"
             }
         }
     },

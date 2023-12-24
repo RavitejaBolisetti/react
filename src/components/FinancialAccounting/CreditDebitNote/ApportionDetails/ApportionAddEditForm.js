@@ -53,30 +53,31 @@ export const AdvanceForm = (props) => {
         return () => {
             setSearchedData();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
 
-    useEffect(() => {
-        const arr = [];
+    // useEffect(() => {
+    //     const arr = [];
 
-        if (documentTypeOptions && documentTypeOptions?.length) {
-            apportionTableData?.map((element) => {
-                arr.push(element?.documentType);
-                return undefined;
-            });
+    //     if (documentTypeOptions && documentTypeOptions?.length) {
+    //         apportionTableData?.map((element) => {
+    //             arr.push(element?.documentType);
+    //             return undefined;
+    //         });
 
-            setDocumentTypeOptions(
-                documentTypeOptions?.map((element) => {
-                    if (arr?.includes(element?.documentDescription) || arr?.includes(element?.documentCode)) {
-                        return { ...element, disabled: true };
-                    } else {
-                        return { ...element, disabled: false };
-                    }
-                })
-            );
-        }
+    //         setDocumentTypeOptions(
+    //             documentTypeOptions?.map((element) => {
+    //                 if (arr?.includes(element?.documentDescription) || arr?.includes(element?.documentCode)) {
+    //                     return { ...element, disabled: true };
+    //                 } else {
+    //                     return { ...element, disabled: false };
+    //                 }
+    //             })
+    //         );
+    //     }
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apportionTableData]);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [apportionTableData]);
 
     const onFinish = () => {
         apportionForm
@@ -161,6 +162,12 @@ export const AdvanceForm = (props) => {
     };
     const handleDocumentNumberSearch = (values) => {
         if (!values) return false;
+
+        if (apportionTableData?.find((i) => i?.documentNumber === values)) {
+            showGlobalNotification({ message: translateContent('creditDebitNote.ApportionDetails.message.duplicateDocumentNumber') });
+            return false;
+        }
+
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
         };
@@ -171,8 +178,8 @@ export const AdvanceForm = (props) => {
                 const apportionValues = res?.data;
                 setSearchedData(apportionValues);
                 apportionForm.setFieldsValue({
-                    documentDate: formatDateToCalenderDate(apportionValues?.documentDate),
                     ...apportionValues,
+                    documentDate: formatDateToCalenderDate(apportionValues?.documentDate),
                     settledAmount: apportionValues?.receivedAmount,
                     // documentAmount: apportionValues?.documentAmount,
                     // balancedAmount: apportionValues?.balancedAmount,
