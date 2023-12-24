@@ -176,6 +176,15 @@ export const VehicleReceiptMasterBase = (props) => {
                 filter: true,
             },
             {
+                key: 'chasisNumber',
+                title: 'Chassis Number',
+                value: filterString?.chasisNumber,
+                name: filterString?.chasisNumber,
+                // searchValue
+                canRemove: true,
+                filter: true,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: filterString?.current,
@@ -273,16 +282,16 @@ export const VehicleReceiptMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId({ id: record?.id, supplierInvoiceNumber: record?.supplierInvoiceNumber });
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId({ id: record?.id, supplierInvoiceNumber: record?.supplierInvoiceNumber });
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId({ id: record?.id, supplierInvoiceNumber: record?.supplierInvoiceNumber });
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -322,7 +331,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const changeObjtoArr = (data) => {
         const FinalArr = [];
         Object?.entries(data)?.map(([key, value]) => {
-            FinalArr.push({ ...value, mfgdate: dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) });
+            FinalArr.push({ ...value, mfgdate: value?.mfgdate ? dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) : null });
 
             return undefined;
         });
@@ -330,7 +339,7 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { supplierInvoiceNumber: selectedId, vehicleDetails: changeObjtoArr(finalData) };
+        const data = { id: selectedId?.id, supplierInvoiceNumber: selectedId?.supplierInvoiceNumber, vehicleDetails: changeObjtoArr(finalData) };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -443,16 +452,6 @@ export const VehicleReceiptMasterBase = (props) => {
         setFilterString({ current: 1 });
     };
 
-    const handleChange = (e) => {
-        const { pageSize } = filterString;
-        if (!e?.target?.value) {
-            setFilterString({ current: 1, pageSize });
-            setParameterName('grnNumber');
-            searchForm.resetFields();
-            searchForm.setFieldValue('searchType', 'grnNumber');
-        }
-    };
-
     const handleSearch = () => {
         const { pageSize } = filterString;
         searchForm
@@ -485,7 +484,6 @@ export const VehicleReceiptMasterBase = (props) => {
         onFinishSearch,
         receiptType,
         handleReceiptTypeChange,
-        handleChange,
         handleSearch,
         currentItem,
         setCurrentItem,

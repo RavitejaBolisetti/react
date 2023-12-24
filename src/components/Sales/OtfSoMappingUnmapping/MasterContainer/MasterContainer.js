@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { memo } from 'react';
+import React from 'react';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS as SectionConstant } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 import { SoFormMaster } from './SoForms';
 import { MappingMaster } from './MappingAndUnmapping';

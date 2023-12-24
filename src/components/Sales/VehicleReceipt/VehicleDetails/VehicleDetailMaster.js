@@ -72,20 +72,20 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedId) {
+        if (userId && selectedId?.id) {
             setButtonData({ ...buttonData, formBtnActive: false });
             const extraParams = [
                 {
-                    key: 'supplierInvoiceNumber',
-                    title: 'supplierInvoiceNumber',
-                    value: selectedId,
-                    name: 'Supplier Invoice Number',
+                    key: 'id',
+                    title: 'id',
+                    value: selectedId?.id,
+                    name: 'id',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedId]);
+    }, [userId, selectedId?.id]);
 
     const formProps = {
         ...props,

@@ -35,10 +35,10 @@ export default function VehicleReceiptFilter(props) {
             key: 'supplierInvoiceNumber',
             value: 'Supplier Invoice Number',
         },
-        // {
-        //     key: 'vin',
-        //     value: 'VIN',
-        // },
+        {
+            key: 'chasisNumber',
+            value: 'Chassis Number',
+        },
     ];
 
     const handleParameterChange = (value) => {
