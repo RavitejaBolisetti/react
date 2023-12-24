@@ -46,6 +46,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { translateContent } from 'utils/translateContent';
 import { zoneMasterDataAction } from 'store/actions/data/zoneMaster';
 import { areaOfficeDataAction } from 'store/actions/data/areaOfficeLov';
+import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
 
 const { Search } = Input;
 
@@ -174,6 +175,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchAreaOfficeList: areaOfficeDataAction.fetchList,
             listAreaOfficeListShowLoading: areaOfficeDataAction.listShowLoading,
 
+            resetDealerList: dealerBlockMasterDataAction.reset,
+
+
             showGlobalNotification,
         },
 
@@ -182,7 +186,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfBlockMasterMain = (props) => {
-    const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading, dealerBlockData } = props;
+    const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, resetDealerList, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading, dealerBlockData } = props;
 
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
 
@@ -223,7 +227,6 @@ export const OtfBlockMasterMain = (props) => {
     const [searchValue, setSearchValue] = useState('');
 
     const [zone, setZone] = useState();
-    const [area, setArea] = useState();
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: false, siblingBtn: false, enable: false };
 
@@ -407,6 +410,7 @@ export const OtfBlockMasterMain = (props) => {
     };
 
     const handleZoneChange = (value) => {
+        resetDealerList();
         const extraParams = [
             {
                 key: 'zone',
@@ -416,8 +420,9 @@ export const OtfBlockMasterMain = (props) => {
         fetchAreaOfficeList({ setIsLoading: listAreaOfficeListShowLoading, userId, extraParams });
         setZone(value);
         if (zone) {
-            form.setFieldsValue({ area: null });
+            form.setFieldsValue({ areaCode: null, dealerCode: null });
         }
+       
     };
 
     const handleSelectTreeClick = (value) => {
@@ -616,8 +621,7 @@ export const OtfBlockMasterMain = (props) => {
         zoneMasterData,
         handleZoneChange,
         zone,
-        area,
-        setArea,
+        
     };
 
     const viewProps = {

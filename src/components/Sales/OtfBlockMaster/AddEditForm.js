@@ -6,7 +6,6 @@
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Button, Switch, Select } from 'antd';
 import { connect } from 'react-redux';
-import { customSelectBox } from 'utils/customSelectBox';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
@@ -18,6 +17,7 @@ import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { customSelectBoxKeyValue } from 'utils/customSelectBoxKeyValue';
 const { Option } = Select;
 
 
@@ -73,6 +73,7 @@ const AddEditFormMain = (props) => {
     const handleDealer = (value) => {
         let zoneValue = zone;
         let areaValue =  value;
+        form.setFieldsValue({ dealerCode: null });
         if(zoneValue && areaValue) {
             const extraParams = [
                 { key: 'zoneCode', value: zoneValue },
@@ -127,9 +128,8 @@ const AddEditFormMain = (props) => {
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.dealerCode} label={translateContent('bookingBlockMaster.label.dealerCode')} name="dealerCode" rules={[validateRequiredInputField(translateContent('bookingBlockMaster.label.dealerCode'))]}>
-    
-                                    {customSelectBox({ data: dealerBlockData, fieldNames: { key: 'dealerCode', value: 'dealerName' }, placeholder: preparePlaceholderSelect(translateContent('bookingBlockMaster.label.dealerCode')) })}
+                                <Form.Item initialValue={formData?.dealerCode} label={translateContent('bookingBlockMaster.label.dealerName')} name="dealerCode" rules={[validateRequiredInputField(translateContent('bookingBlockMaster.label.dealerName'))]}>
+                                    {customSelectBoxKeyValue({ data: dealerBlockData, fieldNames: { key: 'dealerCode', value: 'dealerName'}, placeholder: preparePlaceholderSelect(translateContent('bookingBlockMaster.label.dealerName')) })}
                                 </Form.Item>
                             </Col>
                         </Row>
