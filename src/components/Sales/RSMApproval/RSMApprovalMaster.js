@@ -270,7 +270,7 @@ export const RSMApprovalMasterBase = (props) => {
                 form.resetFields();
                 rejectForm.resetFields();
                 setShowDataLoading(true);
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
                 setRejectModalVisible(false);
                 setButtonData({ ...buttonData, formBtnActive: false });
