@@ -3,34 +3,19 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Row, Col, Input, Form, DatePicker, Card, Space, Collapse, Divider, Switch } from 'antd';
+import React from 'react';
+import { Row, Col, Input, Form, Card, Space, Switch } from 'antd';
 
-import { dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { customSelectBox } from 'utils/customSelectBox';
-import { expandIcon } from 'utils/accordianExpandIcon';
 
-const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { formData, onHandleSelect } = props;
     const { isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
-    const [openAccordian, setOpenAccordian] = useState(1);
-
-    const activeStatusData = [
-        {
-            key: '1',
-            value: 'Yes',
-        },
-        {
-            key: '2',
-            value: 'No (Pending for Approval)',
-        },
-    ];
 
     const assosiateType = [
         {
@@ -54,15 +39,13 @@ const AddEditFormMain = (props) => {
         },
     ];
 
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
 
     return (
         <>
-            <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
+            {/* <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
                 <Panel header={'Request Detail' || translateContent('applicationMaster.text.applicationActions')} key="1">
-                    <Divider />
+                    <Divider /> */}
+                    <Card>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Space style={{ display: 'flex' }} size="middle" direction="vertical">
@@ -188,8 +171,9 @@ const AddEditFormMain = (props) => {
                             </Space>
                         </Col>
                     </Row>
-                </Panel>
-            </Collapse>
+                    </Card>
+                {/* </Panel>
+            </Collapse> */}
         </>
     );
 };

@@ -106,6 +106,7 @@ import AdditionalCsdCpcClaimPage from 'pages/Sales/AdditionalCsdCpcClaim';
 import OverRiderClaimPage from 'pages/Sales/OverRiderClaim';
 import ExchangeLoyalityClaimMasterPage from 'pages/Sales/ExchangeLoyalityClaim';
 import { IncentiveSchemeMasterPage } from 'pages/Sales/IncentiveSchemeMaster/IncentiveSchemeMasterPage';
+import IncentiveSchemePage from 'pages/Sales/IncentiveScheme';
 
 const mapStateToProps = (state) => {
     const {
@@ -297,6 +298,7 @@ const AuthenticatedUserPageMain = (props) => {
                 {/* iNCENTIVE SCHEME N CLAIM  */}
                 <Route path={routing.ROUTING_MITRA_BROKER_REGISTRATION} element={<MitraBrokerRegistrationMasterPage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME_MASTER} element={<IncentiveSchemeMasterPage />} exact />
+                <Route path={routing.ROUTING_INCENTIVE_SCHEME} element={<IncentiveSchemePage />} exact />
                 
 
 
