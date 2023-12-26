@@ -17,7 +17,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData, activeKey, handleCollapse } = props;
     const { voucherDetailsDto, partyDetailsDto } = formData;
     const viewProps = {
         bordered: false,
@@ -30,7 +30,7 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={[1]} expandIconPosition="end" className={styles.collapseContainer}>
+                    <Collapse activeKey={activeKey} onChange={() => handleCollapse(1)} collapsible="icon" expandIcon={expandIcon} expandIconPosition="end" className={styles.collapseContainer}>
                         <Panel header={translateContent('creditDebitNote.label.voucherDetails')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -42,7 +42,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end" className={styles.collapseContainer}>
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => handleCollapse(2)} expandIconPosition="end" className={styles.collapseContainer}>
                         <Panel header={translateContent('creditDebitNote.label.partyDetails')} key="2">
                             <Divider />
                             <Descriptions {...viewProps}>

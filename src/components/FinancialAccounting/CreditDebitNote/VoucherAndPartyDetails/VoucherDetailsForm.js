@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -11,7 +11,12 @@ import { validateRequiredInputField } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 
 export const VoucherDetailsForm = (props) => {
-    const { formType, formData } = props;
+    const { formType, formData, form } = props;
+
+    useEffect(() => {
+        form.setFieldsValue({ [formType]: { ...formData } });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
         <>

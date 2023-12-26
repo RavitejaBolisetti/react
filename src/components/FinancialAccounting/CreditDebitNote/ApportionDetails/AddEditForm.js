@@ -127,7 +127,7 @@ const AddEditFormMain = (props) => {
                             key="apportion"
                         >
                             <Divider />
-                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType })} scroll={{ x: 1000 }} tableData={apportionTableData} pagination={false} />
+                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, documentTypeOptions })} scroll={{ x: 1000 }} tableData={apportionTableData} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

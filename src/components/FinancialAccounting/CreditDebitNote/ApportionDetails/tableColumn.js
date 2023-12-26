@@ -9,15 +9,17 @@ import styles from 'assets/sass/app.module.scss';
 
 import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
+import { getCodeValue } from 'utils/getCodeValue';
 
 export const tableColumn = (props) => {
-    const { handleButtonClick, formActionType } = props;
+    const { handleButtonClick, formActionType, documentTypeOptions } = props;
 
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('creditDebitNote.ApportionDetails.label.documentType'),
             dataIndex: 'documentType',
             width: '15%',
+            render: (text) => getCodeValue(documentTypeOptions, text, 'documentDescription', false, 'documentCode') || text,
         }),
 
         tblPrepareColumns({
@@ -66,7 +68,7 @@ export const tableColumn = (props) => {
     ];
 
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canView: false, canEdit: false, canServerDataEdit: true, canDelete: true }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canView: false, canEdit: true, canDelete: true }));
     }
     return tableColumn;
 };

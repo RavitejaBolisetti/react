@@ -91,7 +91,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
             handleFormValueChange();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType?.addMode, isDetailLoaded, requestPayload, formActionType?.editMode, section]);
+    }, [formActionType, isDetailLoaded, requestPayload, section]);
 
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -206,6 +206,8 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         handlePartySegmentChange,
         handleSearchParamSearch,
         handlePartyIdChange,
+        activeKey,
+        setActiveKey,
     };
 
     const viewProps = {
@@ -214,8 +216,8 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         styles,
         activeKey,
         setActiveKey,
+        handleCollapse,
     };
-
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>

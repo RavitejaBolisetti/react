@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -16,9 +16,13 @@ import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
 export const PartyDetailsForm = (props) => {
-    const { handlePartyIdChange, handlePartySegmentChange, formType, formData, typeData, formActionType, handleSearchParamSearch } = props;
-
+    const { handlePartyIdChange, handlePartySegmentChange, formType, formData, typeData, formActionType, handleSearchParamSearch, form } = props;
     const disabledProps = { disabled: formActionType?.editMode };
+    
+    useEffect(() => {
+        form.setFieldsValue({ [formType]: { ...formData } });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
         <>
