@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VoucherDetailsMasterMain = (props) => {
-    const { formActionType, NEXT_ACTION, handleButtonClick, isAccoutHeadLoading } = props;
+    const { formActionType, NEXT_ACTION, handleButtonClick, isAccoutHeadLoading, isCreditDrawerDataLoading } = props;
     const { showGlobalNotification, setRequestPayload, handleFormValueChange, requestPayload, fetchFinancialAccountList, listFinanceShowLoading, voucherTableData, setVoucherTableData } = props;
 
     const [form] = Form.useForm();
@@ -95,6 +95,7 @@ export const VoucherDetailsMasterMain = (props) => {
         activeKey,
         setActiveKey,
         formActionType,
+        isLoading: isCreditDrawerDataLoading,
     };
 
     const onFinish = () => {

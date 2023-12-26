@@ -23,9 +23,9 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            PartyMaster: { isLoading, data, detailData },
+            PartyMaster: { isLoading = false, data, detailData },
             Vehicle: {
-                CustomerCommonDetails: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: partyData = [] },
+                CustomerCommonDetails: { isLoaded: isPartyDataLoaded = false, isLoading: isPartyDataLoading = false, data: partyData = [] },
             },
         },
         common: {
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VoucherAndPartyDetailsMasterMain = (props) => {
     const { formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { handleFormValueChange, isDetailLoaded, section } = props;
-    const { showGlobalNotification, userId, setButtonData, buttonData, fetchList, listShowLoading, listPartyShowLoading, fetchDetail, requestPayload, setRequestPayload, typeData } = props;
+    const { showGlobalNotification, userId, setButtonData, buttonData, fetchList, listShowLoading, listPartyShowLoading, fetchDetail, requestPayload, setRequestPayload, typeData, isCreditDrawerDataLoading } = props;
 
     const [form] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -149,7 +149,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
                 showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.voucherAndPartyDetails.validation.detailNotForPartySegment') });
                 setButtonData({ ...buttonData, formBtnActive: false });
             }
-            form.setFieldsValue({ partyDetails: res?.data[0] });
+            form.setFieldsValue({ partyDetails: res?.data?.[0] });
             setButtonData({ ...buttonData, formBtnActive: true });
         };
         const onSuccessCustomerAction = (res) => {
@@ -209,7 +209,6 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         activeKey,
         setActiveKey,
     };
-
     const viewProps = {
         typeData,
         formData,
@@ -217,6 +216,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         activeKey,
         setActiveKey,
         handleCollapse,
+        isLoading: isCreditDrawerDataLoading,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>

@@ -30,9 +30,7 @@ export const tableColumn = (props) => {
         tblPrepareColumns({
             title: translateContent('creditDebitNote.ApportionDetails.label.documentDate'),
             dataIndex: 'documentDate',
-            render: (value) => {
-                return convertDate(value?.documentDate, dateFormatView);
-            },
+            render: (value) => convertDate(value?.documentDate, dateFormatView),
             width: '10%',
         }),
         tblPrepareColumns({
@@ -60,15 +58,10 @@ export const tableColumn = (props) => {
             dataIndex: 'apportionAmount',
             width: '10%',
         }),
-        // tblPrepareColumns({
-        //     title: translateContent('creditDebitNote.ApportionDetails.placeholder.remarks'),
-        //     dataIndex: 'remarks',
-        //     width: '10%',
-        // }),
     ];
 
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canView: false, canEdit: true, canDelete: true }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canView: false, canEdit: false, canServerDataEdit: true, canDelete: true }));
     }
     return tableColumn;
 };

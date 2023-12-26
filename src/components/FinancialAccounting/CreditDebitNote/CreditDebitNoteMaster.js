@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             FinancialAccounting: {
-                CreditDebitNoteSearch: { isLoaded: isDataLoaded = false, isDetailLoaded = false, data, detailData: creditDebitData = [], filter: filterString },
+                CreditDebitNoteSearch: { isLoading: isCreditDrawerDataLoading = false, isLoaded: isDataLoaded = false, isDetailLoaded = false, data, detailData: creditDebitData = [], filter: filterString },
             },
         },
     } = state;
@@ -52,6 +52,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         filterString,
         creditDebitData,
+        isCreditDrawerDataLoading,
     };
     return returnValue;
 };
@@ -76,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CreditDebitNoteMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, totalRecords, isDataLoaded, isDetailLoaded, showGlobalNotification } = props;
     const { typeData, moduleTitle } = props;
-    const { fetchDetail, filterString, setFilterString, creditDebitData } = props;
+    const { fetchDetail, filterString, setFilterString, creditDebitData, isCreditDrawerDataLoading } = props;
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -532,6 +533,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setVoucherTableData,
         apportionTableData,
         setApportionTableData,
+        isCreditDrawerDataLoading,
     };
 
     const reportDetail = vouchertype === VOUCHER_TYPE?.CREDIT_TYPE?.key ? EMBEDDED_REPORTS?.CREDIT_DOCUMENT : VOUCHER_TYPE?.DEBIT_TYPE?.key ? EMBEDDED_REPORTS?.DEBIT_DOCUMENT : null;

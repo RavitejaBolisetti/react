@@ -16,9 +16,9 @@ import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
 export const PartyDetailsForm = (props) => {
-    const { handlePartyIdChange, handlePartySegmentChange, formType, formData, typeData, formActionType, handleSearchParamSearch, form } = props;
+    const { handlePartyIdChange, handlePartySegmentChange, formType, formData, typeData, formActionType, handleSearchParamSearch, form, isPartyDataLoading } = props;
     const disabledProps = { disabled: formActionType?.editMode };
-    
+
     useEffect(() => {
         form.setFieldsValue({ [formType]: { ...formData } });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,7 +34,7 @@ export const PartyDetailsForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'partyId']} label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyId')} initialValue={formData?.partyId} rules={[validateRequiredSelectField(translateContent('creditDebitNote.voucherAndPartyDetails.validation.partyId')), noWhiteSpaceinBeginning(translateContent('creditDebitNote.voucherAndPartyDetails.validation.partyId'))]} validateTrigger={['onSearch', 'onChange']} data-testid="party_id_input">
-                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.partyId'))} /> : <Search {...disabledProps} placeholder={translateContent('global.placeholder.select')} maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
+                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherAndPartyDetails.placeholder.partyId'))} /> : <Search {...disabledProps} loading={isPartyDataLoading} placeholder={translateContent('global.placeholder.select')} maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

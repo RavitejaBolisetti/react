@@ -14,14 +14,14 @@ import { translateContent } from 'utils/translateContent';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { tableData, styles, bindCodeValue, collapseProps, formActionType } = props;
+    const { tableData, styles, bindCodeValue, collapseProps, formActionType, isLoading } = props;
 
     return (
         <div className={styles.viewDrawerContainer}>
             <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={[1]} expandIconPosition="end" {...collapseProps}>
                 <Panel header={translateContent('creditDebitNote.ApportionDetails.heading.title')} key="1">
                     <Divider />
-                    <DataTable scroll={{ x: 1000 }} tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={tableData} pagination={false} />
+                    <DataTable isLoading={isLoading} scroll={{ x: 1000 }} tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={tableData} pagination={false} />
                 </Panel>
             </Collapse>
         </div>

@@ -156,7 +156,7 @@ export const tblActionColumn = ({
                     </Button>
                 )}
 
-                {canServerDataEdit && record?.id && (
+                {canServerDataEdit && !record?.id && (
                     <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
                     </Button>

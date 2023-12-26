@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ApportionDetailsMasterMain = (props) => {
-    const { isLoading, userId, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
+    const { isCreditDrawerDataLoading, userId, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
     const { fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData } = props;
     const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, requestPayload, showGlobalNotification } = props;
 
@@ -136,7 +136,7 @@ export const ApportionDetailsMasterMain = (props) => {
     const viewProps = {
         tableData: requestPayload?.apportionDetailsDto,
         styles,
-        isLoading,
+        isLoading:isCreditDrawerDataLoading,
         activeKey,
         setActiveKey,
         formActionType,

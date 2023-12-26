@@ -25,7 +25,7 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
+    console.log('isLoading', isLoading);
     return (
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
                         <Panel header={translateContent('creditDebitNote.label.partyDetails')} key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyId')}>{checkAndSetDefaultValue(partyDetailsDto?.partyId, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyName')}>{checkAndSetDefaultValue(partyDetailsDto?.partyName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.address')}>{checkAndSetDefaultValue(partyDetailsDto?.address, isLoading)}</Descriptions.Item>

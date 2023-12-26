@@ -14,10 +14,11 @@ const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
     const { form } = props;
-    const { activeKey, handleCollapse, handlePartySegmentChange, handleSearchParamSearch, handlePartyIdChange, formData, typeData, formActionType } = props;
+    const { activeKey, handleCollapse, handlePartySegmentChange, handleSearchParamSearch, handlePartyIdChange, formData, typeData, formActionType, isPartyDataLoading } = props;
 
     const voucherDetailsProp = { form, formType: 'voucherDetails', formData: formData?.voucherDetailsDto };
-    const partyDetailsProp = { form, handlePartyIdChange, handlePartySegmentChange, formType: 'partyDetails', formData: formData?.partyDetailsDto, typeData, formActionType, handleSearchParamSearch };
+    const partyDetailsProp = { isPartyDataLoading, form, handlePartyIdChange, handlePartySegmentChange, formType: 'partyDetails', formData: formData?.partyDetailsDto, typeData, formActionType, handleSearchParamSearch };
+
     return (
         <>
             <Row gutter={20}>
