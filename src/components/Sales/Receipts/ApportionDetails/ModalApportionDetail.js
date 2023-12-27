@@ -20,7 +20,7 @@ import { APPORTION_CONSTANTS } from 'components/FinancialAccounting/CreditDebitN
 const { Search } = Input;
 
 export const ApportionDetailForm = (props) => {
-    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberChange, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList } = props;
+    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberChange, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList, isEditing, setShowApportionForm, isVisible } = props;
     const [apportionedAmount, setApportionedAmount] = useState();
     const [writeOffAmount, setWriteOffAmount] = useState();
 
@@ -42,6 +42,16 @@ export const ApportionDetailForm = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apportionTableFormData]);
+
+    useEffect(() => {
+        if (isEditing) {
+            setShowApportionForm(apportionTableFormData);
+        }
+        return () => {
+            setShowApportionForm();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isVisible, isEditing]);
 
     const checkDuplicateValidator = (_, value) => {
         if (apportionList.length > 0) {

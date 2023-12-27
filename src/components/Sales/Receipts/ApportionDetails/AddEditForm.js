@@ -15,6 +15,7 @@ import { ModalApportionDetail } from './ModalApportionDetail';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Text } = Typography;
 
@@ -47,13 +48,25 @@ const AddEditFormMain = (props) => {
         apportionForm.resetFields();
     };
 
-    const handleButtonClick = ({ record, index,buttonAction }) => {
-        setApportionTableFormData({ ...record, index: index });
-        setModalApportionVisible(true);
-        setisEditing(true);
-        apportionForm.resetFields();
-        setShowApportionForm(record);
-        setTotalApportionAmount(parseFloat(totalApportionAmount) - parseFloat(record?.apportionedAmount));
+    const handleButtonClick = ({ record, index, buttonAction = FROM_ACTION_TYPE?.EDIT }) => {
+        switch (buttonAction) {
+            case FROM_ACTION_TYPE?.EDIT: {
+                setApportionTableFormData({ ...record, index: index });
+                setModalApportionVisible(true);
+                setisEditing(true);
+                apportionForm.resetFields();
+                setShowApportionForm(record);
+                setTotalApportionAmount(parseFloat(totalApportionAmount) - parseFloat(record?.apportionedAmount));
+                break;
+            }
+            case FROM_ACTION_TYPE?.DELETE: {
+                setApportionList([...apportionList?.filter((_, i) => index !== i)]);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     };
 
     // const pagination = false;
@@ -116,6 +129,7 @@ const AddEditFormMain = (props) => {
         setReceivedAmount,
         totalReceivedAmount,
         apportionList,
+        setShowApportionForm,
     };
 
     return (
