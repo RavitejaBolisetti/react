@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('LoyaltyDocumentMaster.heading.pageTitle');
+    const moduleTitle = translateContent('LoyaltySchemeMaster.heading.pageTitle');
 
     let returnValue = {
         userId,
@@ -164,25 +164,7 @@ export const LoyaltyDocumentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
-    // useEffect(() => {
-    //         setSearchdata(data);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [data]);
-
-    // useEffect(() => {
-    //     if (data?.length > 0 && userId) {
-    //         if (filterString) {
-    //             const keyword = filterString?.keyword;
-    //             const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
-    //             setSearchdata(filterDataItem);
-    //             setShowDataLoading(false);
-    //         } else {
-    //             setSearchdata(data);
-    //             setShowDataLoading(false);
-    //         }
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString, isDataLoaded, data, userId]);
+    
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -295,7 +277,7 @@ export const LoyaltyDocumentMasterBase = (props) => {
         dynamicPagination,
     };
 
-    const title = translateContent('LoyaltyDocumentMaster.heading.title');
+   // const title = translateContent('LoyaltyDocumentMaster.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,
@@ -306,8 +288,9 @@ export const LoyaltyDocumentMasterBase = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,
+       // title:'',
         tableData: searchData,
+        showRefereshButton: false,
     };
 
     return (

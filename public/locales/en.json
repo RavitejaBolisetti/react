@@ -3101,6 +3101,45 @@
     }
 },
 
+"LoyaltySchemeMaster": {
+    "heading": {
+        "pageTitle": "Exchange/Loyalty Scheme Master",
+        "title": "Exchange/Loyalty Scheme"
+    },
+    "label": {
+        "documentId": "Document ID",
+        "documentName": "Document Name",
+        "schemeId": "Scheme ID",
+        "SchemeName": "Scheme Name",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "documentstatus": "Is Document Active?",
+        "activesheme":"Active",
+        "inactivesheme":"Inactive",
+        "documentmandatory": "Is Document Mandatory?",
+        "documentyes":"Yes",
+        "documentno":"No"
+    },
+    "placeholder": {
+        "schemeId": "Scheme ID",
+        "SchemeName": "Scheme Name",
+        "documentId": "Document ID",
+        "documentName": "Document Name",
+        "validFrom": "Valid From",
+        "validTo": "Valid To"
+    },
+    "validation": {
+        "documentId": "Document ID",
+        "documentName": "Document Name",
+        "schemeId": "Scheme ID",
+        "SchemeName": "Scheme Name",
+        "validFrom": "Valid From",
+        "validTo": "Valid To"
+    }
+},
 
     "configurableParameter": {
         "heading": {

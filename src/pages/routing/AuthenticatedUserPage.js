@@ -45,7 +45,17 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage } from 'pages/FinancialAccounting';
+import { TaxChargesPage, 
+    TaxChargesCategoryPage, 
+    AccountCategoryPage, 
+    VehicleModelTaxChargesCategoryPage,
+     DocumentTypeOtherChargesPage, 
+     CreditDebitNoteMasterPage, 
+     GSTIRNAuthenticationPage, 
+     ChartOfAccountPage, 
+     GstIRNTransactionPage 
+} from 'pages/FinancialAccounting';
+
 import {
     OTFMasterPage,
     VehicleDetailMasterPage,
@@ -79,18 +89,16 @@ import {
     CoDealerInvoiceGenerationPage,
     LoyaltyDocumentMasterPage,
     ClaimEmpowermentPage,
-    ExchangeLoyaltyCappingMasterPage
+    ExchangeLoyaltyCappingMasterPage,
+    LoyaltySchemeMasterPage
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
-
 import { PageNotFound } from 'components/PageNotFound';
-
 import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPage';
 import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocumentPage';
-
 import { CMSPage } from 'pages/cms';
 import { DealerCompanyPage } from 'pages/common/Dealer';
 import { VehicleSalesSchemeMasterPage } from 'pages/Sales/VehicleSalesSchemeMaster/VehicleSalesSchemeMasterPage';
@@ -256,8 +264,9 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.LOYALTY_DOCUMENT} element={<LoyaltyDocumentMasterPage />} exact />
                 <Route path={routing.ROUTING_EXCHANGE_LOYALTY_CAPPING_MASTER} element={<ExchangeLoyaltyCappingMasterPage />} exact />
 
-
-               
+                <Route path={routing.ROUTING_LOYALTY_SCHEME} element={<LoyaltySchemeMasterPage />} exact />
+                
+                           
                 <Route path={routing.ROUTING_EVR_DETAILS_CAPTURING} element={<EvrDetailsCapturingMasterPage />} exact />
                 <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
 

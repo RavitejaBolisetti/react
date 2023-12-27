@@ -146,6 +146,7 @@ export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
 export const CLAIM_EMPOWERMENT = ROUTING_SALES.concat('claim-empowerment');
 export const LOYALTY_DOCUMENT = ROUTING_SALES.concat('loyalty-document');
 export const ROUTING_EXCHANGE_LOYALTY_CAPPING_MASTER = ROUTING_SALES.concat('exchange-loyalty-capping-master');
+export const ROUTING_LOYALTY_SCHEME = ROUTING_SALES.concat('loyalty-Scheme');
 
 
 

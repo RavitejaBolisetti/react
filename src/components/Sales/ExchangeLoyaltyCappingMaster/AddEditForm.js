@@ -97,9 +97,6 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            
-
-
                                     <Form.Item initialValue={selectedOrder?.modelGroup} label={translateContent('ExchangeLoyaltyCappingMaster.label.modelGroup')} name="modelGroup">
                           {customSelectBox({ disabled: formActionType?.viewMode, disableOptionsKey: 'modelGroup', data: modelGroup, fieldNames: fieldNames, placeholder: preparePlaceholderSelect(translateContent('ExchangeLoyaltyCappingMaster.label.modelGroup')) })}                       
                         </Form.Item> 
@@ -179,8 +176,8 @@ const AddEditFormMain = (props) => {
 
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('LoyaltyDocumentMaster.label.status')}>
-                                        <Switch checkedChildren={translateContent('LoyaltyDocumentMaster.label.active')} unCheckedChildren={translateContent('LoyaltyDocumentMaster.label.inactive')} onChange={(checked) => (checked ? 1 : 0)} />
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('ExchangeLoyaltyCappingMaster.label.status')}>
+                                        <Switch checkedChildren={translateContent('ExchangeLoyaltyCappingMaster.label.active')} unCheckedChildren={translateContent('ExchangeLoyaltyCappingMaster.label.inactive')} onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>

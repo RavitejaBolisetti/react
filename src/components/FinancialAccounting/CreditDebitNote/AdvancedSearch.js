@@ -76,8 +76,7 @@ export const AdvancedSearchFrom = (props) => {
         return Promise.reject(new Error(translateContent('creditDebitNote.validation.dateCompareValidation')));
     };
 
-    return (
-        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
+    return (<Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.voucherType} label={translateContent('creditDebitNote.label.voucherType')} name="voucherType">

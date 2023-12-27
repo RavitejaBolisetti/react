@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-// import { lessorCompanyMasterDataActions } from 'store/actions/data/lessorCompanyMaster';
+import { lessorCompanyMasterDataActions } from 'store/actions/data/lessorCompanyMaster';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -19,14 +19,10 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-// import { filterFunction } from 'utils/filterFunction';
+import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
-import { AdvancedSearch } from './AdvancedSearch';
-
-
-
 
 const mapStateToProps = (state) => {
     const {
@@ -36,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('ExchangeLoyaltyCappingMaster.heading.pageTitle');
+    const moduleTitle = translateContent('LoyaltySchemeMaster.heading.pageTitle');
 
     let returnValue = {
         userId,
@@ -53,24 +49,22 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-           
+            fetchList: lessorCompanyMasterDataActions.fetchList,
+            saveData: lessorCompanyMasterDataActions.saveData,
+            listShowLoading: lessorCompanyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const ExchangeLoyaltyCappingMasterBase = (props) => {
+export const LoyaltySchemeMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, totalRecords } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-    const [advanceFilterForm] = Form.useForm();
-    const [searchForm] = Form.useForm();
-
     const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
 
-
-    const [showDataLoading, setShowDataLoading] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState([]);
     const [refershData, setRefershData] = useState(false);
 
@@ -78,7 +72,6 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
     const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [page, setPage] = useState({});
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -86,7 +79,6 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const dynamicPagination = true;
-
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -142,7 +134,7 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
                 ...defaultExtraParam,
                 {
                     key: 'documentName',
-                   title: 'Search Param',
+                    title: 'Search Param',
                     value: filterString?.documentName,
                     name: filterString?.documentName,
                     canRemove: true,
@@ -157,14 +149,14 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
     useEffect(() => {
         if (userId && refershData) {
-            // fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -226,13 +218,13 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
         const recordId = formData?.id || '';
 
         let data = { ...values, id: recordId };
-        setSearchdata(prev =>([...prev, values]))
+        setSearchdata((prev) => [...prev, values]);
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -259,23 +251,11 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
 
         saveData(requestData);
     };
-    const handleResetFilter = () => {
-        setShowDataLoading(false);
-        setFilterString();
-        advanceFilterForm.resetFields();
-    };
 
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-    };
-    
-    const onAdvanceSearchCloseAction = () => {
-        form.resetFields();
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
@@ -286,17 +266,19 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
         formActionType,
         setFormActionType,
         onFinish,
+
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: searchData,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
+
         setButtonData,
         handleButtonClick,
-       
     };
 
     const tableProps = {
@@ -306,50 +288,31 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
         setPage: setFilterString,
         filterString,
         totalRecords,
-        dynamicPagination, 
+        dynamicPagination,
     };
 
-    // const title = translateContent('ExchangeLoyaltyCappingMaster.heading.title');
+   // const title = translateContent('LoyaltySchemeMaster.heading.title');
 
     const advanceFilterResultProps = {
-        advanceFilter: true,
+        advanceFilter: false,
         filterString,
         from: listFilterForm,
-        setAdvanceSearchVisible,
         onSearchHandle,
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-     //  title:'',
+       title:'',
         tableData: searchData,
-        formActionType,
         showRefereshButton: false,
     };
-    
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-        titleOverride: translateContent('global.advanceFilter.title'),
-        onCloseAction: onAdvanceSearchCloseAction,
-        handleResetFilter,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        setAdvanceSearchVisible,
-        formActionType,
-        searchForm,
-    };
-
-
-
 
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
-            <AdvancedSearch {...advanceFilterProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd}/>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
@@ -357,4 +320,4 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
     );
 };
 
-export const ExchangeLoyaltyCappingMaster = connect(mapStateToProps, mapDispatchToProps)(ExchangeLoyaltyCappingMasterBase);
+export const LoyaltySchemeMaster = connect(mapStateToProps, mapDispatchToProps)(LoyaltySchemeMasterBase);

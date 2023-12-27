@@ -40,6 +40,7 @@ import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
 import ClaimEmpowermentPage from './ClaimEmpowerment';
 import LoyaltyDocumentMasterPage from './LoyaltyDocument';
 import ExchangeLoyaltyCappingMasterPage from './ExchangeLoyaltyCappingMaster';
+import LoyaltySchemeMasterPage from './LoyaltyScheme';
 
 export {
     OTFMasterPage,
@@ -74,5 +75,6 @@ export {
     CoDealerInvoiceGenerationPage,
     ClaimEmpowermentPage,
     LoyaltyDocumentMasterPage,
-    ExchangeLoyaltyCappingMasterPage
+    ExchangeLoyaltyCappingMasterPage,
+    LoyaltySchemeMasterPage,
 };
