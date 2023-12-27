@@ -8,15 +8,16 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { getCodeValue } from 'utils/getCodeValue';
 
 export const tableColumnApportion = (props) => {
-    const { formActionType, handleButtonClick } = props;
+    const { formActionType, handleButtonClick, documentDescriptionList } = props;
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('receipts.tableColumn.docType'),
             dataIndex: 'documentType',
+            render: (text) => getCodeValue(documentDescriptionList, text, 'documentDescription', false, 'documentCode') || text,
             width: '14%',
-            fixed: 'left',
         }),
 
         tblPrepareColumns({

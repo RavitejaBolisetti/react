@@ -20,7 +20,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberChange, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, totalReceivedAmount } = props;
+    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberChange, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, totalReceivedAmount, ApportionLoading } = props;
     const [modalForm] = Form.useForm();
     const [isModalApportionVisible, setModalApportionVisible] = useState(false);
     const [showApportionTable, setApportionTable] = useState(false);
@@ -86,7 +86,7 @@ const AddEditFormMain = (props) => {
                 apportionForm.resetFields();
                 setModalApportionVisible(false);
             } else {
-                const data = { ...values, id: '', apportionedAmount: parseFloat(values?.apportionedAmount), writeOffAmount: parseFloat(values?.writeOffAmount) };
+                const data = { ...values, id: '', apportionedAmount: parseFloat(values?.apportionedAmount), writeOffAmount: parseFloat(values?.writeOffAmount), balanceAmount: Number(values?.balanceAmount), receivedAmount: Number(values?.receivedAmount) };
                 const newarr = [...apportionList];
                 newarr[apportionTableFormData?.index] = data;
                 setApportionList(newarr);
@@ -130,6 +130,7 @@ const AddEditFormMain = (props) => {
         totalReceivedAmount,
         apportionList,
         setShowApportionForm,
+        ApportionLoading,
     };
 
     return (
@@ -150,7 +151,7 @@ const AddEditFormMain = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <DataTable tableColumn={tableColumnApportion({ handleButtonClick, formActionType })} scroll={{ x: 1000 }} tableData={apportionList} pagination={false} />
+                            <DataTable tableColumn={tableColumnApportion({ handleButtonClick, formActionType, documentDescriptionList })} scroll={{ x: 1000 }} tableData={apportionList} pagination={false} />
                         </Col>
                     </Row>
                 </>

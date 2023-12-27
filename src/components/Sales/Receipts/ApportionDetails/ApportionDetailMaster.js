@@ -29,6 +29,7 @@ const mapStateToProps = (state) => {
         data: {
             FinancialAccounting: {
                 DocumentDescription: { isLoaded: isDocumentTypesLoaded = false, data: documentDescriptionList = [] },
+                InvoiceDetails: { isLoading: ApportionLoading = false },
             },
         },
     } = state;
@@ -40,8 +41,7 @@ const mapStateToProps = (state) => {
         isDocumentTypesLoaded,
         documentDescriptionList,
 
-        // otfData,
-        // isLoading,
+        ApportionLoading,
         moduleTitle,
     };
     return returnValue;
@@ -65,13 +65,12 @@ const mapDispatchToProps = (dispatch) => ({
 const ApportionDetailMasterBase = (props) => {
     const { userId, documentDescriptionList, showGlobalNotification, section, isDocumentTypesLoaded, listDocumentTypeShowLoading, listInvoiceShowLoading, fetchDocumentTypeList, resetInvoiceData, fetchInvoiceList, fetchList, isLoading } = props;
     const { form, formActionType, handleFormValueChange, handleButtonClick, receiptOnFinish } = props;
-    const { apportionList, setApportionList, receiptDetailData, totalReceivedAmount, receiptStatus } = props;
+    const { apportionList, setApportionList, receiptDetailData, totalReceivedAmount, receiptStatus, ApportionLoading } = props;
 
     const [showApportionForm, setShowApportionForm] = useState();
     const [documentAmount, setDocumentAmount] = useState();
     const [receivedAmount, setReceivedAmount] = useState();
     const [searchData, setSearchData] = useState();
-
 
     const [apportionForm] = Form.useForm();
 
@@ -101,6 +100,7 @@ const ApportionDetailMasterBase = (props) => {
     const handleDocumentNumberChange = () => {
         setShowApportionForm();
         resetInvoiceData();
+        apportionForm.resetFields(['documentDate', 'documentAmount', 'receivedAmount', 'balanceAmount', 'writeOffAmount', 'apportionAmount']);
     };
 
     const handleDocumentNumberSearch = (values) => {
@@ -116,6 +116,8 @@ const ApportionDetailMasterBase = (props) => {
                 documentDate: formatDateToCalenderDate(apportionValues?.documentDate),
                 documentAmount: apportionValues?.documentAmount,
                 balanceAmount: apportionValues?.balancedAmount,
+                trueBalanceAmount: apportionValues?.balancedAmount,
+                trueReceivedAmount: apportionValues?.receivedAmount,
             });
         };
 
@@ -165,6 +167,7 @@ const ApportionDetailMasterBase = (props) => {
         apportionList,
         setApportionList,
         totalReceivedAmount,
+        ApportionLoading,
     };
 
     const viewProps = {

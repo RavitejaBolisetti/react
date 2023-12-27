@@ -20,7 +20,7 @@ import { APPORTION_CONSTANTS } from 'components/FinancialAccounting/CreditDebitN
 const { Search } = Input;
 
 export const ApportionDetailForm = (props) => {
-    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberChange, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList, isEditing, setShowApportionForm, isVisible } = props;
+    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberChange, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList, isEditing, setShowApportionForm, isVisible, ApportionLoading } = props;
     const [apportionedAmount, setApportionedAmount] = useState();
     const [writeOffAmount, setWriteOffAmount] = useState();
 
@@ -35,6 +35,8 @@ export const ApportionDetailForm = (props) => {
                 balanceAmount: apportionTableFormData?.balanceAmount ?? '',
                 writeOffAmount: apportionTableFormData?.writeOffAmount ?? '',
                 apportionedAmount: apportionTableFormData?.apportionedAmount ?? '',
+                trueBalanceAmount: apportionTableFormData?.trueBalanceAmount || 0,
+                trueReceivedAmount: apportionTableFormData?.trueReceivedAmount || 0,
                 id: apportionTableFormData?.id ?? '',
             });
             setDocumentAmount(apportionTableFormData?.documentAmount);
@@ -67,51 +69,60 @@ export const ApportionDetailForm = (props) => {
     const calculateApportionDetails = ({ formValues, type }) => {
         switch (type) {
             case APPORTION_CONSTANTS?.APPORTION_AMOUNT?.key: {
-                if (parseFloat(formValues?.apportionedAmount) >= 0) {
-                    const receivedCal = parseFloat(formValues?.receivedAmount ?? 0) + parseFloat(formValues?.apportionedAmount ?? 0);
-                    const balancedCalculate = parseFloat(formValues?.balanceAmount) - (parseFloat(formValues?.writeOffAmount ?? 0) + parseFloat(formValues?.apportionedAmount ?? 0));
-                    if (receivedCal >= 0 && balancedCalculate >= 0) {
-                        apportionForm.setFieldsValue({
-                            receivedAmount: receivedCal,
-                            balanceAmount: balancedCalculate,
-                        });
-                        return Promise.resolve();
+                try {
+                    if (parseFloat(formValues?.apportionedAmount) >= 0) {
+                        const receivedCal = parseFloat(formValues?.receivedAmount) + parseFloat(formValues?.apportionedAmount);
+                        const balancedCalculate = parseFloat(formValues?.balanceAmount) - (parseFloat(formValues?.writeOffAmount) + parseFloat(formValues?.apportionedAmount));
+                        if (receivedCal >= 0 && balancedCalculate >= 0) {
+                            apportionForm.setFieldsValue({
+                                receivedAmount: receivedCal?.toFixed(2),
+                                balanceAmount: balancedCalculate?.toFixed(2),
+                            });
+                            return Promise.resolve();
+                        } else {
+                            if (receivedCal < 0) return Promise.reject(new Error('received amount cannot be negative'));
+                            if (balancedCalculate < 0) {
+                                return Promise.reject(new Error('apportion amount is greater than balanced amount '));
+                            }
+                        }
                     } else {
-                        if (receivedCal < 0) return Promise.reject(new Error('received amount cannot be negative'));
-                        if (balancedCalculate < 0) {
-                            return Promise.reject(new Error('apportion amount is greater than balanced amount '));
+                        if (parseFloat(formValues?.apportionedAmount) < 0) {
+                            return Promise.reject(new Error('apportionAmount cannot be negative'));
+                        } else {
+                            return Promise.resolve();
                         }
                     }
-                } else {
-                    if (parseFloat(formValues?.apportionedAmount) < 0) {
-                        return Promise.reject(new Error('apportionAmount cannot be negative'));
-                    } else {
-                        return Promise.reject(new Error('apportionAmount is not present'));
-                    }
+                } catch (err) {
+                    console.error(err);
                 }
                 break;
             }
             case APPORTION_CONSTANTS?.WRITE_OFF_AMOUNT?.key: {
-                if (parseFloat(formValues?.writeOffAmount) >= 0) {
-                    const receivedCal = parseFloat(formValues?.receivedAmount) + parseFloat(formValues?.apportionedAmount ?? 0);
-                    const balancedCalculate = parseFloat(formValues?.balanceAmount) - (parseFloat(formValues?.writeOffAmount ?? 0) + parseFloat(formValues?.apportionedAmount ?? 0));
-                    if (receivedCal >= 0 && balancedCalculate >= 0) {
-                        apportionForm.setFieldsValue({
-                            balanceAmount: balancedCalculate,
-                        });
-                        return Promise.resolve();
+                try {
+                    if (Number(formValues?.writeOffAmount) >= 0) {
+                        const receivedCal = Number(formValues?.receivedAmount) + Number(formValues?.apportionedAmount);
+                        const balancedCalculate = Number(formValues?.balanceAmount) - (Number(formValues?.writeOffAmount) + Number(formValues?.apportionedAmount));
+                        console.log('balancedCalculate', Number(formValues?.balanceAmount), Number(formValues?.writeOffAmount), Number(formValues?.apportionedAmount));
+                        if (receivedCal >= 0 && balancedCalculate >= 0) {
+                            apportionForm.setFieldsValue({
+                                balanceAmount: balancedCalculate?.toFixed(2),
+                            });
+                            return Promise.resolve();
+                        } else {
+                            if (receivedCal < 0) return Promise.reject(new Error('received amount cannot be negative'));
+                            if (balancedCalculate < 0) {
+                                return Promise.reject(new Error('write of amount is greater than balanced amount '));
+                            }
+                        }
                     } else {
-                        if (receivedCal < 0) return Promise.reject(new Error('received amount cannot be negative'));
-                        if (balancedCalculate < 0) {
-                            return Promise.reject(new Error('write of amount is greater than balanced amount '));
+                        if (Number(formValues?.writeOffAmount) < 0) {
+                            return Promise.reject(new Error('write of amount cannot be negative'));
+                        } else {
+                            return Promise.resolve();
                         }
                     }
-                } else {
-                    if (parseFloat(formValues?.writeOffAmount) < 0) {
-                        return Promise.reject(new Error('write of amount cannot be negative'));
-                    } else {
-                        return Promise.reject(new Error('write of amount is not present'));
-                    }
+                } catch (err) {
+                    console.error(err);
                 }
                 break;
             }
@@ -127,7 +138,6 @@ export const ApportionDetailForm = (props) => {
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label={translateContent('receipts.label.apportionDetails.documentType')} name="documentType" rules={[validateRequiredSelectField(translateContent('receipts.label.apportionDetails.documentType'))]}>
                         {customSelectBox({
-                            data: documentDescriptionList,
                             data: documentDescriptionList?.reduce((prev, curr) => {
                                 const finder = apportionList?.find((item) => item?.documentType === curr?.documentCode || item?.documentType === curr?.documentDescription);
                                 prev.push({ ...curr, disabled: !!finder });
@@ -135,6 +145,7 @@ export const ApportionDetailForm = (props) => {
                             }, []),
                             placeholder: preparePlaceholderSelect(translateContent('receipts.label.apportionDetails.documentType')),
                             fieldNames: { key: 'documentCode', value: 'documentDescription' },
+                            disabled: isEditing,
                         })}
                     </Form.Item>
                 </Col>
@@ -149,7 +160,7 @@ export const ApportionDetailForm = (props) => {
                             },
                         ]}
                     >
-                        <Search allowClear onChange={handleDocumentNumberChange} onSearch={() => handleDocumentNumberSearch(apportionForm.getFieldsValue())} placeholder={preparePlaceholderText(translateContent('receipts.label.apportionDetails.documentNumber'))} />
+                        <Search loading={ApportionLoading} disabled={isEditing} allowClear onChange={handleDocumentNumberChange} onSearch={() => handleDocumentNumberSearch(apportionForm.getFieldsValue())} placeholder={preparePlaceholderText(translateContent('receipts.label.apportionDetails.documentNumber'))} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -185,18 +196,28 @@ export const ApportionDetailForm = (props) => {
                     <Form.Item
                         label={translateContent('receipts.label.apportionDetails.writeOffAmount')}
                         name="writeOffAmount"
-                        rules={[validateRequiredInputField(translateContent('receipts.label.apportionDetails.writeOffAmount')), validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.writeOffAmount')), { validator: (_, writeOffVal) => calculateApportionDetails({ formValues: { ...apportionForm.getFieldsValue(), writeOffAmount: writeOffVal, balanceAmount: showApportionForm?.balancedAmount, receivedAmount: showApportionForm?.receivedAmount }, type: APPORTION_CONSTANTS?.WRITE_OFF_AMOUNT?.key }) }]}
+                        rules={[
+                            validateRequiredInputField(translateContent('receipts.label.apportionDetails.writeOffAmount')),
+                            validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.writeOffAmount')),
+                            { validator: (_, writeOffVal) => calculateApportionDetails({ formValues: { ...apportionForm.getFieldsValue(), writeOffAmount: writeOffVal, balanceAmount: apportionForm.getFieldValue('trueBalanceAmount') || 0, receivedAmount: apportionForm.getFieldValue('trueReceivedAmount') || 0, apportionedAmount: apportionForm.getFieldValue('apportionedAmount') || 0 }, type: APPORTION_CONSTANTS?.WRITE_OFF_AMOUNT?.key }) },
+                        ]}
                     >
-                        <Input onChange={(e) => setWriteOffAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.writeOffAmount'))} />
+                        <Input disabled={ApportionLoading} onChange={(e) => setWriteOffAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.writeOffAmount'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item name="trueBalanceAmount" hidden />
+                    <Form.Item name="trueReceivedAmount" hidden />
                     <Form.Item
                         label={translateContent('receipts.label.apportionDetails.apportionAmount')}
                         name="apportionedAmount"
-                        rules={[validateRequiredInputField(translateContent('receipts.label.apportionDetails.apportionAmount')), validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.apportionAmount')), { validator: (_, apportionVal) => calculateApportionDetails({ formValues: { ...apportionForm.getFieldsValue(), apportionedAmount: apportionVal, balanceAmount: showApportionForm?.balancedAmount, receivedAmount: showApportionForm?.receivedAmount }, type: APPORTION_CONSTANTS?.APPORTION_AMOUNT?.key }) }]}
+                        rules={[
+                            validateRequiredInputField(translateContent('receipts.label.apportionDetails.apportionAmount')),
+                            validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.apportionAmount')),
+                            { validator: (_, apportionVal) => calculateApportionDetails({ formValues: { ...apportionForm.getFieldsValue(), apportionedAmount: apportionVal, balanceAmount: apportionForm.getFieldValue('trueBalanceAmount') || 0, receivedAmount: apportionForm.getFieldValue('trueReceivedAmount') || 0, writeOffAmount: apportionForm.getFieldValue('writeOffAmount') || 0 }, type: APPORTION_CONSTANTS?.APPORTION_AMOUNT?.key }) },
+                        ]}
                     >
-                        <Input onChange={(e) => setApportionedAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.apportionAmount'))} />
+                        <Input disabled={ApportionLoading} onChange={(e) => setApportionedAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.apportionAmount'))} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -210,7 +231,7 @@ export const ApportionDetailForm = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button type="primary" onClick={handleAddApportion}>
-                        {translateContent('global.buttons.add')}
+                        {isEditing ? translateContent('global.buttons.save') : translateContent('global.buttons.add')}
                     </Button>
                 </Col>
             </Row>
