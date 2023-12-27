@@ -19,7 +19,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { isReadOnly, setIsReadOnly, typeData, styles } = props;
+    const { isReadOnly, setIsReadOnly, typeData, styles, isAccoutHeadLoading } = props;
     const { itemOptions, setitemOptions } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, openAccordian, setOpenAccordian, handleFormValueChange } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue } = props;
@@ -32,7 +32,6 @@ const AddEditFormMain = (props) => {
     const [isAccountHeadValidated, setIsAccountHeadValidated] = useState(true);
 
     const voucherModuleTitle = translateContent('creditDebitNote.voucherDetails.heading.voucherModuleTitle');
-
     const addContactHandeler = () => {
         voucherForm.resetFields();
         setOpenAccordian('voucher');
@@ -58,6 +57,7 @@ const AddEditFormMain = (props) => {
         handleFormValueChange,
         MakefieldNames,
         ItemFieldNames,
+        isAccoutHeadLoading,
     };
 
     const advanceFilterProps = {

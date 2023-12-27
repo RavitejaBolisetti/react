@@ -56,29 +56,6 @@ export const AdvanceForm = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
 
-    // useEffect(() => {
-    //     const arr = [];
-
-    //     if (documentTypeOptions && documentTypeOptions?.length) {
-    //         apportionTableData?.map((element) => {
-    //             arr.push(element?.documentType);
-    //             return undefined;
-    //         });
-
-    //         setDocumentTypeOptions(
-    //             documentTypeOptions?.map((element) => {
-    //                 if (arr?.includes(element?.documentDescription) || arr?.includes(element?.documentCode)) {
-    //                     return { ...element, disabled: true };
-    //                 } else {
-    //                     return { ...element, disabled: false };
-    //                 }
-    //             })
-    //         );
-    //     }
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [apportionTableData]);
-
     const onFinish = () => {
         apportionForm
             .validateFields()
@@ -213,7 +190,9 @@ export const AdvanceForm = (props) => {
             })
             .catch((err) => console.error(err));
     };
-
+    const resetApportionForm = () => {
+        apportionForm.resetFields(['documentDate', 'documentAmount', 'settledAmount', 'balancedAmount', 'writeOffAmount', 'apportionAmount']);
+    };
     return (
         <Form autoComplete="off" layout="vertical" form={apportionForm}>
             <Row gutter={20}>
@@ -221,19 +200,42 @@ export const AdvanceForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.documentType')} name="documentType" rules={[validateRequiredSelectField(translateContent('creditDebitNote.ApportionDetails.validation.documentType'))]}>
-                                {customSelectBox({ data: documentTypeOptions, disabled: isEditing, placeholder: preparePlaceholderSelect(translateContent('creditDebitNote.ApportionDetails.placeholder.documentType')), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
+                                {customSelectBox({
+                                    data: documentTypeOptions?.reduce((prev, curr) => {
+                                        const finder = apportionTableData?.find((item) => item?.documentType === curr?.documentCode || item?.documentType === curr?.documentDescription);
+                                        prev.push({ ...curr, disabled: !!finder });
+                                        return prev;
+                                    }, []),
+                                    disabled: isEditing,
+                                    placeholder: preparePlaceholderSelect(translateContent('creditDebitNote.ApportionDetails.placeholder.documentType')),
+                                    fieldNames: { key: 'documentCode', value: 'documentDescription' },
+                                })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item name="documentNumber" label={translateContent('creditDebitNote.ApportionDetails.label.documentNumber')} rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.documentNumber'))]}>
-                                <Search disabled={isEditing} loading={isApportionDetailsLoading} allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.documentNumber'))} onSearch={handleDocumentNumberSearch} />
+                            <Form.Item
+                                name="documentNumber"
+                                label={translateContent('creditDebitNote.ApportionDetails.label.documentNumber')}
+                                rules={[
+                                    validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.documentNumber')),
+                                    {
+                                        validator: (_, value) => {
+                                            if (apportionTableData?.find((item) => item?.documentNumber === value)) {
+                                                return Promise.reject(new Error('documentNumber already present'));
+                                            }
+                                            return Promise.resolve();
+                                        },
+                                    },
+                                ]}
+                            >
+                                <Search disabled={isEditing} loading={isApportionDetailsLoading} allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.documentNumber'))} onSearch={handleDocumentNumberSearch} onChange={(e) => resetApportionForm(apportionForm.getFieldValue('documentType'), e.target.value)} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label={translateContent('creditDebitNote.ApportionDetails.label.documentDate')} name="documentDate" rules={[validateRequiredInputField(translateContent('creditDebitNote.ApportionDetails.validation.documentDate'))]}>
-                                <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                                <DatePicker disabled={true} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>

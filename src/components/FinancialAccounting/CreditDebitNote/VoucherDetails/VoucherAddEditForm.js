@@ -17,7 +17,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
 export const AdvanceForm = (props) => {
-    const { voucherTableFormData, setVoucherTableFormData } = props;
+    const { voucherTableFormData, setVoucherTableFormData, isAccoutHeadLoading } = props;
     const { handleCancel, handleFormValueChange, voucherForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
@@ -26,31 +26,53 @@ export const AdvanceForm = (props) => {
     const { fetchFinancialAccountList, listFinanceShowLoading, voucherTableData, setVoucherTableData, isAccountHeadValidated, setIsAccountHeadValidated } = props;
 
     const handleFinancialAccountValidate = (values) => {
-        const extraParams = [
-            {
-                key: 'code',
-                title: 'Code',
-                value: values,
-            },
-            {
-                key: 'onlyActive',
-                title: 'onlyActive',
-                value: 'YES',
-            },
-        ];
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const onSuccessAction = (res) => {
-            if (res.data) {
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('creditDebitNote.voucherDetails.message.successMessage') });
-                setIsAccountHeadValidated(false);
+        const isAccountHeadPresent = new Promise((resolve, reject) => {
+            if (isEditing) {
+                if (voucherTableData?.find((item) => item?.accountCode === values && values !== voucherTableFormData?.accountCode)) {
+                    reject(new Error('account head already present'));
+                } else {
+                    resolve();
+                }
             } else {
-                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.voucherDetails.message.errorMessage') });
+                if (voucherTableData?.find((item) => item?.accountCode === values)) {
+                    reject(new Error('account head already present', { cause: 'account head already present' }));
+                } else {
+                    resolve();
+                }
             }
-        };
-        values && fetchFinancialAccountList({ setIsLoading: listFinanceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });
+        });
+
+        isAccountHeadPresent
+            .then(() => {
+                const extraParams = [
+                    {
+                        key: 'code',
+                        title: 'Code',
+                        value: values,
+                    },
+                    {
+                        key: 'onlyActive',
+                        title: 'onlyActive',
+                        value: 'YES',
+                    },
+                ];
+                const onErrorAction = (message) => {
+                    showGlobalNotification({ message });
+                };
+
+                const onSuccessAction = (res) => {
+                    if (res.data) {
+                        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('creditDebitNote.voucherDetails.message.successMessage') });
+                        setIsAccountHeadValidated(false);
+                    } else {
+                        showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.voucherDetails.message.errorMessage') });
+                    }
+                };
+                values && fetchFinancialAccountList({ setIsLoading: listFinanceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });
+            })
+            .catch((err) => {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: err.cause });
+            });
     };
 
     useEffect(() => {
@@ -133,15 +155,15 @@ export const AdvanceForm = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item name="accountCode" label={translateContent('creditDebitNote.voucherDetails.label.accountHead')} rules={[validateRequiredSelectField(translateContent('creditDebitNote.voucherDetails.label.accountHead'))]}>
-                                <Search allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.accountHead'))} onChange={handleAccountChange} onSearch={handleFinancialAccountValidate} />
+                            <Form.Item name="accountCode" label={translateContent('creditDebitNote.voucherDetails.label.accountHead')} rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.accountHead'))]}>
+                                <Search loading={isAccoutHeadLoading} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.accountHead'))} onChange={handleAccountChange} onSearch={handleFinancialAccountValidate} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label={translateContent('creditDebitNote.voucherDetails.label.amount')} name="amount" rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.amount')), validateNumberWithTwoDecimalPlaces(translateContent('creditDebitNote.voucherDetails.label.amount'))]}>
                                 <Input maxLength={30} placeholder={preparePlaceholderText(translateContent('creditDebitNote.voucherDetails.placeholder.amount'))} />
                             </Form.Item>
-                            <Form.Item name="id" hidden></Form.Item>
+                            <Form.Item name="id" hidden />
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label={translateContent('creditDebitNote.voucherDetails.label.accountNarration')} name="accountNarration" rules={[validateRequiredInputField(translateContent('creditDebitNote.voucherDetails.label.accountNarration'))]}>

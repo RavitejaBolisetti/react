@@ -39,21 +39,19 @@ export const ApportionDetailForm = (props) => {
             });
             setDocumentAmount(apportionTableFormData?.documentAmount);
             setReceivedAmount(apportionTableFormData?.receivedAmount);
-            // setWriteOffAmount(apportionTableFormData?.writeOffAmount);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apportionTableFormData]);
 
-    const checkDuplicateValidator = (ObjValue, value) => {
+    const checkDuplicateValidator = (_, value) => {
         if (apportionList.length > 0) {
             const filterItem = apportionList?.filter((item, index) => {
                 return apportionTableFormData?.index !== index && item?.documentNumber === value;
             });
             if (!filterItem?.length) return Promise.resolve();
-            else return Promise.reject(new Error(translateContent('receipts.validation.checkDuplicate')));
-        } else {
-            return Promise.resolve();
+            return Promise.reject(new Error(translateContent('receipts.validation.checkDuplicate')));
         }
+        return Promise.resolve();
     };
 
     return (
@@ -95,7 +93,6 @@ export const ApportionDetailForm = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
                     <Row gutter={16}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label={translateContent('receipts.label.apportionDetails.receivedAmount')} name="receivedAmount" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.label.apportionDetails.receivedAmount'))]}>

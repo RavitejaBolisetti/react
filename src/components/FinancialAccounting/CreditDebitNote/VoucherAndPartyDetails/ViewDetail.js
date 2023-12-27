@@ -17,7 +17,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData, activeKey, handleCollapse } = props;
     const { voucherDetailsDto, partyDetailsDto } = formData;
     const viewProps = {
         bordered: false,
@@ -25,12 +25,12 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
+    console.log('isLoading', isLoading);
     return (
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse collapsible="icon" expandIcon={expandIcon} defaultActiveKey={[1]} expandIconPosition="end" className={styles.collapseContainer}>
+                    <Collapse activeKey={activeKey} onChange={() => handleCollapse(1)} collapsible="icon" expandIcon={expandIcon} expandIconPosition="end" className={styles.collapseContainer}>
                         <Panel header={translateContent('creditDebitNote.label.voucherDetails')} key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -42,11 +42,11 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end" className={styles.collapseContainer}>
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => handleCollapse(2)} expandIconPosition="end" className={styles.collapseContainer}>
                         <Panel header={translateContent('creditDebitNote.label.partyDetails')} key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partySegment')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyId')}>{checkAndSetDefaultValue(partyDetailsDto?.partyId, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.partyName')}>{checkAndSetDefaultValue(partyDetailsDto?.partyName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('creditDebitNote.voucherAndPartyDetails.label.address')}>{checkAndSetDefaultValue(partyDetailsDto?.address, isLoading)}</Descriptions.Item>
