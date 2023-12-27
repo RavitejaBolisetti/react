@@ -21,6 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { tableColumnApportion } from './tableColumnApportion';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { BASE_URL_APPORTION_DETAILS_SEARCH } from 'constants/routingApi';
 
 const mapStateToProps = (state) => {
     const {
@@ -69,6 +70,8 @@ const ApportionDetailMasterBase = (props) => {
     const [showApportionForm, setShowApportionForm] = useState();
     const [documentAmount, setDocumentAmount] = useState();
     const [receivedAmount, setReceivedAmount] = useState();
+    const [searchData, setSearchData] = useState();
+
 
     const [apportionForm] = Form.useForm();
 
@@ -101,33 +104,43 @@ const ApportionDetailMasterBase = (props) => {
     };
 
     const handleDocumentNumberSearch = (values) => {
-        const extraParams = [
-            {
-                key: 'invoiceId',
-                title: 'Invoice ID',
-                value: values,
-            },
-        ];
-
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
         };
 
         const onSuccessAction = (res) => {
-            const apportionValues = res?.data[0];
+            const apportionValues = res?.data;
             setShowApportionForm(apportionValues);
             apportionForm.setFieldsValue({
-                documentDate: formatDateToCalenderDate(apportionValues?.invoiceDate),
-                documentAmount: apportionValues?.invoiceAmount,
-                receivedAmount: apportionValues?.receivedAmount,
-                balanceAmount: apportionValues?.invoiceAmount - apportionValues?.receivedAmount,
+                ...apportionValues,
+                documentDate: formatDateToCalenderDate(apportionValues?.documentDate),
+                documentAmount: apportionValues?.documentAmount,
+                balanceAmount: apportionValues?.balancedAmount,
             });
-            setDocumentAmount(apportionValues?.invoiceAmount);
-            setReceivedAmount(apportionValues?.receivedAmount);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         };
 
-        values && fetchInvoiceList({ setIsLoading: listInvoiceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });
+        values &&
+            fetchInvoiceList({
+                setIsLoading: listInvoiceShowLoading,
+                onErrorAction,
+                onSuccessAction,
+                userId,
+                extraParams: [
+                    {
+                        key: 'documentNumber',
+                        value: values?.documentNumber,
+                    },
+                    {
+                        key: 'documentType',
+                        value: values?.documentType,
+                    },
+                    {
+                        key: 'type',
+                        value: 'REC',
+                    },
+                ],
+                customURL: BASE_URL_APPORTION_DETAILS_SEARCH,
+            });
     };
 
     const formProps = {
