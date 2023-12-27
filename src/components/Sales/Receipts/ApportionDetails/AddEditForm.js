@@ -47,7 +47,7 @@ const AddEditFormMain = (props) => {
         apportionForm.resetFields();
     };
 
-    const handleButtonClick = ({ record, index }) => {
+    const handleButtonClick = ({ record, index,buttonAction }) => {
         setApportionTableFormData({ ...record, index: index });
         setModalApportionVisible(true);
         setisEditing(true);
@@ -66,18 +66,15 @@ const AddEditFormMain = (props) => {
     };
 
     const handleAddApportion = () => {
-        apportionForm.validateFields().then(() => {
-            const values = apportionForm.getFieldsValue();
-
+        apportionForm.validateFields().then((values) => {
             if (!isEditing) {
-                const data = { ...values, id: '' };
+                const data = { ...values, id: '', apportionedAmount: parseFloat(values?.apportionedAmount), writeOffAmount: parseFloat(values?.writeOffAmount) };
                 setApportionList([data, ...apportionList]);
                 apportionForm.resetFields();
                 setModalApportionVisible(false);
             } else {
-                const data = { ...values, id: '' };
+                const data = { ...values, id: '', apportionedAmount: parseFloat(values?.apportionedAmount), writeOffAmount: parseFloat(values?.writeOffAmount) };
                 const newarr = [...apportionList];
-
                 newarr[apportionTableFormData?.index] = data;
                 setApportionList(newarr);
                 setModalApportionVisible(false);
@@ -123,9 +120,6 @@ const AddEditFormMain = (props) => {
 
     return (
         <Card>
-            {/* <Collapse expandIcon={expandIcon} expandIconPosition="end" collapsible="icon"> */}
-            {/* <Panel
-                header={ */}
             <Row gutter={20} className={styles.marB10}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Text strong>{translateContent('receipts.label.apportionDetails.apportionDetailsText')}</Text>
@@ -136,17 +130,13 @@ const AddEditFormMain = (props) => {
                     )}
                 </Col>
             </Row>
-            {/* key="2">
-            </Panel>
-            </Collapse> */}
+
             {(showApportionTable || apportionList.length > 0) && (
                 <>
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <DataTable tableColumn={tableColumnApportion({ handleButtonClick, formActionType })} scroll={{ x: 1000 }} tableData={apportionList} pagination={false} />
-                            {/* {parseFloat(totalApportionAmount) === parseFloat(totalReceivedAmount) && <p className={styles.marB20}>{translateContent('receipts.label.apportionDetails.totalReceivedAmountText')}</p>} */}
-                            {/* <ListDataTable handleAdd={handleButtonClick} {...tableApportionProps} showAddButton={false} /> */}
                         </Col>
                     </Row>
                 </>
