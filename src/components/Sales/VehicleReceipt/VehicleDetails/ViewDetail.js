@@ -16,11 +16,13 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import dayjs from 'dayjs';
 import { dateFormat, dateTimeFormat, mmYYYYFormat } from 'utils/formatDateTime';
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
+import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType } = props;
+    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType, defectStatusType, shortageSelect, selectedPhysicalStatusType } = props;
 
     const [activeKey, setactiveKey] = useState([]);
 
@@ -48,6 +50,8 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
+    const checkDefectStatus = (type) => [PHYSICAL_STATUS?.MAJOR_DAMAGE?.key, PHYSICAL_STATUS?.MINOR_DAMAGE?.key].includes(type);
+    const checkShortageStatus = (type) => type === YES_NO_FLAG?.YES?.key;
     return (
         <>
             {formData?.map((item, index) => (
@@ -60,12 +64,10 @@ const ViewDetailMain = (props) => {
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                             <Space size="small">
                                                 <Text className={styles.headText}>
-                                                    {' '}
                                                     {translateContent('vehicleReceipt.label.vehicleDetails.model')} : {checkAndSetDefaultValue(item?.modelDescription, isLoading)}{' '}
                                                 </Text>
                                                 <Text className={styles.headText}> {`|`}</Text>
                                                 <Text className={styles.headText}>
-                                                    {' '}
                                                     {translateContent('vehicleReceipt.label.vehicleDetails.VIN')} : {checkAndSetDefaultValue(item?.vin, isLoading)}
                                                 </Text>
                                             </Space>
@@ -127,7 +129,23 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.demoVehicle')}>{checkAndSetDefaultValue(getCodeValue(shortageType, item?.demoVehicle), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus')}>{checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.physicalStatus')}>{checkAndSetDefaultValue(getCodeValue(physicalStatusType, item?.physicalStatus), isLoading)}</Descriptions.Item>
+                                {checkDefectStatus(item?.physicalStatus) && (
+                                    <>
+                                        <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.defectType')}>{checkAndSetDefaultValue(getCodeValue(defectStatusType, item?.physicalStatusDetail?.defectType), isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.defectLocation')}>{checkAndSetDefaultValue(item?.physicalStatusDetail?.defectLocation, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.defectDescription')}>{checkAndSetDefaultValue(item?.physicalStatusDetail?.defectDescription, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.remarks')}>{checkAndSetDefaultValue(item?.physicalStatusDetail?.remarks, isLoading)}</Descriptions.Item>
+                                    </>
+                                )}
                                 <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.shortage')}>{checkAndSetDefaultValue(getCodeValue(shortageType, item?.shortage), isLoading)}</Descriptions.Item>
+                                {checkShortageStatus(item.shortage) && (
+                                    <>
+                                        <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.shortageType')}>{checkAndSetDefaultValue(item?.shortageDetail?.shortageType, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.shortageDescription')}>{checkAndSetDefaultValue(item?.shortageDetail?.shortageDescription, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.remarks')}>{checkAndSetDefaultValue(item?.shortageDetail?.remarks, isLoading)}</Descriptions.Item>
+                                    </>
+                                )}
+
                                 <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleReceiptChecklistNumber')}>
                                     {/* <a style={{ color: 'ff3e5b' }} href={item?.vehicleReceiptChecklistNumber} target="_blank" rel="noreferrer"> */}
                                     {checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}

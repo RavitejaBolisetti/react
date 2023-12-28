@@ -329,18 +329,16 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const changeObjtoArr = (data) => {
-        const FinalArr = [];
+        const finalDataItem = [];
         Object?.entries(data)?.map(([key, value]) => {
-            FinalArr.push({ ...value, mfgdate: value?.mfgdate ? dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) : null });
-
+            finalDataItem.push({ ...value, mfgdate: value?.mfgdate ? dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) : null });
             return undefined;
         });
-        return FinalArr;
+        return finalDataItem;
     };
 
     const onFinish = (values) => {
         const data = { id: selectedId?.id, supplierInvoiceNumber: selectedId?.supplierInvoiceNumber, vehicleDetails: changeObjtoArr(finalData) };
-
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -349,7 +347,6 @@ export const VehicleReceiptMasterBase = (props) => {
             fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-
             setIsFormVisible(false);
         };
 

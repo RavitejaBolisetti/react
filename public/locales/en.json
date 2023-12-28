@@ -2799,7 +2799,13 @@
                 "vehicleStatus": "Vehicle Status",
                 "physicalStatus": "Physical Status",
                 "shortage": "Shortage",
-                "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No."
+                "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No.",
+                "defectType": "Defect Type",
+                "defectDescription": "Defect Description",
+                "shortageType": "Shortage Type",
+                "shortageDescription": "Shortage Description",
+                "remarks": "Remarks",
+                "defectLocation": "Defect Location"
             },
             "advancedSearch": {
                 "grnFromDate": "GRN From Date",

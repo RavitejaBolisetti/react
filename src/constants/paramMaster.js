@@ -521,4 +521,8 @@ export const PARAM_MASTER = {
         id: 'OTF_SO_MAPPING_UNMAPPING_SER',
         title: 'Otf so Mapping and unmapping Search',
     },
+    DEFCT_CD:{
+        id: 'DEFCT_CD',
+        title: 'Defect',
+    }
 };

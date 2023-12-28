@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -16,8 +16,12 @@ import { translateContent } from 'utils/translateContent';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { BASE_URL_INVOICE_DEFECT_LOCATION as customURL, BASE_URL_INVOICE_DEFECT_SHORTAGE as shortageCustomURL } from 'constants/routingApi';
+import { invoiceDetailsDataAction } from 'store/actions/data/financialAccounting/invoiceDetails';
 
 import styles from 'assets/sass/app.module.scss';
+import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,6 +41,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         vehicleStatusType: typeData[PARAM_MASTER?.VEHCL_STATS?.id],
         physicalStatusType: typeData[PARAM_MASTER?.PHYSICAL_STATUS?.id],
+        defectStatusType: typeData[PARAM_MASTER?.DEFCT_CD?.id],
         shortageType: typeData[PARAM_MASTER?.YES_NO_FLG?.id],
 
         vehicleDetailData: vehicleDetailData?.vehicleDetails,
@@ -54,6 +59,12 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: vehicleDetailDataActions.saveData,
             resetData: vehicleDetailDataActions.reset,
             listShowLoading: vehicleDetailDataActions.listShowLoading,
+
+            fetchDefectLocationList: invoiceDetailsDataAction.fetchList,
+            resetDefectLocationList: invoiceDetailsDataAction.reset,
+            listDefectLocationList: invoiceDetailsDataAction.listShowLoading,
+            resetList: invoiceDetailsDataAction.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -62,10 +73,18 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, selectedRecord, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed, receiptType } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading, fetchDefectLocationList, listDefectLocationList } = props;
+    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed, receiptType, defectStatusType, resetList } = props;
 
     const [vehicleDetailForm] = Form.useForm();
+    const [selectedPhysicalStatusType, setSelectedPhysicalStatusType] = useState(PHYSICAL_STATUS?.NO_DAMAGE?.key);
+    const [defactTypeData, setDefectTypeData] = useState([]);
+    const [selectedDefactTypeData, setSelectedDefactTypeData] = useState(null);
+    const [defectDesc, setDefectDesc] = useState([]);
+    const [shortageSelect, setShortageSelect] = useState();
+    const [shortTypeData, setShortTypeData] = useState([]);
+    const [shortageSelectedData, setShortageSelectedData] = useState([]);
+    const [shortageData, setShortageData] = useState(null);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -87,6 +106,99 @@ const VehicleDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedId?.id]);
 
+    useEffect(() => {
+        if (selectedPhysicalStatusType !== PHYSICAL_STATUS?.NO_DAMAGE?.key) {
+            const onSuccessAction = (res) => {
+                setDefectTypeData([...res?.data]);
+            };
+            fetchDefectLocationList({ setIsLoading: listDefectLocationList, onSuccessAction, userId, customURL });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedPhysicalStatusType]);
+
+    useEffect(() => {
+        resetList();
+        if (selectedDefactTypeData) {
+            const onSuccessAction = (res) => {
+                setDefectDesc([...res?.data]);
+            };
+            fetchDefectLocationList({
+                setIsLoading: listDefectLocationList,
+                onSuccessAction,
+                userId,
+                extraParams: [
+                    {
+                        key: 'defectLocationCode',
+                        value: selectedDefactTypeData,
+                    },
+                ],
+                customURL,
+            });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedDefactTypeData]);
+
+    useEffect(() => {
+        if (shortageSelect === YES_NO_FLAG?.YES?.key) {
+            const onSuccessAction = (res) => {
+                setShortTypeData([...res?.data]);
+            };
+
+            fetchDefectLocationList({
+                setIsLoading: listDefectLocationList,
+                onSuccessAction,
+                userId,
+                customURL: shortageCustomURL,
+            });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [shortageSelect]);
+
+    useEffect(() => {
+        resetList();
+        if (shortageSelectedData) {
+            const onSuccessAction = (res) => {
+                setShortageData([...res?.data]);
+            };
+            fetchDefectLocationList({
+                setIsLoading: listDefectLocationList,
+                onSuccessAction,
+                userId,
+                extraParams: [
+                    {
+                        key: 'shortageType',
+                        value: shortageSelectedData,
+                    },
+                ],
+                customURL: shortageCustomURL,
+            });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [shortageSelectedData]);
+
+    const onStatusChange = (statusType) => {
+        setSelectedPhysicalStatusType(statusType);
+    };
+
+    const onDefectLocation = (type) => {
+        setSelectedDefactTypeData(type);
+        if (selectedDefactTypeData) {
+            form.setFieldsValue({ defectDescription: null });
+        }
+    };
+    const handleShortageSelect = (value) => {
+        resetList();
+        setShortageSelect(value);
+    };
+
+    const onSelectShortageType = (value) => {
+        resetList();
+        setShortageSelectedData(value);
+    };
+
     const formProps = {
         ...props,
         form,
@@ -96,6 +208,7 @@ const VehicleDetailsMasterBase = (props) => {
         vehicleStatusType,
         physicalStatusType,
         shortageType,
+        defectStatusType,
 
         userId,
         isDataLoaded,
@@ -108,6 +221,18 @@ const VehicleDetailsMasterBase = (props) => {
         buttonData,
         receiptType,
         selectedRecord,
+        selectedPhysicalStatusType,
+        onStatusChange,
+        defactTypeData,
+        selectedDefactTypeData,
+        onDefectLocation,
+        defectDesc,
+        handleShortageSelect,
+        shortageSelect,
+
+        onSelectShortageType,
+        shortageData,
+        shortTypeData,
     };
 
     const viewProps = {
@@ -119,6 +244,9 @@ const VehicleDetailsMasterBase = (props) => {
         styles,
         isLoading,
         selectedRecord,
+        defectStatusType,
+        shortageSelect,
+        selectedPhysicalStatusType,
     };
 
     return (
