@@ -401,3 +401,4 @@ export const BASE_URL_SCHEME_RSA_DESCRIPTION = BASE_URL_VEHICLE + 'scheme/rsa/lo
 export const BASE_URL_CO_DEALER_VIN_DETAILS = BASE_URL_VEHICLE_ALLOTMENT + '/search';
 export const BASE_URL_TAX_CALCULATION = BASE_URL_OTF + 'codealerinvoice/taxdetails';
 export const BASE_URL_APPORTION_DETAILS_SEARCH = BASE_URL_FINANCE + 'documentdetails';
+export const BASE_URL_RSM_APPROVAL_FORM_DATA = BASE_URL_INVOICE + 'codealer/rsmapproval';

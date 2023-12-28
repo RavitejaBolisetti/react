@@ -63,13 +63,13 @@ export const RejectRequestForm = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Button onClick={rejectModalCloseAction} danger className={styles.fullWidth}>
-                        Cancel
+                        {translateContent('global.buttons.cancel')}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Button disabled={rejectFormButtonActive} className={styles.fullWidth} htmlType="submit" type="primary">
-                        Submit
+                        {translateContent('global.buttons.submit')}
                     </Button>
                 </Col>
             </Row>
