@@ -14,6 +14,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { ApportionAddEditForm } from './ApportionAddEditForm';
 import { tableColumn } from './tableColumn';
 import { translateContent } from 'utils/translateContent';
+import { CalculateSum } from 'utils/calculateSum';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -22,7 +23,7 @@ const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, record } = props;
     const { itemOptions, setitemOptions, styles } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, openAccordian, setOpenAccordian, handleFormValueChange } = props;
-    const { collapseProps, fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData, documentTypeData, isDocumentTypeLoading, typeData, documentTypeOptions, setDocumentTypeOptions, isApportionDetailsLoading } = props;
+    const { collapseProps, fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData, documentTypeData, isDocumentTypeLoading, typeData, documentTypeOptions, setDocumentTypeOptions, isApportionDetailsLoading, voucherTableData } = props;
 
     const [apportionForm] = Form.useForm();
 
@@ -54,6 +55,7 @@ const AddEditFormMain = (props) => {
         handleFormValueChange,
         record,
         isApportionDetailsLoading,
+        voucherTableData,
     };
     const advanceFilterProps = {
         ...apportionFormProps,
@@ -107,7 +109,7 @@ const AddEditFormMain = (props) => {
             }
         }
     };
-
+    const ApportionGreater = CalculateSum(apportionTableData, 'apportionAmount') >= CalculateSum(voucherTableData, 'amount');
     return (
         <>
             <Row gutter={20}>
@@ -118,7 +120,7 @@ const AddEditFormMain = (props) => {
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <Text strong> {translateContent('creditDebitNote.ApportionDetails.heading.title')}</Text>
-                                        <Button className={styles.marL5} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                                        <Button disabled={ApportionGreater} className={styles.marL5} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
                                             {translateContent('global.buttons.add')}
                                         </Button>
                                     </Col>

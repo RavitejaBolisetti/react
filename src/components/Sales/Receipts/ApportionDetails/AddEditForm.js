@@ -16,6 +16,7 @@ import { ModalApportionDetail } from './ModalApportionDetail';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { CalculateSum } from 'utils/calculateSum';
 
 const { Text } = Typography;
 
@@ -138,7 +139,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20} className={styles.marB10}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Text strong>{translateContent('receipts.label.apportionDetails.apportionDetailsText')}</Text>
-                    {parseFloat(totalApportionAmount) < parseFloat(totalReceivedAmount) && (
+                    {CalculateSum(apportionList, 'apportionedAmount') < parseFloat(totalReceivedAmount) && (
                         <Button onClick={handleApportionAdd} icon={<PlusOutlined />} type="primary" disabled={isReadOnly} className={styles.marB20}>
                             {translateContent('global.buttons.add')}
                         </Button>

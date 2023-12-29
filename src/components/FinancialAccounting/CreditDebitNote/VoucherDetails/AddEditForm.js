@@ -93,7 +93,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDelete = ({ index }) => {
-        setVoucherTableData(voucherTableData.filter((element, i) => i !== index));
+        setVoucherTableData(voucherTableData.filter((_, i) => i !== index));
     };
 
     const handleButtonClick = ({ buttonAction, record, index }) => {

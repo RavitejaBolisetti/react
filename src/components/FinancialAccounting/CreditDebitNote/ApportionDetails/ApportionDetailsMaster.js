@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ApportionDetailsMasterMain = (props) => {
     const { isCreditDrawerDataLoading, userId, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
     const { fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData } = props;
-    const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, requestPayload, showGlobalNotification } = props;
+    const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, requestPayload, showGlobalNotification, voucherTableData } = props;
 
     const [form] = Form.useForm();
     const [activeKey, setActiveKey] = useState([]);
@@ -131,12 +131,14 @@ export const ApportionDetailsMasterMain = (props) => {
         setApportionTableData,
         documentTypeData,
         isDocumentTypeLoading,
+
+        voucherTableData,
     };
 
     const viewProps = {
         tableData: requestPayload?.apportionDetailsDto,
         styles,
-        isLoading:isCreditDrawerDataLoading,
+        isLoading: isCreditDrawerDataLoading,
         activeKey,
         setActiveKey,
         formActionType,
