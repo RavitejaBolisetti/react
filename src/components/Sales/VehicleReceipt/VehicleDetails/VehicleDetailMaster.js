@@ -85,10 +85,20 @@ const VehicleDetailsMasterBase = (props) => {
     const [shortTypeData, setShortTypeData] = useState([]);
     const [shortageSelectedData, setShortageSelectedData] = useState([]);
     const [shortageData, setShortageData] = useState(null);
+    const [formData, setFormData] = useState(null);
+
+    const checkPhysicalStatus = (type) => [PHYSICAL_STATUS?.MAJOR_DAMAGE?.key, PHYSICAL_STATUS?.MINOR_DAMAGE?.key].includes(type);
+    const checkShortage = (type) => type === YES_NO_FLAG?.YES?.key;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    useEffect(() => {
+        vehicleDetailData && setFormData(vehicleDetailData);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleDetailData]);
 
     useEffect(() => {
         if (userId && selectedId?.id) {
@@ -107,40 +117,14 @@ const VehicleDetailsMasterBase = (props) => {
     }, [userId, selectedId?.id]);
 
     useEffect(() => {
-        if (selectedPhysicalStatusType !== PHYSICAL_STATUS?.NO_DAMAGE?.key) {
+        if (defactTypeData?.length <= 0) {
             const onSuccessAction = (res) => {
                 setDefectTypeData([...res?.data]);
             };
             fetchDefectLocationList({ setIsLoading: listDefectLocationList, onSuccessAction, userId, customURL });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedPhysicalStatusType]);
 
-    useEffect(() => {
-        resetList();
-        if (selectedDefactTypeData) {
-            const onSuccessAction = (res) => {
-                setDefectDesc([...res?.data]);
-            };
-            fetchDefectLocationList({
-                setIsLoading: listDefectLocationList,
-                onSuccessAction,
-                userId,
-                extraParams: [
-                    {
-                        key: 'defectLocationCode',
-                        value: selectedDefactTypeData,
-                    },
-                ],
-                customURL,
-            });
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedDefactTypeData]);
-
-    useEffect(() => {
-        if (shortageSelect === YES_NO_FLAG?.YES?.key) {
+        if (shortTypeData?.length <= 0) {
             const onSuccessAction = (res) => {
                 setShortTypeData([...res?.data]);
             };
@@ -152,32 +136,23 @@ const VehicleDetailsMasterBase = (props) => {
                 customURL: shortageCustomURL,
             });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shortageSelect]);
+    }, []);
 
-    useEffect(() => {
-        resetList();
-        if (shortageSelectedData) {
+    const fetchDefectAndShortageDependentData = ({ customURL, value, extraParams, dataItem, successAction, index }) => {
+        if (value) {
             const onSuccessAction = (res) => {
-                setShortageData([...res?.data]);
+                successAction({ ...dataItem, [index]: res?.data });
             };
             fetchDefectLocationList({
                 setIsLoading: listDefectLocationList,
                 onSuccessAction,
                 userId,
-                extraParams: [
-                    {
-                        key: 'shortageType',
-                        value: shortageSelectedData,
-                    },
-                ],
-                customURL: shortageCustomURL,
+                extraParams,
+                customURL,
             });
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shortageSelectedData]);
+    };
 
     const onStatusChange = (statusType) => {
         setSelectedPhysicalStatusType(statusType);
@@ -212,7 +187,8 @@ const VehicleDetailsMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        formData: vehicleDetailData,
+        formData,
+        setFormData,
         isLoading,
         vehicleDetailForm,
         finalData,
@@ -233,6 +209,10 @@ const VehicleDetailsMasterBase = (props) => {
         onSelectShortageType,
         shortageData,
         shortTypeData,
+
+        checkPhysicalStatus,
+        checkShortage,
+        fetchDefectAndShortageDependentData,
     };
 
     const viewProps = {
@@ -240,13 +220,17 @@ const VehicleDetailsMasterBase = (props) => {
         vehicleStatusType,
         physicalStatusType,
         shortageType,
-        formData: vehicleDetailData,
+        formData,
+        setFormData,
         styles,
         isLoading,
         selectedRecord,
         defectStatusType,
         shortageSelect,
         selectedPhysicalStatusType,
+
+        checkPhysicalStatus,
+        checkShortage,
     };
 
     return (

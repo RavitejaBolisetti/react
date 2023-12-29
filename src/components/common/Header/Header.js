@@ -19,7 +19,7 @@ import { setCollapsed } from 'store/actions/common/leftsidebar';
 import { showGlobalNotification } from 'store/actions/notification';
 import { menuDataActions } from 'store/actions/data/menu';
 import { headerDataActions } from 'store/actions/common/header';
-import { clearLocalStorageData, doRefreshToken, doLogoutAPI } from 'store/actions/auth';
+import { clearLocalStorageData, doRefreshToken, doLogoutAPI, authPostLogin } from 'store/actions/auth';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { notificationDataActions } from 'store/actions/common/notification';
 import { userAccessMasterDataAction } from 'store/actions/data/userAccess';
@@ -267,8 +267,9 @@ const HeaderMain = (props) => {
     useEffect(() => {
         const interval = setInterval(() => {
             doRefreshToken({
-                onSuccess: () => {
+                onSuccess: (res) => {
                     Modal.destroyAll();
+                    authPostLogin(res?.data);
                 },
                 data: { userId, token: refreshToken },
                 onError: () => {
@@ -276,7 +277,7 @@ const HeaderMain = (props) => {
                     navigate(routing.ROUTING_LOGIN);
                 },
             });
-        }, 90 * 1000);
+        }, 10 * 1000);
 
         return () => {
             clearInterval(interval);
