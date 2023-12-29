@@ -10,16 +10,15 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-import {BASE_URL_DEALER_OTF_BLOCK_MASTER as customURL} from 'constants/routingApi';
+import { BASE_URL_DEALER_OTF_BLOCK_MASTER as customURL } from 'constants/routingApi';
 import { bindActionCreators } from 'redux';
 
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-import { customSelectBoxKeyValue } from 'utils/customSelectBoxKeyValue';
+import { customSelectBox } from 'utils/customSelectBox';
 const { Option } = Select;
-
 
 const mapStateToProps = (state) => {
     const {
@@ -46,10 +45,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-
             fetchDealerList: dealerBlockMasterDataAction.fetchList,
             listDealerShowLoading: dealerBlockMasterDataAction.listShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -60,28 +57,38 @@ const AddEditFormMain = (props) => {
     const { isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
 
     useEffect(() => {
-        form.setFieldsValue({ status: formData?.status });
+        if (formData) {
+            form.setFieldsValue({ status: formData?.status });
+            form.setFieldsValue({ hierarchyMstId: formData?.hierarchyMstName });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
 
     useEffect(() => {
-        form.setFieldsValue({ hierarchyMstId: formData?.hierarchyMstName });
+        if (dealerBlockData && dealerBlockData[0]?.dealerCode !== 'All') {
+            dealerBlockData.unshift({
+                id: null,
+                dealerTin: null,
+                parentGroupCode: null,
+                dealerCode: 'All',
+                dealerName: 'All',
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-    
+    }, [dealerBlockData]);
+
     const handleDealer = (value) => {
         let zoneValue = zone;
-        let areaValue =  value;
+        let areaValue = value;
         form.setFieldsValue({ dealerCode: null });
-        if(zoneValue && areaValue) {
+        if (zoneValue && areaValue) {
             const extraParams = [
                 { key: 'zoneCode', value: zoneValue },
                 { key: 'areaCode', value: areaValue },
             ];
             fetchDealerList({ setIsLoading: listDealerShowLoading, userId, extraParams, customURL });
         }
-    } 
+    };
     const handleFormValueChange = () => {
         setFormBtnActive(true);
     };
@@ -90,9 +97,9 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-
-    
-
+    const customTitle = (key, value) => {
+        return `${value} - (${key})`;
+    };
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
@@ -105,7 +112,6 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
 
-                            
                             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.zone')} name="zoneCode" initialValue={formData?.zoneCode} rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.zone'))]}>
                                     <Select placeholder={translateContent('global.placeholder.select')} onChange={handleZoneChange} allowClear>
@@ -129,7 +135,12 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.dealerCode} label={translateContent('bookingBlockMaster.label.dealerName')} name="dealerCode" rules={[validateRequiredInputField(translateContent('bookingBlockMaster.label.dealerName'))]}>
-                                    {customSelectBoxKeyValue({ data: dealerBlockData, fieldNames: { key: 'dealerCode', value: 'dealerName'}, placeholder: preparePlaceholderSelect(translateContent('bookingBlockMaster.label.dealerName')) })}
+                                    {customSelectBox({
+                                        data: dealerBlockData,
+                                        fieldNames: { key: 'dealerCode', value: 'dealerName' },
+                                        customTitle,
+                                        placeholder: preparePlaceholderSelect(translateContent('bookingBlockMaster.label.dealerName')),
+                                    })}
                                 </Form.Item>
                             </Col>
                         </Row>
