@@ -11,7 +11,6 @@ import { Row, Col, Form } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
-import { VIEW_ACTION } from 'utils/btnVisiblity';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -90,8 +89,6 @@ export const RSMApprovalMasterBase = (props) => {
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
 
     const dynamicPagination = true;
 

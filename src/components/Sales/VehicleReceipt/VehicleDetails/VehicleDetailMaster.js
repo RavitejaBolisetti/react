@@ -74,17 +74,13 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, selectedRecord, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading, fetchDefectLocationList, listDefectLocationList } = props;
-    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed, receiptType, defectStatusType, resetList } = props;
+    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed, receiptType, defectStatusType } = props;
 
     const [vehicleDetailForm] = Form.useForm();
     const [selectedPhysicalStatusType, setSelectedPhysicalStatusType] = useState(PHYSICAL_STATUS?.NO_DAMAGE?.key);
     const [defactTypeData, setDefectTypeData] = useState([]);
     const [selectedDefactTypeData, setSelectedDefactTypeData] = useState(null);
-    const [defectDesc, setDefectDesc] = useState([]);
-    const [shortageSelect, setShortageSelect] = useState();
     const [shortTypeData, setShortTypeData] = useState([]);
-    const [shortageSelectedData, setShortageSelectedData] = useState([]);
-    const [shortageData, setShortageData] = useState(null);
     const [formData, setFormData] = useState(null);
 
     const checkPhysicalStatus = (type) => [PHYSICAL_STATUS?.MAJOR_DAMAGE?.key, PHYSICAL_STATUS?.MINOR_DAMAGE?.key].includes(type);
@@ -164,15 +160,6 @@ const VehicleDetailsMasterBase = (props) => {
             form.setFieldsValue({ defectDescription: null });
         }
     };
-    const handleShortageSelect = (value) => {
-        resetList();
-        setShortageSelect(value);
-    };
-
-    const onSelectShortageType = (value) => {
-        resetList();
-        setShortageSelectedData(value);
-    };
 
     const formProps = {
         ...props,
@@ -202,12 +189,7 @@ const VehicleDetailsMasterBase = (props) => {
         defactTypeData,
         selectedDefactTypeData,
         onDefectLocation,
-        defectDesc,
-        handleShortageSelect,
-        shortageSelect,
 
-        onSelectShortageType,
-        shortageData,
         shortTypeData,
 
         checkPhysicalStatus,
@@ -226,7 +208,6 @@ const VehicleDetailsMasterBase = (props) => {
         isLoading,
         selectedRecord,
         defectStatusType,
-        shortageSelect,
         selectedPhysicalStatusType,
 
         checkPhysicalStatus,

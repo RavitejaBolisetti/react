@@ -3,12 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Input, Button, DatePicker, Divider } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { customSelectBox } from 'utils/customSelectBox';
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, compareAmountValidator } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
 
 import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
@@ -20,9 +20,7 @@ import { APPORTION_CONSTANTS } from 'components/FinancialAccounting/CreditDebitN
 const { Search } = Input;
 
 export const ApportionDetailForm = (props) => {
-    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberChange, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList, isEditing, setShowApportionForm, isVisible, ApportionLoading } = props;
-    const [apportionedAmount, setApportionedAmount] = useState();
-    const [writeOffAmount, setWriteOffAmount] = useState();
+    const { handleCancel, handleAddApportion, apportionTableFormData, apportionForm, setDocumentAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberChange, handleDocumentNumberSearch, totalReceivedAmount, apportionList, isEditing, setShowApportionForm, isVisible, ApportionLoading } = props;
 
     useEffect(() => {
         if (apportionTableFormData) {
@@ -203,7 +201,7 @@ export const ApportionDetailForm = (props) => {
                             { validator: (_, writeOffVal) => calculateApportionDetails({ formValues: { ...apportionForm.getFieldsValue(), writeOffAmount: writeOffVal, balanceAmount: apportionForm.getFieldValue('trueBalanceAmount') || 0, receivedAmount: apportionForm.getFieldValue('trueReceivedAmount') || 0, apportionedAmount: apportionForm.getFieldValue('apportionedAmount') || 0 }, type: APPORTION_CONSTANTS?.WRITE_OFF_AMOUNT?.key }) },
                         ]}
                     >
-                        <Input disabled={ApportionLoading} onChange={(e) => setWriteOffAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.writeOffAmount'))} />
+                        <Input disabled={ApportionLoading} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.writeOffAmount'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -218,7 +216,7 @@ export const ApportionDetailForm = (props) => {
                             { validator: (_, apportionVal) => calculateApportionDetails({ formValues: { ...apportionForm.getFieldsValue(), apportionedAmount: apportionVal, balanceAmount: apportionForm.getFieldValue('trueBalanceAmount') || 0, receivedAmount: apportionForm.getFieldValue('trueReceivedAmount') || 0, writeOffAmount: apportionForm.getFieldValue('writeOffAmount') || 0 }, type: APPORTION_CONSTANTS?.APPORTION_AMOUNT?.key }) },
                         ]}
                     >
-                        <Input disabled={ApportionLoading} onChange={(e) => setApportionedAmount(e.target.value)} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.apportionAmount'))} />
+                        <Input disabled={ApportionLoading} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.apportionAmount'))} />
                     </Form.Item>
                 </Col>
             </Row>

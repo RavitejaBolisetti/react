@@ -9,7 +9,7 @@ import { Col, Input, Form, Row, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';

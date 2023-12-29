@@ -28,7 +28,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, setFormData, selectedRecord, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType, defectStatusType, selectedPhysicalStatusType, defactTypeData, onStatusChange, onDefectLocation, defectDesc, shortageSelect, handleShortageSelect, shortageSelectedData, onSelectShortageType, shortageData, shortTypeData, finalData } = props;
+    const { formData, setFormData, selectedRecord, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType, defectStatusType, defactTypeData, shortTypeData } = props;
     const { fetchDefectAndShortageDependentData, checkPhysicalStatus, checkShortage } = props;
 
     const [activeKey, setactiveKey] = useState([]);
@@ -113,6 +113,12 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleStatusType]);
+
+    useEffect(() => {
+        vehicleDetailForm.resetFields();
+        setFormData([]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onChange = (values) => {
         const isPresent = activeKey?.includes(values);

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
@@ -27,10 +27,9 @@ export const AdvanceForm = (props) => {
     const { handleCancel, handleFormValueChange, apportionForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, documentTypeOptions, setDocumentTypeOptions, isApportionDetailsLoading } = props;
-    const [searchedData, setSearchedData] = useState();
+    const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, documentTypeOptions, isApportionDetailsLoading } = props;
     const voucherTableSum = CalculateSum(voucherTableData, 'amount');
-   
+
     useEffect(() => {
         if (apportionTableFormData && isVisible) {
             apportionForm.setFieldsValue({
@@ -49,16 +48,6 @@ export const AdvanceForm = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apportionTableFormData]);
-
-    useEffect(() => {
-        if (isVisible && isEditing) {
-            setSearchedData(apportionTableFormData);
-        }
-        return () => {
-            setSearchedData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVisible]);
 
     const onFinish = () => {
         apportionForm
@@ -168,7 +157,6 @@ export const AdvanceForm = (props) => {
                 showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('creditDebitNote.ApportionDetails.message.documentInvalid') });
             } else {
                 const apportionValues = res?.data;
-                setSearchedData(apportionValues);
                 apportionForm.setFieldsValue({
                     ...apportionValues,
                     documentDate: formatDateToCalenderDate(apportionValues?.documentDate),

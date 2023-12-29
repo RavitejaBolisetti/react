@@ -70,7 +70,6 @@ const ApportionDetailMasterBase = (props) => {
     const [showApportionForm, setShowApportionForm] = useState();
     const [documentAmount, setDocumentAmount] = useState();
     const [receivedAmount, setReceivedAmount] = useState();
-    const [searchData, setSearchData] = useState();
 
     const [apportionForm] = Form.useForm();
 
