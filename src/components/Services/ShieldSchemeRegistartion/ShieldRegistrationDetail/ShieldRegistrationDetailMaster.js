@@ -111,6 +111,10 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         }
     };
 
+    const handleEnter = (e) => {
+        e.code === 'Enter' && e.preventDefault();
+    };
+
     const formProps = {
         ...props,
         form,
@@ -162,7 +166,7 @@ const ShieldRegistrationDetailMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={shieldDetailForm} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" onKeyDownCapture={handleEnter} form={shieldDetailForm} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -849,7 +849,7 @@ export const RSARegistrationMasterBase = (props) => {
             },
         ];
         if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDiscount || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode) {
-            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
             fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: customeURL, onErrorAction, onSuccessAction });

@@ -497,7 +497,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             },
         ];
         if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDescription || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeBasicAmount) {
-            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
             fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
@@ -620,6 +620,13 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         }
     };
 
+    const VIN_SEARCH_CONSTANT = {
+        SHIELD: {
+            id: 1,
+            key: 'SHIELD',
+        },
+    };
+
     const handleVinSearch = (value) => {
         const onSuccessAction = (res) => {
             setVehicleCustomeDetailsOnly(res?.data);
@@ -650,6 +657,12 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     title: 'vin',
                     value: value,
                     name: 'vin',
+                },
+                {
+                    key: 'transaction',
+                    title: 'SHIELD',
+                    value: VIN_SEARCH_CONSTANT?.SHIELD?.key,
+                    name: 'transaction',
                 },
             ];
             fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
