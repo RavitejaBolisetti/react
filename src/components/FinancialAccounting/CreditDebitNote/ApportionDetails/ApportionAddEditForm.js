@@ -29,7 +29,7 @@ export const AdvanceForm = (props) => {
     const { isVisible, setisEditing, isEditing } = props;
     const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, documentTypeOptions, isApportionDetailsLoading } = props;
     const voucherTableSum = CalculateSum(voucherTableData, 'amount');
-
+   
     useEffect(() => {
         if (apportionTableFormData && isVisible) {
             apportionForm.setFieldsValue({
@@ -78,7 +78,7 @@ export const AdvanceForm = (props) => {
         switch (type) {
             case APPORTION_CONSTANTS?.APPORTION_AMOUNT?.key: {
                 try {
-                    if (formValues.apportionAmount >= 0 && formValues?.apportionAmount <= voucherTableSum) {
+                    if (formValues.apportionAmount >= 0 && formValues?.apportionAmount <= voucherTableSum - formValues?.writeOffAmount) {
                         const settledCalculate = formValues?.settledAmount + formValues?.apportionAmount;
                         const balancedCalculate = formValues?.balancedAmount - (formValues?.writeOffAmount + formValues?.apportionAmount);
                         if (settledCalculate >= 0 && balancedCalculate >= 0) {
@@ -97,8 +97,8 @@ export const AdvanceForm = (props) => {
                         if (formValues.apportionAmount < 0) {
                             return Promise.reject(new Error('apportionAmount cannot be negative'));
                         } else {
-                            if (formValues?.apportionAmount > voucherTableSum) {
-                                return Promise.reject(new Error(`apportionAmount cannot be greater than ${voucherTableSum}`));
+                            if (formValues?.apportionAmount > voucherTableSum - formValues?.writeOffAmount) {
+                                return Promise.reject(new Error(`apportionAmount cannot be greater than ${voucherTableSum} - ${formValues?.writeOffAmount}`));
                             }
                             return Promise.resolve();
                         }

@@ -68,7 +68,7 @@ export const ApportionDetailForm = (props) => {
         switch (type) {
             case APPORTION_CONSTANTS?.APPORTION_AMOUNT?.key: {
                 try {
-                    if (parseFloat(formValues?.apportionedAmount) >= 0 && parseFloat(formValues?.apportionedAmount) <= totalReceivedAmount) {
+                    if (parseFloat(formValues?.apportionedAmount) >= 0 && parseFloat(formValues?.apportionedAmount) <= totalReceivedAmount - parseFloat(formValues?.writeOffAmount)) {
                         const receivedCal = parseFloat(formValues?.receivedAmount) + parseFloat(formValues?.apportionedAmount);
                         const balancedCalculate = parseFloat(formValues?.balanceAmount) - (parseFloat(formValues?.writeOffAmount) + parseFloat(formValues?.apportionedAmount));
                         if (receivedCal >= 0 && balancedCalculate >= 0) {
@@ -86,8 +86,8 @@ export const ApportionDetailForm = (props) => {
                     } else {
                         if (parseFloat(formValues?.apportionedAmount) < 0) {
                             return Promise.reject(new Error('apportion amount cannot be negative'));
-                        } else if (parseFloat(formValues?.apportionedAmount) > totalReceivedAmount) {
-                            return Promise.reject(new Error(`apportion amount cannot greater than ${totalReceivedAmount}`));
+                        } else if (parseFloat(formValues?.apportionedAmount) > totalReceivedAmount - parseFloat(formValues?.writeOffAmount)) {
+                            return Promise.reject(new Error(`apportion amount cannot greater than ${totalReceivedAmount} - ${parseFloat(formValues?.writeOffAmount)}`));
                         } else {
                             return Promise.resolve();
                         }
