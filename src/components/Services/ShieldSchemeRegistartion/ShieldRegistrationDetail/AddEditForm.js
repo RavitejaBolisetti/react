@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { SALE_TYPE } from '../utils/saleTypeConstant';
 
-import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
+import { validateRequiredSelectField, validateOnlyPositiveNumber, validateRequiredInputField } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -116,7 +116,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.odometerReading} label={translateContent('shieldSchemeRegistration.label.odometerReading')} name={['registrationInformation', 'odometerReading']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.odometerReading')), validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.odometerReading'))]}>
+                                <Form.Item initialValue={formData?.odometerReading} label={translateContent('shieldSchemeRegistration.label.odometerReading')} name={['registrationInformation', 'odometerReading']} rules={[validateRequiredInputField(translateContent('shieldSchemeRegistration.label.odometerReading')), validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.odometerReading'))]}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.odometerReading'))} />
                                 </Form.Item>
                             </Col>

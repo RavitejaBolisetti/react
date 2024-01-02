@@ -541,7 +541,7 @@ export const RSARegistrationMasterBase = (props) => {
                 },
             ];
             const availableFundSuccessAction = (res) => {
-                shieldDetailForm.setFieldValue({ registrationInformation: { availableFund: res?.data?.rsaRegistrationDetails?.registrationInformation?.availableFund } });
+                shieldDetailForm.setFieldsValue({ registrationInformation: { availableFund: res?.data?.rsaRegistrationDetails?.registrationInformation?.availableFund } });
             };
             fetchDetail({ setIsLoading: listShowLoading, userId, customURL: customeURL, extraParams, onSuccessAction: availableFundSuccessAction, onErrorAction });
         };
