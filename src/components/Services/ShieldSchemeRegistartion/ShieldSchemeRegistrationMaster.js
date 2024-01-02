@@ -263,7 +263,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             {
                 key: 'status',
                 title: 'Status',
-                value: filterString?.amcStatus || amcStatus,
+                value: filterString?.status,
                 canRemove: false,
                 filter: false,
             },
@@ -329,7 +329,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, amcStatus, filterString]);
+    }, [searchValue, filterString]);
 
     useEffect(() => {
         const defaultSection = SHIELD_REGISTRATION_SECTION.SHIELD_REGISTRATION_DETAILS.id;
@@ -352,9 +352,15 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     useEffect(() => {
-        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        if (loginUserData?.userType) {
+            if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_CONSTANTS?.PENDING?.key });
+            } else {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
+            }
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [loginUserData?.userType]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -372,11 +378,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
                 setAmcStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
                 setUserType(AMC_CONSTANTS?.DEALER?.key);
-                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key });
+                setFilterString({ ...filterString, status: QUERY_BUTTONS_CONSTANTS.PENDING.key });
             } else {
                 setAmcStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
                 setUserType(AMC_CONSTANTS?.MNM?.key);
-                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
+                setFilterString({ ...filterString, status: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
             }
         }
 
@@ -384,7 +390,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && loginUserData?.userType) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -463,7 +469,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         const key = buttonName?.key;
         setAmcStatus(key);
         searchForm.resetFields();
-        setFilterString({ amcStatus: key, current: 1, pageSize: 10 });
+        setFilterString({ status: key, current: 1, pageSize: 10 });
     };
 
     const handleTaxChange = () => {
@@ -776,7 +782,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleResetFilter = (e) => {
         const { pageSize } = filterString;
         setShowDataLoading(false);
-        setFilterString({ amcStatus: filterString?.amcStatus, pageSize });
+        setFilterString({ status: filterString?.amcStatus, pageSize });
         advanceFilterForm.resetFields();
     };
 

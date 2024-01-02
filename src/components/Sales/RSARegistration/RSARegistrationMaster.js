@@ -360,10 +360,14 @@ export const RSARegistrationMasterBase = (props) => {
 
     useEffect(() => {
         if (loginUserData?.userType) {
-            setFilterString({ ...filterString, pageSize: 10, current: 1, status: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS?.PENDING?.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
+            if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_CONSTANTS?.PENDING?.key });
+            } else {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginUserData]);
+    }, [loginUserData?.userType]);
 
     useEffect(() => {
         const defaultSection = RSA_LEFTMENU_SECTION.RSA_REGISTRATION_DETAILS.id;
