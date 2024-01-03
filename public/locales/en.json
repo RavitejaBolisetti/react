@@ -1975,7 +1975,7 @@
     "rsmAsmApproval": {
         "heading": {
             "mainTitle": "Delivery/Invoice Cancellation Approval",
-            "title": "RSM Approval Summary",
+            "title": "Delivery/Invoice Cancellation Approval Summary",
             "titleOverride": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters :"
         },
