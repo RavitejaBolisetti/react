@@ -5,18 +5,23 @@
  */
 export const GST_IRN_TRANSACTION_STATUS = {
     PENDING: {
-        id: 2,
+        id: 1,
         title: 'Pending',
         key: 'P',
     },
-    FAILED: {
-        id: 3,
-        title: 'Failed',
-        key: 'F',
+    REJECTED: {
+        id: 2,
+        title: 'Rejected',
+        key: 'R',
     },
     SUCCESS: {
-        id: 1,
+        id: 3,
         title: 'Success',
-        key: 'S',
+        key: 'A',
+    },
+    FAILED: {
+        id: 4,
+        title: 'Failed',
+        key: 'F',
     },
 };

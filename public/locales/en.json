@@ -198,7 +198,8 @@
             "printCreditDebit": "Print Credit Debit Note",
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
-            "reGenerateIRN": "Re-Generate IRN"
+            "reGenerateIRN": "Re-Generate IRN",
+            "irnStatusNotPresent":"IRN status not present"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1800,7 +1801,8 @@
             "location": "Location",
             "irnResponse": "IRN Server Response",
             "irnStatus": "IRN Status",
-            "gstin": "GSTIN"
+            "gstin": "GSTIN",
+            "action":"Action"
         }
     },
 
