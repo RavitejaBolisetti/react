@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNotification, refreshToken, userId, timeOutConfig }) => {
+const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNotification, refreshToken, token, userId, timeOutConfig }) => {
     const navigate = useNavigate();
     const [timeOutSetting, setTimeOutSetting] = useState({ timeout: 180_000, promptBeforeIdle: 30_000 });
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -112,7 +112,7 @@ const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNo
                 setIsModalOpen(false);
                 authPostLogin(res?.data);
             },
-            data: { userId, token: refreshToken },
+            data: { userId, token: refreshToken || token },
             onError,
         });
     };

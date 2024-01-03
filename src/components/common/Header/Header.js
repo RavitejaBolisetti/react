@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = (props) => {
-    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, refreshToken, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, refreshToken,token, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
     const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData } = props;
     const { notificationCount, resetNotification, listShowMenuLoading, doRefreshToken } = props;
 
@@ -271,13 +271,13 @@ const HeaderMain = (props) => {
                     Modal.destroyAll();
                     authPostLogin(res?.data);
                 },
-                data: { userId, token: refreshToken },
+                data: { userId, token: refreshToken || token },
                 onError: () => {
                     showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Session Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
                     navigate(routing.ROUTING_LOGIN);
                 },
             });
-        }, 10 * 1000);
+        }, 900 * 1000);
 
         return () => {
             clearInterval(interval);
