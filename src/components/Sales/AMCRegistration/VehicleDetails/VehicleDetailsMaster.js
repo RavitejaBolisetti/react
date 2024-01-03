@@ -29,6 +29,7 @@ import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyM
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 import { AMC_REGISTRATION_SECTION } from 'constants/AMCRegistrationSection';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Text } = Typography;
 
@@ -81,7 +82,6 @@ const VehicleDetailsMasterBase = (props) => {
     const [isAdding, setIsAdding] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [vehicleSearchVisible, setVehicleSearchVisible] = useState(false);
-
     const disabledProps = { disabled: isReadOnly };
     const resetVehicleData = () => {
         resetFamily();
@@ -95,7 +95,7 @@ const VehicleDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload, section]);
     useEffect(() => {
-        if (formActionType?.viewMode || (formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key)) {
+        if (formActionType?.viewMode) {
             handleModelData({});
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,12 +111,13 @@ const VehicleDetailsMasterBase = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
+
     useEffect(() => {
         if (modelGroupData?.length > 0 || modelFamilyData?.length > 0 || productAttributeData?.length > 0) {
             contactform.setFieldsValue({
-                modelGroupDesc: modelGroupData?.[0]?.modelGroupDescription,
-                modelFamilyDesc: modelFamilyData?.[0]?.familyDescription,
-                productDescription: productAttributeData?.[0]?.prodctShrtName,
+                modelGroupDesc: getCodeValue(modelGroupData, contactform.getFieldValue('modelGroup'), 'modelGroupDescription', true, 'modelGroupCode'),
+                modelFamilyDesc: getCodeValue(modelFamilyData, contactform.getFieldValue('modelFamily'), 'familyDescription', true, 'familyCode'),
+                productDescription: getCodeValue(productAttributeData, contactform.getFieldValue('modelDescription'), 'prodctShrtName', true, 'prodctCode'),
             });
         }
 
@@ -134,7 +135,6 @@ const VehicleDetailsMasterBase = (props) => {
     useEffect(() => {
         if (formActionType?.addMode) {
             setLastSection(true);
-
             setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,9 +200,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     const fnSetData = (data) => {
-        if (!(requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key)) {
-            handleModelData({ ...data });
-        }
+        handleModelData({ ...data });
         contactform.setFieldsValue({ ...data, modelDescription: data?.modelCode, vehicleRegistrationNumber: data?.registrationNumber, orignallyWarrantyStartDate: formattedCalendarDate(data?.orignallyWarrantyStartDate) });
     };
 
@@ -212,6 +210,7 @@ const VehicleDetailsMasterBase = (props) => {
         }
         const onVehicleSearchSuccessAction = (data) => {
             fnSetData(data?.data?.vehicleDetails);
+
             if (requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) {
                 setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
             }
