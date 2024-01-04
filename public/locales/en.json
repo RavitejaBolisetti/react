@@ -199,7 +199,7 @@
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
             "reGenerateIRN": "Re-Generate IRN",
-            "irnStatusNotPresent":"IRN status not present"
+            "irnStatusNotPresent": "IRN status not present"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1802,7 +1802,7 @@
             "irnResponse": "IRN Server Response",
             "irnStatus": "IRN Status",
             "gstin": "GSTIN",
-            "action":"Action"
+            "action": "Action"
         }
     },
 
@@ -4472,6 +4472,49 @@
         "heading": {
             "moduleTitle": "Co Dealer Invoice",
             "title": "Co Dealer Invoice"
+        },
+        "label": {
+            "status": "Status",
+            "indentDealerToParent": "Indent Dealer To Parent",
+            "indentDetails": {
+                "indentNumber": "Indent No.",
+                "indentDate": "Indent Date",
+                "dealerCode": "Dealer Code",
+                "dealerName": "Dealer Name",
+                "address": "Address",
+                "cityDistrict": "City/District",
+                "state": "State",
+                "pinCode": "Pin Code",
+                "gstIn": "GSTIN"
+            },
+            "profileCard": {
+                "invoiceNumber": "Invoice Number",
+                "invoiceDate": "Invoice Date",
+                "invoiceStatus": "Invoice Status"
+            },
+            "tableColumn": {
+                "invoiceNumberAndDate": "Invoice No. & Date",
+                "DealerName": "Indent Dealer Name",
+                "ModelDescription": "Model Description",
+                "IndentNumberAndDate": "Indent No. & Date",
+                "IRNStatus": "IRN Status"
+            }
+        },
+        "placeholder": {},
+        "validation": {
+            "toDate": "Date cant be less than Effective from date",
+            "ModelCode": "Model code is not present"
+        },
+        "text": {},
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
+        }
+    },
+    "centralFameSubsidy": {
+        "heading": {
+            "moduleTitle": "Central Fame Subsidy",
+            "title": "Central Fame Subsidy"
         },
         "label": {
             "status": "Status",
