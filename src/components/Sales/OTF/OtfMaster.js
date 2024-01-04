@@ -38,6 +38,7 @@ import { translateContent } from 'utils/translateContent';
 import LeftProfileCard from './LeftProfileCard';
 
 import styles from 'assets/sass/app.module.scss';
+import { ChangeModelVariantMaster } from '../Common/VehicleDetails/ChangeModelVariant';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -831,6 +832,8 @@ export const OtfMasterBase = (props) => {
             {isTransferVisible && <TransferMaster {...transferOTFProps} />}
             <ChangeHistory {...ChangeHistoryProps} />
             {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
+
+            <ChangeModelVariantMaster isVisible={true} {...transferOTFProps} />
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
             <UnSaveDataConfirmation {...unSavedDataModalProps} />

@@ -21,6 +21,8 @@ import { withSpinner } from 'components/withSpinner';
 import { translateContent } from 'utils/translateContent';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
+import { ChangeModelVariantMaster } from './ChangeModelVariant';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -469,26 +471,28 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} data-testid="logRole">
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {StatusBar && <StatusBar status={selectedOrder?.orderStatus} />}
-                        </Col>
-                    </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...props} />
-                </Col>
-            </Row>
-        </Form>
+        <>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} data-testid="logRole">
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Row>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <h2>{section?.title}</h2>
+                            </Col>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                {StatusBar && <StatusBar status={selectedOrder?.orderStatus} />}
+                            </Col>
+                        </Row>
+                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <FormActionButton {...props} />
+                    </Col>
+                </Row>
+            </Form>
+        </>
     );
 };
 export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(VehicleDetailsMasterMain));

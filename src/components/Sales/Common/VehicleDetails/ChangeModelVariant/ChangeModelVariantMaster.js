@@ -17,6 +17,7 @@ import { ViewDetail } from './ViewDetail';
 import { STATUS } from 'constants/modelVariant';
 
 import styles from 'assets/sass/app.module.scss';
+import { withDrawer } from 'components/withDrawer';
 
 const { Text } = Typography;
 
@@ -164,4 +165,5 @@ const ChangeModelVariantMasterBase = (props) => {
         </>
     );
 };
-export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(ChangeModelVariantMasterBase);
+
+export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeModelVariantMasterBase, { width: '90%', footer: null }));
