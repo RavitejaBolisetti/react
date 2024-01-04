@@ -26,8 +26,10 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [] },
-
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            OTF: {
+                VehicleDetails: { isLoading: VehicleDetailsTaxLoading = false },
+            },
         },
     } = state;
     const NO_DATA = '-';
@@ -39,6 +41,7 @@ const mapStateToProps = (state) => {
         isProductHierarchyLoading,
         productAttributeData,
         NO_DATA,
+        VehicleDetailsTaxLoading,
     };
     return returnValue;
 };
@@ -62,13 +65,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMain = (props) => {
     const { CoDealerInvoiceStateMaster, form, NO_DATA, section, formActionType, resetProductData } = props;
-    const { fetchData, listShowLoading, userId, coDealerOnFinish, listProductShowLoading, fetchProductLovCode, isProductHierarchyDataLoaded, productAttributeData } = props;
+    const { fetchData, listShowLoading, userId, coDealerOnFinish, listProductShowLoading, fetchProductLovCode, isProductHierarchyDataLoaded, productAttributeData, showGlobalNotification, VehicleDetailsTaxLoading } = props;
     const [formData, setFormData] = useState();
     const [collapseActiveKey, setcollapseActiveKey] = useState([1]);
     const [dealerDiscount, setDealerDicountValue] = useState();
     const [changeStatus, setchangeStatus] = useState();
     const trueDealerDiscount = useDeferredValue(dealerDiscount);
     const [toolTipContent, setToolTipContent] = useState();
+    const [previousFormFields, setpreviousFormFields] = useState({});
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -107,10 +111,16 @@ const VehicleDetailsMain = (props) => {
 
             const onSuccessAction = (res) => {
                 setFormData({ ...res?.data });
+                setpreviousFormFields({ ...res?.data });
                 form.setFieldsValue({ ...res?.data });
             };
 
             const onErrorAction = (message) => {
+                if (previousFormFields instanceof Object && Object?.keys(previousFormFields)?.length > 0) {
+                    form.setFieldsValue(previousFormFields);
+                } else {
+                    form.resetFields();
+                }
                 showGlobalNotification({ message });
             };
 
@@ -126,9 +136,10 @@ const VehicleDetailsMain = (props) => {
         return () => {
             setFormData();
             resetProductData();
+            setpreviousFormFields();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, form, section?.id]);
+    }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, section?.id]);
 
     useEffect(() => {
         if (trueDealerDiscount || changeStatus) {
@@ -177,6 +188,9 @@ const VehicleDetailsMain = (props) => {
         setchangeStatus,
         toolTipContent,
         setToolTipContent,
+        isLoading: VehicleDetailsTaxLoading,
+        previousFormFields,
+        setpreviousFormFields,
     };
     const viewProps = {
         ...formProps,

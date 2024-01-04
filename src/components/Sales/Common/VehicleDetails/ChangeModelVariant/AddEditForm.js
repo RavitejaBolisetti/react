@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Button } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -20,12 +20,57 @@ import { STATUS } from 'constants/modelVariant';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setChangeModel, revisedModelInformation, onModelSubmit, setOnModelSubmit } = props;
-    const { getProductAttributeDetail, setRevisedProductAttributeData, form, modelChangeItemList, setModelChangeItemList, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
-    const [selectedTreeKey, setSelectedTreeKey] = useState(formData?.model);
+    const { formData, formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, buttonData, setButtonData, confirmRequest, setConfirmRequest, setShowChangeModel, revisedModelInformation } = props;
+    const { productDetailRefresh, setProductDetailRefresh, getProductAttributeDetail, setRevisedProductAttributeData, form, productHierarchyData, modelStatus, setModelStatus, selectedRecordId, filterVehicleData, saveData, handleVehicleDetailChange, handleFormValueChange } = props;
+    const [selectedTreeKey, setSelectedTreeKey] = useState();
     const [modelChange, setModelChange] = useState(true);
     const formType = editMode ? 'New' : '';
     const modelChangeField = ['model' + formType, 'modelCode' + formType];
+
+    useEffect(() => {
+        if (formData?.revisedModel) {
+            form.setFieldsValue({ ['model' + formType]: formData?.revisedModel });
+            form.setFieldsValue({ ['modelCode' + formType]: formData?.revisedModel });
+            setSelectedTreeKey(formData?.revisedModel);
+        } else {
+            form.setFieldsValue({ ['model' + formType]: undefined, ['modelCode' + formType]: undefined });
+            form.setFieldsValue({ ['model' + formType]: formData?.model });
+            form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
+            setSelectedTreeKey(formData?.model);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const onError = (message) => {
+        showGlobalNotification({ message });
+    };
+
+    const modelChangeService = (data, onSuccessAction) => {
+        const onSuccess = (res) => {
+            setModelStatus(res?.data?.status);
+            setProductDetailRefresh(!productDetailRefresh);
+            onSuccessAction && onSuccessAction();
+            if (res?.data?.status === STATUS?.SUCCESS?.key) {
+                setShowChangeModel(false);
+                setRefreshData(!refreshData);
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
+            } else {
+                setButtonData({ ...buttonData, formBtnActive: false });
+                showGlobalNotification({ notificationType: res?.data?.status ? (res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error') : 'success', title: res?.data?.status ? STATUS?.[res?.data?.status]?.title : 'SUCCESS', message: res.responseMessage });
+            }
+        };
+
+        const requestData = {
+            data: data,
+            customURL: BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
+    };
 
     const onHandleSave = () => {
         form?.validateFields(modelChangeField)
@@ -39,33 +84,10 @@ const AddEditFormMain = (props) => {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
                 } else {
                     const data = {
-                        modelCode: vehicleModelChangeRequest?.modelCode,
                         otfId: selectedRecordId,
+                        modelCode: vehicleModelChangeRequest?.modelCode,
                     };
-                    const onError = (message) => {
-                        showGlobalNotification({ message });
-                    };
-                    const onSuccess = (res) => {
-                        setOnModelSubmit(true);
-                        setModelStatus(res?.data?.status);
-                        if (res?.data?.status === STATUS?.SUCCESS?.key) {
-                            setButtonData({ ...buttonData, formBtnActive: true });
-                        } else {
-                            setButtonData({ ...buttonData, formBtnActive: false });
-                            setRefreshData(!refreshData);
-                            showGlobalNotification({ notificationType: res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error', title: STATUS?.[res?.data?.status]?.title, message: res.responseMessage });
-                        }
-                    };
-                    const requestData = {
-                        data: data,
-                        customURL: BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT,
-                        method: 'put',
-                        setIsLoading: listShowLoading,
-                        userId,
-                        onError,
-                        onSuccess,
-                    };
-                    saveData(requestData);
+                    modelChangeService(data);
                 }
             })
             .catch((err) => console.error(err));
@@ -80,9 +102,6 @@ const AddEditFormMain = (props) => {
             onCloseAction: onCloseAction,
             onSubmitAction: onSubmitAction,
         });
-        setModelChangeItemList(modelChangeItemList?.map((i) => ({ ...i, changeAllowed: false })));
-        form.setFieldsValue({ ['model' + formType]: formData?.model });
-        form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
     };
 
     const onCloseAction = () => {
@@ -92,12 +111,32 @@ const AddEditFormMain = (props) => {
         });
     };
 
+    const onSuccessAction = () => {
+        setShowChangeModel(false);
+        form.setFieldsValue({ ['model' + formType]: formData?.model });
+        form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
+    };
+
     const onSubmitAction = () => {
-        setConfirmRequest({
-            ...confirmRequest,
-            isVisible: false,
-        });
-        setChangeModel(false);
+        if (formData?.revisedModel) {
+            setConfirmRequest({
+                ...confirmRequest,
+                isVisible: false,
+            });
+
+            const data = {
+                status: 'CNCL',
+                otfId: selectedRecordId,
+            };
+            modelChangeService(data, onSuccessAction);
+        } else {
+            setConfirmRequest({
+                ...confirmRequest,
+                isVisible: false,
+            });
+            setShowChangeModel(false);
+            onSuccessAction();
+        }
     };
 
     const handleSelectTreeClick = (value) => {
@@ -140,46 +179,44 @@ const AddEditFormMain = (props) => {
         defaultParent: false,
         selectedTreeSelectKey: selectedTreeKey,
         handleSelectTreeClick,
-        treeExpandedKeys: [formData?.model],
+        treeExpandedKeys: [selectedTreeKey],
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
-        // loading: !viewOnly ? isProductDataLoading : false,
-        treeDisabled: onModelSubmit,
+        treeDisabled: formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus),
     };
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key]?.includes(modelStatus);
     return (
         <div className={styles.cardInnerBox}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.model')} initialValue={formData?.model} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.model')} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                     {revisedModelInformation && <div className={styles.modelTooltip}>{addToolTip(revisedModelInformation, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                 </Col>
                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} initialValue={formData?.modelCode} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
+                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
-            {editMode && !onModelSubmit && (
-                <>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
-                            {modelStatus !== STATUS?.PENDING?.key ? (
-                                <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
-                                    {translateContent('global.buttons.retry')}
-                                </Button>
-                            ) : (
-                                <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
-                                    {translateContent('global.buttons.submit')}
-                                </Button>
-                            )}
-                            <Button onClick={() => handleCollapse(formType)} danger>
-                                {translateContent('global.buttons.cancel')}
+            {!isReviedModelPending && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
+                        {modelStatus === STATUS?.REJECTED?.key ? (
+                            <Button type="primary" form="myNameForm" onClick={onHandleSave}>
+                                {translateContent('global.buttons.retry')}
                             </Button>
-                            <ConfirmationModal {...confirmRequest} />
-                        </Col>
-                    </Row>
-                </>
+                        ) : (
+                            <Button type="primary" form="myNameForm" onClick={onHandleSave} disabled={modelChange}>
+                                {translateContent('global.buttons.submit')}
+                            </Button>
+                        )}
+                        <Button onClick={() => handleCollapse(formType)} danger>
+                            {translateContent('global.buttons.cancel')}
+                        </Button>
+                        <ConfirmationModal {...confirmRequest} />
+                    </Col>
+                </Row>
             )}
         </div>
     );

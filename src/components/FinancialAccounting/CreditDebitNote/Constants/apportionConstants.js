@@ -3,25 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const GST_IRN_TRANSACTION_STATUS = {
-    PENDING: {
+export const APPORTION_CONSTANTS = {
+    WRITE_OFF_AMOUNT: {
         id: 1,
-        title: 'Pending',
-        key: 'P',
+        key: 'WRITE_OFF_AMOUNT',
+        value: 'WRITE_OFF_AMOUNT',
     },
-    REJECTED: {
+    APPORTION_AMOUNT: {
         id: 2,
-        title: 'Rejected',
-        key: 'R',
-    },
-    SUCCESS: {
-        id: 3,
-        title: 'Success',
-        key: 'A',
-    },
-    FAILED: {
-        id: 4,
-        title: 'Failed',
-        key: 'F',
+        key: 'APPORTION_AMOUNT',
+        value: 'APPORTION_AMOUNT',
     },
 };

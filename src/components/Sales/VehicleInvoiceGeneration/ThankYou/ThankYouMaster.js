@@ -10,11 +10,12 @@ import { REGISTRATION } from 'constants/modules/vehicleInvoiceGeneration';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { useEffect } from 'react';
 import { translateContent } from 'utils/translateContent';
+import { DOCUMENT_CONSTANTS } from '../Constants';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, otfData, onPrintInvoice, defaultBtnVisiblity, setButtonData } = props;
+    const { FormActionButton, otfData, onPrintDocument, defaultBtnVisiblity, setButtonData } = props;
 
     const myProps = {
         ...props,
@@ -61,7 +62,7 @@ export const ThankYouMaster = (props) => {
                                             <path d="M7.64062 1.75V5.425H11.3156" stroke="#FF3E5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     }
-                                    onClick={onPrintInvoice}
+                                    onClick={ () => onPrintDocument({reportType: DOCUMENT_CONSTANTS?.INVOICE?.key })}
                                 >
                                     {translateContent('global.buttons.download') + '/' + translateContent('global.buttons.printInvoice')}
                                 </Button>

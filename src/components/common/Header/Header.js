@@ -19,7 +19,7 @@ import { setCollapsed } from 'store/actions/common/leftsidebar';
 import { showGlobalNotification } from 'store/actions/notification';
 import { menuDataActions } from 'store/actions/data/menu';
 import { headerDataActions } from 'store/actions/common/header';
-import { clearLocalStorageData, doRefreshToken, doLogoutAPI } from 'store/actions/auth';
+import { clearLocalStorageData, doRefreshToken, doLogoutAPI, authPostLogin } from 'store/actions/auth';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { notificationDataActions } from 'store/actions/common/notification';
 import { userAccessMasterDataAction } from 'store/actions/data/userAccess';
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = (props) => {
-    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, refreshToken, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, refreshToken,token, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
     const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData } = props;
     const { notificationCount, resetNotification, listShowMenuLoading, doRefreshToken } = props;
 
@@ -267,16 +267,17 @@ const HeaderMain = (props) => {
     useEffect(() => {
         const interval = setInterval(() => {
             doRefreshToken({
-                onSuccess: () => {
+                onSuccess: (res) => {
                     Modal.destroyAll();
+                    authPostLogin(res?.data);
                 },
-                data: { userId, token: refreshToken },
+                data: { userId, token: refreshToken || token },
                 onError: () => {
                     showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Session Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
                     navigate(routing.ROUTING_LOGIN);
                 },
             });
-        }, 90 * 1000);
+        }, 900 * 1000);
 
         return () => {
             clearInterval(interval);

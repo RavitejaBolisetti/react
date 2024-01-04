@@ -77,7 +77,6 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const [listFilterForm] = Form.useForm();
     const [receiptType, setReceiptType] = useState(VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key);
-    const [searchValue, setSearchValue] = useState();
 
     const tableActions = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: true };
     const tableActionsFalse = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: false };
@@ -100,6 +99,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [parameterName, setParameterName] = useState('grnNumber');
 
     const dynamicPagination = true;
 
@@ -129,8 +129,8 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
+        // searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
+        // searchForm.resetFields();
         setShowDataLoading(false);
     };
 
@@ -156,11 +156,30 @@ export const VehicleReceiptMasterBase = (props) => {
                 canRemove: false,
                 filter: false,
             },
+
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
                 value: filterString?.grnNumber,
                 name: filterString?.grnNumber,
+                // searchValue
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'supplierInvoiceNumber',
+                title: 'Supplier Invoice Number',
+                value: filterString?.supplierInvoiceNumber,
+                name: filterString?.supplierInvoiceNumber,
+                // searchValue
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'chasisNumber',
+                title: 'Chassis Number',
+                value: filterString?.chasisNumber,
+                name: filterString?.chasisNumber,
                 // searchValue
                 canRemove: true,
                 filter: true,
@@ -219,7 +238,7 @@ export const VehicleReceiptMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [receiptType, searchValue, filterString]);
+    }, [receiptType, filterString]);
 
     useEffect(() => {
         return () => {
@@ -263,16 +282,16 @@ export const VehicleReceiptMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId({ id: record?.id, supplierInvoiceNumber: record?.supplierInvoiceNumber });
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId({ id: record?.id, supplierInvoiceNumber: record?.supplierInvoiceNumber });
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId({ id: record?.id, supplierInvoiceNumber: record?.supplierInvoiceNumber });
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -302,22 +321,24 @@ export const VehicleReceiptMasterBase = (props) => {
         const { pageSize } = filterString;
         setShowDataLoading(false);
         setFilterString({ pageSize, current: 1 });
+        searchForm.resetFields();
+        setParameterName('grnNumber');
+        searchForm.setFieldValue('searchType', 'grnNumber');
+
         advanceFilterForm.resetFields();
     };
 
     const changeObjtoArr = (data) => {
-        const FinalArr = [];
+        const finalDataItem = [];
         Object?.entries(data)?.map(([key, value]) => {
-            FinalArr.push({ ...value, mfgdate: dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) });
-
+            finalDataItem.push({ ...value, mfgdate: value?.mfgdate ? dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) : null });
             return undefined;
         });
-        return FinalArr;
+        return finalDataItem;
     };
 
     const onFinish = (values) => {
-        const data = { supplierInvoiceNumber: selectedId, vehicleDetails: changeObjtoArr(finalData) };
-
+        const data = { id: selectedId?.id, supplierInvoiceNumber: selectedId?.supplierInvoiceNumber, vehicleDetails: changeObjtoArr(finalData) };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -326,7 +347,6 @@ export const VehicleReceiptMasterBase = (props) => {
             fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-
             setIsFormVisible(false);
         };
 
@@ -366,12 +386,14 @@ export const VehicleReceiptMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
     const tableProps = {
         dynamicPagination,
         filterString,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         tableColumn: tableColumn({ handleButtonClick, tableIconsVisibility }),
         tableData: data,
         showAddButton: false,
@@ -427,14 +449,17 @@ export const VehicleReceiptMasterBase = (props) => {
         setFilterString({ current: 1 });
     };
 
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
-    };
-
-    const handleSearch = (value) => {
-        setFilterString({ ...filterString, grnNumber: value, advanceFilter: true, current: 1 });
-        setSearchValue(value);
-        searchForm.resetFields();
+    const handleSearch = () => {
+        const { pageSize } = filterString;
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setFilterString({ ...values, advanceFilter: true, current: 1, pageSize });
+                searchForm.resetFields();
+            })
+            .catch(() => {
+                return;
+            });
     };
     const advanceFilterResultProps = {
         extraParams,
@@ -456,10 +481,11 @@ export const VehicleReceiptMasterBase = (props) => {
         onFinishSearch,
         receiptType,
         handleReceiptTypeChange,
-        handleChange,
         handleSearch,
         currentItem,
         setCurrentItem,
+        parameterName,
+        setParameterName,
     };
 
     const advanceFilterProps = {

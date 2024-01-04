@@ -179,7 +179,7 @@
             "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order",
             "register": "Register",
             "addCreditNote": "Add Credit Note",
-            "addDebitNote": "Add Dedit Note",
+            "addDebitNote": "Add Debit Note",
             "printReceipt": "Print Receipt",
             "applyFilter": "Apply",
             "printForm21": "Print Form 21",
@@ -198,7 +198,8 @@
             "printCreditDebit": "Print Credit Debit Note",
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
-            "reGenerateIRN": "Re-Generate IRN"
+            "reGenerateIRN": "Re-Generate IRN",
+            "irnStatusNotPresent":"IRN status not present"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1800,7 +1801,8 @@
             "location": "Location",
             "irnResponse": "IRN Server Response",
             "irnStatus": "IRN Status",
-            "gstin": "GSTIN"
+            "gstin": "GSTIN",
+            "action":"Action"
         }
     },
 
@@ -1974,8 +1976,8 @@
     },
     "rsmAsmApproval": {
         "heading": {
-            "mainTitle": "RSM/ASM Approval",
-            "title": "RSM Approval Summary",
+            "mainTitle": "Delivery/Invoice Cancellation Approval",
+            "title": "Delivery/Invoice Cancellation Approval Summary",
             "titleOverride": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters :"
         },
@@ -2799,7 +2801,13 @@
                 "vehicleStatus": "Vehicle Status",
                 "physicalStatus": "Physical Status",
                 "shortage": "Shortage",
-                "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No."
+                "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No.",
+                "defectType": "Defect Type",
+                "defectDescription": "Defect Description",
+                "shortageType": "Shortage Type",
+                "shortageDescription": "Shortage Description",
+                "remarks": "Remarks",
+                "defectLocation": "Defect Location"
             },
             "advancedSearch": {
                 "grnFromDate": "GRN From Date",
@@ -2891,6 +2899,7 @@
                 "editApportion": "Edit Apportion Details",
                 "addApportion": "Add Apportion Details",
                 "apportionDetailsText": "Apportion Details",
+                "totalReceivedAmountText": "total received amount",
                 "totalApportionAmountText": "The entire paid amount has been apportioned. Cannot be apportioned further."
             },
             "receiptFromDate": "Receipt From Date",
@@ -3659,7 +3668,8 @@
             "message": {
                 "successMessage": "Account Head validated successfully",
                 "errorMessage": "Write-off and apportion amount cannot exceed balance amount",
-                "documentInvalid": "Document Number is invalid"
+                "documentInvalid": "Document Number is invalid",
+                "duplicateDocumentNumber": "Duplicate document number is invalid"
             }
         }
     },

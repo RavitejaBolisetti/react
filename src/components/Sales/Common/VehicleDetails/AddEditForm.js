@@ -36,7 +36,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, changeModel, setChangeModel, onModelSubmit, setOnModelSubmit } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, showChangeModel, setShowChangeModel, onModelSubmit, setOnModelSubmit } = props;
     const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
 
     const [optionForm] = Form.useForm();
@@ -131,7 +131,7 @@ const AddEditFormMain = (props) => {
         onModelSubmit,
         setOnModelSubmit,
         setFilterVehicleData,
-        setChangeModel,
+        setShowChangeModel,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -186,7 +186,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeModel = () => {
-        setChangeModel(true);
+        setShowChangeModel(true);
         setRevisedModelInformation({ ...toolTipContent });
     };
 
@@ -223,14 +223,14 @@ const AddEditFormMain = (props) => {
 
                                 {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
                                     <Col xs={24} sm={24} md={3} lg={3} xl={3} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={onModelSubmit}>
+                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={showChangeModel} style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
                                             Change
                                         </Button>
                                     </Col>
                                 )}
                             </Row>
                             <Divider />
-                            {changeModel && (
+                            {showChangeModel && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <ChangeModelVariantMaster {...myProp} />

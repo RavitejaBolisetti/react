@@ -418,6 +418,7 @@ export const VehiclePriceMasterBase = (props) => {
             setUploadedFile();
             setFileList([]);
             setShowDataLoading(true);
+            fetchVehiclePriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, customURL, onErrorAction, onSuccessAction });
 
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });

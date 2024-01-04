@@ -18,9 +18,8 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
-import { STATUS as MODEL_VARIANT } from 'constants/modelVariant';
 import { ChangeModelVariantMaster } from './ChangeModelVariant';
-import { TbRefresh } from 'react-icons/tb';
+import { STATUS } from 'constants/modelVariant';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -38,6 +37,8 @@ const ViewDetailMain = (props) => {
         ...viewProps,
         column: { xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 },
     };
+
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
     return (
         <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
@@ -73,7 +74,7 @@ const ViewDetailMain = (props) => {
                                 </Col>
                             </Row>
                             <Divider />
-                            {formData?.sapStatusResponseCode !== MODEL_VARIANT?.SUCCESS?.key && (
+                            {isReviedModelPending && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <ChangeModelVariantMaster {...props} />

@@ -13,7 +13,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-    
+
 import styles from 'assets/sass/app.module.scss';
 
 import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
         data: {
             FinancialAccounting: {
                 DocumentDescription: { isLoaded: isDocumentTypesLoaded = false, isLoading: isDocumentTypeLoading = false, data: documentTypeData = [] },
+                InvoiceDetails: { isLoading: isApportionDetailsLoading = false },
             },
         },
         common: {
@@ -46,6 +47,7 @@ const mapStateToProps = (state) => {
         isDocumentTypeLoading,
 
         moduleTitle,
+        isApportionDetailsLoading,
     };
     return returnValue;
 };
@@ -67,9 +69,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ApportionDetailsMasterMain = (props) => {
-    const { isLoading, userId, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
+    const { isCreditDrawerDataLoading, userId, formActionType, handleFormValueChange, creditDebitNoteOnFinish } = props;
     const { fetchInvoiceList, listInvoiceShowLoading, apportionTableData, setApportionTableData } = props;
-    const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, requestPayload, showGlobalNotification } = props;
+    const { fetchDocumentTypeList, listDocumentTypeShowLoading, isDocumentTypesLoaded, documentTypeData, isDocumentTypeLoading, requestPayload, showGlobalNotification, voucherTableData } = props;
 
     const [form] = Form.useForm();
     const [activeKey, setActiveKey] = useState([]);
@@ -129,12 +131,14 @@ export const ApportionDetailsMasterMain = (props) => {
         setApportionTableData,
         documentTypeData,
         isDocumentTypeLoading,
+
+        voucherTableData,
     };
 
     const viewProps = {
         tableData: requestPayload?.apportionDetailsDto,
         styles,
-        isLoading,
+        isLoading: isCreditDrawerDataLoading,
         activeKey,
         setActiveKey,
         formActionType,

@@ -18,25 +18,64 @@ import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { GRN_TYPE_CONSTANT } from '../utils/GrnTypeConstant';
 import dayjs from 'dayjs';
+import { BASE_URL_INVOICE_DEFECT_LOCATION as defectCustomURL, BASE_URL_INVOICE_DEFECT_SHORTAGE as shortageCustomURL } from 'constants/routingApi';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { Option } = Select;
+const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, selectedRecord, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType } = props;
+    const { formData, setFormData, selectedRecord, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType, defectStatusType, defactTypeData, shortTypeData } = props;
+    const { fetchDefectAndShortageDependentData, checkPhysicalStatus, checkShortage } = props;
 
     const [activeKey, setactiveKey] = useState([]);
     const [statusType, setstatusType] = useState([]);
-    // const [vehicleDetailList, setVehicleDetailList] = useState([]);
+    const [defectDescription, setDefectDescription] = useState([]);
+    const [shortageDescription, setShortageDescription] = useState([]);
 
     useEffect(() => {
         if (formData) {
             formData && setFinalData(formData);
+            if (formData) {
+                formData.forEach((element, index) => {
+                    element?.physicalStatusDetail?.defectLocation &&
+                        fetchDefectAndShortageDependentData({
+                            value: element?.physicalStatusDetail?.defectLocation,
+                            extraParams: [
+                                {
+                                    key: 'defectLocationCode',
+                                    value: element?.physicalStatusDetail?.defectLocation,
+                                },
+                            ],
+                            successAction: setDefectDescription,
+                            dataItem: defectDescription,
+                            index,
+                            customURL: defectCustomURL,
+                        });
+
+                    element?.shortageDetail?.shortageType &&
+                        fetchDefectAndShortageDependentData({
+                            value: element?.shortageDetail?.shortageType,
+                            extraParams: [
+                                {
+                                    key: 'shortageType',
+                                    value: element?.shortageDetail?.shortageType,
+                                },
+                            ],
+                            successAction: setShortageDescription,
+                            dataItem: shortageDescription,
+                            index,
+                            customURL: shortageCustomURL,
+                        });
+                });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+
     useEffect(() => {
         if (vehicleStatusType?.length) {
             const skippable = selectedRecord?.grnType === GRN_TYPE_CONSTANT?.CO_DEALER?.desc || selectedRecord?.grnType === GRN_TYPE_CONSTANT?.CO_DEALER?.key;
@@ -75,12 +114,17 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleStatusType]);
 
+    useEffect(() => {
+        vehicleDetailForm.resetFields();
+        setFormData([]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const onChange = (values) => {
         const isPresent = activeKey?.includes(values);
 
         if (isPresent) {
             const newActivekeys = [];
-
             activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
@@ -116,6 +160,7 @@ const AddEditFormMain = (props) => {
     const handleCancelFormEdit = () => {
         setactiveKey([]);
     };
+
     const collapseProps = {
         collapsible: 'icon',
     };
@@ -124,6 +169,44 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
+    };
+
+    const handleDataChange = ({ value, index, type }) => {
+        setFormData((data) => {
+            return data?.map((item, i) => (i === index ? { ...item, [type]: value } : item));
+        });
+    };
+
+    const handleDefectShortageChange = ({ value, index, type }) => {
+        if (type === 'shortage') {
+            fetchDefectAndShortageDependentData({
+                value,
+                extraParams: [
+                    {
+                        key: 'shortageType',
+                        value: value,
+                    },
+                ],
+                successAction: setShortageDescription,
+                dataItem: shortageDescription,
+                index,
+                customURL: shortageCustomURL,
+            });
+        } else {
+            fetchDefectAndShortageDependentData({
+                value,
+                extraParams: [
+                    {
+                        key: 'defectLocationCode',
+                        value: value,
+                    },
+                ],
+                successAction: setDefectDescription,
+                dataItem: defectDescription,
+                index,
+                customURL: defectCustomURL,
+            });
+        }
     };
 
     return (
@@ -139,12 +222,10 @@ const AddEditFormMain = (props) => {
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <Space size="small">
                                                     <Text className={styles.headText}>
-                                                        {' '}
                                                         {translateContent('vehicleReceipt.label.vehicleDetails.model')}: {item?.modelDescription}{' '}
                                                     </Text>
                                                     <Text className={styles.headText}> {`|`}</Text>
                                                     <Text className={styles.headText}>
-                                                        {' '}
                                                         {translateContent('vehicleReceipt.label.vehicleDetails.VIN')}: {item?.vin}
                                                     </Text>
                                                 </Space>
@@ -224,7 +305,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.demoVehicle ?? YES_NO_FLAG?.NO?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.demoVehicle')} name={[index, 'demoVehicle']} rules={[validateRequiredSelectField('Demo Vehicle')]}>
+                                        <Form.Item initialValue={item?.demoVehicle ?? YES_NO_FLAG?.NO?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.demoVehicle')} name={[index, 'demoVehicle']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.demoVehicle'))]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'dv' + item.key} value={item.key}>
@@ -235,7 +316,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleStatus ?? VEHICLE_RECEIPT_STATUS.RECEIVED.key} label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus')} name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
+                                        <Form.Item initialValue={item?.vehicleStatus ?? VEHICLE_RECEIPT_STATUS.RECEIVED.key} label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus')} name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.vehicleStatus'))]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {statusType?.map((item) => (
                                                     <Option disabled={item?.disabled} key={'vs' + item.key} value={item.key}>
@@ -246,46 +327,122 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     {selectedRecord?.grnType !== GRN_TYPE_CONSTANT?.CO_DEALER?.desc && (
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item initialValue={item?.physicalStatus ?? PHYSICAL_STATUS?.NO_DAMAGE?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.physicalStatus')} name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
-                                                <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                    {physicalStatusType?.map((item) => (
-                                                        <Option key={'ps' + item.key} value={item.key}>
-                                                            {item.value}
-                                                        </Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
+                                        <>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item initialValue={item?.physicalStatus ?? PHYSICAL_STATUS?.NO_DAMAGE?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.physicalStatus')} name={[index, 'physicalStatus']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.physicalStatus'))]}>
+                                                    <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleDataChange({ value, index, type: 'physicalStatus' })}>
+                                                        {physicalStatusType?.map((item) => (
+                                                            <Option key={'ps' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            {checkPhysicalStatus(item?.physicalStatus) && (
+                                                <>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item initialValue={item?.physicalStatusDetail?.defectType} label={translateContent('vehicleReceipt.label.vehicleDetails.defectType')} name={[index, 'physicalStatusDetail', 'defectType']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.defectType'))]}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                                {defectStatusType?.map((item) => (
+                                                                    <Option key={'df' + item.key} value={item.key}>
+                                                                        {item.value}
+                                                                    </Option>
+                                                                ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item initialValue={item?.physicalStatusDetail?.defectLocation} label={translateContent('vehicleReceipt.label.vehicleDetails.defectLocation')} name={[index, 'physicalStatusDetail', 'defectLocation']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.defectLocation'))]}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleDefectShortageChange({ value, index, type: 'defect' })}>
+                                                                {defactTypeData?.map((item) => (
+                                                                    <Option key={'df' + item.key} value={item.key}>
+                                                                        {item.value}
+                                                                    </Option>
+                                                                ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item initialValue={item?.physicalStatusDetail?.defectDescription} label={translateContent('vehicleReceipt.label.vehicleDetails.defectDescription')} name={[index, 'physicalStatusDetail', 'defectDescription']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.defectDescription'))]}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                                {defectDescription?.[index]?.map((item) => (
+                                                                    <Option key={'ds' + item.key} value={item.key}>
+                                                                        {item.value}
+                                                                    </Option>
+                                                                ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                        <Form.Item initialValue={item?.physicalStatusDetail?.remarks} label={translateContent('vehicleReceipt.label.vehicleDetails.remarks')} name={[index, 'physicalStatusDetail', 'remarks']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.remarks'))]}>
+                                                            <TextArea maxLength={400} placeholder={preparePlaceholderText(translateContent('configurableParameter.placeholder.controlDescriptionPlaceHolder'))} disabled={''} showCount />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                                                        <Form.Item hidden label="" initialValue={item?.physicalStatusDetail?.id} name={[index, 'physicalStatusDetail', 'id']} />
+                                                    </Col>
+                                                </>
+                                            )}
+                                        </>
                                     )}
                                     {selectedRecord?.grnType !== GRN_TYPE_CONSTANT?.CO_DEALER?.desc && (
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item initialValue={item?.shortage ?? YES_NO_FLAG?.NO?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.shortage')} name={[index, 'shortage']}>
-                                                <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                    {shortageType?.map((item) => (
-                                                        <Option key={'st' + item.key} value={item.key}>
-                                                            {item.value}
-                                                        </Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
+                                        <>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item initialValue={item?.shortage ?? YES_NO_FLAG?.NO?.key} label={translateContent('vehicleReceipt.label.vehicleDetails.shortage')} name={[index, 'shortage']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.shortage'))]}>
+                                                    <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleDataChange({ value, index, type: 'shortage' })}>
+                                                        {shortageType?.map((item) => (
+                                                            <Option key={'st' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            {checkShortage(item?.shortage) && (
+                                                <>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item initialValue={item?.shortageDetail?.shortageType} label={translateContent('vehicleReceipt.label.vehicleDetails.shortageType')} name={[index, 'shortageDetail', 'shortageType']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.shortageType'))]}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleDefectShortageChange({ value, index, type: 'shortage' })}>
+                                                                {shortTypeData?.map((item) => (
+                                                                    <Option key={'st' + item.key} value={item.key}>
+                                                                        {item.value}
+                                                                    </Option>
+                                                                ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item initialValue={item?.shortageDetail?.shortageDescription} label={translateContent('vehicleReceipt.label.vehicleDetails.shortageDescription')} name={[index, 'shortageDetail', 'shortageDescription']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.shortageDescription'))]}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                                {shortageDescription?.[index]?.map((item) => (
+                                                                    <Option key={'st' + item.key} value={item.key}>
+                                                                        {item.value}
+                                                                    </Option>
+                                                                ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                        <Form.Item initialValue={item?.shortageDetail?.remarks} label={translateContent('vehicleReceipt.label.vehicleDetails.remarks')} name={[index, 'shortageDetail', 'remarks']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.remarks'))]}>
+                                                            <TextArea maxLength={400} placeholder={preparePlaceholderText(translateContent('configurableParameter.placeholder.controlDescriptionPlaceHolder'))} showCount />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                                                        <Form.Item hidden label="" initialValue={item?.shortageDetail?.id} name={[index, 'shortageDetail', 'id']} />
+                                                    </Col>
+                                                </>
+                                            )}
+                                        </>
                                     )}
-
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleReceiptChecklistNumber')} name={[index, 'vehicleRecieptCheckListNumber']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Receipt Checklist No.')} disabled={true} />
                                         </Form.Item>
                                     </Col>
-                                    <Form.Item hidden initialValue={item?.id} name={[index, 'id']}>
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item hidden initialValue={item?.modelCode} name={[index, 'modelCode']}>
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item hidden initialValue={item?.engineNumber} name={[index, 'engineNumber']}>
-                                        <Input />
-                                    </Form.Item>
+                                    <Form.Item hidden initialValue={item?.id} name={[index, 'id']} />
+                                    <Form.Item hidden initialValue={item?.modelCode} name={[index, 'modelCode']} />
+                                    <Form.Item hidden initialValue={item?.engineNumber} name={[index, 'engineNumber']} />
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

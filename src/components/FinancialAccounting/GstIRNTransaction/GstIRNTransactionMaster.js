@@ -19,6 +19,7 @@ import { BASE_URL_GSTIRN_TRANSACTION_GSTIN as customURL } from 'constants/routin
 import { translateContent } from 'utils/translateContent';
 
 import { FilterIcon } from 'Icons';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,6 +41,7 @@ const mapStateToProps = (state) => {
         isDataLoading,
         data,
         filterString,
+        isLoading: isDataLoading,
     };
     return returnValue;
 };
@@ -61,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const GstIRNTransactionMain = (props) => {
-    const { userId, typeData, showGlobalNotification, saveData } = props;
+    const { userId, typeData, showGlobalNotification, saveData, isDataLoading } = props;
     const { fetchList, listShowLoading, data, filterString, setFilterString } = props;
     const { fetchGSTINList } = props;
     const [searchForm] = Form.useForm();
@@ -237,17 +239,13 @@ export const GstIRNTransactionMain = (props) => {
 
     const tableProps = {
         dynamicPagination,
-        filterString,
-        totalRecords: data?.totalRecords,
+        totalRecords: data?.totalRecords || '',
         setPage: setCurrentPage,
-        isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick),
-        tableData: data?.paginationData,
+        isLoading: showDataLoading || !typeData?.[PARAM_MASTER?.IRN_GEN_STATUS?.id],
+        tableColumn: tableColumn({ handleButtonClick, typeData, isDataLoading }),
+        tableData: data?.paginationData || [],
         showAddButton: false,
-    };
-
-    const ListDataTableProps = {
-        ...tableProps,
+        filterString,
     };
 
     const advanceFilterResultProps = {
@@ -259,7 +257,6 @@ export const GstIRNTransactionMain = (props) => {
         setFilterString,
         handleResetFilter,
         advanceFilterForm,
-
         title,
         setAdvanceSearchVisible,
         typeData,
@@ -268,10 +265,8 @@ export const GstIRNTransactionMain = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
         titleOverride: translateContent('global.advanceFilter.title'),
-
         onCloseAction: onAdvanceSearchCloseAction,
         filterString,
         setFilterString,
@@ -287,13 +282,12 @@ export const GstIRNTransactionMain = (props) => {
             <AdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable {...ListDataTableProps} showAddButton={false} />
+                    <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-
             <AdvancedSearch {...advanceFilterProps} />
         </>
     );
 };
 
-export const GstIRNTransaction = connect(mapStateToProps, mapDispatchToProps)(GstIRNTransactionMain);
+export const GstIRNTransaction = connect(mapStateToProps, mapDispatchToProps)(withSpinner(GstIRNTransactionMain));

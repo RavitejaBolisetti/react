@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { doRefreshToken, doLogoutAPI } from 'store/actions/auth';
+import { doRefreshToken, doLogoutAPI, authPostLogin } from 'store/actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useIdleTimer } from 'react-idle-timer';
 import { SessionTimeoutModal } from './SessionTimeoutModal';
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNotification, refreshToken, userId, timeOutConfig }) => {
+const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNotification, refreshToken, token, userId, timeOutConfig }) => {
     const navigate = useNavigate();
     const [timeOutSetting, setTimeOutSetting] = useState({ timeout: 180_000, promptBeforeIdle: 30_000 });
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -110,8 +110,9 @@ const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNo
             onSuccess: (res) => {
                 Modal.destroyAll();
                 setIsModalOpen(false);
+                authPostLogin(res?.data);
             },
-            data: { userId, token: refreshToken },
+            data: { userId, token: refreshToken || token },
             onError,
         });
     };

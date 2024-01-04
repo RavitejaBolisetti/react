@@ -18,7 +18,7 @@ export const IRN_CONSTANTS = {
     },
     SUCCESS: {
         id: 3,
-        key: 'S',
+        key: 'A',
         tagColor: 'success',
         tagDesc: 'Success',
     },

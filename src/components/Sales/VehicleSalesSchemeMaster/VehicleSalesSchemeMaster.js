@@ -518,7 +518,6 @@ export const VehicleSalesSchemeMasterBase = (props) => {
         addSchemeForm.resetFields();
         setOrganizationId([]);
         setTableDataItem([]);
-        console.log(record,`record`)
         if (buttonAction === VIEW_ACTION || buttonAction === EDIT_ACTION) {
             const extraParams = [
                 {

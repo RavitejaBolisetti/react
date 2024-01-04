@@ -42,39 +42,37 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeModelVariantMasterBase = (props) => {
-    const { typeData, setCustomerNameList, selectedRecordId, setButtonData, buttonData, setFormData } = props;
+    const { typeData, setCustomerNameList, selectedRecordId } = props;
     const {
         formActionType: { editMode, viewMode },
         formData,
         userId,
-        showGlobalNotification,
-        fetchList,
         listShowLoading,
-        isVehicleServiceLoaded,
-        isOTFModule,
-        fetchServiceLov,
-        serviceLoading,
         data,
-        onModelSubmit,
-        setOnModelSubmit,
-        isLoading,
         handleFormValueChange,
         handleVehicleDetailChange,
         filterVehicleData,
         confirmRequest,
         setConfirmRequest,
+        getProductAttributeDetail,
+        setRevisedProductAttributeData,
+        productDetailRefresh,
+        setProductDetailRefresh,
     } = props;
 
-    const { selectedCustomerId, setChangeModel } = props;
+    const { selectedCustomerId } = props;
     const vehicleModelChangeRequest = formData?.vehicleModelChangeRequest || false;
 
-    const [uploadedFileName, setUploadedFileName] = useState('');
-    const [modelStatus, setModelStatus] = useState(formData?.sapStatusResponseCode || STATUS?.PENDING?.key);
     const [modelChangeItemList, setModelChangeItemList] = useState([]);
+    const [modelStatus, setModelStatus] = useState();
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message: message });
-    };
+    useEffect(() => {
+        formData?.sapStatusResponseCode && setModelStatus(formData?.sapStatusResponseCode);
+        if (formData?.revisedModel) {
+            getProductAttributeDetail(formData?.revisedModel, setRevisedProductAttributeData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const nameChangeHistoryItem = useMemo(() => {
         const vehicleModelItem = [
@@ -111,13 +109,9 @@ const ChangeModelVariantMasterBase = (props) => {
         data,
         typeData,
         selectedCustomerId,
-        setUploadedFileName,
-        uploadedFileName,
         vehicleModelChangeRequest,
         modelChangeItemList,
         setModelChangeItemList,
-        onModelSubmit,
-        setOnModelSubmit,
         setCustomerNameList,
         handleFormValueChange,
         handleVehicleDetailChange,
@@ -130,72 +124,19 @@ const ChangeModelVariantMasterBase = (props) => {
     };
 
     const handleRefresh = () => {
-        if (userId && selectedRecordId) {
-            if (isOTFModule && !isLoading) {
-                const extraParams = [
-                    {
-                        key: 'otfId',
-                        value: selectedRecordId,
-                    },
-                ];
-                const onSuccessAction = (res) => {
-                    setModelStatus(res?.data?.sapStatusResponseCode);
-                    if (res?.data?.sapStatusResponseCode === STATUS?.SUCCESS?.key) {
-                        setButtonData({ ...buttonData, formBtnActive: true });
-                        setOnModelSubmit(false);
-                        setFormData(res?.data);
-                        setChangeModel(false);
-                        showGlobalNotification({ notificationType: 'success', title: 'Request Generated Successfully', message: 'Model Change Request has been submitted successfully' });
-                    }
-                    if (res?.data?.sapStatusResponseCode === STATUS?.REJECTED?.key) {
-                        setConfirmRequest({
-                            isVisible: true,
-                            showCancelButton: false,
-                            titleOverride: 'Failed Request',
-                            closable: true,
-                            icon: false,
-                            onCloseAction: () => {
-                                setConfirmRequest({
-                                    ...confirmRequest,
-                                    isVisible: false,
-                                });
-                            },
-                            onSubmitAction: () => {
-                                setOnModelSubmit(false);
-                                setConfirmRequest({
-                                    ...confirmRequest,
-                                    isVisible: false,
-                                });
-                            },
-                            submitText: 'Okay',
-                            text: (
-                                <>
-                                    <p>{res?.data?.sapResonseRemarks}</p>
-                                </>
-                            ),
-                        });
-                    }
-                };
-
-                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
-            }
-
-            if (!isVehicleServiceLoaded) {
-                fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
-            }
-        }
+        setProductDetailRefresh(!productDetailRefresh);
     };
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
     return (
-        !viewMode &&
-        modelStatus === STATUS?.PENDING?.key && (
+        <>
             <div className={`${styles.cardInsideBox} ${styles.pad10}`}>
                 <Row justify="space-between" className={styles.fullWidth}>
                     <div className={styles.marB10}>
                         <Text strong>Change Model</Text>
                     </div>
-                    {onModelSubmit && (
+                    {isReviedModelPending && (
                         <div className={styles.verticallyCentered}>
-                            {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">Pending for SAP Confirmation</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">Success</Tag> : <Tag color="error">Failed for SAP Confirmation</Tag>}
+                            {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">{STATUS?.PENDING?.title}</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">{STATUS?.SUCCESS?.title}</Tag> : <Tag color="error">{STATUS?.REJECTED?.title}</Tag>}
                             {modelStatus && (
                                 <Button
                                     onClick={handleRefresh}
@@ -213,18 +154,14 @@ const ChangeModelVariantMasterBase = (props) => {
                 {viewMode ? (
                     <ViewDetail {...formProps} />
                 ) : (
-                    modelChangeItemList?.map((item) => {
-                        return (
-                            <>
-                                <Divider />
-                                <AddEditForm {...formProps} />
-                                <ConfirmationModal {...confirmRequest} />
-                            </>
-                        );
-                    })
+                    <>
+                        <Divider />
+                        <AddEditForm {...formProps} />
+                        <ConfirmationModal {...confirmRequest} />
+                    </>
                 )}
             </div>
-        )
+        </>
     );
 };
 export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(ChangeModelVariantMasterBase);

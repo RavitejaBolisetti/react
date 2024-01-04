@@ -15,11 +15,13 @@ import { ModalApportionDetail } from './ModalApportionDetail';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { CalculateSum } from 'utils/calculateSum';
 
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberChange, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, totalReceivedAmount } = props;
+    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberChange, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, totalReceivedAmount, ApportionLoading } = props;
     const [modalForm] = Form.useForm();
     const [isModalApportionVisible, setModalApportionVisible] = useState(false);
     const [showApportionTable, setApportionTable] = useState(false);
@@ -47,13 +49,25 @@ const AddEditFormMain = (props) => {
         apportionForm.resetFields();
     };
 
-    const handleButtonClick = ({ record, index }) => {
-        setApportionTableFormData({ ...record, index: index });
-        setModalApportionVisible(true);
-        setisEditing(true);
-        apportionForm.resetFields();
-        setShowApportionForm(record);
-        setTotalApportionAmount(parseFloat(totalApportionAmount) - parseFloat(record?.apportionedAmount));
+    const handleButtonClick = ({ record, index, buttonAction = FROM_ACTION_TYPE?.EDIT }) => {
+        switch (buttonAction) {
+            case FROM_ACTION_TYPE?.EDIT: {
+                setApportionTableFormData({ ...record, index: index });
+                setModalApportionVisible(true);
+                setisEditing(true);
+                apportionForm.resetFields();
+                setShowApportionForm(record);
+                setTotalApportionAmount(parseFloat(totalApportionAmount) - parseFloat(record?.apportionedAmount));
+                break;
+            }
+            case FROM_ACTION_TYPE?.DELETE: {
+                setApportionList([...apportionList?.filter((_, i) => index !== i)]);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     };
 
     // const pagination = false;
@@ -66,18 +80,15 @@ const AddEditFormMain = (props) => {
     };
 
     const handleAddApportion = () => {
-        apportionForm.validateFields().then(() => {
-            const values = apportionForm.getFieldsValue();
-
+        apportionForm.validateFields().then((values) => {
             if (!isEditing) {
-                const data = { ...values, id: '' };
+                const data = { ...values, id: '', apportionedAmount: parseFloat(values?.apportionedAmount), writeOffAmount: parseFloat(values?.writeOffAmount) };
                 setApportionList([data, ...apportionList]);
                 apportionForm.resetFields();
                 setModalApportionVisible(false);
             } else {
-                const data = { ...values, id: '' };
+                const data = { ...values, id: '', apportionedAmount: parseFloat(values?.apportionedAmount), writeOffAmount: parseFloat(values?.writeOffAmount), balanceAmount: Number(values?.balanceAmount), receivedAmount: Number(values?.receivedAmount) };
                 const newarr = [...apportionList];
-
                 newarr[apportionTableFormData?.index] = data;
                 setApportionList(newarr);
                 setModalApportionVisible(false);
@@ -119,34 +130,29 @@ const AddEditFormMain = (props) => {
         setReceivedAmount,
         totalReceivedAmount,
         apportionList,
+        setShowApportionForm,
+        ApportionLoading,
     };
 
     return (
         <Card>
-            {/* <Collapse expandIcon={expandIcon} expandIconPosition="end" collapsible="icon"> */}
-            {/* <Panel
-                header={ */}
             <Row gutter={20} className={styles.marB10}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Text strong>{translateContent('receipts.label.apportionDetails.apportionDetailsText')}</Text>
-                    {parseFloat(totalApportionAmount) < parseFloat(totalReceivedAmount) && (
+                    {CalculateSum(apportionList, 'apportionedAmount') < parseFloat(totalReceivedAmount) && (
                         <Button onClick={handleApportionAdd} icon={<PlusOutlined />} type="primary" disabled={isReadOnly} className={styles.marB20}>
                             {translateContent('global.buttons.add')}
                         </Button>
                     )}
                 </Col>
             </Row>
-            {/* key="2">
-            </Panel>
-            </Collapse> */}
+
             {(showApportionTable || apportionList.length > 0) && (
                 <>
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <DataTable tableColumn={tableColumnApportion({ handleButtonClick, formActionType })} scroll={{ x: 1000 }} tableData={apportionList} pagination={false} />
-                            {parseFloat(totalApportionAmount) === parseFloat(totalReceivedAmount) && <p className={styles.marB20}>{translateContent('receipts.label.apportionDetails.totalReceivedAmountText')}</p>}
-                            {/* <ListDataTable handleAdd={handleButtonClick} {...tableApportionProps} showAddButton={false} /> */}
+                            <DataTable tableColumn={tableColumnApportion({ handleButtonClick, formActionType, documentDescriptionList })} scroll={{ x: 1000 }} tableData={apportionList} pagination={false} />
                         </Col>
                     </Row>
                 </>

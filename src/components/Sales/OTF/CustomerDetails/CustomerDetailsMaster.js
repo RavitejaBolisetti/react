@@ -20,6 +20,7 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { convertDateTimedayjs } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -134,13 +135,20 @@ export const CustomerDetailsMain = (props) => {
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         } else {
-            form.getFieldsValue();
             if (!values?.bookingCustomer?.customerId && formData?.bookingCustomer?.customerId) {
-                data = { otfId: selectedRecordId, bookingCustomer: { ...formData?.bookingCustomer, otfId: selectedRecordId }, billingCustomer: { ...values?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+                data = { otfId: selectedRecordId, bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateTimedayjs(formData?.bookingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId }, billingCustomer: { ...values?.billingCustomer, birthDate: convertDateTimedayjs(values?.billingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
             } else if (!values?.billingCustomer?.customerId && formData?.billingCustomer?.customerId) {
-                data = { otfId: selectedRecordId, bookingCustomer: { ...values?.bookingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id }, billingCustomer: { ...formData?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer } };
+                data = {
+                    otfId: selectedRecordId,
+                    bookingCustomer: { ...values?.bookingCustomer, birthDate: convertDateTimedayjs(values?.bookingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id },
+                    billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateTimedayjs(formData?.billingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer },
+                };
             } else {
-                data = { otfId: selectedRecordId, bookingCustomer: { ...values?.bookingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+                data = {
+                    otfId: selectedRecordId,
+                    bookingCustomer: { ...values?.bookingCustomer, birthDate: convertDateTimedayjs(values?.bookingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer },
+                    billingCustomer: { ...values?.billingCustomer, birthDate: convertDateTimedayjs(values?.billingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer },
+                };
             }
 
             if (onFinishCustom) {

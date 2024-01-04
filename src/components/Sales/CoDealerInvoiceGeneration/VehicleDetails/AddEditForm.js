@@ -20,18 +20,20 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { CardSkeleton } from 'components/common/Skeleton';
+import { withSpinner } from 'components/withSpinner';
 
 const { Panel } = Collapse;
 
-export const AddEditForm = (props) => {
+const AddEditFormMain = (props) => {
     const { toolTipContent, formData, typeData } = props;
     const { collapseActiveKey, setcollapseActiveKey, CoDealerInvoiceStateMaster, HandleVinList, setDealerDicountValue, isVinLoading } = props;
-    const { isDisabled = true, form, setButtonData, setchangeStatus } = props;
+    const { isDisabled = true, form, setButtonData, setchangeStatus, setpreviousFormFields } = props;
     const disabledProps = { disabled: isDisabled };
 
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData });
+            setpreviousFormFields({ ...formData });
             if (formData?.modelCode) {
                 HandleVinList(formData?.modelCode);
             }
@@ -137,3 +139,4 @@ export const AddEditForm = (props) => {
         </>
     );
 };
+export const AddEditForm = withSpinner(AddEditFormMain);

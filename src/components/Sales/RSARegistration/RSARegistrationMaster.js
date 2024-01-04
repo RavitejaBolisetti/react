@@ -360,10 +360,14 @@ export const RSARegistrationMasterBase = (props) => {
 
     useEffect(() => {
         if (loginUserData?.userType) {
-            setFilterString({ ...filterString, pageSize: 10, current: 1, status: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS?.PENDING?.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
+            if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_CONSTANTS?.PENDING?.key });
+            } else {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginUserData]);
+    }, [loginUserData?.userType]);
 
     useEffect(() => {
         const defaultSection = RSA_LEFTMENU_SECTION.RSA_REGISTRATION_DETAILS.id;
@@ -541,7 +545,7 @@ export const RSARegistrationMasterBase = (props) => {
                 },
             ];
             const availableFundSuccessAction = (res) => {
-                shieldDetailForm.setFieldValue({ registrationInformation: { availableFund: res?.data?.rsaRegistrationDetails?.registrationInformation?.availableFund } });
+                shieldDetailForm.setFieldsValue({ registrationInformation: { availableFund: res?.data?.rsaRegistrationDetails?.registrationInformation?.availableFund } });
             };
             fetchDetail({ setIsLoading: listShowLoading, userId, customURL: customeURL, extraParams, onSuccessAction: availableFundSuccessAction, onErrorAction });
         };
@@ -654,10 +658,14 @@ export const RSARegistrationMasterBase = (props) => {
         setRequestPayload();
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         page: filterString,
         filterString,
 
@@ -712,8 +720,9 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({ current: 1, pageSize, status: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS?.PENDING?.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
         advanceFilterForm.resetFields();
     };
 
@@ -844,7 +853,7 @@ export const RSARegistrationMasterBase = (props) => {
             },
         ];
         if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDiscount || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode) {
-            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
             fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: customeURL, onErrorAction, onSuccessAction });

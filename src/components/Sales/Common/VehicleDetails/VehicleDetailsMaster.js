@@ -19,6 +19,7 @@ import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 import styles from 'assets/sass/app.module.scss';
 import { withSpinner } from 'components/withSpinner';
 import { translateContent } from 'utils/translateContent';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -105,11 +106,12 @@ const VehicleDetailsMasterMain = (props) => {
     const [customerNameList, setCustomerNameList] = useState({});
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
-    const [changeModel, setChangeModel] = useState(false);
+    const [showChangeModel, setShowChangeModel] = useState(false);
     const [onModelSubmit, setOnModelSubmit] = useState(false);
     const [productAttributeData, setProductAttributeData] = useState(false);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
-    
+    const [productDetailRefresh, setProductDetailRefresh] = useState(false);
+
     const onSuccessAction = () => {
         return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -139,7 +141,12 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData) {
             setFormData(vehicleDetailData);
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911' });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
+            vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
+            // vehicleDetailData?.sapStatusResponseCode && setSapStatusResponseCode(vehicleDetailData?.sapStatusResponseCode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -161,7 +168,7 @@ const VehicleDetailsMasterMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedRecordId, isVehicleServiceLoaded]);
+    }, [userId, selectedRecordId, isVehicleServiceLoaded, productDetailRefresh]);
 
     useEffect(() => {
         setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
@@ -373,13 +380,6 @@ const VehicleDetailsMasterMain = (props) => {
         }
     };
 
-    // const handlePriceTypeChange = (value, option) => {
-    //     setPriceType(value);
-    //     if (option?.type === 'D') {
-    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This value has been deprecated. Please select another value' });
-    //     }
-    // };
-
     const formProps = {
         ...props,
         formData,
@@ -427,8 +427,8 @@ const VehicleDetailsMasterMain = (props) => {
         setNameChangeRequested,
         confirmRequest,
         setConfirmRequest,
-        changeModel,
-        setChangeModel,
+        showChangeModel,
+        setShowChangeModel,
         isVehicleServiceLoaded,
         fetchServiceLov,
         serviceLoading,
@@ -441,6 +441,8 @@ const VehicleDetailsMasterMain = (props) => {
         setRevisedModelInformation,
         getProductAttributeDetail,
         setRevisedProductAttributeData,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     const viewProps = {
@@ -451,15 +453,19 @@ const VehicleDetailsMasterMain = (props) => {
         onChange,
         styles,
         formData,
-
         typeData,
         isLoading,
         isOTFModule,
         showOptionalService,
-
         toolTipContent,
         setToolTipContent,
         revisedModelInformation,
+        getProductAttributeDetail,
+        revisedProductAttributeData,
+        setRevisedProductAttributeData,
+        showChangeModel,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     return (
