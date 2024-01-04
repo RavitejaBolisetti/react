@@ -60,19 +60,23 @@ export const ThankYouMaster = (props) => {
                                 <CopytoClipboard type={'primary'} buttonText={'Copy'} text={selectedOrder?.message} />
                             </Space>
 
-                            <Divider />
-                            <Space size="middle" direction="vertical">
-                                <Text>{translateContent('amcRegistration.validation.doWantToDownload')} </Text>
-                                <Row justify="space-between">
-                                    {documentType?.map((type) => (
-                                        <Popover>
-                                            <Button onClick={() => (type?.id === 2 ? handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value }) : handleDownloadFile(selectedOrder?.data?.amcRegistration?.documentId))} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
-                                                {type?.name}
-                                            </Button>
-                                        </Popover>
-                                    ))}
-                                </Row>
-                            </Space>
+                            {selectedOrder?.data?.amcRegistration?.priceType !== AMC_CONSTANTS?.PAID?.key && (
+                                <>
+                                    <Divider />
+                                    <Space size="middle" direction="vertical">
+                                        <Text>{translateContent('amcRegistration.validation.doWantToDownload')} </Text>
+                                        <Row justify="space-between">
+                                            {documentType?.map((type) => (
+                                                <Popover>
+                                                    <Button onClick={() => (type?.id === 2 ? handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value }) : handleDownloadFile(selectedOrder?.data?.amcRegistration?.documentId))} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
+                                                        {type?.name}
+                                                    </Button>
+                                                </Popover>
+                                            ))}
+                                        </Row>
+                                    </Space>
+                                </>
+                            )}
                         </div>
                     </Space>
                 </Col>
