@@ -9,16 +9,17 @@ import { Row, Col, Space, Avatar, Typography, Divider, Button, Popover } from 'a
 import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
-import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
 import { translateContent } from 'utils/translateContent';
-import { documentType } from '../utils/amcDocumentName';
+// import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
+// import { documentType } from '../utils/amcDocumentName';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, handlePrintDownload, record, selectedOrder, handleDownloadFile } = props;
+    const { FormActionButton, selectedOrder } = props;
+    // const { handlePrintDownload, record, handleDownloadFile } = props;
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -60,7 +61,7 @@ export const ThankYouMaster = (props) => {
                                 <CopytoClipboard type={'primary'} buttonText={'Copy'} text={selectedOrder?.message} />
                             </Space>
 
-                            {selectedOrder?.data?.amcRegistration?.priceType !== AMC_CONSTANTS?.PAID?.key && (
+                            {/* {selectedOrder?.data?.amcRegistration?.priceType !== AMC_CONSTANTS?.PAID?.key && (
                                 <>
                                     <Divider />
                                     <Space size="middle" direction="vertical">
@@ -76,7 +77,7 @@ export const ThankYouMaster = (props) => {
                                         </Row>
                                     </Space>
                                 </>
-                            )}
+                            )} */}
                         </div>
                     </Space>
                 </Col>
