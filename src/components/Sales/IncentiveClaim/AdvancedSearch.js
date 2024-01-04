@@ -1,0 +1,133 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React from 'react';
+import { Col, Form, Row, Select, DatePicker, Switch } from 'antd';
+
+import { withModal } from 'components/withModal';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { convertDateToCalender, dateFormat, formatDate, formattedCalendarDate } from 'utils/formatDateTime';
+import { ModalButtons } from 'components/common/Button';
+
+import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
+import { validateRequiredSelectField } from 'utils/validation';
+import moment from 'moment';
+
+const statusList = [
+    {
+        key: 'All',
+        value: 'All',
+    },
+    {
+        key: 'Active',
+        value: 'Active',
+    },
+    {
+        key: 'Inactive',
+        value: 'Inactive',
+    },
+];
+
+export const AdvancedSearchFrom = (props) => {
+    const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading, record } = props;
+    const {
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        advanceFilterForm: { resetFields },
+        rules,
+        setrules,
+        statusFilter,
+    } = props;
+
+    const onFinish = (values) => {
+        setFilterString({
+            ...filterString,
+            ...values,
+            fromDate: formatDate(values?.fromDate),
+            toDate: formatDate(values?.toDate),
+            advanceFilter: true,
+        });
+
+        setAdvanceSearchVisible(false);
+    };
+
+    const handleResetFilter = (e) => {
+        resetFields();
+        setrules({ fromdate: false, todate: false });
+    };
+
+    const onFinishFailed = () => {
+        return;
+    };
+
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: translateContent('global.buttons.reset'),
+        submitName: translateContent('global.buttons.apply'),
+        handleResetFilter,
+    };
+    return (
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Zone" name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Area Office" name="areaOffice">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Area Office')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Dealer Name" name="dealerName">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Dealer Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Location Name" name="locatioName">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Location Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Scheme Name" name="schemeName">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Scheme Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Claim No" name="claimNo">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Claim No')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item label={translateContent('adminHierarchy.label.effectiveFrom')} name="effectiveFrom" rules={[validateRequiredSelectField(translateContent('adminHierarchy.validation.dateRequired'))]} initialValue={convertDateToCalender(record?.effectiveFrom)}>
+                        <DatePicker onChange={() => advanceFilterForm.setFieldsValue({ effectiveTo: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} format={dateFormat} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item label={translateContent('adminHierarchy.label.effectiveTo')} name="effectiveTo" rules={[validateRequiredSelectField(translateContent('adminHierarchy.validation.dateRequired'))]} initialValue={formattedCalendarDate(record?.effectiveTo)}>
+                        <DatePicker disabledDate={(current) => current < advanceFilterForm?.getFieldValue('effectiveFrom')} format={dateFormat} />
+                    </Form.Item>
+                </Col>
+
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Form.Item label="Status" name="zone">
+                        <Select optionFilterProp="children" options={statusList || []} placeholder={preparePlaceholderSelect('Status')} fieldNames={{ label: 'value', value: 'key' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+            </Row>
+
+            <ModalButtons {...modalProps} />
+        </Form>
+    );
+};
+
+export const AdvancedSearch = withModal(AdvancedSearchFrom, {});

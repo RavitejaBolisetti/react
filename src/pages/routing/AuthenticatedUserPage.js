@@ -82,6 +82,7 @@ import {
     EmployeeEmpowermentMasterPage,
     ExchangeLoyaltyIncentiveMasterPage,
     MitraBrokerRegistrationMasterPage,
+    IncentiveClaimPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -299,6 +300,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_MITRA_BROKER_REGISTRATION} element={<MitraBrokerRegistrationMasterPage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME_MASTER} element={<IncentiveSchemeMasterPage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME} element={<IncentiveSchemePage />} exact />
+                <Route path={routing.ROUTING_INCENTIVE_CLAIM} element={<IncentiveClaimPage />} exact />
                 
 
 

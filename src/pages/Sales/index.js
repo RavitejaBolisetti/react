@@ -41,8 +41,9 @@ import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
 import CorporateMasterPage from './CorporateMaster';
 import EmployeeEmpowermentMasterPage from './EmployeeEmpowerment';
 import ExchangeLoyaltyIncentiveMasterPage from './ExchangeLoyaltyIncentiveMaster'
-import MitraBrokerRegistrationMasterPage from './MitraBrokerRegistrationMaster'
-
+import MitraBrokerRegistrationMasterPage from './MitraBrokerRegistrationMaster';
+import IncentiveSchemePage from './IncentiveScheme';
+import IncentiveClaimPage from './IncentiveClaim'
 
 
 export {
@@ -80,5 +81,7 @@ export {
     CorporateMasterPage,
     EmployeeEmpowermentMasterPage,
     ExchangeLoyaltyIncentiveMasterPage,
-    MitraBrokerRegistrationMasterPage     
+    MitraBrokerRegistrationMasterPage,
+    IncentiveSchemePage,
+    IncentiveClaimPage 
 };
