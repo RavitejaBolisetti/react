@@ -66,6 +66,7 @@ import { CRMSchemeEnrollmentList } from './crmSchemeEnrollment';
 import { ShieldSchemeRegistration } from './services';
 import { Dashboard } from './dashboard';
 import { CoDealerInvoice } from './CoDealerInvoice';
+import { CentralFameSubsidy } from './CentralFameSubsidy';
 
 export const data = combineReducers({
     Menu,
@@ -129,4 +130,5 @@ export const data = combineReducers({
     RSASchemeCategoryLov,
     ShieldSchemeCategoryLov,
     CoDealerInvoice,
+    CentralFameSubsidy,
 });

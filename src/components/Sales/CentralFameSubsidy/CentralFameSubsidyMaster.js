@@ -13,31 +13,46 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_INVOICE, btnV
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
-import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 
 import { CentralFameSubsidyFilter } from './CentralFameSubsidyFilter';
-import { CoDealerSearchDataActions, CoDealerVinNumberDataActions } from 'store/actions/data/CoDealerInvoice';
-import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
+import { CentralFameSubsidySearchDataActions } from 'store/actions/data/CentralFameSubsidy';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
-import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
-import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
-import { geoStateDataActions } from 'store/actions/data/geo/states';
-import { geoCityDataActions } from 'store/actions/data/geo/cities';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
+import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
+import { BASE_URL_OTF_FAME_DETAILS_SAVE, BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
+import { SELECT_BOX_NAME_CONSTANTS } from './fameSubsidryConstants';
+import { drawerTitle } from 'utils/drawerTitle';
+import { NoDataFound } from 'utils/noDataFound';
 
+import styles from 'assets/sass/app.module.scss';
+
+const defaultBtnVisiblity = {
+    editBtn: false,
+    saveBtn: false,
+    saveAndNewBtn: false,
+    saveAndNewBtnClicked: false,
+    closeBtn: false,
+    cancelBtn: false,
+    formBtnActive: false,
+};
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-        },
-        OTF: {
-            VehicleDetailsLov: { data, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
+            CentralFameSubsidy: {
+                CentralFameSubsidySearch: { data, filter: filterString },
+            },
+            Vehicle: {
+                ModelVehicleDetails: { isLoading: isModelLoading, data: modelData = [] },
+                VariantVehicleDetails: { isLoading: isVariantLoading, data: variantData = [] },
+            },
         },
     } = state;
 
@@ -49,8 +64,11 @@ const mapStateToProps = (state) => {
         data: data?.paginationData || [],
         totalRecords: data?.totalRecords || [],
         moduleTitle,
-        isModelDataLoading,
-        vehicleModelData,
+        isModelLoading,
+        modelData,
+        isVariantLoading,
+        variantData,
+        filterString,
     };
     return returnValue;
 };
@@ -59,67 +77,36 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchCoDealerInvoice: CoDealerSearchDataActions.fetchList,
-            resetCoDealerData: CoDealerSearchDataActions.reset,
-            listShowCoDealerLoading: CoDealerSearchDataActions.listShowLoading,
-            setFilterString: CoDealerSearchDataActions.setFilter,
-            fetchCoDealerProfileData: vehicleInvoiceGenerationDataActions.fetchData,
-            saveData: CoDealerSearchDataActions.saveData,
+            fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
+            listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
+            resetModel: vehicleModelDetailsDataActions.reset,
 
-            fetchCoDealerDetails: CoDealerSearchDataActions.fetchDetail,
-            resetCoDealerDetailData: CoDealerSearchDataActions.resetDetail,
-            listCoDealerDetailShowLoading: CoDealerSearchDataActions.listDetailShowLoading,
+            fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
+            listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
+            resetVariant: vehicleVariantDetailsDataActions.reset,
 
-            fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
-            listShowDealerLoading: dealerParentLovDataActions.listShowLoading,
-
-            fetchVin: CoDealerVinNumberDataActions.fetchList,
-            listVinLoading: CoDealerVinNumberDataActions.listShowLoading,
-            resetVinData: CoDealerVinNumberDataActions.reset,
-
-            resetTaxDetails: otfvehicleDetailsDataActions.reset,
-
-            CancelInvoiceGenerated: vehicleInvoiceGenerationDataActions.saveData,
-            restCancellationData: vehicleInvoiceGenerationDataActions.reset,
-
-            generateIrn: vehicleInvoiceGenerationDataActions.saveData,
-            listIrnLoading: vehicleInvoiceGenerationDataActions.listShowLoading,
-
-            fetchStateLovList: geoStateDataActions.fetchFilteredList,
-            listStateLoading: geoStateDataActions.listShowLoading,
-            fetchCityLovList: geoCityDataActions.fetchFilteredList,
-            listCityLoading: geoCityDataActions.listShowLoading,
+            fetchSubsidery: CentralFameSubsidySearchDataActions.fetchList,
+            showSubsideryloading: CentralFameSubsidySearchDataActions.listShowLoading,
+            resetSubsidery: CentralFameSubsidySearchDataActions.reset,
+            setFilterString: CentralFameSubsidySearchDataActions.setFilter,
+            saveData: CentralFameSubsidySearchDataActions.saveData,
 
             showGlobalNotification,
         },
         dispatch
     ),
 });
+export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRecords, data, vehicleModelData, userId, modelData, variantData, isModelLoading, isVariantLoading, moduleTitle, ...rest }) => {
+    const { fetchModelLovList, listModelShowLoading, saveData, fetchVariantLovList, listVariantShowLoading, resetVariant, fetchSubsidery, showSubsideryloading, resetSubsidery } = rest;
 
-export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRecords, data }) => {
     const [form] = Form.useForm();
-    const [searchForm] = Form.useForm();
+    const [modelVariantForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
 
     const [showdataLoading, setShowDataLoading] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState(false);
-
-    const defaultBtnVisiblity = {
-        editBtn: false,
-        saveBtn: false,
-        saveAndNewBtn: false,
-        saveAndNewBtnClicked: false,
-        closeBtn: false,
-        cancelBtn: false,
-        formBtnActive: false,
-        deliveryNote: false,
-        nextBtn: false,
-        cancelDeliveryNoteBtn: false,
-        printInvoiceBtn: false,
-    };
-
+    const [formData, setFormData] = useState({});
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
@@ -137,49 +124,14 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
     const extraParams = useMemo(() => {
         return [
             {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
-                // name: getCodeValue(CoDealerInvoiceStateMaster?.TYPE_DATA_INV_SEARCH, filterString?.searchType, 'value', false),
+                key: 'modelGroupCode',
+                value: filterString?.modelGroupCode,
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'dealerParentCode',
-                title: 'IndentParent',
-                value: filterString?.dealerParentCode,
-                // name: getCodeValue(indentToDealerData, filterString?.dealerParentCode, 'value', false),
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'fromDate',
-                title: 'Invoice From Date',
-                value: filterString?.invoiceFromDate,
-                // name: convertDateTime(filterString?.invoiceFromDate, dateFormatView, 'NA'),
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'Invoice To Date',
-                value: filterString?.invoiceToDate,
-                // name: convertDateTime(filterString?.invoiceToDate, dateFormatView, 'NA'),
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'invoiceStatus',
-                title: 'Indent Status',
-                value: filterString?.currentQuery,
+                key: 'variantCode',
+                value: filterString?.variantCode,
                 canRemove: false,
                 filter: false,
             },
@@ -215,10 +167,27 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    useEffect(() => {
+        if (userId) {
+            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+            fetchSubsidery({ setIsLoading: showSubsideryloading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
+    useEffect(() => {
+        if (formActionType?.addMode && isFormVisible) {
+            form.setFieldsValue({ ...filterString });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType, isFormVisible]);
+
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
-        setFormActionType({ addMode: buttonAction === FROM_ACTION_TYPE?.ADD_ACTION, viewMode: FROM_ACTION_TYPE?.VIEW_ACTION, editMode: FROM_ACTION_TYPE?.EDIT_ACTION });
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, viewMode: buttonAction === VIEW_ACTION, editMode: buttonAction === EDIT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        record && setFormData(record);
         setIsFormVisible(true);
     };
 
@@ -239,49 +208,96 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         filterString,
     };
 
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else if (key === 'invoiceToDate' || key === 'invoiceFromDate') {
-            const { invoiceToDate, invoiceFromDate, status, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else if (key === 'dealerParentCode') {
-            const { dealerParentCode, status, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
+    const handleModelVariantSelect = (type) => (value) => {
+        switch (type) {
+            case SELECT_BOX_NAME_CONSTANTS?.MODEL?.key: {
+                setFilterString({ ...filterString, modelGroupCode: value });
+                if (value) {
+                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'model', value }] });
+                } else {
+                    resetVariant();
+                    modelVariantForm.resetFields(['variantCode']);
+                    setFilterString({ ...filterString, variantCode: undefined });
+                }
+                break;
+            }
+            case SELECT_BOX_NAME_CONSTANTS?.VARIANT?.key: {
+                setFilterString({ ...filterString, variantCode: value });
+                break;
+            }
+            default: {
+                break;
+            }
         }
-        advanceFilterForm.resetFields();
+    };
+    const handleFormValueChange = (values) => {
+        const isBatteryOrIncentivePresent = Object?.keys(values)?.find((item) => item === 'batteryCapacity' || item === 'demandIncentive');
+        setButtonData((prev) => ({ ...prev, formBtnActive: true }));
     };
 
-    const CoDealerInvoiceFilterProps = {
-        extraParams,
-        removeFilter,
-        advanceFilter: true,
-        otfFilter: true,
+    const onFinish = () => {
+        let finalPayload = {};
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const onSuccess = (res) => {};
+
+        const requestData = {
+            data: finalPayload,
+            method: formData?.id ? 'put' : 'post',
+            setIsLoading: showSubsideryloading,
+            userId,
+            onError,
+            onSuccess,
+            customURL: BASE_URL_OTF_FAME_DETAILS_SAVE,
+        };
+        saveData(requestData);
+    };
+
+    const CentralFameSubsidyFilterProps = {
         filterString,
         setFilterString,
-        onFinish: () => {},
+        onFinish,
         advanceFilterForm,
-        handleButtonClick,
         data,
-        searchForm,
+        modelData,
+        variantData,
+        handleButtonClick,
+        handleModelVariantSelect,
+        isVariantLoading,
+        modelVariantForm,
     };
     const formProps = {
+        form,
+        isVisible: isFormVisible,
+        showGlobalNotification,
+        onFinish: () => {},
+        onCloseAction,
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
+        formData,
+        setIsFormVisible,
         formActionType,
-    };
+        setFormData,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+        handleButtonClick,
+        setButtonData,
+        defaultBtnVisiblity,
 
+        handleFormValueChange,
+        modelData,
+        variantData,
+    };
     return (
         <>
-            <CentralFameSubsidyFilter {...CoDealerInvoiceFilterProps} />
+            <CentralFameSubsidyFilter {...CentralFameSubsidyFilterProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-
             {formActionType?.viewMode ? <ViewDetail {...formProps} /> : <AddEditForm {...formProps} />}
         </>
     );

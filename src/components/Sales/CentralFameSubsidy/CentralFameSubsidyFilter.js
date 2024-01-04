@@ -5,76 +5,39 @@
  */
 import React from 'react';
 import { Button, Row, Col, Form } from 'antd';
-import { FilterIcon } from 'Icons';
-import { RxCross2 } from 'react-icons/rx';
-import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
-import { SearchBox } from 'components/utils/SearchBox';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { customSelectBox } from 'utils/customSelectBox';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { PlusOutlined } from '@ant-design/icons';
+import { SELECT_BOX_NAME_CONSTANTS } from './fameSubsidryConstants';
 
 export const CentralFameSubsidyFilter = (props) => {
-    const { status, extraParams, removeFilter, searchForm, filterString, coDealerInvoiceStatusList, setFilterString, handleResetFilter, advanceFilter = false, handleDeliveryNoteTypeChange, setAdvanceSearchVisible, typeData } = props;
-    const searchBoxProps = {
-        searchForm,
-        filterString,
-        setFilterString,
-        optionType: typeData,
-        allowClear: false,
-    };
+    const { modelData, modelVariantForm, variantData, handleButtonClick, handleModelVariantSelect, isVariantLoading, isModelLoading, isVariantAndModelPresent } = props;
 
     return (
         <div className={styles.contentHeaderBackground}>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
-                                <QueryButtons currentItem={status} items={coDealerInvoiceStatusList} onClick={handleDeliveryNoteTypeChange} />
-                                <div className={styles.fullWidth}>
-                                    <SearchBox {...searchBoxProps} />
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                <Button icon={<FilterIcon />} type="link" className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)}>
-                                    {translateContent('global.advanceFilter.title')}
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                </Col>
-            </Row>
-            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i?.name) && (
+            <Form form={modelVariantForm}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                {extraParams?.map((filter) => {
-                                    return (
-                                        filter?.value &&
-                                        filter?.filter && (
-                                            <div className={styles.advanceFilterItem} key={filter?.key}>
-                                                {filter?.name}
-                                                {filter?.canRemove && (
-                                                    <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
-                                                    </span>
-                                                )}
-                                            </div>
-                                        )
-                                    );
-                                })}
-                            </Col>
-                            <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter(true)} danger>
-                                    {translateContent('global.buttons.clear')}
-                                </Button>
-                            </Col>
-                        </Row>
+                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                        <Form.Item style={{ marginBottom: '0px' }} name="modelGroupCode">
+                            {customSelectBox({ data: modelData, loading: isModelLoading, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.exchangeDetails.modelGroup')), onChange: (value) => handleModelVariantSelect(SELECT_BOX_NAME_CONSTANTS?.MODEL?.key)(value), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' } })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                        <Form.Item style={{ marginBottom: '0px' }} name="variantCode">
+                            {customSelectBox({ data: variantData, loading: isVariantLoading, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.exchangeDetails.variant')), onChange: (value) => handleModelVariantSelect(SELECT_BOX_NAME_CONSTANTS?.VARIANT?.key)(value), fieldNames: { key: 'variantCode', value: 'variantDescription' } })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                        <Button icon={<PlusOutlined />} data-testid="add" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ADD, record: {} })} type="primary" className={styles.floatRight}>
+                            {translateContent('global.buttons.add')}
+                        </Button>
                     </Col>
                 </Row>
-            )}
+            </Form>
         </div>
     );
 };

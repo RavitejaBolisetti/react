@@ -13,33 +13,20 @@ import styles from 'assets/sass/app.module.scss';
 export const tableColumn = ({ handleButtonClick }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('creditDebitNote.label.voucherNumber'),
-            dataIndex: 'voucherNumber',
+            title: translateContent('centralFameSubsidy.label.tableColumn.product'),
+            dataIndex: 'product',
             width: '18%',
         }),
         tblPrepareColumns({
-            title: translateContent('creditDebitNote.label.voucherType'),
-            dataIndex: 'voucherType',
+            title: translateContent('centralFameSubsidy.label.tableColumn.modelGroup'),
+            dataIndex: 'modelGroupCode',
             width: '18%',
         }),
-
         tblPrepareColumns({
-            title: translateContent('creditDebitNote.label.partySegment'),
+            title: translateContent('centralFameSubsidy.label.tableColumn.taxIndicator'),
             dataIndex: 'partySegment',
             width: '15%',
         }),
-
-        tblPrepareColumns({
-            title: translateContent('creditDebitNote.label.customerName'),
-            dataIndex: 'customerName',
-            width: '18%',
-        }),
-        tblPrepareColumns({
-            title: translateContent('creditDebitNote.label.paidAmount'),
-            dataIndex: 'paidAmount',
-            width: '16%',
-        }),
-
         tblActionColumn({ handleButtonClick, styles, width: '15%' }),
     ];
 

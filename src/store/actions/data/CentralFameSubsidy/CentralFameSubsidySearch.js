@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_CO_DEALER_INVOICE as baseURL } from 'constants/routingApi';
+import { BASE_URL_OTF_FAME_DETAILS as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'CENTRAL_FAME_SUBSIDY_SEARCH_';
 const moduleName = 'Central Fame Subsidy Search';

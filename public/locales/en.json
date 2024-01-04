@@ -4517,33 +4517,20 @@
             "title": "Central Fame Subsidy"
         },
         "label": {
-            "status": "Status",
-            "indentDealerToParent": "Indent Dealer To Parent",
-            "indentDetails": {
-                "indentNumber": "Indent No.",
-                "indentDate": "Indent Date",
-                "dealerCode": "Dealer Code",
-                "dealerName": "Dealer Name",
-                "address": "Address",
-                "cityDistrict": "City/District",
-                "state": "State",
-                "pinCode": "Pin Code",
-                "gstIn": "GSTIN"
-            },
-            "profileCard": {
-                "invoiceNumber": "Invoice Number",
-                "invoiceDate": "Invoice Date",
-                "invoiceStatus": "Invoice Status"
-            },
+            "batterycapacity": "battery capacity",
+            "taxiIndicator": "Taxi Indicator",
+            "subsidyAmount": "Central subsidy amount",
+            "percentageOnExShowRoomPrice": "Percentage on exShowRoomPrice",
+            "demandIncentive": "Demand Incentive",
+            "totalAmount": "Total Amount",
+            "activeIndicator": "Active Indicator",
             "tableColumn": {
-                "invoiceNumberAndDate": "Invoice No. & Date",
-                "DealerName": "Indent Dealer Name",
-                "ModelDescription": "Model Description",
-                "IndentNumberAndDate": "Indent No. & Date",
-                "IRNStatus": "IRN Status"
+                "product": "Product",
+                "modelGroup": "Model group",
+                "taxIndicator": "Taxi Indicator"
             }
         },
-        "placeholder": {},
+        "placeholder": { "modelGroupVariant": "Please select model group and model Variant" },
         "validation": {
             "toDate": "Date cant be less than Effective from date",
             "ModelCode": "Model code is not present"
