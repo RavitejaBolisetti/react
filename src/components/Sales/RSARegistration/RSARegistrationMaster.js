@@ -536,6 +536,7 @@ export const RSARegistrationMasterBase = (props) => {
 
     const handleVinSearch = (value) => {
         const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', message: res?.responseMessage });
             setVehicleCustomeDetailsOnly(res?.data);
 
             const extraParams = [
