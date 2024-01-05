@@ -9,12 +9,13 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { TAXI_NO_TAXI } from './fameSubsidryConstants';
 
 export const tableColumn = ({ handleButtonClick }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('centralFameSubsidy.label.tableColumn.product'),
-            dataIndex: 'product',
+            dataIndex: 'variantCode',
             width: '18%',
         }),
         tblPrepareColumns({
@@ -22,10 +23,12 @@ export const tableColumn = ({ handleButtonClick }) => {
             dataIndex: 'modelGroupCode',
             width: '18%',
         }),
+
         tblPrepareColumns({
             title: translateContent('centralFameSubsidy.label.tableColumn.taxIndicator'),
-            dataIndex: 'partySegment',
+            dataIndex: 'taxiIndicator',
             width: '15%',
+            render: (status) => TAXI_NO_TAXI?.[status]?.value || '-',
         }),
         tblActionColumn({ handleButtonClick, styles, width: '15%' }),
     ];

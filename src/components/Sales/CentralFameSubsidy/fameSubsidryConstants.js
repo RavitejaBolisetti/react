@@ -15,3 +15,15 @@ export const SELECT_BOX_NAME_CONSTANTS = {
         value: 'VARIANT',
     },
 };
+export const TAXI_NO_TAXI = {
+    T: {
+        id: 1,
+        key: 'T',
+        value: 'Taxi',
+    },
+    N: {
+        id: 2,
+        key: 'N',
+        value: 'Non Taxi',
+    },
+};

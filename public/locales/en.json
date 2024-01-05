@@ -4517,17 +4517,18 @@
             "title": "Central Fame Subsidy"
         },
         "label": {
-            "batterycapacity": "battery capacity",
+            "batterycapacity": "Battery Capacity",
             "taxiIndicator": "Taxi Indicator",
-            "subsidyAmount": "Central subsidy amount",
-            "percentageOnExShowRoomPrice": "Percentage on exShowRoomPrice",
+            "subsidyAmount": "Central Subsidy Amount",
+            "percentageOnExShowRoomPrice": "Percentage on ExShowRoomPrice",
             "demandIncentive": "Demand Incentive",
             "totalAmount": "Total Amount",
             "activeIndicator": "Active Indicator",
             "tableColumn": {
                 "product": "Product",
                 "modelGroup": "Model group",
-                "taxIndicator": "Taxi Indicator"
+                "taxIndicator": "Taxi Indicator",
+                "variantCode": "Variant Code"
             }
         },
         "placeholder": { "modelGroupVariant": "Please select model group and model Variant" },
