@@ -29,7 +29,7 @@ export const AdvanceForm = (props) => {
     const { isVisible, setisEditing, isEditing } = props;
     const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, documentTypeOptions, isApportionDetailsLoading } = props;
     const voucherTableSum = CalculateSum(voucherTableData, 'amount');
-   
+
     useEffect(() => {
         if (apportionTableFormData && isVisible) {
             apportionForm.setFieldsValue({
@@ -231,7 +231,7 @@ export const AdvanceForm = (props) => {
                                     },
                                 ]}
                             >
-                                <Search disabled={isEditing} loading={isApportionDetailsLoading} allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.documentNumber'))} onSearch={handleDocumentNumberSearch} onChange={(e) => resetApportionForm(apportionForm.getFieldValue('documentType'), e.target.value)} />
+                                <Search disabled={isEditing} loading={isApportionDetailsLoading} allowClear placeholder={preparePlaceholderText(translateContent('creditDebitNote.ApportionDetails.placeholder.documentNumber'))} onSearch={handleDocumentNumberSearch} onChange={resetApportionForm} />
                             </Form.Item>
                         </Col>
                     </Row>
