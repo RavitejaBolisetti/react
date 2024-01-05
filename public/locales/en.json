@@ -4520,13 +4520,13 @@
             "batterycapacity": "Battery Capacity",
             "taxiIndicator": "Taxi Indicator",
             "subsidyAmount": "Central Subsidy Amount",
-            "percentageOnExShowRoomPrice": "Percentage on ExShowRoomPrice",
+            "percentageOnExShowRoomPrice": "Percentage On ExshowRoomPrice",
             "demandIncentive": "Demand Incentive",
             "totalAmount": "Total Amount",
             "activeIndicator": "Active Indicator",
             "tableColumn": {
-                "product": "Product",
-                "modelGroup": "Model group",
+                "product": "Model Variant",
+                "modelGroup": "Model Group",
                 "taxIndicator": "Taxi Indicator",
                 "variantCode": "Variant Code"
             }

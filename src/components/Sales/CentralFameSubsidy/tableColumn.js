@@ -13,13 +13,13 @@ import { TAXI_NO_TAXI } from './fameSubsidryConstants';
 export const tableColumn = ({ handleButtonClick }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('centralFameSubsidy.label.tableColumn.product'),
-            dataIndex: 'variantCode',
+            title: translateContent('centralFameSubsidy.label.tableColumn.modelGroup'),
+            dataIndex: 'modelGroupCode',
             width: '18%',
         }),
         tblPrepareColumns({
-            title: translateContent('centralFameSubsidy.label.tableColumn.modelGroup'),
-            dataIndex: 'modelGroupCode',
+            title: translateContent('centralFameSubsidy.label.tableColumn.product'),
+            dataIndex: 'variantCode',
             width: '18%',
         }),
 

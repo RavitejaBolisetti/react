@@ -18,8 +18,8 @@ export const CentralFameSubsidyFilter = (props) => {
         <div className={styles.contentHeaderBackground}>
             <Form form={modelVariantForm}>
                 <Row gutter={20}>
-                    <ModelVariantDropDown variantStyle={{ style: { marginBottom: '0px' } }} modelStyle={{ style: { marginBottom: '0px' } }} colSize={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }} {...props} modelGroupLabel="" variantLabel="" modelGroupRules={[]} variantRules={[]} />
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                    <ModelVariantDropDown variantStyle={{ style: { marginBottom: '0px' } }} modelStyle={{ style: { marginBottom: '0px' } }} colSize={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }} {...props} modelGroupLabel="" variantLabel="" modelGroupRules={[]} variantRules={[]} />
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Button icon={<PlusOutlined />} data-testid="add" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ADD, record: {} })} type="primary" className={styles.floatRight}>
                             {translateContent('global.buttons.add')}
                         </Button>

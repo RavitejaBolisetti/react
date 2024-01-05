@@ -124,13 +124,13 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         return [
             {
                 key: 'modelGroupCode',
-                value: filterString?.variantCode ? filterString?.modelGroupCode : undefined,
+                value: filterString?.modelGroupCode,
                 canRemove: false,
                 filter: false,
             },
             {
                 key: 'variantCode',
-                value: filterString?.modelGroupCode ? filterString?.variantCode : undefined,
+                value: filterString?.variantCode,
                 canRemove: false,
                 filter: false,
             },
@@ -177,7 +177,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         if (formActionType?.addMode && isFormVisible) {
             form.setFieldsValue({ ...filterString });
         }
-        if (formActionType?.editMode) {
+        if (formActionType?.editMode && isFormVisible) {
             fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'model', value: formData?.modelGroupCode }] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -211,7 +211,6 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
     const onCloseAction = () => {
         setIsFormVisible(false);
         form.resetFields();
-        setFilterString();
         setShowFields(true);
         resetVariant();
     };
@@ -227,29 +226,6 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         isLoading: showdataLoading,
         showAddButton: false,
         filterString,
-    };
-
-    const handleModelVariantSelect = (type) => (value) => {
-        switch (type) {
-            case SELECT_BOX_NAME_CONSTANTS?.MODEL?.key: {
-                setFilterString({ ...filterString, modelGroupCode: value });
-                if (value) {
-                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'model', value }] });
-                } else {
-                    resetVariant();
-                    setFilterString({ ...filterString, variantCode: undefined, modelGroupCode: undefined });
-                }
-                modelVariantForm.resetFields(['variantCode']);
-                break;
-            }
-            case SELECT_BOX_NAME_CONSTANTS?.VARIANT?.key: {
-                setFilterString({ ...filterString, variantCode: value });
-                break;
-            }
-            default: {
-                break;
-            }
-        }
     };
 
     const handleFormValueChange = (values) => {
@@ -273,7 +249,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             }
             setShowFields(true);
-            setFilterString({});
+            setFilterString({ pageSize: 10, current: 1 });
             form.resetFields();
             modelVariantForm.resetFields();
             resetVariant();
@@ -300,7 +276,6 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         modelData,
         variantData,
         handleButtonClick,
-        handleModelVariantSelect,
         isVariantLoading,
         modelVariantForm,
         isModelLoading,
@@ -336,7 +311,6 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         variantData,
         isVariantLoading,
         isModelLoading,
-        handleModelVariantSelect,
         showFields,
         setShowFields,
         styles,

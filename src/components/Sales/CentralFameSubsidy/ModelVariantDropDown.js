@@ -19,8 +19,8 @@ const ModelVariantDropDown = (props) => {
     const handleModelVariantSelect = (type) => (value) => {
         switch (type) {
             case SELECT_BOX_NAME_CONSTANTS?.MODEL?.key: {
-                setFilter && setFilterString({ ...filterString, modelGroupCode: value });
                 if (value) {
+                    resetVariant();
                     fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'model', value }] });
                 } else {
                     resetVariant();
@@ -30,7 +30,7 @@ const ModelVariantDropDown = (props) => {
                 break;
             }
             case SELECT_BOX_NAME_CONSTANTS?.VARIANT?.key: {
-                setFilter && setFilterString({ ...filterString, variantCode: value });
+                setFilter && setFilterString({ ...filterString, variantCode: value, modelGroupCode: formName.getFieldValue('modelGroupCode') });
                 break;
             }
             default: {
@@ -47,7 +47,7 @@ const ModelVariantDropDown = (props) => {
             </Col>
             <Col {...colSize}>
                 <Form.Item {...variantStyle} name="variantCode" label={variantLabel} rules={variantRules}>
-                    <Select showSearch placeholder={preparePlaceholderSelect(translateContent('commonModules.label.exchangeDetails.variant'))} filterOption={(input, option) => (option?.variantCode?.trim()?.toLowerCase() ?? '').includes(input?.trim()?.toLowerCase()) || (option?.variantDescription?.trim()?.toLowerCase() ?? '').includes(input?.trim()?.toLowerCase())} onChange={(value) => handleModelVariantSelect(SELECT_BOX_NAME_CONSTANTS?.VARIANT?.key)(value)} options={variantData} loading={isVariantLoading} fieldNames={{ label: 'variantDescription', value: 'variantCode' }} />
+                    <Select allowClear showSearch placeholder={preparePlaceholderSelect(translateContent('commonModules.label.exchangeDetails.variant'))} filterOption={(input, option) => (option?.variantCode?.trim()?.toLowerCase() ?? '').includes(input?.trim()?.toLowerCase()) || (option?.variantDescription?.trim()?.toLowerCase() ?? '').includes(input?.trim()?.toLowerCase())} onChange={(value) => handleModelVariantSelect(SELECT_BOX_NAME_CONSTANTS?.VARIANT?.key)(value)} options={variantData} loading={isVariantLoading} fieldNames={{ label: 'variantDescription', value: 'variantCode' }} />
                 </Form.Item>
             </Col>
         </>
