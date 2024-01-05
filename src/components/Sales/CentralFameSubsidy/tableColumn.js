@@ -5,7 +5,6 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
