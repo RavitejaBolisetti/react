@@ -55,7 +55,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.amcRegistration?.priceType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYP'], formData?.amcRegistration?.saleType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYPE'], formData?.amcRegistration?.saleType), isLoading)}</Descriptions.Item>
                                 {formData?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key && (
                                     <>
                                         <Descriptions.Item label={translateContent('amcRegistration.label.bookingNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.bookingNumber, isLoading)}</Descriptions.Item>
@@ -66,15 +66,19 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerCode), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.remarks')}>{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
-                            <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteAmount, isLoading)}</Descriptions.Item>
-                            </Descriptions>
+                            {selectedAMC?.status === AMC_CONSTANTS?.CANCELLED?.key && (
+                                <>
+                                    <Divider />
+                                    <Descriptions {...viewProps}>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteAmount, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteAmount, isLoading)}</Descriptions.Item>
+                                    </Descriptions>
+                                </>
+                            )}
                         </Panel>
                     </Collapse>
                 </Col>

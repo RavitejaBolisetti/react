@@ -635,6 +635,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const handleVinSearch = (value) => {
         const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', message: res?.responseMessage });
             setVehicleCustomeDetailsOnly(res?.data);
             shieldDetailForm.setFieldsValue({
                 registrationInformation: {
