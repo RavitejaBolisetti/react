@@ -538,6 +538,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             supportingDocumentList: [...payload, ...deletedUpload],
             checklistNumber: checklistNumber,
             chassisNumber: chassisNumber,
+            id: selectedRecord?.id || '',
         };
 
         const onSuccess = (res) => {
@@ -650,7 +651,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
