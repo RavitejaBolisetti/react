@@ -16,11 +16,13 @@ export const tableColumn = ({ handleButtonClick }) => {
             title: translateContent('centralFameSubsidy.label.tableColumn.modelGroup'),
             dataIndex: 'modelGroupCode',
             width: '18%',
+            render: (_, record) => record?.modelGroupName || record?.modelGroupCode,
         }),
         tblPrepareColumns({
             title: translateContent('centralFameSubsidy.label.tableColumn.product'),
             dataIndex: 'variantCode',
             width: '18%',
+            render: (_, record) => record?.variantName || record?.variantCode,
         }),
 
         tblPrepareColumns({

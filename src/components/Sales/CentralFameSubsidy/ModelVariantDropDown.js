@@ -21,7 +21,7 @@ const ModelVariantDropDown = (props) => {
             case SELECT_BOX_NAME_CONSTANTS?.MODEL?.key: {
                 if (value) {
                     resetVariant();
-                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'model', value }] });
+                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value }] });
                 } else {
                     resetVariant();
                     setFilter && setFilterString({ ...filterString, variantCode: undefined, modelGroupCode: undefined });

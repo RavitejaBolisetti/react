@@ -152,7 +152,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
             form.setFieldsValue({ ...filterString });
         }
         if (formActionType?.editMode && isFormVisible) {
-            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'model', value: formData?.modelGroupCode }] });
+            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: formData?.modelGroupCode }] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, isFormVisible]);
