@@ -12,7 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PlusOutlined } from '@ant-design/icons';
 import ModelVariantDropDown from './ModelVariantDropDown';
 
-export const CentralFameSubsidyFilter = (props) => {
+export const CentralFameSubsidyHeader = (props) => {
     const { modelVariantForm, handleButtonClick } = props;
     return (
         <div className={styles.contentHeaderBackground}>

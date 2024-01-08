@@ -875,4 +875,10 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'OTD',
     },
+    [getMenyKey('SACT-07')]: {
+        key: 'SACT-07',
+        link: routing.ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER,
+        icon: undefined,
+        parentMenuId: 'Sales',
+    },
 };
