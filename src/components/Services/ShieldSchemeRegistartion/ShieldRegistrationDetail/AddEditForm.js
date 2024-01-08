@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { SALE_TYPE } from '../utils/saleTypeConstant';
 
-import { validateRequiredSelectField, validateOnlyPositiveNumber, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredSelectField, validateOnlyPositiveNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -165,7 +165,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
+                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateNumberWithTwoDecimalPlaces(translateContent('shieldSchemeRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={handleTaxChange} />
                                 </Form.Item>
                             </Col>

@@ -22,7 +22,7 @@ import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAll
 import { reportDataActions } from 'store/actions/data/report/reports';
 import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL, BASE_URL_VEHICLE_ALLOTMENT as customURLVINSearch } from 'constants/routingApi';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
-import { ISSUE_STATUS } from './constants/IssueStatus'
+import { ISSUE_STATUS } from './constants/IssueStatus';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -147,7 +147,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [advanceFilterForm] = Form.useForm();
     const [addIndentDetailsForm] = Form.useForm();
 
-    const [ change, setChange ] = useState(false);
+    const [change, setChange] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
     const [isViewIndentVisible, setIsViewIndentVisible] = useState(false);
@@ -522,8 +522,8 @@ export const StockTransferIndentMasterBase = (props) => {
     // }, [toggleButton]);
 
     useEffect(() => {
-        if (recordType === ISSUE_STATUS?.ISSUED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
-        else if (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || ISSUE_STATUS?.RECEIEVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT);
+        if (recordType === ISSUE_STATUS?.ISSUED?.key || (toggleButton === STOCK_TRANSFER?.RAISED.key && (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || recordType === ISSUE_STATUS?.RECEIEVED?.key))) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+        else if (toggleButton === STOCK_TRANSFER?.RECEIVED.key && (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || recordType === ISSUE_STATUS?.RECEIEVED?.key)) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
         else setReportDetail(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordType, change]);
