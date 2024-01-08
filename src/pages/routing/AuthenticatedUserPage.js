@@ -83,6 +83,7 @@ import {
     ExchangeLoyaltyIncentiveMasterPage,
     MitraBrokerRegistrationMasterPage,
     IncentiveClaimPage,
+    CentralFameSubsidyPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -305,6 +306,8 @@ const AuthenticatedUserPageMain = (props) => {
 
 
                 {/*  */}
+                <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
+                <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
             </Routes>
         ) : (
             <Routes>

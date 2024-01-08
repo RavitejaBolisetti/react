@@ -82,6 +82,10 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                 key: 'schemeCode',
                 value: schemeForm?.getFieldValue('schemeCode'),
             },
+            {
+                key: 'otfNumber',
+                value: registrationForm?.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key ? registrationForm?.getFieldValue('bookingNumber') : null,
+            },
         ];
         if (!registrationForm?.getFieldValue('saleType') || !schemeForm?.getFieldValue('schemeDiscount') || !schemeForm?.getFieldValue('schemeCode')) {
             // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });

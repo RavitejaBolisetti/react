@@ -44,6 +44,7 @@ import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFam
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 import { RSA_REQUEST_TITLE_CONSTANTS } from './utils/RSARequestTitleConstant';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { SALE_TYPE } from './utils/saleTypeConstant';
 
 const mapStateToProps = (state) => {
     const {
@@ -536,6 +537,7 @@ export const RSARegistrationMasterBase = (props) => {
 
     const handleVinSearch = (value) => {
         const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', message: res?.responseMessage });
             setVehicleCustomeDetailsOnly(res?.data);
 
             const extraParams = [
@@ -850,6 +852,14 @@ export const RSARegistrationMasterBase = (props) => {
             {
                 key: 'schemeCode',
                 value: shieldDetailForm?.getFieldValue()?.schemeDetails?.schemeCode,
+            },
+            {
+                key: 'otfNumber',
+                value: saleType === SALE_TYPE?.MNM_FOC?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.otf : null,
+            },
+            {
+                key: 'vin',
+                value: saleType === SALE_TYPE?.PAID?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.vin : null,
             },
         ];
         if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDiscount || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode) {

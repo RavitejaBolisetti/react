@@ -390,9 +390,9 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key, pageSize: 10, current: 1 });
+        setFilterString({ ...filterString, amcStatus: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS.PENDING.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key, pageSize: 10, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [loginUserData?.userType]);
 
     const handleDownloadFile = (key) => {
         const extraParams = [

@@ -195,7 +195,7 @@ export const CustomerDetailsMain = (props) => {
                 extraParams,
                 userId,
                 onSuccessAction: (response) => {
-                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth } });
+                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth, gstin: response?.data?.gstin, panNo: response?.data?.pan } });
                     setButtonData({ ...buttonData, formBtnActive: true });
                 },
                 onErrorAction,

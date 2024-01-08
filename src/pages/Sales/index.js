@@ -44,7 +44,7 @@ import ExchangeLoyaltyIncentiveMasterPage from './ExchangeLoyaltyIncentiveMaster
 import MitraBrokerRegistrationMasterPage from './MitraBrokerRegistrationMaster';
 import IncentiveSchemePage from './IncentiveScheme';
 import IncentiveClaimPage from './IncentiveClaim'
-
+import CentralFameSubsidyPage from './CentralFameSubsidy';
 
 export {
     OTFMasterPage,
@@ -83,5 +83,6 @@ export {
     ExchangeLoyaltyIncentiveMasterPage,
     MitraBrokerRegistrationMasterPage,
     IncentiveSchemePage,
-    IncentiveClaimPage 
+    IncentiveClaimPage, 
+    CentralFameSubsidyPage,
 };

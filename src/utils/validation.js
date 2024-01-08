@@ -277,3 +277,8 @@ export const compareFromToDate = (compareTo) => {
         },
     };
 };
+
+export const DecimalPercentageValidation = (fieldName) => ({
+    pattern: /^(?:\d{1,2}(?:\.\d{1,2})?|100(?:\.0?0)?)$/,
+    message: fieldName + ' accepts between 0-100 and upto 2 decimal places',
+});

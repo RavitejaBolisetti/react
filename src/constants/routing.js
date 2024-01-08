@@ -142,6 +142,7 @@ export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master')
 export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-transaction');
 export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');
 export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
+export const ROUTING_CENTRAL_FAME_SUBSIDY = ROUTING_SALES.concat('central-fame-subsidy');
 
 // UI-Screens
 

@@ -9,11 +9,11 @@ import { Row, Col, Space, Avatar, Typography, Divider, Button, Popover } from 'a
 import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
-import { SHIELD_REPORT_DOCUMENT_TYPE } from '../utils/shieldReportDocumentType';
-import { RSA_DOCUMENT_TYPE } from '../utils/rsaReportType';
-import { SALE_TYPE } from '../utils/saleTypeConstant';
-import { shieldDocName } from '../utils/ShieldReportName';
-import { translateContent } from 'utils/translateContent';
+// import { SHIELD_REPORT_DOCUMENT_TYPE } from '../utils/shieldReportDocumentType';
+// import { RSA_DOCUMENT_TYPE } from '../utils/rsaReportType';
+// import { SALE_TYPE } from '../utils/saleTypeConstant';
+// import { shieldDocName } from '../utils/ShieldReportName';
+// import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -32,7 +32,8 @@ const responseMessageHandler = (message) => {
     return '-';
 };
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, handlePrintDownload, record, handleDownloadFile } = props;
+    const { FormActionButton, record } = props;
+    // const {  handlePrintDownload, , handleDownloadFile } = props;
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -73,7 +74,7 @@ export const ThankYouMaster = (props) => {
                                 </div>
                                 <CopytoClipboard type={'primary'} buttonText={'Copy'} text={responseMessageHandler(record?.res?.responseMessage)} />
                             </Space>
-
+                            {/* 
                             <Divider />
 
                             <Space size="middle" direction="vertical">
@@ -87,7 +88,7 @@ export const ThankYouMaster = (props) => {
                                                   </Button>
                                               </Popover>
                                           ))
-                                        : record?.res?.data?.rsaRegistrationNumber?.length > 0
+                                        : record?.res?.data?.registrationDetails?.registrationInformation?.saleType === SALE_TYPE?.PAID?.key && record?.res?.data?.rsaRegistrationNumber?.length > 0
                                         ? shieldDocName?.map((type) => (
                                               <Popover content={'Coming Soon'} trigger={type?.id === 3 ? 'hover' : 'none'}>
                                                   <Button onClick={() => (type?.id !== 3 ? handlePrintDownload({ ...record, typeRecord: type?.id === 1 ? RSA_DOCUMENT_TYPE?.INVOICE_RSA?.value : type?.id === 2 ? RSA_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_RSA?.value : null }) : null)} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
@@ -97,7 +98,7 @@ export const ThankYouMaster = (props) => {
                                           ))
                                         : null}
                                 </Row>
-                            </Space>
+                            </Space> */}
                         </div>
                     </Space>
                 </Col>
