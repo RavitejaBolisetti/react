@@ -26,7 +26,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { handleOtfSoMappingHistory, typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule, requestPayload } = props;
+    const { handleOtfSoMappingHistory, typeData, isLoading, formActionType, activeKey, onChange, toolTipContent, styles, formData, showPrintDiscount = false, isOTFModule } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -96,7 +96,7 @@ const ViewDetailMain = (props) => {
                                 )}
 
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vin')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleUsageType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.VEHCL_TYPE?.id], formData?.vehicleUsageType || requestPayload?.vehicleUsageType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleUsageType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.VEHCL_TYPE?.id], formData?.vehicleUsageType), isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}>
