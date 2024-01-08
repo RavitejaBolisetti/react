@@ -90,7 +90,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
-    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true, requestPayload } = props;
+    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});

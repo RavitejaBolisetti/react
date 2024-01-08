@@ -4,11 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import { getCodeValue } from 'utils/getCodeValue';
 import { translateContent } from 'utils/translateContent';
-
-import styles from 'assets/sass/app.module.scss';
 import { TAXI_NO_TAXI } from './fameSubsidryConstants';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = ({ handleButtonClick }) => {
     const tableColumn = [
