@@ -26,9 +26,9 @@ const EmployeeEmpowermentMainContainerMain = (props) => {
             case OVER_RIDER_CLAIM_SECTION.CLAIM_DETAILS.id: {
                 return <EmployeeEmpowermentDetailsMaster {...myProps} />;
             }
-            case OVER_RIDER_CLAIM_SECTION.DOCUMENTS.id: {
-                return <SupportingDocumentMaster {...myProps} />;
-            }
+            // case OVER_RIDER_CLAIM_SECTION.DOCUMENTS.id: {
+            //     return <SupportingDocumentMaster {...myProps} />;
+            // }
             case OVER_RIDER_CLAIM_SECTION.APPROVAL_REQUEST.id: {
                 return <ClaimApprovalRequestMaster {...myProps} />;
             }

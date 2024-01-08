@@ -9,11 +9,11 @@ export const OVER_RIDER_CLAIM_SECTION = {
         title: 'Claim Details',
         displayOnList: true,
     },
-    DOCUMENTS: {
-        id: 2,
-        title: 'Supporting Document',
-        displayOnList: true,
-    },
+    // DOCUMENTS: {
+    //     id: 2,
+    //     title: 'Supporting Document',
+    //     displayOnList: true,
+    // },
     APPROVAL_REQUEST: {
         id: 3,
         title: 'Approval Request',

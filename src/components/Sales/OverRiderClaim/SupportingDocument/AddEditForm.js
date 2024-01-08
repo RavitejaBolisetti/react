@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Select, Card, Descriptions, Button, Space, Typography,Upload, Input } from 'antd';
+import { Row, Col, Form, Select, Card, Descriptions, Button, Space, Typography, Upload, Input } from 'antd';
 
 import { UploadUtil } from 'utils/Upload';
 import { translateContent } from 'utils/translateContent';
@@ -25,9 +25,8 @@ const AddEditForm = (uploadProps) => {
 
     return (
         <>
-
-<>
-                            {/* <Row gutter={16}>
+            <>
+                {/* <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('vehicleDetail.documents.label.documentType')} name="documentTypeCd" rules={mandatoryFields ? [validateRequiredSelectField(translateContent('vehicleDetail.documents.label.documentType'))] : ''} placeholder={preparePlaceholderSelect('document type')}>
                                         <Select loading={!(typeData?.length !== 0)} onChange={handleClearChange} placeholder="Select" {...selectProps}>
@@ -45,12 +44,12 @@ const AddEditForm = (uploadProps) => {
                                     </Form.Item>
                                 </Col>
                             </Row> */}
-                            <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
-                                </Col>
-                            </Row>
-                        </>
+                <Row gutter={16}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
+                    </Col>
+                </Row>
+            </>
 
             {/* <UploadUtil {...uploadProps} /> */}
         </>

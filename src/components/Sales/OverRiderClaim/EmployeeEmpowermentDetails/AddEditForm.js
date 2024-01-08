@@ -12,8 +12,17 @@ import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { customSelectBox } from 'utils/customSelectBox';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { validateRequiredSelectField } from 'utils/validation';
+import VehicleDetailsMaster from './VehicleDetails';
 
 const { Panel } = Collapse;
+
+const chessisNoList = [
+    { key: 'VGDV9894', value: 'VGDV9894' },
+    { key: 'VGDV9893', value: 'VGDV9893' },
+    { key: 'VGDV9892', value: 'VGDV9892' },
+    { key: 'VGDV9891', value: 'VGDV9891' },
+];
 
 const AddEditFormMain = (props) => {
     const { formData, onHandleSelect, formActionType } = props;
@@ -24,26 +33,25 @@ const AddEditFormMain = (props) => {
         setOpenAccordian(key);
     };
 
+    const vehicleFormProps = {
+        chessisNoList,
+        formActionType,
+    };
+
     return (
         <>
             <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
                 <Panel header={'Claim Detail' || translateContent('applicationMaster.text.applicationActions')} key="1">
                     <Divider />
                     <Row gutter={20}>
-                      
                         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-                            <Form.Item name="mnmInvoice No" label={'M&M Invoice No'} initialValue={formData?.invoiceNo}  >
+                            <Form.Item name="mnmInvoice No" label={'M&M Invoice No'} initialValue={formData?.invoiceNo}>
                                 <Input placeholder={preparePlaceholderText('M&M Invoice No')} maxLength={50} disabled={!formActionType?.addMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="mnmInvoiceDate" label={'M&M Invoice Date'} initialValue={formData?.financierName}>
                                 <DatePicker placeholder={preparePlaceholderSelect('M&M Invoice Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name='Chessis No' label={'Chessis No'} initialValue={formData?.financierName}>
-                                <Input placeholder={preparePlaceholderText('Chessis No')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
@@ -80,7 +88,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item name="month" label={'Credit Note Date'} initialValue={formData?.invoiceNo}>
                                 <DatePicker placeholder={preparePlaceholderSelect('Credit Note Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                             </Form.Item>
-                        </Col> 
+                        </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                             <Form.Item name="month" label={'Credit Note Amount'} initialValue={formData?.invoiceNo}>
                                 <Input placeholder={preparePlaceholderText('Credit Note Amount')} maxLength={50} {...disabledProps} />
@@ -122,6 +130,12 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+                </Panel>
+            </Collapse>
+            <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
+                <Panel header={'Vehicle Detail' || translateContent('applicationMaster.text.applicationActions')} key="1">
+                    <Divider />
+                    <VehicleDetailsMaster {...vehicleFormProps} />
                 </Panel>
             </Collapse>
         </>
