@@ -37,6 +37,7 @@ import AMCRegistrationMasterPage from './AMCRegistration';
 import RsmAsmApprovalPage from './RsmAsmApproval';
 import RSARegistrationPage from './RSARegistration';
 import CoDealerInvoiceGenerationPage from './CoDealerInvoiceGeneration';
+import CentralFameSubsidyPage from './CentralFameSubsidy';
 
 export {
     OTFMasterPage,
@@ -69,4 +70,5 @@ export {
     AMCRegistrationMasterPage,
     RSARegistrationPage,
     CoDealerInvoiceGenerationPage,
+    CentralFameSubsidyPage,
 };

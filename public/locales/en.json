@@ -199,7 +199,7 @@
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
             "reGenerateIRN": "Re-Generate IRN",
-            "irnStatusNotPresent":"IRN status not present"
+            "irnStatusNotPresent": "IRN status not present"
         },
         "placeholder": {
             "input": "Enter ",
@@ -1804,7 +1804,7 @@
             "irnResponse": "IRN Server Response",
             "irnStatus": "IRN Status",
             "gstin": "GSTIN",
-            "action":"Action"
+            "action": "Action"
         }
     },
 
@@ -4503,6 +4503,37 @@
             }
         },
         "placeholder": {},
+        "validation": {
+            "toDate": "Date cant be less than Effective from date",
+            "ModelCode": "Model code is not present"
+        },
+        "text": {},
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
+        }
+    },
+    "centralFameSubsidy": {
+        "heading": {
+            "moduleTitle": "Central Fame Subsidy",
+            "title": "Central Fame Subsidy"
+        },
+        "label": {
+            "batterycapacity": "Battery Capacity",
+            "taxiIndicator": "Taxi Indicator",
+            "subsidyAmount": "Central Subsidy Amount",
+            "percentageOnExShowRoomPrice": "Percentage On ExshowRoomPrice",
+            "demandIncentive": "Demand Incentive",
+            "totalAmount": "Total Amount",
+            "activeIndicator": "Active Indicator",
+            "tableColumn": {
+                "product": "Model Variant",
+                "modelGroup": "Model Group",
+                "taxIndicator": "Taxi Indicator",
+                "variantCode": "Variant Code"
+            }
+        },
+        "placeholder": { "modelGroupVariant": "Please select model group and model Variant" },
         "validation": {
             "toDate": "Date cant be less than Effective from date",
             "ModelCode": "Model code is not present"
