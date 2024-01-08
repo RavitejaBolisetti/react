@@ -14,17 +14,18 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVis
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { CentralFameSubsidyFilter } from './CentralFameSubsidyFilter';
+import { CentralFameSubsidyHeader } from './CentralFameSubsidyHeader';
 import { CentralFameSubsidySearchDataActions } from 'store/actions/data/CentralFameSubsidy';
 import { translateContent } from 'utils/translateContent';
 import { AddEditForm } from './AddEditForm';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { BASE_URL_OTF_FAME_DETAILS_SAVE, BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
-import { SELECT_BOX_NAME_CONSTANTS, TAXI_NO_TAXI } from './fameSubsidryConstants';
+import { TAXI_NO_TAXI } from './fameSubsidryConstants';
 import { drawerTitle } from 'utils/drawerTitle';
 
 import styles from 'assets/sass/app.module.scss';
+import { defaultPageProps } from 'utils/defaultPageProps';
 
 const defaultBtnVisiblity = {
     editBtn: false,
@@ -134,34 +135,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
                 canRemove: false,
                 filter: false,
             },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: filterString?.current ?? 1,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: filterString?.pageSize ?? 10,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: filterString?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: filterString?.sortType,
-                canRemove: true,
-                filter: false,
-            },
+            ...defaultPageProps(filterString),
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -235,7 +209,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
     };
 
     const onFinish = (values) => {
-        let finalPayload = { ...values, id: formData?.id || '', taxiIndicator: values?.taxiIndicator ? TAXI_NO_TAXI?.T?.key : TAXI_NO_TAXI?.N?.key };
+        const finalPayload = { ...values, id: formData?.id || '', taxiIndicator: values?.taxiIndicator ? TAXI_NO_TAXI?.T?.key : TAXI_NO_TAXI?.N?.key };
         const onError = (message) => {
             showGlobalNotification({ message });
         };
@@ -267,7 +241,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         saveData(requestData);
     };
 
-    const CentralFameSubsidyFilterProps = {
+    const CentralFameSubsidyHeaderProps = {
         filterString,
         setFilterString,
         onFinish,
@@ -328,7 +302,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
     };
     return (
         <>
-            <CentralFameSubsidyFilter {...CentralFameSubsidyFilterProps} />
+            <CentralFameSubsidyHeader {...CentralFameSubsidyHeaderProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />

@@ -16,7 +16,13 @@ export const ViewDetail = (props) => {
         layout: 'vertical',
         column: { xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 },
     };
-
+    const ConsitionalFields = showFields && (
+        <>
+            <Descriptions.Item label={translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice')}>{formData?.percentageOnExShowRoomPrice + '%'}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('centralFameSubsidy.label.demandIncentive')}>{formData?.demandIncentive}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('centralFameSubsidy.label.totalAmount')}>{formData?.totalAmount}</Descriptions.Item>
+        </>
+    );
     return (
         <div className={styles.viewDrawerContainer}>
             <Descriptions {...viewProps}>
@@ -25,13 +31,7 @@ export const ViewDetail = (props) => {
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.batterycapacity')}>{formData?.batteryCapacity + ' KVA'}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.taxiIndicator')}>{formData?.taxiIndicator ? 'Taxi' : 'Non taxi'}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.subsidyAmount')}>{formData?.subsidyAmount}</Descriptions.Item>
-                {showFields && (
-                    <>
-                        <Descriptions.Item label={translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice')}>{formData?.percentageOnExShowRoomPrice + '%'}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('centralFameSubsidy.label.demandIncentive')}>{formData?.demandIncentive}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('centralFameSubsidy.label.totalAmount')}>{formData?.totalAmount}</Descriptions.Item>
-                    </>
-                )}
+                {ConsitionalFields}
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.activeIndicator')}>
                     <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
                 </Descriptions.Item>
