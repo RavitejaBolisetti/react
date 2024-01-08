@@ -13,8 +13,7 @@ import { addToolTip } from 'utils/customMenuLink';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { translateContent } from 'utils/translateContent';
-import { CO_DEALER_QUERY_BUTTONS } from '../constants';
-import { IRN_STATUS } from 'constants/IRNStatus';
+import { CO_DEALER_QUERY_BUTTONS, IRN_CONSTANTS } from '../constants';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
 
@@ -40,7 +39,7 @@ const CoDealerCard = (props) => {
                 if (!selectedOrder?.irnStatus) {
                     showIrnGenrationButton = true;
                 } else {
-                    if (selectedOrder?.irnStatus === IRN_STATUS?.APPROVED?.key) {
+                    if ([IRN_CONSTANTS?.APPROVED?.key, IRN_CONSTANTS?.REJECTED?.key]?.includes(selectedOrder?.irnStatus)) {
                         showInfo = true;
                         showIrnGenrationButton = false;
                     } else {

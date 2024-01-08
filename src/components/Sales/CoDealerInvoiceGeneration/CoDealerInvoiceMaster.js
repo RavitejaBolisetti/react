@@ -14,7 +14,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_INVOICE, btnV
 import { CoDealerInvoiceMainContainer } from './CoDealerInvoiceMainContainer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { CoDealerInvoiceAdvancedSearch } from './CoDealerInvoiceAdvancedSearch';
-import { CO_DEALER_QUERY_BUTTONS, SEARCH_PARAM_CONSTANTS, THANK_YOU_TYPE } from './constants';
+import { CO_DEALER_QUERY_BUTTONS, IRN_CONSTANTS, SEARCH_PARAM_CONSTANTS, THANK_YOU_TYPE } from './constants';
 import { showGlobalNotification } from 'store/actions/notification';
 import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -36,7 +36,6 @@ import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDeta
 import { CancelInvoice } from '../VehicleInvoiceGeneration/CancelInvoice';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoCityDataActions } from 'store/actions/data/geo/cities';
-import { IRN_STATUS } from 'constants/IRNStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -438,7 +437,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 extraParams: ExtraParams('invoiceId', null, id),
                 onSuccessAction: (res) => {
                     setCoDealerInvoiceStateMaster((prev) => ({ ...prev, selectedOrder: { ...res?.data, invoiceDate: convertDateTimedayjs(res?.data?.invoiceDate, dateFormatView) } }));
-                    const showCancelInvoice = [IRN_STATUS?.APPROVED?.key, IRN_STATUS?.REJECTED?.key, null]?.includes(res?.data?.irnStatus) && !formActionType?.addMode && res?.data?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key;
+                    const showCancelInvoice = [IRN_CONSTANTS?.APPROVED?.key, IRN_CONSTANTS?.REJECTED?.key, null]?.includes(res?.data?.irnStatus) && !formActionType?.addMode && res?.data?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key;
                     setButtonData((prev) => ({ ...prev, cancelInvoice: showCancelInvoice }));
                 },
                 onErrorAction,

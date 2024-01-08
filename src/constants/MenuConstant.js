@@ -877,7 +877,7 @@ export const MenuConstant = {
     },
     [getMenyKey('SACT-07')]: {
         key: 'SACT-07',
-        link: routing.ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER,
+        link: routing.ROUTING_CENTRAL_FAME_SUBSIDY,
         icon: undefined,
         parentMenuId: 'Sales',
     },
