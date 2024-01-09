@@ -26,8 +26,8 @@ export const ViewDetail = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.modelGroup')}>{formData?.modelGroupCode}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.variant')}>{formData?.variantCode}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.modelGroup')}>{formData?.modelGroupName || formData?.modelGroupCode}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.variant')}>{formData?.variantName || formData?.variantCode}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.batterycapacity')}>{formData?.batteryCapacity + ' KVA'}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.taxiIndicator')}>{formData?.taxiIndicator ? 'Taxi' : 'Non taxi'}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.subsidyAmount')}>{formData?.subsidyAmount}</Descriptions.Item>

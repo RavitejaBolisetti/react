@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CentralFameSubsidy: {
-                CentralFameSubsidySearch: { data, filter: filterString },
+                CentralFameSubsidySearch: { data, filter: filterString, isLoading: isSearchLoading },
             },
             Vehicle: {
                 ModelVehicleDetails: { isLoading: isModelLoading, data: modelData = [] },
@@ -69,6 +69,7 @@ const mapStateToProps = (state) => {
         filterString,
         batteryCapcityKey,
         demanIncentiveKey,
+        isSearchLoading,
     };
     return returnValue;
 };
@@ -96,7 +97,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRecords, data, vehicleModelData, userId, modelData, variantData, isModelLoading, isVariantLoading, moduleTitle, showGlobalNotification, ...rest }) => {
+export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilterString, totalRecords, data, vehicleModelData, userId, modelData, variantData, isModelLoading, isVariantLoading, moduleTitle, showGlobalNotification, ...rest }) => {
     const { fetchModelLovList, listModelShowLoading, saveData, fetchVariantLovList, listVariantShowLoading, fetchSubsidery, showSubsideryloading, resetVariant, batteryCapcityKey, demanIncentiveKey } = rest;
 
     const [form] = Form.useForm();
@@ -151,11 +152,12 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         if (formActionType?.addMode && isFormVisible) {
             form.setFieldsValue({ ...filterString });
         }
-        if (formActionType?.editMode && isFormVisible) {
+        if (formActionType?.editMode && isFormVisible && userId) {
             fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: formData?.modelGroupCode }] });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType, isFormVisible]);
+    }, [formActionType, isFormVisible, userId]);
 
     useEffect(() => {
         if (extraParams && userId) {
@@ -170,9 +172,10 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         form.setFieldsValue(undefined);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, viewMode: buttonAction === VIEW_ACTION, editMode: buttonAction === EDIT_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        resetVariant();
         if (record) {
-            setFormData({ ...record, taxiIndicator: TAXI_NO_TAXI?.T?.key ? true : false });
-            form.setFieldsValue({ ...record, taxiIndicator: TAXI_NO_TAXI?.T?.key ? true : false });
+            setFormData({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.T?.key ? true : false });
+            form.setFieldsValue({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.T?.key ? true : false });
             if (Number(record?.subsidyAmount) > 0) {
                 setShowFields(false);
             } else {
@@ -187,6 +190,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         form.resetFields();
         setShowFields(true);
         resetVariant();
+        userId && modelVariantForm.getFieldValue('modelGroupCode') && fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: modelVariantForm.getFieldValue('modelGroupCode') }] });
     };
 
     const tableProps = {
@@ -299,6 +303,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         listVariantShowLoading,
         userId,
         setFilter: false,
+        isSearchLoading,
     };
     return (
         <>
