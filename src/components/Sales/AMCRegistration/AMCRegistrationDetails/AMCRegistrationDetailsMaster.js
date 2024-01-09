@@ -20,7 +20,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
     const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange, showGlobalNotification } = props;
 
-    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, schemeData, listShowLoading, fetchManagerList, managerData, fetchDetail } = props;
+    const { isOTFValidated, schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, schemeData, listShowLoading, fetchManagerList, managerData, fetchDetail } = props;
 
     const [activeKey, setActiveKey] = useState([]);
 
@@ -125,7 +125,9 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                     .then(() => {
                         if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldsValue()?.hasOwnProperty('schemeDescription') || registrationForm.getFieldsValue()?.hasOwnProperty('saleType'))) {
                             setActiveKey(['schemeKey', 'regKey']);
-                        } else if (registrationForm.getFieldValue('saleType') === AMC_CONSTANTS?.MNM_FOC?.key && !registrationForm.getFieldValue('vin')) {
+                        } else if (!isOTFValidated && registrationForm.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key) {
+                            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.validateOTF') });
+                        } else if (registrationForm.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key && !registrationForm.getFieldValue('vin')) {
                             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.noVINFound') });
                             setButtonData({ ...buttonData, formBtnActive: false });
                         } else {

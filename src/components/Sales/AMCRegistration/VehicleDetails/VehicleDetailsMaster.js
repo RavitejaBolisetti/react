@@ -207,6 +207,9 @@ const VehicleDetailsMasterBase = (props) => {
     const handleVinSearch = (value) => {
         if (!value && formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.PAID?.key) {
             return false;
+        } else if (checkDuplicate(value)) {
+            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.duplicateVehicle') });
+            return false;
         }
         const onVehicleSearchSuccessAction = (data) => {
             fnSetData(data?.data?.vehicleDetails);
