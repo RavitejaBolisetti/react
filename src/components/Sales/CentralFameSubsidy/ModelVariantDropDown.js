@@ -17,6 +17,7 @@ const ModelVariantDropDown = (props) => {
     const { variantLabel = translateContent('commonModules.label.exchangeDetails.variant'), variantRules = [validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.variant'))] } = props;
     const { setFilter = true, colSize = { xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 12 }, variantStyle = { styles: { marginBottom: '20px' } }, modelStyle = { styles: { marginBottom: '20px' } } } = props;
     const handleModelVariantSelect = (type) => (value) => {
+        const haveSelectedfilterValue = filterString?.variantCode || filterString?.modelGroupCode;
         switch (type) {
             case SELECT_BOX_NAME_CONSTANTS?.MODEL?.key: {
                 if (value) {
@@ -24,7 +25,7 @@ const ModelVariantDropDown = (props) => {
                     fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value }] });
                 } else {
                     resetVariant();
-                    setFilter && setFilterString({ ...filterString, variantCode: undefined, modelGroupCode: undefined });
+                    setFilter && haveSelectedfilterValue && setFilterString({ ...filterString, variantCode: undefined, modelGroupCode: undefined });
                 }
                 formName.resetFields(['variantCode']);
                 break;
