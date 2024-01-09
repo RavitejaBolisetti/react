@@ -13,13 +13,13 @@ import styles from 'assets/sass/app.module.scss';
 import { ClaimApprovalRequestMaster } from './ClaimApprovalRequest/ClaimApprovalRequestMaster';
 import { SupportingDocumentMaster } from './SupportingDocument';
 import { DetailsMaster } from './ClaimDetails';
-import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ClaimGeneration';
-import { OldVehicleDetailsMaster } from './OldVehicleDetails';
-import { CreditDebitDetailsMaster } from './CreditDebitDetails';
-import { TransferRCMaster } from './TransferRC/TransferRCMaster';
-import { ClaimDetail } from './Claim';
+import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ReclaimRequest';
+import VehicleDetailsCurrentMaster from './VehicleDetailsCurrent';
+import VehicleDetailsNewMaster from './VehicleDetailsNew';
+import { CurrentVehicleDetailsMaster } from './CurrentVehicleDetails';
+import { NewVehicleDetailsMaster } from './NewVehicleDetails';
 
-const ExchangeLoyalityClaimMasterContainerMain = (props) => {
+const ExchangeLoyaltyReclaimRequestContainerMain = (props) => {
     const { currentSection } = props;
     const myProps = {
         ...props,
@@ -27,23 +27,20 @@ const ExchangeLoyalityClaimMasterContainerMain = (props) => {
 
     const renderElement = () => {
         switch (currentSection) {
-            case RECLAIM_REQUEST_SECTION.CLAIM.id: {
+            case RECLAIM_REQUEST_SECTION.REQUEST_DETAILS.id: {
                 return <DetailsMaster {...myProps} />;
             }
-            case RECLAIM_REQUEST_SECTION.OLD_VEHICLE_DETAILS.id: {
-                return <OldVehicleDetailsMaster {...myProps} />;
+            case RECLAIM_REQUEST_SECTION.CURRENT_VEHICLE_DETAILS.id: {
+                return <CurrentVehicleDetailsMaster {...myProps} />;
+                // return <VehicleDetailsCurrentMaster {...myProps} />;
+                
+            }
+            case RECLAIM_REQUEST_SECTION.NEW_VEHICLE_DETAILS.id: {
+                return <NewVehicleDetailsMaster {...myProps} />;
+                // return <VehicleDetailsNewMaster {...myProps} />;
             }
             case RECLAIM_REQUEST_SECTION.DOCUMENTS.id: {
                 return <SupportingDocumentMaster {...myProps} />;
-            }
-            case RECLAIM_REQUEST_SECTION.TRANSFER_RC.id: {
-                return <TransferRCMaster {...myProps} />;
-            }
-            case RECLAIM_REQUEST_SECTION.CLAIM_DETAILS.id: {
-                return <ClaimDetail {...myProps} />;
-            }
-            case RECLAIM_REQUEST_SECTION.CREDIT_DEBIT_DETIALS.id: {
-                return <CreditDebitDetailsMaster {...myProps} />;
             }
             case RECLAIM_REQUEST_SECTION.APPROVAL_REQUEST.id: {
                 return <ClaimApprovalRequestMaster {...myProps} />;
@@ -66,4 +63,4 @@ const ExchangeLoyalityClaimMasterContainerMain = (props) => {
     );
 };
 
-export const ExchangeLoyalityClaimMasterContainer = withDrawer(ExchangeLoyalityClaimMasterContainerMain, { width: '90%', footer: null });
+export const ExchangeLoyaltyReclaimRequestContainer = withDrawer(ExchangeLoyaltyReclaimRequestContainerMain, { width: '90%', footer: null });

@@ -166,7 +166,7 @@ export const ROUTING_OVER_RIDER_CLAIM = ROUTING_SALES.concat('over-rider-claim')
 // export const ROUTING_EXCHANGE_LOYALTY_DOCUMENT_MASTER = ROUTING_SALES.concat('exchange-loyalty-document-master');
 // export const ROUTING_EXCHANGE_LOYALTY_SCHEME_MASTER = ROUTING_SALES.concat('exchange-loyalty-scheme-master');
 export const ROUTING_EXCHANGE_LOYALTY_INCENTIVE_MASTER = ROUTING_SALES.concat('exchange-loyalty-incentive-master');
-// export const ROUTING_EXCHANGE_LOYALTY_RECLAIM_REQUEST = ROUTING_SALES.concat('exchange-loyalty-incentive-master');
+export const ROUTING_EXCHANGE_LOYALTY_RECLAIM_REQUEST = ROUTING_SALES.concat('exchange-loyalty-reclaim-request');
 export const ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('exchange-loyalty-claim-generation');//need discussion
 
 // /Incentive scheme and claim

@@ -8,7 +8,7 @@ import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'assets/sass/app.module.scss';
-import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ClaimGeneration';
+import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ReclaimRequest';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, previousSection } = props;

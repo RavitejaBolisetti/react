@@ -25,9 +25,8 @@ import { LANGUAGE_EN } from 'language/en';
 
 import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 import { drawerTitle } from 'utils/drawerTitle';
-import { ExchangeLoyalityClaimMasterContainer } from './ExchangeLoyalityClaimMasterContainer';
-import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ClaimGeneration';
-
+import { ExchangeLoyaltyReclaimRequestContainer } from './ExchangeLoyaltyReclaimRequestContainer';
+import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ReclaimRequest';
 
 const mapStateToProps = (state) => {
     const {
@@ -88,7 +87,7 @@ const statusFilter = [
     },
 ];
 
-export const ExchangeLoyalityClaimMasterBase = (props) => {
+export const ExchangeLoyaltyReclaimRequestBase = (props) => {
     const { userId, data, totalRecords, moduleTitle } = props;
     const { isModelDataLoading, vehicleModelData } = props;
     const { isProfileDataLoaded, ProfileData, ChecklistData, typeData } = props;
@@ -225,7 +224,7 @@ export const ExchangeLoyalityClaimMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        const defaultSection = RECLAIM_REQUEST_SECTION.CLAIM.id;
+        const defaultSection = RECLAIM_REQUEST_SECTION.REQUEST_DETAILS.id;
         setDefaultSection(defaultSection);
         setSetionName(RECLAIM_REQUEST_SECTION);
         setSection(defaultSection);
@@ -502,16 +501,14 @@ export const ExchangeLoyalityClaimMasterBase = (props) => {
             <AdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
 
-            {/* <AppliedAdvanceFilter {...advanceFilterProps} /> */}
-
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-            <ExchangeLoyalityClaimMasterContainer {...containerProps} />
+            <ExchangeLoyaltyReclaimRequestContainer {...containerProps} />
         </>
     );
 };
 
-export const ExchangeLoyalityClaimMaster = connect(mapStateToProps, mapDispatchToProps)(ExchangeLoyalityClaimMasterBase);
+export const ExchangeLoyaltyReclaimRequestMaster = connect(mapStateToProps, mapDispatchToProps)(ExchangeLoyaltyReclaimRequestBase);

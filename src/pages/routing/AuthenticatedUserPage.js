@@ -84,6 +84,7 @@ import {
     MitraBrokerRegistrationMasterPage,
     IncentiveClaimPage,
     CentralFameSubsidyPage,
+    ExchangeLoyaltyReclaimRequestMasterPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -296,6 +297,7 @@ const AuthenticatedUserPageMain = (props) => {
 
                 <Route path={routing.ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION} element={<ExchangeLoyalityClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_EXCHANGE_LOYALTY_INCENTIVE_MASTER} element={<ExchangeLoyaltyIncentiveMasterPage />} exact />
+                <Route path={routing.ROUTING_EXCHANGE_LOYALTY_RECLAIM_REQUEST} element={<ExchangeLoyaltyReclaimRequestMasterPage />} exact />
                 
                 {/* iNCENTIVE SCHEME N CLAIM  */}
                 <Route path={routing.ROUTING_MITRA_BROKER_REGISTRATION} element={<MitraBrokerRegistrationMasterPage />} exact />
