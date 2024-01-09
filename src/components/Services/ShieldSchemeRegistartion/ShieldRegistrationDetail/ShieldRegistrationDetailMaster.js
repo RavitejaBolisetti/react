@@ -20,7 +20,7 @@ const ShieldRegistrationDetailMasterBase = (props) => {
     const { typeData, detailShieldData, registrationDetails, employeeData, managerData, resetDetail, fetchEmployeeList, fetchManagerList, listEmployeeShowLoading } = props;
     const { userId, buttonData, setButtonData, section, filterString, isDataLoaded, isLoading } = props;
     const { form, amcStatus, saleType, handlePrintDownload, handleSaleTypeChange, handleOtfSearch, handleVinSearch, handleEmployeeSearch, schemeDetail, shieldDetailForm, formActionType, NEXT_ACTION, handleButtonClick } = props;
-    const { screenType, setRequestPayload, vinNumber, setVinNumber, bookingNumber, isEmployeeDataLoading } = props;
+    const { showGlobalNotification, isVINOrOTFValidated, screenType, setRequestPayload, vinNumber, setVinNumber, bookingNumber, isEmployeeDataLoading } = props;
 
     const [activeKey, setActiveKey] = useState('');
     const [options, setOptions] = useState(false);
@@ -71,8 +71,13 @@ const ShieldRegistrationDetailMasterBase = (props) => {
     };
 
     const handleOtfChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: false });
         setVinNumber();
         resetDetail();
+    };
+
+    const handleVINChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const handleOnSelect = (key) => {
@@ -92,10 +97,13 @@ const ShieldRegistrationDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        if (values?.hasOwnProperty('schemeDetails') && !values?.hasOwnProperty('registrationInformation')) {
+        if (!isVINOrOTFValidated) {
+            showGlobalNotification({ message: 'Please Validate VIN Or Booking Number' });
             setActiveKey(1);
         } else if (!values?.hasOwnProperty('schemeDetails') && values?.hasOwnProperty('registrationInformation')) {
             setActiveKey(2);
+        } else if (values?.hasOwnProperty('schemeDetails') && !values?.hasOwnProperty('registrationInformation')) {
+            setActiveKey(1);
         } else {
             setRequestPayload({ registrationDetails: { ...values } });
             handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -147,6 +155,7 @@ const ShieldRegistrationDetailMasterBase = (props) => {
         setActiveKey,
         employeeData,
         managerData,
+        handleVINChange,
     };
 
     const viewProps = {

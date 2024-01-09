@@ -229,6 +229,8 @@ export const AMCRegistrationMasterBase = (props) => {
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isPendingForCancellation, setIsPendingForCancellation] = useState(selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
+    const [isOTFValidated, setIsOTFValidated] = useState(false);
+
     useEffect(() => {
         if (loginUserData?.userType) {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
@@ -488,10 +490,12 @@ export const AMCRegistrationMasterBase = (props) => {
             if (!res?.data?.otfDetails[0]?.vin) {
                 showGlobalNotification({ title: translateContent('global.notificationError.title'), notificationType: 'error', message: translateContent('amcRegistration.validation.noVINFound') });
                 setButtonData({ ...buttonData, formBtnActive: false });
+                setIsOTFValidated(false);
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
                 schemeForm.getFieldValue('amcType') && schemeList(res?.data?.otfDetails[0]?.vin);
+                setIsOTFValidated(true);
             }
         };
 
@@ -924,6 +928,7 @@ export const AMCRegistrationMasterBase = (props) => {
         fetchDetail,
         listShowLoading,
         handleDownloadFile,
+        isOTFValidated,
     };
     const cancelModalProps = {
         isVisible: isRejectModalVisible,
