@@ -25,9 +25,9 @@ const AddEditFormMain = (props) => {
                 {!formActionType?.viewMode ? (
                     <>
                         <Row gutter={20}>
-                            <ModelVariantDropDown variantStyle={{ style: { marginBottom: '20px' } }} modelStyle={{ style: { marginBottom: '20px' } }} colSize={{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 12 }} {...props} />
+                            <ModelVariantDropDown {...props} />
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label={translateContent('centralFameSubsidy.label.batterycapacity')} name="batteryCapacity" rules={[validateNumberWithTwoDecimalPlaces(translateContent('centralFameSubsidy.label.batterycapacity')), validateRequiredInputField(translateContent('centralFameSubsidy.label.batterycapacity'))]}>
+                                <Form.Item initialValue={formData?.batteryCapacity || 0} label={translateContent('centralFameSubsidy.label.batterycapacity')} name="batteryCapacity" rules={[validateNumberWithTwoDecimalPlaces(translateContent('centralFameSubsidy.label.batterycapacity')), validateRequiredInputField(translateContent('centralFameSubsidy.label.batterycapacity'))]}>
                                     <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.batterycapacity'))} defaultValue={0} addonAfter="KVA" />
                                 </Form.Item>
                             </Col>
@@ -60,12 +60,12 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label={translateContent('centralFameSubsidy.label.demandIncentive')} name="demandIncentive" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.demandIncentive'))]}>
+                                        <Form.Item initialValue={formData?.demandIncentive || 0} label={translateContent('centralFameSubsidy.label.demandIncentive')} name="demandIncentive" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.demandIncentive'))]}>
                                             <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.demandIncentive'))} precision={2} defaultValue={0} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label={translateContent('centralFameSubsidy.label.totalAmount')} name="totalAmount" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.totalAmount'))]}>
+                                        <Form.Item initialValue={formData?.totalAmount || 0} label={translateContent('centralFameSubsidy.label.totalAmount')} name="totalAmount" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.totalAmount'))]}>
                                             <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.totalAmount'))} disabled precision={2} defaultValue={0} />
                                         </Form.Item>
                                     </Col>
