@@ -17,22 +17,23 @@ import styles from 'assets/sass/app.module.scss';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const AddEditFormMain = (props) => {
-    const { showFields, setShowFields, form, onFinish, handleFormValueChange, formActionType, formData } = props;
+    const { showFields, setShowFields, form, onFinish, handleFormValueChange, formActionType, formData, isSearchLoading } = props;
+    const nonTaxi = 'NonTaxi';
     return (
         <div className={styles.drawerBodyNew}>
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFinish={onFinish}>
                 {!formActionType?.viewMode ? (
                     <>
                         <Row gutter={20}>
-                            <ModelVariantDropDown variantStyle={{ style: { marginBottom: '20px' } }} modelStyle={{ style: { marginBottom: '20px' } }} colSize={{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 12 }} {...props} />
+                            <ModelVariantDropDown {...props} />
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label={translateContent('centralFameSubsidy.label.batterycapacity')} name="batteryCapacity" rules={[validateNumberWithTwoDecimalPlaces(translateContent('centralFameSubsidy.label.batterycapacity')), validateRequiredInputField(translateContent('centralFameSubsidy.label.batterycapacity'))]}>
+                                <Form.Item initialValue={formData?.batteryCapacity || 0} label={translateContent('centralFameSubsidy.label.batterycapacity')} name="batteryCapacity" rules={[validateNumberWithTwoDecimalPlaces(translateContent('centralFameSubsidy.label.batterycapacity')), validateRequiredInputField(translateContent('centralFameSubsidy.label.batterycapacity'))]}>
                                     <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.batterycapacity'))} defaultValue={0} addonAfter="KVA" />
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item data-testid="toggle" initialValue={formActionType?.addMode ? true : formActionType?.taxiIndicator ? true : false} valuePropName="checked" label={translateContent('centralFameSubsidy.label.taxiIndicator')} name="taxiIndicator" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.taxiIndicator'))]}>
-                                    <Switch checkedChildren="yes" unCheckedChildren="No" onChange={(checked) => (checked ? true : false)} />
+                                <Form.Item data-testid="toggle" initialValue={formActionType?.addMode ? true : formData?.taxiIndicator ? true : false} valuePropName="checked" label={translateContent('centralFameSubsidy.label.taxiIndicator')} name="taxiIndicator" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.taxiIndicator'))]}>
+                                    <Switch checkedChildren="Taxi" unCheckedChildren={nonTaxi} onChange={(checked) => (checked ? true : false)} />
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -52,21 +53,19 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             {showFields && (
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.percentageOnExShowRoomPrice ?? 0} label={translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice')} name="percentageOnExShowRoomPrice" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice')), DecimalPercentageValidation(translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice'))]}>
-                                        <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice'))} addonAfter={<FaPercent />} precision={2} defaultValue={0} />
-                                    </Form.Item>
-                                </Col>
-                            )}
-                            {showFields && (
                                 <>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label={translateContent('centralFameSubsidy.label.demandIncentive')} name="demandIncentive" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.demandIncentive'))]}>
+                                        <Form.Item initialValue={formData?.percentageOnExShowRoomPrice ?? 0} label={translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice')} name="percentageOnExShowRoomPrice" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice')), DecimalPercentageValidation(translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice'))]}>
+                                            <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.percentageOnExShowRoomPrice'))} addonAfter={<FaPercent />} precision={2} defaultValue={0} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Form.Item initialValue={formData?.demandIncentive || 0} label={translateContent('centralFameSubsidy.label.demandIncentive')} name="demandIncentive" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.demandIncentive'))]}>
                                             <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.demandIncentive'))} precision={2} defaultValue={0} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label={translateContent('centralFameSubsidy.label.totalAmount')} name="totalAmount" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.totalAmount'))]}>
+                                        <Form.Item initialValue={formData?.totalAmount || 0} label={translateContent('centralFameSubsidy.label.totalAmount')} name="totalAmount" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.totalAmount'))]}>
                                             <InputNumber placeholder={preparePlaceholderText(translateContent('centralFameSubsidy.label.totalAmount'))} disabled precision={2} defaultValue={0} />
                                         </Form.Item>
                                     </Col>
@@ -74,7 +73,7 @@ const AddEditFormMain = (props) => {
                             )}
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item data-testid="toggle" initialValue={formActionType?.addMode ? true : formActionType?.activeIndicator ? true : false} valuePropName="checked" label={translateContent('centralFameSubsidy.label.activeIndicator')} name="activeIndicator" rules={[validateRequiredInputField(translateContent('centralFameSubsidy.label.activeIndicator'))]}>
-                                    <Switch checkedChildren="yes" unCheckedChildren="No" onChange={(checked) => (checked ? true : false)} />
+                                    <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? true : false)} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -82,7 +81,7 @@ const AddEditFormMain = (props) => {
                 ) : (
                     <ViewDetail {...props} />
                 )}
-                <DrawerFormButton multipleForm={true} {...props} />
+                <DrawerFormButton multipleForm={true} {...props} isLoadingOnSave={{ isSaveBtnLoading: isSearchLoading, isSaveAndNewBtnLoading: isSearchLoading }} />
             </Form>
         </div>
     );

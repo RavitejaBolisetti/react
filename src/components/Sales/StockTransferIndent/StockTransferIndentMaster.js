@@ -523,7 +523,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     useEffect(() => {
         if (recordType === ISSUE_STATUS?.ISSUED?.key || (toggleButton === STOCK_TRANSFER?.RAISED.key && (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || recordType === ISSUE_STATUS?.RECEIEVED?.key))) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
-        else if (toggleButton === STOCK_TRANSFER?.RECEIVED.key && (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || recordType === ISSUE_STATUS?.RECEIEVED?.key)) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+        else if (toggleButton === STOCK_TRANSFER?.RECEIVED.key && (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || recordType === ISSUE_STATUS?.RECEIEVED?.key)) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT);
         else setReportDetail(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordType, change]);

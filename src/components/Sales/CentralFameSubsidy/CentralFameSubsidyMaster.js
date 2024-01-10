@@ -14,17 +14,18 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVis
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { CentralFameSubsidyFilter } from './CentralFameSubsidyFilter';
+import { CentralFameSubsidyHeader } from './CentralFameSubsidyHeader';
 import { CentralFameSubsidySearchDataActions } from 'store/actions/data/CentralFameSubsidy';
 import { translateContent } from 'utils/translateContent';
 import { AddEditForm } from './AddEditForm';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { BASE_URL_OTF_FAME_DETAILS_SAVE, BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
-import { SELECT_BOX_NAME_CONSTANTS, TAXI_NO_TAXI } from './fameSubsidryConstants';
+import { TAXI_NO_TAXI } from './fameSubsidryConstants';
 import { drawerTitle } from 'utils/drawerTitle';
 
 import styles from 'assets/sass/app.module.scss';
+import { defaultPageProps } from 'utils/defaultPageProps';
 
 const defaultBtnVisiblity = {
     editBtn: false,
@@ -42,7 +43,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CentralFameSubsidy: {
-                CentralFameSubsidySearch: { data, filter: filterString },
+                CentralFameSubsidySearch: { data, filter: filterString, isLoading: isSearchLoading },
             },
             Vehicle: {
                 ModelVehicleDetails: { isLoading: isModelLoading, data: modelData = [] },
@@ -68,6 +69,7 @@ const mapStateToProps = (state) => {
         filterString,
         batteryCapcityKey,
         demanIncentiveKey,
+        isSearchLoading,
     };
     return returnValue;
 };
@@ -95,8 +97,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRecords, data, vehicleModelData, userId, modelData, variantData, isModelLoading, isVariantLoading, moduleTitle, showGlobalNotification, ...rest }) => {
-    const { fetchModelLovList, listModelShowLoading, saveData, fetchVariantLovList, listVariantShowLoading, fetchSubsidery, showSubsideryloading, resetVariant, batteryCapcityKey, demanIncentiveKey } = rest;
+export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilterString, totalRecords, data, vehicleModelData, userId, modelData, variantData, isModelLoading, isVariantLoading, moduleTitle, showGlobalNotification, ...rest }) => {
+    const { fetchModelLovList, listModelShowLoading, saveData, fetchVariantLovList, listVariantShowLoading, fetchSubsidery, showSubsideryloading, resetVariant, batteryCapcityKey, demanIncentiveKey, typeData } = rest;
 
     const [form] = Form.useForm();
     const [modelVariantForm] = Form.useForm();
@@ -134,34 +136,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
                 canRemove: false,
                 filter: false,
             },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: filterString?.current ?? 1,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: filterString?.pageSize ?? 10,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: filterString?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: filterString?.sortType,
-                canRemove: true,
-                filter: false,
-            },
+            ...defaultPageProps(filterString),
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -177,11 +152,12 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         if (formActionType?.addMode && isFormVisible) {
             form.setFieldsValue({ ...filterString });
         }
-        if (formActionType?.editMode && isFormVisible) {
-            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'model', value: formData?.modelGroupCode }] });
+        if (formActionType?.editMode && isFormVisible && userId) {
+            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: formData?.modelGroupCode }] });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType, isFormVisible]);
+    }, [formActionType, isFormVisible, userId]);
 
     useEffect(() => {
         if (extraParams && userId) {
@@ -196,9 +172,14 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         form.setFieldsValue(undefined);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, viewMode: buttonAction === VIEW_ACTION, editMode: buttonAction === EDIT_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        resetVariant();
         if (record) {
-            setFormData({ ...record, taxiIndicator: TAXI_NO_TAXI?.T?.key ? true : false });
-            form.setFieldsValue({ ...record, taxiIndicator: TAXI_NO_TAXI?.T?.key ? true : false });
+            if (buttonAction === VIEW_ACTION) {
+                setFormData({ ...record });
+            } else {
+                setFormData({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.TAXI?.key ? true : false });
+                form.setFieldsValue({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.TAXI?.key ? true : false });
+            }
             if (Number(record?.subsidyAmount) > 0) {
                 setShowFields(false);
             } else {
@@ -213,6 +194,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         form.resetFields();
         setShowFields(true);
         resetVariant();
+        userId && modelVariantForm.getFieldValue('modelGroupCode') && fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: modelVariantForm.getFieldValue('modelGroupCode') }] });
     };
 
     const tableProps = {
@@ -220,7 +202,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         totalRecords,
         setPage: setFilterString,
         page: filterString,
-        tableColumn: tableColumn({ handleButtonClick }),
+        tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         handleButtonClick,
         isLoading: showdataLoading,
@@ -235,7 +217,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
     };
 
     const onFinish = (values) => {
-        let finalPayload = { ...values, id: formData?.id || '', taxiIndicator: values?.taxiIndicator ? TAXI_NO_TAXI?.T?.key : TAXI_NO_TAXI?.N?.key };
+        const finalPayload = { ...values, id: formData?.id || '', taxiIndicator: values?.taxiIndicator ? TAXI_NO_TAXI?.TAXI?.key : TAXI_NO_TAXI?.NON_TAXI?.key };
         const onError = (message) => {
             showGlobalNotification({ message });
         };
@@ -267,7 +249,7 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         saveData(requestData);
     };
 
-    const CentralFameSubsidyFilterProps = {
+    const CentralFameSubsidyHeaderProps = {
         filterString,
         setFilterString,
         onFinish,
@@ -325,10 +307,11 @@ export const CentralFameSubsidyMain = ({ filterString, setFilterString, totalRec
         listVariantShowLoading,
         userId,
         setFilter: false,
+        isSearchLoading,
     };
     return (
         <>
-            <CentralFameSubsidyFilter {...CentralFameSubsidyFilterProps} />
+            <CentralFameSubsidyHeader {...CentralFameSubsidyHeaderProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />

@@ -15,7 +15,7 @@ export const defaultPageProps = (page) => {
         {
             key: 'pageNumber',
             title: 'Value',
-            value: page?.current,
+            value: page?.current ?? 1,
             canRemove: true,
             filter: false,
         },

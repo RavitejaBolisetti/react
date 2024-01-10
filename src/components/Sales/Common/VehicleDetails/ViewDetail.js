@@ -20,6 +20,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
 import { ChangeModelVariantMaster } from './ChangeModelVariant';
 import { STATUS } from 'constants/modelVariant';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -95,7 +96,7 @@ const ViewDetailMain = (props) => {
                                 )}
 
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vin')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleUsageType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_TYPE, formData?.vehicleUsageType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleUsageType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.VEHCL_TYPE?.id], formData?.vehicleUsageType), isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}>
@@ -110,7 +111,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}>{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')}>{checkAndSetDefaultValue(formData?.consumerSchemeWithTax, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.mnmCashBenefitAmountWithTax')}>{checkAndSetDefaultValue(formData?.mnmCashBenefitAmountWithTax, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount')}>{checkAndSetDefaultValue(formData?.mnmNonCashBenefitAmountWithTax, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount')}>{checkAndSetDefaultValue(formData?.fameSubsidyAmount, isLoading)}</Descriptions.Item>
                                 {showPrintDiscount && <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>{formData?.printDiscount === 'Y' ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no')}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>

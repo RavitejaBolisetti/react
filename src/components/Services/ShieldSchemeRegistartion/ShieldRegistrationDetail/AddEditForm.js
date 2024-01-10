@@ -21,7 +21,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, typeData, handleTaxChange } = props;
+    const { handleVINChange, formData, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, typeData, handleTaxChange } = props;
     const { activeKey, setActiveKey } = props;
 
     useEffect(() => {
@@ -102,7 +102,7 @@ const AddEditFormMain = (props) => {
                             {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.vin} label={translateContent('shieldSchemeRegistration.label.vin')} name={['registrationInformation', 'vin']}>
-                                        <Search allowClear onSearch={handleVinSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vin'))} disabled={!formActionType?.addMode} />
+                                        <Search allowClear onChange={handleVINChange} onSearch={handleVinSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vin'))} disabled={!formActionType?.addMode} />
                                     </Form.Item>
                                 </Col>
                             )}

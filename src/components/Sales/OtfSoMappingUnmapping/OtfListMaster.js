@@ -344,12 +344,13 @@ export const OtfListMasterBase = (props) => {
     };
 
     const handleSearchChange = (value, type) => {
-        if (!value) return;
+        if (!value) return false;
         SoForm?.validateFields(['parentGroupCode', 'locationCode'])
-            .then((formValues) => {
+            .then(() => {
+                const formValues = SoForm.getFieldsValue();
                 setfilterString({ otfNumber: formValues[type]?.otfNumber, soNumber: formValues[type]?.soNumber, soStatusCode: type === FORM_TYPE_CONSTANSTS?.FORM_1?.id ? status?.CRD_1 : status?.CRD_2, parentGroupCode: formValues?.parentGroupCode, dealerLocationCode: formValues?.locationCode, formType: type });
             })
-            .catch((err) => {});
+            .catch(() => {});
     };
     const handleResetData = (type, exception = undefined) => {
         switch (type) {

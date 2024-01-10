@@ -158,13 +158,13 @@ const VehicleDetailsMasterBase = (props) => {
         showGlobalNotification({ message });
         contactform.resetFields(['vehicleRegistrationNumber', 'orignallyWarrantyStartDate', 'modelGroup', 'modelFamily', 'modelDescription', 'modelGroupDesc', 'modelFamilyDesc', 'productDescription']);
     };
-    const checkDuplicate = (vehicleRegistrationNumber) => contactData.find((value) => value?.vehicleRegistrationNumber === vehicleRegistrationNumber);
+    const checkDuplicate = (vin) => contactData.find((value) => value?.vin === vin);
 
     const onSaveFormData = () => {
         contactform
             .validateFields()
             .then((value) => {
-                if (checkDuplicate(value?.vehicleRegistrationNumber)) {
+                if (checkDuplicate(value?.vin)) {
                     showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.duplicateVehicle') });
                     return false;
                 } else {
@@ -206,6 +206,9 @@ const VehicleDetailsMasterBase = (props) => {
 
     const handleVinSearch = (value) => {
         if (!value && formActionType?.addMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.PAID?.key) {
+            return false;
+        } else if (checkDuplicate(value)) {
+            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), notificationType: 'error', message: translateContent('amcRegistration.validation.duplicateVehicle') });
             return false;
         }
         const onVehicleSearchSuccessAction = (data) => {

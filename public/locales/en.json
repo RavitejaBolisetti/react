@@ -908,6 +908,7 @@
         "validation": {
             "noSchemeVIN": "No Schemes present for this AMC Type",
             "noVINFound": "No VIN found for searched Booking Number",
+            "validateOTF" : "Please Validate Booking Number to Continue",
             "noEmployeesFound": "No employees found for searched name",
             "incorrectEmployeeName": "Employee name is not correct",
             "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount",

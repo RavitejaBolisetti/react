@@ -197,6 +197,7 @@ export const RSARegistrationMasterBase = (props) => {
     const [previousSection, setPreviousSection] = useState(1);
     const [vehicleCustomerDetailsOnly, setVehicleCustomeDetailsOnly] = useState({});
     const [selectedCardData, setSelectedCardData] = useState();
+    const [isVINOrOTFValidated, setIsVINOrOTFValidated] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -516,12 +517,17 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleOtfSearch = (value) => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setIsVINOrOTFValidated(false);
+        };
         setBookingNumber(value);
         if (value) {
             const onSuccessAction = (res) => {
                 setVehicleCustomeDetailsOnly(res?.data);
                 setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+                setIsVINOrOTFValidated(true);
             };
             const extraParams = [
                 {
@@ -536,9 +542,15 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleVinSearch = (value) => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsVINOrOTFValidated(false);
+        };
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setVehicleCustomeDetailsOnly(res?.data);
+            setIsVINOrOTFValidated(true);
 
             const extraParams = [
                 {
@@ -1033,6 +1045,8 @@ export const RSARegistrationMasterBase = (props) => {
         selectedCardData,
         userType,
         handleDownloadFile,
+        showGlobalNotification,
+        isVINOrOTFValidated,
     };
 
     useEffect(() => {
