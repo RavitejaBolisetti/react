@@ -46,6 +46,8 @@ import IncentiveSchemePage from './IncentiveScheme';
 import IncentiveClaimPage from './IncentiveClaim'
 import CentralFameSubsidyPage from './CentralFameSubsidy';
 import ExchangeLoyaltyReclaimRequestMasterPage from './ExchangeLoyaltyReclaimRequest';
+import ExchangeClaimMasterPage from './ExchangeClaim';
+import LoyaltyClaimMasterPage from './LoyaltyClaim';
 
 export {
     OTFMasterPage,
@@ -87,4 +89,6 @@ export {
     IncentiveClaimPage, 
     CentralFameSubsidyPage,
     ExchangeLoyaltyReclaimRequestMasterPage,
+    ExchangeClaimMasterPage,
+    LoyaltyClaimMasterPage
 };

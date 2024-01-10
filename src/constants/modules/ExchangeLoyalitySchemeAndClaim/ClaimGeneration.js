@@ -24,11 +24,11 @@ export const RECLAIM_REQUEST_SECTION = {
         title: 'Transfer RC',
         displayOnList: true,
     },
-    CLAIM_DETAILS: {
-        id: 5,
-        title: 'Claim Details',
-        displayOnList: true,
-    },
+    // CLAIM_DETAILS: {
+    //     id: 5,
+    //     title: 'Claim Details',
+    //     displayOnList: true,
+    // },
     CREDIT_DEBIT_DETIALS: {
         id: 6,
         title: 'Credit/Debit Details',

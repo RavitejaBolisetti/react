@@ -85,6 +85,8 @@ import {
     IncentiveClaimPage,
     CentralFameSubsidyPage,
     ExchangeLoyaltyReclaimRequestMasterPage,
+    ExchangeClaimMasterPage,
+    LoyaltyClaimMasterPage
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -107,7 +109,7 @@ import CustomerEmpowermentMasterPage from 'pages/Sales/CustomerEmpowerment';
 import CsdCpcClaimMasterPage from 'pages/Sales/CsdCpcClaim';
 import AdditionalCsdCpcClaimPage from 'pages/Sales/AdditionalCsdCpcClaim';
 import OverRiderClaimPage from 'pages/Sales/OverRiderClaim';
-import ExchangeLoyalityClaimMasterPage from 'pages/Sales/ExchangeLoyalityClaim';
+// import ExchangeLoyalityClaimMasterPage from 'pages/Sales/ExchangeLoyalityClaim';
 import { IncentiveSchemeMasterPage } from 'pages/Sales/IncentiveSchemeMaster/IncentiveSchemeMasterPage';
 import IncentiveSchemePage from 'pages/Sales/IncentiveScheme';
 
@@ -295,7 +297,9 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_ADDITIONAL_CDC_CPC_CLAIM} element={<AdditionalCsdCpcClaimPage />} exact />
                 <Route path={routing.ROUTING_OVER_RIDER_CLAIM} element={<OverRiderClaimPage />} exact />
 
-                <Route path={routing.ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION} element={<ExchangeLoyalityClaimMasterPage />} exact />
+                {/* <Route path={routing.ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION} element={<ExchangeLoyalityClaimMasterPage />} exact /> */}
+                <Route path={routing.ROUTING_EXCHANGE_CLAIM_GENERATION} element={<ExchangeClaimMasterPage />} exact />
+                <Route path={routing.ROUTING_LOYALTY_CLAIM_GENERATION} element={<LoyaltyClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_EXCHANGE_LOYALTY_INCENTIVE_MASTER} element={<ExchangeLoyaltyIncentiveMasterPage />} exact />
                 <Route path={routing.ROUTING_EXCHANGE_LOYALTY_RECLAIM_REQUEST} element={<ExchangeLoyaltyReclaimRequestMasterPage />} exact />
                 
