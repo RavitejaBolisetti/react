@@ -57,9 +57,9 @@ export const EMBEDDED_REPORTS = {
 
     AMC_CETRIFICATE_DOCUMENT: {
         id: 7,
-        key: 'AMC-Certificate_Document',
+        key: 'AMC_Certificate_Document',
         title: 'AMC Certificate Document',
-        type: 'Report',
+        type: 'Document',
         slug: 'amc-certificate-document',
     },
     POSO: {
@@ -172,7 +172,7 @@ export const EMBEDDED_REPORTS = {
     AMC_REGISTRATION_INVOICE_DOCUMENT: {
         id: 24,
         key: 'AMC_Certificate_Document',
-        title: 'AMC Registration Invoice Document ',
+        title: 'AMC Registration Invoice Document',
         type: 'Document',
     },
     CHALLAN_DOCUMENT: {

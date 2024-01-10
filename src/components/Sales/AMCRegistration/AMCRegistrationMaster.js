@@ -448,13 +448,13 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handlePrintDownload = (record) => {
-        let typeRecordKey = record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
-        setReportButtonType(record?.typeRecord);
+        let typeRecordKey = record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
+        setReportButtonType(record?.typeselectedAMC);
         setReportVisible(true);
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.message,
+                value: record?.amcId,
             },
         ]);
     };
@@ -951,7 +951,7 @@ export const AMCRegistrationMasterBase = (props) => {
         if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_CETRIFICATE_DOCUMENT);
         } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         }
