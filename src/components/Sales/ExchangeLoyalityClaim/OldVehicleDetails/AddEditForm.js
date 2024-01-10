@@ -78,7 +78,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item name="LastName" label={'Last Name'}>
+                                <Form.Item name="lastName" label={'Last Name'}>
                                     <Input placeholder={preparePlaceholderText('Last Name')} maxLength={50} disabled={true} />
                                 </Form.Item>
                             </Col>
@@ -104,7 +104,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item label={'VehicleVarient'} name="vehicleVarient" className={styles?.datePicker}>
+                                <Form.Item label={'Vehicle Varient'} name="vehicleVarient" className={styles?.datePicker}>
                                     <Input placeholder={preparePlaceholderText('Vehicle Varient')} maxLength={50} disabled={true} />
                                 </Form.Item>
                             </Col>
@@ -115,7 +115,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item label={'Reg. No'} name="RegistrationNo" className={styles?.datePicker}>
+                                <Form.Item label={'Reg. No'} name="registrationNo" className={styles?.datePicker}>
                                     <Input placeholder={preparePlaceholderText('Reg. No')} maxLength={50} disabled={true} />
                                 </Form.Item>
                             </Col>
@@ -125,7 +125,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item label={'Month of Registration'} name="MonthOfRegistration" className={styles?.datePicker}>
+                                <Form.Item label={'Month of Registration'} name="monthOfRegistration" className={styles?.datePicker}>
                                     <DatePicker placeholder={preparePlaceholderSelect('Month of Registration')} format={dateFormat} className={styles.fullWidth} disabled={true} />
                                 </Form.Item>
                             </Col>
@@ -180,12 +180,12 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item label={'Ins. No Claim Bonus'} name="InsNoClaimBonus" className={styles?.datePicker}>
+                                <Form.Item label={'Ins. No Claim Bonus'} name="insNoClaimBonus" className={styles?.datePicker}>
                                     <Input placeholder={preparePlaceholderText('Ins. No Claim Bonus')} maxLength={50} disabled={true} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item label={'Ins. Exp. Date'} name="InsExpDate" className={styles?.datePicker}>
+                                <Form.Item label={'Ins. Exp. Date'} name="insExpDate" className={styles?.datePicker}>
                                     <DatePicker placeholder={preparePlaceholderSelect('Ins. Exp. Date')} format={dateFormat} className={styles.fullWidth} disabled={true} />
                                 </Form.Item>
                             </Col>
@@ -195,12 +195,12 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item label={'Deviation Doc Date'} name="Deviation Doc Date" className={styles?.datePicker}>
+                                <Form.Item label={'Deviation Doc Date'} name="deviationDocDate" className={styles?.datePicker}>
                                     <DatePicker placeholder={preparePlaceholderSelect('Deviation Doc Date')} format={dateFormat} className={styles.fullWidth} disabled={true} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item label={'Deviation Req Status'} name="Deviation Req Status" className={styles?.datePicker}>
+                                <Form.Item label={'Deviation Req Status'} name="deviationReqStatus" className={styles?.datePicker}>
                                     <Input placeholder={preparePlaceholderText('Deviation Req Status')} maxLength={50} disabled={true} />
                                 </Form.Item>
                             </Col>

@@ -62,12 +62,12 @@ const AddEditFormMain = (props) => {
             <Card>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Customer ID" label={'Customer ID'}>
+                        <Form.Item name="customerID" label={'Customer ID'}>
                             <Input placeholder={preparePlaceholderText('Customer ID')} maxLength={50} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Customer Name" label={'Customer Name'}>
+                        <Form.Item name="customerName" label={'Customer Name'}>
                             <Input placeholder={preparePlaceholderText('Customer Name')} maxLength={50} />
                         </Form.Item>
                     </Col>
@@ -84,7 +84,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item label={'Varient'} name="Varient">
+                        <Form.Item label={'varient'} name="Varient">
                             <Input placeholder={preparePlaceholderText('Varient')} maxLength={50} disabled={true} />
                         </Form.Item>
                     </Col>
@@ -115,7 +115,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item label={'Month of Registration'} name="MonthOfRegistration" className={styles?.datePicker}>
+                        <Form.Item label={'Month of Registration'} name="monthOfRegistration" className={styles?.datePicker}>
                             {customSelectBox({ data: [], placeholder: preparePlaceholderText('Month of Registration'), disabled:true, })}
 
                             {/* <DatePicker placeholder={preparePlaceholderSelect('Month of Registration')} format={dateFormat} className={styles.fullWidth} disabled={true} /> */}
@@ -142,17 +142,17 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item label={'Customer Expected Price'} name="Customer Expected Price" className={styles?.datePicker}>
+                        <Form.Item label={'Customer Expected Price'} name="customerExpectedPrice" className={styles?.datePicker}>
                             <Input placeholder={preparePlaceholderText('Customer Expected Price')} maxLength={50} disabled={true} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Procurement Price" label={'Procurement Price'}>
+                        <Form.Item name="procurementPrice" label={'Procurement Price'}>
                             <Input placeholder={preparePlaceholderText('Procurement Price')} disabled={true}/>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Finance Company" label={'Finance Company'}>
+                        <Form.Item name="financeCompany" label={'Finance Company'}>
                             <Input placeholder={preparePlaceholderText('Finance Company')} disabled={true}/>
                         </Form.Item>
                     </Col>

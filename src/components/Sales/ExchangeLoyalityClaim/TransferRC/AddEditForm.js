@@ -84,29 +84,29 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="DocNumber" label={'Evaluation Number'} initialValue={formData?.EvaluationNumber}>
+                                    <Form.Item name="evaluationNumber" label={'Evaluation Number'} initialValue={formData?.EvaluationNumber}>
                                         <Input placeholder={preparePlaceholderText('Evaluation Number')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="EvaluationDate" label={'Evaluation Date'} initialValue={formData?.financierDate}>
+                                    <Form.Item name="evaluationDate" label={'Evaluation Date'} initialValue={formData?.financierDate}>
                                     <DatePicker placeholder={preparePlaceholderSelect('Evaluation Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
 
                                         {/* <Input placeholder={preparePlaceholderText('Evaluation Date')} maxLength={50} {...disabledProps} /> */}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="CustomerName" label={'Customer Name'} initialValue={formData?.financierName}>
+                                    <Form.Item name="customerName" label={'Customer Name'} initialValue={formData?.financierName}>
                                         <Input placeholder={preparePlaceholderText('Customer Number')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="ProcuremantPrice" label={'Procuremant Price'} initialValue={formData?.financierPrice}>
+                                    <Form.Item name="procuremantPrice" label={'Procuremant Price'} initialValue={formData?.financierPrice}>
                                         <Input placeholder={preparePlaceholderText('Procuremant Price')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="ProcurementDate" label={'Procurement Date'} initialValue={formData?.financierDate}>
+                                    <Form.Item name="procurementDate" label={'Procurement Date'} initialValue={formData?.financierDate}>
                                     <DatePicker placeholder={preparePlaceholderSelect('Procurement Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                                         {/* <Input placeholder={preparePlaceholderText('Procurement Date')} maxLength={50} {...disabledProps} /> */}
                                     </Form.Item>
@@ -117,7 +117,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="ProductType" label={'Product Type'} initialValue={formData?.financierType}>
+                                    <Form.Item name="productType" label={'Product Type'} initialValue={formData?.financierType}>
                                         <Input placeholder={preparePlaceholderText('Product Type')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -137,12 +137,12 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="Mileage" label={'Mileage(KMS)'} initialValue={formData?.financier}>
+                                    <Form.Item name="mileage" label={'Mileage(KMS)'} initialValue={formData?.financier}>
                                         <Input placeholder={preparePlaceholderText('Mileage in KMs')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="Varient" label={'Varient'} initialValue={formData?.varient}>
+                                    <Form.Item name="varient" label={'Varient'} initialValue={formData?.varient}>
                                         <Input placeholder={preparePlaceholderText('Varient')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -177,12 +177,12 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="ChassisNumber" label={'Chassis Number'} initialValue={formData?.ChassisNumber}>
+                                    <Form.Item name="chassisNumber" label={'Chassis Number'} initialValue={formData?.ChassisNumber}>
                                         <Input placeholder={preparePlaceholderText('Chassis Number')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="EngineNumber" label={'Engine Number'} initialValue={formData?.EngineNumber}>
+                                    <Form.Item name="engineNumber" label={'Engine Number'} initialValue={formData?.EngineNumber}>
                                         <Input placeholder={preparePlaceholderText('Engine Number')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -213,7 +213,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="BrokerSource" label={'Broker Source'} initialValue={formData?.BrokerSource}>
+                                    <Form.Item name="brokerSource" label={'Broker Source'} initialValue={formData?.BrokerSource}>
                                         <Input placeholder={preparePlaceholderText('Broker Source')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
@@ -228,7 +228,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="BrokerVahanAckNumber" label={'Broker Vahan Ack Number'} initialValue={formData?.BrokerVahanAckNumber}>
+                                    <Form.Item name="brokerVahanAckNumber" label={'Broker Vahan Ack Number'} initialValue={formData?.BrokerVahanAckNumber}>
                                         <Input placeholder={preparePlaceholderText('Broker Vahan Ack Number')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>

@@ -52,7 +52,7 @@ const ClaimDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {'Status'}
+                    {'Request Status'}
                     <span>{record?.irnStatus}</span>
                 </div>
                 <Divider />

@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { AddEditForm } from './AddEditForm';
+import ViewDetail from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { EmployeeEmpowermentFormButton } from '../EmployeeEmpowermentFormButton';
 
@@ -87,7 +88,7 @@ const CreditDebitDetailsMain = (props) => {
                         </Col>
                     </Row>
                     <Card className={styles.cardView}>
-                        <AddEditForm {...formProps} />
+                        {formActionType?.viewMode ? <ViewDetail {...formProps}  /> : <AddEditForm {...formProps} />}
                     </Card>
                 </Col>
             </Row>

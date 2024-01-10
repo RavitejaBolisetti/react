@@ -45,9 +45,28 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Zone" name="zone">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Area Office" name="areaOffice">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Area Office')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Dealer Name" name="dealerName">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Location Name" name="locationName">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Location Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col> */}
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label={'Scheme Type' || translateContent('city.label.countryCode')} name="schemeType" rules={[validateRequiredSelectField('corporate category' || translateContent('city.validation.country'))]}>
-                    {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Scheme Type') })}
-                       
+                        {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Scheme Type') })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -71,35 +90,13 @@ export const AdvancedSearchFrom = (props) => {
                         {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Modal Varient') })}
                     </Form.Item>
                 </Col>
-            </Row>
 
-            {/* <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        label={'Valid as on' || translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')}
-                        name="fromDate"
-                        className={styles?.datePicker}
-                        //  rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}
-                    >
-                        <DatePicker
-                            placeholder={'Valid as on' || preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
-                            format={dateFormat}
-                            className={styles.fullWidth}
-                            // disabledDate={(current) => current > new Date()}
-                            // onChange={(event) => {
-                            //     advanceFilterForm.setFieldsValue({ toDate: undefined });
-                            //     if (event && Object?.keys(event)?.length) setrules({ fromdate: true, todate: true });
-                            //     else if (!event) setrules({ fromdate: false, todate: false });
-                            // }}
-                        />
-                    </Form.Item>
-                </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.pad5}>
                     <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label={'Status' || translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
                         <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
                     </Form.Item>
                 </Col>
-            </Row> */}
+            </Row>
 
             <ModalButtons {...modalProps} />
         </Form>

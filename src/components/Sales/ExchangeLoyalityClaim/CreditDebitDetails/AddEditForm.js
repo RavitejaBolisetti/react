@@ -25,7 +25,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="Credit Note Date" label={'Credit Note Date'}>
+                            <Form.Item name="creditNoteDate" label={'Credit Note Date'}>
                                 <Input placeholder={preparePlaceholderText('Credit Note Date')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -36,28 +36,28 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="DebitNoteNumber" label={'Debit Note Number'}>
+                            <Form.Item name="debitNoteNumber" label={'Debit Note Number'}>
                                 <Input placeholder={preparePlaceholderText('Debit Note Number')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="Debit Note Date" label={'Debit Note Date'}>
+                            <Form.Item name="debitNoteDate" label={'Debit Note Date'}>
                                 <Input placeholder={preparePlaceholderText('Debit Note Date')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="DebitNoteAmount" label={'Debit Note Amount'}>
+                            <Form.Item name="debitNoteAmount" label={'Debit Note Amount'}>
                                 <Input placeholder={preparePlaceholderText('Debit Note Amount')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="M&M Claim Number" label={'M&M Claim Number'}>
+                            <Form.Item name="mnMClaimNumber" label={'M&M Claim Number'}>
                                 <Input placeholder={preparePlaceholderText('M&M Claim Number')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="M&M Claim Date" label={'M&M Claim Date'}>
+                            <Form.Item name="mnMClaimDate" label={'M&M Claim Date'}>
                                 <DatePicker placeholder={preparePlaceholderSelect('M&M Claim Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
 
                                 {/* <Input placeholder={preparePlaceholderText('M&M Claim Dtae')} maxLength={50} {...disabledProps} /> */}
@@ -70,7 +70,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="reCredit Note Date" label={'Re Credit Note Date'}>
+                            <Form.Item name="reCreditNoteDate" label={'Re Credit Note Date'}>
                                 <DatePicker placeholder={preparePlaceholderSelect('Re Credit Note Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                                 {/* <Input placeholder={preparePlaceholderText('Re Credit Note Date')} maxLength={50} {...disabledProps} /> */}
                             </Form.Item>
@@ -87,7 +87,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="reDebit Note Date" label={'Re Debit Note Date'}>
+                            <Form.Item name="reDebitNoteDate" label={'Re Debit Note Date'}>
                                 <DatePicker placeholder={preparePlaceholderSelect('Re Debit Note Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
 
                                 {/* <Input placeholder={preparePlaceholderText('Re Debit Note Date')} maxLength={50} {...disabledProps} /> */}

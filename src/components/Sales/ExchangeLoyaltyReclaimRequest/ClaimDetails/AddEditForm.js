@@ -32,17 +32,17 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="invoiceId" label={'Invoice Id'}>
-                                        <Input placeholder={preparePlaceholderText('Invoice Id')} maxLength={50} {...disabledProps} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                     <Form.Item name="registrationNumber" label={'Registration Number'}>
                                         <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item label={'invoiceDate'} name="InvoiceData" className={styles?.datePicker}>
+                                    <Form.Item name="invoiceId" label={'Invoice Id'}>
+                                        <Input placeholder={preparePlaceholderText('Invoice Id')} maxLength={50}  />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                    <Form.Item label={'Invoice Date'} name="invoiceData" className={styles?.datePicker}>
                                         <DatePicker placeholder={preparePlaceholderSelect('Invoice Date')} format={dateFormat} className={styles.fullWidth} />
                                     </Form.Item>
                                 </Col>

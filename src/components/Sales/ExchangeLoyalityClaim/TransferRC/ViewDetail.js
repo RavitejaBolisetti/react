@@ -26,51 +26,42 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <>
-            <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
-                <Panel header={'Request Detail' || translateContent('applicationMaster.text.applicationActions')} key="1">
-                    <Divider />
-                    <Descriptions {...viewProps}>
-                        <Descriptions.Item label={'Financial Year' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Month' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Requested Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{formData?.isActive ? 'Active' : 'InActive'}</Descriptions.Item>
-                    </Descriptions>
-                </Panel>
-            </Collapse>
-            <Collapse onChange={() => handleCollapse(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
-                <Panel header={'Employeement Details' || translateContent('applicationMaster.text.applicationActions')} key="2">
-                    <Divider />
-                    <Descriptions {...viewProps}>
-                        <Descriptions.Item label={'Dealer Code' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Dealer Location' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Employee Code' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        {/* {on search employee code from employee fetails fetch} */}
-                        <Descriptions.Item label={'Employee Name' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Employee Status' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Mobile No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'PAN No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Bank Name' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Bank Acc No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'IFSC Code' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        {/*  */}
-                        <Descriptions.Item label={'Recognition Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={'Recognition Comment' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-
-                        {/* <Descriptions.Item label={'Month' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Request ID' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Request Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Request Status' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'requester ' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Budgeted For the Period' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Utilized' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Balance Available' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Dealer Location' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Dealer Code' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item> */}
-                    </Descriptions>
-                </Panel>
-            </Collapse>
-        </>
+        <Card>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label={'Doc Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.docNumber, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Doc Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.DocDate, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Doc Status' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.docStatus, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Evaluation Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.evaluationNumber, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Evaluation Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.evaluationDate, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Customer Name' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Procuremant Price' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.procuremantPrice, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Procurement Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.procurementDate, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Customer Mob. Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.customerMobNumber, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Product Type' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.productType, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Reg. Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.regNumber, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Fuel Type' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.fuelType, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Make' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.make, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Mileage' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.mileage, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Varient' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.varient, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Model' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.model, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Year of Manufacturing' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.yearofManufacturing, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Month of Manufacturing' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.monthofManufacturing, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Color' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.color, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Year of Registration' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.yearofRegistration, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Month of Registration' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.monthofRegistration, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Chassis Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Engine Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Selling/Offload Price' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.sellingOffloadPrice, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Selling Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.sellingDate, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Selling Type' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.sellingType, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Bussiness Assosiate Id' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.bussinessAssosiateId, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Bussiness Assosiate Name' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.bussinessAssosiateName, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Broker Source' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.brokerSource, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Assosiate Mob No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.assosiateMobNo, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Form 29C Vahan Ack  Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.form29cVahanAckNumber, isLoading)}</Descriptions.Item> 
+                <Descriptions.Item label={'Broker Vahan Ack Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.brokerVahanAckNumber, isLoading)}</Descriptions.Item> 
+            </Descriptions>
+        </Card>
     );
 };
 

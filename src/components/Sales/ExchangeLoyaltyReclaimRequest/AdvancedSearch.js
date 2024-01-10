@@ -77,9 +77,14 @@ export const AdvancedSearchFrom = (props) => {
                         <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Location Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Request Type" name="requestType">
                         <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('request Type')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
+                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -114,16 +119,7 @@ export const AdvancedSearchFrom = (props) => {
                         />
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('global.label.status')}>
-                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
-                    </Form.Item>
-                </Col>
-                {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={'Request ' + translateContent('designationMaster.label.status')}>
-                        <Select optionFilterProp="children" options={statusFilter || []} placeholder={preparePlaceholderSelect('Request Status')} fieldNames={{ label: 'value', value: 'key' }} loading={isModelDataLoading} allowClear showSearch  />
-                    </Form.Item>
-                </Col> */}
+               
             </Row>
 
             <ModalButtons {...modalProps} />

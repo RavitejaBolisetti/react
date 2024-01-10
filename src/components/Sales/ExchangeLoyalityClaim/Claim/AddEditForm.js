@@ -69,38 +69,38 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="OEM Share Amount" label={'OEM Share Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
+                                    <Form.Item name="oemShareAmount" label={'OEM Share Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
                                         <Input placeholder={preparePlaceholderText('OEM Share Amount')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="Total Amount" label={'Total Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
+                                    <Form.Item name="totalAmount" label={'Total Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
                                         <Input placeholder={preparePlaceholderText('Total Amount')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="Approved Dealer Amount" label={'Approved Dealer Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
+                                    <Form.Item name="approvedDealerAmount" label={'Approved Dealer Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
                                         <Input placeholder={preparePlaceholderText('Approved Dealer Amount')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="Approved Total Amount" label={'Approved Total Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
+                                    <Form.Item name="approvedTotalAmount" label={'Approved Total Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
                                         <Input placeholder={preparePlaceholderText('Approved Total Amount')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="M&M claim Number" label={'M&M claim Number'} initialValue={formData?.insPremiumValue} disabled={true}>
+                                    <Form.Item name="MnMclaimNumber" label={'M&M claim Number'} initialValue={formData?.insPremiumValue} disabled={true}>
                                         <Input placeholder={preparePlaceholderText('M&M claim Number')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-                                    <Form.Item name="M&MClaimDate" label={'M&M claim Date'} initialValue={formData?.insPremiumValue} disabled={true}>
+                                    <Form.Item name="MnMClaimDate" label={'M&M claim Date'} initialValue={formData?.insPremiumValue} disabled={true}>
                                         <DatePicker placeholder={preparePlaceholderSelect('M&M claim Date')} format={dateFormat} picker="year" className={styles.fullWidth} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="Remark" label={'Remarks'} initialValue={formData?.financierName}>
+                                    <Form.Item name="Remark" label={'remarks'} initialValue={formData?.financierName}>
                                         <Input placeholder={preparePlaceholderText('Remarks')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
