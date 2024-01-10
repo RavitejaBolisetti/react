@@ -30,16 +30,7 @@ export const EmployeeEmpowermentFormButton = ({ record, onCloseAction, buttonDat
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                {buttonData?.approvalChangeHistory && (
-                        <Button onClick={handleApprovalChangeHistory} type="primary">
-                            {"View Approval History" ||translateContent('global.buttons.viewHistory')}
-                        </Button>
-                    )}
-                {buttonData?.changeHistory && (
-                        <Button onClick={handleExchangeClaimChangeHistory} type="primary">
-                            {"Exchange Claim History"||translateContent('global.buttons.viewHistory')}
-                        </Button>
-                    )}
+               
                     {buttonData?.editBtn && !buttonType && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             {translateContent('global.buttons.edit')}

@@ -87,9 +87,9 @@ const CreditDebitDetailsMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <Card className={styles.cardView}>
+                    < >
                         {formActionType?.viewMode ? <ViewDetail {...formProps}  /> : <AddEditForm {...formProps} />}
-                    </Card>
+                    </>
                 </Col>
             </Row>
             <Row>

@@ -133,7 +133,7 @@ export const ExchangeClaimMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         cancelOtfBtn: false,
-        approvalChangeHistory: true,
+        // approvalChangeHistory: true,
         changeHistory: true
 
     };
@@ -549,7 +549,6 @@ export const ExchangeClaimMasterBase = (props) => {
             <AdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
 
-            {/* <AppliedAdvanceFilter {...advanceFilterProps} /> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -557,7 +556,7 @@ export const ExchangeClaimMasterBase = (props) => {
                 </Col>
             </Row>
             <ExchangeClaimMasterContainer {...containerProps} />
-            <ApprovalChangeHistory {...approvalChangeHistoryProps} />
+            {/* <ApprovalChangeHistory {...approvalChangeHistoryProps} /> */}
             <ExchangeClaimChangeHistory {...exchangeClaimChangehHistoryProps} />
 
         </>

@@ -8,11 +8,11 @@ import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'assets/sass/app.module.scss';
-import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ClaimGeneration';
+import { LOYALTY_CLAIM_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/LoyalityClaimGeneration';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, previousSection } = props;
-    const vehicleSectionList = Object.values(RECLAIM_REQUEST_SECTION);
+    const vehicleSectionList = Object.values(LOYALTY_CLAIM_SECTION);
     const onHandle = (key) => {
         setCurrentSection(key);
     };

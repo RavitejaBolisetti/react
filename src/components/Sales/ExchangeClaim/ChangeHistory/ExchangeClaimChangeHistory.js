@@ -125,47 +125,63 @@ const ExchangeClaimChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAct
         tblPrepareColumns({
             title: 'Claim No' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 120,
         }),
         tblPrepareColumns({
             title: 'Claim Date' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 120,
         }),
         tblPrepareColumns({
             title: 'New Vehicle Invoie Date' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 200,
         }),
         tblPrepareColumns({
             title: 'New Vehicle Invoie Customer' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 220,
         }),
         tblPrepareColumns({
             title: 'New Vehicle Dealer Name' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 220,
+
         }),
         tblPrepareColumns({
             title: 'New Vehicle Invoie Dealer Code' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 260,
+
         }),
         tblPrepareColumns({
             title: 'Old Vehicle Make' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 180,
+
         }),
         tblPrepareColumns({
             title: 'Old Vehicle Model' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 180,
+
         }),
         tblPrepareColumns({
             title: 'Old Vehicle Varient' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 180,
         }),
         tblPrepareColumns({
             title: 'Old Vehicle Customer Name' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 220,
         }),
         // Image Rc
         tblPrepareColumns({
             title: 'Exhange Claim Amount' || translateContent('customerMaster.tableColHeading.changeSource'),
             dataIndex: 'source',
+            width: 180,
+
         }),
        
         tblStatusColumn({ styles, width: '10%' }),

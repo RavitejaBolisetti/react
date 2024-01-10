@@ -84,13 +84,13 @@ const AddEditFormMain = (props) => {
                             </Col>
                            
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item name="exchangeMake" label={'Exchange Make'} initialValue={formData?.chassisNumber}>
-                                    <Input placeholder={preparePlaceholderText('Exchange Make')} maxLength={50} disabled={true} />
+                                <Form.Item name="make" label={'Make'} initialValue={formData?.chassisNumber}>
+                                    <Input placeholder={preparePlaceholderText('Make')} maxLength={50} disabled={true} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                <Form.Item name="exchangeModal" label={'Exchange Modal'} initialValue={formData?.chassisNumber}>
-                                    <Input placeholder={preparePlaceholderText('Exchange Modal')} maxLength={50} disabled={true} />
+                                <Form.Item name="modal" label={'Modal'} initialValue={formData?.chassisNumber}>
+                                    <Input placeholder={preparePlaceholderText('Modal')} maxLength={50} disabled={true} />
                                 </Form.Item>
                             </Col>
 

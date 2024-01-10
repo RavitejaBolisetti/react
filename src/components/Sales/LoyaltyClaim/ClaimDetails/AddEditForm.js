@@ -100,18 +100,7 @@ const AddEditFormMain = (props) => {
                                         <Input placeholder={preparePlaceholderText('Customer Name')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="evaluationId" label={'Evaluation Id'} initialValue={formData?.financierName}>
-                                        <Input placeholder={preparePlaceholderText('Evaluation Id')} maxLength={50} {...disabledProps} />
-                                    </Form.Item>
-                                </Col>
-                                {/* <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="approverRemark" label={'Approver Remarks'} initialValue={formData?.financierName}>
-                                        <Input placeholder={preparePlaceholderText('Approver Remarks')} maxLength={50} {...disabledProps} />
-                                    </Form.Item>
-                                </Col> */}
-                            </Row>
-                            <Row gutter={20}>
+
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                     <Form.Item name="dealerShareAmount" label={'Dealer Share Amount'} initialValue={formData?.insPremiumValue} disabled={true}>
                                         <Input placeholder={preparePlaceholderText('Dealer Share Amount')} maxLength={50} {...disabledProps} />
@@ -149,7 +138,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                    <Form.Item name="Remark" label={'remarks'} initialValue={formData?.financierName}>
+                                    <Form.Item name="remark" label={'Remarks'} initialValue={formData?.financierName}>
                                         <Input placeholder={preparePlaceholderText('Remarks')} maxLength={50} {...disabledProps} />
                                     </Form.Item>
                                 </Col>

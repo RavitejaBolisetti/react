@@ -26,8 +26,8 @@ import { LANGUAGE_EN } from 'language/en';
 import { QUERY_BUTTONS_CONSTANTS, QueryButtons } from './QueryButtons';
 import { drawerTitle } from 'utils/drawerTitle';
 import { LoyaltyClaimMasterContainer } from './LoyaltyClaimMasterContainer';
-import { RECLAIM_REQUEST_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/ClaimGeneration';
 import { ApprovalChangeHistory, ExchangeClaimChangeHistory } from './ChangeHistory';
+import { LOYALTY_CLAIM_SECTION } from 'constants/modules/ExchangeLoyalitySchemeAndClaim/LoyalityClaimGeneration';
 
 
 const mapStateToProps = (state) => {
@@ -132,8 +132,6 @@ export const LoyaltyClaimMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         cancelOtfBtn: false,
-        approvalChangeHistory: true,
-        changeHistory: true
     };
     const pageIntialState = {
         pageSize: 10,
@@ -230,9 +228,9 @@ export const LoyaltyClaimMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        const defaultSection = RECLAIM_REQUEST_SECTION.CLAIM.id;
+        const defaultSection = LOYALTY_CLAIM_SECTION.CLAIM.id;
         setDefaultSection(defaultSection);
-        setSetionName(RECLAIM_REQUEST_SECTION);
+        setSetionName(LOYALTY_CLAIM_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
