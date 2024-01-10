@@ -506,13 +506,14 @@ export const AMCRegistrationMasterBase = (props) => {
                     value: 'otfNumber',
                 },
                 {
+                    key: 'registrationType',
+                    value: 'REG',
+                },
+                {
                     key: 'searchParam',
                     value: otfNumber,
                 },
-                {
-                    key: 'otfStatus',
-                    value: 'I',
-                },
+
                 {
                     key: 'pageNumber',
                     value: '1',
