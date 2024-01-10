@@ -5,10 +5,11 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { translateContent } from 'utils/translateContent';
-import { TAXI_NO_TAXI } from './fameSubsidryConstants';
 import styles from 'assets/sass/app.module.scss';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
-export const tableColumn = ({ handleButtonClick }) => {
+export const tableColumn = ({ handleButtonClick, typeData }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('centralFameSubsidy.label.tableColumn.modelGroup'),
@@ -27,7 +28,7 @@ export const tableColumn = ({ handleButtonClick }) => {
             title: translateContent('centralFameSubsidy.label.tableColumn.taxIndicator'),
             dataIndex: 'taxiIndicator',
             width: '15%',
-            render: (status) => TAXI_NO_TAXI?.[status]?.value || '-',
+            render: (status) => getCodeValue(typeData[PARAM_MASTER?.VEHCL_TYPE?.id], status),
         }),
         tblActionColumn({ handleButtonClick, styles, width: '15%' }),
     ];

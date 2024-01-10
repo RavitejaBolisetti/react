@@ -6,6 +6,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { translateContent } from 'utils/translateContent';
+import { TAXI_NO_TAXI } from './fameSubsidryConstants';
 
 export const ViewDetail = (props) => {
     const { formData, styles, showFields } = props;
@@ -29,7 +30,7 @@ export const ViewDetail = (props) => {
                 <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.modelGroup')}>{formData?.modelGroupName || formData?.modelGroupCode}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('commonModules.label.exchangeDetails.variant')}>{formData?.variantName || formData?.variantCode}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.batterycapacity')}>{formData?.batteryCapacity + ' KVA'}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('centralFameSubsidy.label.taxiIndicator')}>{formData?.taxiIndicator ? 'Taxi' : 'Non taxi'}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('centralFameSubsidy.label.taxiIndicator')}>{formData?.taxiIndicator === TAXI_NO_TAXI?.TAXI?.key ? 'Taxi' : 'Non taxi'}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.subsidyAmount')}>{formData?.subsidyAmount}</Descriptions.Item>
                 {ConsitionalFields}
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.activeIndicator')}>

@@ -16,12 +16,12 @@ export const SELECT_BOX_NAME_CONSTANTS = {
     },
 };
 export const TAXI_NO_TAXI = {
-    T: {
+    TAXI: {
         id: 1,
         key: 'T',
         value: 'Taxi',
     },
-    N: {
+    NON_TAXI: {
         id: 2,
         key: 'N',
         value: 'Non Taxi',

@@ -98,7 +98,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilterString, totalRecords, data, vehicleModelData, userId, modelData, variantData, isModelLoading, isVariantLoading, moduleTitle, showGlobalNotification, ...rest }) => {
-    const { fetchModelLovList, listModelShowLoading, saveData, fetchVariantLovList, listVariantShowLoading, fetchSubsidery, showSubsideryloading, resetVariant, batteryCapcityKey, demanIncentiveKey } = rest;
+    const { fetchModelLovList, listModelShowLoading, saveData, fetchVariantLovList, listVariantShowLoading, fetchSubsidery, showSubsideryloading, resetVariant, batteryCapcityKey, demanIncentiveKey, typeData } = rest;
 
     const [form] = Form.useForm();
     const [modelVariantForm] = Form.useForm();
@@ -174,8 +174,12 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         resetVariant();
         if (record) {
-            setFormData({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.T?.key ? true : false });
-            form.setFieldsValue({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.T?.key ? true : false });
+            if (buttonAction === VIEW_ACTION) {
+                setFormData({ ...record });
+            } else {
+                setFormData({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.TAXI?.key ? true : false });
+                form.setFieldsValue({ ...record, taxiIndicator: record?.taxiIndicator === TAXI_NO_TAXI?.TAXI?.key ? true : false });
+            }
             if (Number(record?.subsidyAmount) > 0) {
                 setShowFields(false);
             } else {
@@ -198,7 +202,7 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         totalRecords,
         setPage: setFilterString,
         page: filterString,
-        tableColumn: tableColumn({ handleButtonClick }),
+        tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         handleButtonClick,
         isLoading: showdataLoading,
@@ -213,7 +217,7 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
     };
 
     const onFinish = (values) => {
-        const finalPayload = { ...values, id: formData?.id || '', taxiIndicator: values?.taxiIndicator ? TAXI_NO_TAXI?.T?.key : TAXI_NO_TAXI?.N?.key };
+        const finalPayload = { ...values, id: formData?.id || '', taxiIndicator: values?.taxiIndicator ? TAXI_NO_TAXI?.TAXI?.key : TAXI_NO_TAXI?.NON_TAXI?.key };
         const onError = (message) => {
             showGlobalNotification({ message });
         };
