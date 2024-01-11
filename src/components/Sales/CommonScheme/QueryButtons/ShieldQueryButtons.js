@@ -3,17 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const QUERY_BUTTONS = {
+export const QUERY_BUTTONS_CONSTANTS = {
     PENDING: {
         id: 'pending',
         title: 'Pending',
-        key: 'PEND',
+        key: 'PND',
         active: true,
     },
     APPROVED: {
         id: 'approved',
         title: 'Approved',
-        key: 'DONE',
+        key: 'COM',
         active: true,
     },
     REJECTED: {
@@ -25,9 +25,10 @@ export const QUERY_BUTTONS = {
     CANCELLED: {
         id: 'cancelled',
         title: 'Cancelled',
-        key: 'CNCL',
+        key: 'CAN',
         active: false,
     },
+  
 };
 
 export const QUERY_BUTTONS_MNM_USER = {
