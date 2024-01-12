@@ -31,9 +31,7 @@ const AddEditFormBase = (props) => {
                     ...formData?.billingCustomer,
                     birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate),
                     sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer,
-                    panNo: formData?.panNo,
                     alternateNumber: formData?.alternateNumber,
-                    gstin: formData?.gstin,
                 },
             });
 

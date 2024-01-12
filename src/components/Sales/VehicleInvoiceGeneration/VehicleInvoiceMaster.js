@@ -621,7 +621,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const generateInvoice = () => {
         const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
-        const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails };
+        const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails, vehicleUsageType: vehicleDetails?.vehicleUsageType };
 
         const onSuccess = (res) => {
             form.resetFields();

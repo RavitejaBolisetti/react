@@ -742,7 +742,7 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACT-04',
     },
-    
+
     [getMenyKey('SACT-04.06')]: {
         key: 'SACT-04.06',
         link: routing.ROUTING_VEHICLE_CHECKLIST_MASTER,
@@ -850,7 +850,7 @@ export const MenuConstant = {
 
     [getMenyKey('SACT-06.10')]: {
         key: 'SACT-06.10',
-        link: routing.CO_DEALER_INVOICE,
+        link: routing.ROUTING_CO_DEALER_INVOICE,
         icon: undefined,
         parentMenuId: 'OTD',
     },
@@ -874,5 +874,11 @@ export const MenuConstant = {
         link: routing.ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER,
         icon: undefined,
         parentMenuId: 'OTD',
+    },
+    [getMenyKey('SACT-07')]: {
+        key: 'SACT-07',
+        link: routing.ROUTING_CENTRAL_FAME_SUBSIDY,
+        icon: undefined,
+        parentMenuId: 'Sales',
     },
 };

@@ -229,6 +229,8 @@ export const AMCRegistrationMasterBase = (props) => {
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isPendingForCancellation, setIsPendingForCancellation] = useState(selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
+    const [isOTFValidated, setIsOTFValidated] = useState(false);
+
     useEffect(() => {
         if (loginUserData?.userType) {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
@@ -390,9 +392,9 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key, pageSize: 10, current: 1 });
+        setFilterString({ ...filterString, amcStatus: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS.PENDING.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key, pageSize: 10, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [loginUserData?.userType]);
 
     const handleDownloadFile = (key) => {
         const extraParams = [
@@ -446,13 +448,13 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handlePrintDownload = (record) => {
-        let typeRecordKey = record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
-        setReportButtonType(record?.typeRecord);
+        let typeRecordKey = record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
+        setReportButtonType(record?.typeselectedAMC);
         setReportVisible(true);
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.message,
+                value: record?.amcId,
             },
         ]);
     };
@@ -488,10 +490,12 @@ export const AMCRegistrationMasterBase = (props) => {
             if (!res?.data?.otfDetails[0]?.vin) {
                 showGlobalNotification({ title: translateContent('global.notificationError.title'), notificationType: 'error', message: translateContent('amcRegistration.validation.noVINFound') });
                 setButtonData({ ...buttonData, formBtnActive: false });
+                setIsOTFValidated(false);
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
                 schemeForm.getFieldValue('amcType') && schemeList(res?.data?.otfDetails[0]?.vin);
+                setIsOTFValidated(true);
             }
         };
 
@@ -502,13 +506,14 @@ export const AMCRegistrationMasterBase = (props) => {
                     value: 'otfNumber',
                 },
                 {
+                    key: 'registrationType',
+                    value: 'REG',
+                },
+                {
                     key: 'searchParam',
                     value: otfNumber,
                 },
-                {
-                    key: 'otfStatus',
-                    value: 'I',
-                },
+
                 {
                     key: 'pageNumber',
                     value: '1',
@@ -924,6 +929,7 @@ export const AMCRegistrationMasterBase = (props) => {
         fetchDetail,
         listShowLoading,
         handleDownloadFile,
+        isOTFValidated,
     };
     const cancelModalProps = {
         isVisible: isRejectModalVisible,
@@ -946,7 +952,7 @@ export const AMCRegistrationMasterBase = (props) => {
         if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_CETRIFICATE_DOCUMENT);
         } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         }

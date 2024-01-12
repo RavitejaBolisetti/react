@@ -41,6 +41,7 @@ import { VehicleReceiptFormButton } from './VehicleReceiptFormButton';
 import { drawerTitle } from 'utils/drawerTitle';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { SALE_TYPE } from './utils/saleTypeConstant';
 
 const mapStateToProps = (state) => {
     const {
@@ -187,6 +188,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [reportButtonType, setReportButtonType] = useState();
     const [shieldDocumentType, setShieldDocumentType] = useState();
     const [requestPayload, setRequestPayload] = useState({ registrationDetails: {}, vehicleAndCustomerDetails: {} });
+    const [isVINOrOTFValidated, setIsVINOrOTFValidated] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -501,6 +503,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 key: 'rate',
                 value: shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeBasicAmount,
             },
+            {
+                key: 'otfNumber',
+                value: saleType === SALE_TYPE?.MNM_FOC?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.otf : null,
+            },
+            {
+                key: 'vin',
+                value: saleType === SALE_TYPE?.PAID?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.vin : null,
+            },
         ];
         if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDescription || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeBasicAmount) {
             // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
@@ -594,6 +604,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleOtfSearch = (value) => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setIsVINOrOTFValidated(false);
+        };
         setBookingNumber(value);
         resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
@@ -613,6 +627,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
                 setVehicleCustomeDetailsOnly(res?.data);
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+                setIsVINOrOTFValidated(true);
             };
             const extraParams = [
                 {
@@ -635,12 +650,21 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
 
     const handleVinSearch = (value) => {
         const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setVehicleCustomeDetailsOnly(res?.data);
+            setIsVINOrOTFValidated(true);
+
             shieldDetailForm.setFieldsValue({
                 registrationInformation: {
                     availableFund: res?.data?.registrationDetails?.registrationInformation?.availableFund,
                 },
             });
+        };
+
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsVINOrOTFValidated(false);
         };
         setVinNumber(value);
         resetSchemeDetail();
@@ -1087,6 +1111,8 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         handleTaxChange,
         selectedCardData,
         handleDownloadFile,
+        showGlobalNotification,
+        isVINOrOTFValidated,
     };
 
     useEffect(() => {

@@ -28,7 +28,7 @@ import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/emp
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { ListDataTable } from 'utils/ListDataTable';
-import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons/AMCQueryButtons';
+import { RSA_QUERY_BUTTONS as QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons';
 import { AMC_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/AMCConstants';
 import { CancelScheme } from 'components/Services/ShieldSchemeRegistartion/CancelScheme';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -44,6 +44,7 @@ import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFam
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 import { RSA_REQUEST_TITLE_CONSTANTS } from './utils/RSARequestTitleConstant';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { SALE_TYPE } from './utils/saleTypeConstant';
 
 const mapStateToProps = (state) => {
     const {
@@ -196,6 +197,7 @@ export const RSARegistrationMasterBase = (props) => {
     const [previousSection, setPreviousSection] = useState(1);
     const [vehicleCustomerDetailsOnly, setVehicleCustomeDetailsOnly] = useState({});
     const [selectedCardData, setSelectedCardData] = useState();
+    const [isVINOrOTFValidated, setIsVINOrOTFValidated] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -515,12 +517,17 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleOtfSearch = (value) => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setIsVINOrOTFValidated(false);
+        };
         setBookingNumber(value);
         if (value) {
             const onSuccessAction = (res) => {
                 setVehicleCustomeDetailsOnly(res?.data);
                 setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+                setIsVINOrOTFValidated(true);
             };
             const extraParams = [
                 {
@@ -535,8 +542,15 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const handleVinSearch = (value) => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsVINOrOTFValidated(false);
+        };
         const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setVehicleCustomeDetailsOnly(res?.data);
+            setIsVINOrOTFValidated(true);
 
             const extraParams = [
                 {
@@ -851,6 +865,14 @@ export const RSARegistrationMasterBase = (props) => {
                 key: 'schemeCode',
                 value: shieldDetailForm?.getFieldValue()?.schemeDetails?.schemeCode,
             },
+            {
+                key: 'otfNumber',
+                value: saleType === SALE_TYPE?.MNM_FOC?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.otf : null,
+            },
+            {
+                key: 'vin',
+                value: saleType === SALE_TYPE?.PAID?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.vin : null,
+            },
         ];
         if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDiscount || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode) {
             // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
@@ -1023,6 +1045,8 @@ export const RSARegistrationMasterBase = (props) => {
         selectedCardData,
         userType,
         handleDownloadFile,
+        showGlobalNotification,
+        isVINOrOTFValidated,
     };
 
     useEffect(() => {

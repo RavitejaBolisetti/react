@@ -283,7 +283,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });
-        const { productModelCode, discountAmount, saleType, priceType } = vehicleData;
+        const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType } = vehicleData;
         const extraParams = [
             {
                 key: 'otfId',
@@ -307,6 +307,11 @@ const VehicleDetailsMasterMain = (props) => {
                 key: 'priceType',
                 value: priceType,
             },
+
+            {
+                key: 'vehicleUsageType',
+                value: vehicleUsageType,
+            },
         ];
 
         const onSuccessAction = (res) => {
@@ -317,8 +322,8 @@ const VehicleDetailsMasterMain = (props) => {
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
 
-            const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
-            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
+            const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType } = vehicleDetailData;
+            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType, vehicleUsageType });
 
             setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });

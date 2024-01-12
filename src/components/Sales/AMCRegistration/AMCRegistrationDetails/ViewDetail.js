@@ -55,7 +55,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.amcRegistration?.priceType), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYP'], formData?.amcRegistration?.saleType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYPE'], formData?.amcRegistration?.saleType), isLoading)}</Descriptions.Item>
                                 {formData?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key && (
                                     <>
                                         <Descriptions.Item label={translateContent('amcRegistration.label.bookingNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.bookingNumber, isLoading)}</Descriptions.Item>
@@ -66,15 +66,19 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerCode), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.remarks')}>{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
-                            <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteAmount, isLoading)}</Descriptions.Item>
-                            </Descriptions>
+                            {selectedAMC?.status === AMC_CONSTANTS?.CANCELLED?.key && (
+                                <>
+                                    <Divider />
+                                    <Descriptions {...viewProps}>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.creditNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.creditNoteAmount, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteNumber')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteDate')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('amcRegistration.label.debitNoteAmount')}>{checkAndSetDefaultValue(formData?.amcRegistration?.debitNoteAmount, isLoading)}</Descriptions.Item>
+                                    </Descriptions>
+                                </>
+                            )}
                         </Panel>
                     </Collapse>
                 </Col>
@@ -94,43 +98,45 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label={translateContent('amcRegistration.label.schemeTaxAmount')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeTaxAmount, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('amcRegistration.label.schemeEndDate')}>{checkAndSetDefaultValue(formData?.amcSchemeDetails?.schemeEndDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 </Descriptions>
-                                {formData?.amcRegistration?.priceType !== AMC_CONSTANTS?.MNM_FOC?.key && selectedAMC?.status === AMC_CONSTANTS?.APPROVED?.key && (
+                                {selectedAMC?.status === AMC_CONSTANTS?.APPROVED?.key && (
                                     <>
-                                        <Card>
-                                            <Row>
-                                                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                                    <Text strong>
-                                                        {translateContent('amcRegistration.label.invoiceNumber')}:{checkAndSetDefaultValue(formData?.amcRegistration?.invoiceNumber, isLoading)}
-                                                    </Text>
-                                                </Col>
-                                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                                    <div className={styles.floatRight}>
-                                                        <Popover trigger="hover">
-                                                            <Button onClick={() => handleDownloadFile(formData?.amcRegistration?.documentId)} danger>
-                                                                {translateContent('global.buttons.print/download')}
-                                                            </Button>
-                                                        </Popover>
-                                                    </div>
-                                                </Col>
-                                            </Row>
-                                            <Row className={styles.marB10}>
-                                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Text type="secondary">
-                                                        {translateContent('amcRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.amcRegistration?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
-                                                    </Text>
-                                                </Col>
-                                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Text type="secondary">
-                                                        {translateContent('amcRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnNumber, isLoading)}
-                                                    </Text>
-                                                </Col>
-                                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Text type="secondary">
-                                                        {translateContent('amcRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnStatus, isLoading)}
-                                                    </Text>
-                                                </Col>
-                                            </Row>
-                                        </Card>
+                                        {formData?.amcRegistration?.priceType !== AMC_CONSTANTS?.MNM_FOC?.key && (
+                                            <Card>
+                                                <Row>
+                                                    <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                                        <Text strong>
+                                                            {translateContent('amcRegistration.label.invoiceNumber')}:{checkAndSetDefaultValue(formData?.amcRegistration?.invoiceNumber, isLoading)}
+                                                        </Text>
+                                                    </Col>
+                                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                                        <div className={styles.floatRight}>
+                                                            <Popover trigger="hover">
+                                                                <Button onClick={() => handleDownloadFile(formData?.amcRegistration?.documentId)} danger>
+                                                                    {translateContent('global.buttons.print/download')}
+                                                                </Button>
+                                                            </Popover>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                                <Row className={styles.marB10}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                        <Text type="secondary">
+                                                            {translateContent('amcRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.amcRegistration?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
+                                                        </Text>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                        <Text type="secondary">
+                                                            {translateContent('amcRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnNumber, isLoading)}
+                                                        </Text>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                        <Text type="secondary">
+                                                            {translateContent('amcRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnStatus, isLoading)}
+                                                        </Text>
+                                                    </Col>
+                                                </Row>
+                                            </Card>
+                                        )}
 
                                         <Card>
                                             <Row>
@@ -156,39 +162,41 @@ const ViewDetailMain = (props) => {
                                             </Row>
                                         </Card>
 
-                                        <Card>
-                                            <Row>
-                                                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                                    <Text strong>
-                                                        {translateContent('amcRegistration.label.amcIncenticeClaim')}:{checkAndSetDefaultValue(formData?.amcRegistration?.amcIncentiveClaim, isLoading)}
-                                                    </Text>
-                                                </Col>
-                                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                                    <div className={styles.floatRight}>
-                                                        <Popover content={'Coming Soon'} trigger="hover">
-                                                            <Button danger>{translateContent('global.buttons.print/download')}</Button>
-                                                        </Popover>
-                                                    </div>
-                                                </Col>
-                                            </Row>
-                                            <Row className={styles.marB10}>
-                                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Text type="secondary">
-                                                        {translateContent('amcRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.amcRegistration?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
-                                                    </Text>
-                                                </Col>
-                                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Text type="secondary">
-                                                        {translateContent('amcRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnNumber, isLoading)}
-                                                    </Text>
-                                                </Col>
-                                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Text type="secondary">
-                                                        {translateContent('amcRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnStatus, isLoading)}
-                                                    </Text>
-                                                </Col>
-                                            </Row>
-                                        </Card>
+                                        {formData?.amcRegistration?.priceType !== AMC_CONSTANTS?.MNM_FOC?.key && (
+                                            <Card>
+                                                <Row>
+                                                    <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                                        <Text strong>
+                                                            {translateContent('amcRegistration.label.amcIncenticeClaim')}:{checkAndSetDefaultValue(formData?.amcRegistration?.amcIncentiveClaim, isLoading)}
+                                                        </Text>
+                                                    </Col>
+                                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                                        <div className={styles.floatRight}>
+                                                            <Popover content={'Coming Soon'} trigger="hover">
+                                                                <Button danger>{translateContent('global.buttons.print/download')}</Button>
+                                                            </Popover>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                                <Row className={styles.marB10}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                        <Text type="secondary">
+                                                            {translateContent('amcRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.amcRegistration?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
+                                                        </Text>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                        <Text type="secondary">
+                                                            {translateContent('amcRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnNumber, isLoading)}
+                                                        </Text>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                        <Text type="secondary">
+                                                            {translateContent('amcRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnStatus, isLoading)}
+                                                        </Text>
+                                                    </Col>
+                                                </Row>
+                                            </Card>
+                                        )}
                                     </>
                                 )}
                             </>

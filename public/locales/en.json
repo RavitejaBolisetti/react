@@ -199,7 +199,7 @@
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
             "reGenerateIRN": "Re-Generate IRN",
-            "irnStatusNotPresent":"IRN status not present"
+            "irnStatusNotPresent": "IRN status not present"
         },
         "placeholder": {
             "input": "Enter ",
@@ -254,6 +254,7 @@
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
+            "vehicleDetails.vehicleUsageType": "Vehicle Usage",
             "vehicleDetails.saleType": "Sale Type",
             "vehicleDetails.priceType": "Price Type",
             "vehicleDetails.vehicleSellingPrice": "Vehicle Selling Price",
@@ -262,6 +263,7 @@
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
             "vehicleDetails.mnmCashBenefitAmountWithTax": "M&M Cash Benefits with TAX",
             "vehicleDetails.mnmNonCashBenefitAmountWithTax": "M&M Non-Cash Benefits with TAX",
+            "vehicleDetails.fameSubsidyAmount": "Fame Subsidy Amount",
             "vehicleDetails.printDiscount": "Print Discount?",
             "vehicleDetails.taxCalculation": "Tax Calculation",
             "vehicleDetails.availableStock": "Available Stock",
@@ -906,6 +908,7 @@
         "validation": {
             "noSchemeVIN": "No Schemes present for this AMC Type",
             "noVINFound": "No VIN found for searched Booking Number",
+            "validateOTF" : "Please Validate Booking Number to Continue",
             "noEmployeesFound": "No employees found for searched name",
             "incorrectEmployeeName": "Employee name is not correct",
             "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount",
@@ -1802,7 +1805,7 @@
             "irnResponse": "IRN Server Response",
             "irnStatus": "IRN Status",
             "gstin": "GSTIN",
-            "action":"Action"
+            "action": "Action"
         }
     },
 
@@ -4501,6 +4504,37 @@
             }
         },
         "placeholder": {},
+        "validation": {
+            "toDate": "Date cant be less than Effective from date",
+            "ModelCode": "Model code is not present"
+        },
+        "text": {},
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
+        }
+    },
+    "centralFameSubsidy": {
+        "heading": {
+            "moduleTitle": "Central Fame Subsidy",
+            "title": "Central Fame Subsidy"
+        },
+        "label": {
+            "batterycapacity": "Battery Capacity",
+            "taxiIndicator": "Taxi Indicator",
+            "subsidyAmount": "Central Subsidy Amount",
+            "percentageOnExShowRoomPrice": "Percentage On ExshowRoomPrice",
+            "demandIncentive": "Demand Incentive",
+            "totalAmount": "Total Amount",
+            "activeIndicator": "Active Indicator",
+            "tableColumn": {
+                "product": "Model Variant",
+                "modelGroup": "Model Group",
+                "taxIndicator": "Taxi Indicator",
+                "variantCode": "Variant Code"
+            }
+        },
+        "placeholder": { "modelGroupVariant": "Please select model group and model Variant" },
         "validation": {
             "toDate": "Date cant be less than Effective from date",
             "ModelCode": "Model code is not present"

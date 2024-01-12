@@ -330,7 +330,7 @@ export const RSMApprovalMasterBase = (props) => {
         } else {
             const tempfilterString = filterString;
             if (tempfilterString?.hasOwnProperty(key)) {
-                delete [key];
+                delete tempfilterString?.[key];
             }
             setFilterString({ ...tempfilterString });
         }

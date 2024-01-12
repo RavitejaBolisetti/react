@@ -8,7 +8,6 @@ import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } 
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
 import dayjs from 'dayjs';
 
@@ -36,25 +35,19 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, showChangeModel, setShowChangeModel, onModelSubmit, setOnModelSubmit } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, isVehicleModelChange, setIsVehicleModelChange, onModelSubmit, setOnModelSubmit } = props;
     const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
     const [editingOptionalData, setEditingOptionalData] = useState({});
-
-    const findUsageType = (usage) => {
-        const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
-        return foundVal?.key;
-    };
-
     const disabledProp = { disabled: true };
+
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
                 poDate: formData?.poDate ? dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY') : undefined,
-                vehicleUsageType: findUsageType(formData?.vehicleUsageType),
                 vehicleAllocatedStatus: getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'),
             });
         }
@@ -131,7 +124,7 @@ const AddEditFormMain = (props) => {
         onModelSubmit,
         setOnModelSubmit,
         setFilterVehicleData,
-        setShowChangeModel,
+        setIsVehicleModelChange,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -186,7 +179,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeModel = () => {
-        setShowChangeModel(true);
+        setIsVehicleModelChange(true);
         setRevisedModelInformation({ ...toolTipContent });
     };
 
@@ -223,7 +216,8 @@ const AddEditFormMain = (props) => {
 
                                 {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
                                     <Col xs={24} sm={24} md={3} lg={3} xl={3} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={showChangeModel} style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
+                                        {/* disabled={isVehicleModelChange}  */}
+                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
                                             Change
                                         </Button>
                                     </Col>
@@ -281,6 +275,12 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.vin')} name="vinNumber">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vin'))} />
+                                    </Form.Item>
+                                </Col>
+
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.vehicleUsageType')} name="vehicleUsageType">
+                                        {customSelectBox({ data: typeData?.VEHCL_TYPE, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, vehicleUsageType: value }) })}
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -347,8 +347,8 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')} name="mnmNonCashBenefitAmountWithTax">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax'), true, false)} />
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount')} name="fameSubsidyAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount'), true, false)} />
                                     </Form.Item>
                                 </Col>
                                 {showPrintDiscount && (

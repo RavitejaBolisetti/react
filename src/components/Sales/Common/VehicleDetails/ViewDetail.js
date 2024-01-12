@@ -20,6 +20,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
 import { ChangeModelVariantMaster } from './ChangeModelVariant';
 import { STATUS } from 'constants/modelVariant';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -82,7 +83,7 @@ const ViewDetailMain = (props) => {
                                 </Row>
                             )}
                             <Descriptions {...viewProps}>
-                                {isOTFModule ? (
+                                {isOTFModule && (
                                     <>
                                         <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.availableStock')}>{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.poNumber')}>{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
@@ -90,26 +91,13 @@ const ViewDetailMain = (props) => {
                                         <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.poStatus')}>{checkAndSetDefaultValue(formData?.poStatus, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.soNumber')}>{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
                                         <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.soStatus')}>{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.sapResonseRemarks')}>{checkAndSetDefaultValue(formData?.sapResonseRemarks, isLoading)}</Descriptions.Item>
                                     </>
-                                ) : (
-                                    <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vin')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                                 )}
-                            </Descriptions>
 
-                            {isOTFModule && (
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <Descriptions {...singleViewProps}>
-                                            <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.sapResonseRemarks')}>{checkAndSetDefaultValue(formData?.sapResonseRemarks, isLoading)}</Descriptions.Item>
-                                        </Descriptions>
-                                    </Col>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Descriptions {...singleViewProps}>
-                                            <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vin')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
-                                        </Descriptions>
-                                    </Col>
-                                </Row>
-                            )}
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vin')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleUsageType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.VEHCL_TYPE?.id], formData?.vehicleUsageType), isLoading)}</Descriptions.Item>
+                            </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.priceInformation'))}>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
@@ -123,7 +111,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}>{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')}>{checkAndSetDefaultValue(formData?.consumerSchemeWithTax, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.mnmCashBenefitAmountWithTax')}>{checkAndSetDefaultValue(formData?.mnmCashBenefitAmountWithTax, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')}>{checkAndSetDefaultValue(formData?.mnmNonCashBenefitAmountWithTax, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount')}>{checkAndSetDefaultValue(formData?.fameSubsidyAmount, isLoading)}</Descriptions.Item>
                                 {showPrintDiscount && <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>{formData?.printDiscount === 'Y' ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no')}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>
