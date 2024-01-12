@@ -213,8 +213,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [shieldDetailForm] = Form.useForm();
-    // const [registrationForm] = Form.useForm();
-    // const [schemeForm] = Form.useForm();
     const [vehicleCustomerForm] = Form.useForm();
     const [vehicleDetailForm] = Form.useForm();
     const [customerDetailForm] = Form.useForm();
@@ -609,7 +607,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             setIsVINOrOTFValidated(false);
         };
         setBookingNumber(value);
-        resetSchemeDetail();
+        !(bookingNumber === value) && resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
             schemeDetails: {
                 schemeDescription: undefined,
@@ -660,14 +658,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 },
             });
         };
+        setVinNumber(value);
 
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsVINOrOTFValidated(false);
         };
-        setVinNumber(value);
-        resetSchemeDetail();
+        !(vinNumber === value) && resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
             schemeDetails: {
                 schemeDescription: undefined,
