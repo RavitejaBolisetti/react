@@ -390,7 +390,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId && loginUserData?.userType) {
+        if (userId && loginUserData?.userType && filterString?.status) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -401,6 +401,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listShowLoading, userId });
             fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
+
+            return () => {
+                setFilterString({});
+            };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
