@@ -87,6 +87,7 @@ const VehicleDetailsMasterBase = (props) => {
     const checkShortage = (type) => type === YES_NO_FLAG?.YES?.key;
 
     const onErrorAction = (message) => {
+        setFormData([]);
         showGlobalNotification({ message });
     };
 
@@ -110,7 +111,7 @@ const VehicleDetailsMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedId?.id]);
+    }, [userId, selectedId?.id, formActionType]);
 
     useEffect(() => {
         if (defactTypeData?.length <= 0) {
