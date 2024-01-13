@@ -275,11 +275,13 @@
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
+            "vehicleDetails.branchName": "Branch Name",
+            "vehicleDetails.chassisNumber": "Chassis Number",
+            "vehicleDetails.soDate": "SO Date",
             "vehicleDetails.sapResonseRemarks": "Model Code Response",
             "vehicleDetails.model": "Model",
             "vehicleDetails.totalTaxAmount": "Total Tax Amount",
             "vehicleDetails.tcsAmount": "TCS Amount",
-
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
             "schemeAndOfferDetails.Amount": "Amount",
@@ -911,7 +913,7 @@
         "validation": {
             "noSchemeVIN": "No Schemes present for this AMC Type",
             "noVINFound": "No VIN found for searched Booking Number",
-            "validateOTF" : "Please Validate Booking Number to Continue",
+            "validateOTF": "Please Validate Booking Number to Continue",
             "noEmployeesFound": "No employees found for searched name",
             "incorrectEmployeeName": "Employee name is not correct",
             "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount",
@@ -1650,7 +1652,8 @@
             "cancellationRemark": "Cancellation Remarks",
             "mnmInvoice": "M&M Invoice",
             "pdiDone": "PDI Done",
-            "allotVehicle": "Allot Vehicle"
+            "allotVehicle": "Allot Vehicle",
+            "vehicleSOMapping": "So Mapping"
         },
         "tableColumn": {
             "description": "Description",
@@ -1677,7 +1680,8 @@
                 "modelDescription": "Revised Model Description",
                 "modelCode": "Revised Model Code",
                 "confirmation": "Confirmation",
-                "cancelRequest": "Cancel Request"
+                "cancelRequest": "Cancel Request",
+                "createPurchaseOrder": "Create Purchase Order"
             },
             "validation": {
                 "model": "Model",

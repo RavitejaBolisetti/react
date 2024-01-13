@@ -28,14 +28,13 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { translateContent } from 'utils/translateContent';
-import { ChangeModelVariantMaster } from './ChangeModelVariant';
 import { TbRefresh } from 'react-icons/tb';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, isVehicleModelChange, setIsVehicleModelChange, onModelSubmit, setOnModelSubmit } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, isVehicleModelChange, setOpenVehilceModelChange, onModelSubmit, setOnModelSubmit } = props;
     const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
 
     const [optionForm] = Form.useForm();
@@ -114,19 +113,6 @@ const AddEditFormMain = (props) => {
         editingOptionalData,
     };
 
-    const myProp = {
-        ...props,
-        ...OptionServicesFormProps,
-        setCustomerNameList,
-        customerNameList,
-        editingOptionalData,
-        setEditingOptionalData,
-        onModelSubmit,
-        setOnModelSubmit,
-        setFilterVehicleData,
-        setIsVehicleModelChange,
-    };
-
     const handleSelectTreeClick = (value) => {
         setConfirmRequest({
             isVisible: true,
@@ -179,7 +165,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeModel = () => {
-        setIsVehicleModelChange(true);
+        setOpenVehilceModelChange(true);
         setRevisedModelInformation({ ...toolTipContent });
     };
 
@@ -224,13 +210,13 @@ const AddEditFormMain = (props) => {
                                 )}
                             </Row>
                             <Divider />
-                            {isVehicleModelChange && (
+                            {/* {showChangeModel && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <ChangeModelVariantMaster {...myProp} />
                                     </Col>
                                 </Row>
-                            )}
+                            )} */}
                             <Row gutter={20}>
                                 {isOTFModule && (
                                     <>
