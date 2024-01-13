@@ -21,7 +21,7 @@ import { withSpinner } from 'components/withSpinner';
 import { translateContent } from 'utils/translateContent';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
-import { ChangeModelVariantMaster } from './ChangeModelVariant';
+import { refactorProductAttributeData } from './refactorProductAttributeData';
 
 const mapStateToProps = (state) => {
     const {
@@ -238,28 +238,7 @@ const VehicleDetailsMasterMain = (props) => {
         fetchProductAttribiteDetail({ setIsLoading: () => {}, userId, onErrorAction, onSuccessAction, extraParams });
     };
 
-    const refactorProductAttributeData = (productData) => {
-        return (
-            <div>
-                <p>
-                    {translateContent('commonModules.toolTip.color')} - <span>{productData['color'] ?? 'NA'}</span>
-                </p>
-                <p>
-                    {translateContent('commonModules.toolTip.seating')} - <span>{productData['seatingCapacity'] ?? 'NA'}</span>
-                </p>
-                <p>
-                    {translateContent('commonModules.toolTip.fuel')} - <span>{productData['fuel'] ?? 'NA'}</span>
-                </p>
-                <p>
-                    {translateContent('commonModules.toolTip.variant')} - <span>{productData['variant'] ?? 'NA'}</span>
-                </p>
-                <p>
-                    {translateContent('commonModules.toolTip.name')} - <span>{productData['name'] ?? 'NA'}</span>
-                </p>
-            </div>
-        );
-    };
-
+   
     useEffect(() => {
         if (productAttributeData) {
             setToolTipContent(refactorProductAttributeData(productAttributeData));

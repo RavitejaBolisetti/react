@@ -75,13 +75,13 @@ const ViewDetailMain = (props) => {
                                 </Col>
                             </Row>
                             <Divider />
-                            {isReviedModelPending && (
+                            {/* {isReviedModelPending && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <ChangeModelVariantMaster {...props} />
                                     </Col>
                                 </Row>
-                            )}
+                            )} */}
                             <Descriptions {...viewProps}>
                                 {isOTFModule && (
                                     <>
