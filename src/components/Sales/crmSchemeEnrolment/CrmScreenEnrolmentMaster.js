@@ -260,14 +260,18 @@ export const CrmScreenEnrolmentBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keyValue, changePress]);
 
-    const onHandleRegistrationNumber = (value) => {
-        const extraParams = [
-            {
-                key: 'registrationNumber',
-                value: value,
-            },
-        ];
-        fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL, onSuccessAction, onErrorAction });
+    const onHandleRegistrationNumber = () => {
+        form.validateFields(['registrationNumber'])
+            .then(({ registrationNumber: value }) => {
+                const extraParams = [
+                    {
+                        key: 'registrationNumber',
+                        value: value?.trim(),
+                    },
+                ];
+                fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL, onSuccessAction, onErrorAction });
+            })
+            .catch((err) => console.error(err));
     };
 
     const addFormOpen = () => {
@@ -493,6 +497,8 @@ export const CrmScreenEnrolmentBase = (props) => {
         handlePrintDownload,
         onSchemeChange,
         schemeType,
+        setCustomerData,
+        setVehicleDataDetails,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.REFERRAL_SCHEME_REGISTRATION_DOCUMENT;
