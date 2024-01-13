@@ -5,7 +5,8 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Col, Input, Form, Row, Button, Card, Divider, Typography, Tag } from 'antd';
+import { Col, Input, Form, Row, Button, Card, Divider, Typography, Tag, Checkbox } from 'antd';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -24,10 +25,9 @@ import { STATUS } from 'constants/modelVariant';
 import { BASE_URL_VEHICLE_MODEL_SO_MAPPING_SEARCH as customURL } from 'constants/routingApi';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { connect } from 'react-redux';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { refactorProductAttributeData } from '../refactorProductAttributeData';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
@@ -79,24 +79,29 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { formActionType: { editMode } = undefined, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData, setShowChangeModel } = props;
-    const { fetchSoData, selectedOrder, vehicleDetailData, soDataList, setDataList, productDetailRefresh, setProductDetailRefresh, form, productHierarchyData, selectedRecordId, filterVehicleData, saveData, fetchProductAttribiteDetail } = props;
-    const [selectedVINDetails, setSelectedOrderVINDetails] = useState();
-    const [selectedTreeKey, setSelectedTreeKey] = useState();
-    const [modelChange, setModelChange] = useState(true);
-    const [buttonData, setButtonData] = useState({ cancelBtn: true });
+    const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
+    const { fetchSoData, vehicleDetailData, productDetailRefresh, setProductDetailRefresh, form, productHierarchyData, selectedRecordId, filterVehicleData, saveData, fetchProductAttribiteDetail } = props;
 
-    const [filterString, setFilterString] = useState({ pageSize: 10, current: 1 });
+    const [selectedRecord, setSelectedRecord] = useState();
+    const [selectedTreeKey, setSelectedTreeKey] = useState();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [confirmRequest, setConfirmRequest] = useState(true);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState();
+    const [showCreatePurchaseOrder, setShowCreatePurchaseOrder] = useState(false);
     const [revisedModelInformation, setRevisedModelInformation] = useState();
     const [revisedModelCode, setRevisedModelCode] = useState();
+    const [soDataList, setSoDataList] = useState([]);
+
+    const [buttonData, setButtonData] = useState({ cancelBtn: true, closeBtn: true });
+    const [filterString, setFilterString] = useState({ pageSize: 10, current: 1 });
+
     const [formData, setFormData] = useState();
     const [modelStatus, setModelStatus] = useState();
+
     useEffect(() => {
         if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
+            // setFormData(vehicleDetailData);
+            setFormData({ ...vehicleDetailData, sapStatusResponseCode: null, revisedModel: null });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911' });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911' });
@@ -105,14 +110,25 @@ const AddEditFormMain = (props) => {
     }, [vehicleDetailData]);
 
     useEffect(() => {
+        if (formData?.revisedModel) {
+            form.setFieldsValue({ model: formData?.revisedModel });
+            form.setFieldsValue({ modelCode: formData?.revisedModel });
+            setSelectedTreeKey(formData?.revisedModel);
+        } else {
+            form.setFieldsValue({ model: undefined, modelCode: undefined });
+            form.setFieldsValue({ model: formData?.model });
+            form.setFieldsValue({ modelCode: formData?.modelCode });
+            setSelectedTreeKey(formData?.model);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [revisedModelCode]);
+
+    useEffect(() => {
         if (revisedProductAttributeData) {
             setRevisedModelInformation(refactorProductAttributeData(revisedProductAttributeData));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [revisedProductAttributeData]);
-
-    const formType = editMode ? 'New' : '';
-    const modelChangeField = ['model' + formType, 'modelCode' + formType];
 
     useEffect(() => {
         formData?.sapStatusResponseCode && setModelStatus(formData?.sapStatusResponseCode);
@@ -126,64 +142,64 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchParam ? 'soNumber' : undefined,
-                name: 'So Number',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'modelCode',
-                title: 'Model',
-                value: revisedModelCode,
-                canRemove: true,
-                filter: true,
-            },
+        return (
+            revisedModelCode && [
+                {
+                    key: 'searchType',
+                    title: 'Type',
+                    value: filterString?.searchParam ? 'soNumber' : undefined,
+                    name: 'So Number',
+                    canRemove: false,
+                    filter: false,
+                },
+                {
+                    key: 'searchParam',
+                    title: 'Value',
+                    value: filterString?.searchParam,
+                    name: filterString?.searchParam,
+                    canRemove: true,
+                    filter: true,
+                },
+                {
+                    key: 'modelCode',
+                    title: 'Model',
+                    value: revisedModelCode,
+                    canRemove: true,
+                    filter: true,
+                },
 
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: filterString?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: filterString?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: filterString?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: filterString?.sortType,
-                canRemove: true,
-                filter: false,
-            },
-        ];
+                {
+                    key: 'pageSize',
+                    title: 'Value',
+                    value: filterString?.pageSize,
+                    canRemove: true,
+                    filter: false,
+                },
+                {
+                    key: 'pageNumber',
+                    title: 'Value',
+                    value: filterString?.current,
+                    canRemove: true,
+                    filter: false,
+                },
+                {
+                    key: 'sortBy',
+                    title: 'Sort By',
+                    value: filterString?.sortBy,
+                    canRemove: true,
+                    filter: false,
+                },
+                {
+                    key: 'sortIn',
+                    title: 'Sort Type',
+                    value: filterString?.sortType,
+                    canRemove: true,
+                    filter: false,
+                },
+            ]
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, revisedModelCode]);
-
-    //apidev.mahindradealerrise.com/otf/vehicle/salesorder/search?searchType=soNumber&searchParam=S0123&pageSize=10&pageNumber=1&modelCode=X700MM96316118175
 
     const getProductAttributeDetail = (value, fnSetData) => {
         const extraParams = [
@@ -213,28 +229,15 @@ const AddEditFormMain = (props) => {
                 userId,
                 extraParams,
                 onSuccessAction: (res) => {
+                    setShowCreatePurchaseOrder(res?.data?.paginationData.length <= 0);
                     setShowDataLoading(false);
-                    setDataList(res);
+                    setSoDataList(res?.data);
                 },
                 onErrorAction,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, filterString, extraParams]);
-
-    useEffect(() => {
-        if (formData?.revisedModel) {
-            form.setFieldsValue({ ['model' + formType]: formData?.revisedModel });
-            form.setFieldsValue({ ['modelCode' + formType]: formData?.revisedModel });
-            setSelectedTreeKey(formData?.revisedModel);
-        } else {
-            form.setFieldsValue({ ['model' + formType]: undefined, ['modelCode' + formType]: undefined });
-            form.setFieldsValue({ ['model' + formType]: formData?.model });
-            form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
-            setSelectedTreeKey(formData?.model);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [revisedModelCode]);
 
     const onError = (message) => {
         showGlobalNotification({ message });
@@ -245,8 +248,8 @@ const AddEditFormMain = (props) => {
             setModelStatus(res?.data?.status);
             setProductDetailRefresh(!productDetailRefresh);
             onSuccessAction && onSuccessAction();
+
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
-                setShowChangeModel(false);
                 setRefreshData(!refreshData);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
             } else {
@@ -268,19 +271,20 @@ const AddEditFormMain = (props) => {
     };
 
     const onHandleSave = () => {
-        form?.validateFields(modelChangeField)
+        form?.validateFields()
             .then(() => {
-                setModelChange(false);
-                const vehicleNewModel = form.getFieldsValue(modelChangeField);
-                const vehicleModelChangeRequest = { model: vehicleNewModel?.['model' + formType], modelCode: vehicleNewModel?.['modelCode' + formType] };
+                const vehicleNewModel = form.getFieldsValue();
+                const vehicleModelChangeRequest = { model: vehicleNewModel?.model, modelCode: vehicleNewModel?.modelCode };
                 const vehicleCurrentModel = { model: formData?.model, modelCode: formData?.modelCode };
-
                 if (JSON.stringify(vehicleModelChangeRequest) === JSON.stringify(vehicleCurrentModel)) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
                 } else {
                     const data = {
                         otfId: selectedRecordId,
                         modelCode: vehicleModelChangeRequest?.modelCode,
+                        status: null,
+                        revisedSoNumber: selectedRecord,
+                        createPurchaseOrder: vehicleNewModel?.createPurchaseOrder,
                     };
                     modelChangeService(data);
                 }
@@ -288,14 +292,14 @@ const AddEditFormMain = (props) => {
             .catch((err) => console.error(err));
     };
 
-    const handleCollapse = (formType) => {
+    const handleCollapse = () => {
         setConfirmRequest({
             isVisible: true,
             titleOverride: translateContent('bookingManagement.modelVariant.label.cancelRequest'),
             text: translateContent('bookingManagement.modelVariant.heading.cancelChangeRequest'),
             submitText: translateContent('bookingManagement.modelVariant.button.yes'),
-            onCloseAction: onCloseAction,
-            onSubmitAction: onSubmitAction,
+            onSubmitAction,
+            onCloseAction,
         });
     };
 
@@ -307,9 +311,8 @@ const AddEditFormMain = (props) => {
     };
 
     const onSuccessAction = () => {
-        setShowChangeModel(false);
-        form.setFieldsValue({ ['model' + formType]: formData?.model });
-        form.setFieldsValue({ ['modelCode' + formType]: formData?.modelCode });
+        form.setFieldsValue({ model: formData?.model });
+        form.setFieldsValue({ modelCode: formData?.modelCode });
     };
 
     const onSubmitAction = () => {
@@ -329,51 +332,72 @@ const AddEditFormMain = (props) => {
                 ...confirmRequest,
                 isVisible: false,
             });
-            setShowChangeModel(false);
+            onCancelCloseAction();
             onSuccessAction();
         }
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+    const handleFormValueChange = (value) => {
+        setButtonData({ ...buttonData, formBtnActive: value });
     };
 
     const handleSelectTreeClick = (value) => {
         getProductAttributeDetail(value, setRevisedProductAttributeData);
-        const finalData = { ...filterVehicleData, productModelCode: value };
-        form.setFieldsValue({ ['modelCode' + formType]: finalData?.productModelCode });
-        setSelectedTreeKey(finalData?.productModelCode);
-        handleFormValueChange(false);
         setButtonData({ ...buttonData, formBtnActive: false });
+        form.setFieldsValue({ modelCode: value });
+        setRevisedModelCode(value);
+        setSelectedTreeKey(value);
+        handleFormValueChange(false);
+        setShowCreatePurchaseOrder(false);
+    };
 
-        // setConfirmRequest({
-        //     isVisible: true,
-        //     titleOverride: translateContent('bookingManagement.modelVariant.label.confirmation'),
-        //     closable: true,
-        //     icon: false,
-        //     onCloseAction: () => {
-        //         setConfirmRequest({
-        //             ...confirmRequest,
-        //             isVisible: false,
-        //         });
-        //     },
-        //     onSubmitAction: () => {
-        //         getProductAttributeDetail(value, setRevisedProductAttributeData);
-        //         setModelChange(false);
-        //         const finalData = { ...filterVehicleData, productModelCode: value };
-        //         handleVehicleDetailChange(finalData);
-        //         form.setFieldsValue({ ['modelCode' + formType]: finalData?.productModelCode });
-        //         setSelectedTreeKey(finalData?.productModelCode);
-        //         handleFormValueChange(false);
-        //         setButtonData({ ...buttonData, formBtnActive: false });
-        //         setConfirmRequest({
-        //             ...confirmRequest,
-        //             isVisible: false,
-        //         });
-        //     },
-        //     submitText: translateContent('bookingManagement.modelVariant.button.yes'),
-        //     text: translateContent('bookingManagement.modelVariant.heading.modelChange'),
-        // });
+    useEffect(() => {
+        if (soDataList?.paginationData?.length > 0) {
+            setButtonData({ ...buttonData, formBtnActive: true });
+        } else {
+            setButtonData({ ...buttonData, formBtnActive: false });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [soDataList]);
+
+    const rowSelection = {
+        selectedRowKeys: [selectedRecord?.soNumber],
+        type: 'radio',
+        onChange: (_, selectedRows) => {
+            setSelectedRecord(selectedRows?.[0]);
+        },
+    };
+
+    const onChange = (e) => {
+        handleFormValueChange(e.target.checked);
+    };
+
+    const dynamicPagination = true;
+    const tableProps = {
+        srl: false,
+        dynamicPagination,
+        totalRecords: soDataList?.totalRecords,
+        filterString,
+        setPage: setFilterString,
+        isLoading: showDataLoading,
+        tableColumn: tableColumn(),
+        tableData: soDataList?.paginationData,
+        showAddButton: false,
+        rowKey: 'soNumber',
+        noDataMessage: (
+            <>
+                SO is not available,
+                <br />
+                Please create new purchase order
+            </>
+        ),
+        rowSelection: {
+            ...rowSelection,
+        },
+    };
+
+    const handleRefresh = () => {
+        setProductDetailRefresh(!productDetailRefresh);
     };
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -390,109 +414,9 @@ const AddEditFormMain = (props) => {
         treeDisabled: formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode),
     };
 
-    const onFinish = (values) => {};
-
-    // useEffect(() => {
-    //     if (soDataList?.paginationData?.length > 0) {
-    //         setButtonData({ ...buttonData, formBtnActive: true });
-    //     } else {
-    //         setButtonData({ ...buttonData, formBtnActive: false });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [soDataList]);
-
-    const SO_MAPPING = 'SO_MAPPING';
-    const VEHICLE_TYPE = {
-        ALLOTED: {
-            key: 'allot',
-        },
-        UNALLOTED: {
-            key: 'allot',
-        },
-    };
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        switch (buttonAction) {
-            case SO_MAPPING:
-                handleVehicleAllotment(record, buttonAction);
-                break;
-
-            default:
-                break;
-        }
-    };
-
-    const handleVehicleAllotment = (req, buttonAction) => {
-        if (!selectedVINDetails) {
-            showGlobalNotification({ message: translateContent('bookingManagement.validation.mandatoryVINSelect') });
-            return false;
-        }
-
-        let updatedStatus = '';
-        if (buttonAction === FROM_ACTION_TYPE?.ALLOT) {
-            updatedStatus = VEHICLE_TYPE?.ALLOTED.key;
-        } else {
-            updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
-        }
-
-        const { otfId, otfNumber, bookingNumber = undefined } = selectedOrder;
-        const { vehicleIdentificationNumber } = selectedVINDetails;
-
-        let data = { otfId, otfNumber, bookingNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
-
-        const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setRefreshData(!refreshData);
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: buttonAction === FROM_ACTION_TYPE?.ALLOT ? 'post' : 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
-    };
-
-    const rowSelection = {
-        selectedRowKeys: [selectedVINDetails?.vehicleIdentificationNumber],
-        type: 'radio',
-        onChange: (selectedRowKeys, selectedRows) => {
-            setSelectedOrderVINDetails(selectedRows?.[0]);
-        },
-    };
-
-    const dynamicPagination = true;
-    const tableProps = {
-        srl: false,
-        dynamicPagination,
-        totalRecords: soDataList?.totalRecords,
-        filterString,
-        setPage: setFilterString,
-        isLoading: showDataLoading,
-        tableColumn: tableColumn(),
-        tableData: soDataList?.paginationData,
-        showAddButton: false,
-        rowKey: 'vehicleIdentificationNumber',
-        rowSelection: {
-            ...rowSelection,
-        },
-    };
-
-    const handleRefresh = () => {
-        setProductDetailRefresh(!productDetailRefresh);
-    };
-
     const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key]?.includes(formData?.sapStatusResponseCode);
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} data-testid="modelChange">
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} data-testid="modelChange">
             <div className={`${styles.drawerBody} ${styles.height180}`}>
                 <Row justify="space-between" className={styles.fullWidth}>
                     <div className={styles.marB10}>
@@ -520,35 +444,45 @@ const AddEditFormMain = (props) => {
                         <Card>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.model')} name={'model' + formType} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
+                                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.model')} name={'model'} rules={[validateRequiredSelectField(translateContent('bookingManagement.modelVariant.validation.model'))]}>
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Form.Item>
                                     {revisedModelInformation && <div className={styles.modelTooltip}>{addToolTip(revisedModelInformation, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                                 </Col>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} name={'modelCode' + formType} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
+                                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} name={'modelCode'} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
                                         <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                         </Card>
                         <Divider className={styles.marT20} />
-                        <h4>{translateContent('bookingManagement.label.vehicleSOMapping')}</h4>
-                        <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+                                <h4>{translateContent('bookingManagement.label.vehicleSOMapping')}</h4>
+                            </Col>
+                            {showCreatePurchaseOrder && (
+                                <Col xs={24} sm={24} md={4} lg={4} xl={4} className={`${styles.verticallyCentered} ${styles.alignRight}`}>
+                                    <Form.Item initialValue={formData?.createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
+                                        <Checkbox>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
+                                    </Form.Item>
+                                </Col>
+                            )}
+                        </Row>
+                        <ListDataTable {...tableProps} showAddButton={false} />
                     </Col>
                 </Row>
             </div>
             <div className={styles.formFooter}>
                 <Row gutter={20}>
                     <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
-                        {buttonData?.closeBtn && (
+                        {/* {buttonData?.closeBtn && (
                             <Button danger onClick={onCloseAction} data-testid="close">
                                 {translateContent('global.buttons.close')}
                             </Button>
-                        )}
-
+                        )} */}
                         {buttonData?.cancelBtn && (
-                            <Button loading={false} disabled={!buttonData?.formBtnActive} onClick={() => handleCollapse(formType)} danger>
+                            <Button loading={false} disabled={!buttonData?.formBtnActive} onClick={() => handleCollapse()} danger>
                                 {translateContent('global.buttons.cancel')}
                             </Button>
                         )}
@@ -565,6 +499,7 @@ const AddEditFormMain = (props) => {
                                     {translateContent('global.buttons.submit')}
                                 </Button>
                             )}
+
                             <ConfirmationModal {...confirmRequest} />
                         </Col>
                     )}

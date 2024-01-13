@@ -770,7 +770,7 @@ export const OtfMasterBase = (props) => {
         refreshData,
         setRefreshData,
         handleUnSavedChangeFn,
-        setOpenVehilceModelChange
+        setOpenVehilceModelChange,
     };
 
     const onCancelCloseAction = () => {
@@ -826,6 +826,7 @@ export const OtfMasterBase = (props) => {
 
     const changeVehilceModelProps = {
         ...props,
+        selectedRecordId,
         form: changeVehicleModelForm,
         formActionType,
         selectedOrder,

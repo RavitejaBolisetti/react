@@ -1677,7 +1677,8 @@
                 "modelDescription": "Revised Model Description",
                 "modelCode": "Revised Model Code",
                 "confirmation": "Confirmation",
-                "cancelRequest": "Cancel Request"
+                "cancelRequest": "Cancel Request",
+                "createPurchaseOrder": "Create Purchase Order"
             },
             "validation": {
                 "model": "Model",
