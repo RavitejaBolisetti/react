@@ -29,6 +29,7 @@ import { productHierarchyDataActions } from 'store/actions/data/productHierarchy
 import { refactorProductAttributeData } from '../refactorProductAttributeData';
 
 import styles from 'assets/sass/app.module.scss';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
 const { Text } = Typography;
 const mapStateToProps = (state) => {
@@ -72,6 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             showGlobalNotification,
             fetchSoData: otfvehicleDetailsDataActions.fetchData,
+            fetchList: vehicleDetailDataActions.fetchList,
             fetchProductAttribiteDetail: productHierarchyDataActions.fetchProductAttribiteDetail,
         },
         dispatch
@@ -80,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
-    const { fetchSoData, vehicleDetailData, productDetailRefresh, setProductDetailRefresh, form, productHierarchyData, selectedRecordId, filterVehicleData, saveData, fetchProductAttribiteDetail } = props;
+    const { isOTFModule, fetchList, fetchSoData, vehicleDetailData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedTreeKey, setSelectedTreeKey] = useState();
@@ -97,11 +99,32 @@ const AddEditFormMain = (props) => {
 
     const [formData, setFormData] = useState();
     const [modelStatus, setModelStatus] = useState();
+    console.log('🚀 ~ AddEditFormMain ~ modelStatus:', modelStatus);
+    const [productDetailRefresh, setProductDetailRefresh] = useState();
+
+    useEffect(() => {
+        if (userId && selectedRecordId) {
+            if (isOTFModule) {
+                const extraParams = [
+                    {
+                        key: 'otfId',
+                        value: selectedRecordId,
+                    },
+                ];
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            }
+
+            // if (!isVehicleServiceLoaded) {
+            //     fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
+            // }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedRecordId, productDetailRefresh]);
 
     useEffect(() => {
         if (vehicleDetailData) {
-            // setFormData(vehicleDetailData);
-            setFormData({ ...vehicleDetailData, sapStatusResponseCode: null, revisedModel: null });
+            setFormData(vehicleDetailData);
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: null, revisedModel: null });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911' });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911' });
@@ -121,7 +144,7 @@ const AddEditFormMain = (props) => {
             setSelectedTreeKey(formData?.model);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [revisedModelCode]);
+    }, [formData]);
 
     useEffect(() => {
         if (revisedProductAttributeData) {
@@ -219,10 +242,12 @@ const AddEditFormMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
+        setSelectedRecord();
     };
 
     useEffect(() => {
         if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
+            setShowDataLoading(true);
             fetchSoData({
                 customURL: customURL,
                 setIsLoading: listShowLoading,
@@ -232,6 +257,7 @@ const AddEditFormMain = (props) => {
                     setShowCreatePurchaseOrder(res?.data?.paginationData.length <= 0);
                     setShowDataLoading(false);
                     setSoDataList(res?.data);
+                    setSelectedRecord();
                 },
                 onErrorAction,
             });
@@ -248,7 +274,6 @@ const AddEditFormMain = (props) => {
             setModelStatus(res?.data?.status);
             setProductDetailRefresh(!productDetailRefresh);
             onSuccessAction && onSuccessAction();
-
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
                 setRefreshData(!refreshData);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
@@ -278,12 +303,14 @@ const AddEditFormMain = (props) => {
                 const vehicleCurrentModel = { model: formData?.model, modelCode: formData?.modelCode };
                 if (JSON.stringify(vehicleModelChangeRequest) === JSON.stringify(vehicleCurrentModel)) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
+                } else if (!vehicleNewModel?.createPurchaseOrder && !selectedRecord?.soNumber) {
+                    showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please select one option either to map so number or create purchase order' });
                 } else {
                     const data = {
                         otfId: selectedRecordId,
                         modelCode: vehicleModelChangeRequest?.modelCode,
                         status: null,
-                        revisedSoNumber: selectedRecord,
+                        revisedSoNumber: selectedRecord?.soNumber || null,
                         createPurchaseOrder: vehicleNewModel?.createPurchaseOrder,
                     };
                     modelChangeService(data);
@@ -366,6 +393,7 @@ const AddEditFormMain = (props) => {
         onChange: (_, selectedRows) => {
             setSelectedRecord(selectedRows?.[0]);
         },
+        onClick: () => setShowCreatePurchaseOrder(true),
     };
 
     const onChange = (e) => {
@@ -403,6 +431,8 @@ const AddEditFormMain = (props) => {
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
+    const isReviedModelPending = modelStatus && [STATUS?.PENDING?.key]?.includes(modelStatus);
+
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: productHierarchyData,
@@ -411,10 +441,9 @@ const AddEditFormMain = (props) => {
         handleSelectTreeClick,
         treeExpandedKeys: [selectedTreeKey],
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
-        treeDisabled: formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode),
+        treeDisabled: isReviedModelPending,
     };
 
-    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key]?.includes(formData?.sapStatusResponseCode);
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} data-testid="modelChange">
             <div className={`${styles.drawerBody} ${styles.height180}`}>
@@ -464,7 +493,7 @@ const AddEditFormMain = (props) => {
                             {showCreatePurchaseOrder && (
                                 <Col xs={24} sm={24} md={4} lg={4} xl={4} className={`${styles.verticallyCentered} ${styles.alignRight}`}>
                                     <Form.Item initialValue={formData?.createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
-                                        <Checkbox>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
+                                        <Checkbox disabled={isReviedModelPending}>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
                                     </Form.Item>
                                 </Col>
                             )}
@@ -476,16 +505,17 @@ const AddEditFormMain = (props) => {
             <div className={styles.formFooter}>
                 <Row gutter={20}>
                     <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
-                        {/* {buttonData?.closeBtn && (
-                            <Button danger onClick={onCloseAction} data-testid="close">
-                                {translateContent('global.buttons.close')}
-                            </Button>
-                        )} */}
-                        {buttonData?.cancelBtn && (
-                            <Button loading={false} disabled={!buttonData?.formBtnActive} onClick={() => handleCollapse()} danger>
-                                {translateContent('global.buttons.cancel')}
-                            </Button>
-                        )}
+                        {isReviedModelPending
+                            ? buttonData?.closeBtn && (
+                                  <Button danger onClick={onCancelCloseAction} data-testid="close">
+                                      {translateContent('global.buttons.close')}
+                                  </Button>
+                              )
+                            : buttonData?.cancelBtn && (
+                                  <Button loading={false} disabled={!buttonData?.formBtnActive} onClick={() => handleCollapse()} danger>
+                                      {translateContent('global.buttons.cancel')}
+                                  </Button>
+                              )}
                     </Col>
 
                     {!isReviedModelPending && (
