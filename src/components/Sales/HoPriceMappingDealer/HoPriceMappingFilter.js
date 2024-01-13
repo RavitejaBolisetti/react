@@ -14,8 +14,8 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
-export default function HoPriceMappingFilter(props) {
-    const { extraParams, removeFilter, setFilterString, advanceFilter, setAdvanceSearchVisible, searchForm, pricingType, handlePricingTypeChange, handleSearch, filterString } = props;
+const HoPriceMappingFilter = (props) => {
+    const { extraParams, removeFilter, setFilterString, advanceFilter, setAdvanceSearchVisible, searchForm, pricingType, handlePricingTypeChange, handleSearch, filterString, setSelectedTreeSelectKey, advanceFilterForm, setFilteredCityData } = props;
 
     return (
         <div className={styles.contentHeaderBackground}>
@@ -26,13 +26,21 @@ export default function HoPriceMappingFilter(props) {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
                                     <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                        {Object.values(PRICING_TYPE)?.map((item) => {
-                                            return (
-                                                <Button type={pricingType === item?.key ? 'primary' : 'link'} onClick={() => handlePricingTypeChange(item?.key)}>
-                                                    {item?.title}
-                                                </Button>
-                                            );
-                                        })}
+                                        {Object.values(PRICING_TYPE)?.map((item) => (
+                                            <Button
+                                                type={pricingType === item?.key ? 'primary' : 'link'}
+                                                onClick={() => {
+                                                    handlePricingTypeChange(item?.key);
+                                                    setFilterString({ pricingType: item?.key });
+                                                    setSelectedTreeSelectKey();
+                                                    advanceFilterForm.resetFields();
+                                                    advanceFilterForm.setFieldsValue({ modelCode: null, stateCode: null, cityCode: null });
+                                                    setFilteredCityData([]);
+                                                }}
+                                            >
+                                                {item?.title}
+                                            </Button>
+                                        ))}
                                     </div>
                                     <div className={styles.fullWidth}>
                                         <Search placeholder={translateContent('hoPriceMapping.label.searchDealerParent')} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
@@ -40,14 +48,7 @@ export default function HoPriceMappingFilter(props) {
                                 </Col>
                                 {advanceFilter && (
                                     <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
-                                        <Button
-                                            type="link"
-                                            icon={<FilterIcon />}
-                                            className={styles.verticallyCentered}
-                                            onClick={() => {
-                                                setAdvanceSearchVisible(true);
-                                            }}
-                                        >
+                                        <Button type="link" icon={<FilterIcon />} className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)}>
                                             {translateContent('global.advanceFilter.title')}
                                         </Button>
                                     </Col>
@@ -62,7 +63,7 @@ export default function HoPriceMappingFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}> {translateContent('global.advanceFilter.appliedAdvanceFilter')}: </div>
+                                <div className={styles.advanceFilterTitle}> {translateContent('global.advanceFilter.appliedAdvanceFilter')}</div>
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
@@ -90,4 +91,6 @@ export default function HoPriceMappingFilter(props) {
             )}
         </div>
     );
-}
+};
+
+export default HoPriceMappingFilter;

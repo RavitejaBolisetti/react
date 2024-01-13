@@ -33,7 +33,7 @@ export const AdvancedSearchFrom = (props) => {
             stateCode: values?.stateCode,
             stateCodeName: filteredStateData?.find((i) => i?.key === values?.stateCode)?.value,
             cityCode: values?.cityCode,
-            cityCodeName: filteredCityData?.find((i) => i?.key === values?.cityCode)?.value,
+            cityCodeName: filteredCityData?.find((i) => i?.code === values?.cityCode)?.name,
             modelCode: values?.modelCode,
             modelCodeName: modelCodeName,
             advanceFilter: true,
@@ -43,7 +43,6 @@ export const AdvancedSearchFrom = (props) => {
         resetFields();
         setFilteredCityData([]);
     };
-
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -77,7 +76,7 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label={translateContent('hoPriceMapping.label.city')} initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField(translateContent('global.validation.city'))]}>
                         <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.city'))} {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
-                                <Option value={item?.key}>{item?.value}</Option>
+                                <Option value={item?.code}>{item?.name}</Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -87,14 +86,6 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.modelCode} label={translateContent('hoPriceMapping.label.productHierarchy')} name="modelCode" rules={[validateRequiredSelectField(translateContent('global.validation.productHierarchy'))]}>
-                        {/* <Select placeholder={preparePlaceholderSelect(translateContent('hoPriceMapping.label.productHierarchy'))} {...selectProps} loading={isProductLoading}>
-                            {productHierarchyList?.map((item) => (
-                                <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
-                                    {item.prodctShrtName}
-                                </Option>
-                            ))}
-                        </Select> */}
-
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
