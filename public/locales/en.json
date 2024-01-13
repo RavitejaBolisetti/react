@@ -28,7 +28,10 @@
             "select": "Select",
             "passwordStrength": "Password strength",
             "actions": "Actions",
-            "input": "input"
+            "input": "input",
+            "yes":"Yes",
+            "no":"No"
+
         },
         "validation": {
             "input": "Please enter ",
