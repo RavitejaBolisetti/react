@@ -11,6 +11,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -49,4 +50,4 @@ const ChangeModelVariantMasterBase = (props) => {
     return <div>{viewMode ? <ViewDetail {...props} /> : <AddEditForm {...props} />}</div>;
 };
 
-export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeModelVariantMasterBase, { width: '90%', title: 'Model Change', footer: null }));
+export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(withDrawer(withSpinner(ChangeModelVariantMasterBase), { width: '90%', title: 'Model Change', footer: null }));

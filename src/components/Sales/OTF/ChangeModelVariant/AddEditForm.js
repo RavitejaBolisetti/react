@@ -26,10 +26,9 @@ import { BASE_URL_VEHICLE_MODEL_SO_MAPPING_SEARCH as customURL } from 'constants
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { refactorProductAttributeData } from '../refactorProductAttributeData';
 
 import styles from 'assets/sass/app.module.scss';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
+import { refactorProductAttributeData } from 'utils/refactorProductAttributeData';
 
 const { Text } = Typography;
 const mapStateToProps = (state) => {
@@ -85,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, isLoading, listShowLoading, setRefreshData, refreshData } = props;
+    const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
     const { isOTFModule, fetchList, fetchSoData, vehicleDetailData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
 
     const [selectedRecord, setSelectedRecord] = useState();
@@ -116,21 +115,16 @@ const AddEditFormMain = (props) => {
                 ];
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
             }
-
-            // if (!isVehicleServiceLoaded) {
-            //     fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
-            // }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId, productDetailRefresh]);
 
     useEffect(() => {
         if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: null, revisedModel: null });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911' });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911' });
+            // setFormData(vehicleDetailData);
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
+            setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -493,13 +487,12 @@ const AddEditFormMain = (props) => {
                             <Col xs={24} sm={24} md={20} lg={20} xl={20}>
                                 <h4>{translateContent('bookingManagement.label.vehicleSOMapping')}</h4>
                             </Col>
-                            {showCreatePurchaseOrder && (
-                                <Col xs={24} sm={24} md={4} lg={4} xl={4} className={`${styles.verticallyCentered} ${styles.alignRight}`}>
-                                    <Form.Item initialValue={formData?.createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
-                                        <Checkbox disabled={isReviedModelPending}>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
-                                    </Form.Item>
-                                </Col>
-                            )}
+
+                            <Col xs={24} sm={24} md={4} lg={4} xl={4} className={`${styles.verticallyCentered} ${styles.alignRight}`}>
+                                <Form.Item initialValue={formData?.createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
+                                    <Checkbox disabled={isReviedModelPending || !revisedProductAttributeData?.autoOrder}>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
+                                </Form.Item>
+                            </Col>
                         </Row>
                         <ListDataTable {...tableProps} showAddButton={false} />
                     </Col>

@@ -18,7 +18,6 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
-import { ChangeModelVariantMaster } from './ChangeModelVariant';
 import { STATUS } from 'constants/modelVariant';
 import { PARAM_MASTER } from 'constants/paramMaster';
 

@@ -36,9 +36,9 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { UnSaveDataConfirmation, handleUnSavedChange } from 'utils/UnSaveDataConfirmation';
 import { translateContent } from 'utils/translateContent';
 import LeftProfileCard from './LeftProfileCard';
+import { ChangeModelVariantMaster } from './ChangeModelVariant';
 
 import styles from 'assets/sass/app.module.scss';
-import { ChangeModelVariantMaster } from '../Common/VehicleDetails/ChangeModelVariant';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
