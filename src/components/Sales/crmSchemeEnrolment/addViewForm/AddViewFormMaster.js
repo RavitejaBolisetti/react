@@ -35,7 +35,7 @@ const AddViewFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        saveButtonName: formActionType?.addMode ? translateContent('global.buttons.saveAndNext') : translateContent('global.buttons.next'),
+        saveButtonName: formActionType?.addMode ? translateContent('global.buttons.save') : translateContent('global.buttons.next'),
         handlePrintDownload,
     };
 

@@ -11,14 +11,16 @@ import { addToolTip } from 'utils/customMenuLink';
 import { translateContent } from 'utils/translateContent';
 import { getCodeValue } from 'utils/getCodeValue';
 import { formattedCalendarDate, dateFormat, mmYYYYFormat } from 'utils/formatDateTime';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { GRN_TYPE_CONSTANT } from '../utils/GrnTypeConstant';
-import dayjs from 'dayjs';
+import { DEFECT_SHORTAGE_OTHER_CONSTANT } from './defectShortageOtherConstant';
 import { BASE_URL_INVOICE_DEFECT_LOCATION as defectCustomURL, BASE_URL_INVOICE_DEFECT_SHORTAGE as shortageCustomURL } from 'constants/routingApi';
+import { CardSkeleton } from 'components/common/Skeleton';
+import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -28,13 +30,15 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, setFormData, selectedRecord, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType, defectStatusType, defactTypeData, shortTypeData } = props;
+    const { isLoading, formData, setFormData, selectedRecord, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType, defectStatusType, defactTypeData, shortTypeData } = props;
     const { fetchDefectAndShortageDependentData, checkPhysicalStatus, checkShortage } = props;
 
     const [activeKey, setactiveKey] = useState([]);
     const [statusType, setstatusType] = useState([]);
     const [defectDescription, setDefectDescription] = useState([]);
     const [shortageDescription, setShortageDescription] = useState([]);
+
+    const [otherShortageAndDefectType, setOtherShortageAndDefectType] = useState({});
 
     useEffect(() => {
         if (formData) {
@@ -70,6 +74,19 @@ const AddEditFormMain = (props) => {
                             index,
                             customURL: shortageCustomURL,
                         });
+
+                    setOtherShortageAndDefectType((prev) => {
+                        return {
+                            ...prev,
+                            [index]: {
+                                otherDefectType: element?.physicalStatusDetail?.otherDefectType,
+                                otherDefectLocation: element?.physicalStatusDetail?.otherDefectLocation,
+                                otherDefectDescription: element?.physicalStatusDetail?.otherDefectDescription,
+                                otherShortageType: element?.shortageDetail?.otherShortageType,
+                                otherShortageDescription: element?.shortageDetail?.otherShortageDescription,
+                            },
+                        };
+                    });
                 });
             }
         }
@@ -136,7 +153,7 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const onFinishFailed = (errorInfo) => {
+    const onFinishFailed = () => {
         vehicleDetailForm
             .validateFields()
             .then((values) => {})
@@ -149,7 +166,7 @@ const AddEditFormMain = (props) => {
             .then(() => {
                 const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
                 const filteredFormData = formData?.filter((element, i) => i !== indexId);
-                const finalData = { ...filteredFormData, ...vehicleDetailData };
+                const finalData = [...filteredFormData, ...Object.values(vehicleDetailData)];
                 setFinalData(finalData);
                 setButtonData({ ...buttonData, formBtnActive: true });
                 setactiveKey([]);
@@ -192,6 +209,9 @@ const AddEditFormMain = (props) => {
                 index,
                 customURL: shortageCustomURL,
             });
+            setOtherShortageAndDefectType((prev) => {
+                return { ...prev, [index]: { ...prev?.[index], otherShortageType: value === DEFECT_SHORTAGE_OTHER_CONSTANT?.SHORTAGE_TYPE?.key } };
+            });
         } else {
             fetchDefectAndShortageDependentData({
                 value,
@@ -206,10 +226,19 @@ const AddEditFormMain = (props) => {
                 index,
                 customURL: defectCustomURL,
             });
+            setOtherShortageAndDefectType((prev) => {
+                return { ...prev, [index]: { ...prev?.[index], otherDefectLocation: value === DEFECT_SHORTAGE_OTHER_CONSTANT?.DEFECT_DESCRIPTION?.key } };
+            });
         }
     };
 
-    return (
+    const handleOtherDefectAndShortage = ({ value, typeKey, index }) => {
+        setOtherShortageAndDefectType((prev) => {
+            return { ...prev, [index]: { ...prev?.[index], [typeKey?.mapKey]: value === typeKey?.key } };
+        });
+    };
+
+    return !isLoading ? (
         <>
             <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
                 {formData?.map((item, index) => (
@@ -343,7 +372,7 @@ const AddEditFormMain = (props) => {
                                                 <>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                         <Form.Item initialValue={item?.physicalStatusDetail?.defectType} label={translateContent('vehicleReceipt.label.vehicleDetails.defectType')} name={[index, 'physicalStatusDetail', 'defectType']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.defectType'))]}>
-                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleOtherDefectAndShortage({ value, typeKey: DEFECT_SHORTAGE_OTHER_CONSTANT?.DEFECT_TYPE, index })}>
                                                                 {defectStatusType?.map((item) => (
                                                                     <Option key={'df' + item.key} value={item.key}>
                                                                         {item.value}
@@ -352,6 +381,14 @@ const AddEditFormMain = (props) => {
                                                             </Select>
                                                         </Form.Item>
                                                     </Col>
+
+                                                    {otherShortageAndDefectType?.[index]?.otherDefectType && (
+                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                            <Form.Item initialValue={item?.physicalStatusDetail?.otherDefectType} label={translateContent('vehicleReceipt.label.vehicleDetails.otherDefectType')} name={[index, 'physicalStatusDetail', 'otherDefectType']} rules={[validateRequiredInputField(translateContent('vehicleReceipt.label.vehicleDetails.otherDefectType'))]}>
+                                                                <Input placeholder={preparePlaceholderText(translateContent('vehicleReceipt.label.vehicleDetails.otherDefectType'))} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    )}
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                         <Form.Item initialValue={item?.physicalStatusDetail?.defectLocation} label={translateContent('vehicleReceipt.label.vehicleDetails.defectLocation')} name={[index, 'physicalStatusDetail', 'defectLocation']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.defectLocation'))]}>
                                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleDefectShortageChange({ value, index, type: 'defect' })}>
@@ -363,9 +400,16 @@ const AddEditFormMain = (props) => {
                                                             </Select>
                                                         </Form.Item>
                                                     </Col>
+                                                    {otherShortageAndDefectType?.[index]?.otherDefectLocation && (
+                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                            <Form.Item initialValue={item?.physicalStatusDetail?.otherDefectLocation} label={translateContent('vehicleReceipt.label.vehicleDetails.otherDefectLocation')} name={[index, 'physicalStatusDetail', 'otherDefectLocation']} rules={[validateRequiredInputField(translateContent('vehicleReceipt.label.vehicleDetails.otherDefectLocation'))]}>
+                                                                <Input placeholder={preparePlaceholderText(translateContent('vehicleReceipt.label.vehicleDetails.otherDefectLocation'))} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    )}
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                         <Form.Item initialValue={item?.physicalStatusDetail?.defectDescription} label={translateContent('vehicleReceipt.label.vehicleDetails.defectDescription')} name={[index, 'physicalStatusDetail', 'defectDescription']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.defectDescription'))]}>
-                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleOtherDefectAndShortage({ value, typeKey: DEFECT_SHORTAGE_OTHER_CONSTANT?.DEFECT_DESCRIPTION, index })}>
                                                                 {defectDescription?.[index]?.map((item) => (
                                                                     <Option key={'ds' + item.key} value={item.key}>
                                                                         {item.value}
@@ -374,6 +418,13 @@ const AddEditFormMain = (props) => {
                                                             </Select>
                                                         </Form.Item>
                                                     </Col>
+                                                    {otherShortageAndDefectType?.[index]?.otherDefectDescription && (
+                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                            <Form.Item initialValue={item?.physicalStatusDetail?.otherDefectDescription} label={translateContent('vehicleReceipt.label.vehicleDetails.otherDefectDescription')} name={[index, 'physicalStatusDetail', 'otherDefectDescription']} rules={[validateRequiredInputField(translateContent('vehicleReceipt.label.vehicleDetails.otherDefectDescription'))]}>
+                                                                <Input placeholder={preparePlaceholderText(translateContent('vehicleReceipt.label.vehicleDetails.otherDefectDescription'))} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    )}
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                         <Form.Item initialValue={item?.physicalStatusDetail?.remarks} label={translateContent('vehicleReceipt.label.vehicleDetails.remarks')} name={[index, 'physicalStatusDetail', 'remarks']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.remarks'))]}>
                                                             <TextArea maxLength={400} placeholder={preparePlaceholderText(translateContent('configurableParameter.placeholder.controlDescriptionPlaceHolder'))} disabled={''} showCount />
@@ -412,9 +463,16 @@ const AddEditFormMain = (props) => {
                                                             </Select>
                                                         </Form.Item>
                                                     </Col>
+                                                    {otherShortageAndDefectType?.[index]?.otherShortageType && (
+                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                            <Form.Item initialValue={item?.shortageDetail?.otherShortageType} label={translateContent('vehicleReceipt.label.vehicleDetails.otherShortageType')} name={[index, 'shortageDetail', 'otherShortageType']} rules={[validateRequiredInputField(translateContent('vehicleReceipt.label.vehicleDetails.otherShortageType'))]}>
+                                                                <Input placeholder={preparePlaceholderText(translateContent('vehicleReceipt.label.vehicleDetails.otherShortageType'))} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    )}
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                         <Form.Item initialValue={item?.shortageDetail?.shortageDescription} label={translateContent('vehicleReceipt.label.vehicleDetails.shortageDescription')} name={[index, 'shortageDetail', 'shortageDescription']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.shortageDescription'))]}>
-                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
+                                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} onChange={(value) => handleOtherDefectAndShortage({ value, typeKey: DEFECT_SHORTAGE_OTHER_CONSTANT?.SHORTAGE_TYPE, index })}>
                                                                 {shortageDescription?.[index]?.map((item) => (
                                                                     <Option key={'st' + item.key} value={item.key}>
                                                                         {item.value}
@@ -423,6 +481,13 @@ const AddEditFormMain = (props) => {
                                                             </Select>
                                                         </Form.Item>
                                                     </Col>
+                                                    {otherShortageAndDefectType?.[index]?.otherShortageDescription && (
+                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                            <Form.Item initialValue={item?.shortageDetail?.otherShortageDescription} label={translateContent('vehicleReceipt.label.vehicleDetails.otherShortageDescription')} name={[index, 'shortageDetail', 'otherShortageDescription']} rules={[validateRequiredInputField(translateContent('vehicleReceipt.label.vehicleDetails.otherShortageDescription'))]}>
+                                                                <Input placeholder={preparePlaceholderText(translateContent('vehicleReceipt.label.vehicleDetails.otherShortageDescription'))} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    )}
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                         <Form.Item initialValue={item?.shortageDetail?.remarks} label={translateContent('vehicleReceipt.label.vehicleDetails.remarks')} name={[index, 'shortageDetail', 'remarks']} rules={[validateRequiredSelectField(translateContent('vehicleReceipt.label.vehicleDetails.remarks'))]}>
                                                             <TextArea maxLength={400} placeholder={preparePlaceholderText(translateContent('configurableParameter.placeholder.controlDescriptionPlaceHolder'))} showCount />
@@ -460,6 +525,8 @@ const AddEditFormMain = (props) => {
                 ))}
             </Form>
         </>
+    ) : (
+        <CardSkeleton title={false} contentHeight={350} />
     );
 };
 

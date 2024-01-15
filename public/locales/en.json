@@ -28,7 +28,10 @@
             "select": "Select",
             "passwordStrength": "Password strength",
             "actions": "Actions",
-            "input": "input"
+            "input": "input",
+            "yes":"Yes",
+            "no":"No"
+
         },
         "validation": {
             "input": "Please enter ",
@@ -2807,12 +2810,17 @@
                 "demoVehicle": "Demo Vehicle",
                 "vehicleStatus": "Vehicle Status",
                 "physicalStatus": "Physical Status",
+                "otherDefectType" : "Other Defect Type",
+                "otherDefectLocation" : "Other Defect Location",
+                "otherDefectDescription" : "Other Defect Description",
                 "shortage": "Shortage",
                 "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No.",
                 "defectType": "Defect Type",
                 "defectDescription": "Defect Description",
                 "shortageType": "Shortage Type",
+                "otherShortageType": "Other Shortage Type",
                 "shortageDescription": "Shortage Description",
+                "otherShortageDescription": "Other Shortage Description",
                 "remarks": "Remarks",
                 "defectLocation": "Defect Location"
             },

@@ -34,7 +34,7 @@ export const ViewDetail = (props) => {
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.subsidyAmount')}>{formData?.subsidyAmount}</Descriptions.Item>
                 {ConsitionalFields}
                 <Descriptions.Item label={translateContent('centralFameSubsidy.label.activeIndicator')}>
-                    <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
+                    <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? translateContent('global.label.yes') : translateContent('global.label.no')}</span>
                 </Descriptions.Item>
             </Descriptions>
         </div>

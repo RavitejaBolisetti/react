@@ -213,8 +213,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [shieldDetailForm] = Form.useForm();
-    // const [registrationForm] = Form.useForm();
-    // const [schemeForm] = Form.useForm();
     const [vehicleCustomerForm] = Form.useForm();
     const [vehicleDetailForm] = Form.useForm();
     const [customerDetailForm] = Form.useForm();
@@ -392,7 +390,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId && loginUserData?.userType) {
+        if (userId && loginUserData?.userType && filterString?.status) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -403,6 +401,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listShowLoading, userId });
             fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
+
+            return () => {
+                setFilterString({});
+            };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -609,7 +611,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             setIsVINOrOTFValidated(false);
         };
         setBookingNumber(value);
-        resetSchemeDetail();
+        !(bookingNumber === value) && resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
             schemeDetails: {
                 schemeDescription: undefined,
@@ -660,14 +662,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 },
             });
         };
+        setVinNumber(value);
 
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsVINOrOTFValidated(false);
         };
-        setVinNumber(value);
-        resetSchemeDetail();
+        !(vinNumber === value) && resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
             schemeDetails: {
                 schemeDescription: undefined,

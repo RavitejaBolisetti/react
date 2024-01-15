@@ -324,21 +324,11 @@ export const VehicleReceiptMasterBase = (props) => {
         searchForm.resetFields();
         setParameterName('grnNumber');
         searchForm.setFieldValue('searchType', 'grnNumber');
-
         advanceFilterForm.resetFields();
     };
 
-    const changeObjtoArr = (data) => {
-        const finalDataItem = [];
-        Object?.entries(data)?.map(([key, value]) => {
-            finalDataItem.push({ ...value, mfgdate: value?.mfgdate ? dayjs(value?.mfgdate, dateFormat)?.format(dateFormat) : null });
-            return undefined;
-        });
-        return finalDataItem;
-    };
-
     const onFinish = (values) => {
-        const data = { id: selectedId?.id, supplierInvoiceNumber: selectedId?.supplierInvoiceNumber, vehicleDetails: changeObjtoArr(finalData) };
+        const data = { id: selectedId?.id, supplierInvoiceNumber: selectedId?.supplierInvoiceNumber, vehicleDetails: finalData };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);

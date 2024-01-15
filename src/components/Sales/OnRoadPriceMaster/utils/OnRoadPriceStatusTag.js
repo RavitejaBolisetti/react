@@ -9,10 +9,10 @@ import { ONROAD_PRICE_MASTER_STATUS } from 'constants/OnRoadPriceMasterStatus';
 export const OnRoadPriceStatusTag = (status) => {
     let tag = '-';
     switch (true) {
-        case status===ONROAD_PRICE_MASTER_STATUS.ACTIONED.key || status===ONROAD_PRICE_MASTER_STATUS.ACTIONED.key2 :
+        case status===ONROAD_PRICE_MASTER_STATUS.ACTIONED.key || status===ONROAD_PRICE_MASTER_STATUS.ACTIONED.key2 || status===ONROAD_PRICE_MASTER_STATUS.ACTIONED.title :
             tag = <Tag color="success">{ONROAD_PRICE_MASTER_STATUS.ACTIONED.title}</Tag>;
             break;
-        case status===ONROAD_PRICE_MASTER_STATUS.UNACTIONED.key || status===ONROAD_PRICE_MASTER_STATUS.UNACTIONED.key2 :
+        case status===ONROAD_PRICE_MASTER_STATUS.UNACTIONED.key || status===ONROAD_PRICE_MASTER_STATUS.UNACTIONED.key2 || status===ONROAD_PRICE_MASTER_STATUS.UNACTIONED.title :
             tag = <Tag color="error">{ONROAD_PRICE_MASTER_STATUS.UNACTIONED.title}</Tag>;
             break;
 

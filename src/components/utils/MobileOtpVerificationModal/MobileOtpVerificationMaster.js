@@ -109,8 +109,8 @@ const MobileOtpVerificationBase = (props) => {
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
         if (Mno?.length === 10 && regex.test(Mno)) {
             setMobileNumber(Mno);
-        } else if (Mno?.length <= 10) {
-            setMobileNumber(Mno);
+        } else {
+            setMobileNumber();
         }
     };
 

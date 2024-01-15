@@ -15,7 +15,7 @@ import { SCHEME_TYPE } from '../constant';
 const { Search } = Input;
 
 const EnrolmentAdd = (props) => {
-    const { typeData, onHandleRegistrationNumber, isSearchLoading, onSchemeChange, schemeType } = props;
+    const { typeData, onHandleRegistrationNumber, isSearchLoading, onSchemeChange, schemeType, setCustomerData, setVehicleDataDetails } = props;
 
     return (
         <>
@@ -27,7 +27,16 @@ const EnrolmentAdd = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label={translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber')} name="registrationNumber" rules={[validateRequiredInputField(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'))]}>
-                        <Search placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'), false)} allowClear onSearch={onHandleRegistrationNumber} loading={isSearchLoading} />
+                        <Search
+                            placeholder={preparePlaceholderText(translateContent('crmSchemeEnrolment.label.vehicleRegistrationNumber'), false)}
+                            onChange={() => {
+                                setVehicleDataDetails({});
+                                setCustomerData({});
+                            }}
+                            onSearch={onHandleRegistrationNumber}
+                            loading={isSearchLoading}
+                            allowClear
+                        />
                     </Form.Item>
                 </Col>
                 {schemeType !== SCHEME_TYPE?.REFERRAL?.key && (
