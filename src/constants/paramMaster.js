@@ -525,6 +525,14 @@ export const PARAM_MASTER = {
         id: 'DEFCT_CD',
         title: 'Defect',
     },
+    MODE_OF_DIS: {
+        id: 'MODE_OF_DIS',
+        title: 'mode of  discount sales scheme and offer',
+    },
+    SALS_SCHEM_TYPE: {
+        id: 'SALS_SCHEM_TYPE',
+        title: 'Sales scheme type of discount sales scheme and offer',
+    },
     CHNG_EX_ORG: {
         id: 'CHNG_EX_ORG',
         title: 'on road price master',

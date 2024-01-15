@@ -11,13 +11,13 @@ import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
 export const SchemeDetailsMaster = (props) => {
-    const { buttonData, formData, onCloseAction, formActionType } = props;
+    const { buttonData, formData, onCloseAction, formActionType, setRequestPayload, requestPayload } = props;
     const { form, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
     const { FormActionButton } = props;
 
     useEffect(() => {
         if (formData) {
-            form?.setFieldsValue({ ...formData });
+            form.setFieldsValue({ ...formData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -35,7 +35,22 @@ export const SchemeDetailsMaster = (props) => {
         schemeData: formData,
     };
 
-    const onFinish = () => {
+    const onFinish = (values) => {
+        const finalSchemeData = {
+            ...formData,
+            ...values,
+            sales: formData?.sales?.map((item) => {
+                if (item?.id === values?.sales?.salesSchemeId) {
+                    return { ...values?.sales, active: true };
+                } else {
+                    return { ...item, active: false };
+                }
+            }),
+        };
+        setRequestPayload({
+            ...requestPayload,
+            schemeOfferDetails: finalSchemeData,
+        });
         handleButtonClick({ buttonAction: NEXT_ACTION });
     };
 
