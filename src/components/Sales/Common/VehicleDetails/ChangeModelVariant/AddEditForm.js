@@ -72,8 +72,12 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             showGlobalNotification,
+
             fetchSoData: otfvehicleDetailsDataActions.fetchData,
-            fetchList: vehicleDetailDataActions.fetchList,
+            fetchList: otfvehicleDetailsDataActions.fetchList,
+            listShowLoading: otfvehicleDetailsDataActions.listShowLoading,
+            fetchData: otfvehicleDetailsDataActions.fetchData,
+
             fetchProductAttribiteDetail: productHierarchyDataActions.fetchProductAttribiteDetail,
         },
         dispatch
@@ -81,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
+    const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, isLoading, listShowLoading, setRefreshData, refreshData } = props;
     const { isOTFModule, fetchList, fetchSoData, vehicleDetailData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
 
     const [selectedRecord, setSelectedRecord] = useState();
@@ -99,8 +103,7 @@ const AddEditFormMain = (props) => {
 
     const [formData, setFormData] = useState();
     const [modelStatus, setModelStatus] = useState();
-    console.log('🚀 ~ AddEditFormMain ~ modelStatus:', modelStatus);
-    const [productDetailRefresh, setProductDetailRefresh] = useState();
+    const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
     useEffect(() => {
         if (userId && selectedRecordId) {
