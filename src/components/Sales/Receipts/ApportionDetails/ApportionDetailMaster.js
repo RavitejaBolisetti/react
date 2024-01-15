@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ApportionDetailMasterBase = (props) => {
     const { userId, documentDescriptionList, showGlobalNotification, section, isDocumentTypesLoaded, listDocumentTypeShowLoading, listInvoiceShowLoading, fetchDocumentTypeList, resetInvoiceData, fetchInvoiceList, fetchList, isLoading } = props;
     const { form, formActionType, handleFormValueChange, handleButtonClick, receiptOnFinish } = props;
-    const { apportionList, setApportionList, receiptDetailData, totalReceivedAmount, receiptStatus, ApportionLoading } = props;
+    const { setButtonData, buttonData, apportionList, setApportionList, receiptDetailData, totalReceivedAmount, receiptStatus, ApportionLoading } = props;
 
     const [showApportionForm, setShowApportionForm] = useState();
     const [documentAmount, setDocumentAmount] = useState();
@@ -95,6 +95,13 @@ const ApportionDetailMasterBase = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDocumentTypesLoaded]);
+
+    useEffect(() => {
+        if (formActionType?.editMode) {
+            setButtonData({ ...buttonData, formBtnActive: false });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
 
     const handleDocumentNumberChange = () => {
         setShowApportionForm();

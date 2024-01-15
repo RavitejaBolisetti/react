@@ -109,7 +109,7 @@ export const EMBEDDED_REPORTS = {
     RECIEPT_DOCUMENT: {
         id: 14,
         key: 'Receipt_Note',
-        title: 'Reciept Document',
+        title: 'Receipt Document',
         type: 'Document',
     },
     INVOICE_DOCUMENT: {
