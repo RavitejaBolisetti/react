@@ -29,9 +29,8 @@
             "passwordStrength": "Password strength",
             "actions": "Actions",
             "input": "input",
-            "yes":"Yes",
-            "no":"No"
-
+            "yes": "Yes",
+            "no": "No"
         },
         "validation": {
             "input": "Please enter ",
@@ -1961,6 +1960,18 @@
                 "noData": "No data"
             }
         },
+        "connectedVehicle": {
+            "connectedVehicle": "Connected Vehicle",
+            "tcuId": "TCU ID",
+            "esimNo": "E-SIM No",
+            "esimStatus": "E-SIM Status",
+            "preferredMobileNo1": "Prefered Mobile No 1",
+            "preferredMobileNo2": "Prefered Mobile No 2",
+            "kycStatus": "KYC Status",
+            "received": "Recieved",
+            "notReceived": "Not Recieved",
+            "noConnectedVehicleFound": "No Connected Vehicle Found"
+        },
         "documents": {
             "heading": {
                 "moduleTitle": "Documents",
@@ -2810,9 +2821,9 @@
                 "demoVehicle": "Demo Vehicle",
                 "vehicleStatus": "Vehicle Status",
                 "physicalStatus": "Physical Status",
-                "otherDefectType" : "Other Defect Type",
-                "otherDefectLocation" : "Other Defect Location",
-                "otherDefectDescription" : "Other Defect Description",
+                "otherDefectType": "Other Defect Type",
+                "otherDefectLocation": "Other Defect Location",
+                "otherDefectDescription": "Other Defect Description",
                 "shortage": "Shortage",
                 "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No.",
                 "defectType": "Defect Type",
