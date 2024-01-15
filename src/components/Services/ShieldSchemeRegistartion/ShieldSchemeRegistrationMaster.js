@@ -808,7 +808,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleResetFilter = (e) => {
         const { pageSize } = filterString;
         setShowDataLoading(false);
-        setFilterString({ status: filterString?.amcStatus, pageSize });
+        setFilterString({ status: filterString?.status, pageSize });
         advanceFilterForm.resetFields();
     };
 
