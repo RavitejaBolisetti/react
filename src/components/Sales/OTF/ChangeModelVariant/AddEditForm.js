@@ -121,9 +121,9 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         if (vehicleDetailData) {
-            // setFormData(vehicleDetailData);
+            setFormData(vehicleDetailData);
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
-            setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -429,6 +429,7 @@ const AddEditFormMain = (props) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
     const isReviedModelPending = modelStatus && [STATUS?.PENDING?.key]?.includes(modelStatus);
+    const isReviedModelPendingFailed = modelStatus && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -448,10 +449,10 @@ const AddEditFormMain = (props) => {
                     <div className={styles.marB10}>
                         <Text strong>Change Model</Text>
                     </div>
-                    {isReviedModelPending && (
+                    {isReviedModelPendingFailed && (
                         <div className={styles.verticallyCentered}>
                             {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">{STATUS?.PENDING?.title}</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">{STATUS?.SUCCESS?.title}</Tag> : <Tag color="error">{STATUS?.REJECTED?.title}</Tag>}
-                            {modelStatus && (
+                            {isReviedModelPending && (
                                 <Button
                                     onClick={handleRefresh}
                                     type="link"
