@@ -95,6 +95,10 @@ import {
     MultiBrandUsedVehiclePriceCapturingPage,
 } from 'pages/Sales';
 
+import {
+    StoreMasterPage,
+} from 'pages/Spares';
+
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
 
 import { PageNotFound } from 'components/PageNotFound';
@@ -307,6 +311,7 @@ const AuthenticatedUserPageMain = (props) => {
                 {/*  */}
                 <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
+                <Route path={routing.ROUTING_STORE_MASTER} element={<StoreMasterPage />} exact />
             </Routes>
         ) : (
             <Routes>

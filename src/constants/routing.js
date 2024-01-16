@@ -188,4 +188,4 @@ export const ROUTING_MULTI_BRAND_USED_VEHICLE_CAMPAIGN_CREATION = ROUTING_SALES.
 export const ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING = ROUTING_SALES.concat('multi-brand-used-vehicle-price-capturing');
 
 // Spares
-export const ROUTING_STORE_MASTER = ROUTING_SPARES.store('store-master');
+export const ROUTING_STORE_MASTER = ROUTING_SPARES.concat('store-master');
