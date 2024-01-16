@@ -17,18 +17,20 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 
-const documentName = [
-    { key: 1, value: 'Document 1' },
-    { key: 2, value: 'Document 2' },
-    { key: 3, value: 'Document 3' },
-    { key: 4, value: 'Document 4' },
-    { key: 4, value: 'Document 5' },
-];
-const fieldNames = { value: 'value', key: 'value' }
+
 function DocumentDetailsForm({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled, finalFormdata, documentName, documentId,validFrom,validTo,documentstatus,documentmandatory,formData, editMode,selectedOrder, formActionType }) {
     const onFinishFailed = (err) => {
         console.error(err);
     };
+    const documentNamedata = [
+        { key: 1, value: 'Document 1' },
+        { key: 2, value: 'Document 2' },
+        { key: 3, value: 'Document 3' },
+        { key: 4, value: 'Document 4' },
+        { key: 4, value: 'Document 5' },
+    ];
+    
+    const fieldNames = { value: 'value', key: 'value' };
 
   
     return (
@@ -41,12 +43,18 @@ function DocumentDetailsForm({ form, onFieldsChange, onFinish, isEditing, isBtnD
                      {/* <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('document Name')} /> */}
 
                      <Form.Item initialValue={selectedOrder?.documentName} label={translateContent('LoyaltySchemeMaster.label.documentName')} name="documentName">
-                          {customSelectBox({ disabled: formActionType?.viewMode, disableOptionsKey: 'documentName', data: documentName, fieldNames: fieldNames, placeholder: preparePlaceholderSelect(translateContent('LoyaltySchemeMaster.label.documentName')) })}   
+                          {customSelectBox({ disabled: formActionType?.viewMode, disableOptionsKey: 'documentName', data: documentNamedata, fieldNames: fieldNames, placeholder: preparePlaceholderSelect(translateContent('LoyaltySchemeMaster.label.documentName')) })}   
                     </Form.Item>
                 </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label={translateContent('LoyaltySchemeMaster.label.documentId')} name="documentId" rules={[{ max: 3, message: translateContent('global.validation.mustBeCharactersLong').replace('{NAME}', 'code').replace('{Length}', '3') }, validateRequiredInputField(translateContent('LoyaltySchemeMaster.label.documentId')), validationFieldLetterAndNumber(translateContent('LoyaltySchemeMaster.label.documentId')), { validator: (rule, value) => duplicateValidator(value, 'documentId', finalFormdata?.DocumentDetails, documentId) }]}>
-                    <Input disabled={isBtnDisabled} placeholder={preparePlaceholderText('document Id')} />
+                    <Form.Item label={translateContent('LoyaltySchemeMaster.label.documentId')} name="documentId" >
+                    
+                    {/* // rules={[{ max: 3, message: translateContent('global.validation.mustBeCharactersLong').replace('{NAME}', 'code').replace('{Length}', '3') }, validateRequiredInputField(translateContent('LoyaltySchemeMaster.label.documentId')), validationFieldLetterAndNumber(translateContent('LoyaltySchemeMaster.label.documentId')), { validator: (rule, value) => duplicateValidator(value, 'documentId', finalFormdata?.DocumentDetails, documentId) }
+                    // ]} */}
+                    
+                
+
+                    <Input disabled={true} placeholder={preparePlaceholderText('document Id')}  />
                     </Form.Item>
                 </Col>             
                                           

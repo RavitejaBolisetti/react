@@ -16,7 +16,7 @@ const DocumentDetails = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, setF
     const onDocumentFormFinish = (val) => {
         docForm.validateFields().then((data) => {
         console.log("🚀 ~ file: DocumentDetails.js:18 ~ docForm.validateFields ~ ̥:", data)
-        setFinalFormdata((prev) => ([ ...prev, val]));
+        setFinalFormdata((prev) => ([data, ...prev]));
         // docForm.resetFields();
         forceUpdate();
         }).catch(err => console.error(err))

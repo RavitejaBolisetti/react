@@ -288,7 +288,7 @@ export const LoyaltyDocumentMasterBase = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-       // title:'',
+        title: '',
         tableData: searchData,
         showRefereshButton: false,
     };

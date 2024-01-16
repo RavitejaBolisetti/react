@@ -69,6 +69,7 @@ export const LoyaltySchemeMasterBase = (props) => {
     const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
+    const [finalFormdata, setFinalFormdata] = useState([]);
     const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [page, setPage] = useState({});
@@ -190,6 +191,8 @@ export const LoyaltySchemeMasterBase = (props) => {
         form.resetFields();
         setFormData([]);
 
+        console.log(`record`, record);
+
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
@@ -213,43 +216,55 @@ export const LoyaltySchemeMasterBase = (props) => {
             listFilterForm.validateFields(['code']);
         }
     };
-
+    // edit/update table records
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
+        const data = {...values,finalFormdata}
+        console.log(`data`,data)
+        const indx = searchData?.findIndex((e) => e?.schemeId === values?.schemeId);
 
-        let data = { ...values, id: recordId };
-        setSearchdata((prev) => [...prev, values]);
-        const onSuccess = (res) => {
-            form.resetFields();
-            setShowDataLoading(true);
+        if (indx > -1) {
+            const upd_obj = searchData?.map((obj) => {
+                if (obj?.schemeId === values?.schemeId) {
+                    obj.status = values?.status;
+                }
+                return obj;
+            });
+            setSearchdata([...upd_obj]);
+        } else {
+            setSearchdata((prev) => [data, ...prev]);
+        }
 
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+        // const onSuccess = (res) => {
+        //     form.resetFields();
+        //     setShowDataLoading(true);
 
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
-                setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            }
-        };
+        //     showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+        //     fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        //     if (buttonData?.saveAndNewBtnClicked) {
+        //         setIsFormVisible(true);
+        //         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage, placement: 'bottomRight' });
+        //         setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        //     } else {
+        //         setIsFormVisible(false);
+        //         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+        //     }
+        // };
 
-        const requestData = {
-            data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+        // const onError = (message) => {
+        //     showGlobalNotification({ message });
+        // };
 
-        saveData(requestData);
+        // const requestData = {
+        //     data: data,
+        //     method: formActionType?.editMode ? 'put' : 'post',
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
+
+        //saveData(requestData);
     };
 
     const onCloseAction = () => {
@@ -279,6 +294,8 @@ export const LoyaltySchemeMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+        finalFormdata,
+        setFinalFormdata,
     };
 
     const tableProps = {
@@ -291,7 +308,7 @@ export const LoyaltySchemeMasterBase = (props) => {
         dynamicPagination,
     };
 
-   // const title = translateContent('LoyaltySchemeMaster.heading.title');
+    // const title = translateContent('LoyaltySchemeMaster.heading.title');
 
     const advanceFilterResultProps = {
         advanceFilter: false,
@@ -301,7 +318,7 @@ export const LoyaltySchemeMasterBase = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-       title:'',
+        title: '',
         tableData: searchData,
         showRefereshButton: false,
     };

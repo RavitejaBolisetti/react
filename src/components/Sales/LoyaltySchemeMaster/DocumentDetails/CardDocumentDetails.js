@@ -10,12 +10,16 @@ import DocumentDetailsForm from './DocumentDetailsForm';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { formatDate } from 'utils/formatDateTime';
 
 const { Text } = Typography;
 const CardDocumentDetails = (prop) => {
-    const { id, status, termAndConRequired, digitalSignatureRequired, documentName, documentId,validFrom,validTo,documentstatus,documentmandatory, setfinalFormdata, setIsBtnDisabled, isBtnDisabled, onFieldsChange } = prop;
+    const { id, status, termAndConRequired, digitalSignatureRequired, documentName, documentId,validFrom,validTo,documentstatus,documentmandatory, setfinalFormdata, setIsBtnDisabled, isBtnDisabled, onFieldsChange, } = prop;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
+
+    const statusDisplay = documentstatus ? "Active" : "Inactive";
+    const mandatoryDisplay =  documentmandatory ? "HYes" : "No"
 
     // useEffect(() => {
     //     return () => {
@@ -48,8 +52,11 @@ const CardDocumentDetails = (prop) => {
         form.validateFields()
             .then((newFormData) => {
                 setfinalFormdata((prev) => {
+                    console.log(newFormData,`newFormData`)
                     const newList = prev;
-                    const indx = prev?.DocumentDetails.findIndex((el) => el?.documentId === documentId);
+                    console.log(newList,`newList`)
+
+                    const indx = prev?.DocumentDetails?.findIndex((el) => el?.documentId === documentId);
                     newList?.DocumentDetails?.splice(indx, 1, { ...newFormData });
                     return { ...prev, DocumentDetails: newList?.DocumentDetails };
                 });
@@ -65,7 +72,8 @@ const CardDocumentDetails = (prop) => {
     const handleDeleteDocDetail = (val) => {
         setfinalFormdata((prev) => {
             const newList = prev;
-            const indx = prev?.DocumentDetails.findIndex((el) => el.documentId === val?.documentId);
+            const indx = prev?.DocumentDetails?.findIndex((el) => el.documentId === val?.documentId);
+            console.log(indx,`indx`)
             newList?.DocumentDetails?.splice(indx, 1);
             return { ...prev, DocumentDetails: newList?.DocumentDetails };
         });
@@ -85,13 +93,18 @@ const CardDocumentDetails = (prop) => {
                 <Row align="middle" className={styles.marB20}>
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <div>
-                            <Text strong>{documentName}</Text>
+                             <Text >{'Document name: '}{documentName}</Text> <br/>
+                            <Text strong></Text>
                         </div>
                         <div>
-                            <Text type="secondary">{translateContent('applicationMaster.text.code')}{documentId}</Text>
+                        <Text >{'Document Id: '}{ documentId}</Text>
                         </div>
+                        <Text >{'Valid From: '}{formatDate(validFrom) }</Text> <br/>
+                        <Text >{'Valid To: '}{formatDate(validTo) }</Text> <br/>
+                        <Text >{'Is Document Active: '}{statusDisplay }</Text> <br/>
+                        <Text >{'Is Document Mandatory: '}{mandatoryDisplay }</Text>
                     </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
+                    <Col xs={6} sm={6} md={6 } lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
                         {!isEditing ? (
                             <>
                                 <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id, status, termAndConRequired, digitalSignatureRequired, documentName, documentId,validFrom,validTo,documentstatus,documentmandatory)} />

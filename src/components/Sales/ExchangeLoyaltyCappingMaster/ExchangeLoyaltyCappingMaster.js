@@ -320,7 +320,7 @@ export const ExchangeLoyaltyCappingMasterBase = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-     //  title:'',
+        title: '',
         tableData: searchData,
         formActionType,
         showRefereshButton: false,
