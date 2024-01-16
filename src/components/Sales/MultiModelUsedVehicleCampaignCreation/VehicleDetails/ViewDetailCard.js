@@ -136,15 +136,15 @@ const ViewDetailCard = (prop) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} >
                         {!isEditing ? (
                             <>
-                                <Button disabled={isBtnDisabled} type="primary" icon={<FiEdit />} onClick={() => onEdit(formData)}  >Edit</Button>
-                                {!formData?.id?.length > 0 && <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType(formData)} danger icon={<FiTrash />} className={styles.marR10}>Delete</Button>}
+                                <Button disabled={isBtnDisabled} type="primary" icon={<FiEdit />} onClick={() => onEdit(formData)} className={styles.marR10} >Edit</Button>
+                                {!formData?.id?.length > 0 && <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType(formData)} danger icon={<FiTrash />} >Delete</Button>}
                             </>
                         ) : (
                             <>
-                                <Button type="primary" onClick={onUpdate}>
+                                <Button type="primary" onClick={onUpdate} className={styles.marR10}>
                                     {translateContent('global.buttons.add')}
                                 </Button>
-                                <Button danger onClick={() => onCancel()} className={styles.marR10}>
+                                <Button danger onClick={() => onCancel()} >
                                     {translateContent('global.buttons.cancel')}
                                 </Button>
                             </>

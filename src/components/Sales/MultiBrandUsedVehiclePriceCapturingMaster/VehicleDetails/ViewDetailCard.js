@@ -180,7 +180,7 @@ const ViewDetailCard = (prop) => {
                     >
                         {!isEditing ? (
                             <>
-                                <Button disabled={isBtnDisabled} type="primary" icon={<FiEdit />} onClick={() => onEdit(formData)}>
+                                <Button disabled={isBtnDisabled} type="primary" icon={<FiEdit />} onClick={() => onEdit(formData)} className={styles.marR10}>
                                     Edit
                                 </Button>
                                 {!formData?.id?.length > 0 && (
@@ -194,7 +194,7 @@ const ViewDetailCard = (prop) => {
                                 <Button type="primary" onClick={onUpdate}>
                                     {translateContent('global.buttons.add')}
                                 </Button>
-                                <Button danger onClick={() => onCancel()}>
+                                <Button danger onClick={() => onCancel()} className={styles.marR10}>
                                     {translateContent('global.buttons.cancel')}
                                 </Button>
                             </>
