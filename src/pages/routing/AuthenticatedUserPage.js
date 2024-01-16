@@ -97,6 +97,7 @@ import {
 
 import {
     StoreMasterPage,
+    UnitOfMeasureMasterPage,
 } from 'pages/Spares';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -312,6 +313,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
                 <Route path={routing.ROUTING_STORE_MASTER} element={<StoreMasterPage />} exact />
+                <Route path={routing.ROUTING_UNIT_OF_MEASURE_MASTER} element={<UnitOfMeasureMasterPage />} exact />
             </Routes>
         ) : (
             <Routes>
