@@ -20,6 +20,7 @@ export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
 export const ROUTING_SALES = '/sales/';
 export const ROUTING_FINANCE = '/finance/';
+export const ROUTING_SPARES = '/spares/';
 export const ROUTING_FINANCIAL_ACCOUNTING = '/financial-accounting/';
 export const ROUTING_TERM_CONDITION = ROUTING_COMMON.concat('term-condition');
 
@@ -186,4 +187,5 @@ export const ROUTING_MULTI_MODAL_VEHICLE_MASTER = ROUTING_SALES.concat('multi-mo
 export const ROUTING_MULTI_BRAND_USED_VEHICLE_CAMPAIGN_CREATION = ROUTING_SALES.concat('multi-brand-used-vehicle-campaign-creation');
 export const ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING = ROUTING_SALES.concat('multi-brand-used-vehicle-price-capturing');
 
-//
+// Spares
+export const ROUTING_STORE_MASTER = ROUTING_SPARES.store('store-master');
