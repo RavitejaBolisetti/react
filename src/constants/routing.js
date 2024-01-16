@@ -179,4 +179,11 @@ export const ROUTING_INCENTIVE_SCHEME = ROUTING_SALES.concat('incentive-schemes'
 export const ROUTING_INCENTIVE_CLAIM = ROUTING_SALES.concat('incentive-claim');
 
 
+// Used Vehicle
+export const ROUTING_BRAND_SPIDER_MASTER = ROUTING_SALES.concat('brand-spider-master');
+export const ROUTING_RESALE_VEHICLE_COLOR_MASTER = ROUTING_SALES.concat('resale-vehicle-color-master');
+export const ROUTING_MULTI_MODAL_VEHICLE_MASTER = ROUTING_SALES.concat('multi-modal-vehicle-master');
+export const ROUTING_MULTI_BRAND_USED_VEHICLE_CAMPAIGN_CREATION = ROUTING_SALES.concat('multi-brand-used-vehicle-campaign-creation');
+export const ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING = ROUTING_SALES.concat('multi-brand-used-vehicle-price-capturing');
+
 //

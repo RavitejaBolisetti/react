@@ -49,6 +49,14 @@ import ExchangeLoyaltyReclaimRequestMasterPage from './ExchangeLoyaltyReclaimReq
 import ExchangeClaimMasterPage from './ExchangeClaim';
 import LoyaltyClaimMasterPage from './LoyaltyClaim';
 
+import ResaleVehicleColorMasterPage from './ResaleVehicleColorMaster';
+import MultiModalVehicleMasterForResaleVehiclePage from './MultiModalVehicleMasterForResaleVehicle';
+
+import MultiBrandUsedVehicleCampaignCreationPage from './MultiBrandUsedVehicleCampaignCreation';
+import MultiBrandUsedVehiclePriceCapturingPage from './MultiBrandUsedVehiclePriceCapturing';
+import BrandSpiderMasterPage from './BrandSpiderMaster';
+
+
 export {
     OTFMasterPage,
     OtfBlockMasterPage,
@@ -90,5 +98,11 @@ export {
     CentralFameSubsidyPage,
     ExchangeLoyaltyReclaimRequestMasterPage,
     ExchangeClaimMasterPage,
-    LoyaltyClaimMasterPage
+    LoyaltyClaimMasterPage,
+
+    ResaleVehicleColorMasterPage,
+    MultiModalVehicleMasterForResaleVehiclePage,
+    BrandSpiderMasterPage,
+    MultiBrandUsedVehicleCampaignCreationPage,
+    MultiBrandUsedVehiclePriceCapturingPage,
 };

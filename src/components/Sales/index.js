@@ -28,7 +28,36 @@ import { CrmScreenEnrolmentMaster } from './crmSchemeEnrolment';
 import ExchangeLoyaltyIncentiveMaster from './ExchangeLoyaltyIncentiveMaster';
 import IncentiveSchemeMaster from './IncentiveSchemeMaster';
 import IncentiveScheme from './IncentiveScheme';
+import ResaleVehicleColorMaster from './ResaleVehicleColorMaster';
+import MultiModelVehicleMasterForResaleVehicleMaster from './MultiModelVehicleResaleVehicleMaster';
 
 import { CentralFameSubsidyMaster } from './CentralFameSubsidy';
 
-export { OtfMaster, VehicleDetailMaster, OtfBlockMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster, VehicleDeliveryNoteMaster, EvrDetailsCapturingMaster, VehicleChecklistMaster, CrmScreenEnrolmentMaster, RsmAsmApprovalMaster, CentralFameSubsidyMaster,ExchangeLoyaltyIncentiveMaster, IncentiveSchemeMaster, IncentiveScheme  };
+export {
+    OtfMaster,
+    VehicleDetailMaster,
+    OtfBlockMaster,
+    VehicleReceiptMaster,
+    VehiclePurchaseOrderMaster,
+    VehicleRecieptChecklistMaster,
+    OtfSoMappingMaster,
+    ReceiptMaster,
+    HoPriceMappingMaster,
+    DigitalSignatureMaster,
+    VehicleInvoiceMaster,
+    VehicleAllotmentPriorityMaster,
+    VehicleTrackingMaster,
+    OtfSoMappingUnmappingMaster,
+    StockTransferIndentMaster,
+    VehicleDeliveryNoteMaster,
+    EvrDetailsCapturingMaster,
+    VehicleChecklistMaster,
+    CrmScreenEnrolmentMaster,
+    RsmAsmApprovalMaster,
+    CentralFameSubsidyMaster,
+    ExchangeLoyaltyIncentiveMaster,
+    IncentiveSchemeMaster,
+    IncentiveScheme,
+    ResaleVehicleColorMaster,
+    MultiModelVehicleMasterForResaleVehicleMaster,
+};
