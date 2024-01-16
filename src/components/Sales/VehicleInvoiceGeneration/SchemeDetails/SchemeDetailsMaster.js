@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/SchemeDetails';
@@ -14,13 +14,6 @@ export const SchemeDetailsMaster = (props) => {
     const { buttonData, formData, onCloseAction, formActionType, setRequestPayload, requestPayload } = props;
     const { form, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
     const { FormActionButton } = props;
-
-    useEffect(() => {
-        if (formData) {
-            form.setFieldsValue({ ...formData });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
 
     const viewProps = {
         styles,
@@ -39,13 +32,7 @@ export const SchemeDetailsMaster = (props) => {
         const finalSchemeData = {
             ...formData,
             ...values,
-            sales: formData?.sales?.map((item) => {
-                if (item?.id === values?.sales?.salesSchemeId) {
-                    return { ...values?.sales, active: true };
-                } else {
-                    return { ...item, active: false };
-                }
-            }),
+            sales: formData?.sales?.map((item) => (item?.id === values?.sales?.salesSchemeId ? { ...(values?.sales || item), active: true } : { ...item, active: false })),
         };
         setRequestPayload({
             ...requestPayload,

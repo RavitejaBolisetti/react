@@ -54,15 +54,7 @@ const SchemeDetailsMasterBase = (props) => {
     const { resetData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedRecordId, section, handleFormValueChange, isLoading, NEXT_ACTION, handleButtonClick } = props;
     const { FormActionButton, StatusBar, setButtonData } = props;
-
     const [formData, setFormData] = useState();
-    // useEffect(() => {
-    //     if (schemeData) {
-    //         form?.setFieldsValue({ ...schemeData });
-    //         setFormData(schemeData);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [schemeData]);
 
     useEffect(() => {
         return () => {

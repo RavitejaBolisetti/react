@@ -653,6 +653,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             onError,
             onSuccess,
         };
+        // console.log("🚀 ~ generateInvoice ~ requestData:", requestData)
         saveData(requestData);
     };
 

@@ -11,6 +11,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
 import { getCodeValue } from 'utils/getCodeValue';
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -63,7 +64,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.Amount')}>{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.validFrom')}>{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.validTo')}>{checkAndSetDefaultValue(schemeForm?.validTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.discountType')}>{checkAndSetDefaultValue(getCodeValue(discountTypeOption, schemeForm?.discountType), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.discountType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[discountTypeOption], schemeForm?.discountType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.description')}>{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
             </Descriptions>
         </>
@@ -74,13 +75,13 @@ const ViewDetailMain = (props) => {
             <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCode')}>{checkAndSetDefaultValue(schemeForm?.corporateCode, isLoading)}</Descriptions.Item>
             <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDescription')}>{checkAndSetDefaultValue(schemeForm?.corporateDescription, isLoading)}</Descriptions.Item>
             <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateName')}>{checkAndSetDefaultValue(schemeForm?.corporateName, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')}>{checkAndSetDefaultValue(schemeForm?.corporateCategory, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')}>{checkAndSetDefaultValue(getCodeValue(typeData?.CORPT_CATGRY_DESC, schemeForm?.corporateCategory), isLoading)}</Descriptions.Item>
             <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.stdDealerAmount')}>{checkAndSetDefaultValue(schemeForm?.stdDealerAmount, isLoading)}</Descriptions.Item>
             <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.stdOEMDiscount')}>{checkAndSetDefaultValue(schemeForm?.stdOEMDiscount, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')}>{checkAndSetDefaultValue(schemeForm?.corporateAdditionalApplicableDiscount, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount')}>{checkAndSetDefaultValue(schemeForm?.corporateAdditionalDiscount, isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')}>{checkAndSetDefaultValue(getCodeValue(Object.values(YES_NO_FLAG), schemeForm?.corporateAdditionalApplicableDiscount, 'title'), isLoading)}</Descriptions.Item>
+            {schemeForm?.corporateAdditionalApplicableDiscount === YES_NO_FLAG?.YES?.key && <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount')}>{checkAndSetDefaultValue(schemeForm?.corporateAdditionalDiscount, isLoading)}</Descriptions.Item>}
             <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount')}>{checkAndSetDefaultValue(schemeForm?.totalCorporateDiscount, isLoading)}</Descriptions.Item>
-            <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')}>{checkAndSetDefaultValue(getCodeValue(discountTypeOption, schemeForm?.discountType), isLoading)}</Descriptions.Item>
+            <Descriptions.Item label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[discountTypeOption], schemeForm?.discountType), isLoading)}</Descriptions.Item>
         </Descriptions>
     );
 
@@ -118,7 +119,7 @@ const ViewDetailMain = (props) => {
                                 </Collapse>
                             )}
 
-                            {schemeData && schemeData?.sales?.length > 0 && (
+                            {schemeData && schemeData?.sales.filter((i) => i?.active)?.length > 0 && (
                                 <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                                     <Panel header={translateContent('commonModules.heading.schemeAndOfferDetails.salesScheme')} key={4}>
                                         <Divider />
