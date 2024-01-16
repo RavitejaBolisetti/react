@@ -92,8 +92,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
-    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
-
+    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true, requestPayload = undefined } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
@@ -124,7 +123,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
-
+    console.log('requestPayload', requestPayload);
     const vehicleDetailFinalData = useMemo(() => {
         if (isOTFModule && otfVehicleDetailData) {
             return otfVehicleDetailData;
@@ -259,7 +258,16 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
-
+    const findSchemAndDiscount = (data = requestPayload?.schemeOfferDetails?.sales) => {
+        if (Array?.isArray(data)) {
+            const schemeDataObj = requestPayload?.schemeOfferDetails?.sales?.find((item) => item?.active);
+            if (schemeDataObj) {
+                return { salesSchemeId: schemeDataObj?.salesSchemeId, salesSchemeDiscountType: schemeDataObj?.salesSchemeDiscountType };
+            }
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined };
+        }
+        return { salesSchemeId: undefined, salesSchemeDiscountType: undefined };
+    };
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });
         const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType } = vehicleData;
@@ -291,6 +299,16 @@ const VehicleDetailsMasterMain = (props) => {
                 key: 'vehicleUsageType',
                 value: vehicleUsageType,
             },
+
+            {
+                key: 'salesSchemeId',
+                value: findSchemAndDiscount()?.salesSchemeId,
+            },
+
+            {
+                key: 'salesSchemeDiscountType',
+                value: findSchemAndDiscount()?.salesSchemeDiscountType,
+            },
         ];
 
         const onSuccessAction = (res) => {
@@ -301,8 +319,8 @@ const VehicleDetailsMasterMain = (props) => {
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
 
-            const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType } = vehicleDetailData;
-            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType, vehicleUsageType });
+            const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType, salesSchemeId, salesSchemeDiscountType } = vehicleDetailData;
+            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType, vehicleUsageType, salesSchemeId, salesSchemeDiscountType });
 
             setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });

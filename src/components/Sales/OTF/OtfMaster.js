@@ -826,6 +826,7 @@ export const OtfMasterBase = (props) => {
 
     const changeVehilceModelProps = {
         ...props,
+        isOTFModule: true,
         selectedRecordId,
         form: changeVehicleModelForm,
         formActionType,

@@ -224,7 +224,11 @@
         "heading": {
             "collapse.bookingCustomer": "Booking Customer",
             "collapse.billingCustomer": "Billing Customer",
-            "confirmation": "Confirmation"
+            "confirmation": "Confirmation",
+            "schemeAndOfferDetails.exchange": "Exchange Scheme",
+            "schemeAndOfferDetails.loyalty": "Loyalty Scheme",
+            "schemeAndOfferDetails.corporate": "Corporate Scheme",
+            "schemeAndOfferDetails.salesScheme": "Sales Scheme"
         },
         "label": {
             "bookingDetails.bookingNumber": "Booking Number",
@@ -281,6 +285,7 @@
             "vehicleDetails.model": "Model",
             "vehicleDetails.totalTaxAmount": "Total Tax Amount",
             "vehicleDetails.tcsAmount": "TCS Amount",
+            "schemeAndOfferDetails.schemeName": "Scheme Name",
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
             "schemeAndOfferDetails.Amount": "Amount",
@@ -288,6 +293,18 @@
             "schemeAndOfferDetails.validTo": "Valid To",
             "schemeAndOfferDetails.description": "Description",
             "schemeAndOfferDetails.noScheme": "No Scheme and Offer Details Available",
+            "schemeAndOfferDetails.discountType": "Discount Type",
+
+            "schemeAndOfferDetails.corporateCode": "Corporate Code",
+            "schemeAndOfferDetails.corporateDescription": "Corporate Description",
+            "schemeAndOfferDetails.corporateName": "Corporate Name",
+            "schemeAndOfferDetails.corporateCategory": "Corporate Category",
+            "schemeAndOfferDetails.stdDealerAmount": "Std Dealer Amount",
+            "schemeAndOfferDetails.stdOEMDiscount": "Std OEM Discount",
+            "schemeAndOfferDetails.corporateAdditionalApplicableDiscount": "Corp. Add. Applicable Discount",
+            "schemeAndOfferDetails.corporateAdditionalDiscount": "Additional Discount",
+            "schemeAndOfferDetails.totalCorporateDiscount": "Corporate Discount",
+            "schemeAndOfferDetails.corporateDiscountType": "Discount Type",
 
             "insuranceDetails.insuranceCompany": "Insurance Company",
             "insuranceDetails.insuranceCoverNote": "Insurance Cover Note",
