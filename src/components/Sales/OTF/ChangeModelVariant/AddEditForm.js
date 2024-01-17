@@ -92,11 +92,11 @@ const AddEditFormMain = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [confirmRequest, setConfirmRequest] = useState(true);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState();
-    const [showCreatePurchaseOrder, setShowCreatePurchaseOrder] = useState(false);
     const [revisedModelInformation, setRevisedModelInformation] = useState();
     const [revisedModelCode, setRevisedModelCode] = useState();
     const [soDataList, setSoDataList] = useState([]);
     const [autoOrder, setAutoOrder] = useState(false);
+    const [createPurchaseOrder, setCreatePurchaseOrder] = useState(false);
 
     const [buttonData, setButtonData] = useState({ cancelBtn: true, closeBtn: true });
     const [filterString, setFilterString] = useState({ pageSize: 10, current: 1 });
@@ -159,6 +159,7 @@ const AddEditFormMain = (props) => {
             getProductAttributeDetail(formData?.revisedModel, setRevisedProductAttributeData);
         } else {
             setRevisedModelCode(formData?.modelCode);
+            getProductAttributeDetail(formData?.modelCode, setRevisedProductAttributeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -253,7 +254,6 @@ const AddEditFormMain = (props) => {
                 userId,
                 extraParams,
                 onSuccessAction: (res) => {
-                    setShowCreatePurchaseOrder(res?.data?.paginationData.length <= 0);
                     setShowDataLoading(false);
                     setSoDataList(res?.data);
                     setSelectedRecord();
@@ -262,7 +262,7 @@ const AddEditFormMain = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString, extraParams]);
+    }, [userId, filterString, extraParams, autoOrder]);
 
     const onError = (message) => {
         showGlobalNotification({ message });
@@ -273,12 +273,12 @@ const AddEditFormMain = (props) => {
             setModelStatus(res?.data?.status);
             setProductDetailRefresh(!productDetailRefresh);
             onSuccessAction && onSuccessAction();
+
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
-                setRefreshData(!refreshData);
                 // setOpenVehilceModelChange(false);
+                setRefreshData(!refreshData);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
             } else {
-                setButtonData({ ...buttonData, formBtnActive: false });
                 showGlobalNotification({ notificationType: res?.data?.status ? (res?.data?.status === STATUS?.PENDING?.key ? 'warning' : 'error') : 'success', title: res?.data?.status ? STATUS?.[res?.data?.status]?.title : 'SUCCESS', message: res.responseMessage });
             }
         };
@@ -313,7 +313,7 @@ const AddEditFormMain = (props) => {
                         revisedSoNumber: selectedRecord?.soNumber || null,
                         createPurchaseOrder: vehicleNewModel?.createPurchaseOrder,
                     };
-                    modelChangeService(data);
+                    modelChangeService(data, onSuccessAction);
                 }
             })
             .catch((err) => console.error(err));
@@ -338,8 +338,8 @@ const AddEditFormMain = (props) => {
     };
 
     const onSuccessAction = () => {
-        form.setFieldsValue({ model: formData?.model });
-        form.setFieldsValue({ modelCode: formData?.modelCode });
+        form.setFieldsValue({ model: formData?.model, modelCode: formData?.modelCode, createPurchaseOrder: false });
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onSubmitAction = () => {
@@ -364,44 +364,26 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const handleFormValueChange = (value) => {
-        // setButtonData({ ...buttonData, formBtnActive: value });
-    };
-
     const handleSelectTreeClick = (value) => {
         getProductAttributeDetail(value, setRevisedProductAttributeData);
-        setButtonData({ ...buttonData, formBtnActive: formData?.modelCode !== value });
-        form.setFieldsValue({ modelCode: value });
+        setButtonData({ ...buttonData, formBtnActive: !autoOrder });
+        form.setFieldsValue({ modelCode: value, createPurchaseOrder: false });
+        setCreatePurchaseOrder(false);
         setRevisedModelCode(value);
         setSelectedTreeKey(value);
-        setShowCreatePurchaseOrder(false);
     };
-
-    useEffect(() => {
-        if (autoOrder) {
-            if (soDataList?.paginationData?.length > 0) {
-                setButtonData({ ...buttonData, formBtnActive: true });
-            } else {
-                setButtonData({ ...buttonData, formBtnActive: false });
-            }
-        } else {
-            setButtonData({ ...buttonData, formBtnActive: formData?.revisedModel ? formData?.modelCode !== formData?.revisedModel : false });
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [soDataList]);
 
     const rowSelection = {
         selectedRowKeys: [selectedRecord?.soNumber],
         type: 'radio',
         onChange: (_, selectedRows) => {
+            setButtonData({ ...buttonData, formBtnActive: true });
             setSelectedRecord(selectedRows?.[0]);
         },
-        onClick: () => setShowCreatePurchaseOrder(true),
     };
 
     const onChange = (e) => {
-        // handleFormValueChange(e.target.checked);
+        setCreatePurchaseOrder(e.target.checked);
         setButtonData({ ...buttonData, formBtnActive: e.target.checked });
     };
 
@@ -451,7 +433,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} data-testid="modelChange">
+        <Form layout="vertical" autoComplete="off" form={form} data-testid="modelChange">
             <div className={`${styles.drawerBody} ${styles.height180}`}>
                 <Row justify="space-between" className={styles.fullWidth}>
                     <div className={styles.marB10}>
@@ -500,8 +482,8 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={24} sm={24} md={4} lg={4} xl={4} className={`${styles.verticallyCentered} ${styles.alignRight}`}>
-                                        <Form.Item initialValue={formData?.createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
-                                            <Checkbox disabled={isReviedModelPending}>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
+                                        <Form.Item initialValue={createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
+                                            <Checkbox disabled={isReviedModelPending || soDataList?.paginationData?.length > 0}>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
                                         </Form.Item>
                                     </Col>
                                 </Row>
