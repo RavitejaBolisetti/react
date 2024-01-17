@@ -156,12 +156,15 @@ const ReceiptDetailMasterBase = (props) => {
                         let formData = [...prev];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingListData?.purposeOfContact && el?.mobileNumber === editingListData?.mobileNumber && el?.FirstName === editingListData?.FirstName);
                         formData.splice(index, 1, { ...value });
+                        setRequestPayload((prev) => ({ ...prev, receiptsDetails: { ...prev?.receiptsDetails, paymentDetails: formData } }));
                         return [...formData];
                     });
                 } else {
                     setPaymentDataList((prev) => {
-                        const updVal = prev?.length ? [{ ...value, id: '' }, ...prev] : [{ ...value, id: '' }];
-                        return updVal;
+                        const tempArr = prev?.length ? [{ ...value, id: '' }, ...prev] : [{ ...value, id: '' }];
+                        setPaymentDataList(requestPayload?.receiptsDetails?.paymentDetails);
+                        setRequestPayload((prev) => ({ ...prev, receiptsDetails: { ...prev?.receiptsDetails, paymentDetails: tempArr } }));
+                        return tempArr;
                     });
                 }
                 setIsAdding(false);

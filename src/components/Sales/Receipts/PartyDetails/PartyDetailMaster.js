@@ -64,17 +64,21 @@ const PartyDetailMasterBase = (props) => {
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, partyDetailForm, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId } = props;
-
     useEffect(() => {
-        if (receiptDetailData?.partyDetails) {
-            setRequestPayload({ ...requestPayload, partyDetails: receiptDetailData?.partyDetails });
-        }
+        const partyDetails = receiptDetailData?.partyDetails;
+        const canAdvance = receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key;
+        partyDetails && setRequestPayload({ ...requestPayload, partyDetails });
+        canAdvance && setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: false }));
         setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
-        if (receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
-            setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: false }));
-        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData]);
+    useEffect(() => {
+        if (requestPayload?.partyDetails) {
+            partyDetailForm.setFieldsValue({ ...requestPayload?.partyDetails });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [requestPayload?.partyDetails, section]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -88,7 +92,10 @@ const PartyDetailMasterBase = (props) => {
     const handleSearch = () => {
         if (partySegment && partyId) {
             const onSuccessAction = (res) => {
-                setButtonData({ ...buttonData, formBtnActive: true });
+                if (res?.data && res?.data instanceof Object) {
+                    partyDetailForm.setFieldsValue({ ...res?.data });
+                    setButtonData({ ...buttonData, formBtnActive: true });
+                }
             };
             if (partySegment === PartySegment.CUSTOMER.key) {
                 const extraParams = [
@@ -115,10 +122,8 @@ const PartyDetailMasterBase = (props) => {
             }
         }
     };
-
     const onFinish = (values) => {
-        const partyDetails = { ...values, id: '' };
-        setRequestPayload({ ...requestPayload, partyDetails: partyDetails });
+        setRequestPayload({ ...requestPayload, partyDetails: { ...values, id: '' } });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -135,7 +140,7 @@ const PartyDetailMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        formData: formActionType?.addMode ? (partyDetailData[0] ? partyDetailData[0] : partyDetailData) : receiptDetailData.partyDetails,
+        formData: requestPayload?.partyDetails || {},
         isLoading,
         partySegment,
         setPartySegment,

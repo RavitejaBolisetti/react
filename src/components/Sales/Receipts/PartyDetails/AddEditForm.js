@@ -39,8 +39,10 @@ const AddEditFormMain = (props) => {
     };
 
     const handleCustomer = (value) => {
-        setPartySegment(value);
-        setButtonData({ ...buttonData, formBtnActive: false });
+        if (value) {
+            setPartySegment(value);
+            setButtonData({ ...buttonData, formBtnActive: false });
+        }
     };
 
     return (
@@ -73,7 +75,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.address} label={translateContent('receipts.label.partyDetails.address')}name="address">
+                            <Form.Item initialValue={formData?.address} label={translateContent('receipts.label.partyDetails.address')} name="address">
                                 {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.address'))} disabled={true} />}
                             </Form.Item>
                         </Col>
