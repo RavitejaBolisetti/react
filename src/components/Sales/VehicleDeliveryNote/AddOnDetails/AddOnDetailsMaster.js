@@ -198,8 +198,8 @@ export const AddOnDetailsMasterMain = (props) => {
                     setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
                 }
                 setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
-                const message = !formData?.[key] ? 'registered' : 'saved';
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: `Scheme has been ${message} successfully` });
+                // const message = !formData?.[key] ? 'registered' : 'saved';
+                // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: `Scheme has been ${message} successfully` });
             })
             .catch((err) => console.error(err));
     };
