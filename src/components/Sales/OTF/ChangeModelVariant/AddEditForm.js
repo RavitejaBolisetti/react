@@ -401,7 +401,8 @@ const AddEditFormMain = (props) => {
     };
 
     const onChange = (e) => {
-        handleFormValueChange(e.target.checked);
+        // handleFormValueChange(e.target.checked);
+        setButtonData({ ...buttonData, formBtnActive: e.target.checked });
     };
 
     const dynamicPagination = true;
