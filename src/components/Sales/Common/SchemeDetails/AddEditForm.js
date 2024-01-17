@@ -197,7 +197,7 @@ const AddEditFormMain = (props) => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 {isDataExist ? (
                     <>
-                        {schemeData?.exhange && (
+                        {schemeData?.exchange && (
                             <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                                 <Panel header={translateContent('commonModules.heading.schemeAndOfferDetails.exchange')} key={1}>
                                     <Divider />
