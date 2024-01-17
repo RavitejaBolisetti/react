@@ -47,6 +47,7 @@ import { translateContent } from 'utils/translateContent';
 import { zoneMasterDataAction } from 'store/actions/data/zoneMaster';
 import { areaOfficeDataAction } from 'store/actions/data/areaOfficeLov';
 import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
+import { BASE_URL_DEALER_OTF_BLOCK_MASTER as customURL } from 'constants/routingApi';
 
 const { Search } = Input;
 
@@ -170,6 +171,8 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchZoneMasterList: zoneMasterDataAction.fetchList,
             listZoneMasterShowLoading: zoneMasterDataAction.listShowLoading,
+            fetchDealerList: dealerBlockMasterDataAction.fetchList,
+            listDealerShowLoading: dealerBlockMasterDataAction.listShowLoading,
 
             fetchAreaOfficeList: areaOfficeDataAction.fetchList,
             listAreaOfficeListShowLoading: areaOfficeDataAction.listShowLoading,
@@ -185,7 +188,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfBlockMasterMain = (props) => {
-    const { resetAreaOfficeList, viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, resetDealerList, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading, dealerBlockData } = props;
+    const { resetAreaOfficeList, viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, resetDealerList, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading } = props;
 
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
 
@@ -193,7 +196,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const { isAreaOfficeLoading, detailData, userId, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
-    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading } = props;
+    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading, dealerBlockData, fetchDealerList, listDealerShowLoading } = props;
 
     const [form] = Form.useForm();
 
@@ -328,7 +331,7 @@ export const OtfBlockMasterMain = (props) => {
     }, [manufacturerOrgHierarchyData]);
 
     useEffect(() => {
-        handleZoneChange(otfBlockMasterData?.zoneCode, true);
+        handleZoneChange(otfBlockMasterData?.zoneCode, false, true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfBlockMasterData]);
 
@@ -416,7 +419,7 @@ export const OtfBlockMasterMain = (props) => {
         }
     };
 
-    const handleZoneChange = (value, reset = false) => {
+    const handleZoneChange = (value, __, reset = false) => {
         resetDealerList();
         resetAreaOfficeList();
         const extraParams = [
@@ -467,6 +470,35 @@ export const OtfBlockMasterMain = (props) => {
         form.resetFields();
     };
 
+    useEffect(() => {
+        if (dealerBlockData && dealerBlockData[0]?.dealerCode !== 'All') {
+            dealerBlockData.unshift({
+                id: null,
+                dealerTin: null,
+                parentGroupCode: null,
+                dealerCode: 'All',
+                dealerName: 'All',
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dealerBlockData]);
+
+    useEffect(() => {
+        handleDealer(otfBlockMasterData?.zoneCode, false, otfBlockMasterData?.areaCode, true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [otfBlockMasterData]);
+
+    const handleDealer = (zoneCode, __, areaCode, reset = false) => {
+        !reset && form.setFieldsValue({ dealerCode: null });
+        resetDealerList();
+
+        const extraParams = [
+            { key: 'zoneCode', value: zoneCode },
+            { key: 'areaCode', value: areaCode },
+        ];
+        fetchDealerList({ setIsLoading: listDealerShowLoading, userId, extraParams, customURL });
+    };
+
     const onFinish = (values) => {
         const recordId = formData?.id || '';
 
@@ -481,9 +513,10 @@ export const OtfBlockMasterMain = (props) => {
 
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), errorAction: onErrorAction });
                 handleZoneChange(res?.data?.zoneCode);
+                handleDealer(res?.data?.zoneCode, false, res?.data?.areaCode);
+
                 setSelectedOrganizationId(organizationId);
 
                 setSelectedTreeKey([res?.data?.id]);
@@ -631,6 +664,11 @@ export const OtfBlockMasterMain = (props) => {
         handleZoneChange,
         zone,
         isAreaOfficeLoading,
+        otfBlockMasterData,
+        dealerBlockData,
+        fetchDealerList,
+        listDealerShowLoading,
+        handleDealer,
     };
 
     const viewProps = {

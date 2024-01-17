@@ -5,13 +5,9 @@
  */
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Button, Switch, Select } from 'antd';
-import { connect } from 'react-redux';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
-import { showGlobalNotification } from 'store/actions/notification';
-import { BASE_URL_DEALER_OTF_BLOCK_MASTER as customURL } from 'constants/routingApi';
-import { bindActionCreators } from 'redux';
+
 
 import { withDrawer } from 'components/withDrawer';
 
@@ -20,41 +16,9 @@ import { translateContent } from 'utils/translateContent';
 import { customSelectBox } from 'utils/customSelectBox';
 const { Option } = Select;
 
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            DealerBlockMaster: { isLoaded: isDealerDataLoaded = false, isLoading: dealerBlockLoading, data: dealerBlockData = [] },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-        userId,
-        isDealerDataLoaded,
-        dealerBlockLoading,
-        dealerBlockData,
-    };
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchDealerList: dealerBlockMasterDataAction.fetchList,
-            listDealerShowLoading: dealerBlockMasterDataAction.listShowLoading,
-            showGlobalNotification,
-        },
-        dispatch
-    ),
-});
 const AddEditFormMain = (props) => {
-    const { onCloseAction, formData, selectedProductName, userId, zoneMasterData, areaOfficeData, handleZoneChange, zone } = props;
-    const { isAreaOfficeLoading, isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
+    const { onCloseAction, formData, selectedProductName, zoneMasterData, areaOfficeData, handleZoneChange, zone } = props;
+    const { handleDealer, isAreaOfficeLoading, isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
 
     useEffect(() => {
         if (formData) {
@@ -64,31 +28,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    useEffect(() => {
-        if (dealerBlockData && dealerBlockData[0]?.dealerCode !== 'All') {
-            dealerBlockData.unshift({
-                id: null,
-                dealerTin: null,
-                parentGroupCode: null,
-                dealerCode: 'All',
-                dealerName: 'All',
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dealerBlockData]);
-
-    const handleDealer = (value) => {
-        let zoneValue = zone;
-        let areaValue = value;
-        form.setFieldsValue({ dealerCode: null });
-        if (zoneValue && areaValue) {
-            const extraParams = [
-                { key: 'zoneCode', value: zoneValue },
-                { key: 'areaCode', value: areaValue },
-            ];
-            fetchDealerList({ setIsLoading: listDealerShowLoading, userId, extraParams, customURL });
-        }
-    };
     const handleFormValueChange = () => {
         setFormBtnActive(true);
     };
@@ -172,4 +111,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(connect(mapStateToProps, mapDispatchToProps)(AddEditFormMain), {});
+export const AddEditForm = withDrawer(AddEditFormMain, {});

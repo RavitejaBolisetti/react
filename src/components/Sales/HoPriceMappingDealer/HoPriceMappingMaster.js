@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
             Geo: {
                 State: { isFilteredListLoaded: isStateDataLoaded = false, isLoading: isStateLoading, filteredListData: stateData },
                 District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
-                City: { isLoaded: isCityLoaded = false, data: cityData = [] },
+                City: { isFilteredListLoaded: isCityLoaded = false, filteredListData: cityData = [] },
             },
             TermCondition: {
                 ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductLoading, data: productHierarchyList },
@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
 
-            fetchListCity: geoCityDataActions.fetchList,
+            fetchListCity: geoCityDataActions.fetchFilteredList,
             listCityShowLoading: geoCityDataActions.listShowLoading,
 
             fetchProductLovList: tncProductHierarchyDataActions.fetchList,
