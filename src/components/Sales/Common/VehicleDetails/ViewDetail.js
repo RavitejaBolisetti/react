@@ -20,6 +20,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
 import { STATUS } from 'constants/modelVariant';
 import { PARAM_MASTER } from 'constants/paramMaster';
+// import { ViewRevisedModelDetail } from './ViewRevisedModelDetail';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -77,7 +78,7 @@ const ViewDetailMain = (props) => {
                             {/* {isReviedModelPending && (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <ChangeModelVariantMaster {...props} />
+                                        <ViewRevisedModelDetail {...props} />
                                     </Col>
                                 </Row>
                             )} */}

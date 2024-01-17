@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
-    const { isOTFModule, fetchList, fetchSoData, vehicleDetailData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
+    const { setOpenVehilceModelChange, isOTFModule, fetchList, fetchSoData, vehicleDetailData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedTreeKey, setSelectedTreeKey] = useState();
@@ -96,6 +96,7 @@ const AddEditFormMain = (props) => {
     const [revisedModelInformation, setRevisedModelInformation] = useState();
     const [revisedModelCode, setRevisedModelCode] = useState();
     const [soDataList, setSoDataList] = useState([]);
+    const [autoOrder, setAutoOrder] = useState(false);
 
     const [buttonData, setButtonData] = useState({ cancelBtn: true, closeBtn: true });
     const [filterString, setFilterString] = useState({ pageSize: 10, current: 1 });
@@ -146,6 +147,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         if (revisedProductAttributeData) {
             setRevisedModelInformation(refactorProductAttributeData(revisedProductAttributeData));
+            setAutoOrder(revisedProductAttributeData?.autoOrder);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [revisedProductAttributeData]);
@@ -243,7 +245,7 @@ const AddEditFormMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
+        if (autoOrder && userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
             setShowDataLoading(true);
             fetchSoData({
                 customURL: customURL,
@@ -273,6 +275,7 @@ const AddEditFormMain = (props) => {
             onSuccessAction && onSuccessAction();
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
                 setRefreshData(!refreshData);
+                // setOpenVehilceModelChange(false);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
             } else {
                 setButtonData({ ...buttonData, formBtnActive: false });
@@ -300,7 +303,7 @@ const AddEditFormMain = (props) => {
                 const vehicleCurrentModel = { model: formData?.model, modelCode: formData?.modelCode };
                 if (JSON.stringify(vehicleModelChangeRequest) === JSON.stringify(vehicleCurrentModel)) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
-                } else if (!vehicleNewModel?.createPurchaseOrder && !selectedRecord?.soNumber) {
+                } else if (autoOrder && !vehicleNewModel?.createPurchaseOrder && !selectedRecord?.soNumber) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please select one option either to map so number or create purchase order' });
                 } else {
                     const data = {
@@ -362,25 +365,29 @@ const AddEditFormMain = (props) => {
     };
 
     const handleFormValueChange = (value) => {
-        setButtonData({ ...buttonData, formBtnActive: value });
+        // setButtonData({ ...buttonData, formBtnActive: value });
     };
 
     const handleSelectTreeClick = (value) => {
         getProductAttributeDetail(value, setRevisedProductAttributeData);
-        setButtonData({ ...buttonData, formBtnActive: false });
+        setButtonData({ ...buttonData, formBtnActive: formData?.modelCode !== value });
         form.setFieldsValue({ modelCode: value });
         setRevisedModelCode(value);
         setSelectedTreeKey(value);
-        handleFormValueChange(false);
         setShowCreatePurchaseOrder(false);
     };
 
     useEffect(() => {
-        if (soDataList?.paginationData?.length > 0) {
-            setButtonData({ ...buttonData, formBtnActive: true });
+        if (autoOrder) {
+            if (soDataList?.paginationData?.length > 0) {
+                setButtonData({ ...buttonData, formBtnActive: true });
+            } else {
+                setButtonData({ ...buttonData, formBtnActive: false });
+            }
         } else {
-            setButtonData({ ...buttonData, formBtnActive: false });
+            setButtonData({ ...buttonData, formBtnActive: formData?.revisedModel ? formData?.modelCode !== formData?.revisedModel : false });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [soDataList]);
 
@@ -483,19 +490,23 @@ const AddEditFormMain = (props) => {
                                 </Col>
                             </Row>
                         </Card>
-                        <Divider className={styles.marT20} />
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
-                                <h4>{translateContent('bookingManagement.label.vehicleSOMapping')}</h4>
-                            </Col>
+                        {(autoOrder || revisedModelInformation?.autoOrder) && (
+                            <>
+                                <Divider className={styles.marT20} />
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+                                        <h4>{translateContent('bookingManagement.label.vehicleSOMapping')}</h4>
+                                    </Col>
 
-                            <Col xs={24} sm={24} md={4} lg={4} xl={4} className={`${styles.verticallyCentered} ${styles.alignRight}`}>
-                                <Form.Item initialValue={formData?.createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
-                                    <Checkbox disabled={isReviedModelPending || !revisedProductAttributeData?.autoOrder}>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <ListDataTable {...tableProps} showAddButton={false} />
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={`${styles.verticallyCentered} ${styles.alignRight}`}>
+                                        <Form.Item initialValue={formData?.createPurchaseOrder} onChange={onChange} valuePropName="checked" name="createPurchaseOrder">
+                                            <Checkbox disabled={isReviedModelPending}>{translateContent('bookingManagement.modelVariant.label.createPurchaseOrder')}</Checkbox>
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <ListDataTable {...tableProps} showAddButton={false} />
+                            </>
+                        )}
                     </Col>
                 </Row>
             </div>

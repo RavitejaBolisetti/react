@@ -135,16 +135,17 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailFinalData) {
             setVehicleDetailData(vehicleDetailFinalData);
+            // setVehicleDetailData({ ...vehicleDetailFinalData, sapStatusResponseCode: 'PD', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailFinalData]);
 
     useEffect(() => {
         if (vehicleDetailData) {
-            // setFormData(vehicleDetailData);
-            setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911' ,sapResonseRemarks:'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering'});
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
+            setFormData(vehicleDetailData);
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'THRNMM8405642808' });
+            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
             vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
             // vehicleDetailData?.sapStatusResponseCode && setSapStatusResponseCode(vehicleDetailData?.sapStatusResponseCode);
@@ -254,6 +255,10 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData?.modelCode && !isProductHierarchyDataLoaded) {
             getProductAttributeDetail(vehicleDetailData?.modelCode, setProductAttributeData);
+        }
+
+        if (vehicleDetailData?.revisedModel) {
+            getProductAttributeDetail(vehicleDetailData?.revisedModel, setRevisedProductAttributeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
