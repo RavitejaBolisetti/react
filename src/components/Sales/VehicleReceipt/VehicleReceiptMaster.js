@@ -328,7 +328,13 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { id: selectedId?.id, supplierInvoiceNumber: selectedId?.supplierInvoiceNumber, vehicleDetails: finalData };
+        const data = {
+            id: selectedId?.id,
+            supplierInvoiceNumber: selectedId?.supplierInvoiceNumber,
+            vehicleDetails: finalData.map((item) => {
+                return { ...item, mfgdate: item?.mfgdate ? dayjs(item?.mfgdate, dateFormat)?.format(dateFormat) : null };
+            }),
+        };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
