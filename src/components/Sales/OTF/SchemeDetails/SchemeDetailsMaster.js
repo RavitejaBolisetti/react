@@ -19,6 +19,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
+
             OTF: {
                 SchemeDetail: { isLoaded: isDataLoaded = false, isLoading, data: schemeData = [] },
             },
@@ -26,6 +28,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
+        typeData,
         userId,
         isDataLoaded,
         schemeData,
@@ -48,18 +51,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SchemeDetailsMasterBase = (props) => {
-    const { schemeData, resetData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedRecordId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
-    const { FormActionButton, StatusBar } = props;
-
+    const { resetData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
+    const { form, selectedRecordId, section, handleFormValueChange, isLoading, NEXT_ACTION, handleButtonClick } = props;
+    const { FormActionButton, StatusBar, setButtonData } = props;
     const [formData, setFormData] = useState();
-    useEffect(() => {
-        if (schemeData) {
-            form?.setFieldsValue({ ...schemeData });
-            setFormData(schemeData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [schemeData]);
 
     useEffect(() => {
         return () => {
@@ -90,6 +85,15 @@ const SchemeDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId]);
 
+    useEffect(() => {
+        if (formActionType?.viewMode) {
+            setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true, saveBtn: false }));
+        } else if (formActionType?.editMode) {
+            setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true, saveBtn: true }));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
+
     const viewProps = {
         styles,
         onCloseAction,
@@ -101,15 +105,15 @@ const SchemeDetailsMasterBase = (props) => {
         ...props,
         styles,
         formData,
-        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
+        // buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 
-    const onFinish = (values) => {
+    const onFinish = () => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" onFinish={onFinish} form={form}>
+        <Form layout="vertical" autoComplete="off" onFinish={onFinish} form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

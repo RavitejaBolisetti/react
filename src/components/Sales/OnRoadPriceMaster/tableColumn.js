@@ -17,20 +17,20 @@ export const tblActionColumn = ({ handleButtonClick, width = '10%', fixed = '' }
         title: 'Action',
         dataIndex: '',
         width,
-        fixed: fixed,
-        render: (text, record, index) => [
+        fixed,
+        render: (_, record, index) => [
             <Space size="middle">
                 {record?.status === ONROAD_PRICE_MASTER_STATUS?.ACTIONED?.title ? (
                     <>
-                        <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                        <Button data-testid="view" type="link" aria-label="ai-view" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                             <FiEye />
                         </Button>
-                        <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                        <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                             <FiEdit />
                         </Button>
                     </>
                 ) : (
-                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                         <FiEye />
                     </Button>
                 )}

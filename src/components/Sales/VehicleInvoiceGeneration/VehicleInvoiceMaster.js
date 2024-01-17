@@ -620,8 +620,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const generateInvoice = () => {
-        const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
-        const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails, vehicleUsageType: vehicleDetails?.vehicleUsageType };
+        const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails, schemeOfferDetails } = requestPayload;
+        const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails, schemeOfferDetails, vehicleUsageType: vehicleDetails?.vehicleUsageType };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -653,6 +653,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             onError,
             onSuccess,
         };
+        // console.log("🚀 ~ generateInvoice ~ requestData:", requestData)
         saveData(requestData);
     };
 

@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 const AddEditFormMain = (props) => {
     const { onCloseAction, formData, selectedProductName, userId, zoneMasterData, areaOfficeData, handleZoneChange, zone } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
+    const { isAreaOfficeLoading, isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
 
     useEffect(() => {
         if (formData) {
@@ -123,7 +123,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label={translateContent('vehicleSalesSchemeMaster.label.area')} name="areaCode" initialValue={formData?.areaCode} rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.area'))]}>
-                                    <Select placeholder={translateContent('global.placeholder.select')} onChange={handleDealer} allowClear>
+                                    <Select loading={isAreaOfficeLoading} placeholder={translateContent('global.placeholder.select')} onChange={handleDealer} allowClear>
                                         {areaOfficeData?.map((item) => (
                                             <Option value={item?.areaCode}>{item?.areaDescription}</Option>
                                         ))}

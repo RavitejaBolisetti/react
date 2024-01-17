@@ -7,7 +7,7 @@ import React from 'react';
 import { Input, Row, Col, Form, Divider } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
+import { validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, DecimalPercentageValidation } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 
 const CreditFormBase = (props) => {
@@ -28,7 +28,7 @@ const CreditFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ccServiceChargePercentage} label={translateContent('receipts.label.receiptDetails.serviceChargePercentage')} name="ccServiceChargePercentage" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.serviceChargePercentage'))]}>
+                    <Form.Item initialValue={formData?.ccServiceChargePercentage} label={translateContent('receipts.label.receiptDetails.serviceChargePercentage')} name="ccServiceChargePercentage" rules={[DecimalPercentageValidation(translateContent('receipts.validation.serviceChargePercentage'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('receipts.label.receiptDetails.serviceChargePercentage'))} />
                     </Form.Item>
                 </Col>

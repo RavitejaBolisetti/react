@@ -86,7 +86,7 @@ const ReceiptDetailMasterBase = (props) => {
     useEffect(() => {
         if (requestPayload?.receiptsDetails?.paymentDetails) {
             setPaymentDataList(requestPayload?.receiptsDetails?.paymentDetails);
-            setButtonData({ ...buttonData, formBtnActive: true });
+            setButtonData((prev) => ({ ...prev, formBtnActive: true }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload?.receiptsDetails]);
@@ -97,16 +97,18 @@ const ReceiptDetailMasterBase = (props) => {
             setRequestPayload({ ...requestPayload, receiptsDetails: receiptDetailData.receiptsDetails });
             setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
             setTotalReceivedAmount(receiptDetailData?.receiptsDetails?.totalReceivedAmount);
-            receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key && !formActionType?.editMode && setButtonData({ ...buttonData, nextBtn: false, saveBtn: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData?.receiptsDetails]);
     useEffect(() => {
-        if (formActionType?.editMode && receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
-            setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: false });
-        } else if (formActionType?.editMode) {
-            setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: true });
+        if (formActionType?.editMode) {
+            if (receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
+                setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: false });
+            } else {
+                setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: true });
+            }
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, receiptDetailData?.receiptsDetails]);
 

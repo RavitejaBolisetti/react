@@ -21,6 +21,7 @@ import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { ReceiptType } from '../utils/ReceiptType';
 
 const mapStateToProps = (state) => {
     const {
@@ -65,12 +66,15 @@ const PartyDetailMasterBase = (props) => {
     const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId } = props;
 
     useEffect(() => {
-        if (receiptDetailData.partyDetails) {
-            setRequestPayload({ ...requestPayload, partyDetails: receiptDetailData.partyDetails });
+        if (receiptDetailData?.partyDetails) {
+            setRequestPayload({ ...requestPayload, partyDetails: receiptDetailData?.partyDetails });
         }
         setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
+        if (receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
+            setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: false }));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptDetailData.partyDetails]);
+    }, [userId, receiptDetailData]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });

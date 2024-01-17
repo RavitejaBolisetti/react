@@ -15,15 +15,20 @@ import { tableColumn } from './tableCoulmn';
 import { translateContent } from 'utils/translateContent';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { styles, bindCodeValue, formData, collapseProps, tooltTipText, isLoading, optionalServices, formActionType, modelData, variantData, modelFamilyData, ITEM_TYPE } = props;
+    const { bindStatus, styles, bindCodeValue, formData, collapseProps, tooltTipText, isLoading, optionalServices, formActionType, modelData, variantData, modelFamilyData, ITEM_TYPE } = props;
     const [openAccordian, setOpenAccordian] = useState([]);
+    const [innerAccordian, setInnerAccordian] = useState([]);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+    const handleInnerCollapse = (key) => {
+        setInnerAccordian((prev) => (prev === key ? '' : key));
     };
     const { productAttributeDetail } = formData;
     const viewProps = {
@@ -61,33 +66,33 @@ const ViewDetailMain = (props) => {
                 </Panel>
             </Collapse>
 
-            {/* <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" collapsible="icon" style={{ paddinBottom: '20px' }} {...collapseProps}>
-                <Panel header="Connected Vehicle" key="2">
+            <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" collapsible="icon" style={{ paddinBottom: '20px' }} {...collapseProps}>
+                <Panel header={translateContent('vehicleDetail.connectedVehicle.connectedVehicle')} key="2">
                     <Divider />
                     <div>
                         {formData?.connectedVehicle?.map((element, index) => {
                             return (
-                                <Collapse expandIcon={expandIcon} activeKey={InnerCollapse} onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
+                                <Collapse expandIcon={expandIcon} activeKey={innerAccordian} onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
                                     <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
                                         <Divider />
                                         <Descriptions {...viewProps}>
-                                            <Descriptions.Item label="TCU ID">{checkAndSetDefaultValue(connectedVehicle && element?.tcuId, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="E-SIM No">{checkAndSetDefaultValue(connectedVehicle && element?.esimNo, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="E-SIM Status">{checkAndSetDefaultValue(bindStatus(element, 'esimStatus', { active: 'Active', inactive: 'Inctive' }), isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="Prefered Mobile No 1">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo1, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="Prefered Mobile No 2">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo2, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="KYC Status">{checkAndSetDefaultValue(bindStatus(element, 'kycStatus', { active: 'Recieved', inactive: 'Not Recieved' }), isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('vehicleDetail.connectedVehicle.tcuId')}>{checkAndSetDefaultValue(formData?.connectedVehicle && element?.tcuId, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('vehicleDetail.connectedVehicle.esimNo')}>{checkAndSetDefaultValue(formData?.connectedVehicle && element?.esimNo, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('vehicleDetail.connectedVehicle.esimStatus')}>{checkAndSetDefaultValue(bindStatus(element, 'esimStatus', { active: translateContent('global.label.active'), inactive: translateContent('global.label.inActive') }), isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('vehicleDetail.connectedVehicle.preferredMobileNo1')}>{checkAndSetDefaultValue(formData?.connectedVehicle && element?.preferredMobileNo1, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('vehicleDetail.connectedVehicle.preferredMobileNo2')}>{checkAndSetDefaultValue(formData?.connectedVehicle && element?.preferredMobileNo2, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('vehicleDetail.connectedVehicle.kycStatus')}>{checkAndSetDefaultValue(bindStatus(element, 'kycStatus', { active: translateContent('vehicleDetail.connectedVehicle.received'), inactive: translateContent('vehicleDetail.connectedVehicle.Not Recieved') }), isLoading)}</Descriptions.Item>
                                         </Descriptions>
                                     </Panel>
                                 </Collapse>
                             );
                         })}
-                        {!formData?.connectedVehicle?.length && <NoDataFound information={noDataTitle} />}
+                        {!formData?.connectedVehicle?.length && <NoDataFound information={translateContent('vehicleDetail.connectedVehicle.noConnectedVehicleFound')} />}
                     </div>
                 </Panel>
-            </Collapse> */}
-            <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
-                <Panel header={translateContent('vehicleDetail.productDetails.heading.aggregateTitle')} key="3">
+            </Collapse>
+            <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(4)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
+                <Panel header={translateContent('vehicleDetail.productDetails.heading.aggregateTitle')} key="4">
                     <Divider />
                     <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue, ITEM_TYPE })} tableData={optionalServices} pagination={false} />
                 </Panel>

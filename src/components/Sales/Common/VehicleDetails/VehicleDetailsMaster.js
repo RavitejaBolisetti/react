@@ -91,8 +91,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
-    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
-
+    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true, requestPayload = undefined } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
@@ -123,6 +122,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+    const isInvoiceModule = salesModuleType === SALES_MODULE_TYPE.INVOICE.KEY;
 
     const vehicleDetailFinalData = useMemo(() => {
         if (isOTFModule && otfVehicleDetailData) {
@@ -139,6 +139,12 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailFinalData]);
+    useEffect(() => {
+        if (isInvoiceModule && formActionType?.addMode) {
+            handleVehicleDetailChange({ modelCode: vehicleDetailDataPass?.modelCode, discountAmount: vehicleDetailDataPass?.discountAmount, saleType: vehicleDetailDataPass?.saleType, priceType: vehicleDetailDataPass?.priceType, vehicleUsageType: vehicleDetailDataPass?.vehicleUsageType });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isInvoiceModule]);
 
     useEffect(() => {
         if (vehicleDetailData) {
@@ -148,7 +154,6 @@ const VehicleDetailsMasterMain = (props) => {
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
             vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
-            // vehicleDetailData?.sapStatusResponseCode && setSapStatusResponseCode(vehicleDetailData?.sapStatusResponseCode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -262,7 +267,16 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
-
+    const findSchemAndDiscount = (data = requestPayload?.schemeOfferDetails?.sales) => {
+        if (Array?.isArray(data)) {
+            const schemeDataObj = requestPayload?.schemeOfferDetails?.sales?.find((item) => item?.active);
+            if (schemeDataObj) {
+                return { salesSchemeId: schemeDataObj?.salesSchemeId, salesSchemeDiscountType: schemeDataObj?.salesSchemeDiscountType, additionalCorpDiscount: requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount };
+            }
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount };
+        }
+        return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: undefined };
+    };
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });
         const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType } = vehicleData;
@@ -294,6 +308,20 @@ const VehicleDetailsMasterMain = (props) => {
                 key: 'vehicleUsageType',
                 value: vehicleUsageType,
             },
+
+            {
+                key: 'salesSchemeId',
+                value: findSchemAndDiscount()?.salesSchemeId,
+            },
+
+            {
+                key: 'salesSchemeDiscountType',
+                value: findSchemAndDiscount()?.salesSchemeDiscountType,
+            },
+            {
+                key: 'additionalCorpDiscount',
+                value: findSchemAndDiscount()?.additionalCorpDiscount,
+            },
         ];
 
         const onSuccessAction = (res) => {
@@ -304,8 +332,8 @@ const VehicleDetailsMasterMain = (props) => {
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
 
-            const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType } = vehicleDetailData;
-            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType, vehicleUsageType });
+            const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType, salesSchemeId, salesSchemeDiscountType } = vehicleDetailData;
+            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType, vehicleUsageType, salesSchemeId, salesSchemeDiscountType });
 
             setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });
@@ -329,7 +357,7 @@ const VehicleDetailsMasterMain = (props) => {
             case SALES_MODULE_TYPE.OTF.KEY:
                 if (productAttributeData?.length === 0) {
                     showGlobalNotification({ message: translateContent('commonModules.validation.modelValidation') });
-                    return;
+                    return false;
                 }
 
                 const onSuccess = (res) => {
@@ -401,7 +429,6 @@ const VehicleDetailsMasterMain = (props) => {
         vehicleServiceData,
 
         productHierarchyData,
-        // resetProductLov,
         isProductDataLoading,
         filterVehicleData,
         setFilterVehicleData,
