@@ -14,7 +14,7 @@ import { disableFutureDate } from 'utils/disableDate';
 
 const { Search } = Input;
 const NeftFormBase = (props) => {
-    const { formData, handleChange, handlePaymentSearch } = props;
+    const { formData, handleChange, handlePaymentSearch, isLoading } = props;
 
     return (
         <>
@@ -39,7 +39,7 @@ const NeftFormBase = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.paymentBankPartyId} label={translateContent('receipts.label.receiptDetails.paymentBankPartyId')} name="paymentBankPartyId" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.paymentBankPartyId'))]}>
-                        <Search allowClear onChange={handleChange} onSearch={handlePaymentSearch} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.paymentBankPartyId'))} />
+                        <Search allowClear loading={isLoading} onChange={handleChange} onSearch={handlePaymentSearch} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.paymentBankPartyId'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

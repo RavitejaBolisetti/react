@@ -74,16 +74,6 @@ const ReceiptDetailMasterBase = (props) => {
     const [partyId, setPartyId] = useState();
 
     useEffect(() => {
-        if (partyDetailData?.length > 0) {
-            paymentForm.setFieldsValue({
-                paymentBankName: partyDetailData?.[0]?.partyName,
-                paymentBankLocation: partyDetailData?.[0]?.partyLocationCode,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [partyDetailData]);
-
-    useEffect(() => {
         if (requestPayload?.receiptsDetails?.paymentDetails) {
             setPaymentDataList(requestPayload?.receiptsDetails?.paymentDetails);
             setButtonData((prev) => ({ ...prev, formBtnActive: true }));
@@ -122,21 +112,35 @@ const ReceiptDetailMasterBase = (props) => {
     };
 
     const handlePaymentSearch = () => {
-        const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-        };
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
-        const extraParams = [
-            {
-                key: 'partyCode',
-                title: 'partyCode',
-                value: partyId,
-                name: 'partyCode',
-            },
-        ];
-        fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER, onSuccessAction, onErrorAction });
+        if (partyId) {
+            const onSuccessAction = (res) => {
+                const showPaymentBankdata = res?.data?.[0];
+                if (showPaymentBankdata) {
+                    paymentForm.setFieldsValue({
+                        paymentBankName: showPaymentBankdata?.partyName,
+                        paymentBankLocation: showPaymentBankdata?.address,
+                    });
+                }
+            };
+            const onErrorAction = (message) => {
+                showGlobalNotification({ message });
+            };
+            fetchPartyDetail({
+                setIsLoading: listShowLoading,
+                userId,
+                extraParams: [
+                    {
+                        key: 'partyCode',
+                        title: 'partyCode',
+                        value: partyId,
+                        name: 'partyCode',
+                    },
+                ],
+                customURL: BASE_URL_PARTY_MASTER,
+                onSuccessAction,
+                onErrorAction,
+            });
+        }
     };
 
     const handleSavepaymenttForm = () => {
@@ -168,9 +172,7 @@ const ReceiptDetailMasterBase = (props) => {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 setTotalReceivedAmount(parseFloat(totalReceivedAmount) + parseFloat(value.receivedAmount));
             })
-            .catch((err) => {
-                console.error('err', err);
-            });
+            .catch(() => {});
     };
 
     const onFinish = () => {
