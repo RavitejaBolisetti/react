@@ -988,6 +988,7 @@
             "registrationRequest": "Registration Request",
             "requestedOn": "Requested On",
             "reasonForCancellationRquest": "Reason for Cancellation Request",
+            "cancellationType": "Cancellation Type",
             "remarkForCancellation": "Remark for Cancellation",
             "approvedOrRejectedBy": "Approved/Rejected By",
             "approvedDate": "Approved Date",
@@ -2649,6 +2650,7 @@
             "referrals.dateOfBirth": "Date of Birth",
 
             "cancelInvoice.reasonForCancellation": "Reason for Cancellation",
+            "cancelInvoice.cancellationType": "Cancellation Type",
             "digitalSignature": "Digital Signature"
         },
         "placeholder": {},

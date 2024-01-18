@@ -125,7 +125,7 @@ const ViewDetailMain = (props) => {
                                     </Descriptions.Item>
                                     <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.VIN')}>{checkAndSetDefaultValue(item?.vin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.keyNumber')}>{checkAndSetDefaultValue(item?.keyNumber, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')}>{checkAndSetDefaultValue(item?.mfgdate ? dayjs(item?.mfgdate, [mmYYYYFormat, dateTimeFormat])?.format(dateFormat) : null, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')}>{checkAndSetDefaultValue(item?.mfgdate ? dayjs(item?.mfgdate, [mmYYYYFormat, dateFormat])?.format(dateFormat) : null, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.receivedOn')}>{checkAndSetDefaultValue(item?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.vehicleCost')}>{checkAndSetDefaultValue(item?.vehicleCost, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label={translateContent('vehicleReceipt.label.vehicleDetails.demoVehicle')}>{checkAndSetDefaultValue(getCodeValue(shortageType, item?.demoVehicle), isLoading)}</Descriptions.Item>

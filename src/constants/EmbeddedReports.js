@@ -257,7 +257,7 @@ export const EMBEDDED_REPORTS = {
     },
     RSA_CERTIFICATE_DOCUMENT: {
         id: 37,
-        key: 'RSA_Certificate_Document',
+        key: 'RSA_Document',
         title: 'RSA Certificate Document ',
         type: 'Document',
     },

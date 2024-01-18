@@ -484,16 +484,16 @@ export const OtfBlockMasterMain = (props) => {
     }, [dealerBlockData]);
 
     useEffect(() => {
-        handleDealer(otfBlockMasterData?.zoneCode, false, otfBlockMasterData?.areaCode, true);
+        handleDealer(otfBlockMasterData?.areaCode, false, otfBlockMasterData?.zoneCode, true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfBlockMasterData]);
 
-    const handleDealer = (zoneCode, __, areaCode, reset = false) => {
+    const handleDealer = (areaCode, __, zoneCode, reset = false) => {
         !reset && form.setFieldsValue({ dealerCode: null });
         resetDealerList();
 
         const extraParams = [
-            { key: 'zoneCode', value: zoneCode },
+            { key: 'zoneCode', value: zoneCode ?? form.getFieldValue('zoneCode') },
             { key: 'areaCode', value: areaCode },
         ];
         fetchDealerList({ setIsLoading: listDealerShowLoading, userId, extraParams, customURL });
@@ -515,7 +515,7 @@ export const OtfBlockMasterMain = (props) => {
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), errorAction: onErrorAction });
                 handleZoneChange(res?.data?.zoneCode);
-                handleDealer(res?.data?.zoneCode, false, res?.data?.areaCode);
+                handleDealer(res?.data?.areaCode, false, res?.data?.zoneCode);
 
                 setSelectedOrganizationId(organizationId);
 

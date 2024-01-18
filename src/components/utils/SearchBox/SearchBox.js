@@ -47,7 +47,7 @@ const SearchBox = (props) => {
                 break;
             }
             case SearchConstants?.CUSTOMERNAME?.id: {
-                setValidationRules([validateLettersWithWhitespaces('customer name')]);
+                setValidationRules([validateRequiredInputField('customer name')]);
                 break;
             }
             case SearchConstants?.NEWMODELGROUP?.id: {
