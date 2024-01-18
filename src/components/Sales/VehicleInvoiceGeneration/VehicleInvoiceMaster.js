@@ -753,7 +753,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleCancelReceipt = () => {
         const recordId = selectedRecordId;
         const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
-        const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason: cancelReason };
+        const cancelType = cancelInvoiceForm.getFieldValue().cancelType;
+        const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason, cancelType };
         const onSuccess = (res) => {
             setCancelInvoiceVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
