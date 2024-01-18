@@ -60,7 +60,7 @@ const AddEditFormMain = (props) => {
         if (updatedScheme) {
             setSelectedSalesScheme(updatedScheme);
             form.setFieldsValue({
-                [formKey]: { ...updatedScheme, validFrom: formattedCalendarDate(updatedScheme?.validFrom), validTo: formattedCalendarDate(updatedScheme?.validTo), salesSchemeId: id || updatedScheme?.id, salesSchemeDiscountType: updatedScheme?.discountType },
+                [formKey]: { ...updatedScheme, validFrom: formattedCalendarDate(updatedScheme?.validFrom), validTo: formattedCalendarDate(updatedScheme?.validTo), salesSchemeId: id || updatedScheme?.id, salesSchemeDiscountType: updatedScheme?.discountType, discountType: undefined },
             });
         } else {
             setSelectedSalesScheme();
@@ -123,6 +123,7 @@ const AddEditFormMain = (props) => {
                 </Col>
             </Row>
             <Form.Item initialValue={schemeForm?.active} name={[formKey, 'active']} hidden />
+            <Form.Item initialValue={schemeForm?.id} name={[formKey, 'id']} hidden />
             <Form.Item initialValue={schemeForm?.salesSchemeId} name={[formKey, 'salesSchemeId']} hidden />
             <Form.Item initialValue={schemeForm?.salesSchemeDiscountType} name={[formKey, 'salesSchemeDiscountType']} hidden />
         </>
@@ -230,13 +231,11 @@ const AddEditFormMain = (props) => {
                                     <Divider />
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={schemeData.schemeId} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeName')} name={['sales', 'schemeName']}>
+                                            <Form.Item initialValue={selectedSalesScheme?.schemeName} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeName')} name={['sales', 'schemeName']}>
                                                 {customSelectBox({
                                                     data: schemeData?.sales,
                                                     placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.schemeName')),
-                                                    onChange: (value) => {
-                                                        handleSchemeChange(value, 'sales');
-                                                    },
+                                                    onChange: (value) => handleSchemeChange(value, 'sales'),
                                                     fieldNames: { key: 'id', value: 'schemeName' },
                                                 })}
                                             </Form.Item>

@@ -119,7 +119,7 @@ const ViewDetailMain = (props) => {
                                 </Collapse>
                             )}
 
-                            {schemeData && schemeData?.sales.filter((i) => i?.active)?.length > 0 && (
+                            {schemeData?.sales && schemeData?.sales?.filter((i) => i?.active)?.length > 0 && (
                                 <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                                     <Panel header={translateContent('commonModules.heading.schemeAndOfferDetails.salesScheme')} key={4}>
                                         <Divider />
