@@ -13,9 +13,11 @@ import MaterialPricingGroupPage from './MaterialPricingGroup';
 import MovementClassMasterPage from './MovementClass';
 import IssueIndicatorMasterPage from './IssueIndicator';
 import CampaignDiscountPage from './CampaignDiscount';
+import UnitOfMeasureMasterPage  from './UnitOfMeasure';
 
 export {
     StoreMasterPage,
+    UnitOfMeasureMasterPage,
     KitMasterPage,
     PartCategoryMasterPage,
     SpareProductDivisionMasterPage,
@@ -24,4 +26,5 @@ export {
     MovementClassMasterPage,
     IssueIndicatorMasterPage,
     CampaignDiscountPage
+
 };

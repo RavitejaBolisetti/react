@@ -189,6 +189,7 @@ export const ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING = ROUTING_SALES.co
 
 // Spares
 export const ROUTING_STORE_MASTER = ROUTING_SPARES.concat('store-master');
+export const ROUTING_UNIT_OF_MEASURE_MASTER = ROUTING_SPARES.concat('unit-of-measure-master');
 
 export const ROUTING_KIT_MASTER = ROUTING_SPARES.concat('kit-master');
 export const ROUTING_PART_CATEGORY_MASTER = ROUTING_SPARES.concat('part-category-master');
