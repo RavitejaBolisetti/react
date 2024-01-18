@@ -212,6 +212,8 @@ const AddEditFormMain = (props) => {
             setOtherShortageAndDefectType((prev) => {
                 return { ...prev, [index]: { ...prev?.[index], otherShortageType: value === DEFECT_SHORTAGE_OTHER_CONSTANT?.SHORTAGE_TYPE?.key } };
             });
+
+            vehicleDetailForm.setFieldsValue({ [index]: { ...vehicleDetailForm.getFieldsValue()[index], shortageDetail: { ...vehicleDetailForm.getFieldsValue()[index].shortageDetail, shortageDescription: null } } });
         } else {
             fetchDefectAndShortageDependentData({
                 value,
@@ -229,10 +231,15 @@ const AddEditFormMain = (props) => {
             setOtherShortageAndDefectType((prev) => {
                 return { ...prev, [index]: { ...prev?.[index], otherDefectLocation: value === DEFECT_SHORTAGE_OTHER_CONSTANT?.DEFECT_DESCRIPTION?.key } };
             });
+            vehicleDetailForm.setFieldsValue({ [index]: { ...vehicleDetailForm.getFieldsValue()[index], physicalStatusDetail: { ...vehicleDetailForm.getFieldsValue()[index].physicalStatusDetail, defectDescription: null } } });
         }
     };
 
     const handleOtherDefectAndShortage = ({ value, typeKey, index }) => {
+        if (typeKey?.id === DEFECT_SHORTAGE_OTHER_CONSTANT?.DEFECT_TYPE?.id) {
+            vehicleDetailForm.setFieldsValue({ [index]: { ...vehicleDetailForm.getFieldsValue()[index], physicalStatusDetail: { ...vehicleDetailForm.getFieldsValue()[index].physicalStatusDetail, defectLocation: null, defectDescription: null } } });
+        }
+
         setOtherShortageAndDefectType((prev) => {
             return { ...prev, [index]: { ...prev?.[index], [typeKey?.mapKey]: value === typeKey?.key } };
         });
@@ -317,7 +324,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.mfgdate ? dayjs(item?.mfgdate, mmYYYYFormat) : null} label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')} name={[index, 'mfgdate']}>
+                                        <Form.Item initialValue={item?.mfgdate ? dayjs(item?.mfgdate, [dateFormat, mmYYYYFormat]) : null} label={translateContent('vehicleReceipt.label.vehicleDetails.mfgDate')} name={[index, 'mfgdate']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>

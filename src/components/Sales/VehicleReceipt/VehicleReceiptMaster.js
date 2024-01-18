@@ -335,6 +335,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 return { ...item, mfgdate: item?.mfgdate ? dayjs(item?.mfgdate, dateFormat)?.format(dateFormat) : null };
             }),
         };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
