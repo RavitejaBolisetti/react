@@ -8,7 +8,7 @@ import { Input, DatePicker, Row, Col, Form, Divider } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
-import { validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 import { disableFutureDate } from 'utils/disableDate';
 
@@ -26,12 +26,12 @@ const NeftFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.transactionNumber} label={translateContent('receipts.label.receiptDetails.transactionNumber')} name="transactionNumber" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.transactionNumber'))]}>
+                    <Form.Item initialValue={formData?.transactionNumber} label={translateContent('receipts.label.receiptDetails.transactionNumber')} name="transactionNumber" rules={[validateRequiredInputField(translateContent('receipts.validation.transactionNumber')), validationFieldLetterAndNumber(translateContent('receipts.validation.transactionNumber'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.transactionNumber'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.transactionDate} label={translateContent('receipts.label.receiptDetails.transactionDate')} name="transactionDate">
+                    <Form.Item rules={[validateRequiredSelectField(translateContent('receipts.validation.transactionDate'))]} initialValue={formData?.transactionDate} label={translateContent('receipts.label.receiptDetails.transactionDate')} name="transactionDate">
                         <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.transactionDate'))} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>

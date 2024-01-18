@@ -18,7 +18,7 @@ const CreditFormBase = (props) => {
             <Divider />
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.creditCardTransNumber} label={translateContent('receipts.label.receiptDetails.creditCardTransactionsNumber')} name="creditCardTransNumber" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.creditCardTransactionsNumber'))]}>
+                    <Form.Item initialValue={formData?.creditCardTransNumber} label={translateContent('receipts.label.receiptDetails.creditCardTransactionsNumber')} name="creditCardTransNumber" rules={[validateRequiredInputField(translateContent('receipts.validation.creditCardTransactionsNumber')),validationFieldLetterAndNumber(translateContent('receipts.validation.creditCardTransactionsNumber'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.creditCardTransactionsNumber'))} />
                     </Form.Item>
                 </Col>
