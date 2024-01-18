@@ -189,3 +189,12 @@ export const ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING = ROUTING_SALES.co
 
 // Spares
 export const ROUTING_STORE_MASTER = ROUTING_SPARES.concat('store-master');
+
+export const ROUTING_KIT_MASTER = ROUTING_SPARES.concat('kit-master');
+export const ROUTING_PART_CATEGORY_MASTER = ROUTING_SPARES.concat('part-category-master');
+export const ROUTING_SPARE_PRODUCT_DIVISION_MASTER = ROUTING_SPARES.concat('spare-product-division');
+export const ROUTING_VENDOR_BRAND_MASTER = ROUTING_SPARES.concat('vendor-brand-master');//vendor + brand
+export const ROUTING_MATERIAL_PRICING_GROUP = ROUTING_SPARES.concat('metarial-pricing-group');
+export const ROUTING_MOVEMENT_CLASS = ROUTING_SPARES.concat('movement-class');
+export const ROUTING_ISSUE_INDICATOR = ROUTING_SPARES.concat('issue-indicator');
+export const ROUTING_CAMPAIGN_DISCOUNT = ROUTING_SPARES.concat('campaign-discount');

@@ -5,7 +5,23 @@
  */
 
 import StoreMasterPage  from './StoreMaster';
+import KitMasterPage from './KitMaster';
+import PartCategoryMasterPage from './PartCategory';
+import SpareProductDivisionMasterPage from './SpareProductDivision';
+import VendorBrandMasterPage from './VendorBrandMaster';
+import MaterialPricingGroupPage from './MaterialPricingGroup';
+import MovementClassMasterPage from './MovementClass';
+import IssueIndicatorMasterPage from './IssueIndicator';
+import CampaignDiscountPage from './CampaignDiscount';
 
 export {
     StoreMasterPage,
+    KitMasterPage,
+    PartCategoryMasterPage,
+    SpareProductDivisionMasterPage,
+    VendorBrandMasterPage,
+    MaterialPricingGroupPage,
+    MovementClassMasterPage,
+    IssueIndicatorMasterPage,
+    CampaignDiscountPage
 };
