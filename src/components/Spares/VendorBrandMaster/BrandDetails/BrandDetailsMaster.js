@@ -9,23 +9,25 @@ import { Form } from 'antd';
 import ViewDetailCard from './ViewDetailCard';
 import DetailForm from './DetailForm';
 
-const BrandDetailsMaster = ({formActionType}) => {
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [docForm] = Form.useForm();
+const BrandDetailsMaster = (props) => {
+    const {docForm, formActionType, onDocumentFormFinish, formDataList, setformDataList,forceUpdate, isBtnDisabled, setIsBtnDisabled  } = props;
+
+    // const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    // const [docForm] = Form.useForm();
 
     const [canFormSave, setCanFormSave] = useState(false)
-    const [isBtnDisabled, setIsBtnDisabled] = useState(false)
-    const [formDataList,setformDataList] = useState([])
+    // const [isBtnDisabled, setIsBtnDisabled] = useState(false)
+    // const [formDataList,setformDataList] = useState([])
       
 
-    const onDocumentFormFinish = () => {
-        docForm.validateFields().then(val => {
-            console.log("🚀 ~ docForm.validateFields ~ val:", val)
-            setformDataList((prev) => ([ ...prev, val] ));
-            docForm.resetFields();
-            forceUpdate();
-        }).catch(err => console.error(err));
-    };
+    // const onDocumentFormFinish = () => {
+    //     docForm.validateFields().then(val => {
+    //         console.log("🚀 ~ docForm.validateFields ~ val:", val)
+    //         setformDataList((prev) => ([ ...prev, val] ));
+    //         docForm.resetFields();
+    //         forceUpdate();
+    //     }).catch(err => console.error(err));
+    // };
 
     const onFieldsChange = () => {
         setCanFormSave(true);

@@ -10,7 +10,6 @@ import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'assets/sass/app.module.scss';
 import { INCENTIVE_SCHEME_SECTION } from 'constants/modules/IncentiveScheme/IncentiveSchemeSections';
 
-
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, previousSection } = props;
     const vehicleSectionList = Object.values(INCENTIVE_SCHEME_SECTION);
@@ -34,30 +33,19 @@ const MenuNav = (props) => {
                         menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
                         break;
                     }
-
-                    default: {
-                        activeClassName = styles.active;
+                    case id > currentSection: {
+                        activeClassName = styles.AddmodeinActive;
+                        menuNavIcon = <BsRecordCircleFill className={styles.tableTextColor85} />;
+                        break;
+                    }
+                    case id < currentSection: {
+                        activeClassName = styles.inActive;
                         menuNavIcon = <FaCheckCircle />;
                         break;
                     }
-                    //     case id === currentSection: {
-                    //         activeClassName = styles.active;
-                    //         menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
-                    //         break;
-                    //     }
-                    //     case id > currentSection: {
-                    //         activeClassName = styles.AddmodeinActive;
-                    //         menuNavIcon = <BsRecordCircleFill className={styles.tableTextColor85} />;
-                    //         break;
-                    //     }
-                    //     case id < currentSection: {
-                    //         activeClassName = styles.inActive;
-                    //         menuNavIcon = <FaCheckCircle />;
-                    //         break;
-                    //     }
-                    //     default: {
-                    //         break;
-                    //     }
+                    default: {
+                        break;
+                    }
                 }
                 break;
             }
@@ -106,8 +94,8 @@ const MenuNav = (props) => {
         ?.map((item) => ({
             dot: mapIconAndClass(item?.id)?.menuNavIcon,
             children: (
-                // <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
-                <div className={className(item?.id)} onClick={() => onHandle(item?.id)}>
+                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
+                {/* <div className={className(item?.id)} onClick={() => onHandle(item?.id)}> */}
                     {item.title}
                 </div>
             ),

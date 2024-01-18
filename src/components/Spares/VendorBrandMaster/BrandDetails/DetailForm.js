@@ -52,7 +52,7 @@ const DetailForm = ({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled, 
                     </Form.Item>
                 </Col>
             </Row>
-            {!isEditing && (
+            {/* {!isEditing && (
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                         <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" onClick={onFinish}>
@@ -60,7 +60,7 @@ const DetailForm = ({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled, 
                         </Button>
                     </Col>
                 </Row>
-            )}
+            )} */}
         </Form>
     );
 };

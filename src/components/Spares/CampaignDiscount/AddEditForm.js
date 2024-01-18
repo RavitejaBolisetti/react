@@ -3,8 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch, DatePicker, Card, Checkbox, Collapse, Divider, Typography, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -21,13 +22,29 @@ import { convertDateToCalender, dateFormat, formattedCalendarDate } from 'utils/
 import moment from 'moment';
 import DiscountDetailsMaster from './DiscountDetails';
 
+const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode, addMode } = undefined, onFinish } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
+    const [docForm] = Form.useForm();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false)
+    const [formDataList, setformDataList] = useState([]);
     const [openAccordianKey, setOpenAccordianKey] = useState(1);
+
+    const onDocumentFormFinish = () => {
+        docForm
+            .validateFields()
+            .then((val) => {
+                setformDataList((prev) => [...prev, val]);
+                docForm.resetFields();
+                forceUpdate();
+            })
+            .catch((err) => console.error(err));
+    };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -54,6 +71,9 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
+
+    const discountProps = { docForm, onDocumentFormFinish, formDataList, setformDataList, forceUpdate, isBtnDisabled, setIsBtnDisabled };
+
 
     return (
         <>
@@ -98,10 +118,26 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
 
-                                <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordianKey} collapsible="icon">
-                                    <Panel key="1" header={'Disscount Details'}>
-                                        <Divider />
-                                        <DiscountDetailsMaster />
+                                <Collapse defaultActiveKey={1} >
+                                <Panel key={1}
+                                        collapsible="disabled"
+                                        showArrow={false}
+                                        // activeKey={1}
+                                         header={
+                                            <Row justify="space-between" className={styles.fullWidth}>
+                                                <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
+                                                    <Text strong>{'Brand Details'}</Text>
+                                                </Col>
+                                                <Col xs={6} sm={6} md={6} lg={6} xl={6} className={`${styles.buttonsGroupRight}`}>
+                                                    {!viewMode && (
+                                                         <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" onClick={onDocumentFormFinish}>
+                                                         {translateContent('global.buttons.add')}
+                                                     </Button>
+                                                    )}
+                                                </Col>
+                                            </Row>
+                                        }>
+                                        <DiscountDetailsMaster {...discountProps} />
                                     </Panel>
                                 </Collapse>
                             </>
