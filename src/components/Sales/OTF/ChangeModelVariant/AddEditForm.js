@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Col, Input, Form, Row, Button, Card, Divider, Typography, Tag, Checkbox } from 'antd';
+import { Col, Input, Form, Row, Button, Card, Divider, Checkbox } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -13,7 +13,6 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
-import { TbRefresh } from 'react-icons/tb';
 import { BASE_URL_VEHICLE_CHANGE_MODEL_VARIANT } from 'constants/routingApi';
 import { translateContent } from 'utils/translateContent';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
@@ -27,16 +26,15 @@ import { BASE_URL_VEHICLE_MODEL_SO_MAPPING_SEARCH as customURL } from 'constants
 import { ListDataTable } from 'utils/ListDataTable';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 
-import styles from 'assets/sass/app.module.scss';
 import { refactorProductAttributeData } from 'utils/refactorProductAttributeData';
+import RevisedModelHeader from './RevisedModelDetail/RevisedModelHeader';
 
-const { Text } = Typography;
+import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
                 VehicleDetailsServiceLov: { isFilteredListLoaded: isVehicleServiceLoaded = false, isLoading: isVehicleServiceLoading, filteredListData: vehicleServiceData },
             },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
@@ -59,10 +57,6 @@ const mapStateToProps = (state) => {
         isVehicleServiceLoaded,
         isVehicleServiceLoading,
         vehicleServiceData,
-
-        isDataLoaded,
-        isLoading,
-        vehicleDetailData,
     };
 };
 
@@ -85,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
-    const { setOpenVehilceModelChange, isOTFModule, fetchList, fetchSoData, vehicleDetailData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
+    const { formData, isOTFModule, fetchList, fetchSoData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedTreeKey, setSelectedTreeKey] = useState();
@@ -101,7 +95,6 @@ const AddEditFormMain = (props) => {
     const [buttonData, setButtonData] = useState({ cancelBtn: true, closeBtn: true });
     const [filterString, setFilterString] = useState({ pageSize: 10, current: 1 });
 
-    const [formData, setFormData] = useState();
     const [modelStatus, setModelStatus] = useState();
     const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
@@ -121,28 +114,20 @@ const AddEditFormMain = (props) => {
     }, [userId, selectedRecordId, productDetailRefresh]);
 
     useEffect(() => {
-        if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'X700MM89615721911', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'X700MM89615721911' });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'X700MM89615721911', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleDetailData]);
-
-    useEffect(() => {
+        formData?.sapStatusResponseCode && setModelStatus(formData?.sapStatusResponseCode);
         if (formData?.revisedModel) {
-            form.setFieldsValue({ model: formData?.revisedModel });
-            form.setFieldsValue({ modelCode: formData?.revisedModel });
-            setSelectedTreeKey(formData?.revisedModel);
+            form.setFieldsValue({ model: formData?.revisedModelDescription, modelCode: formData?.revisedModel, oemModelCode: formData?.revisedOemModelCode });
+            getProductAttributeDetail(formData?.revisedModel, setRevisedProductAttributeData);
+            setSelectedTreeKey(formData?.revisedModelDescription);
+            setRevisedModelCode(formData?.revisedModel);
         } else {
-            form.setFieldsValue({ model: undefined, modelCode: undefined });
-            form.setFieldsValue({ model: formData?.model });
-            form.setFieldsValue({ modelCode: formData?.modelCode });
+            form.setFieldsValue({ model: formData?.model, modelCode: formData?.modelCode, oemModelCode: formData?.oemModelCode });
+            getProductAttributeDetail(formData?.modelCode, setRevisedProductAttributeData);
             setSelectedTreeKey(formData?.model);
+            setRevisedModelCode(formData?.modelCode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData?.model, formData?.revisedModel]);
 
     useEffect(() => {
         if (revisedProductAttributeData) {
@@ -151,18 +136,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [revisedProductAttributeData]);
-
-    useEffect(() => {
-        formData?.sapStatusResponseCode && setModelStatus(formData?.sapStatusResponseCode);
-        if (formData?.revisedModel) {
-            setRevisedModelCode(formData?.revisedModel);
-            getProductAttributeDetail(formData?.revisedModel, setRevisedProductAttributeData);
-        } else {
-            setRevisedModelCode(formData?.modelCode);
-            getProductAttributeDetail(formData?.modelCode, setRevisedProductAttributeData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
 
     const extraParams = useMemo(() => {
         return (
@@ -364,10 +337,10 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const handleSelectTreeClick = (value) => {
+    const handleTreeSelect = (value, node) => {
         getProductAttributeDetail(value, setRevisedProductAttributeData);
         setButtonData({ ...buttonData, formBtnActive: !autoOrder });
-        form.setFieldsValue({ modelCode: value, createPurchaseOrder: false });
+        form.setFieldsValue({ modelCode: value, oemModelCode: node?.oemModelCode, createPurchaseOrder: false });
         setCreatePurchaseOrder(false);
         setRevisedModelCode(value);
         setSelectedTreeKey(value);
@@ -419,14 +392,13 @@ const AddEditFormMain = (props) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
     const isReviedModelPending = modelStatus && [STATUS?.PENDING?.key]?.includes(modelStatus);
-    const isReviedModelPendingFailed = modelStatus && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus);
 
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: productHierarchyData,
         defaultParent: false,
         selectedTreeSelectKey: selectedTreeKey,
-        handleSelectTreeClick,
+        onSelects: handleTreeSelect,
         treeExpandedKeys: [selectedTreeKey],
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
         treeDisabled: isReviedModelPending,
@@ -435,27 +407,7 @@ const AddEditFormMain = (props) => {
     return (
         <Form layout="vertical" autoComplete="off" form={form} data-testid="modelChange">
             <div className={`${styles.drawerBody} ${styles.height180}`}>
-                <Row justify="space-between" className={styles.fullWidth}>
-                    <div className={styles.marB10}>
-                        <Text strong>Change Model</Text>
-                    </div>
-                    {isReviedModelPendingFailed && (
-                        <div className={styles.verticallyCentered}>
-                            {modelStatus === STATUS?.PENDING?.key ? <Tag color="warning">{STATUS?.PENDING?.title}</Tag> : modelStatus === STATUS?.SUCCESS?.key ? <Tag color="success">{STATUS?.SUCCESS?.title}</Tag> : <Tag color="error">{STATUS?.REJECTED?.title}</Tag>}
-                            {isReviedModelPending && (
-                                <Button
-                                    onClick={handleRefresh}
-                                    type="link"
-                                    icon={
-                                        <div className={`${styles.marL10} ${styles.verticallyCentered}`}>
-                                            <TbRefresh size={18} />
-                                        </div>
-                                    }
-                                ></Button>
-                            )}
-                        </div>
-                    )}
-                </Row>
+                <RevisedModelHeader styles={styles} modelStatus={modelStatus} handleRefresh={handleRefresh} formData={formData} />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card>
@@ -467,9 +419,10 @@ const AddEditFormMain = (props) => {
                                     {revisedModelInformation && <div className={styles.modelTooltip}>{addToolTip(revisedModelInformation, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                                 </Col>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.modelCode')} name={'modelCode'} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.modelCode'))]}>
-                                        <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.modelCode'))} disabled={true} />
+                                    <Form.Item label={translateContent('bookingManagement.modelVariant.label.oemModelCode')} name={'oemModelCode'} rules={[validateRequiredInputField(translateContent('bookingManagement.modelVariant.validation.oemModelCode'))]}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('bookingManagement.modelVariant.placeholder.oemModelCode'))} disabled={true} />
                                     </Form.Item>
+                                    <Form.Item initialValue={formData?.modelCode} name="modelCode" hidden />
                                 </Col>
                             </Row>
                         </Card>

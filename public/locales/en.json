@@ -259,6 +259,7 @@
             "vehicleDetails.vehicleInformation": "Vehicle Information",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.oemModelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
             "vehicleDetails.vehicleUsageType": "Vehicle Usage",
             "vehicleDetails.saleType": "Sale Type",
@@ -267,6 +268,7 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.corporateSchemeWithTax": "Corporate Scheme with TAX",
             "vehicleDetails.mnmCashBenefitAmountWithTax": "M&M Cash Benefits with TAX",
             "vehicleDetails.mnmNonCashBenefitAmountWithTax": "M&M Non-Cash Benefits with TAX",
             "vehicleDetails.fameSubsidyAmount": "Fame Subsidy Amount",
@@ -1695,18 +1697,21 @@
             "label": {
                 "model": "Model",
                 "modelDescription": "Revised Model Description",
-                "modelCode": "Revised Model Code",
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code",
                 "confirmation": "Confirmation",
                 "cancelRequest": "Cancel Request",
                 "createPurchaseOrder": "Create Purchase Order"
             },
             "validation": {
                 "model": "Model",
-                "modelCode": "Model Code"
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code"
             },
             "placeholder": {
                 "model": "Model",
-                "modelCode": "Model Code"
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code"
             },
             "button": {
                 "yes": "Yes"
@@ -2590,6 +2595,7 @@
 
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.oemModelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
             "vehicleDetails.saleType": "Sale Type",
             "vehicleDetails.priceType": "Price Type",

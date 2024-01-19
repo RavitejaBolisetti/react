@@ -4,12 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
+
 import { withDrawer } from 'components/withDrawer';
 import { withSpinner } from 'components/withSpinner';
 
@@ -45,9 +46,32 @@ const mapDispatchToProps = (dispatch) => ({
 const ChangeModelVariantMasterBase = (props) => {
     const {
         formActionType: { viewMode },
+        vehicleDetailData,
     } = props;
 
-    return <div>{viewMode ? <ViewDetail {...props} /> : <AddEditForm {...props} />}</div>;
+    const [formData, setFormData] = useState();
+    useEffect(() => {
+        if (vehicleDetailData) {
+            setFormData(vehicleDetailData);
+            setFormData({
+                ...vehicleDetailData,
+                // sapStatusResponseCode: 'PD',
+                // revisedModel: 'THRNMM8315642773',
+                // revisedOemModelCode: 'AW5018ZAT2A2GA01RX-1',
+                // revisedModelDescription: 'THAR AX AC P MT 4WD 6S ST RED RG-1',
+                // sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering',
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleDetailData]);
+
+    const myProps = {
+        ...props,
+        formData,
+        setFormData,
+    };
+
+    return <div>{viewMode ? null : <AddEditForm {...myProps} />}</div>;
 };
 
 export const ChangeModelVariantMaster = connect(mapStateToProps, mapDispatchToProps)(withDrawer(withSpinner(ChangeModelVariantMasterBase), { width: '90%', title: 'Model Change', footer: null }));
