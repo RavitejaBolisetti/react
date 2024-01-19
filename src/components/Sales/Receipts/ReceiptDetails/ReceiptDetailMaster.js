@@ -20,7 +20,7 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import styles from 'assets/sass/app.module.scss';
 
 import PaymentAddEdit from './PaymentAddEdit';
-import ReceiptInfoAddEdit from './ReceiptInfoAddEdit';
+import ReceiptInfoAdd from './ReceiptInfoAddEdit';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
 import { translateContent } from 'utils/translateContent';
 
@@ -91,7 +91,7 @@ const ReceiptDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData?.receiptsDetails]);
     useEffect(() => {
-        if (formActionType?.editMode) {
+        if (formActionType?.editMode || formActionType?.viewMode) {
             if (receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
                 setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: false });
             } else {
@@ -287,9 +287,7 @@ const ReceiptDetailMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-
-                    {!formActionType?.viewMode ? <ReceiptInfoAddEdit {...formProps} /> : <ViewDetail {...viewProps} />}
-
+                    {formActionType?.addMode ? <ReceiptInfoAdd {...formProps} /> : <ViewDetail {...viewProps} />}
                     <PaymentAddEdit {...formProps} />
                 </Col>
             </Row>

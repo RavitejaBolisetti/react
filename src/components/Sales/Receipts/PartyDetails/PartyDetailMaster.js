@@ -60,25 +60,20 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PartyDetailMasterBase = (props) => {
-    const { setReceipt, typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
+    const { setReceipt, typeData, partySegmentType, receiptDetailData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, partyDetailForm, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId } = props;
     useEffect(() => {
-        const partyDetails = receiptDetailData?.partyDetails;
-        const canAdvance = receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key;
-        partyDetails && setRequestPayload({ ...requestPayload, partyDetails });
-        canAdvance && setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: false }));
-        setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptDetailData]);
-    useEffect(() => {
-        if (requestPayload?.partyDetails) {
-            partyDetailForm.setFieldsValue({ ...requestPayload?.partyDetails });
+        if (receiptDetailData?.partyDetails) {
+            const partyDetails = receiptDetailData?.partyDetails;
+            partyDetails && setRequestPayload({ ...requestPayload, partyDetails });
+            const canAdvance = receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key;
+            canAdvance && setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: true }));
+            setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requestPayload?.partyDetails, section]);
+    }, [userId, section, receiptDetailData?.partyDetails]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -87,38 +82,57 @@ const PartyDetailMasterBase = (props) => {
     const handleChange = (e) => {
         setPartyId(e.target.value);
         setButtonData({ ...buttonData, formBtnActive: false });
+        setRequestPayload({ ...requestPayload, partyDetails: {} });
+        partyDetailForm.resetFields(['partyName', 'address', 'city', 'state', 'mobileNumber', 'mitraType']);
     };
 
-    const handleSearch = () => {
+    const handleSearch = (partyId, partySegment) => {
         if (partySegment && partyId) {
             const onSuccessAction = (res) => {
-                if (res?.data && res?.data instanceof Object) {
-                    partyDetailForm.setFieldsValue({ ...res?.data });
+                if (res?.data) {
+                    if (res?.data && typeof res?.data === 'object') {
+                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data, partyId, partySegment } });
+                        partyDetailForm.setFieldsValue({ ...res?.data });
+                    } else if (res?.data?.[0] && res?.data?.[0] instanceof Object) {
+                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data?.[0], partyId, partySegment } });
+                        partyDetailForm.setFieldsValue({ ...res?.data?.[0] });
+                    }
                     setButtonData({ ...buttonData, formBtnActive: true });
                 }
             };
             if (partySegment === PartySegment.CUSTOMER.key) {
-                const extraParams = [
-                    {
-                        key: 'customerId',
-                        title: 'customerId',
-                        value: partyId,
-                        name: 'customerId',
-                    },
-                ];
-                fetchCustomerDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+                fetchCustomerDetail({
+                    setIsLoading: listShowLoading,
+                    userId,
+                    extraParams: [
+                        {
+                            key: 'customerId',
+                            title: 'customerId',
+                            value: partyId,
+                            name: 'customerId',
+                        },
+                    ],
+                    onSuccessAction,
+                    onErrorAction,
+                });
             } else {
-                const extraParams = [
-                    {
-                        key: 'partyCode',
-                        value: partyId,
-                    },
-                    {
-                        key: 'partyType',
-                        value: partyDetailForm.getFieldsValue()?.partySegment,
-                    },
-                ];
-                fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER, onSuccessAction, onErrorAction });
+                fetchPartyDetail({
+                    setIsLoading: listShowLoading,
+                    userId,
+                    extraParams: [
+                        {
+                            key: 'partyCode',
+                            value: partyId,
+                        },
+                        {
+                            key: 'partyType',
+                            value: partyDetailForm.getFieldsValue()?.partySegment,
+                        },
+                    ],
+                    customURL: BASE_URL_PARTY_MASTER,
+                    onSuccessAction,
+                    onErrorAction,
+                });
             }
         }
     };
@@ -140,7 +154,7 @@ const PartyDetailMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        formData: requestPayload?.partyDetails || {},
+        formData: requestPayload?.partyDetails,
         isLoading,
         partySegment,
         setPartySegment,
@@ -163,12 +177,12 @@ const PartyDetailMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.addMode ? <AddEditForm {...formProps} /> : <ViewDetail {...viewProps} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <VehicleReceiptFormButton {...props} buttonData={{ ...props.buttonData, editBtn: false }} />
                 </Col>
             </Row>
         </Form>
