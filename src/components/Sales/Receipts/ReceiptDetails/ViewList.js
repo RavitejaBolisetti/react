@@ -54,26 +54,19 @@ const ViewList = (props) => {
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                             <Text strong> {getCodeValue(paymentModeType, data?.paymentMode)}</Text>{' '}
                                             {!(isListEditing || isAdding) && (
-                                            <span className={styles.marL5}>
-                                                <Text type="secondary" className={`${styles.headText} ${styles.marL5}`}>
-                                                {`|`}
-                                            </Text>
-                                                <Text type="secondary" className={styles.marL5}>Amount :</Text>
-                                                <BsCurrencyRupee style={{ fontSize: '16px', marginBottom: '-4px' }} />
-                                                <Text type="secondary">{data?.receivedAmount}</Text>
-                                                <Text type="secondary">/- INR</Text>
-                                            </span>
+                                                <span className={styles.marL5}>
+                                                    <Text type="secondary" className={`${styles.headText} ${styles.marL5}`}>
+                                                        {`|`}
+                                                    </Text>
+                                                    <Text type="secondary" className={styles.marL5}>
+                                                        Amount :
+                                                    </Text>
+                                                    <BsCurrencyRupee style={{ fontSize: '16px', marginBottom: '-4px' }} />
+                                                    <Text type="secondary">{data?.receivedAmount}</Text>
+                                                    <Text type="secondary">/- INR</Text>
+                                                </span>
                                             )}
                                         </Col>
-                                        {/* {!(isListEditing || isAdding) && (
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                                <div className={styles.floatRight}>
-                                                    <BsCurrencyRupee style={{ color: '#ff3e5b', fontSize: '20px', marginBottom: '-4px' }} />
-                                                    <h style={{ color: '#8e8585' }}> : </h>
-                                                    <Text type="secondary">{data?.receivedAmount}</Text>
-                                                </div>
-                                            </Col>
-                                        )} */}
                                     </Row>
                                 }
                             >
