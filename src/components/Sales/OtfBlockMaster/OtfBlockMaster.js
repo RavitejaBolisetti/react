@@ -664,7 +664,6 @@ export const OtfBlockMasterMain = (props) => {
         handleZoneChange,
         zone,
         isAreaOfficeLoading,
-        otfBlockMasterData,
         dealerBlockData,
         fetchDealerList,
         listDealerShowLoading,

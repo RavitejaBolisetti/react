@@ -169,6 +169,7 @@ const AddEditFormMain = (props) => {
                         {customSelectBox({ data: Object.values(YES_NO_FLAG), onChange: handleAdditionalDisount, fieldNames: { key: 'key', value: 'title' }, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')) })}
                     </Form.Item>
                 </Col>
+
                 {additionalDiscount === YES_NO_FLAG?.YES?.key && (
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={schemeForm?.corporateAdditionalDiscount} rules={discountRules} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount')} name={[formKey, 'corporateAdditionalDiscount']}>
@@ -176,13 +177,13 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 )}
+                
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={schemeForm?.totalCorporateDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount')} name={[formKey, 'totalCorporateDiscount']}>
                         <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))} {...disabledProps} />
                     </Form.Item>
                 </Col>
-            </Row>
-            <Row gutter={20}>
+
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')} name={[formKey, 'corporateDiscountType']}>
                         {customSelectBox({ data: typeData?.[discountTypeOption], disabled: true, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')) })}

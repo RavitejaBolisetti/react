@@ -14,7 +14,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import dayjs from 'dayjs';
-import { dateFormat, dateTimeFormat, mmYYYYFormat } from 'utils/formatDateTime';
+import { dateFormat, mmYYYYFormat } from 'utils/formatDateTime';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
 import styles from 'assets/sass/app.module.scss';
@@ -23,7 +23,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType, defectStatusType, shortageSelect, selectedPhysicalStatusType } = props;
+    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType, defectStatusType } = props;
 
     const [activeKey, setactiveKey] = useState([]);
 

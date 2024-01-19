@@ -148,8 +148,15 @@ const VehicleDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'PD', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
+            // setFormData(vehicleDetailData);
+            setFormData({
+                ...vehicleDetailData,
+                // sapStatusResponseCode: 'PD',
+                // revisedModel: 'THRNMM8315642773',
+                // revisedOemModelCode: 'AW5018ZAT2A2GA01RX-1',
+                // revisedModelDescription: 'THAR AX AC P MT 4WD 6S ST RED RG-1',
+                // sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering',
+            });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'THRNMM8405642808' });
             // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
