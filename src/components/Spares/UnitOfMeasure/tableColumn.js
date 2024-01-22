@@ -24,7 +24,7 @@ export const tableColumn = (handleButtonClick) => {
         }),
 
         
-
+        tblStatusColumn({width: '12%'}),
         tblActionColumn({ handleButtonClick, styles, canEdit: true })
     );
 

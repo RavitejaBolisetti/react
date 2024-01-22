@@ -22,7 +22,11 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'description',
             width: '45%',
         }),
-
+        tblPrepareColumns({
+            title: 'Status' || `${translateContent('city.title.cityCode')}`,
+            dataIndex: 'status',
+            width: '45%',
+        }),
         
 
         tblActionColumn({ handleButtonClick, styles, canEdit: true })

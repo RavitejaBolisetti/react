@@ -71,29 +71,22 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={'Code' || translateContent('city.label.cityName')} rules={[validateRequiredInputField('Color' || translateContent('city.validation.cityName'))]} name="color">
-                                    <Input placeholder={preparePlaceholderText('Code' || translateContent('city.placeholder.cityCode'))} disabled={editMode ? true : false} />
-                                        {/* <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Color')} fieldNames={{ label: 'key', value: 'value' }} allowClear showSearch /> */}
+                                        <Input placeholder={preparePlaceholderText('Code' || translateContent('city.placeholder.cityCode'))} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
-
-                                
-                                 
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label={translateContent('Description' || 'city.label.countryCode')} name="Description" rules={[validateRequiredInputField('Description' || translateContent('city.validation.country'))]}>
+                                        <Input placeholder={preparePlaceholderText('Description' || translateContent('city.placeholder.cityCode'))} disabled={editMode ? true : false} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('locationTypeMaster.label.status')}>
+                                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} onChange={(checked) => (checked ? 1 : 0)} />
+                                    </Form.Item>
+                                </Col>
+                                {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item label={translateContent('Description' || 'city.label.countryCode')} name="createdBy" rules={[validateRequiredInputField('Created By' || translateContent('city.validation.country'))]}>
                                     <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('adminHierarchy.placeholder.longDescription'))} showCount  />
-                                    </Form.Item>
-                                </Col>
-
-                                {/* 
-                                shall use system date 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={'Created Date' || translateContent('configurableParameter.label.fromDate')} name="createdDate" rules={[validateRequiredInputField('Created Date' || translateContent('configurableParameter.validation.fromDateValidaiton'))]}>
-                                        <DatePicker format={dateFormat} placeholder={'Created Date' || prepareDatePickerText(dateFormat)} disabled={isReadOnly} />
-                                    </Form.Item>
-                                </Col> */}
-                                {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.active} label="Status" name="isActive">
-                                        <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={true} />
                                     </Form.Item>
                                 </Col> */}
                             </Row>

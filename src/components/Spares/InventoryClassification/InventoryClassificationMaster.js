@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
        
     } = state;
 
-    const moduleTitle = 'Part Category Master';
+    const moduleTitle = 'Inventory Classification';
 
     let returnValue = {
         userId,
@@ -47,12 +47,12 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const PartCategoryMasterBase = (props) => {
+export const InventoryClassificationMasterBase = (props) => {
     const { data, saveData, fetchList, userId, resetData, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
-    const { isStateDataLoaded, stateData } = props;
-    const { districtData } = props;
+    const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateLovList } = props;
+    const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictLovList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [form] = Form.useForm();
@@ -81,6 +81,29 @@ export const PartCategoryMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: `${translateContent('global.notificationSuccess.success')}`, message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
+    // useEffect(() => {
+    //     if (userId) {
+    //        
+    //         if (!isDataLoaded) {
+    //             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
+
+    // useEffect(() => {
+    //     if (userId && refershData) {
+    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, refershData]);
+
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
             setFilterString({ countryCode: defaultCountry });
@@ -89,7 +112,37 @@ export const PartCategoryMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
 
-   
+    useEffect(() => {
+        if (isDataLoaded && data && userId) {
+            if (filterString) {
+                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+                const state = filterString?.stateCode;
+                const district = filterString?.districtCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                setSearchdata(filterDataItem);
+                setShowDataLoading(false);
+            } else {
+                setSearchdata(data);
+                setShowDataLoading(false);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, data, userId]);
+    useEffect(() => {
+        if (isAdvanceSearchVisible) {
+            advanceFilterForm.resetFields();
+            advanceFilterForm.setFieldsValue({ code: filterString?.code });
+            if (filterString?.stateCode) {
+                advanceFilterForm.setFieldsValue({ stateCode: filterString?.stateCode, districtCode: filterString?.districtCode });
+                handleFilterChange('stateCode')(filterString?.stateCode);
+            }
+            if (filterString?.districtCode) {
+                advanceFilterForm.setFieldsValue({ districtCode: filterString?.districtCode });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isAdvanceSearchVisible]);
+
     const extraParams = [
         {
             key: 'countryCode',
@@ -104,6 +157,13 @@ export const PartCategoryMasterBase = (props) => {
             value: filterString?.stateCode,
             canRemove: true,
             name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
+        },
+        {
+            key: 'districtCode',
+            title: `${translateContent('city.title.district')}`,
+            canRemove: true,
+            value: filterString?.districtCode,
+            name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
         },
 
         {
@@ -356,4 +416,4 @@ const dummytableData =  [{
     );
 };
 
-export const PartCategoryMaster = connect(mapStateToProps, mapDispatchToProps)(PartCategoryMasterBase);
+export const InventoryClassificationMaster = connect(mapStateToProps, mapDispatchToProps)(InventoryClassificationMasterBase);

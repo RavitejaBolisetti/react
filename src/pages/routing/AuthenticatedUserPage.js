@@ -94,7 +94,7 @@ import {
     MultiBrandUsedVehiclePriceCapturingPage,
 } from 'pages/Sales';
 
-import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage } from 'pages/Spares';
+import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage } from 'pages/Spares';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
 
@@ -313,7 +313,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_MOVEMENT_CLASS} element={<MovementClassMasterPage />} exact />
                 <Route path={routing.ROUTING_ISSUE_INDICATOR} element={<IssueIndicatorMasterPage />} exact />
                 <Route path={routing.ROUTING_CAMPAIGN_DISCOUNT} element={<CampaignDiscountPage />} exact />
-
+                <Route path={routing.ROUTING_INVENTORY_CLASSIFICATION} element={<InventoryClassificationPage />} exact />   
                 {/*  */}
                 <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />

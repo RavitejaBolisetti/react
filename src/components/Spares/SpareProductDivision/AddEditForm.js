@@ -16,6 +16,7 @@ import { dateFormat } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const { Option } = Select;
 
@@ -23,7 +24,7 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode, addMode } = undefined, onFinish } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-const disableProp = {disabled: true}
+    const disableProp = { disabled: true };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -47,13 +48,6 @@ const disableProp = {disabled: true}
         handleButtonClick,
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
-
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
@@ -63,17 +57,21 @@ const disableProp = {disabled: true}
                     ) : (
                         <>
                             <Row gutter={16}>
-                                
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Form.Item name={'make'} label={translateContent('Make')}  rules={[validateRequiredInputField(translateContent('Make'))]}>
+                                        {customSelectBox({  data: [], placeholder: preparePlaceholderSelect(translateContent('Make'))})}
+                                    </Form.Item>
+                                </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('Division Code' || 'city.label.countryCode')} name="divisionCode" rules={[validateRequiredInputField('Division Code' || translateContent('city.validation.country'))]}>
-                                        <Input placeholder={preparePlaceholderText('Division Code' || translateContent('city.placeholder.cityCode'))}  />
+                                        <Input placeholder={preparePlaceholderText('Division Code' || translateContent('city.placeholder.cityCode'))} />
                                     </Form.Item>
-                                </Col> 
+                                </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('Division Description' || 'city.label.countryCode')} name="divisionDescription" rules={[validateRequiredInputField('Division Description' || translateContent('city.validation.country'))]}>
-                                        <Input placeholder={preparePlaceholderText('Division Description' || translateContent('city.placeholder.cityCode'))}/>
+                                        <Input placeholder={preparePlaceholderText('Division Description' || translateContent('city.placeholder.cityCode'))} />
                                     </Form.Item>
-                                </Col> 
+                                </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.active} label="Status" name="isActive">

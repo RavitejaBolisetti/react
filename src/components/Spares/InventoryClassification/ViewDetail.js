@@ -18,9 +18,9 @@ const ViewDetailMain = ({ formData, styles, parameterType }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label={'Code' || translateContent('city.label.code')}>{formData?.stateName}</Descriptions.Item>
-                    <Descriptions.Item label={'Description' || translateContent('city.label.description')}>{formData?.districtName}</Descriptions.Item>
-                    <Descriptions.Item label={'Status' || translateContent('city.label.description')}>{formData?.status}</Descriptions.Item>
+                    <Descriptions.Item label={'Issue Code' || translateContent('city.label.stateName')}>{formData?.code}</Descriptions.Item>
+                    <Descriptions.Item label={'Issue Description' || translateContent('city.label.stateName')}>{formData?.description}</Descriptions.Item>
+                    <Descriptions.Item label={'Status' || translateContent('global.label.status')}>{formData?.status ? `${translateContent('global.label.active')}` : `${translateContent('global.label.inActive')}`}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

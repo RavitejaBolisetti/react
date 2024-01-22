@@ -14,6 +14,7 @@ import MovementClassMasterPage from './MovementClass';
 import IssueIndicatorMasterPage from './IssueIndicator';
 import CampaignDiscountPage from './CampaignDiscount';
 import UnitOfMeasureMasterPage  from './UnitOfMeasure';
+import InventoryClassificationPage from './InventoryClassification';
 
 export {
     StoreMasterPage,
@@ -25,6 +26,6 @@ export {
     MaterialPricingGroupPage,
     MovementClassMasterPage,
     IssueIndicatorMasterPage,
-    CampaignDiscountPage
-
+    CampaignDiscountPage,
+    InventoryClassificationPage
 };

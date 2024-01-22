@@ -12,16 +12,16 @@ export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Code' || `${translateContent('city.title.cityCode')}`,
-            dataIndex: 'code',
+            title: 'Make' || `${translateContent('city.title.cityCode')}`,
+            dataIndex: 'make',
         }),
 
         tblPrepareColumns({
-            title: 'Description' || `${translateContent('city.title.cityCode')}`,
-            dataIndex: 'description',
+            title: 'Product Division' || `${translateContent('city.title.cityCode')}`,
+            dataIndex: 'productDivision',
         }),
 
-        tblStatusColumn({width: '12%'}),
+        // tblStatusColumn({width: '12%'}),
         tblActionColumn({ handleButtonClick, styles, canEdit: true })
     );
 
