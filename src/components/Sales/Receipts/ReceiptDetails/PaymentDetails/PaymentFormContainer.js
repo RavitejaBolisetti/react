@@ -40,9 +40,8 @@ const PaymentFormContainer = (props) => {
         paymentForm.setFieldsValue({ paymentMode: value });
     };
 
-    const RenderPaymentForm = (formInstance) => {
-        // if (!formInstance) return undefined;
-        switch (formInstance) {
+    const RenderPaymentForm = (formKey) => {
+        switch (formKey) {
             case PAYMENT_MODE?.CASH?.KEY: {
                 return <CashForm />;
             }
@@ -59,7 +58,7 @@ const PaymentFormContainer = (props) => {
                 return <NeftForm {...props} />;
             }
             default:
-                return '';
+                return <></>;
         }
     };
 

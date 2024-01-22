@@ -424,6 +424,9 @@ export const AMCRegistrationMasterBase = (props) => {
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listDealerParentShowLoading, userId });
             fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
+            return () => {
+                setFilterString({});
+            };
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -506,13 +509,14 @@ export const AMCRegistrationMasterBase = (props) => {
                     value: 'otfNumber',
                 },
                 {
+                    key: 'registrationType',
+                    value: 'REG',
+                },
+                {
                     key: 'searchParam',
                     value: otfNumber,
                 },
-                {
-                    key: 'otfStatus',
-                    value: 'I',
-                },
+
                 {
                     key: 'pageNumber',
                     value: '1',

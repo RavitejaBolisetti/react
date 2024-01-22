@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col, Switch, InputNumber } from 'antd';
 import { translateContent } from 'utils/translateContent';
 
@@ -17,8 +17,17 @@ import styles from 'assets/sass/app.module.scss';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const AddEditFormMain = (props) => {
-    const { showFields, setShowFields, form, onFinish, handleFormValueChange, formActionType, formData, isSearchLoading } = props;
+    const { showFields, setShowFields, form, onFinish, handleFormValueChange, formActionType, formData } = props;
+    const { filterString, handleVariantSearch } = props;
     const nonTaxi = 'NonTaxi';
+    useEffect(() => {
+        if (!formActionType?.viewMode && (filterString?.modelGroupCode || formData?.modelGroupCode)) {
+            form.setFieldsValue({ ...filterString });
+            handleVariantSearch(filterString?.modelGroupCode || formData?.modelGroupCode);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
+
     return (
         <div className={styles.drawerBodyNew}>
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFinish={onFinish}>
@@ -81,7 +90,7 @@ const AddEditFormMain = (props) => {
                 ) : (
                     <ViewDetail {...props} />
                 )}
-                <DrawerFormButton multipleForm={true} {...props} isLoadingOnSave={{ isSaveBtnLoading: isSearchLoading, isSaveAndNewBtnLoading: isSearchLoading }} />
+                <DrawerFormButton multipleForm={true} {...props} />
             </Form>
         </div>
     );

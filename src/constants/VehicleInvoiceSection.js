@@ -12,20 +12,20 @@ export const VEHICLE_INVOICE_SECTION = {
         translateKey: 'vehicleInvoiceGeneration.heading.section1',
     },
 
-    VEHICLE_DETAILS: {
-        id: 2,
-        title: 'Vehicle Details',
-        advance: true,
-        displayOnList: true,
-        translateKey: 'vehicleInvoiceGeneration.heading.section2',
-    },
-
     SCHEME_OFFER_DETAILS: {
-        id: 3,
+        id: 2,
         title: 'Scheme and Offer Details',
         advance: false,
         displayOnList: true,
         translateKey: 'vehicleInvoiceGeneration.heading.section3',
+    },
+
+    VEHICLE_DETAILS: {
+        id: 3,
+        title: 'Vehicle Details',
+        advance: true,
+        displayOnList: true,
+        translateKey: 'vehicleInvoiceGeneration.heading.section2',
     },
 
     INSURANCE_DETAILS: {

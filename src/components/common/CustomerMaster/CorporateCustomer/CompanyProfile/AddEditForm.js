@@ -74,11 +74,12 @@ const AddEditFormMain = (props) => {
         setAppSubCategory(value);
     };
 
-    const handleCategoryChange = (value, record) => {
+    const handleCategoryChange = (value) => {
         setCustomerCategory(value);
     };
 
     const handleUsageApplicationChange = (values, record) => {
+        form?.setFieldValue('applicationSubCategory', null);
         if (values === USAGE_APPLICATION_CONSTANT?.CPTV?.key) {
             setSubApplication(record?.type);
         } else {

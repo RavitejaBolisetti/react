@@ -90,7 +90,7 @@ const ViewDetail = (props) => {
                     </>
                 ) : (
                     <>
-                        {(selectedOrder?.status === AMC_CONSTANTS?.APPROVED?.key || selectedOrder?.status === AMC_CONSTANTS?.REJECTED?.key) && (
+                        {(selectedOrder?.status === (screenType === 'RSA' ? AMC_CONSTANTS?.APPROVED?.key : AMC_CONSTANTS?.RSA_APPROVED?.key) || selectedOrder?.status === AMC_CONSTANTS?.REJECTED?.key) && (
                             <>
                                 {selectedOrder?.status === AMC_CONSTANTS?.CANCELLATION_REQUEST?.key && (
                                     <>

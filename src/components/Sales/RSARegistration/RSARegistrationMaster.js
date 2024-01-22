@@ -28,7 +28,7 @@ import { employeeSearchDataAction } from 'store/actions/data/amcRegistration/emp
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { ListDataTable } from 'utils/ListDataTable';
-import { QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons/AMCQueryButtons';
+import { RSA_QUERY_BUTTONS as QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } from 'components/Sales/CommonScheme/QueryButtons';
 import { AMC_CONSTANTS } from 'components/Services/ShieldSchemeRegistartion/utils/AMCConstants';
 import { CancelScheme } from 'components/Services/ShieldSchemeRegistartion/CancelScheme';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -407,7 +407,7 @@ export const RSARegistrationMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userId && loginUserData?.userType) {
+        if (userId && loginUserData?.userType && filterString?.status) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -419,6 +419,10 @@ export const RSARegistrationMasterBase = (props) => {
             fetchDealerParentsLovList({ setIsLoading: listShowLoading, userId });
 
             fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
+
+            return () => {
+                setFilterString({});
+            };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
