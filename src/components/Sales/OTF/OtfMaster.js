@@ -36,6 +36,7 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { UnSaveDataConfirmation, handleUnSavedChange } from 'utils/UnSaveDataConfirmation';
 import { translateContent } from 'utils/translateContent';
 import LeftProfileCard from './LeftProfileCard';
+import { ChangeModelVariantMaster } from './ChangeModelVariant';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -141,11 +142,14 @@ export const OtfMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [isTransferVisible, setIsTransferVisible] = useState(false);
     const [isAllotVisible, setIsAllotVisible] = useState(false);
+    const [openVehilceModelChange, setOpenVehilceModelChange] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
 
     const [otfTransferForm] = Form.useForm();
     const [otfCancellationForm] = Form.useForm();
     const [otfAllotmentForm] = Form.useForm();
+    const [changeVehicleModelForm] = Form.useForm();
+
     const [singleDisabled, setSingleDisabled] = useState(false);
     const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
         isVisible: false,
@@ -766,6 +770,7 @@ export const OtfMasterBase = (props) => {
         refreshData,
         setRefreshData,
         handleUnSavedChangeFn,
+        setOpenVehilceModelChange,
     };
 
     const onCancelCloseAction = () => {
@@ -773,9 +778,11 @@ export const OtfMasterBase = (props) => {
         setIsCancelVisible(false);
         setIsTransferVisible(false);
         setIsAllotVisible(false);
+        setOpenVehilceModelChange(false);
         otfTransferForm.resetFields();
         otfCancellationForm.resetFields();
         otfAllotmentForm.resetFields();
+        changeVehicleModelForm.resetFields();
     };
 
     const cancelProps = {
@@ -817,6 +824,23 @@ export const OtfMasterBase = (props) => {
         setShowDataLoading,
     };
 
+    const changeVehilceModelProps = {
+        ...props,
+        isOTFModule: true,
+        selectedRecordId,
+        form: changeVehicleModelForm,
+        formActionType,
+        selectedOrder,
+        isVisible: openVehilceModelChange,
+        setOpenVehilceModelChange,
+        setIsAllotVisible,
+        onCloseAction: onCancelCloseAction,
+        refreshData,
+        setRefreshData,
+        setIsFormVisible,
+        setShowDataLoading,
+    };
+
     return (
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
@@ -831,9 +855,11 @@ export const OtfMasterBase = (props) => {
             {isTransferVisible && <TransferMaster {...transferOTFProps} />}
             <ChangeHistory {...ChangeHistoryProps} />
             {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
+
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
             <UnSaveDataConfirmation {...unSavedDataModalProps} />
+            {openVehilceModelChange && <ChangeModelVariantMaster {...changeVehilceModelProps} />}
         </>
     );
 };

@@ -91,24 +91,18 @@ const VehicleDetailsMasterBase = (props) => {
     useEffect(() => {
         if (formActionType?.viewMode) {
             setContactData(requestPayload?.amcVehicleDetails);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [requestPayload, section]);
-    useEffect(() => {
-        if (formActionType?.viewMode) {
             handleModelData({});
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
+    }, [requestPayload, section]);
 
     useEffect(() => {
-        if ((formActionType?.addMode || !isLoaded) && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key && section?.id === AMC_REGISTRATION_SECTION.VEHICLE_DETAILS.id) {
+        if ((formActionType?.addMode || !isLoaded) && !formActionType?.viewMode && requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key && section?.id === AMC_REGISTRATION_SECTION.VEHICLE_DETAILS.id) {
             handleVinSearch();
             setIsReadOnly(true);
             setShowAddEditForm(true);
             setButtonData({ ...buttonData, formBtnActive: true });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section]);
 

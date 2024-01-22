@@ -80,7 +80,7 @@ const ViewDetailMain = (props) => {
                     )}
                     {/* {formData?.registrationInformation?.shieldIncentiveClaim && ( */}
 
-                    {record?.status === AMC_CONSTANTS?.APPROVED?.key && (
+                    {record?.status === (screenType === 'RSA' ? AMC_CONSTANTS?.RSA_APPROVED?.key : AMC_CONSTANTS?.APPROVED?.key) && (
                         <>
                             {formData?.registrationInformation?.priceType === SALE_TYPE?.PAID?.key && (
                                 <Card>

@@ -46,7 +46,7 @@ export const AMC_CONSTANTS = {
     },
     APPROVED: {
         id: 8,
-        key: 'APPR',
+        key: 'COM',
         title: 'Approved',
     },
     REJECTED: {
@@ -123,5 +123,10 @@ export const AMC_CONSTANTS = {
         id: 26,
         key: 'M',
         title: 'Manager Key',
+    },
+    RSA_APPROVED: {
+        id: 27,
+        key: 'Completed',
+        title: 'Approved',
     },
 };

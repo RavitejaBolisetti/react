@@ -9,7 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { translateContent } from 'utils/translateContent';
 
 export const ViewMain = (props) => {
-    const { viewTitle, styles, formData, selectedProductName, zoneMasterData, areaOfficeData } = props;
+    const { isAreaOfficeLoading, viewTitle, styles, formData, selectedProductName, zoneMasterData, areaOfficeData } = props;
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -24,13 +24,13 @@ export const ViewMain = (props) => {
     return (
         <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
             <Descriptions {...viewOneColProps}>
-                <Descriptions.Item label={translateContent('bookingBlockMaster.label.productHierarchy')}>{checkAndSetDefaultValue(selectedProductName)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.zone')}>{checkAndSetDefaultValue(zoneName)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.area')}>{checkAndSetDefaultValue(areaName)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('bookingBlockMaster.label.dealerCode')}>{checkAndSetDefaultValue(formData?.dealerCode)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('bookingBlockMaster.label.dealerName')}>{checkAndSetDefaultValue(formData?.dealerName)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingBlockMaster.label.productHierarchy')}>{checkAndSetDefaultValue(selectedProductName, isAreaOfficeLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.zone')}>{checkAndSetDefaultValue(zoneName, isAreaOfficeLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('vehicleSalesSchemeMaster.label.area')}>{checkAndSetDefaultValue(areaName, isAreaOfficeLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingBlockMaster.label.dealerCode')}>{checkAndSetDefaultValue(formData?.dealerCode, isAreaOfficeLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('bookingBlockMaster.label.dealerName')}>{checkAndSetDefaultValue(formData?.dealerName, isAreaOfficeLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('global.label.status')}>
-                    <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{checkAndSetDefaultValue(formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive'))}</span>
+                    <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{checkAndSetDefaultValue(formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive'), isAreaOfficeLoading)}</span>
                 </Descriptions.Item>
             </Descriptions>
         </div>

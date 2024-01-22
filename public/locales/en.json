@@ -28,7 +28,9 @@
             "select": "Select",
             "passwordStrength": "Password strength",
             "actions": "Actions",
-            "input": "input"
+            "input": "input",
+            "yes": "Yes",
+            "no": "No"
         },
         "validation": {
             "input": "Please enter ",
@@ -222,7 +224,11 @@
         "heading": {
             "collapse.bookingCustomer": "Booking Customer",
             "collapse.billingCustomer": "Billing Customer",
-            "confirmation": "Confirmation"
+            "confirmation": "Confirmation",
+            "schemeAndOfferDetails.exchange": "Exchange Scheme",
+            "schemeAndOfferDetails.loyalty": "Loyalty Scheme",
+            "schemeAndOfferDetails.corporate": "Corporate Scheme",
+            "schemeAndOfferDetails.salesScheme": "Sales Scheme"
         },
         "label": {
             "bookingDetails.bookingNumber": "Booking Number",
@@ -253,6 +259,7 @@
             "vehicleDetails.vehicleInformation": "Vehicle Information",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.oemModelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
             "vehicleDetails.vehicleUsageType": "Vehicle Usage",
             "vehicleDetails.saleType": "Sale Type",
@@ -261,6 +268,7 @@
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.corporateSchemeWithTax": "Corporate Scheme with TAX",
             "vehicleDetails.mnmCashBenefitAmountWithTax": "M&M Cash Benefits with TAX",
             "vehicleDetails.mnmNonCashBenefitAmountWithTax": "M&M Non-Cash Benefits with TAX",
             "vehicleDetails.fameSubsidyAmount": "Fame Subsidy Amount",
@@ -272,11 +280,14 @@
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
+            "vehicleDetails.branchName": "Branch Name",
+            "vehicleDetails.chassisNumber": "Chassis Number",
+            "vehicleDetails.soDate": "SO Date",
             "vehicleDetails.sapResonseRemarks": "Model Code Response",
             "vehicleDetails.model": "Model",
             "vehicleDetails.totalTaxAmount": "Total Tax Amount",
             "vehicleDetails.tcsAmount": "TCS Amount",
-
+            "schemeAndOfferDetails.schemeName": "Scheme Name",
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
             "schemeAndOfferDetails.Amount": "Amount",
@@ -284,6 +295,18 @@
             "schemeAndOfferDetails.validTo": "Valid To",
             "schemeAndOfferDetails.description": "Description",
             "schemeAndOfferDetails.noScheme": "No Scheme and Offer Details Available",
+            "schemeAndOfferDetails.discountType": "Discount Type",
+
+            "schemeAndOfferDetails.corporateCode": "Corporate Code",
+            "schemeAndOfferDetails.corporateDescription": "Corporate Description",
+            "schemeAndOfferDetails.corporateName": "Corporate Name",
+            "schemeAndOfferDetails.corporateCategory": "Corporate Category",
+            "schemeAndOfferDetails.stdDealerAmount": "Std Dealer Amount",
+            "schemeAndOfferDetails.stdOEMDiscount": "Std OEM Discount",
+            "schemeAndOfferDetails.corporateAdditionalApplicableDiscount": "Corp. Add. Applicable Discount",
+            "schemeAndOfferDetails.corporateAdditionalDiscount": "Additional Discount",
+            "schemeAndOfferDetails.totalCorporateDiscount": "Corporate Discount",
+            "schemeAndOfferDetails.corporateDiscountType": "Discount Type",
 
             "insuranceDetails.insuranceCompany": "Insurance Company",
             "insuranceDetails.insuranceCoverNote": "Insurance Cover Note",
@@ -908,7 +931,7 @@
         "validation": {
             "noSchemeVIN": "No Schemes present for this AMC Type",
             "noVINFound": "No VIN found for searched Booking Number",
-            "validateOTF" : "Please Validate Booking Number to Continue",
+            "validateOTF": "Please Validate Booking Number to Continue",
             "noEmployeesFound": "No employees found for searched name",
             "incorrectEmployeeName": "Employee name is not correct",
             "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount",
@@ -967,6 +990,7 @@
             "registrationRequest": "Registration Request",
             "requestedOn": "Requested On",
             "reasonForCancellationRquest": "Reason for Cancellation Request",
+            "cancellationType": "Cancellation Type",
             "remarkForCancellation": "Remark for Cancellation",
             "approvedOrRejectedBy": "Approved/Rejected By",
             "approvedDate": "Approved Date",
@@ -1647,7 +1671,8 @@
             "cancellationRemark": "Cancellation Remarks",
             "mnmInvoice": "M&M Invoice",
             "pdiDone": "PDI Done",
-            "allotVehicle": "Allot Vehicle"
+            "allotVehicle": "Allot Vehicle",
+            "vehicleSOMapping": "So Mapping"
         },
         "tableColumn": {
             "description": "Description",
@@ -1672,17 +1697,21 @@
             "label": {
                 "model": "Model",
                 "modelDescription": "Revised Model Description",
-                "modelCode": "Revised Model Code",
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code",
                 "confirmation": "Confirmation",
-                "cancelRequest": "Cancel Request"
+                "cancelRequest": "Cancel Request",
+                "createPurchaseOrder": "Create Purchase Order"
             },
             "validation": {
                 "model": "Model",
-                "modelCode": "Model Code"
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code"
             },
             "placeholder": {
                 "model": "Model",
-                "modelCode": "Model Code"
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code"
             },
             "button": {
                 "yes": "Yes"
@@ -1953,6 +1982,18 @@
             "placeholder": {
                 "noData": "No data"
             }
+        },
+        "connectedVehicle": {
+            "connectedVehicle": "Connected Vehicle",
+            "tcuId": "TCU ID",
+            "esimNo": "E-SIM No",
+            "esimStatus": "E-SIM Status",
+            "preferredMobileNo1": "Prefered Mobile No 1",
+            "preferredMobileNo2": "Prefered Mobile No 2",
+            "kycStatus": "KYC Status",
+            "received": "Recieved",
+            "notReceived": "Not Recieved",
+            "noConnectedVehicleFound": "No Connected Vehicle Found"
         },
         "documents": {
             "heading": {
@@ -2554,6 +2595,7 @@
 
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.oemModelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
             "vehicleDetails.saleType": "Sale Type",
             "vehicleDetails.priceType": "Price Type",
@@ -2614,6 +2656,7 @@
             "referrals.dateOfBirth": "Date of Birth",
 
             "cancelInvoice.reasonForCancellation": "Reason for Cancellation",
+            "cancelInvoice.cancellationType": "Cancellation Type",
             "digitalSignature": "Digital Signature"
         },
         "placeholder": {},
@@ -2803,12 +2846,17 @@
                 "demoVehicle": "Demo Vehicle",
                 "vehicleStatus": "Vehicle Status",
                 "physicalStatus": "Physical Status",
+                "otherDefectType": "Other Defect Type",
+                "otherDefectLocation": "Other Defect Location",
+                "otherDefectDescription": "Other Defect Description",
                 "shortage": "Shortage",
                 "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No.",
                 "defectType": "Defect Type",
                 "defectDescription": "Defect Description",
                 "shortageType": "Shortage Type",
+                "otherShortageType": "Other Shortage Type",
                 "shortageDescription": "Shortage Description",
+                "otherShortageDescription": "Other Shortage Description",
                 "remarks": "Remarks",
                 "defectLocation": "Defect Location"
             },

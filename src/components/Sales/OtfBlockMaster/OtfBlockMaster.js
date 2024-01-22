@@ -47,6 +47,7 @@ import { translateContent } from 'utils/translateContent';
 import { zoneMasterDataAction } from 'store/actions/data/zoneMaster';
 import { areaOfficeDataAction } from 'store/actions/data/areaOfficeLov';
 import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
+import { BASE_URL_DEALER_OTF_BLOCK_MASTER as customURL } from 'constants/routingApi';
 
 const { Search } = Input;
 
@@ -91,13 +92,12 @@ const mapStateToProps = (state) => {
 
         isDataLoaded,
 
-        isProductDataLoaded,
-
         manufacturerAdminHierarchyData,
 
         isDataAttributeLoaded,
 
         productHierarchyData,
+        isProductDataLoaded,
 
         moduleTitle,
 
@@ -171,12 +171,14 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchZoneMasterList: zoneMasterDataAction.fetchList,
             listZoneMasterShowLoading: zoneMasterDataAction.listShowLoading,
+            fetchDealerList: dealerBlockMasterDataAction.fetchList,
+            listDealerShowLoading: dealerBlockMasterDataAction.listShowLoading,
 
             fetchAreaOfficeList: areaOfficeDataAction.fetchList,
             listAreaOfficeListShowLoading: areaOfficeDataAction.listShowLoading,
+            resetAreaOfficeList: areaOfficeDataAction.reset,
 
             resetDealerList: dealerBlockMasterDataAction.reset,
-
 
             showGlobalNotification,
         },
@@ -186,15 +188,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfBlockMasterMain = (props) => {
-    const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, resetDealerList, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading, dealerBlockData } = props;
+    const { resetAreaOfficeList, viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, resetDealerList, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading } = props;
 
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
 
     const { fetchZoneMasterList, fetchAreaOfficeList, listAreaOfficeListShowLoading, listZoneMasterShowLoading, zoneMasterData, areaOfficeData } = props;
 
-    const { detailData, userId, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { isAreaOfficeLoading, detailData, userId, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
-    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading } = props;
+    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading, dealerBlockData, fetchDealerList, listDealerShowLoading } = props;
 
     const [form] = Form.useForm();
 
@@ -251,6 +253,9 @@ export const OtfBlockMasterMain = (props) => {
 
         setIsFormVisible(false);
 
+        resetAreaOfficeList();
+
+        resetDealerList();
         setButtonData({ ...defaultBtnVisiblity });
     };
 
@@ -324,6 +329,11 @@ export const OtfBlockMasterMain = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
+
+    useEffect(() => {
+        handleZoneChange(otfBlockMasterData?.zoneCode, false, true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [otfBlockMasterData]);
 
     useEffect(() => {
         if (formData?.id) {
@@ -409,20 +419,19 @@ export const OtfBlockMasterMain = (props) => {
         }
     };
 
-    const handleZoneChange = (value) => {
+    const handleZoneChange = (value, __, reset = false) => {
         resetDealerList();
+        resetAreaOfficeList();
         const extraParams = [
             {
                 key: 'zone',
                 value: value,
             },
         ];
-        fetchAreaOfficeList({ setIsLoading: listAreaOfficeListShowLoading, userId, extraParams });
+        extraParams?.[0]?.value && fetchAreaOfficeList({ setIsLoading: listAreaOfficeListShowLoading, userId, extraParams });
         setZone(value);
-        if (zone) {
-            form.setFieldsValue({ areaCode: null, dealerCode: null });
-        }
-       
+        !reset && form.resetFields(['areaCode', 'dealerCode']);
+        !reset && form.setFieldsValue({ areaCode: null, dealerCode: null });
     };
 
     const handleSelectTreeClick = (value) => {
@@ -461,6 +470,35 @@ export const OtfBlockMasterMain = (props) => {
         form.resetFields();
     };
 
+    useEffect(() => {
+        if (dealerBlockData && dealerBlockData[0]?.dealerCode !== 'All') {
+            dealerBlockData.unshift({
+                id: null,
+                dealerTin: null,
+                parentGroupCode: null,
+                dealerCode: 'All',
+                dealerName: 'All',
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dealerBlockData]);
+
+    useEffect(() => {
+        handleDealer(otfBlockMasterData?.areaCode, false, otfBlockMasterData?.zoneCode, true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [otfBlockMasterData]);
+
+    const handleDealer = (areaCode, __, zoneCode, reset = false) => {
+        !reset && form.setFieldsValue({ dealerCode: null });
+        resetDealerList();
+
+        const extraParams = [
+            { key: 'zoneCode', value: zoneCode ?? form.getFieldValue('zoneCode') },
+            { key: 'areaCode', value: areaCode },
+        ];
+        fetchDealerList({ setIsLoading: listDealerShowLoading, userId, extraParams, customURL });
+    };
+
     const onFinish = (values) => {
         const recordId = formData?.id || '';
 
@@ -475,8 +513,9 @@ export const OtfBlockMasterMain = (props) => {
 
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraparms([{ key: 'manufacturerOrgId', title: 'manufacturerOrgId', value: organizationId, name: 'manufacturerOrgId' }]), errorAction: onErrorAction });
+                handleZoneChange(res?.data?.zoneCode);
+                handleDealer(res?.data?.areaCode, false, res?.data?.zoneCode);
 
                 setSelectedOrganizationId(organizationId);
 
@@ -571,6 +610,9 @@ export const OtfBlockMasterMain = (props) => {
         onCloseAction: () => {
             setIsFormVisible(false);
 
+            resetAreaOfficeList();
+
+            resetDealerList();
             setOptions([]);
 
             form.setFieldsValue({ hierarchyMstId: null });
@@ -621,7 +663,11 @@ export const OtfBlockMasterMain = (props) => {
         zoneMasterData,
         handleZoneChange,
         zone,
-        
+        isAreaOfficeLoading,
+        dealerBlockData,
+        fetchDealerList,
+        listDealerShowLoading,
+        handleDealer,
     };
 
     const viewProps = {
@@ -661,6 +707,7 @@ export const OtfBlockMasterMain = (props) => {
         areaOfficeData,
         zoneMasterData,
         dealerBlockData,
+        isAreaOfficeLoading,
     };
 
     const leftCol = productHierarchyData?.length > 0 && organizationId ? 14 : 24;
@@ -685,6 +732,7 @@ export const OtfBlockMasterMain = (props) => {
         selectedTreeSelectKey: organizationId,
 
         defaultParent: false,
+        loading: ManufacturerAdminHierarchyDetailLoading,
 
         onSelects: (value, treeObj, obj) => {
             resetData();
@@ -736,7 +784,6 @@ export const OtfBlockMasterMain = (props) => {
                     </Col>
                 </Row>
             </div>
-
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     {productHierarchyData?.length <= 0 ? (

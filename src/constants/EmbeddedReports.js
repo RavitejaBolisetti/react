@@ -109,7 +109,7 @@ export const EMBEDDED_REPORTS = {
     RECIEPT_DOCUMENT: {
         id: 14,
         key: 'Receipt_Note',
-        title: 'Reciept Document',
+        title: 'Receipt Document',
         type: 'Document',
     },
     INVOICE_DOCUMENT: {
@@ -257,7 +257,7 @@ export const EMBEDDED_REPORTS = {
     },
     RSA_CERTIFICATE_DOCUMENT: {
         id: 37,
-        key: 'RSA_Certificate_Document',
+        key: 'RSA_Document',
         title: 'RSA Certificate Document ',
         type: 'Document',
     },

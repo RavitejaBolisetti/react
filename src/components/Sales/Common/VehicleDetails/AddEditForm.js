@@ -28,15 +28,16 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { translateContent } from 'utils/translateContent';
-import { ChangeModelVariantMaster } from './ChangeModelVariant';
 import { TbRefresh } from 'react-icons/tb';
+// import { STATUS } from 'constants/modelVariant';
+// import { RevisedModelDetailMaster } from 'components/Sales/OTF/ChangeModelVariant/RevisedModelDetail/RevisedModelDetailMaster';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, isVehicleModelChange, setIsVehicleModelChange, onModelSubmit, setOnModelSubmit } = props;
-    const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setOpenVehilceModelChange } = props;
+    const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
@@ -114,19 +115,6 @@ const AddEditFormMain = (props) => {
         editingOptionalData,
     };
 
-    const myProp = {
-        ...props,
-        ...OptionServicesFormProps,
-        setCustomerNameList,
-        customerNameList,
-        editingOptionalData,
-        setEditingOptionalData,
-        onModelSubmit,
-        setOnModelSubmit,
-        setFilterVehicleData,
-        setIsVehicleModelChange,
-    };
-
     const handleSelectTreeClick = (value) => {
         setConfirmRequest({
             isVisible: true,
@@ -179,9 +167,11 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeModel = () => {
-        setIsVehicleModelChange(true);
+        setOpenVehilceModelChange(true);
         setRevisedModelInformation({ ...toolTipContent });
     };
+
+    // const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
 
     return (
         <>
@@ -209,14 +199,14 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')} name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.oemModelCode')} name="oemModelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField(translateContent('commonModules.label.vehicleDetails.oemModelCode'))]}>
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.oemModelCode'))} />
                                     </Form.Item>
+                                    <Form.Item initialValue={formData?.modelCode} name="modelCode" hidden />
                                 </Col>
 
                                 {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
                                     <Col xs={24} sm={24} md={3} lg={3} xl={3} style={{ display: 'flex', alignItems: 'center' }}>
-                                        {/* disabled={isVehicleModelChange}  */}
                                         <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
                                             Change
                                         </Button>
@@ -224,13 +214,15 @@ const AddEditFormMain = (props) => {
                                 )}
                             </Row>
                             <Divider />
-                            {isVehicleModelChange && (
+                            {/* {isReviedModelPending ? (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <ChangeModelVariantMaster {...myProp} />
+                                        <RevisedModelDetailMaster {...props} />
                                     </Col>
                                 </Row>
-                            )}
+                            ) : (
+                                <Divider />
+                            )} */}
                             <Row gutter={20}>
                                 {isOTFModule && (
                                     <>
@@ -341,9 +333,16 @@ const AddEditFormMain = (props) => {
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax'))} />
                                     </Form.Item>
                                 </Col>
+
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmCashBenefitAmountWithTax')} name="mnmCashBenefitAmountWithTax">
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.mnmCashBenefitAmountWithTax'), true, false)} />
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.corporateSchemeWithTax')} name="corporateSchemeWithTax">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.corporateSchemeWithTax'))} />
+                                    </Form.Item>
+                                </Col>
+
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')} name="mnmNonCashBenefitAmountWithTax">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax'))} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

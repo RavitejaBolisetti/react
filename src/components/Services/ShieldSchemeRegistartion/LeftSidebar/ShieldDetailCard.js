@@ -57,7 +57,7 @@ const ShieldDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {translateContent('shieldSchemeRegistration.label.status')}: <span>{getCodeValue(typeData?.AMC_REG_APRVL_STAT, selectedCardData?.status) || 'In-Progress'}</span>
+                    {translateContent('shieldSchemeRegistration.label.status')}: <span>{getCodeValue(typeData?.SHLDSCHEME_APPROVAL, selectedCardData?.status) || 'In-Progress'}</span>
                 </div>
             </Panel>
         </Collapse>

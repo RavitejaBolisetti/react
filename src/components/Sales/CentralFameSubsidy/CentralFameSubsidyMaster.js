@@ -14,7 +14,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVis
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { CentralFameSubsidyHeader } from './CentralFameSubsidyHeader';
+import { CentralFameSubsidyFilter } from './CentralFameSubsidyFilter';
 import { CentralFameSubsidySearchDataActions } from 'store/actions/data/CentralFameSubsidy';
 import { translateContent } from 'utils/translateContent';
 import { AddEditForm } from './AddEditForm';
@@ -121,6 +121,9 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+    const handleVariantSearch = (value) => {
+        fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value }] });
+    };
 
     const extraParams = useMemo(() => {
         return [
@@ -148,16 +151,16 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    useEffect(() => {
-        if (formActionType?.addMode && isFormVisible) {
-            form.setFieldsValue({ ...filterString });
-        }
-        if (formActionType?.editMode && isFormVisible && userId) {
-            fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: formData?.modelGroupCode }] });
-        }
+    // useEffect(() => {
+    //     if (formActionType?.addMode && isFormVisible) {
+    //         form.setFieldsValue({ ...filterString });
+    //     }
+    //     if (formActionType?.editMode && isFormVisible && userId) {
+    //         fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: formData?.modelGroupCode }] });
+    //     }
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType, isFormVisible, userId]);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [formActionType, isFormVisible, userId]);
 
     useEffect(() => {
         if (extraParams && userId) {
@@ -194,6 +197,7 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         form.resetFields();
         setShowFields(true);
         resetVariant();
+        setFormData({});
         userId && modelVariantForm.getFieldValue('modelGroupCode') && fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: [{ key: 'modelGroupCode', value: modelVariantForm.getFieldValue('modelGroupCode') }] });
     };
 
@@ -235,6 +239,7 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
             form.resetFields();
             modelVariantForm.resetFields();
             resetVariant();
+            setFormData({});
         };
 
         const requestData = {
@@ -249,7 +254,7 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         saveData(requestData);
     };
 
-    const CentralFameSubsidyHeaderProps = {
+    const CentralFameSubsidyFilterProps = {
         filterString,
         setFilterString,
         onFinish,
@@ -258,7 +263,7 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         modelData,
         variantData,
         handleButtonClick,
-        isVariantLoading,
+        isVariantLoading: isVariantLoading && !isFormVisible,
         modelVariantForm,
         isModelLoading,
         BASE_URL_PRODUCT_VARIENT,
@@ -291,7 +296,7 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         handleFormValueChange,
         modelData,
         variantData,
-        isVariantLoading,
+        isVariantLoading: isVariantLoading && isFormVisible,
         isModelLoading,
         showFields,
         setShowFields,
@@ -308,10 +313,12 @@ export const CentralFameSubsidyMain = ({ filterString, isSearchLoading, setFilte
         userId,
         setFilter: false,
         isSearchLoading,
+        isLoadingOnSave: { isSaveBtnLoading: isSearchLoading, isSaveAndNewBtnLoading: isSearchLoading },
+        handleVariantSearch,
     };
     return (
         <>
-            <CentralFameSubsidyHeader {...CentralFameSubsidyHeaderProps} />
+            <CentralFameSubsidyFilter {...CentralFameSubsidyFilterProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />

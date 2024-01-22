@@ -7,6 +7,9 @@ import React from 'react';
 import MenuNav from './MenuNav';
 import ReceiptDetailCard from './ReceiptDetailCard';
 const LeftSidebar = (props) => {
+    const { currentSection, previousSection, setPreviousSection } = props;
+    if (currentSection > previousSection) setPreviousSection(currentSection);
+
     return (
         <>
             <ReceiptDetailCard {...props} />

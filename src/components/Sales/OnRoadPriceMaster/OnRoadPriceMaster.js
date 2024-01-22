@@ -23,6 +23,7 @@ import { AddEditForm } from './AddEditForm';
 import { viewOnRoadPriceDetailAction } from 'store/actions/data/vehicle/viewOnRoadPriceDetailAction';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
     const {
@@ -132,6 +133,7 @@ export const OnRoadPriceMasterBase = (props) => {
 
     const onErrorAction = (res) => {
         showGlobalNotification({ message: res });
+        setShowDataLoading(false);
     };
 
     useEffect(() => {
@@ -140,13 +142,14 @@ export const OnRoadPriceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+    
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'priceType',
                 title: 'Pricing Type',
                 value: filterString?.priceType,
-                name: typeData['PRC_TYP']?.find((i) => i?.key === filterString?.priceType)?.value,
+                name: typeData[PARAM_MASTER?.PRICING_TYPE?.id]?.find((i) => i?.key === filterString?.priceType)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -172,7 +175,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 key: 'changeInExShowroomOrg',
                 title: 'Change EX ShowRoom Org',
                 value: filterString?.changeInExShowroomOrg,
-                name: typeData['CHNG_EX_ORG']?.find((i) => i?.key === filterString?.changeInExShowroomOrg)?.value,
+                name: filterString?.changeInExShowroomOrg && typeData?.[PARAM_MASTER?.CHNG_EX_ORG?.id]?.find((i) => i?.key === filterString?.changeInExShowroomOrg)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -180,7 +183,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 key: 'status',
                 title: 'Status',
                 value: filterString?.status,
-                name: typeData['ON_ROAD_STATUS']?.find((i) => i?.key === filterString?.status)?.value,
+                name: filterString?.status && typeData?.[PARAM_MASTER?.ON_ROAD_STATUS?.id]?.find((i) => i?.key === filterString?.status)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -218,6 +221,7 @@ export const OnRoadPriceMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchOnRoadPriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
