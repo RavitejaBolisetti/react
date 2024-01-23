@@ -105,11 +105,10 @@ const SchemeDetailsMasterBase = (props) => {
         ...props,
         styles,
         formData,
-        // buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 
     const onFinish = () => {
-        handleButtonClick({ buttonAction: NEXT_ACTION });
+        handleButtonClick({ buttonAction: NEXT_ACTION, onSave: true });
     };
 
     return (

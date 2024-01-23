@@ -10,14 +10,14 @@ import SoStyles from 'assets/sass/Somapping.module.scss';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredSelectField } from 'utils/validation';
-import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS, CARD_TITLE_CONSTANT } from 'components/Sales/OtfSoMappingUnmapping/Constants';
+import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS, CARD_TITLE_CONSTANT, HEADER_CONSTANTS } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
 const SoFormMasterMain = (props) => {
     const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear } = props;
-    const { isLocationLoading = false } = props;
+    const { isLocationLoading = false, loginUserData } = props;
     const disabledProps = { disabled: isReadOnly };
     const handleTitle = useMemo(() => {
         switch (selectedKey) {
@@ -55,7 +55,7 @@ const SoFormMasterMain = (props) => {
                                     <Row gutter={20}>
                                         <Col span={11}>
                                             <Form.Item label={translateContent('bookingSoMappUnmapp.label.dealerParent')} name="parentGroupCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.dealerParent'))]}>
-                                                <Select options={DealerParentData} placeholder={translateContent('global.placeholder.select')} fieldNames={{ label: 'value', value: 'key' }} allowClear showSearch optionFilterProp="value" onChange={handleDealerParent} />
+                                                <Select disabled={loginUserData?.userType === HEADER_CONSTANTS?.DLR?.key} options={DealerParentData} placeholder={translateContent('global.placeholder.select')} fieldNames={{ label: 'value', value: 'key' }} allowClear showSearch optionFilterProp="value" onChange={handleDealerParent} />
                                             </Form.Item>
                                         </Col>
                                         <Col span={11} offset={2}>
