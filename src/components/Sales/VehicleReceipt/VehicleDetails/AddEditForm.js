@@ -189,6 +189,9 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDataChange = ({ value, index, type }) => {
+        if (type === 'shortage') {
+            vehicleDetailForm.setFieldsValue({ [index]: { ...vehicleDetailForm.getFieldsValue()[index], shortageDetail: { ...vehicleDetailForm.getFieldsValue()[index].shortageDetail, shortageType: null, otherShortageType: null, shortageDescription: null, otherShortageDescription: null, remarks: null } } });
+        }
         setFormData((data) => {
             return data?.map((item, i) => (i === index ? { ...item, [type]: value } : item));
         });
