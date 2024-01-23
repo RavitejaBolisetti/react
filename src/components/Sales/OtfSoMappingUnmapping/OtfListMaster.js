@@ -399,49 +399,54 @@ export const OtfListMasterBase = (props) => {
         const formOneData = values?.[FORM_TYPE_CONSTANSTS?.FORM_1?.id];
         const formTwoData = values?.[FORM_TYPE_CONSTANSTS?.FORM_2?.id];
         const isModelGroupPresent = formOneData?.modelGroup && formTwoData?.modelGroup;
-        if (!isModelGroupPresent) return showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupNotPresent') });
-        else if (formOneData?.modelGroup !== formTwoData?.modelGroup && isModelGroupPresent) {
+
+        if (!isModelGroupPresent) {
+            return showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupNotPresent') });
+        } else if (formOneData?.modelGroup !== formTwoData?.modelGroup && isModelGroupPresent) {
             showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupDifferent') });
             return false;
+        } else {
+            const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
+            const form_1_Values = {
+                otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
+                soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soNumber,
+                soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soStatusCode,
+            };
+            const form_2_Values = {
+                otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber,
+                soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soNumber,
+                soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
+            };
+
+            if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
+                return false;
+            }
+            
+            const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
+            const onSuccess = (res) => {
+                SoForm.resetFields();
+                resetDealerLocationData();
+                setfilterString();
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            };
+
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
+
+            const requestData = {
+                customURL: CustomUrl,
+                data: finalData,
+                method: 'put',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+
+            saveData(requestData);
         }
-        const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
-        const form_1_Values = {
-            otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
-            soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soNumber,
-            soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soStatusCode,
-        };
-        const form_2_Values = {
-            otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber,
-            soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soNumber,
-            soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
-        };
-        if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
-            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
-            return false;
-        }
-        const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
-        const onSuccess = (res) => {
-            SoForm.resetFields();
-            resetDealerLocationData();
-            setfilterString();
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            customURL: CustomUrl,
-            data: finalData,
-            method: 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
     };
 
     const handleDealerParent = (parentCode) => {
