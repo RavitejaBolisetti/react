@@ -298,6 +298,14 @@ export const OtfListMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfSomappingData, isOtfSoMappingLoaded]);
+    useEffect(() => {
+        const setDealerCodeValue = [OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_BILLED?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_LIVE?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key]?.includes(selectedKey);
+        if (loginUserData?.userType === HEADER_CONSTANTS?.DLR?.key && setDealerCodeValue && loginUserData?.parentGroupCode) {
+            SoForm.setFieldValue('parentGroupCode', loginUserData?.parentGroupCode);
+            handleDealerParent(loginUserData?.parentGroupCode);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedKey, loginUserData?.parentGroupCode]);
 
     const MappingUnmapping = (key) => {
         if (key) {
@@ -388,6 +396,14 @@ export const OtfListMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        const formOneData = values?.[FORM_TYPE_CONSTANSTS?.FORM_1?.id];
+        const formTwoData = values?.[FORM_TYPE_CONSTANSTS?.FORM_2?.id];
+        const isModelGroupPresent = formOneData?.modelGroup && formTwoData?.modelGroup;
+        if (!isModelGroupPresent) return showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupNotPresent') });
+        else if (formOneData?.modelGroup !== formTwoData?.modelGroup && isModelGroupPresent) {
+            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupDifferent') });
+            return false;
+        }
         const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
         const form_1_Values = {
             otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
@@ -429,7 +445,11 @@ export const OtfListMasterBase = (props) => {
     };
 
     const handleDealerParent = (parentCode) => {
-        if (!parentCode) resetDealerLocationData();
+        if (!parentCode) {
+            resetDealerLocationData();
+            SoForm.resetFields(['locationCode']);
+            return false;
+        }
         SoForm.resetFields(['locationCode']);
         const DealerParams = [
             {
@@ -475,6 +495,7 @@ export const OtfListMasterBase = (props) => {
         MappingUnmapping,
         advanceFilterString,
         setadvanceFilterString,
+        loginUserData,
     };
     const SomappingUnmappingFilterProps = {
         form,

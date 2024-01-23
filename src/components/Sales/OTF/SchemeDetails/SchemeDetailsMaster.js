@@ -105,11 +105,10 @@ const SchemeDetailsMasterBase = (props) => {
         ...props,
         styles,
         formData,
-        // buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 
     const onFinish = () => {
-        handleButtonClick({ buttonAction: NEXT_ACTION });
+        handleButtonClick({ buttonAction: NEXT_ACTION, onSave: true });
     };
 
     return (
@@ -124,13 +123,12 @@ const SchemeDetailsMasterBase = (props) => {
                             {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
-                    {/* {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />} */}
-                    <ViewDetail {...viewProps} />
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} buttonData={{ ...props.buttonData, saveBtn: false }} />
+                    <FormActionButton {...myProps} />
                 </Col>
             </Row>
         </Form>

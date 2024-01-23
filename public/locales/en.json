@@ -4207,7 +4207,9 @@
             "search": "Search Booking Number"
         },
         "errorMsg": {
-            "message": "Validate booking number to continue"
+            "message": "Validate booking number to continue",
+            "modelGroupDifferent": "Model group should be same for swapping",
+            "modelGroupNotPresent": "Model group is not present"
         }
     },
     "vehiclePurchaseOrder": {
