@@ -3,20 +3,20 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Input, Form, Card, Divider, Select } from 'antd';
+
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
 import { validateRequiredSelectField } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
+
 const { Search } = Input;
 const { Option } = Select;
 
 export const AddEditForm = (props) => {
     const { setRequestPayload, requestPayload } = props;
-    const { formData, buttonData, setButtonData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
+    const { buttonData, setButtonData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
     const { isLoading } = props;
     const selectProps = {
         optionFilterProp: 'children',
