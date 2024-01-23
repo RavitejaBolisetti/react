@@ -124,12 +124,13 @@ const SchemeDetailsMasterBase = (props) => {
                             {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />}
+                    {/* {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />} */}
+                    <ViewDetail {...viewProps} />
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} />
+                    <FormActionButton {...myProps} buttonData={{ ...props.buttonData, saveBtn: false }} />
                 </Col>
             </Row>
         </Form>
