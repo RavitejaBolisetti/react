@@ -12,7 +12,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { translateContent } from 'utils/translateContent';
 import { customSelectBox } from 'utils/customSelectBox';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -101,7 +101,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.discountType')} name={[formKey, 'discountType']}>
+                    <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.discountType')} name={[formKey, 'discountType']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.discountType'))]}>
                         {customSelectBox({
                             data: typeData?.[discountTypeOption],
                             placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.discountType')),
@@ -177,7 +177,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 )}
-                
+
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={schemeForm?.totalCorporateDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount')} name={[formKey, 'totalCorporateDiscount']}>
                         <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))} {...disabledProps} />
@@ -185,7 +185,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')} name={[formKey, 'corporateDiscountType']}>
+                    <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')} name={[formKey, 'corporateDiscountType']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.discountType'))]}>
                         {customSelectBox({ data: typeData?.[discountTypeOption], disabled: true, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')) })}
                     </Form.Item>
                 </Col>

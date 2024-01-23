@@ -17,15 +17,14 @@ import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, userId, formActionType, numbValidatedSuccess, selectedCustomer, setNumbValidatedSuccess, defaultExtraParam } = props;
+    const { form, typeData, formData, formActionType: { editMode } = undefined, data, customerType, userId, formActionType, numbValidatedSuccess, selectedCustomer, setNumbValidatedSuccess, defaultExtraParam } = props;
+    const { corporateDescriptionLovData, corporateTypeLovData, fetchCorporateDescriptionLovList, listCorporateDescriptionLovShowLoading, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
-    const [corporateType, setCorporateType] = useState('');
-   
+    const [readOnly, setReadOnly] = useState(false);
     useEffect(() => {
-        setCorporateType(formData?.corporateType);
+        handleCorporateTypeChange(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.corporateType]);
-
     useEffect(() => {
         form.setFieldsValue({
             mobileNumber: data?.mobileNumber,
@@ -38,27 +37,15 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
         handleFormFieldChange();
+        fetchCorporateTypeLovList({ setIsLoading: listCorporateTypeLovShowLoading, userId });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const handleCorporateChange = (value) => {
-        setCorporateType(value);
-        if (value === 'NON-LIS') {
-            form.setFieldsValue({
-                corporateName: null,
-            });
-        } else if (value === 'LIS') {
-            form.setFieldsValue({
-                corporateCode: null,
-                corporateName: null,
-            });
-        }
-    };
-
-    const onHandleSelect = (value) => {
+    const handleCorporateChange = (__, values) => {
         form.setFieldsValue({
-            corporateCode: value,
-            corporateCategory: corporateLovData?.find((i) => i?.key === value)?.parentKey,
+            corporateCode: values?.option?.corporateCode,
+            corporateName: values?.option?.corporateName,
+            corporateCategory: values?.option?.corporateCategory,
         });
     };
 
@@ -69,6 +56,24 @@ const AddEditFormMain = (props) => {
         } else {
             return Promise.resolve('');
         }
+    };
+
+    const handleCorporateTypeChange = (value, values) => {
+        setReadOnly(value !== 'C2');
+        values &&
+            form.setFieldsValue({
+                corporateDescription: null,
+                corporateCode: null,
+                corporateName: null,
+                corporateCategory: null,
+            });
+        const extraParams = [
+            {
+                key: 'corporateType',
+                value,
+            },
+        ];
+        fetchCorporateDescriptionLovList({ setIsLoading: listCorporateDescriptionLovShowLoading, userId, extraParams });
     };
 
     const mobileOtpProps = {
@@ -151,35 +156,36 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item label={translateContent('customerMaster.label.corporateType')} initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
-                            {customSelectBox({ data: typeData['CORP_TYPE'], placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateType')), onChange: handleCorporateChange })}
+                            {customSelectBox({
+                                data: corporateTypeLovData.map((item) => {
+                                    return { key: item.categoryCode, value: `${item?.categoryCode}-${item?.categoryDescription}` };
+                                }),
+                                placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateType')),
+                                onChange: handleCorporateTypeChange,
+                            })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label={translateContent('customerMaster.label.corporateDescription')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateDescription">
+                            {customSelectBox({ data: corporateDescriptionLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.label.corporateDescription')), fieldNames: { key: 'corporateCode', value: 'corporateCodeDescription' }, onChange: handleCorporateChange })}
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {corporateType === 'NON-LIS' ? (
-                            <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} />
-                            </Form.Item>
-                        ) : (
-                            <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                {/* <Select placeholder={preparePlaceholderSelect('corporate name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
-
-                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
-                            </Form.Item>
-                        )}
+                        <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} disabled={readOnly} />
+                        </Form.Item>
                     </Col>
 
-                    {(corporateType === 'LIS' || corporateType === '') && (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={formData?.corporateCode} label={translateContent('customerMaster.label.corporateCode')} name="corporateCode" data-testid="corporate code">
-                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.parentCompanyName'))} disabled />
-                            </Form.Item>
-                        </Col>
-                    )}
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={formData?.corporateCode} label={translateContent('customerMaster.label.corporateCode')} name="corporateCode" data-testid="corporate code">
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.parentCompanyName'))} disabled />
+                        </Form.Item>
+                    </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item label={translateContent('customerMaster.label.corporateCategory')} initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateCategory'))} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateCategory'))} disabled />
                         </Form.Item>
                     </Col>
                     {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>

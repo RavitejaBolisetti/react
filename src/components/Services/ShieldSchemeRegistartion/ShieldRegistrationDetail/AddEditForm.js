@@ -121,12 +121,12 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
+                                <Form.Item initialValue={formData?.employeeCode} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeCode']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
                                     {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.employeeName')) })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.managerName} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerName']}>
+                                <Form.Item initialValue={formData?.managerCode} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerCode']}>
                                     {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')) })}
                                 </Form.Item>
                             </Col>

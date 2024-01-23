@@ -1086,11 +1086,14 @@
         "label": {
             "mobileNumber": "Mobile Number",
             "customerType": "Customer Type",
+            "corporateType": "Corporate type",
+
             "emailID": "Email ID",
             "contactNo": "Contact over WhatsApp?",
             "WhatsAppNoText": "Use mobile no as WhatsApp no?",
             "whatsappNumber": "Whatsapp Number",
-            "corporateType": "Corporate Type",
+            "corporateDescription": "Corporate Description",
+            "corporate": "Corporate Type",
             "corporateName": "Corporate Name",
             "corporateCode": "Corporate Code",
             "corporateCategory": "Corporate Category",

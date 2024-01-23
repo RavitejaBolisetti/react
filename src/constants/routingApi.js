@@ -52,6 +52,8 @@ export const BASE_URL_CUSTOMER_MASTER_CHANGE_HISTORY = BASE_URL + 'customers/cha
 export const BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/namechangehistory';
 export const BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST = BASE_URL + 'customers/vehicle/search';
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
+export const BASE_URL_CORPORATE_DESCRIPTION = BASE_URL_CUSTOMER_MASTER + '/corporate';
+export const BASE_URL_CORPORATE_TYPE = BASE_URL_CUSTOMER_MASTER + '/corporate/type';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 
