@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, corporateLovData } = props;
+    const { styles, formData, isLoading, typeData, corporateLovData, corporateTypeLovData } = props;
 
     const findListedNonListed = () => {
         if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
@@ -89,10 +89,21 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label={translateContent('customerMaster.label.whatsappNumber')}>{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label={translateContent('customerMaster.label.corporateType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('customerMaster.label.corporateName')}>{findListedNonListed()}</Descriptions.Item>
-                        {formData?.corporateCode && <Descriptions.Item label={translateContent('customerMaster.label.corporateCode')}>{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>}
-                        <Descriptions.Item label={translateContent('customerMaster.label.corporateCategory')}>{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.corporateType')}>
+                            {checkAndSetDefaultValue(
+                                getCodeValue(
+                                    corporateTypeLovData.map((item) => {
+                                        return { key: item.categoryCode, value: `${item?.categoryCode}-${item?.categoryDescription}` };
+                                    }),
+                                    formData?.corporateType
+                                ),
+                                isLoading
+                            )}
+                        </Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.corporateDescription')}>{checkAndSetDefaultValue(formData?.corporateName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.corporateName')}>{formData?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.corporateCode')}>{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.corporateCategory')}>{checkAndSetDefaultValue(formData?.corporateCategory, isLoading)}</Descriptions.Item>
                         {/* <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item> */}
                     </Descriptions>
                 </Card>

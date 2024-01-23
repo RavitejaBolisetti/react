@@ -22,6 +22,8 @@ import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
+import { corporateCompanyDescriptionDataActions } from 'store/actions/data/customerMaster/corporateDescription';
+import { corporateCompanyDescriptionTypeDataActions } from 'store/actions/data/customerMaster/corporateDescriptionType';
 
 const mapStateToProps = (state) => {
     const {
@@ -30,6 +32,9 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
+                CorporateDescription: { isFilteredListLoaded: isCorporateDescriptionLoaded = false, isLoading: isCorporateDescriptionLovLoading, filteredListData: corporateDescriptionLovData },
+                CorporateDescriptionType: { isFilteredListLoaded: isCorporateDescriptionTypeLoaded = false, isLoading: isCorporateDescriptionTypeLovLoading, filteredListData: corporateTypeLovData },
+
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -51,6 +56,13 @@ const mapStateToProps = (state) => {
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
+
+        isCorporateDescriptionLoaded,
+        isCorporateDescriptionTypeLoaded,
+        isCorporateDescriptionLovLoading,
+        isCorporateDescriptionTypeLovLoading,
+        corporateDescriptionLovData,
+        corporateTypeLovData,
     };
     return returnValue;
 };
@@ -77,6 +89,12 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
+
+            fetchCorporateDescriptionLovList: corporateCompanyDescriptionDataActions.fetchFilteredList,
+            listCorporateDescriptionLovShowLoading: corporateCompanyDescriptionDataActions.listShowLoading,
+
+            fetchCorporateTypeLovList: corporateCompanyDescriptionTypeDataActions.fetchFilteredList,
+            listCorporateTypeLovShowLoading: corporateCompanyDescriptionTypeDataActions.listShowLoading,
 
             hideGlobalNotification,
             showGlobalNotification,
@@ -238,6 +256,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        console.log('🚀 ~ onFinish ~ values:', values);
         if (!formActionType?.addMode && !numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: translateContent('customerMaster.notification.verify') });
             return;

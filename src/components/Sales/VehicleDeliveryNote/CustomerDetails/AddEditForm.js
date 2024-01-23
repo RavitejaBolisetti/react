@@ -79,8 +79,8 @@ const AddEditFormMain = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerId')} name="pinCode">
-                                                    <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.customerDetails.label.customerId'))} disabled={true} />
+                                                <Form.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.pinCode')} name="pinCode">
+                                                    <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.customerDetails.label.pinCode'))} disabled={true} />
                                                 </Form.Item>
                                             </Col>
 

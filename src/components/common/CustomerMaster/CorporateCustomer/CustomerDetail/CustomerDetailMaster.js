@@ -20,6 +20,8 @@ import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 import { debounce } from 'utils/debounce';
+import { corporateCompanyDescriptionDataActions } from 'store/actions/data/customerMaster/corporateDescription';
+import { corporateCompanyDescriptionTypeDataActions } from 'store/actions/data/customerMaster/corporateDescriptionType';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,6 +31,8 @@ const mapStateToProps = (state) => {
                 CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [] },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 CustomerParentCompany: { isLoaded: isCustomerParentCompanyDataLoaded = false, isCustomerParentCompanyLoading, data: customerParentCompanyData = [] },
+                CorporateDescription: { isFilteredListLoaded: isCorporateDescriptionLoaded = false, isLoading: isCorporateDescriptionLovLoading, filteredListData: corporateDescriptionLovData },
+                CorporateDescriptionType: { isFilteredListLoaded: isCorporateDescriptionTypeLoaded = false, isLoading: isCorporateDescriptionTypeLovLoading, filteredListData: corporateTypeLovData },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
@@ -52,6 +56,13 @@ const mapStateToProps = (state) => {
         isCustomerParentCompanyDataLoaded,
         isCustomerParentCompanyLoading,
         customerParentCompanyData,
+
+        isCorporateDescriptionLoaded,
+        isCorporateDescriptionTypeLoaded,
+        isCorporateDescriptionLovLoading,
+        isCorporateDescriptionTypeLovLoading,
+        corporateDescriptionLovData,
+        corporateTypeLovData,
     };
 
     return returnValue;
@@ -71,6 +82,12 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: customerDetailsDataActions.listShowLoading,
             saveData: customerDetailsDataActions.saveData,
             resetData: customerDetailsDataActions.reset,
+
+            fetchCorporateDescriptionLovList: corporateCompanyDescriptionDataActions.fetchFilteredList,
+            listCorporateDescriptionLovShowLoading: corporateCompanyDescriptionDataActions.listShowLoading,
+
+            fetchCorporateTypeLovList: corporateCompanyDescriptionTypeDataActions.fetchFilteredList,
+            listCorporateTypeLovShowLoading: corporateCompanyDescriptionTypeDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -195,21 +212,24 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const validateParentCode = useCallback(debounce((e) => {
-        const parentCompanyData = e?.target?.value;
-        if (parentCompanyData) {
-            const extraParams = [
-                {
-                    key: 'parentCompanyCode',
-                    title: 'parentCompanyCode',
-                    value: parentCompanyData,
-                    name: 'parentCompanyCode',
-                },
-            ];
+    const validateParentCode = useCallback(
+        debounce((e) => {
+            const parentCompanyData = e?.target?.value;
+            if (parentCompanyData) {
+                const extraParams = [
+                    {
+                        key: 'parentCompanyCode',
+                        title: 'parentCompanyCode',
+                        value: parentCompanyData,
+                        name: 'parentCompanyCode',
+                    },
+                ];
 
-            fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, extraParams, userId, onErrorAction });
-        }
-    }), []);
+                fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, extraParams, userId, onErrorAction });
+            }
+        }),
+        []
+    );
 
     const formProps = {
         ...props,
