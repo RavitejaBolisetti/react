@@ -19,7 +19,7 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, formActionType, editableOnSearch, showAlert, isExchangeVisible, setExchangeVisible } = props;
+    const { formMasterData, formData, form, formActionType, editableOnSearch, showAlert, isExchangeVisible, setExchangeVisible } = props;
     const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false } = props;
@@ -40,6 +40,21 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+
+    useEffect(() => {
+        if (isExchangeVisible) {
+            form.setFieldsValue({
+                ...formMasterData,
+            });
+
+            if (formMasterData?.make !== MAHINDRA_MAKE) {
+                setDisabled(true);
+            } else {
+                setDisabled(false);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isExchangeVisible]);
 
     const onHandleMakeChange = (value) => {
         if (value !== MAHINDRA_MAKE) {

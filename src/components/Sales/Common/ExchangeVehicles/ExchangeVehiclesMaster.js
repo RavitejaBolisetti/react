@@ -149,6 +149,7 @@ const ExchangeVehiclesBase = (props) => {
     const [modelGroup, setModelGroup] = useState(null);
     const [isMahindraMake, setIsMahindraMake] = useState(false);
     const [isExchangeVisible, setExchangeVisible] = useState(false);
+    const [formMasterData, setFormMasterData] = useState([]);
 
     const [exhangeDataParams, setExchangeDataParams] = useState();
 
@@ -163,6 +164,7 @@ const ExchangeVehiclesBase = (props) => {
     useEffect(() => {
         if (isOTFModule && exchangeData) {
             setFormData(exchangeData?.exchange ? exchangeData : null);
+            setFormMasterData(exchangeData?.exchange ? exchangeData : null);
             setIsMahindraMake(exchangeData?.make === MAHINDRA_MAKE);
             setExchangeDataParams({ make: exchangeData?.make, modelGroup: exchangeData?.modelGroup });
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -173,6 +175,7 @@ const ExchangeVehiclesBase = (props) => {
     useEffect(() => {
         if (exchangeDataPass) {
             setFormData(exchangeDataPass);
+            setFormMasterData(exchangeDataPass);
             setIsMahindraMake(exchangeDataPass?.make === MAHINDRA_MAKE);
             setExchangeDataParams({ make: exchangeDataPass?.make, modelGroup: exchangeDataPass?.modelGroup });
         }
@@ -394,7 +397,7 @@ const ExchangeVehiclesBase = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION , onSave: true });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             };
 
             const requestData = {
@@ -496,6 +499,7 @@ const ExchangeVehiclesBase = (props) => {
         isMahindraMake,
         isExchangeVisible,
         setExchangeVisible,
+        formMasterData,
     };
 
     const viewProps = {
@@ -511,6 +515,7 @@ const ExchangeVehiclesBase = (props) => {
         MAHINDRA_MAKE,
         isMahindraMake,
         setIsMahindraMake,
+        formMasterData
     };
 
     const VehiclePriorityAlertProp = {
