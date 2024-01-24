@@ -48,8 +48,9 @@ const SoFormMasterMain = (props) => {
                         onFinish={onFinish}
                         colon={false}
                         layout="horizontal"
+                        onKeyDownCapture={(e) => e.code === 'Enter' && e.preventDefault()}
                     >
-                        <Row gutter={20}>
+                        <Row onk gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Card className={`${styles.fullWidth} ${styles.whiteBG}`}>
                                     <Row gutter={20}>
