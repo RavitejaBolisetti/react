@@ -22,7 +22,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { record, formData, employeeData, managerData, handlePrintDownload, isLoading, rsaDetails, detailShieldData, screenType, typeData, handleDownloadFile } = props;
+    const { record, formData, handlePrintDownload, isLoading, rsaDetails, detailShieldData, screenType, typeData, handleDownloadFile } = props;
 
     const [activeKey, setactiveKey] = useState([]);
 
