@@ -97,7 +97,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData, customerType } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
-    const { setFilterString, form, handleFormValueChange, buttonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
+    const { fetchCorporateTypeLovList, listCorporateTypeLovShowLoading, setFilterString, form, handleFormValueChange, buttonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -107,8 +107,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (customerDetailsData) {
-            form?.setFieldsValue({ ...customerDetailsData });
+            form?.setFieldsValue({ ...customerDetailsData, corporateDescription: customerDetailsData?.corporateName });
             setFormData(customerDetailsData);
+            fetchCorporateTypeLovList({ setIsLoading: listCorporateTypeLovShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerDetailsData]);

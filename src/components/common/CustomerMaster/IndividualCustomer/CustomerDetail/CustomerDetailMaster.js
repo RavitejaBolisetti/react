@@ -108,7 +108,7 @@ const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId, mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType } = props;
+    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading } = props;
     const { sendOTP, validateOTP } = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -131,8 +131,9 @@ const CustomerDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (data) {
-            form.setFieldsValue({ ...data });
+            form.setFieldsValue({ ...data, corporateDescription: data?.corporateName });
             setFormData(data);
+            fetchCorporateTypeLovList({ setIsLoading: listCorporateTypeLovShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
@@ -256,7 +257,6 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        console.log('🚀 ~ onFinish ~ values:', values);
         if (!formActionType?.addMode && !numbValidatedSuccess && data?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: translateContent('customerMaster.notification.verify') });
             return;
