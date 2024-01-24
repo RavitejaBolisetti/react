@@ -352,7 +352,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 {showPrintDiscount && (
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
+                                        <Form.Item initialValue={formData?.printDiscount ? formData?.printDiscount === 'Y' : true} valuePropName="checked"  labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
                                             <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={(checked) => (checked ? 'Y' : 'N')} />
                                         </Form.Item>
                                     </Col>

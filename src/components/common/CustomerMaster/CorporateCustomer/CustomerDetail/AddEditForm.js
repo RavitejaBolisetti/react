@@ -15,7 +15,7 @@ import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificat
 import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
-    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
+    const { typeData, formData, form, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
     const { corporateDescriptionLovData, corporateTypeLovData, fetchCorporateDescriptionLovList, listCorporateDescriptionLovShowLoading } = props;
     const [readOnly, setReadOnly] = useState(false);
 
@@ -24,12 +24,11 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.corporateType]);
 
-   
-
     useEffect(() => {
         form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerParentCompanyData?.parentCompanyName]);
+    
     const handleCorporateChange = (__, values) => {
         form.setFieldsValue({
             corporateCode: values?.option?.corporateCode,

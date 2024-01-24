@@ -61,8 +61,8 @@ const ViewDetailMain = (props) => {
 
                         {formData?.registrationInformation?.priceType !== SALE_TYPE?.PAID?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(screenType === 'RSA' ? formData?.registrationInformation?.otfNumber : formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>}
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, screenType === 'RSA' ? formData?.registrationInformation?.employeeCode : formData?.registrationInformation?.employeeName), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, screenType === 'RSA' ? formData?.registrationInformation?.managerCode : formData?.registrationInformation?.managerName), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.employeeName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.managerName, isLoading)}</Descriptions.Item>
                     </Descriptions>
 
                     {record?.status === AMC_CONSTANTS?.CANCELLED?.key && (

@@ -92,10 +92,10 @@ const PartyDetailMasterBase = (props) => {
                 if (res?.data) {
                     if (res?.data && typeof res?.data === 'object') {
                         setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data, partyId, partySegment } });
-                        partyDetailForm.setFieldsValue({ ...res?.data });
+                        partyDetailForm.setFieldsValue({ ...res?.data, partyName: res?.data?.partyName || res?.data?.customerName });
                     } else if (res?.data?.[0] && res?.data?.[0] instanceof Object) {
                         setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data?.[0], partyId, partySegment } });
-                        partyDetailForm.setFieldsValue({ ...res?.data?.[0] });
+                        partyDetailForm.setFieldsValue({ ...res?.data?.[0], partyName: res?.data?.[0]?.partyName || res?.data?.[0]?.customerName });
                     }
                     setButtonData({ ...buttonData, formBtnActive: true });
                 }
