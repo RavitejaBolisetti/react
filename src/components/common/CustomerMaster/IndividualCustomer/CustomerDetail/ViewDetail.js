@@ -45,15 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, corporateLovData, corporateTypeLovData } = props;
-
-    const findListedNonListed = () => {
-        if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
-            return formData?.corporateName;
-        } else {
-            return checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading);
-        }
-    };
+    const { styles, formData, isLoading, typeData, corporateTypeLovData } = props;
 
     const viewProps = {
         bordered: false,

@@ -23,6 +23,7 @@ const AddEditFormMain = (props) => {
     const [selectedSalesScheme, setSelectedSalesScheme] = useState();
     const [additionalDiscount, setAdditionalDiscount] = useState(schemeData?.corporate?.corporateAdditionalApplicableDiscount);
     const [discountRules, setDiscountRules] = useState([]);
+
     useEffect(() => {
         if (schemeData?.corporate?.corporateAdditionalApplicableDiscount === YES_NO_FLAG.YES?.key) {
             setDiscountRules([validateRequiredInputField(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount'))]);
@@ -31,6 +32,7 @@ const AddEditFormMain = (props) => {
         setSelectedSalesScheme(schemeData?.sales?.find((i) => i.active));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [schemeData]);
+
     const handleAdditionalDisount = (value) => {
         if (value) {
             setDiscountRules([validateRequiredInputField(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount'))]);
@@ -39,6 +41,7 @@ const AddEditFormMain = (props) => {
             setDiscountRules([]);
         }
     };
+
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
         if (isPresent) {
@@ -58,9 +61,9 @@ const AddEditFormMain = (props) => {
     const handleSchemeChange = (id, formKey) => {
         const updatedScheme = schemeData?.sales?.find((i) => id === i.id);
         if (updatedScheme) {
-            setSelectedSalesScheme(updatedScheme);
+            setSelectedSalesScheme({ ...updatedScheme, active: true });
             form.setFieldsValue({
-                [formKey]: { ...updatedScheme, validFrom: formattedCalendarDate(updatedScheme?.validFrom), validTo: formattedCalendarDate(updatedScheme?.validTo), salesSchemeId: id || updatedScheme?.id, salesSchemeDiscountType: updatedScheme?.discountType, discountType: undefined },
+                [formKey]: { ...updatedScheme, active: true, validFrom: formattedCalendarDate(updatedScheme?.validFrom), validTo: formattedCalendarDate(updatedScheme?.validTo), salesSchemeId: id || updatedScheme?.id, salesSchemeDiscountType: updatedScheme?.discountType, discountType: undefined },
             });
         } else {
             setSelectedSalesScheme();
@@ -78,11 +81,13 @@ const AddEditFormMain = (props) => {
                         {customSelectBox({ data: showTitle ? typeData['SCHEME_TYPE'] : typeData['SALS_SCHEM_TYPE'], placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.schemeType')), disabled: disableTitle })}
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.schemeCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory')} name={[formKey, 'schemeCategory']}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory'))} {...disabledProps} />
-                    </Form.Item>
-                </Col>
+                {(formKey !== 'sales' || (formKey === 'sales' && schemeForm?.schemeType === 'CD')) && (
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.schemeCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory')} name={[formKey, 'schemeCategory']}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory'))} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                )}
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={schemeForm?.amount} label={translateContent('commonModules.label.schemeAndOfferDetails.Amount')} name={[formKey, 'amount']}>
                         <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.Amount'))} {...disabledProps} />
@@ -149,7 +154,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.corporateCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')} name={[formKey, 'corporateCategory']}>
+                    <Form.Item initialValue={schemeForm?.corporateCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')} name={[formKey, 'corporateCategory']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory'))]}>
                         {customSelectBox({ data: typeData?.['CORPT_CATGRY_DESC'], placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')) })}
                     </Form.Item>
                 </Col>
@@ -165,7 +170,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={additionalDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')} name={[formKey, 'corporateAdditionalApplicableDiscount']}>
+                    <Form.Item initialValue={additionalDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')} name={[formKey, 'corporateAdditionalApplicableDiscount']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount'))]}>
                         {customSelectBox({ data: Object.values(YES_NO_FLAG), onChange: handleAdditionalDisount, fieldNames: { key: 'key', value: 'title' }, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')) })}
                     </Form.Item>
                 </Col>
@@ -179,7 +184,7 @@ const AddEditFormMain = (props) => {
                 )}
 
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.totalCorporateDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount')} name={[formKey, 'totalCorporateDiscount']}>
+                    <Form.Item initialValue={schemeForm?.totalCorporateDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount')} name={[formKey, 'totalCorporateDiscount']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))} {...disabledProps} />
                     </Form.Item>
                 </Col>
