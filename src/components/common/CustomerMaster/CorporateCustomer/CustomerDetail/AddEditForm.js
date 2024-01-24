@@ -15,7 +15,7 @@ import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificat
 import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
-    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
+    const { typeData, formData, form, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
     const { corporateDescriptionLovData, corporateTypeLovData, fetchCorporateDescriptionLovList, listCorporateDescriptionLovShowLoading, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading } = props;
     const [readOnly, setReadOnly] = useState(false);
 
