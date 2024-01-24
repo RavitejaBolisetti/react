@@ -208,7 +208,7 @@ export const validateAadhar = (fieldName) => ({
 });
 export const validateVoterId = (fieldName) => ({
     pattern: /^([a-zA-Z]){3}\d{7}$/,
-    mesage: 'Please enter valid ' + fieldName,
+    message: 'Please enter valid ' + fieldName,
 });
 
 export const valueOfPer = (fieldName) => ({

@@ -15,8 +15,8 @@ import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificat
 import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
-    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
-    const { corporateDescriptionLovData, corporateTypeLovData, fetchCorporateDescriptionLovList, listCorporateDescriptionLovShowLoading, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading } = props;
+    const { typeData, formData, form, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
+    const { corporateDescriptionLovData, corporateTypeLovData, fetchCorporateDescriptionLovList, listCorporateDescriptionLovShowLoading } = props;
     const [readOnly, setReadOnly] = useState(false);
 
     useEffect(() => {
@@ -25,14 +25,10 @@ const AddEditFormMain = (props) => {
     }, [formData?.corporateType]);
 
     useEffect(() => {
-        fetchCorporateTypeLovList({ setIsLoading: listCorporateTypeLovShowLoading, userId });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
-    useEffect(() => {
         form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerParentCompanyData?.parentCompanyName]);
+    
     const handleCorporateChange = (__, values) => {
         form.setFieldsValue({
             corporateCode: values?.option?.corporateCode,
@@ -124,7 +120,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.corporateDescription')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateDescription">
+                        <Form.Item label={translateContent('customerMaster.label.corporateDescription')} initialValue={formData?.corporateName} name="corporateDescription" data-testid="corporateDescription">
                             {customSelectBox({ data: corporateDescriptionLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.label.corporateDescription')), fieldNames: { key: 'corporateCode', value: 'corporateCodeDescription' }, onChange: handleCorporateChange })}
                         </Form.Item>
                     </Col>
