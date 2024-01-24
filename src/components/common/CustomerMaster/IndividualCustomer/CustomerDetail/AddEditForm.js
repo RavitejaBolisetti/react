@@ -45,6 +45,7 @@ const AddEditFormMain = (props) => {
         form.setFieldsValue({
             corporateCode: values?.option?.corporateCode,
             corporateName: values?.option?.corporateName,
+            corporateDescription: values?.option?.corporateName,
             corporateCategory: values?.option?.corporateCategory,
         });
     };
@@ -166,13 +167,13 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.corporateDescription')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateDescription">
+                        <Form.Item label={translateContent('customerMaster.label.corporateDescription')} initialValue={formData?.corporateName} name="corporateDescription" data-testid="corporateDescription">
                             {customSelectBox({ data: corporateDescriptionLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.label.corporateDescription')), fieldNames: { key: 'corporateCode', value: 'corporateCodeDescription' }, onChange: handleCorporateChange })}
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateDescription" data-testid="corporateName">
+                        <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
                             <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} disabled={readOnly} />
                         </Form.Item>
                     </Col>

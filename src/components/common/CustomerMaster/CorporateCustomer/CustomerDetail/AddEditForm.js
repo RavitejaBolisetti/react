@@ -33,6 +33,7 @@ const AddEditFormMain = (props) => {
         form.setFieldsValue({
             corporateCode: values?.option?.corporateCode,
             corporateName: values?.option?.corporateName,
+            corporateDescription: values?.option?.corporateName,
             corporateCategory: values?.option?.corporateCategory,
         });
     };

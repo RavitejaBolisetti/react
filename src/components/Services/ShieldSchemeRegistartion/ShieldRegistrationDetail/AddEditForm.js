@@ -39,6 +39,10 @@ const AddEditFormMain = (props) => {
         allowClear: true,
     };
 
+    const handleEmployeeChange = ({ values, key }) => {
+        shieldDetailForm.setFieldsValue({ registrationInformation: { [key]: values?.option?.value } });
+    };
+
     const handleSchemeDescription = (key) => {
         const selectedScheme = schemeDetail?.find((i) => i.schemeDescription === key);
         if (selectedScheme) {
@@ -122,13 +126,15 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.employeeCode} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeCode']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
-                                    {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.employeeName')) })}
+                                    {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.employeeName')), onChange: (_, values) => handleEmployeeChange({ key: 'employeeName', values }) })}
                                 </Form.Item>
+                                <Form.Item initialValue={formData?.employeeName} name={['registrationInformation', 'employeeName']} />
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.managerCode} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerCode']}>
-                                    {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')) })}
+                                    {customSelectBox({ data: [{ key: 'hello', value: 'wow' }], placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')), onChange: (_, values) => handleEmployeeChange({ key: 'managerName', values }) })}
                                 </Form.Item>
+                                <Form.Item initialValue={formData?.managerName} name={['registrationInformation', 'managerName']} />
                             </Col>
                         </Row>
                     </Panel>
