@@ -57,13 +57,18 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const onExhangeChange = (value) => {
+        setExchangeVisible(value);
+        form.resetFields(Object.keys(form.getFieldsValue())?.filter((i) => i !== 'exchange'));
+    };
+
     const disabledProps = { disabled: viewOnly };
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label={translateContent('commonModules.label.exchangeDetails.exchange')} valuePropName="checked">
-                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onClick={(value) => setExchangeVisible(value)} />
+                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onClick={onExhangeChange} />
                     </Form.Item>
                 </Col>
             </Row>
