@@ -21,6 +21,7 @@ import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS, HEADER_CONSTANTS, FORM_TYPE_CONSTAN
 import { converDateDayjs } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 import SomappingUnmappingFilter from './SomappingUnmappingFilter';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -394,18 +395,35 @@ export const OtfListMasterBase = (props) => {
         }
         return f1 ?? f2;
     };
-
+    const checkIfCanProceedWithSwapping = ({ formOneData, formTwoData }) => {
+        const isModelGroupPresent = formOneData?.modelGroup && formTwoData?.modelGroup;
+        const bothOtfAreBooked = formOneData?.orderStatus === OTF_STATUS?.BOOKED?.key && formTwoData?.orderStatus === OTF_STATUS?.BOOKED?.key;
+        const isModelChangeRequestSent = formOneData?.revisedModel || formTwoData?.revisedModel;
+        if (formOneData?.otfNumber === formTwoData?.otfNumber) {
+            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.otfNumberAreSame') });
+            return false;
+        } else if (!isModelGroupPresent) {
+            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupNotPresent') });
+            return false;
+        } else {
+            if (formOneData?.modelGroup !== formTwoData?.modelGroup) {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupDifferent') });
+                return false;
+            } else if (!bothOtfAreBooked) {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.bookingNumberAreNotBooked') });
+                return false;
+            } else if (isModelChangeRequestSent) {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelChangeRequestSent') });
+                return false;
+            } else {
+                return true;
+            }
+        }
+    };
     const onFinish = (values) => {
         const formOneData = values?.[FORM_TYPE_CONSTANSTS?.FORM_1?.id];
         const formTwoData = values?.[FORM_TYPE_CONSTANSTS?.FORM_2?.id];
-        const isModelGroupPresent = formOneData?.modelGroup && formTwoData?.modelGroup;
-
-        if (!isModelGroupPresent) {
-            return showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupNotPresent') });
-        } else if (formOneData?.modelGroup !== formTwoData?.modelGroup && isModelGroupPresent) {
-            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupDifferent') });
-            return false;
-        } else {
+        if (checkIfCanProceedWithSwapping({ formOneData, formTwoData })) {
             const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
             const form_1_Values = {
                 otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
@@ -413,7 +431,7 @@ export const OtfListMasterBase = (props) => {
                 soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soStatusCode,
             };
             const form_2_Values = {
-                otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber,
+                otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber || '',
                 soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soNumber,
                 soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
             };
@@ -422,7 +440,7 @@ export const OtfListMasterBase = (props) => {
                 showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
                 return false;
             }
-            
+
             const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
             const onSuccess = (res) => {
                 SoForm.resetFields();
@@ -446,6 +464,8 @@ export const OtfListMasterBase = (props) => {
             };
 
             saveData(requestData);
+        } else {
+            return false;
         }
     };
 

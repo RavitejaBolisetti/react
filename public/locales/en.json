@@ -4212,7 +4212,10 @@
         "errorMsg": {
             "message": "Validate booking number to continue",
             "modelGroupDifferent": "Model group should be same for swapping",
-            "modelGroupNotPresent": "Model group is not present"
+            "modelGroupNotPresent": "Model group is not present",
+            "bookingNumberAreNotBooked": "Both booking should be booked",
+            "modelChangeRequestSent": "Model change request sent",
+            "otfNumberAreSame": "Booking number cannot be same"
         }
     },
     "vehiclePurchaseOrder": {

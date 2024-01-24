@@ -81,6 +81,9 @@ const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoadin
             <Form.Item label={translateContent('bookingSoMappUnmapp.label.modelDescription')} name={[formType, 'modelDescription']}>
                 <Input {...disabledProps} />
             </Form.Item>
+            <Form.Item  name={[formType, 'orderStatus']} hidden/>
+            <Form.Item  name={[formType, 'revisedModel']} hidden/>
+                       
         </>
     );
 };
