@@ -210,6 +210,7 @@ const ExchangeVehiclesBase = (props) => {
             handleFormValueChange();
             setExchangeDataParams({ make: MAHINDRA_MAKE, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
+            setIsMahindraMake(true);
         } else if (!data) {
             setEditableOnSearch(false);
             form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegistrationNumber', 'oldChessisNumber']);
