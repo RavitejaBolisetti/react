@@ -119,6 +119,7 @@ export const OtfMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
     const [refreshData, setRefreshData] = useState();
+    const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
     const [listFilterForm] = Form.useForm();
 
@@ -769,6 +770,8 @@ export const OtfMasterBase = (props) => {
         handleOtfSoMappingHistory,
         refreshData,
         setRefreshData,
+        productDetailRefresh,
+        setProductDetailRefresh,
         handleUnSavedChangeFn,
         setOpenVehilceModelChange,
     };
@@ -839,6 +842,8 @@ export const OtfMasterBase = (props) => {
         setRefreshData,
         setIsFormVisible,
         setShowDataLoading,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     return (

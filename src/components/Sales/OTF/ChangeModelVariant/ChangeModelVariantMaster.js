@@ -52,10 +52,9 @@ const ChangeModelVariantMasterBase = (props) => {
     const [formData, setFormData] = useState();
     useEffect(() => {
         if (vehicleDetailData) {
-            // setFormData(vehicleDetailData);
             setFormData({
                 ...vehicleDetailData,
-                // sapStatusResponseCode: 'PD',
+                // sapStatusResponseCode: 'CR',
                 // revisedModel: 'X700MM89615721919',
                 // revisedOemModelCode: 'AW62BCZF7T801A00RA',
                 // revisedModelDescription: 'XUV700 AX7 L PET AT 7 SEATER RED',
