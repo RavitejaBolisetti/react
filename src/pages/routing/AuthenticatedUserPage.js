@@ -45,7 +45,18 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage } from 'pages/FinancialAccounting';
+import { VehicleRelatedPage } from 'pages/common/VehicleRelated';
+
+import { TaxChargesPage, 
+    TaxChargesCategoryPage,
+    AccountCategoryPage, 
+    VehicleModelTaxChargesCategoryPage, 
+    DocumentTypeOtherChargesPage, 
+    CreditDebitNoteMasterPage, 
+    GSTIRNAuthenticationPage, 
+    ChartOfAccountPage, 
+    GstIRNTransactionPage } 
+    from 'pages/FinancialAccounting';
 import {
     OTFMasterPage,
     VehicleDetailMasterPage,
@@ -87,7 +98,6 @@ import {
     ExchangeLoyaltyReclaimRequestMasterPage,
     ExchangeClaimMasterPage,
     LoyaltyClaimMasterPage,
-
     ResaleVehicleColorMasterPage,
     MultiModalVehicleMasterForResaleVehiclePage,
     BrandSpiderMasterPage,
@@ -95,12 +105,13 @@ import {
     MultiBrandUsedVehiclePriceCapturingPage,
 } from 'pages/Sales';
 
-import {
-    StoreMasterPage,
+import { 
+    StoreMasterPage, 
+    PartMasterPage,
 } from 'pages/Spares';
 
-import { ShieldSchemeRegistrationPage } from 'pages/Services';
 
+import { ShieldSchemeRegistrationPage } from 'pages/Services';
 import { PageNotFound } from 'components/PageNotFound';
 
 import { SplashPage } from 'pages/splash';
@@ -311,7 +322,12 @@ const AuthenticatedUserPageMain = (props) => {
                 {/*  */}
                 <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
+                   {/* Spares Master */}
                 <Route path={routing.ROUTING_STORE_MASTER} element={<StoreMasterPage />} exact />
+                <Route path={routing.ROUTING_PART_MASTER} element={<PartMasterPage />} exact />
+                 {/* Vehicle Related */} 
+                 <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
+
             </Routes>
         ) : (
             <Routes>

@@ -3,10 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import { QueryButtons } from './QueryButtons';
+import { QUERY_BUTTONS } from './QueryButtonConstants';
 
-import StoreMasterPage from './StoreMaster';
-import PartMasterPage from './PartMaster';
-export {
-    StoreMasterPage,
-    PartMasterPage,
-};
+export { QueryButtons, QUERY_BUTTONS };

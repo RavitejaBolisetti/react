@@ -3,10 +3,21 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-
-import StoreMasterPage from './StoreMaster';
-import PartMasterPage from './PartMaster';
-export {
-    StoreMasterPage,
-    PartMasterPage,
+export const QUERY_BUTTONS = {
+    PENDING: {
+        id: 1,
+        title: 'Pending ',
+        key: 'PND',
+    },
+    APPROVED: {
+        id: 2,
+        title: 'Approved',
+        key: 'APV',
+    },
+    REJECTED: {
+        id: 3,
+        title: 'Rejected',
+        key: "RJT",
+    },
 };
+

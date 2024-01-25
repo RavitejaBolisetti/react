@@ -29,35 +29,35 @@ const MenuNav = (props) => {
         switch (true) {
             case formActionType?.addMode: {
                 switch (true) {
-                    case id === currentSection: {
-                        activeClassName = styles.active;
-                        menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
-                        break;
-                    }
+                    // case id === currentSection: {
+                    //     activeClassName = styles.active;
+                    //     menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
+                    //     break;
+                    // }
 
-                    default: {
-                        activeClassName = styles.active;
-                        menuNavIcon = <FaCheckCircle />;
-                        break;
-                    }
-                    //     case id === currentSection: {
-                    //         activeClassName = styles.active;
-                    //         menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
-                    //         break;
-                    //     }
-                    //     case id > currentSection: {
-                    //         activeClassName = styles.AddmodeinActive;
-                    //         menuNavIcon = <BsRecordCircleFill className={styles.tableTextColor85} />;
-                    //         break;
-                    //     }
-                    //     case id < currentSection: {
-                    //         activeClassName = styles.inActive;
-                    //         menuNavIcon = <FaCheckCircle />;
-                    //         break;
-                    //     }
-                    //     default: {
-                    //         break;
-                    //     }
+                    // default: {
+                    //     activeClassName = styles.active;
+                    //     menuNavIcon = <FaCheckCircle />;
+                    //     break;
+                    // }
+                        case id === currentSection: {
+                            activeClassName = styles.active;
+                            menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
+                            break;
+                        }
+                        case id > currentSection: {
+                            activeClassName = styles.AddmodeinActive;
+                            menuNavIcon = <BsRecordCircleFill className={styles.tableTextColor85} />;
+                            break;
+                        }
+                        case id < currentSection: {
+                            activeClassName = styles.inActive;
+                            menuNavIcon = <FaCheckCircle />;
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                 }
                 break;
             }
@@ -106,8 +106,8 @@ const MenuNav = (props) => {
         ?.map((item) => ({
             dot: mapIconAndClass(item?.id)?.menuNavIcon,
             children: (
-                // <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
-                <div className={className(item?.id)} onClick={() => onHandle(item?.id)}>
+                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
+                {/* <div className={className(item?.id)} onClick={() => onHandle(item?.id)}> */}
                     {item.title}
                 </div>
             ),

@@ -8,25 +8,23 @@ import { Form, Row, Col, Typography, Button, Card, Divider } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PlusOutlined } from '@ant-design/icons';
-
-import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+
 import { showGlobalNotification } from 'store/actions/notification';
-import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
-import { addressCorporateDataActions } from 'store/actions/data/customerMaster/corporate/address/individualAddress';
+import { ViewDetail } from './ViewDetail';
 
 import AddEditForm from './AddEditForm';
-// import { CustomerFormButton } from '../../CustomerFormButton';
-import ViewAddressList from './ViewAddressList';
+import { PartMasterFormButton } from '../PartMasterFormButton';
+import ViewList from './ViewList';
 import { CardSkeleton } from 'components/common/Skeleton';
 
 import { NoDataFound } from 'utils/noDataFound';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
-import { MitraBrokerRegistrationMasterFormButton } from '../MitraBrokerRegistrationMasterFormButton';
-
 const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
@@ -63,37 +61,26 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: addressIndividualDataActions.fetchList,
-            saveData: addressIndividualDataActions.saveData,
-            resetData: addressIndividualDataActions.reset,
-            listShowLoading: addressIndividualDataActions.listShowLoading,
+            fetchViewDocument: documentViewDataActions.fetchList,
+            viewListShowLoading: documentViewDataActions.listShowLoading,
+            resetViewData: documentViewDataActions.reset,
 
+            fetchList: supportingDocumentDataActions.fetchList,
+            saveData: supportingDocumentDataActions.saveData,
+            uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            downloadFile: supportingDocumentDataActions.downloadFile,
+            listShowLoading: supportingDocumentDataActions.listShowLoading,
+            resetData: supportingDocumentDataActions.resetData,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const zoneData = [
-    { key: '1', value: 'Zone 1' },
-    { key: '2', value: 'Zone 2' },
-    { key: '3', value: 'Zone 3' },
-];
-const areaData = [
-    { key: '1', value: 'area 1' },
-    { key: '2', value: 'area 2' },
-    { key: '3', value: 'area 3' },
-];
-const dealerData = [
-    { key: '1', value: 'dealer 1' },
-    { key: '2', value: 'dealer 2' },
-    { key: '3', value: 'dealer 3' },
-];
-const VehicleDetailsMasterBase = (props) => {
+const BinWiseStockDetailsMasterBase = (props) => {
     const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, buttonData, setButtonData, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
     const { isAddressLoading, isCorporateAddressLoading, fetchListCorporate, saveDataCorporate, customerType, resetData, resetPincodeData, resetDataCorporate, NEXT_ACTION } = props;
-    const dealerListdata = { zoneData, areaData, dealerData };
 
     const [addressForm] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
@@ -106,7 +93,7 @@ const VehicleDetailsMasterBase = (props) => {
     const noDataTitle = translateContent('global.generalNotifications.noDataExist.title');
     const addDataTitle = (
         <p className={styles.textCenter}>
-            Please add Vehicle Details <br /> <strong>“Add”</strong> button at top
+            Please add new binwise stock details using <br /> <strong>“Add”</strong> button at top
         </p>
     );
 
@@ -130,26 +117,19 @@ const VehicleDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
-    // useEffect(() => {
-    //     if (userId && selectedCustomer?.customerId) {
-    //         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-    //             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-    //         } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-    //             fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
-    //         }
-    //     }
+    useEffect(() => {
+        if (userId && selectedCustomer?.customerId) {
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
+                fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
+            }
+        }
 
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedCustomer?.customerId]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedCustomer?.customerId]);
 
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //         resetDataCorporate();
-    //         resetPincodeData();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+  
 
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
@@ -194,11 +174,11 @@ const VehicleDetailsMasterBase = (props) => {
             onSuccess,
         };
 
-        // if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-        //     saveData(requestData);
-        // } else {
-        //     saveDataCorporate(requestData);
-        // }
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+            saveData(requestData);
+        } else {
+            saveDataCorporate(requestData);
+        }
         setIsAdding(false);
         setShowAddEditForm(false);
         setIsEditing(false);
@@ -221,6 +201,13 @@ const VehicleDetailsMasterBase = (props) => {
         addressForm.resetFields();
         setIsAdding(true);
         setShowAddEditForm(true);
+    };
+    const viewProps = {
+        showGlobalNotification,
+        formActionType,
+        listShowLoading,
+        saveData,
+        userId,
     };
 
     const formProps = {
@@ -253,7 +240,6 @@ const VehicleDetailsMasterBase = (props) => {
         isAdding,
         setIsAdding,
         showGlobalNotification,
-        dealerListdata,
     };
 
     const myProps = {
@@ -273,24 +259,24 @@ const VehicleDetailsMasterBase = (props) => {
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <h2>{section?.title || translateContent(section?.translateKey)} </h2>
+                        <h2>{translateContent(section?.translateKey)} </h2>
                         <Card className="">
                             {isAddressLoading || isCorporateAddressLoading ? (
                                 formSkeleton
                             ) : (
                                 <>
-                                    <Row type="flex" align="middle">
-                                        <Text strong> {'Vehicle Details'}</Text>
+                                          <Row type="flex" align="middle">
+                                        <Text strong> {'Bin Wise Stock Details'}</Text>
                                         {!isViewModeVisible && !formActionType?.viewMode && (
                                             <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
                                                 {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
-                                    </Row>
+                                    </Row>                            
                                     <Divider className={styles.marT20} />
-                                    
-                                    {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!addressData?.length && !isAdding ? <NoDataFound information={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewAddressList {...formProps} />}
+
+                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                {!addressData?.length && !isAdding ? <NoDataFound information={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewList {...formProps} />}
                                 </>
                             )}
                         </Card>
@@ -298,7 +284,7 @@ const VehicleDetailsMasterBase = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <MitraBrokerRegistrationMasterFormButton {...props} />
+                        <PartMasterFormButton {...myProps} />
                     </Col>
                 </Row>
             </Form>
@@ -306,4 +292,4 @@ const VehicleDetailsMasterBase = (props) => {
     );
 };
 
-export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterBase);
+export const BinWiseStockDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(BinWiseStockDetailsMasterBase);

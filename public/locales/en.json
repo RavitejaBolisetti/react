@@ -4544,5 +4544,266 @@
             "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
             "cancelInvoice": "Cancel Invoice"
         }
+    },
+
+    "partMaster": {
+        "heading": {
+            "moduleTitle": "Party Master",
+            "title": "Part Number",
+            "description": "Description",
+            "partNumberSource": "Part Number Source",
+            "status": "Status",
+            "advanceFilters": "Advance Filter"
+        },
+        "label": {
+            "partNumber": "Part Number",
+            "partDescription": "Part Description",
+            "partNumberSource": "Part Number Source",
+            "partType": "Part Type",
+            "partCategory": "Part Category",
+            "alternatePartNo": "Alternate Part No.",
+            "salesOrg": "Sales Org.",
+            "productDivision": "Product Division",
+            "issueIndicator": "Issue Indicator",
+            "warrantyIndicator": "Warranty Indicator",          
+            "vendor": "Vendor",
+            "brand": "Brand",
+            "unitofMeasure": "Unit of Measure",
+            "allowDecimalQty": "Allow Decimal Qty",
+            "skuWiseKLQty": "SKU Wise KL Qty.",
+            "minPackQty": "Min. Pack Qty.",
+            "minOrderQty": "Min. Order Qty.",
+            "qtyPerVehicle": "Qty. Per Vehicle",  
+
+            "materialPricingGroup": "Material Pricing Group",  
+            "hsnCode": "HSN Code", 
+            "taxCategory": "Tax Category", 
+            "accountCategory": "Account Category", 
+            "purchasePriceGNDP": "Purchase Price/GNDP", 
+            "mrp": "MRP", 
+            "sellingPrice": "Selling Price", 
+            "latestLandedCost": "Latest Landed Cost",
+            "inventoryType": "Inventory Type",
+            "onHandStock": "On Hand Stock",
+            "stockValue": "Stock Value",
+            "allocatedStock": "Allocated Stock",
+            "backOrderQty": "Back Order Qty.",
+            "wipOrderQty": "WIP Order Qty.",
+            "inTransitQty": "In Transit Qty.",
+
+            "mFGPlant": "MFG Plant",
+            "otherMFGPlant": "Other MFG Plant",
+            "plantLocation": "Plant Location",
+            "plantBlock": "Plant Block",            
+            "activeInd": "Active Industry",
+
+            "approverName": "Approver Name",
+            "requestedon": "Requested on",
+            "action": "Action",
+            "actionedon": "Actioned on",
+            "remarks": "Remarks",
+
+          
+            "includeinAutoIndent": "Include in Auto Indent",
+            "minimumLevel": "Minimum Level",
+            "maximumLevel": "Maximum Level",
+            "reOrderLevel": "Re-Order Level",
+            "safetyStock": "Safety Stock",
+            "reservationQty": "Reservation Qty.",
+            "aBC1C2": "ABC1C2",
+            "hml": "HML",
+            "rIS": "RIS",            
+            "seasonalPart": "Seasonal Part",
+            "seasonFromMonth": "Season From Month",
+            "seasonToMonth": "Season To Month",
+            "movementClass": "Movement Class",
+            "deadstock": "Dead stock",
+            "includeforAuction": "Include for Auction?",
+            "targetSettingGroup": "Target Setting Group",
+
+            "store": "Store",
+            "binLocation": "Bin Location",
+            "stockinhand": "Stock–in-hand",
+            "allocatedstock": "Allocated Stock",
+            "active": "Active"
+            
+            
+           },
+
+        "placeholder": { 
+            "partNumber": "Part Number",
+            "partDescription": "Part Description",
+            "partNumberSource": "Part Number Source",
+            "partType": "Part Type",
+            "partCategory": "Part Category",
+            "alternatePartNo": "Alternate Part No.",
+            "salesOrg": "Sales Org.",
+            "productDivision": "Product Division",
+            "issueIndicator": "Issue Indicator",
+            "warrantyIndicator": "Warranty Indicator",          
+            "vendor": "Vendor",
+            "brand": "Brand",
+            "unitofMeasure": "Unit of Measure",
+            "allowDecimalQty": "Allow Decimal Qty",
+            "skuWiseKLQty": "SKU Wise KL Qty.",
+            "minPackQty": "Min. Pack Qty.",
+            "minOrderQty": "Min. Order Qty.",
+            "qtyPerVehicle": "Qty. Per Vehicle",
+            "materialPricingGroup": "Material Pricing Group",  
+            "hsnCode": "HSN Code", 
+            "taxCategory": "Tax Category", 
+            "accountCategory": "Account Category", 
+            "purchasePriceGNDP": "Purchase Price/GNDP", 
+            "mrp": "MRP", 
+            "sellingPrice": "Selling Price", 
+            "latestLandedCost": "Latest Landed Cost",
+            "inventoryType": "Inventory Type",
+            "onHandStock ": "On Hand Stock ",
+            "stockValue": "Stock Value",
+            "allocatedStock": "Allocated Stock",
+            "backOrderQty": "Back Order Qty.",
+            "wipOrderQty": "WIP Order Qty.",
+            "inTransitQty": "In Transit Qty.",
+            "mFGPlant": "MFG Plant",
+            "otherMFGPlant": "Other MFG Plant",
+            "plantLocation": "Plant Location",
+            "plantBlock": "Plant Block",
+            "activeInd": "Active Industry", 
+
+            "approverName": "Approver Name",
+            "requestedon": "Requested date",
+            "action": "Action",
+            "actionedon": "Actioned date",
+            "remarks": "Remarks when action selected 'Rejected'",
+
+            "includeinAutoIndent": "Include in Auto Indent",
+            "minimumLevel": "Minimum Level",
+            "maximumLevel": "Maximum Level",
+            "reOrderLevel": "Re-Order Level",
+            "safetyStock": "Safety Stock",
+            "reservationQty": "Reservation Qty.",
+            "aBC1C2": "ABC1C2",
+            "hml": "HML",
+            "rIS": "RIS",            
+            "seasonalPart": "Seasonal Part",
+            "seasonFromMonth": "Season From Month",
+            "seasonToMonth": "Season To Month",
+            "movementClass": "Movement Class",
+            "deadstock": "Dead stock",
+            "includeforAuction": "Include for Auction?",
+            "targetSettingGroup": "Target Setting Group",
+
+            "store": "Store",
+            "binLocation": "Bin Location",
+            "stockinhand": "Stock–in-hand",
+            "allocatedstock": "Allocated Stock",
+            "active": "Active"
+         },
+
+
+        "validation": {
+            "partNumber": "Part Number",
+            "partDescription": "Part Description",
+            "partNumberSource": "Part Number Source",
+            "partType": "Part Type",
+            "partCategory": "Part Category",
+            "alternatePartNo": "Alternate Part No.",
+            "salesOrg": "Sales Org.",
+            "productDivision": "Product Division",
+            "issueIndicator": "Issue Indicator",
+            "warrantyIndicator": "Warranty Indicator",          
+            "vendor": "Vendor",
+            "brand": "Brand",
+            "unitofMeasure": "Unit of Measure",
+            "allowDecimalQty": "Allow Decimal Qty",
+            "skuWiseKLQty": "SKU Wise KL Qty.",
+            "minPackQty": "Min. Pack Qty.",
+            "minOrderQty": "Min. Order Qty.",
+            "qtyPerVehicle": "Qty. Per Vehicle",
+            "materialPricingGroup": "Material Pricing Group",  
+            "hsnCode": "HSN Code", 
+            "taxCategory": "Tax Category", 
+            "accountCategory": "Account Category", 
+            "purchasePriceGNDP": "Purchase Price/GNDP", 
+            "mrp": "MRP", 
+            "sellingPrice": "Selling Price", 
+            "latestLandedCost": "Latest Landed Cost",
+
+            "inventoryType": "Inventory Type",
+            "onHandStock ": "On Hand Stock ",
+            "stockValue": "Stock Value",
+            "allocatedStock": "Allocated Stock",
+            "backOrderQty": "Back Order Qty.",
+            "wipOrderQty": "WIP Order Qty.",
+            "inTransitQty": "In Transit Qty.",
+            "mFGPlant": "MFG Plant",
+            "otherMFGPlant": "Other MFG Plant",
+            "plantLocation": "Plant Location",
+            "plantBlock": "Plant Block",
+            "activeInd": "Active Industry"            
+            
+        },
+
+        "section": {
+            "drawertitle": "Thank You"
+        },
+        "text": {},
+
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
+        }
+    },
+
+    "vehicleRelated": {
+        "heading": {
+            "moduleTitle": "Vehicle Related",
+            "registrationNo": "Registration No.",
+            "customerId": "Customer ID",
+            "customerName": "Customer Name",
+            "chassisNo": "Chassis No.",
+            "engineNo": "Engine No."
+        
+        },
+        "label": {
+            "requesttype": "Request Type",
+            "searchBy": "Search By",
+            "partNumberSource": "Part Number Source"
+       
+           
+            
+            
+           },
+
+        "placeholder": { 
+            "requesttype": "Request Type",
+            "searchBy": "Search By",
+            "partNumberSource": "Part Number Source"
+          
+            
+         },
+
+
+        "validation": {
+            "partNumber": "Part Number",
+            "searchBy": "Search By",
+            "partNumberSource": "Part Number Source"
+        
+                      
+            
+        },
+
+        "section": {
+            "drawertitle": "Thank You"
+        },
+        "text": {},
+
+        "button": {
+            "download": "Download",
+            "cancel": "Cancel"
+        }
     }
+
+
+
 }

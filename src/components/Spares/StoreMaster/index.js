@@ -4,4 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { StoreMaster } from './StoreMaster';
-export default StoreMaster ;
+//import { PartMaster } from './PartMaster';
+
+
+export default StoreMaster;
+   // PartMaster,
+

@@ -3,10 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import { VehicleRelatedPage } from './VehicleRelatedPage';
 
-import StoreMasterPage from './StoreMaster';
-import PartMasterPage from './PartMaster';
-export {
-    StoreMasterPage,
-    PartMasterPage,
-};
+export { VehicleRelatedPage };
