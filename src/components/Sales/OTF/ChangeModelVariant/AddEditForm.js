@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
-    const { formData, isOTFModule, fetchList, fetchSoData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
+    const { setOpenVehilceModelChange, formData, isOTFModule, fetchList, fetchSoData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedTreeKey, setSelectedTreeKey] = useState();
@@ -98,6 +98,8 @@ const AddEditFormMain = (props) => {
     const [modelStatus, setModelStatus] = useState();
     const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
+    const isReviedModelPending = modelStatus && [STATUS?.PENDING?.key]?.includes(modelStatus);
+    const isReviedModelFailed = modelStatus && [STATUS?.REJECTED?.key]?.includes(modelStatus);
     useEffect(() => {
         if (userId && selectedRecordId) {
             if (isOTFModule) {
@@ -114,12 +116,22 @@ const AddEditFormMain = (props) => {
     }, [userId, selectedRecordId, productDetailRefresh]);
 
     useEffect(() => {
+        if (autoOrder && !isReviedModelFailed) {
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else {
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [autoOrder]);
+
+    useEffect(() => {
         formData?.sapStatusResponseCode && setModelStatus(formData?.sapStatusResponseCode);
         if (formData?.revisedModel) {
             form.setFieldsValue({ model: formData?.revisedModelDescription, modelCode: formData?.revisedModel, oemModelCode: formData?.revisedOemModelCode });
             getProductAttributeDetail(formData?.revisedModel, setRevisedProductAttributeData);
             setSelectedTreeKey(formData?.revisedModelDescription);
             setRevisedModelCode(formData?.revisedModel);
+            isReviedModelFailed && setButtonData({ ...buttonData, formBtnActive: true });
         } else {
             form.setFieldsValue({ model: formData?.model, modelCode: formData?.modelCode, oemModelCode: formData?.oemModelCode });
             getProductAttributeDetail(formData?.modelCode, setRevisedProductAttributeData);
@@ -130,12 +142,19 @@ const AddEditFormMain = (props) => {
     }, [formData?.model, formData?.revisedModel]);
 
     useEffect(() => {
-        if (revisedProductAttributeData) {
-            setRevisedModelInformation(refactorProductAttributeData(revisedProductAttributeData));
-            setAutoOrder(revisedProductAttributeData?.autoOrder);
+        if (formData?.revisedModel && soDataList?.paginationData?.length > 0) {
+            setSelectedRecord(soDataList?.paginationData?.find((i) => i.soNumber === formData?.revisedSoNumber));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [revisedProductAttributeData]);
+    }, [soDataList, formData]);
+
+    useEffect(() => {
+        if (revisedProductAttributeData) {
+            setRevisedModelInformation(refactorProductAttributeData(revisedProductAttributeData));
+            setAutoOrder(revisedProductAttributeData?.autoOrder || (!revisedProductAttributeData?.autoOrder && !formData?.soNumber));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData, revisedProductAttributeData]);
 
     const extraParams = useMemo(() => {
         return (
@@ -248,7 +267,7 @@ const AddEditFormMain = (props) => {
             onSuccessAction && onSuccessAction();
 
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
-                // setOpenVehilceModelChange(false);
+                setOpenVehilceModelChange(false);
                 setRefreshData(!refreshData);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
             } else {
@@ -391,8 +410,6 @@ const AddEditFormMain = (props) => {
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
-    const isReviedModelPending = modelStatus && [STATUS?.PENDING?.key]?.includes(modelStatus);
-
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: productHierarchyData,
@@ -401,7 +418,7 @@ const AddEditFormMain = (props) => {
         onSelects: handleTreeSelect,
         treeExpandedKeys: [selectedTreeKey],
         placeholder: preparePlaceholderSelect(translateContent('bookingManagement.modelVariant.placeholder.model')),
-        treeDisabled: isReviedModelPending,
+        treeDisabled: modelStatus && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(modelStatus),
     };
 
     return (
@@ -426,7 +443,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                             </Row>
                         </Card>
-                        {(autoOrder || revisedModelInformation?.autoOrder) && (
+                        {!showDataLoading && autoOrder && (
                             <>
                                 <Divider className={styles.marT20} />
                                 <Row gutter={20}>
