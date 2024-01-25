@@ -132,7 +132,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.managerCode} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerCode']}>
-                                    {customSelectBox({ data: [{ key: 'hello', value: 'wow' }], placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')), onChange: (_, values) => handleEmployeeChange({ key: 'managerName', values }) })}
+                                    {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')), onChange: (_, values) => handleEmployeeChange({ key: 'managerName', values }) })}
                                 </Form.Item>
                                 <Form.Item initialValue={formData?.managerName} name={['registrationInformation', 'managerName']} />
                             </Col>

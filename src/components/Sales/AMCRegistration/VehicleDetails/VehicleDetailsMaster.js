@@ -166,7 +166,7 @@ const VehicleDetailsMasterBase = (props) => {
                     setRequestPayload({ ...requestPayload, amcVehicleDetails: newArr || { vin: requestPayload?.amcRegistration?.vin } });
                     setContactData(newArr);
                     setShowAddEditForm(false);
-                    setIsEditing(false);
+                    setIsEditing(false);    
                     setEditingData({});
                     setIsAdding(false);
                     handleFormValueChange();
@@ -209,7 +209,7 @@ const VehicleDetailsMasterBase = (props) => {
             fnSetData(data?.data?.vehicleDetails);
 
             if (requestPayload?.amcRegistration?.priceType === AMC_CONSTANTS?.MNM_FOC?.key) {
-                setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ vin: requestPayload?.amcRegistration?.vin }] });
+                setRequestPayload({ ...requestPayload, amcVehicleDetails: [{ ...data?.data?.vehicleDetails, vin: requestPayload?.amcRegistration?.vin, modelDescription: data?.data?.vehicleDetails?.modelCode, vehicleRegistrationNumber: data?.data?.vehicleDetails?.registrationNumber }] });
             }
         };
         const vehicleExtraParams = [

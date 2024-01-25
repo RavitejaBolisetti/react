@@ -203,10 +203,12 @@ const ExchangeVehiclesBase = (props) => {
         if (data?.make) {
             setFormData({ ...data, exchange: isExchangeVisible, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
+            setExchangeDataParams({ make: data?.make, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
         } else if (data && !data?.make) {
-            setFormData({ ...data, exchange: isExchangeVisible, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, make: MAHINDRA_MAKE, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
+            setExchangeDataParams({ make: MAHINDRA_MAKE, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
         } else if (!data) {
             setEditableOnSearch(false);
@@ -515,7 +517,7 @@ const ExchangeVehiclesBase = (props) => {
         MAHINDRA_MAKE,
         isMahindraMake,
         setIsMahindraMake,
-        formMasterData
+        formMasterData,
     };
 
     const VehiclePriorityAlertProp = {
