@@ -4768,9 +4768,21 @@
         "label": {
             "requesttype": "Request Type",
             "searchBy": "Search By",
-            "partNumberSource": "Part Number Source"
-       
-           
+            "registrationNo": "Registration No.",
+            "chassisNo": "Chassis No.",
+            "engineNo": "Engine No.",
+            "customerId": "Customer ID",
+            "customerName": "Customer Name",
+            "currentInsuranceExpiryDate": "Current Insurance Expiry Date",
+            "currentPUCExpiryDate": "Current PUC Expiry Date",
+            "newcustomerId": "New Customer ID",
+            "newregistrationNo": "New Registration No.",
+            "newInsuranceExpiryDate": "New Insurance Expiry Date",
+            "newPUCExpiryDate": "New PUC Expiry Date",
+            "browseUpload": "Browse & Upload"
+            
+            
+            
             
             
            },
@@ -4778,7 +4790,18 @@
         "placeholder": { 
             "requesttype": "Request Type",
             "searchBy": "Search By",
-            "partNumberSource": "Part Number Source"
+            "registrationNo": "Registration No.",
+            "chassisNo": "Chassis No.",
+            "engineNo": "Engine No.",
+            "customerId": "Customer ID",
+            "customerName": "Customer Name",
+            "currentInsuranceExpiryDate": "Current Insurance Expiry Date",
+            "currentPUCExpiryDate": "Current PUC Expiry Date",
+            "newcustomerId": "New Customer ID",
+            "newregistrationNo": "New Registration No.",
+            "newInsuranceExpiryDate": "New Insurance Expiry Date",
+            "newPUCExpiryDate": "New PUC Expiry Date",
+            "browseUpload": "Browse & Upload"
           
             
          },
@@ -4787,7 +4810,18 @@
         "validation": {
             "partNumber": "Part Number",
             "searchBy": "Search By",
-            "partNumberSource": "Part Number Source"
+            "registrationNo": "Registration No.",
+            "chassisNo": "Chassis No.",
+            "engineNo": "Engine No.",
+            "customerId": "Customer ID",
+            "customerName": "Customer Name",
+            "currentInsuranceExpiryDate": "Current Insurance Expiry Date",
+            "currentPUCExpiryDate": "Current PUC Expiry Date",
+            "newcustomerId": "New Customer ID",
+            "newregistrationNo": "New Registration No.",
+            "newInsuranceExpiryDate": "New Insurance Expiry Date",
+            "newPUCExpiryDate": "New PUC Expiry Date",
+            "browseUpload": "Browse & Upload"
         
                       
             

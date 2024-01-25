@@ -249,7 +249,6 @@ const RequestDetailsMasterBase = (props) => {
             </Col>
         </Row>
     );
-console.log('section',section);
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
