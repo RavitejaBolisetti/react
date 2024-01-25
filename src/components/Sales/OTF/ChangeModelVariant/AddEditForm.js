@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { onCloseAction: onCancelCloseAction, showGlobalNotification, userId, listShowLoading, setRefreshData, refreshData } = props;
-    const { setOpenVehilceModelChange, formData, isOTFModule, fetchList, fetchSoData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
+    const {  formData, isOTFModule, fetchList, fetchSoData, form, productHierarchyData, selectedRecordId, saveData, fetchProductAttribiteDetail } = props;
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedTreeKey, setSelectedTreeKey] = useState();
@@ -267,7 +267,7 @@ const AddEditFormMain = (props) => {
             onSuccessAction && onSuccessAction();
 
             if (res?.data?.status === STATUS?.SUCCESS?.key) {
-                setOpenVehilceModelChange(false);
+                // setOpenVehilceModelChange(false);
                 setRefreshData(!refreshData);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res.responseMessage });
             } else {
