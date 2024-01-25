@@ -41,7 +41,7 @@ export const AMC_CONSTANTS = {
     },
     APPROVED: {
         id: 8,
-        key: 'APPR',
+        key: 'DONE',
         title: 'Approved',
     },
     REJECTED: {

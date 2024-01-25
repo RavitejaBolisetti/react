@@ -6,7 +6,28 @@
 
 import StoreMasterPage from './StoreMaster';
 import PartMasterPage from './PartMaster';
+import KitMasterPage from './KitMaster';
+import PartCategoryMasterPage from './PartCategory';
+import SpareProductDivisionMasterPage from './SpareProductDivision';
+import VendorBrandMasterPage from './VendorBrandMaster';
+import MaterialPricingGroupPage from './MaterialPricingGroup';
+import MovementClassMasterPage from './MovementClass';
+import IssueIndicatorMasterPage from './IssueIndicator';
+import CampaignDiscountPage from './CampaignDiscount';
+import UnitOfMeasureMasterPage  from './UnitOfMeasure';
+import InventoryClassificationPage from './InventoryClassification';
+
 export {
-    StoreMasterPage,
+    UnitOfMeasureMasterPage,
+    KitMasterPage,
+    PartCategoryMasterPage,
+    SpareProductDivisionMasterPage,
+    VendorBrandMasterPage,
+    MaterialPricingGroupPage,
+    MovementClassMasterPage,
+    IssueIndicatorMasterPage,
+    CampaignDiscountPage,
+    InventoryClassificationPage,
     PartMasterPage,
+    StoreMasterPage,
 };

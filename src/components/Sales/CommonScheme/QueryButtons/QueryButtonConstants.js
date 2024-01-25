@@ -13,7 +13,7 @@ export const QUERY_BUTTONS = {
     APPROVED: {
         id: 'approved',
         title: 'Approved',
-        key: 'APPR',
+        key: 'DONE',
         active: true,
     },
     REJECTED: {
@@ -28,7 +28,6 @@ export const QUERY_BUTTONS = {
         key: 'CNCL',
         active: false,
     },
-  
 };
 
 export const QUERY_BUTTONS_MNM_USER = {

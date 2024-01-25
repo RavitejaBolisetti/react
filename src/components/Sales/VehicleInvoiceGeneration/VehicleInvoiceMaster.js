@@ -620,8 +620,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const generateInvoice = () => {
-        const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails } = requestPayload;
-        const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails, vehicleUsageType: vehicleDetails?.vehicleUsageType };
+        const { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails, schemeOfferDetails } = requestPayload;
+        const data = { vehicleDetails, financeDetails, insuranceDetails, invoiceDetails, schemeOfferDetails, vehicleUsageType: vehicleDetails?.vehicleUsageType };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -653,6 +653,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             onError,
             onSuccess,
         };
+        // console.log("🚀 ~ generateInvoice ~ requestData:", requestData)
         saveData(requestData);
     };
 
@@ -752,7 +753,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleCancelReceipt = () => {
         const recordId = selectedRecordId;
         const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
-        const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason: cancelReason };
+        const cancelType = cancelInvoiceForm.getFieldValue().cancelType;
+        const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason, cancelType };
         const onSuccess = (res) => {
             setCancelInvoiceVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });

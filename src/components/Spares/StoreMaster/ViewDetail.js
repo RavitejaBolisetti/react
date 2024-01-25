@@ -20,7 +20,7 @@ const ViewDetailMain = ({ formData, styles, parameterType }) => {
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label={'Code' || translateContent('city.label.code')}>{formData?.stateName}</Descriptions.Item>
                     <Descriptions.Item label={'Description' || translateContent('city.label.description')}>{formData?.districtName}</Descriptions.Item>
-                    
+                    <Descriptions.Item label={'Status' || translateContent('city.label.description')}>{formData?.status}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>

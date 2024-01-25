@@ -301,7 +301,7 @@
     > svg {
         margin-left: 5px;
         color: $semanticInfo;
-        width:25px;
+        width: 25px;
     }
 }
 
@@ -415,6 +415,10 @@
 
 .drawerBody .timelineCard :global .ant-card-body {
     padding: 10px !important;
+}
+
+.height180 {
+    height: calc(100vh - 180px) !important;
 }
 
 .drawerBody {
@@ -1329,8 +1333,6 @@
     }
 }
 
-
-
 /*--------------sub title Section Strat--------------*/
 .subTitle {
     margin-bottom: 20px;
@@ -1442,7 +1444,7 @@
         padding: 4px 8px;
         border: solid 1px $primaryRed;
         color: $primaryRed;
-         // border: solid 1px $neutralGrey2;
+        // border: solid 1px $neutralGrey2;
         // color: $neutralGrey4;
         line-height: 18px;
         margin-right: 12px;
@@ -3326,9 +3328,8 @@
                         background: $neutralGrey0;
                     }
                 }
-                
             }
-        }        
+        }
     }
 }
 

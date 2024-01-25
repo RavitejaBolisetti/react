@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Form, Select, Input } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 
 import { SearchConstants } from './SearchBoxConstants';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
@@ -47,7 +47,7 @@ const SearchBox = (props) => {
                 break;
             }
             case SearchConstants?.CUSTOMERNAME?.id: {
-                setValidationRules([validateLettersWithWhitespaces('customer name')]);
+                setValidationRules([validateRequiredInputField('customer name')]);
                 break;
             }
             case SearchConstants?.NEWMODELGROUP?.id: {

@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
-    const moduleTitle = 'Mitra/Broker';
+    const moduleTitle = 'Incentive Scheme';
 
     let returnValue = {
         userId,

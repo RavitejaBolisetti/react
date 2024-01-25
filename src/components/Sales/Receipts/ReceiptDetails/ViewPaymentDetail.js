@@ -45,7 +45,7 @@ const ViewPaymentDetailBase = (props) => {
 
                         {formData?.paymentMode === PAYMENT_MODE?.CREDIT_CARD?.KEY && (
                             <>
-                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.creditCardTransactionNumber')}>{checkAndSetDefaultValue(formData?.creditCardTransNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('receipts.label.receiptDetails.creditCardTransactionsNumber')}>{checkAndSetDefaultValue(formData?.creditCardTransNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('receipts.label.receiptDetails.serviceChargePercentage')}>{checkAndSetDefaultValue(formData?.ccServiceChargePercentage, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('receipts.label.receiptDetails.serviceChargeAmount')}>{checkAndSetDefaultValue(formData?.ccServiceChargeAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('receipts.label.receiptDetails.taxOnServiceCharge')}>{checkAndSetDefaultValue(formData?.taxChargeAmount, isLoading)}</Descriptions.Item>

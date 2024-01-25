@@ -105,10 +105,8 @@ import {
     MultiBrandUsedVehiclePriceCapturingPage,
 } from 'pages/Sales';
 
-import { 
-    StoreMasterPage, 
-    PartMasterPage,
-} from 'pages/Spares';
+import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage, 
+    PartMasterPage, } from 'pages/Spares';
 
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -133,7 +131,6 @@ import OverRiderClaimPage from 'pages/Sales/OverRiderClaim';
 // import ExchangeLoyalityClaimMasterPage from 'pages/Sales/ExchangeLoyalityClaim';
 import { IncentiveSchemeMasterPage } from 'pages/Sales/IncentiveSchemeMaster/IncentiveSchemeMasterPage';
 import IncentiveSchemePage from 'pages/Sales/IncentiveScheme';
-
 
 const mapStateToProps = (state) => {
     const {
@@ -310,7 +307,6 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME_MASTER} element={<IncentiveSchemeMasterPage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME} element={<IncentiveSchemePage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_CLAIM} element={<IncentiveClaimPage />} exact />
-                
 
                 {/* Used Vehicle */}
                 <Route path={routing.ROUTING_RESALE_VEHICLE_COLOR_MASTER} element={<ResaleVehicleColorMasterPage />} exact />
@@ -319,15 +315,26 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_BRAND_SPIDER_MASTER} element={<BrandSpiderMasterPage />} exact />
                 <Route path={routing.ROUTING_MULTI_BRAND_USED_VEHICLE_CAMPAIGN_CREATION} element={<MultiBrandUsedVehicleCampaignCreationPage />} exact />
                 <Route path={routing.ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING} element={<MultiBrandUsedVehiclePriceCapturingPage />} exact />
+{/* spare/ */}
+                <Route path={routing.ROUTING_STORE_MASTER} element={<StoreMasterPage />} exact />
+                <Route path={routing.ROUTING_KIT_MASTER} element={<KitMasterPage />} exact />
+                <Route path={routing.ROUTING_PART_CATEGORY_MASTER} element={<PartCategoryMasterPage />} exact />
+                <Route path={routing.ROUTING_SPARE_PRODUCT_DIVISION_MASTER} element={<SpareProductDivisionMasterPage />} exact />
+                <Route path={routing.ROUTING_VENDOR_BRAND_MASTER} element={<VendorBrandMasterPage />} exact />
+                <Route path={routing.ROUTING_MATERIAL_PRICING_GROUP} element={<MaterialPricingGroupPage />} exact />
+                <Route path={routing.ROUTING_MOVEMENT_CLASS} element={<MovementClassMasterPage />} exact />
+                <Route path={routing.ROUTING_ISSUE_INDICATOR} element={<IssueIndicatorMasterPage />} exact />
+                <Route path={routing.ROUTING_CAMPAIGN_DISCOUNT} element={<CampaignDiscountPage />} exact />
+                <Route path={routing.ROUTING_INVENTORY_CLASSIFICATION} element={<InventoryClassificationPage />} exact />   
                 {/*  */}
                 <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
                    {/* Spares Master */}
-                <Route path={routing.ROUTING_STORE_MASTER} element={<StoreMasterPage />} exact />
                 <Route path={routing.ROUTING_PART_MASTER} element={<PartMasterPage />} exact />
                  {/* Vehicle Related */} 
                  <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
 
+                <Route path={routing.ROUTING_UNIT_OF_MEASURE_MASTER} element={<UnitOfMeasureMasterPage />} exact />
             </Routes>
         ) : (
             <Routes>

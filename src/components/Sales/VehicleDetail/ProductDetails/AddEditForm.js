@@ -22,6 +22,7 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 import { ListDataTable } from 'utils/ListDataTable';
 import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -39,6 +40,8 @@ const AddEditFormMain = (props) => {
 
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
+    const [innerAccordian, setInnerAccordian] = useState([]);
+
     const AggregateModuleTitle = `Aggregates`;
 
     useEffect(() => {
@@ -150,6 +153,10 @@ const AddEditFormMain = (props) => {
         filterString: page,
     };
 
+    const handleInnerCollapse = (key) => {
+        setInnerAccordian((prev) => (prev === key ? '' : key));
+    };
+
     return (
         <>
             <Row gutter={20}>
@@ -201,50 +208,50 @@ const AddEditFormMain = (props) => {
                             </Row> */}
                         </Panel>
                     </Collapse>
-                    {/* <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                        <Panel header="Connected Vehicle" key="Vehicle">
+                    <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                        <Panel header={translateContent('vehicleDetail.connectedVehicle.connectedVehicle')} key="Vehicle">
                             <Form layout="vertical" autoComplete="off" form={connectedForm}>
                                 <Divider />
                                 {formData?.connectedVehicle?.map((element, index) => {
                                     return (
-                                        <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={InnerCollapse} {...collapseProps}>
+                                        <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={innerAccordian} {...collapseProps}>
                                             <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
                                                 <Divider />
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="TCU ID" name={[index, 'tcuId']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('tcu id')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.tcuId')} name={[index, 'tcuId']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.tcuId'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="E-Sim No" name={[index, 'esimNo']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('Sim no.')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.esimNo')} name={[index, 'esimNo']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.esimNo'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="E-Sim Status" name={[index, 'esimStatus']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('Sim status')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.esimStatus')} name={[index, 'esimStatus']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.esimStatus'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Preffered Mobile No 1" name={[index, 'preferredMobileNo1']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.preferredMobileNo1')} name={[index, 'preferredMobileNo1']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.preferredMobileNo1'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Preffered Mobile No 2" name={[index, 'preferredMobileNo2']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.preferredMobileNo2')} name={[index, 'preferredMobileNo2']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.preferredMobileNo2'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="KYC Status" name={[index, 'kycStatus']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('kyc status')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.kycStatus')} name={[index, 'kycStatus']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.kycStatus'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -252,10 +259,10 @@ const AddEditFormMain = (props) => {
                                         </Collapse>
                                     );
                                 })}
-                                {!formData?.connectedVehicle?.length && <NoDataFound information={noDataTitle} />}
+                                {!formData?.connectedVehicle?.length && <NoDataFound information={translateContent('vehicleDetail.connectedVehicle.noConnectedVehicleFound')} />}
                             </Form>
-                        </Panel>                     
-                    </Collapse> */}
+                        </Panel>
+                    </Collapse>
                     <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel
                             header={

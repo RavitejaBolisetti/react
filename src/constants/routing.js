@@ -173,7 +173,7 @@ export const ROUTING_EXCHANGE_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('e
 export const ROUTING_EXCHANGE_CLAIM_GENERATION = ROUTING_SALES.concat('exchange-claim-generation');
 export const ROUTING_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('loyalty-claim-generation');
 
-// /Incentive scheme and claim
+// Incentive scheme and claim
 export const ROUTING_MITRA_BROKER_REGISTRATION = ROUTING_SALES.concat('mitra-broker-registration');
 export const ROUTING_INCENTIVE_SCHEME_MASTER = ROUTING_SALES.concat('incentive-scheme-master');
 export const ROUTING_INCENTIVE_SCHEME = ROUTING_SALES.concat('incentive-schemes');
@@ -193,3 +193,14 @@ export const ROUTING_PART_MASTER = ROUTING_SPARES.concat('part-master');
 
 // vehicle related
 export const ROUTING_COMMON_VEHICLE_RELATED = ROUTING_COMMON.concat('vehicle-related');
+export const ROUTING_UNIT_OF_MEASURE_MASTER = ROUTING_SPARES.concat('unit-of-measure-master');
+
+export const ROUTING_KIT_MASTER = ROUTING_SPARES.concat('kit-master');
+export const ROUTING_PART_CATEGORY_MASTER = ROUTING_SPARES.concat('part-category-master');
+export const ROUTING_SPARE_PRODUCT_DIVISION_MASTER = ROUTING_SPARES.concat('spare-product-division');
+export const ROUTING_VENDOR_BRAND_MASTER = ROUTING_SPARES.concat('vendor-brand-master');//vendor + brand
+export const ROUTING_MATERIAL_PRICING_GROUP = ROUTING_SPARES.concat('metarial-pricing-group');
+export const ROUTING_MOVEMENT_CLASS = ROUTING_SPARES.concat('movement-class');
+export const ROUTING_ISSUE_INDICATOR = ROUTING_SPARES.concat('issue-indicator');
+export const ROUTING_CAMPAIGN_DISCOUNT = ROUTING_SPARES.concat('campaign-discount');
+export const ROUTING_INVENTORY_CLASSIFICATION = ROUTING_SPARES.concat('inventory-classification');

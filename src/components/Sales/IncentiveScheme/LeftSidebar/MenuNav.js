@@ -10,7 +10,6 @@ import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'assets/sass/app.module.scss';
 import { INCENTIVE_SCHEME_SECTION } from 'constants/modules/IncentiveScheme/IncentiveSchemeSections';
 
-
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, formActionType, previousSection } = props;
     const vehicleSectionList = Object.values(INCENTIVE_SCHEME_SECTION);

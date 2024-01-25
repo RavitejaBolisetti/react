@@ -52,14 +52,6 @@ const PaymentAddEdit = (props) => {
                                     </Button>
                                 )}
                             </Col>
-                            <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                {/* <div className={`${styles.floatRight} ${styles.marT5}`}>
-                                    <Text type="secondary">{translateContent('receipts.label.totalAmount')}</Text>
-                                    <HiOutlineCurrencyRupee style={{ color: '#ff3e5b', fontSize: '20px', marginBottom: '-4px' }} />
-                                    <h style={{ color: '#8e8585' }}> : </h>
-                                    <Text type="secondary">{totalReceivedAmount}</Text>
-                                </div> */}
-                            </Col>
                         </Row>
                     }
                     key="2"

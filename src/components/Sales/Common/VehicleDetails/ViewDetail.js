@@ -18,9 +18,9 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
 import { prepareCaption } from 'utils/prepareCaption';
 import { translateContent } from 'utils/translateContent';
-import { ChangeModelVariantMaster } from './ChangeModelVariant';
 import { STATUS } from 'constants/modelVariant';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { RevisedModelDetailMaster } from 'components/Sales/OTF/ChangeModelVariant/RevisedModelDetail/RevisedModelDetailMaster';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -40,6 +40,8 @@ const ViewDetailMain = (props) => {
     };
 
     const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
+    const TCSAmountCalculation = getCodeValue(formData?.['taxDetails'], 'TCS', 'taxAmount', true, 'taxType');
+    const TCSAmount = TCSAmountCalculation === 'TCS' ? '-' : TCSAmountCalculation;
     return (
         <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
@@ -70,17 +72,19 @@ const ViewDetailMain = (props) => {
                                 </Col>
                                 <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                     <Descriptions {...singleViewProps}>
-                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.oemModelCode')}>{checkAndSetDefaultValue(formData?.oemModelCode, isLoading)}</Descriptions.Item>
                                     </Descriptions>
                                 </Col>
                             </Row>
-                            <Divider />
-                            {isReviedModelPending && (
+
+                            {isReviedModelPending ? (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <ChangeModelVariantMaster {...props} />
+                                        <RevisedModelDetailMaster {...props} />
                                     </Col>
                                 </Row>
+                            ) : (
+                                <Divider />
                             )}
                             <Descriptions {...viewProps}>
                                 {isOTFModule && (
@@ -104,13 +108,14 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleSellingPrice')}>{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleAmount')}>{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')}>{checkAndSetDefaultValue(formData?.tcsAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')}>{checkAndSetDefaultValue(TCSAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.dealerDiscountWithTax')}>{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax')}>{checkAndSetDefaultValue(formData?.consumerSchemeWithTax, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.mnmCashBenefitAmountWithTax')}>{checkAndSetDefaultValue(formData?.mnmCashBenefitAmountWithTax, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.corporateSchemeWithTax')}>{checkAndSetDefaultValue(formData?.corporateSchemeWithTax, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')}>{checkAndSetDefaultValue(formData?.mnmNonCashBenefitsWithTAX, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount')}>{checkAndSetDefaultValue(formData?.fameSubsidyAmount, isLoading)}</Descriptions.Item>
                                 {showPrintDiscount && <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>{formData?.printDiscount === 'Y' ? translateContent('global.yesNo.yes') : translateContent('global.yesNo.no')}</Descriptions.Item>}
                             </Descriptions>
@@ -120,14 +125,14 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
                         <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.taxDetails')} key="2">
                             <Divider />
-                            <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
+                            <DataTable tableColumn={taxDetailsColumn()} tableData={formData?.['taxDetails']} pagination={false} />
                         </Panel>
                     </Collapse>
 
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
                         <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.optionalService')} key="3">
                             <Divider />
-                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={formData['optionalServices']} pagination={false} />
+                            <DataTable tableColumn={optionalServicesColumns({ formActionType })} tableData={formData?.['optionalServices']} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Col>

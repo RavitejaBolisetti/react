@@ -6,7 +6,7 @@
 import React from 'react';
 import { Input, DatePicker, Row, Col, Form, Divider } from 'antd';
 
-import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
@@ -25,7 +25,7 @@ const CashFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.transactionDate} label={translateContent('receipts.label.receiptDetails.transactionDate')} name="transactionDate">
+                    <Form.Item initialValue={formData?.transactionDate} rules={[validateRequiredSelectField(translateContent('receipts.label.receiptDetails.transactionDate'))]} label={translateContent('receipts.label.receiptDetails.transactionDate')} name="transactionDate">
                         <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.transactionDate'))} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>

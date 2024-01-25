@@ -41,7 +41,7 @@ export const RSA_CONSTANTS = {
     },
     APPROVED: {
         id: 8,
-        key: 'APPR',
+        key: 'Completed',
         title: 'Approved',
     },
     REJECTED: {
