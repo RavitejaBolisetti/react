@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterMain = (props) => {
     const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, fetchProductAttribiteDetail, isLoading, saveData } = props;
     const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
+    const { refreshData, setRefreshData, productDetailRefresh, setProductDetailRefresh, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
     const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true, requestPayload = undefined } = props;
@@ -110,7 +110,6 @@ const VehicleDetailsMasterMain = (props) => {
     const [onModelSubmit, setOnModelSubmit] = useState(false);
     const [productAttributeData, setProductAttributeData] = useState(false);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
-    const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
     const onSuccessAction = () => {
         return false;
@@ -152,7 +151,7 @@ const VehicleDetailsMasterMain = (props) => {
             setFormData({
                 ...vehicleDetailData,
                 tcsAmount: vehicleDetailData?.taxDetails?.find((i) => i?.taxType === 'TCS')?.taxAmount || 0,
-                // sapStatusResponseCode: 'PD',
+                // sapStatusResponseCode: 'CR',
                 // revisedModel: 'X700MM89615721919',
                 // revisedOemModelCode: 'AW62BCZF7T801A00RA',
                 // revisedModelDescription: 'XUV700 AX7 L PET AT 7 SEATER RED',
