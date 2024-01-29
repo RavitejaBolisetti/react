@@ -202,13 +202,13 @@ const ExchangeVehiclesBase = (props) => {
 
     const fnSetData = (data) => {
         if (data?.make) {
-            setFormData({ ...data, exchange: isExchangeVisible, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.vinNumber });
             handleFormValueChange();
             setExchangeDataParams({ make: data?.make, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
             setMakeModelVarientDisabled(true);
         } else if (data && !data?.make) {
-            setFormData({ ...data, exchange: isExchangeVisible, make: MAHINDRA_MAKE, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, make: MAHINDRA_MAKE, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.vinNumber });
             handleFormValueChange();
             setExchangeDataParams({ make: MAHINDRA_MAKE, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
