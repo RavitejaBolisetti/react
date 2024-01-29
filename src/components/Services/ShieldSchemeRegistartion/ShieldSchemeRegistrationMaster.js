@@ -176,6 +176,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [cancelSchemeVisible, setCancelSchemeVisible] = useState(false);
     const [searchValue, setSearchValue] = useState();
     const [vinNumber, setVinNumber] = useState();
+    const [odometerReading, setOdometerReading] = useState(null);
     const [saleType, setSaleType] = useState();
     const [bookingNumber, setBookingNumber] = useState();
     const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
@@ -351,6 +352,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
 
+    const handleOdometerReading = (e) => {
+        setOdometerReading(e.target.value);
+    };
+
     useEffect(() => {
         if (loginUserData?.userType) {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
@@ -425,7 +430,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, selectedOrderId]);
 
     useEffect(() => {
-        if (vinNumber) {
+        if (vinNumber && odometerReading) {
             const extraParams = [
                 {
                     key: 'vin',
@@ -433,11 +438,17 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     value: vinNumber,
                     name: 'vin',
                 },
+                {
+                    key: 'odometerReading',
+                    title: 'odometerReading',
+                    value: odometerReading,
+                    name: 'odometerReading',
+                },
             ];
             fetchSchemeDescription({ setIsLoading: listSchemeLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, vinNumber]);
+    }, [userId, vinNumber, odometerReading]);
 
     useEffect(() => {
         if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily) {
@@ -1031,6 +1042,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         shieldDetailForm,
         // registrationForm,
         // schemeForm,
+        handleOdometerReading,
         vehicleCustomerForm,
         vehicleDetailForm,
         customerDetailForm,
