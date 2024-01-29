@@ -12,30 +12,35 @@ import { translateContent } from 'utils/translateContent';
 export const tableColumn = ({ handleButtonClick, page, pageSize }) => {
     const tableColumn = [
 
+        tblPrepareColumns({
+            title: translateContent('vehicleRelated.heading.requesttype'),
+            dataIndex: 'requesttype',
+            width: '20%',
+        }),
        tblPrepareColumns({
             title: translateContent('vehicleRelated.heading.registrationNo'),
             dataIndex: 'registrationNo',
-            width: '20%',
+            width: '18%',
         }),
         tblPrepareColumns({
             title: translateContent('vehicleRelated.heading.customerId'),
             dataIndex: 'customerId',
-            width: '20%',
+            width: '15%',
         }),
         tblPrepareColumns({
             title: translateContent('vehicleRelated.heading.customerName'),
             dataIndex: 'customerName',
-            width: '20%',
+            width: '15%',
         }),
         tblPrepareColumns({
             title: translateContent('vehicleRelated.heading.chassisNo'),
             dataIndex: 'chassisNo',
-            width: '20%',
+            width: '15%',
         }),
         tblPrepareColumns({
             title: translateContent('vehicleRelated.heading.engineNo'),
             dataIndex: 'engineNo',
-            width: '20%',
+            width: '18%',
         }),
         tblActionColumn({ handleButtonClick, styles, canEdit: true })       
     ];

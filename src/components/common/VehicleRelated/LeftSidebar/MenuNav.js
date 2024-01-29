@@ -11,7 +11,7 @@ import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import { VEHICLERELATED_SECTION } from 'constants/modules/VehicleRelated/VehicleRelatedSections';
 
 const MenuNav = (props) => {
-    const { customerType, currentSection, setCurrentSection, formActionType, buttonData, setIsUnsavedDataPopup, setNextCurrentSection } = props;
+    const { customerType, currentSection, setCurrentSection, formActionType, buttonData, setNextCurrentSection } = props;
     const profileOptions = Object.values(VEHICLERELATED_SECTION);
     const { previousSection } = props;
 
@@ -20,12 +20,13 @@ const MenuNav = (props) => {
     };
 
     const onHandle = (key) => {
-        if (buttonData?.formBtnActive) {
-            setIsUnsavedDataPopup(true);
-            setNextCurrentSection(key);
-        } else {
-            setCurrentSection(key);
-        }
+        setCurrentSection(key);
+        // if (buttonData?.formBtnActive) {
+        //     //setIsUnsavedDataPopup(true);
+        //     setNextCurrentSection(key);
+        // } else {
+        //     setCurrentSection(key);
+        // }
     };
 
     const items = profileOptions

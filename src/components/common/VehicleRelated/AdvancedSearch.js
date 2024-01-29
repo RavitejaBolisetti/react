@@ -32,6 +32,11 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+    const status = [
+        { key: '1', value: 'Pending' },
+        { key: '2', value: 'Approved' },
+        { key: '3', value: 'Rejected' },
+       ];
 
     const modalProps = {
         reset: true,
@@ -44,58 +49,40 @@ export const AdvancedSearchFrom = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
-                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Zone" name="zone">
-                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
-                    </Form.Item>
-                </Col>
+              
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Area Office" name="areaOffice">
-                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Area Office')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Area Office')} fieldNames={{ label: 'areaOffice', value: 'areaOffice' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Dealer Name" name="dealerName">
-                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} /> */}
-                    {/* </Form.Item>
-                </Col> */}
-                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Location Name" name="locationName">
-                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Location Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Name')} fieldNames={{ label: 'dealerName', value: 'dealerName' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} /> 
+                     </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Dealer Branch" name="dealerbranch">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Branch')} fieldNames={{ label: 'dealerbranch', value: 'dealerbranch' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
-                </Col> */}
-                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label={'Scheme Type' || translateContent('city.label.countryCode')} name="schemeType" rules={[validateRequiredSelectField('corporate category' || translateContent('city.validation.country'))]}>
-                        {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Scheme Type') })}
+                </Col>
+               
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="From Date" name="fromDate">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('fromDate')} fieldNames={{ label: 'fromDate', value: 'fromDate' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={'Scheme Name' || translateContent('city.label.state')} initialValue={filterString?.stateCode} name="stateCode">
-                        {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Scheme Name') })}
+                    <Form.Item label="To Date" name="toDate">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('toDate')} fieldNames={{ label: 'toDate', value: 'toDate' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={'Validity For' || translateContent('city.label.state')} initialValue={filterString?.stateCode} name="stateCode">
-                        {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Validity For') })}
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={'Modal Group' || translateContent('city.label.state')} initialValue={filterString?.stateCode} name="stateCode">
-                        {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Modal Group') })}
-                    </Form.Item>
-                </Col>
+              
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label={'Modal Varient' || translateContent('city.label.state')} initialValue={filterString?.stateCode} name="stateCode">
-                        {customSelectBox({ data: [], fieldNames: { key: 'key', value: 'key' }, placeholder: preparePlaceholderSelect('Modal Varient') })}
-                    </Form.Item>
-                </Col>
-
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.pad5}>
-                    <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label={'Status' || translateContent('applicationMaster.label.documentNumRequired')} valuePropName="checked">
-                        <Switch checkedChildren={translateContent('global.label.active')} unCheckedChildren={translateContent('global.label.inActive')} valuePropName="checked" />
-                    </Form.Item>
-                </Col> */}
+                        <Form.Item label={translateContent('vehicleRelated.label.status')}  rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.status'))]}>
+                            {customSelectBox({ data: status, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.status')) })}
+                        </Form.Item>
+                        </Col>
             </Row>
 
             <ModalButtons {...modalProps} />

@@ -255,25 +255,15 @@ const RequestDetailsMasterBase = (props) => {
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title || translateContent(section?.translateKey)} </h2>
-                        <Card className="">
-                            {/* {isAddressLoading || isCorporateAddressLoading ? (
-                                formSkeleton
-                            ) : ( */}
+                        <Card>
+                           
                                 <>
-                                          {/* <Row type="flex" align="middle">
-                                        <Text strong> {'Bin Wise Stock Details'}</Text>
-                                        {!isViewModeVisible && !formActionType?.viewMode && (
-                                            <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
-                                                {translateContent('global.buttons.add')}
-                                            </Button>
-                                        )}
-                                    </Row>                             */}
-                                    {/* <Divider className={styles.marT20} /> */}
+                                <Row type="flex" align="middle">
+                                        <Text strong> {'Bin Wise Stock Details'}</Text>                                        
+                                    </Row>                            
+                                    <Divider className={styles.marT20} />
                                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-
-                                {/* {!addressData?.length && !isAdding ? <NoDataFound information={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewList {...formProps} />} */}
-                                </>
-                            {/* )} */}
+                              </>                         
                         </Card>
                     </Col>
                 </Row>

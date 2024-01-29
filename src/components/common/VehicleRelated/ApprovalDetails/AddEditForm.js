@@ -21,38 +21,75 @@ const AddEditFormMain = (props) => {
     const { TextArea } = Input;
    
     const Action = [
-        { key: '1', value: 'Approved  1' },
-        { key: '2', value: 'Rejected 2' },       
+        { key: '1', value: 'Approved' },
+        { key: '2', value: 'Rejected' },       
     ];
     
 
     return (
         <>
          <Card>
-            <Row gutter={20}>
-    
-            <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Form.Item label={translateContent('partMaster.label.approverName')} >
-                        <Input placeholder={preparePlaceholderText(translateContent('partMaster.placeholder.approverName'))} maxLength={50} {...disabledProps}/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Form.Item label={translateContent('partMaster.label.requestedon')} >
-                        <Input placeholder={preparePlaceholderText(translateContent('partMaster.placeholder.requestedon'))} maxLength={50} {...disabledProps}/>
-                    </Form.Item>
-                </Col>
+            <Row gutter={20}>    
 
-                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Form.Item  label={(translateContent('partMaster.label.action'))} rules={[validateRequiredInputField(translateContent('partMaster.validation.action'))]} name="action">
-                        {customSelectBox({data: Action, placeholder:preparePlaceholderSelect(translateContent('partMaster.placeholder.action')), onChange: onHandleSelect })}
+            <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+            <Form.Item label={translateContent('vehicleRelated.label.requesttype')}>
+                            <Input value={'Change Registration No.'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.requesttype'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+            <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.dealerBranch')}>
+                            <Input value={'Dealer Branch'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.dealerBranch'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.requestId')}>
+                            <Input value={'RE3421342'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.requestId'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+
+                              <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.requestDate')}>
+                            <Input value={'28/01/24'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.requestDate'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.registrationNo')}>
+                            <Input value={'23154654'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.registrationNo'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.chassisNo')}>
+                            <Input value={'Chassis No'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.chassisNo'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.customerId')}>
+                            <Input value={'Customer ID'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.customerName')}>
+                            <Input value={'Customer Name'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerName'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+              <Form.Item label={translateContent('vehicleRelated.label.newregistrationNo')}>
+                            <Input value={'ER234567832'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newregistrationNo'))} maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                        </Col>
+
+                        
+                  <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                    <Form.Item  label={(translateContent('vehicleRelated.label.action'))} rules={[validateRequiredInputField(translateContent('vehicleRelated.validation.action'))]} name="action">
+                        {customSelectBox({data: Action, placeholder:preparePlaceholderSelect(translateContent('vehicleRelated.placeholder.action')), onChange: onHandleSelect })}
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Form.Item label={translateContent('partMaster.label.actionedon')} >
-                        <Input placeholder={preparePlaceholderText(translateContent('partMaster.placeholder.actionedon'))} maxLength={50} {...disabledProps}/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+             
+                <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                 <Form.Item label={(translateContent('partMaster.label.remarks'))}>
                     <TextArea placeholder={preparePlaceholderText(translateContent('partMaster.placeholder.remarks'))} maxLength={300} />
                     </Form.Item>

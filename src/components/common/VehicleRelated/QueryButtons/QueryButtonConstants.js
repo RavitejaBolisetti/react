@@ -9,11 +9,11 @@ export const QUERY_BUTTONS = {
         title: 'Pending ',
         key: 'PND',
     },
-    APPROVED: {
-        id: 2,
-        title: 'Approved',
-        key: 'APV',
-    },
+    // APPROVED: {
+    //     id: 2,
+    //     title: 'Approved',
+    //     key: 'APV',
+    // },
     REJECTED: {
         id: 3,
         title: 'Rejected',

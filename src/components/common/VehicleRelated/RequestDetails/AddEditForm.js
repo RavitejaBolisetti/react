@@ -6,18 +6,21 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Row, Col, Checkbox, Button, Divider, Form, Input, DatePicker, Select, AutoComplete } from 'antd';
+import { Row, Col, Card, Checkbox, Button, Divider, Descriptions, Form, Input, Space, Typography, DatePicker, Upload, Select, AutoComplete } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField, duplicateValidator } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { UploadUtil } from 'utils/Upload';
+
+
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { SearchBox } from 'components/utils/SearchBox';
 
 const { TextArea, Search } = Input;
-
+const { Text, Title } = Typography;
+const { Dragger } = Upload;
 const AddEditForm = (props) => {
     const { addressForm, setAddressData, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, uploadProps, userId, formData, formActionType, handleOnChange } = props;
     const { forceUpdate, handleFormValueChange, setIsAdding, showGlobalNotification, addData, resetPincodeData } = props;
@@ -102,6 +105,8 @@ const AddEditForm = (props) => {
         { key: '1', value: 'Change Customer ID' },
         { key: '2', value: 'Change Registration No.' },
         { key: '3', value: 'Change Insurance Expiry Date' },
+        { key: '4', value: 'Current PUC Expiry Date' },
+       
     ];
 
     const searchType = [
@@ -117,10 +122,23 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={addressForm} id="myAdd" onFinish={handleSave} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
-                <Row gutter={20}>
+    {/* //    <Row gutter={20}> */}
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                
+                <Card>
+                <Row gutter={20}>        
+          <Row type="flex" align="middle">
+                                   <Text strong> {'Bin Wise Stock Details'}</Text>                                        
+                               </Row>                            
+                               <Divider className={styles.marT20} />
+              
                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                         <Form.Item label={translateContent('vehicleRelated.label.requesttype')} name="requesttype" rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.requesttype'))]}>
                             {customSelectBox({ data: requesttype, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.requesttype')) })}
+                        </Form.Item>
+
+                        <Form.Item label={translateContent('vehicleRelated.label.dealerBranch')}>
+                            <Input value={'Acbd1234456'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
@@ -136,6 +154,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                     )}
+                   
                     {searchby === '2' && (
                         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.chassisNo')}>
@@ -143,8 +162,16 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                     )}
-                        <Divider />
-
+                       
+</Row>
+</Card>
+</Col>
+<Card>
+                           
+ <Row type="flex" align="middle">
+       <Text strong> {'Bin Wise Stock Details'}</Text>                                        
+          </Row>                            
+            <Divider className={styles.marT20} />
                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                         <Form.Item label={translateContent('vehicleRelated.label.customerId')}>
                             <Input value={'Acbd1234456'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
@@ -181,16 +208,18 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
 
-                
-                  
-                </Row>
+</Card>          
+<Row gutter={20}>      
 
+ <Card>
+                           
+                           <Row type="flex" align="middle">
+                                                    <Text strong> {'Bin Wise Stock Details'}</Text>                                        
+                                                </Row>                            
+                                                <Divider className={styles.marT20} />
                 <Divider />
 
-                <Row gutter={20}>
-                    
-                    
-                        
+               
                 <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                         <Form.Item label={translateContent('vehicleRelated.label.newcustomerId')}>
                             <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newcustomerId'))} maxLength={50}  />
@@ -219,16 +248,28 @@ const AddEditForm = (props) => {
                                         <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
                                     </Form.Item>
                                 </Col>
-                    {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.currentPUCExpiryDate')}>
-                            <Input  placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.browseUpload'))} maxLength={50} />
-                        </Form.Item>
-                    </Col> */}
+                
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
-                        </Col>
-                  
+                        <Descriptions.Item label={''}>
+                        <Dragger className={styles.uploadDraggerStrip}>
+                            <Space direction="vertical">
+                                <div>
+                                    <Title level={5}>{'Click or drop your file here to upload'}</Title>
+                                </div>
+                            </Space>
+                        </Dragger>
+                    </Descriptions.Item>
+    
+                  </Col>
+                  </Card>
                 </Row>
+
+
+
+
+
+
+
 
                 <Form.Item hidden name="id" initialValue="" />
 {/* 

@@ -24,23 +24,23 @@ export default function AdvanceFilter(props) {
     const { extraParams, handleButtonClick, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
     const { showChangeHistoryButton, showChangeHistoryList, downloadReport, handleDownloadReport, uploadBtn, handleOnClickUpload, tableData, addBtnVisible, handleReferesh, showRefreshBtn, showAddButton } = props;
 
-    const {typeData, setFilterString } = props;
+    const {typeData } = props;
 
     const serachBoxProps = {
         searchForm,
         filterString,
         optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
         defaultOption: 'customerName',
-        setFilterString,
+        //setFilterString,
         allowClear: false,
     };
 
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.masterListSearchForm}>
                     {filter && (
-                        <Form form={searchForm} className={styles.masterListSearchForm}>
+                        <Form form={searchForm} >
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
                                     {title}
@@ -63,7 +63,7 @@ export default function AdvanceFilter(props) {
                         >
                             Advance Filters
                         </Button>
-                    </Col>
+                    </Col>         
                 )}
                 <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                     {showChangeHistoryButton && (

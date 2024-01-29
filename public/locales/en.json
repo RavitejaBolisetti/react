@@ -4810,7 +4810,8 @@
             "customerId": "Customer ID",
             "customerName": "Customer Name",
             "chassisNo": "Chassis No.",
-            "engineNo": "Engine No."
+            "engineNo": "Engine No.",
+            "requesttype": "Request Type"
         
         },
         "label": {
@@ -4827,11 +4828,16 @@
             "newregistrationNo": "New Registration No.",
             "newInsuranceExpiryDate": "New Insurance Expiry Date",
             "newPUCExpiryDate": "New PUC Expiry Date",
-            "browseUpload": "Browse & Upload"
-            
-            
-            
-            
+            "browseUpload": "Browse & Upload",
+            "dealerBranch": "Dealer Branch",
+            "requestId": "Request ID",
+            "requestDate": "Request Date",
+            "action": "Action",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "status": "Status"
+           
+                                
             
            },
 
@@ -4849,8 +4855,14 @@
             "newregistrationNo": "New Registration No.",
             "newInsuranceExpiryDate": "New Insurance Expiry Date",
             "newPUCExpiryDate": "New PUC Expiry Date",
-            "browseUpload": "Browse & Upload"
-          
+            "browseUpload": "Browse & Upload",
+            "dealerBranch": "Dealer Branch",
+            "requestId": "Request ID",
+            "requestDate": "Request Date",
+            "action": "Action",
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "status": "Status"
             
          },
 
@@ -4869,8 +4881,7 @@
             "newregistrationNo": "New Registration No.",
             "newInsuranceExpiryDate": "New Insurance Expiry Date",
             "newPUCExpiryDate": "New PUC Expiry Date",
-            "browseUpload": "Browse & Upload"
-        
+            "browseUpload": "Browse & Upload"       
                       
             
         },
