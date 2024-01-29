@@ -22,7 +22,7 @@ const AddEditFormMain = (props) => {
     const { formMasterData, formData, form, formActionType, editableOnSearch, showAlert, isExchangeVisible, setExchangeVisible } = props;
     const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false, makeModelVarientDisabled } = props;
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
@@ -106,7 +106,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item label={translateContent('commonModules.label.exchangeDetails.make')} name="make" data-testid="make" initialValue={formData?.make} rules={[validateRequiredSelectField(translateContent('commonModules.label.exchangeDetails.make'))]}>
                                 {customSelectBox({
                                     data: typeData['VEHCL_MFG'],
-                                    disabled: viewOnly,
+                                    disabled: viewOnly || makeModelVarientDisabled,
                                     loading: isMakeLoading,
                                     onChange: (value) => {
                                         handleFilterChange('make', value);
@@ -120,7 +120,7 @@ const AddEditFormMain = (props) => {
                                 {customSelectBox({
                                     data: filteredModelData,
                                     loading: isModelLoading,
-                                    disabled: viewOnly,
+                                    disabled: viewOnly || makeModelVarientDisabled,
                                     fieldNames: isMahindraMake ? { key: 'modelGroupCode', value: 'modelGroupDescription' } : undefined,
                                     onChange: (value) => {
                                         handleFilterChange('modelGroup', value);
@@ -137,7 +137,7 @@ const AddEditFormMain = (props) => {
                                 {customSelectBox({
                                     data: filteredVariantData,
                                     loading: isVariantLoading,
-                                    disabled: viewOnly || disabled,
+                                    disabled: viewOnly || disabled || makeModelVarientDisabled,
                                     fieldNames: isMahindraMake ? { key: 'variantCode', value: 'variantDescription' } : undefined,
                                 })}
                             </Form.Item>

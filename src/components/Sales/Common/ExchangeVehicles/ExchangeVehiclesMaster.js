@@ -150,6 +150,7 @@ const ExchangeVehiclesBase = (props) => {
     const [isMahindraMake, setIsMahindraMake] = useState(false);
     const [isExchangeVisible, setExchangeVisible] = useState(false);
     const [formMasterData, setFormMasterData] = useState([]);
+    const [makeModelVarientDisabled, setMakeModelVarientDisabled] = useState(false);
 
     const [exhangeDataParams, setExchangeDataParams] = useState();
 
@@ -205,14 +206,17 @@ const ExchangeVehiclesBase = (props) => {
             handleFormValueChange();
             setExchangeDataParams({ make: data?.make, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
+            setMakeModelVarientDisabled(true);
         } else if (data && !data?.make) {
             setFormData({ ...data, exchange: isExchangeVisible, make: MAHINDRA_MAKE, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
             setExchangeDataParams({ make: MAHINDRA_MAKE, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
             setIsMahindraMake(true);
+            setMakeModelVarientDisabled(true);
         } else if (!data) {
             setEditableOnSearch(false);
+            setMakeModelVarientDisabled(false);
             form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegistrationNumber', 'oldChessisNumber']);
         }
     };
@@ -470,7 +474,7 @@ const ExchangeVehiclesBase = (props) => {
         form,
         formData,
         onFinish,
-
+        makeModelVarientDisabled,
         typeData,
 
         isSchemeLovLoading,
