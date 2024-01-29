@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, saveData, addData } = props;
+    const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, selectedCustomerId, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, buttonData, setButtonData, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
     const { isAddressLoading, isCorporateAddressLoading, fetchListCorporate, saveDataCorporate, customerType, resetData, resetPincodeData, resetDataCorporate, NEXT_ACTION } = props;
 
@@ -155,7 +155,7 @@ const AddressMasterBase = (props) => {
 
     const onFinish = () => {
         let data = {
-            customerId: selectedCustomer?.customerId,
+            customerId: selectedCustomer?.customerId || selectedCustomerId,
             customerAddress: addressData?.map((el) => {
                 const { tehsilName, cityName, districtName, stateName, ...rest } = el;
                 return { ...rest };
