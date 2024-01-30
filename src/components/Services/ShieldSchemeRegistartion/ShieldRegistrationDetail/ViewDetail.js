@@ -17,13 +17,15 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { DATA_TYPE } from 'constants/dataType';
 import { SALE_TYPE } from '../utils/saleTypeConstant';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
+import { CollapseOnChange } from 'utils/CollapseOnChange';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { record, formData, handlePrintDownload, isLoading, rsaDetails, detailShieldData, screenType, typeData, handleDownloadFile } = props;
-
+    const { employeeData, managerData } = props;
+    
     const [activeKey, setactiveKey] = useState([]);
 
     const viewProps = {
@@ -33,36 +35,19 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
-
     return (
         <div className={styles.viewDrawerContainer}>
-            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
+            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => CollapseOnChange(1, activeKey, setactiveKey)} expandIconPosition="end" collapsible="icon">
                 <Panel header={translateContent('shieldSchemeRegistration.heading.registrationInformation')} key="1">
                     <Divider />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.registrationInformation?.priceType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData['SALE_TYPE'], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.DLVR_SALE_TYP.id], formData?.registrationInformation?.priceType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.SALE_TYPE?.id], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
 
                         {formData?.registrationInformation?.priceType !== SALE_TYPE?.PAID?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(screenType === 'RSA' ? formData?.registrationInformation?.otfNumber : formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>}
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.employeeName, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.managerName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.amcRegistration?.employeeCode) || formData?.amcRegistration?.employeeName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerCode) || formData?.amcRegistration?.managerName, isLoading)}</Descriptions.Item>
                     </Descriptions>
 
                     {record?.status === AMC_CONSTANTS?.CANCELLED?.key && (
@@ -78,7 +63,6 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </>
                     )}
-                    {/* {formData?.registrationInformation?.shieldIncentiveClaim && ( */}
 
                     {record?.status === (screenType === 'RSA' ? AMC_CONSTANTS?.RSA_APPROVED?.key : AMC_CONSTANTS?.APPROVED?.key) && (
                         <>
@@ -117,8 +101,7 @@ const ViewDetailMain = (props) => {
                                     </Row>
                                 </Card>
                             )}
-                            {/* )}
-                    {formData?.registrationInformation?.shieldCertificateNumber && ( */}
+
                             <Card>
                                 <Row>
                                     <Col xs={14} sm={14} md={14} lg={14} xl={14}>
@@ -142,8 +125,7 @@ const ViewDetailMain = (props) => {
                                     </Col>
                                 </Row>
                             </Card>
-                            {/* )}
-                    {formData?.registrationInformation?.invoiceNumber && ( */}
+
                             {formData?.registrationInformation?.priceType === SALE_TYPE?.PAID?.key && (
                                 <Card>
                                     <Row>
@@ -181,11 +163,9 @@ const ViewDetailMain = (props) => {
                             )}
                         </>
                     )}
-
-                    {/* )} */}
                 </Panel>
             </Collapse>
-            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
+            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => CollapseOnChange(2, activeKey, setactiveKey)} expandIconPosition="end" collapsible="icon">
                 <Panel header={translateContent('shieldSchemeRegistration.heading.schemeDetails')} key="2">
                     <Divider />
                     <Descriptions {...viewProps}>

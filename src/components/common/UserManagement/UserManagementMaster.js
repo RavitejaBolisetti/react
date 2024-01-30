@@ -42,7 +42,6 @@ import { DealerProductActions } from 'store/actions/data/userManagement/dealerPr
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -54,8 +53,8 @@ const mapStateToProps = (state) => {
                 SearchUser: { isLoading: isDataLoading, data: userDataList = {}, detailData: userDetailData },
                 RoleList: { isLoading: isRoleListLoding, data: roleListdata },
                 RoleApplicaion: { isLoaded: isRoleApplicationLoaded, isLoading: isRoleApplicationLoding, data: roleApplicationData },
-                UserDealerApplicatin: { isLoaded: isDlrAppLoaded, isLoading: isDlrAppLoding, data: dlrAppList },
-                UserManufacturerApplication: { isLoaded: isMnmAppLoaded, isLoading: isMnmAppLoding, data: mnmAppList },
+                UserDealerApplicatin: { isLoaded: isDlrAppLoaded, isLoading: isDlrAppLoding = false, data: dlrAppList },
+                UserManufacturerApplication: { isLoaded: isMnmAppLoaded, isLoading: isMnmAppLoding = false, data: mnmAppList },
                 UserDealerList: { isLoaded: isDealerListLoaded, isLoading: isDealerListLoding, data: dealerDataList },
                 UserRoleList: { isLoaded: isUserRoleListLoaded, isLoading: isUserRoleListLoding, data: userRoleDataList },
                 DealerBranchLocation: { isLoaded: isdlrBrLocationsLoaded, isLoading: isDlrBrLocationLoding, data: dlrBranchLocationDataList },
@@ -463,7 +462,7 @@ const UserManagementMain = (props) => {
         formActionType,
         isReadOnly,
         setFormData,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         productHierarchyData,
         onCloseAction,
         finalFormdata,
@@ -565,8 +564,6 @@ const UserManagementMain = (props) => {
                                 </Form>
                             </Col>
                         </Row>
-                        {/* {userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist && <TokenValidateDataCard tokenData={userDataList?.userSearchResponse?.userDetails?.[0]} isLoading={listShowLoading} selectedDealerCode={selectedDealerCode} handleButtonClick={handleButtonClick} userType={userType} />} */}
-                        {/* {error && <TokenErrorCard error={error} />} */}
                     </div>
                 </Col>
             </Row>

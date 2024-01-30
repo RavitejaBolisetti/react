@@ -198,8 +198,7 @@ export const OtfMasterBase = (props) => {
         });
     };
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -350,7 +349,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data,
             method: 'put',
             setIsLoading: listShowLoading,
             userId,
@@ -429,13 +428,18 @@ export const OtfMasterBase = (props) => {
                     const onErrorAction = (message) => {
                         showGlobalNotification({ message });
                     };
-                    const extraParams = [
-                        {
-                            key: 'otfId',
-                            value: selectedRecordId,
-                        },
-                    ];
-                    fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+                    fetchVehicleDetail({
+                        setIsLoading: listShowLoading,
+                        userId,
+                        extraParams: [
+                            {
+                                key: 'otfId',
+                                value: selectedRecordId,
+                            },
+                        ],
+                        onErrorAction,
+                        onSuccessAction,
+                    });
                 }
                 break;
             case CANCELLN_REJECT:
@@ -462,7 +466,7 @@ export const OtfMasterBase = (props) => {
         }
     };
 
-    const onFinishSearch = (values) => {};
+    const onFinishSearch = () => {};
 
     const handleResetFilter = (e) => {
         const { pageSize } = filterString;
@@ -492,7 +496,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data,
             baseURL,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
@@ -504,8 +508,8 @@ export const OtfMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
+    const onFinishFailed = () => {
+        return false;
     };
     const handleChangeHistory = () => {
         setChangeHistoryVisible(true);

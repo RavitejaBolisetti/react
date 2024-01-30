@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SchemeDetailsMasterBase = (props) => {
     const { resetData, onCloseAction, fetchList, saveData, formActionType, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedRecordId, section, handleFormValueChange, isLoading, NEXT_ACTION, handleButtonClick } = props;
-    const { FormActionButton, StatusBar, setButtonData } = props;
+    const { FormActionButton, StatusBar, setButtonData, buttonData } = props;
     const [formData, setFormData] = useState();
 
     useEffect(() => {
@@ -94,15 +94,6 @@ const SchemeDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId]);
 
-    useEffect(() => {
-        if (formActionType?.viewMode) {
-            setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true, saveBtn: false }));
-        } else if (formActionType?.editMode) {
-            setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true, saveBtn: true }));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
-
     const viewProps = {
         styles,
         onCloseAction,
@@ -115,7 +106,6 @@ const SchemeDetailsMasterBase = (props) => {
         styles,
         formData,
     };
-
 
     const onFinish = (data) => {
         const onSuccess = (res) => {
@@ -156,7 +146,7 @@ const SchemeDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} />
+                    <FormActionButton {...myProps} buttonData={{ ...buttonData, editBtn: false, saveBtn: !formActionType?.viewMode }} />
                 </Col>
             </Row>
         </Form>

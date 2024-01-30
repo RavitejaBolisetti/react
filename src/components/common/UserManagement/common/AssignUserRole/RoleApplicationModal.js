@@ -20,7 +20,7 @@ import { translateContent } from 'utils/translateContent';
 
 const RoleApplicationModalrMain = (props) => {
     const { form, formActionType, handleFormFieldChange, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
-    const { dlrAppList, mnmAppList, selectedRoleId, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn, record } = props;
+    const { dlrAppList, mnmAppList, selectedRoleId, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn, record, isMnmAppLoding, isDlrAppLoding } = props;
 
     useEffect(() => {
         (selectedRoleId || record?.roleId) && form.setFieldsValue({ roleId: selectedRoleId || record?.roleId });
@@ -31,7 +31,7 @@ const RoleApplicationModalrMain = (props) => {
         reset: true,
         submit: true,
         hideSaveBtn: formActionType?.viewMode,
-        saveDisabled: disableMdlSaveBtn,
+        saveDisabled: disableMdlSaveBtn || (isMnmAppLoding || isDlrAppLoding),
         htmltype: false,
         resetName: translateContent('global.buttons.cancel'),
         submitName: translateContent('global.buttons.save'),

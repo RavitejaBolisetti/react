@@ -50,14 +50,14 @@ const AssignUserRole = (props) => {
     const { roleListdata, handleButtonClick, isLastSection, onCloseAction } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, saveMNMUserRoleAppDataList } = props;
     const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props;
-    const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding } = props;
+    const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding, isDealerListLoding } = props;
 
     const [form] = Form.useForm();
     const [mainform] = Form.useForm();
     const [checkedKeys, setCheckedKeys] = useState([]);
     const [webApplications, setWebApplications] = useState([]);
     const [mobileApplications, setMobileApplications] = useState([]);
-    const [deviceType, setDeviceType] = useState(DEVICE_TYPE.WEB.key);
+    const [deviceType, setDeviceType] = useState(DEVICE_TYPE?.WEB?.key);
     const [defaultCheckedKeysMangement, setdefaultCheckedKeysMangement] = useState([]);
 
     const [isModalVisible, setisModalVisible] = useState(false);
@@ -187,7 +187,7 @@ const AssignUserRole = (props) => {
 
         const request = {
             id: dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null' ? dlrAppList?.role?.id : mnmAppList?.role?.id && mnmAppList?.role?.id !== 'null' ? mnmAppList?.role?.id : '',
-            employeeCode: userType === USER_TYPE_USER?.DEALER?.id ? formData?.userName : formData?.employeeCode ,
+            employeeCode: userType === USER_TYPE_USER?.DEALER?.id ? formData?.userName : formData?.employeeCode,
             roleId: record?.roleId || selectedRoleId,
             status: true,
             applications: {
@@ -308,6 +308,9 @@ const AssignUserRole = (props) => {
         mnmAppList,
         disableMdlSaveBtn,
         setDisableMdlSaveBtn,
+
+        isMnmAppLoding,
+        isDlrAppLoding,
     };
 
     const onFinish = () => {
