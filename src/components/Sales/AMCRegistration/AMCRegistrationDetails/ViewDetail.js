@@ -62,8 +62,8 @@ const ViewDetailMain = (props) => {
                                         <Descriptions.Item label={translateContent('amcRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.amcRegistration?.vin, isLoading)}</Descriptions.Item>
                                     </>
                                 )}
-                                <Descriptions.Item label={translateContent('amcRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.amcRegistration?.employeeCode), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerCode), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.amcRegistration?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('amcRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.amcRegistration?.managerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('amcRegistration.label.remarks')}>{checkAndSetDefaultValue(formData?.amcRegistration?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             {selectedAMC?.status === AMC_CONSTANTS?.CANCELLED?.key && (
