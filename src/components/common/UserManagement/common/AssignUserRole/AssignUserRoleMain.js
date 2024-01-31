@@ -50,7 +50,7 @@ const AssignUserRole = (props) => {
     const { roleListdata, handleButtonClick, isLastSection, onCloseAction } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, saveMNMUserRoleAppDataList } = props;
     const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props;
-    const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding, isDealerListLoding } = props;
+    const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding } = props;
 
     const [form] = Form.useForm();
     const [mainform] = Form.useForm();

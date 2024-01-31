@@ -14,11 +14,8 @@ import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditio
 import { onRoadPriceMasterAction } from 'store/actions/data/vehicle/onRoadPriceMasterAction';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
-import { ONROAD_PRICE_EX_SHOWROOM_STATUS } from 'constants/OnRoadPriceExShowroomStatus';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { ONROAD_PRICE_MASTER_STATUS } from 'constants/OnRoadPriceMasterStatus';
-
 const { Option } = Select;
 
 const mapStateToProps = (state) => {

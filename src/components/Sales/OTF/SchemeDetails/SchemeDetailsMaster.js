@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SchemeDetailsMasterBase = (props) => {
     const { resetData, onCloseAction, fetchList, saveData, formActionType, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedRecordId, section, handleFormValueChange, isLoading, NEXT_ACTION, handleButtonClick } = props;
-    const { FormActionButton, StatusBar, setButtonData, buttonData } = props;
+    const { FormActionButton, StatusBar, buttonData } = props;
     const [formData, setFormData] = useState();
 
     useEffect(() => {
