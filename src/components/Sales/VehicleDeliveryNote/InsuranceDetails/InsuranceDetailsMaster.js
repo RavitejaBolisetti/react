@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading = false, NEXT_ACTION, handleButtonClick } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType,handleLocalFormChange } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, handleLocalFormChange } = props;
     const [formData, setFormData] = useState({});
 
     useEffect(() => {
@@ -73,6 +73,7 @@ const InsuranceDetailsMasterBase = (props) => {
         isLoading,
         formData,
         pageType,
+        deliveryNote: true,
     };
 
     const myProps = {
