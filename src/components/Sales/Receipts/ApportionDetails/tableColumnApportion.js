@@ -28,7 +28,7 @@ export const tableColumnApportion = (props) => {
 
         tblPrepareColumns({
             title: translateContent('receipts.tableColumn.docDate'),
-            dataIndex: 'docDate',
+            dataIndex: 'documentDate',
             width: '14%',
             render: (text) => convertDateMonthYear(text),
         }),
