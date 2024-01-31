@@ -69,7 +69,7 @@ const PartyDetailMasterBase = (props) => {
             const partyDetails = receiptDetailData?.partyDetails;
             partyDetails && setRequestPayload({ ...requestPayload, partyDetails });
             const canAdvance = receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key;
-            canAdvance && setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: true }));
+            canAdvance && setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true }));
             setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +91,7 @@ const PartyDetailMasterBase = (props) => {
             const onSuccessAction = (res) => {
                 if (res?.data) {
                     if (res?.data && !Array?.isArray(res?.data)) {
-                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data, partyId, partySegment ,partyName: res?.data?.partyName || res?.data?.customerName} });
+                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data, partyId, partySegment, partyName: res?.data?.partyName || res?.data?.customerName } });
                         partyDetailForm.setFieldsValue({ ...res?.data, partyName: res?.data?.partyName || res?.data?.customerName });
                     } else if (res?.data?.[0] && Array?.isArray(res?.data)) {
                         setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data?.[0], partyId, partySegment, partyName: res?.data?.[0]?.partyName || res?.data?.[0]?.customerName } });

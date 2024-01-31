@@ -369,7 +369,7 @@ export const AMCRegistrationMasterBase = (props) => {
             {
                 key: 'status',
                 title: 'Status',
-                value: filterString?.amcStatus ?? amcStatus,
+                value: filterString?.amcStatus,
                 canRemove: false,
                 filter: false,
             },
@@ -409,7 +409,7 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId) {
+        if (userId && filterString?.amcStatus) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }

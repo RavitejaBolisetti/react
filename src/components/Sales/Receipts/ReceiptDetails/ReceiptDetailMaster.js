@@ -93,9 +93,9 @@ const ReceiptDetailMasterBase = (props) => {
     useEffect(() => {
         if (formActionType?.editMode || formActionType?.viewMode) {
             if (receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
-                setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: false });
+                setButtonData({ ...buttonData, editBtn: false, nextBtn: false });
             } else {
-                setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: true });
+                setButtonData({ ...buttonData, editBtn: false, nextBtn: true });
             }
         }
 
