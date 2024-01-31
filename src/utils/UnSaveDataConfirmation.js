@@ -9,7 +9,8 @@ import { ConfirmationModal } from './ConfirmationModal';
 import { translateContent } from './translateContent';
 
 export const handleUnSavedChange = ({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn = undefined, formActionType = undefined }) => {
-    const onCloseAction = () => setUnSavedModelVisible(false);
+    const onCloseAction = () => setUnSavedModelVisible({ ...unSavedDataModalProps, isVisible: false });
+
     const onSubmitAction = () => {
         successFn && successFn();
         setUnSavedModelVisible({ ...unSavedDataModalProps, isVisible: false });

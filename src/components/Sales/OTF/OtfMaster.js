@@ -155,6 +155,7 @@ export const OtfMasterBase = (props) => {
     const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
         isVisible: false,
     });
+
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
@@ -461,9 +462,10 @@ export const OtfMasterBase = (props) => {
                 });
                 setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction === VIEW_ACTION ? true : false }, buttonAction, orderStatus: record?.orderStatus }));
             }
-        } else {
-            setButtonData((prev) => ({ ...prev, formBtnActive: false }));
         }
+        // } else {
+        //     // setButtonData((prev) => ({ ...prev, formBtnActive: false })); //Hide to stop disable on edit
+        // }
     };
 
     const onFinishSearch = () => {};
