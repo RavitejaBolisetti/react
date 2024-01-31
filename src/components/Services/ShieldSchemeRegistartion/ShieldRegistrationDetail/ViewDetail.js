@@ -25,7 +25,7 @@ const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { record, formData, handlePrintDownload, isLoading, rsaDetails, detailShieldData, screenType, typeData, handleDownloadFile } = props;
     const { employeeData, managerData } = props;
-    
+
     const [activeKey, setactiveKey] = useState([]);
 
     const viewProps = {
@@ -45,9 +45,9 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.SALE_TYPE?.id], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
 
                         {formData?.registrationInformation?.priceType !== SALE_TYPE?.PAID?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(screenType === 'RSA' ? formData?.registrationInformation?.otfNumber : formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>}
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(getCodeValue(employeeData, formData?.amcRegistration?.employeeCode) || formData?.amcRegistration?.employeeName, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(getCodeValue(managerData, formData?.amcRegistration?.managerCode) || formData?.amcRegistration?.managerName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>  
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.employeeName || getCodeValue(employeeData, formData?.registrationInformation?.employeeCode) , isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.managerName || getCodeValue(managerData, formData?.registrationInformation?.managerCode) , isLoading)}</Descriptions.Item>
                     </Descriptions>
 
                     {record?.status === AMC_CONSTANTS?.CANCELLED?.key && (

@@ -20,7 +20,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, employeeData, managerData, typeData, handlePrintDownload, selectedAMC, handleDownloadFile } = props;
+    const { formData, isLoading, typeData, handlePrintDownload, selectedAMC, handleDownloadFile } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
