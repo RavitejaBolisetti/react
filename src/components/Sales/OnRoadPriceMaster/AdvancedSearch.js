@@ -117,7 +117,7 @@ export const AdvancedSearchFrom = (props) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label={translateContent('onRoadPriceMaster.label.pricingType')} initialValue={filterString?.priceType} name="priceType" rules={[validateRequiredSelectField(translateContent('onRoadPriceMaster.label.pricingType'))]}>
                         <Select placeholder="Select" {...selectProps}>
-                            {typeData?.[PARAM_MASTER?.PRICING_TYPE?.id]?.map((item) => (
+                            {typeData?.[PARAM_MASTER?.PRC_TYP?.id]?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>
                             ))}
                         </Select>

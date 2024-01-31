@@ -149,7 +149,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 key: 'priceType',
                 title: 'Pricing Type',
                 value: filterString?.priceType,
-                name: typeData[PARAM_MASTER?.PRICING_TYPE?.id]?.find((i) => i?.key === filterString?.priceType)?.value,
+                name: typeData[PARAM_MASTER?.PRC_TYP?.id]?.find((i) => i?.key === filterString?.priceType)?.value,
                 canRemove: true,
                 filter: true,
             },

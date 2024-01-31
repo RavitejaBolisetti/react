@@ -13,9 +13,9 @@ import { CustomerAndVehicleView } from './CustomerAndVehicleView';
 import { EnrolmentView } from './EnrolmentView';
 import { EnrolmentNumberGenerated } from '../EnrolmentNumberGenerated';
 import { translateContent } from 'utils/translateContent';
+import { handleEnterValidation } from 'utils/handleEnterValidation';
 
 import styles from 'assets/sass/app.module.scss';
-import { handleEnterValidation } from 'utils/handleEnterValidation';
 
 const { Panel } = Collapse;
 
