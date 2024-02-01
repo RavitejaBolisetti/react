@@ -93,6 +93,11 @@ import {
     BrandSpiderMasterPage,
     MultiBrandUsedVehicleCampaignCreationPage,
     MultiBrandUsedVehiclePriceCapturingPage,
+    SpecialIncentiveSchemesPage,
+    InitiateDealercommunicationSpecialSchemeMasterPage,
+    DealerCommunicationViewPage,
+    UploadFestiveSchemePage,
+    GSTClaimPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -295,6 +300,12 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME_MASTER} element={<IncentiveSchemeMasterPage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME} element={<IncentiveSchemePage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_CLAIM} element={<IncentiveClaimPage />} exact />
+               
+                <Route path={routing.ROUTING_SPECIAL_INCENTIVE_SCHEME} element={<SpecialIncentiveSchemesPage />} exact />
+                <Route path={routing.ROUTING_INITIATE_DEALER_SCHEME_SPECIAL} element={<InitiateDealercommunicationSpecialSchemeMasterPage />} exact />
+                <Route path={routing.ROUTING_DEALER_COMMUNICTION_VIEW} element={<DealerCommunicationViewPage />} exact />
+                <Route path={routing.ROUTING_UPLOAD_FESTIVE_SCHEME} element={<UploadFestiveSchemePage />} exact />
+                 <Route path={routing.ROUTING_GST_CLAIM} element={<GSTClaimPage />} exact />
                 
 
                 {/* Used Vehicle */}

@@ -178,6 +178,13 @@ export const ROUTING_INCENTIVE_SCHEME_MASTER = ROUTING_SALES.concat('incentive-s
 export const ROUTING_INCENTIVE_SCHEME = ROUTING_SALES.concat('incentive-schemes');
 export const ROUTING_INCENTIVE_CLAIM = ROUTING_SALES.concat('incentive-claim');
 
+export const ROUTING_SPECIAL_INCENTIVE_SCHEME = ROUTING_SALES.concat('special-incentive-scheme');
+export const ROUTING_INITIATE_DEALER_SCHEME_SPECIAL = ROUTING_SALES.concat('initiate-dealer-scheme-special'); //remove 
+export const ROUTING_DEALER_COMMUNICTION_VIEW = ROUTING_SALES.concat('dealer-communication-view');
+export const ROUTING_UPLOAD_FESTIVE_SCHEME = ROUTING_SALES.concat('upload-festive-scheme');
+
+export const ROUTING_GST_CLAIM = ROUTING_SALES.concat('gst-claim');
+
 
 // Used Vehicle
 export const ROUTING_BRAND_SPIDER_MASTER = ROUTING_SALES.concat('brand-spider-master');
