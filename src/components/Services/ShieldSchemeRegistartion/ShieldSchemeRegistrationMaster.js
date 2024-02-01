@@ -42,6 +42,7 @@ import { drawerTitle } from 'utils/drawerTitle';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { SALE_TYPE } from './utils/saleTypeConstant';
+import { debounce } from 'utils/debounce';
 
 const mapStateToProps = (state) => {
     const {
@@ -352,9 +353,9 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
 
-    const handleOdometerReading = (e) => {
+    const handleOdometerReading = debounce((e) => {
         setOdometerReading(e.target.value);
-    };
+    }, 500);
 
     useEffect(() => {
         if (loginUserData?.userType) {

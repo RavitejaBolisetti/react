@@ -166,6 +166,8 @@ export const StockTransferIndentMasterBase = (props) => {
     const [refershIndentData, setRefershIndentData] = useState();
     const [recordType, setRecordType] = useState();
     const [reportDetail, setReportDetail] = useState();
+    const [initialReport, setInitialReport] = useState(false);
+
     const defaultDealerLocationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
 
     const dynamicPagination = true;
@@ -416,10 +418,12 @@ export const StockTransferIndentMasterBase = (props) => {
         setIsAddNewIndentVisible(false);
         addIndentDetailsForm.resetFields();
         handleChangeLocation('');
+        setInitialReport(false);
     };
 
     const onCloseActionViewIndentDetails = () => {
         setIsViewIndentVisible(false);
+        setInitialReport(false);
     };
 
     const removeFilter = (key) => {
@@ -502,8 +506,8 @@ export const StockTransferIndentMasterBase = (props) => {
         fetchVinDetails({ customURL: customURLVINSearch + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
-    const handlePrintDownload = (record) => {
-        setRecordType(record?.issueStatus);
+    const handlePrintDownload = (record, onSuccess = false) => {
+        onSuccess ? setRecordType(ISSUE_STATUS?.ISSUED?.key) : setRecordType(record?.issueStatus);
         setChange(() => !change);
         setReportVisible(true);
         setAdditionalReportParams([
@@ -625,6 +629,7 @@ export const StockTransferIndentMasterBase = (props) => {
             setCancellationData([]);
             resetIssueList();
             setCancellationIssueVisible(false);
+            setInitialReport(false);
         },
         titleOverride: INDENT_ACTION_LIST.CANCELLATION?.name,
         cancellationData,
@@ -650,6 +655,8 @@ export const StockTransferIndentMasterBase = (props) => {
         refershIndentData,
         setRefershIndentData,
         setReportDetail,
+        initialReport,
+        setInitialReport,
     };
 
     const reportProps = {

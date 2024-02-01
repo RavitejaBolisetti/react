@@ -335,7 +335,6 @@ const ExchangeVehiclesBase = (props) => {
     const showAlert = (val) => {
         setModelGroup((prev) => ({ ...prev, oldModelGroup: val }));
     };
-
     useEffect(() => {
         if (selectedOrder?.modelCode) {
             const LovParams = [
@@ -352,7 +351,7 @@ const ExchangeVehiclesBase = (props) => {
 
     useEffect(() => {
         if (VehicleLovCodeData && isProductHierarchyDataLoaded) {
-            setModelGroup((prev) => ({ ...prev, newModelGroup: VehicleLovCodeData?.[0]?.modelGroupCode }));
+            setModelGroup((prev) => ({ ...prev, newModelGroup: VehicleLovCodeData?.find((item) => item.prodctCode === selectedOrder?.modelCode)?.modelGroupCode }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleLovCodeData]);

@@ -46,6 +46,7 @@ const ViewDetailMain = (props) => {
 
                         {formData?.registrationInformation?.priceType !== SALE_TYPE?.PAID?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(screenType === 'RSA' ? formData?.registrationInformation?.otfNumber : formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>}
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>  
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.odometerReading')}>{checkAndSetDefaultValue(formData?.registrationInformation?.odometerReading, isLoading)}</Descriptions.Item>  
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.employeeName || getCodeValue(employeeData, formData?.registrationInformation?.employeeCode) , isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.managerName || getCodeValue(managerData, formData?.registrationInformation?.managerCode) , isLoading)}</Descriptions.Item>
                     </Descriptions>

@@ -22,7 +22,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { handleVINChange, formData, managerData, vinNumber, bookingNumber, schemeDetail, employeeData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, typeData, handleTaxChange } = props;
-    const { activeKey, setActiveKey,handleOdometerReading } = props;
+    const { activeKey, setActiveKey, handleOdometerReading } = props;
 
     useEffect(() => {
         shieldDetailForm.setFieldsValue({ registrationInformation: { vin: vinNumber, otf: bookingNumber } });

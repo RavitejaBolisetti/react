@@ -64,12 +64,19 @@ const PartyDetailMasterBase = (props) => {
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, partyDetailForm, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId } = props;
+    const ReceiptStatus = {
+        CANCELLED: {
+            key: 'C',
+            value: 'Cancelled',
+        },
+    };
     useEffect(() => {
         if (receiptDetailData?.partyDetails) {
             const partyDetails = receiptDetailData?.partyDetails;
             partyDetails && setRequestPayload({ ...requestPayload, partyDetails });
             const canAdvance = receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key;
-            canAdvance && setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true }));
+            const canCancel = receiptDetailData?.receiptsDetails?.receiptStatus !== ReceiptStatus?.CANCELLED?.key;
+            canCancel && canAdvance ? setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: true })) : setButtonData((prev) => ({ ...prev, cancelReceiptBtn: false, editBtn: false, nextBtn: true }));
             setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
