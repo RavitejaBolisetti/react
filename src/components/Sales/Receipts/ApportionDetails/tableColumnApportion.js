@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import { convertDateMonthYear } from 'utils/formatDateTime';
+import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
@@ -30,7 +30,7 @@ export const tableColumnApportion = (props) => {
             title: translateContent('receipts.tableColumn.docDate'),
             dataIndex: 'documentDate',
             width: '14%',
-            render: (text) => convertDateMonthYear(text),
+            render: (value) => convertDateTimedayjs(value, dateFormatView),
         }),
 
         tblPrepareColumns({

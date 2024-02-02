@@ -11,7 +11,7 @@ import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
 export const SchemeDetailsMaster = (props) => {
-    const { buttonData, formData, onCloseAction, formActionType, setRequestPayload, requestPayload } = props;
+    const { buttonData, formData, onCloseAction, formActionType, setRequestPayload } = props;
     const { form, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
     const { FormActionButton } = props;
 
@@ -29,15 +29,14 @@ export const SchemeDetailsMaster = (props) => {
     };
 
     const onFinish = (values) => {
-        const finalSchemeData = {
-            ...formData,
-            ...values,
-            sales: formData?.sales?.map((item) => (item?.id === values?.sales?.salesSchemeId ? { ...(values?.sales || item), active: true } : { ...item, active: false })),
-        };
-        setRequestPayload({
-            ...requestPayload,
-            schemeOfferDetails: finalSchemeData,
-        });
+        setRequestPayload((prev) => ({
+            ...prev,
+            schemeOfferDetails: {
+                ...formData,
+                ...values,
+                sales: formData?.sales?.map((item) => (item?.id === values?.sales?.salesSchemeId ? { ...(values?.sales || item), active: true } : { ...item, active: false })),
+            },
+        }));
         handleButtonClick({ buttonAction: NEXT_ACTION });
     };
 

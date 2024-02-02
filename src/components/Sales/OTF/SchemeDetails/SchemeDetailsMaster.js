@@ -21,7 +21,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-
             OTF: {
                 SchemeDetail: { isLoaded: isDataLoaded = false, isLoading, data: schemeData = [] },
             },
@@ -105,6 +104,7 @@ const SchemeDetailsMasterBase = (props) => {
         ...props,
         styles,
         formData,
+        isOTFModule: true,
     };
 
     const onFinish = (data) => {
@@ -146,7 +146,7 @@ const SchemeDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} buttonData={{ ...buttonData, editBtn: false, saveBtn: !formActionType?.viewMode }} />
+                    <FormActionButton {...myProps} buttonData={{ ...buttonData, editBtn: false, saveBtn: false }} />
                 </Col>
             </Row>
         </Form>

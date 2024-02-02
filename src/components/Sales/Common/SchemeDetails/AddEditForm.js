@@ -13,12 +13,13 @@ import { translateContent } from 'utils/translateContent';
 import { customSelectBox } from 'utils/customSelectBox';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { CardSkeleton } from 'components/common/Skeleton';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { typeData, schemeData, styles, viewOnly = true, form } = props;
+    const { isOTFModule = false, typeData, schemeData, styles, viewOnly = true, form, isLoading = false } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [selectedSalesScheme, setSelectedSalesScheme] = useState();
     const [additionalDiscount, setAdditionalDiscount] = useState(schemeData?.corporate?.corporateAdditionalApplicableDiscount);
@@ -73,133 +74,141 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const schemeFormField = ({ schemeForm, showTitle, formKey, disableTitle = true, discountTypeOption }) => (
-        <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.schemeType} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeType')} name={[formKey, 'schemeType']}>
-                        {customSelectBox({ data: showTitle ? typeData['SCHEME_TYPE'] : typeData['SALS_SCHEM_TYPE'], placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.schemeType')), disabled: disableTitle })}
-                    </Form.Item>
-                </Col>
-                {(formKey !== 'sales' || (formKey === 'sales' && schemeForm?.schemeType === 'CD')) && (
+    const schemeFormField = ({ schemeForm, showTitle, formKey, disableTitle = true, discountTypeOption, isOTFModule }) => {
+        const viewOnly = isOTFModule;
+        return (
+            <>
+                <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={schemeForm?.schemeCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory')} name={[formKey, 'schemeCategory']}>
-                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory'))} {...disabledProps} />
+                        <Form.Item initialValue={schemeForm?.schemeType} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeType')} name={[formKey, 'schemeType']}>
+                            {customSelectBox({ data: showTitle ? typeData['SCHEME_TYPE'] : typeData['SALS_SCHEM_TYPE'], placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.schemeType')), disabled: disableTitle })}
                         </Form.Item>
                     </Col>
-                )}
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.amount} label={translateContent('commonModules.label.schemeAndOfferDetails.Amount')} name={[formKey, 'amount']}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.Amount'))} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label={translateContent('commonModules.label.schemeAndOfferDetails.validFrom')} name={[formKey, 'validFrom']}>
-                        <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.validFrom'))} onChange={onChange} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label={translateContent('commonModules.label.schemeAndOfferDetails.validTo')} name={[formKey, 'validTo']}>
-                        <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.validTo'))} onChange={onChange} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.discountType')} name={[formKey, 'discountType']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.discountType'))]}>
-                        {customSelectBox({
-                            data: typeData?.[discountTypeOption],
-                            placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.discountType')),
-                            disabled: !showTitle,
-                            onChange: (salesSchemeDiscountType) => {
-                                if (salesSchemeDiscountType) {
-                                    form.setFieldsValue({ [formKey]: { salesSchemeDiscountType: salesSchemeDiscountType || form.getFieldsValue()?.[formKey]?.discountType } });
-                                }
-                            },
-                        })}
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={schemeForm?.description} label={translateContent('commonModules.label.schemeAndOfferDetails.description')} name={[formKey, 'description']}>
-                        <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.description'))} {...disabledProps} showCount />
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Form.Item initialValue={schemeForm?.active} name={[formKey, 'active']} hidden />
-            <Form.Item initialValue={schemeForm?.id} name={[formKey, 'id']} hidden />
-            <Form.Item initialValue={schemeForm?.salesSchemeId} name={[formKey, 'salesSchemeId']} hidden />
-            <Form.Item initialValue={schemeForm?.salesSchemeDiscountType} name={[formKey, 'salesSchemeDiscountType']} hidden />
-        </>
-    );
-
-    const corporateFormField = ({ schemeForm, discountTypeOption, formKey }) => (
-        <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.corporateCode} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCode')} name={[formKey, 'corporateCode']}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateCode'))} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.corporateDescription} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDescription')} name={[formKey, 'corporateDescription']}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateCode'))} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.corporateName} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateName')} name={[formKey, 'corporateName']}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateName'))} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.corporateCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')} name={[formKey, 'corporateCategory']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory'))]}>
-                        {customSelectBox({ data: typeData?.['CORPT_CATGRY_DESC'], placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')) })}
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.stdDealerAmount} label={translateContent('commonModules.label.schemeAndOfferDetails.stdDealerAmount')} name={[formKey, 'stdDealerAmount']}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.stdDealerAmount'))} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.stdOEMDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.stdOEMDiscount')} name={[formKey, 'stdOEMDiscount']}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.stdOEMDiscount'))} />
-                    </Form.Item>
-                </Col>
-
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={additionalDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')} name={[formKey, 'corporateAdditionalApplicableDiscount']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount'))]}>
-                        {customSelectBox({ data: Object.values(YES_NO_FLAG), onChange: handleAdditionalDisount, fieldNames: { key: 'key', value: 'title' }, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')) })}
-                    </Form.Item>
-                </Col>
-
-                {additionalDiscount === YES_NO_FLAG?.YES?.key && (
+                    {(formKey !== 'sales' || (formKey === 'sales' && schemeForm?.schemeType === 'CD')) && (
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                            <Form.Item initialValue={schemeForm?.schemeCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory')} name={[formKey, 'schemeCategory']}>
+                                <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.schemeCategory'))} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                    )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={schemeForm?.corporateAdditionalDiscount} rules={discountRules} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount')} name={[formKey, 'corporateAdditionalDiscount']}>
-                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount'))} />
+                        <Form.Item initialValue={schemeForm?.amount} label={translateContent('commonModules.label.schemeAndOfferDetails.Amount')} name={[formKey, 'amount']}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.Amount'))} {...disabledProps} />
                         </Form.Item>
                     </Col>
-                )}
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label={translateContent('commonModules.label.schemeAndOfferDetails.validFrom')} name={[formKey, 'validFrom']}>
+                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.validFrom'))} onChange={onChange} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label={translateContent('commonModules.label.schemeAndOfferDetails.validTo')} name={[formKey, 'validTo']}>
+                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.validTo'))} onChange={onChange} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.discountType')} name={[formKey, 'discountType']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.discountType'))]}>
+                            {customSelectBox({
+                                data: typeData?.[discountTypeOption],
+                                placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.discountType')),
+                                disabled: !showTitle || viewOnly,
+                                onChange: (salesSchemeDiscountType) => {
+                                    if (salesSchemeDiscountType) {
+                                        form.setFieldsValue({ [formKey]: { salesSchemeDiscountType: salesSchemeDiscountType || form.getFieldsValue()?.[formKey]?.discountType } });
+                                    }
+                                },
+                            })}
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item initialValue={schemeForm?.description} label={translateContent('commonModules.label.schemeAndOfferDetails.description')} name={[formKey, 'description']}>
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.description'))} {...disabledProps} showCount />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Form.Item initialValue={schemeForm?.active} name={[formKey, 'active']} hidden />
+                <Form.Item initialValue={schemeForm?.id} name={[formKey, 'id']} hidden />
+                <Form.Item initialValue={schemeForm?.salesSchemeId} name={[formKey, 'salesSchemeId']} hidden />
+                <Form.Item initialValue={schemeForm?.salesSchemeDiscountType} name={[formKey, 'salesSchemeDiscountType']} hidden />
+            </>
+        );
+    };
 
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.totalCorporateDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount')} name={[formKey, 'totalCorporateDiscount']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))]}>
-                        <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))} {...disabledProps} />
-                    </Form.Item>
-                </Col>
+    const corporateFormField = ({ schemeForm, discountTypeOption, formKey, isOTFModule }) => {
+        const viewOnly = isOTFModule;
+        return (
+            <>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.corporateCode} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCode')} name={[formKey, 'corporateCode']}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateCode'))} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.corporateDescription} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDescription')} name={[formKey, 'corporateDescription']}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateCode'))} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.corporateName} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateName')} name={[formKey, 'corporateName']}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateName'))} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
 
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')} name={[formKey, 'corporateDiscountType']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.discountType'))]}>
-                        {customSelectBox({ data: typeData?.[discountTypeOption], disabled: true, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')) })}
-                    </Form.Item>
-                </Col>
-            </Row>
-        </>
-    );
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.corporateCategory} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')} name={[formKey, 'corporateCategory']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory'))]}>
+                            {customSelectBox({ data: typeData?.['CORPT_CATGRY_DESC'], disabled: viewOnly, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateCategory')) })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.stdDealerAmount} label={translateContent('commonModules.label.schemeAndOfferDetails.stdDealerAmount')} name={[formKey, 'stdDealerAmount']}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.stdDealerAmount'))} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.stdOEMDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.stdOEMDiscount')} name={[formKey, 'stdOEMDiscount']}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.stdOEMDiscount'))} disabled={viewOnly} />
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={additionalDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')} name={[formKey, 'corporateAdditionalApplicableDiscount']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount'))]}>
+                            {customSelectBox({ data: Object.values(YES_NO_FLAG), disabled: viewOnly, onChange: handleAdditionalDisount, fieldNames: { key: 'key', value: 'title' }, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalApplicableDiscount')) })}
+                        </Form.Item>
+                    </Col>
+
+                    {additionalDiscount === YES_NO_FLAG?.YES?.key && (
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                            <Form.Item initialValue={schemeForm?.corporateAdditionalDiscount} rules={discountRules} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount')} name={[formKey, 'corporateAdditionalDiscount']}>
+                                <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.corporateAdditionalDiscount'))} disabled={viewOnly} />
+                            </Form.Item>
+                        </Col>
+                    )}
+
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.totalCorporateDiscount} label={translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount')} name={[formKey, 'totalCorporateDiscount']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))]}>
+                            <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.schemeAndOfferDetails.totalCorporateDiscount'))} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={schemeForm?.discountType} label={translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')} name={[formKey, 'discountType']} rules={[validateRequiredSelectField(translateContent('commonModules.label.schemeAndOfferDetails.discountType'))]}>
+                            {customSelectBox({ data: typeData?.[discountTypeOption], disabled: true, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.corporateDiscountType')) })}
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </>
+        );
+    };
 
     const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || schemeData?.sales?.length > 0;
-    return (
+    return isLoading ? (
+        <CardSkeleton content={false} titleHeight={60} count={2} />
+    ) : (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 {isDataExist ? (
@@ -208,7 +217,7 @@ const AddEditFormMain = (props) => {
                             <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                                 <Panel header={translateContent('commonModules.heading.schemeAndOfferDetails.exchange')} key={1}>
                                     <Divider />
-                                    {schemeFormField({ schemeForm: schemeData?.exchange, showTitle: schemeData?.exchange?.title, formKey: 'exchange', discountTypeOption: 'EXCH_MODE_OF_DIS' })}
+                                    {schemeFormField({ schemeForm: schemeData?.exchange, showTitle: schemeData?.exchange?.title, formKey: 'exchange', discountTypeOption: 'EXCH_MODE_OF_DIS', isOTFModule })}
                                 </Panel>
                             </Collapse>
                         )}
@@ -217,7 +226,7 @@ const AddEditFormMain = (props) => {
                             <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                                 <Panel header={translateContent('commonModules.heading.schemeAndOfferDetails.loyalty')} key={2}>
                                     <Divider />
-                                    {schemeFormField({ schemeForm: schemeData?.loyalty, formKey: 'loyalty', discountTypeOption: 'LOYAL_MODE_OF_DIS' })}
+                                    {schemeFormField({ schemeForm: schemeData?.loyalty, formKey: 'loyalty', discountTypeOption: 'LOYAL_MODE_OF_DIS', isOTFModule })}
                                 </Panel>
                             </Collapse>
                         )}
@@ -226,7 +235,7 @@ const AddEditFormMain = (props) => {
                             <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                                 <Panel header={translateContent('commonModules.heading.schemeAndOfferDetails.corporate')} key={3}>
                                     <Divider />
-                                    {corporateFormField({ schemeForm: schemeData?.corporate, formKey: 'corporate', discountTypeOption: 'CORP_MODE_OF_DIS' })}
+                                    {corporateFormField({ schemeForm: schemeData?.corporate, formKey: 'corporate', discountTypeOption: 'CORP_MODE_OF_DIS', isOTFModule })}
                                 </Panel>
                             </Collapse>
                         )}
@@ -240,6 +249,7 @@ const AddEditFormMain = (props) => {
                                             <Form.Item initialValue={selectedSalesScheme?.schemeName} label={translateContent('commonModules.label.schemeAndOfferDetails.schemeName')} name={['sales', 'schemeName']}>
                                                 {customSelectBox({
                                                     data: schemeData?.sales,
+                                                    disabled: isOTFModule,
                                                     placeholder: preparePlaceholderSelect(translateContent('commonModules.label.schemeAndOfferDetails.schemeName')),
                                                     onChange: (value) => handleSchemeChange(value, 'sales'),
                                                     fieldNames: { key: 'id', value: 'schemeName' },
@@ -247,7 +257,7 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                     </Row>
-                                    {schemeFormField({ schemeForm: selectedSalesScheme, schemeList: schemeData?.sales, showTitle: true, formKey: 'sales', discountTypeOption: 'SALES_MODE_OF_DIS' })}
+                                    {schemeFormField({ schemeForm: selectedSalesScheme, schemeList: schemeData?.sales, showTitle: true, formKey: 'sales', discountTypeOption: 'SALES_MODE_OF_DIS', isOTFModule })}
                                 </Panel>
                             </Collapse>
                         )}

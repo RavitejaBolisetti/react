@@ -274,14 +274,18 @@ const VehicleDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
     const findSchemAndDiscount = (data = requestPayload?.schemeOfferDetails?.sales) => {
+        const additionalCorpDiscount = requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount;
         if (Array?.isArray(data)) {
             const schemeDataObj = requestPayload?.schemeOfferDetails?.sales?.find((item) => item?.active);
             if (schemeDataObj) {
-                return { salesSchemeId: schemeDataObj?.salesSchemeId, salesSchemeDiscountType: schemeDataObj?.salesSchemeDiscountType, additionalCorpDiscount: requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount };
+                return { salesSchemeId: schemeDataObj?.salesSchemeId, salesSchemeDiscountType: schemeDataObj?.salesSchemeDiscountType, additionalCorpDiscount };
             }
-            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount };
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount };
+        } else if (additionalCorpDiscount) {
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount };
+        } else {
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: undefined };
         }
-        return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: undefined };
     };
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });
