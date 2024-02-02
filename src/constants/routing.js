@@ -148,6 +148,8 @@ export const ROUTING_CENTRAL_FAME_SUBSIDY = ROUTING_SALES.concat('central-fame-s
 
 // UI-Screens
 
+//Financial-accounting
+export const ROUTING_FINANCE_PAYMENT = ROUTING_FINANCIAL_ACCOUNTING.concat('voucher-payment');
 
 //Corporate Scheme
 export const ROUTING_DEALER_CORPORATE_CLAIM = ROUTING_SALES.concat('dealer-corporate-claim');
@@ -190,9 +192,6 @@ export const ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING = ROUTING_SALES.co
 // Spares
 export const ROUTING_STORE_MASTER = ROUTING_SPARES.concat('store-master');
 export const ROUTING_PART_MASTER = ROUTING_SPARES.concat('part-master');
-
-// vehicle related
-export const ROUTING_COMMON_VEHICLE_RELATED = ROUTING_COMMON.concat('vehicle-related');
 export const ROUTING_UNIT_OF_MEASURE_MASTER = ROUTING_SPARES.concat('unit-of-measure-master');
 
 export const ROUTING_KIT_MASTER = ROUTING_SPARES.concat('kit-master');
@@ -204,3 +203,8 @@ export const ROUTING_MOVEMENT_CLASS = ROUTING_SPARES.concat('movement-class');
 export const ROUTING_ISSUE_INDICATOR = ROUTING_SPARES.concat('issue-indicator');
 export const ROUTING_CAMPAIGN_DISCOUNT = ROUTING_SPARES.concat('campaign-discount');
 export const ROUTING_INVENTORY_CLASSIFICATION = ROUTING_SPARES.concat('inventory-classification');
+// export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('Target-Type');
+
+// vehicle related
+export const ROUTING_COMMON_VEHICLE_RELATED = ROUTING_COMMON.concat('vehicle-related');
+

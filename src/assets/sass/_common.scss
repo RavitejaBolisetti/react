@@ -134,6 +134,9 @@
 .padT5 {
     padding-top: 5px;
 }
+.padT25 {
+    padding-top: 25px;
+}
 
 .padRight18 {
     padding-right: 18px;
@@ -212,7 +215,28 @@
 .textCenter {
     text-align: center;
 }
+.tableoverflow{
+    overflow: auto;
+    &::-webkit-scrollbar-track {
+        background-color: $primaryWhite;
+    }
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background-color: $primaryWhite;
+    }
 
+    &::-webkit-scrollbar-thumb {
+        background-color: $neutralGrey2;
+        border-radius: 10px;
+        border: 2px solid $primaryWhite;
+
+        &:hover {
+            border: 2px solid $neutralGrey2;
+        }
+    }
+   
+}
 .whiteBG {
     background: $primaryWhite !important;
     border: 1px solid black;
@@ -536,10 +560,6 @@
         }
     }
 
-    &::-webkit-scrollbar-track {
-        background-color: $primaryWhite;
-    }
-
     & :global {
         .ant-table-wrapper {
             .ant-table-fixed-header {
@@ -567,7 +587,9 @@
             }
         }
     }
-
+    &::-webkit-scrollbar-track {
+        background-color: $primaryWhite;
+    }
     &::-webkit-scrollbar {
         width: 8px;
         background-color: $primaryWhite;

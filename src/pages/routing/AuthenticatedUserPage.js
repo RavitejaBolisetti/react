@@ -55,7 +55,8 @@ import { TaxChargesPage,
     CreditDebitNoteMasterPage, 
     GSTIRNAuthenticationPage, 
     ChartOfAccountPage, 
-    GstIRNTransactionPage } 
+    GstIRNTransactionPage,
+    VoucherPaymentPage, } 
     from 'pages/FinancialAccounting';
 import {
     OTFMasterPage,
@@ -288,6 +289,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
                 <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 {/* UI-Screens */}
+                <Route path={routing.ROUTING_FINANCE_PAYMENT} element={<VoucherPaymentPage />} exact />
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_SCHEME_REGISTRATION} element={<CorporateSchemeRegistrationMasterPage />} exact />
@@ -325,7 +327,8 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_MOVEMENT_CLASS} element={<MovementClassMasterPage />} exact />
                 <Route path={routing.ROUTING_ISSUE_INDICATOR} element={<IssueIndicatorMasterPage />} exact />
                 <Route path={routing.ROUTING_CAMPAIGN_DISCOUNT} element={<CampaignDiscountPage />} exact />
-                <Route path={routing.ROUTING_INVENTORY_CLASSIFICATION} element={<InventoryClassificationPage />} exact />   
+                <Route path={routing.ROUTING_INVENTORY_CLASSIFICATION} element={<InventoryClassificationPage />} exact />  
+                {/* <Route path={routing.ROUTING_TARGET_TYPE} element={<InventoryClassificationPage />} exact />    */}
                 {/*  */}
                 <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
