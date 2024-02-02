@@ -1772,7 +1772,8 @@
             "stage": "Stage",
             "requestDetails": "Request Details",
             "serviceActivity": "Service Activity:",
-            "electric": "Electric"
+            "electric": "Electric",
+            "modelDescription": "Model Description"
         },
         "placeholder": {
             "bookingNumber": "Booking Number",

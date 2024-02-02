@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Form, Input, Collapse, Typography, Divider, Button, Descriptions, Card, Space } from 'antd';
+import { Row, Col, Form, Input, Collapse, Typography, Divider, Button, Descriptions, Card } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -58,6 +58,7 @@ const AddEditFormMain = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAddRequestVisible(false);
         setDisabled(false);
+        addRequestForm.resetFields();
     };
 
     const addRequestProps = {
@@ -82,76 +83,75 @@ const AddEditFormMain = (props) => {
             <div className={styles.drawerCustomerMaster}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                            {formActionType?.addMode && (
-                                <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                    <Row gutter={18}>
+                        {formActionType?.addMode && (
+                            <Card style={{ backgroundColor: '#F2F2F2' }}>
+                                <Row gutter={18}>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.bookingNumber || formData?.otfNumber} label={translateContent('chargerInstallationDetails.label.bookingNumber')} name="otfNumber" rules={[validateRequiredInputField(translateContent('chargerInstallationDetails.validation.bookingNumber'))]}>
+                                            <Search maxLength={50} placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingNumber'))} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} loading={isChargerSearchLoading} />
+                                        </Form.Item>
+                                    </Col>
+                                    {chargerDetails && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.bookingNumber || formData?.otfNumber} label={translateContent('chargerInstallationDetails.label.bookingNumber')} name="otfNumber" rules={[validateRequiredInputField(translateContent('chargerInstallationDetails.validation.bookingNumber'))]}>
-                                                <Search maxLength={50} placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingNumber'))} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} loading={isChargerSearchLoading} />
+                                            <Form.Item initialValue={getCodeValue(typeData?.[PARAM_MASTER?.ORDR_STATS?.id], crmCustomerVehicleData?.otfDetails?.orderStatus)} label={translateContent('chargerInstallationDetails.label.bookingStatus')} name="bookingStatus">
+                                                <Input placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingStatus'))} disabled={true} />
                                             </Form.Item>
                                         </Col>
-                                        {chargerDetails && (
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={getCodeValue(typeData['ORDR_STATS'], crmCustomerVehicleData?.otfDetails?.orderStatus)} label={translateContent('chargerInstallationDetails.label.bookingStatus')} name="bookingStatus">
-                                                    <Input placeholder={preparePlaceholderText(translateContent('chargerInstallationDetails.placeholder.bookingStatus'))} disabled={true} />
-                                                </Form.Item>
-                                            </Col>
-                                        )}
-                                    </Row>
-
-                                    {chargerDetails && (
-                                        <>
-                                            <Divider />
-                                            <Descriptions {...viewProps}>
-                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelVariant, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.color, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelCode, isLoading)}</Descriptions.Item>
-                                            </Descriptions>
-                                        </>
                                     )}
-                                </Card>
-                            )}
-                            {formActionType?.editMode && (
-                                <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                    <Descriptions {...viewProps}>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestId')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestDate')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
-                                        <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
-                                    </Descriptions>
-                                </Card>
-                            )}
+                                </Row>
 
-                            {chargerDetails && (
-                                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                                    <Panel
-                                        header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Typography>{translateContent('chargerInstallationDetails.label.addRequest')}</Typography>
+                                {chargerDetails && (
+                                    <>
+                                        <Divider />
+                                        <Descriptions {...viewProps}>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelVariant, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.color, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelDescription')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.model, isLoading)}</Descriptions.Item>
+                                        </Descriptions>
+                                    </>
+                                )}
+                            </Card>
+                        )}
+                        {formActionType?.editMode && (
+                            <Card style={{ backgroundColor: '#F2F2F2' }}>
+                                <Descriptions {...viewProps}>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestId')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestId, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestDate')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelDescription')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.model, isLoading)}</Descriptions.Item>
+                                </Descriptions>
+                            </Card>
+                        )}
 
-                                                    {!formActionType?.viewMode && (
-                                                        <Button className={styles.marL10} type="primary" disabled={disabled} onClick={handleAddRequestChange} icon={<PlusOutlined />}>
-                                                            {translateContent('global.buttons.add')}
-                                                        </Button>
-                                                    )}
-                                                </Row>
+                        {chargerDetails && (
+                            <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                                <Panel
+                                    header={
+                                        <Row type="flex" justify="space-between" align="middle" size="large">
+                                            <Row type="flex" justify="space-around" align="middle">
+                                                <Typography>{translateContent('chargerInstallationDetails.label.addRequest')}</Typography>
+                                                {!formActionType?.viewMode && (
+                                                    <Button className={styles.marL10} type="primary" disabled={disabled} onClick={handleAddRequestChange} icon={<PlusOutlined />}>
+                                                        {translateContent('global.buttons.add')}
+                                                    </Button>
+                                                )}
                                             </Row>
-                                        }
-                                        key="1"
-                                    >
-                                        <DataTable tableColumn={addRequestColumns(typeData)} tableData={addRequestData} pagination={false} />
-                                    </Panel>
-                                </Collapse>
-                            )}
-                        </Space>
+                                        </Row>
+                                    }
+                                    key="1"
+                                >
+                                    <DataTable tableColumn={addRequestColumns(typeData)} tableData={addRequestData} pagination={false} />
+                                </Panel>
+                            </Collapse>
+                        )}
                     </Col>
                 </Row>
             </div>

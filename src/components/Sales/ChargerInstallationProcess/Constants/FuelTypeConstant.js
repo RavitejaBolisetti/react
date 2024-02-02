@@ -20,3 +20,25 @@ export const FUEL_TYPE = {
         filter: true,
     },
 };
+export const REQUEST_STAGE_CONSTANTS = {
+    SITE_SURVEY: {
+        id: 1,
+        key: 'SRV',
+        value: 'Site Survey',
+    },
+    SITE_VALIDATION: {
+        id: 2,
+        key: 'VLD',
+        value: 'Site Validation',
+    },
+    INSTALLATION: {
+        id: 3,
+        key: 'INS',
+        value: 'Installation',
+    },
+    COMMISSIONING: {
+        id: 4,
+        key: 'COM',
+        value: 'Commissioning',
+    },
+};

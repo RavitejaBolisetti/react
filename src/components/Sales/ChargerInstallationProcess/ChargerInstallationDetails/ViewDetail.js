@@ -57,11 +57,9 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelDescription')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.model, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
-                        {/* <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
-                            </Card> */}
 
                         <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
