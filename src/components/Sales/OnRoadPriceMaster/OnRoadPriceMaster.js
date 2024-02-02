@@ -122,7 +122,7 @@ export const OnRoadPriceMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
-
+    const [singleDisabled, setSingleDisabled] = useState(false);
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -142,7 +142,7 @@ export const OnRoadPriceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
-    
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -442,6 +442,7 @@ export const OnRoadPriceMasterBase = (props) => {
             form.resetFields();
             setFileList([]);
             resetViewData();
+            setSingleDisabled(false);
         },
         buttonData,
         setButtonData,
@@ -477,6 +478,9 @@ export const OnRoadPriceMasterBase = (props) => {
         validationText: translateContent('onRoadPriceMaster.message.uploadValidation'),
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
     };
 
     const buttonProps = {

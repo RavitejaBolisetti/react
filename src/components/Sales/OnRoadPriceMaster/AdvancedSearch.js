@@ -134,7 +134,7 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label={translateContent('onRoadPriceMaster.label.pricingCity')} initialValue={filterString?.pricingCity} name="pricingCity">
                         <Select placeholder="Select" {...selectProps}>
                             {cityData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option value={item?.key}>{item?.value}</Option>
                             ))}
                         </Select>
                     </Form.Item>

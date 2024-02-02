@@ -411,7 +411,7 @@ export const AMCRegistrationMasterBase = (props) => {
     useEffect(() => {
         if (userId && filterString?.amcStatus) {
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, filterString]);

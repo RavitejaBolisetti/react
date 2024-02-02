@@ -164,10 +164,9 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
     const [refershIndentData, setRefershIndentData] = useState();
-    const [recordType, setRecordType] = useState();
     const [reportDetail, setReportDetail] = useState();
-    const [initialReport, setInitialReport] = useState(false);
 
+    
     const defaultDealerLocationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
 
     const dynamicPagination = true;
@@ -418,12 +417,10 @@ export const StockTransferIndentMasterBase = (props) => {
         setIsAddNewIndentVisible(false);
         addIndentDetailsForm.resetFields();
         handleChangeLocation('');
-        setInitialReport(false);
     };
 
     const onCloseActionViewIndentDetails = () => {
         setIsViewIndentVisible(false);
-        setInitialReport(false);
     };
 
     const removeFilter = (key) => {
@@ -506,31 +503,23 @@ export const StockTransferIndentMasterBase = (props) => {
         fetchVinDetails({ customURL: customURLVINSearch + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
-    const handlePrintDownload = (record, onSuccess = false) => {
-        onSuccess ? setRecordType(ISSUE_STATUS?.ISSUED?.key) : setRecordType(record?.issueStatus);
+    const handlePrintDownload = (record) => {
         setChange(() => !change);
         setReportVisible(true);
         setAdditionalReportParams([
             {
-                key: 'vehicle_identification_number',
-                value: record?.vin,
+                key: 'sa_vi_indent_hdr_id',
+                value: record?.indentHdrId,
             },
         ]);
     };
 
-    // useEffect(() => {
-    //     if (toggleButton === STOCK_TRANSFER?.RAISED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
-    //     else if (toggleButton === STOCK_TRANSFER?.RECEIVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT);
-    //     else setReportDetail(null);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [toggleButton]);
-
     useEffect(() => {
-        if (recordType === ISSUE_STATUS?.ISSUED?.key || (toggleButton === STOCK_TRANSFER?.RAISED.key && (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || recordType === ISSUE_STATUS?.RECEIEVED?.key))) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT);
-        else if (toggleButton === STOCK_TRANSFER?.RECEIVED.key && (recordType === ISSUE_STATUS?.PARTIALLY_RECEIEVED?.key || recordType === ISSUE_STATUS?.RECEIEVED?.key)) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+        if (toggleButton === STOCK_TRANSFER?.RECEIVED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT);
+        else if (toggleButton === STOCK_TRANSFER?.RAISED?.key) setReportDetail(EMBEDDED_REPORTS?.STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT);
         else setReportDetail(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [recordType, change]);
+    }, [toggleButton, change]);
 
     const tableProps = {
         dynamicPagination,
@@ -629,7 +618,6 @@ export const StockTransferIndentMasterBase = (props) => {
             setCancellationData([]);
             resetIssueList();
             setCancellationIssueVisible(false);
-            setInitialReport(false);
         },
         titleOverride: INDENT_ACTION_LIST.CANCELLATION?.name,
         cancellationData,
@@ -655,8 +643,8 @@ export const StockTransferIndentMasterBase = (props) => {
         refershIndentData,
         setRefershIndentData,
         setReportDetail,
-        initialReport,
-        setInitialReport,
+       
+        
     };
 
     const reportProps = {

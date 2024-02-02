@@ -8,7 +8,7 @@ import { Row, Col, Input, Form, Card, Switch } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateOnlyPositiveNumber } from 'utils/validation';
 import { prepareCaption } from 'utils/prepareCaption';
 import { getCodeValue } from 'utils/getCodeValue';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
@@ -143,7 +143,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="kilometer" label={translateContent('commonModules.label.exchangeDetails.kms')} initialValue={formData?.kilometer} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.kilometer')), validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.exchangeDetails.kilometer'))]}>
+                            <Form.Item name="kilometer" label={translateContent('commonModules.label.exchangeDetails.kms')} initialValue={formData?.kilometer} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.kilometer')), validateOnlyPositiveNumber(translateContent('commonModules.label.exchangeDetails.kilometer'))]}>
                                 <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.kilometer'))} maxLength={50} />
                             </Form.Item>
                         </Col>
@@ -223,12 +223,12 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerExpectedPrice" label={translateContent('commonModules.label.exchangeDetails.customerExpectedPrice')} initialValue={formData?.customerExpectedPrice} rules={[validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.exchangeDetails.customerExpectedPrice'))]}>
+                            <Form.Item name="customerExpectedPrice" label={translateContent('commonModules.label.exchangeDetails.customerExpectedPrice')} initialValue={formData?.customerExpectedPrice} rules={[validateOnlyPositiveNumber(translateContent('commonModules.label.exchangeDetails.customerExpectedPrice'))]}>
                                 <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.customerExpectedPrice'))} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="procurementPrice" label={translateContent('commonModules.label.exchangeDetails.procurementPrice')} initialValue={formData?.procurementPrice} rules={[validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.exchangeDetails.procurementPrice'))]}>
+                            <Form.Item name="procurementPrice" label={translateContent('commonModules.label.exchangeDetails.procurementPrice')} initialValue={formData?.procurementPrice} rules={[validateOnlyPositiveNumber(translateContent('commonModules.label.exchangeDetails.procurementPrice'))]}>
                                 <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.procurementPrice'))} />
                             </Form.Item>
                         </Col>

@@ -23,7 +23,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const IssueIndentMasterMain = (props) => {
-    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload, setReportDetail, initialReport, setInitialReport } = props;
+    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload, setReportDetail } = props;
 
     const defaultVisibility = {
         canCancel: true,
@@ -121,7 +121,6 @@ const IssueIndentMasterMain = (props) => {
         const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.oemInvoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
 
         const onSuccess = (res) => {
-            setInitialReport(true);
             issueForm.resetFields();
             setIssueModal(false);
             resetVinDetails();
@@ -232,7 +231,7 @@ const IssueIndentMasterMain = (props) => {
                                                                 icon={<FiDownload />}
                                                                 onClick={() => {
                                                                     setReportDetail();
-                                                                    handlePrintDownload(element, initialReport);
+                                                                    handlePrintDownload(element);
                                                                 }}
                                                             >
                                                                 {BUTTON_NAME_CONSTANTS?.PRINT?.name}
