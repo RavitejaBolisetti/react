@@ -37,7 +37,7 @@ const ViewDetail = (props) => {
                                         {REQUEST_CONSTANT?.[data?.requestType]} | {checkAndSetDefaultValue(data?.customerName, false)} | {selectedAMC?.amcRegistrationNumber}
                                     </Typography>
                                 </Row>
-                                {AMCStatusTags(data?.amcStatus)}
+                                {AMCStatusTags(data?.requestStatus)}
                             </Row>
                             <Row type="flex" align="middle" className={data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>

@@ -610,9 +610,9 @@ export const AMCRegistrationMasterBase = (props) => {
         if (!type) {
             finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber };
         } else if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
-            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? (isMNMApproval ? QUERY_BUTTONS_CONSTANTS?.APPROVED?.key : QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) : QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails?.[0], amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? (isMNMApproval ? QUERY_BUTTONS_CONSTANTS?.APPROVED?.key : QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) : QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
         } else if (type === AMC_CONSTANTS?.AMC_CANCELLATION?.key) {
-            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails?.[0], amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
         }
 
         const onError = (message) => {
@@ -811,7 +811,7 @@ export const AMCRegistrationMasterBase = (props) => {
             .validateFields()
             .then(() => {
                 if (isMNMApproval) {
-                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails[0], amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
                     onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
                 } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
                     setRejectRequest(true);
@@ -824,7 +824,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 } else if (amcWholeCancellation) {
                     setRejectRequest(true);
                 } else {
-                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails[0], amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
                     onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
                 }
             })
