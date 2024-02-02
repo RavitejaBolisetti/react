@@ -82,7 +82,7 @@ export const AddOnDetailsMasterMain = (props) => {
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
     const { selectedOrder } = props;
 
-    const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData,handleLocalFormChange } = props;
+    const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData, handleLocalFormChange } = props;
     const { fetchAmc, listAmcLoading } = props;
     const { fetchRsa, listRsaLoading } = props;
     const { fetchSheild, listSheildLoaing } = props;
@@ -113,8 +113,20 @@ export const AddOnDetailsMasterMain = (props) => {
                 value: selectedOrder?.invoicehdrId,
                 name: 'Invoice Number',
             },
+            {
+                key: 'vin',
+                title: 'vin',
+                value: requestPayload?.vehicleDetails?.vinNumber,
+                name: 'VIN',
+            },
+            {
+                key: 'odometerReading',
+                title: 'odometerReading',
+                value: 2,
+                name: 'odometer reading',
+            },
         ];
-    }, [selectedOrder]);
+    }, [selectedOrder, requestPayload?.vehicleDetails?.vinNumber]);
 
     useEffect(() => {
         if (selectedOrder?.invoicehdrId && userId) {
@@ -204,15 +216,20 @@ export const AddOnDetailsMasterMain = (props) => {
             .catch((err) => console.error(err));
     };
     const handleAmcDescriptionData = (amcSchemeCode) => {
-        const params = [
-            ...extraParams,
-            {
-                key: 'type',
-                title: 'Amc Scheme code',
-                value: amcSchemeCode,
-            },
-        ];
-        fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams: params, onErrorAction });
+        console.log('amcSchemeCode', amcSchemeCode);
+        fetchAmc({
+            setIsLoading: listAmcLoading,
+            userId,
+            extraParams: [
+                ...extraParams,
+                {
+                    key: 'type',
+                    title: 'Amc Scheme code',
+                    value: amcSchemeCode,
+                },
+            ],
+            onErrorAction,
+        });
     };
     const onFinish = () => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
