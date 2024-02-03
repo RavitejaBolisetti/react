@@ -43,6 +43,7 @@ const RequestDetailMasterBase = (props) => {
         handleRequest,
         workflowDetails,
         screenType,
+        registrationPriceType : requestPayload?.registrationDetails?.registrationInformation?.priceType
     };
 
     return (

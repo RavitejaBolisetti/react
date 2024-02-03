@@ -852,7 +852,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
+        setStatus(detailShieldData?.requestDetails[0]?.requestStatus);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);
@@ -895,7 +895,8 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleCancelScheme = () => {
-        const data = { id: detailShieldData?.id, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, userId: userId, status: status, ...cancelSchemeForm.getFieldsValue() };
+        const detailPayload = detailShieldData?.requestDetails?.[0];
+        const data = { id: detailPayload?.id, shieldHdrId: detailPayload?.shieldHdrId, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, userId: userId, status: status, ...cancelSchemeForm.getFieldsValue() };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
