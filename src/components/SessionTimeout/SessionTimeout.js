@@ -106,15 +106,20 @@ const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNo
 
     const handleSessionContinueAction = () => {
         activate();
-        doRefreshToken({
-            onSuccess: (res) => {
-                Modal.destroyAll();
-                setIsModalOpen(false);
-                authPostLogin(res?.data);
-            },
-            data: { userId, token: refreshToken || token },
-            onError,
-        });
+        if (refreshToken) {
+            doRefreshToken({
+                onSuccess: (res) => {
+                    Modal.destroyAll();
+                    setIsModalOpen(false);
+                    authPostLogin(res?.data);
+                },
+                data: { userId, token: refreshToken },
+                onError,
+            });
+        } else {
+            Modal.destroyAll();
+            setIsModalOpen(false);
+        }
     };
 
     const onSuccess = (res) => {
