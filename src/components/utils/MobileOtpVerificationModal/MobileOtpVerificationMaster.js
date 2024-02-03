@@ -156,7 +156,7 @@ const MobileOtpVerificationBase = (props) => {
                 setNumbValidatedSuccess(true);
             };
             const onError = (message) => {
-                showGlobalNotification({ notificationType: userId ? 'error' : 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
+                showGlobalNotification({ notificationType: userId ? 'error' : 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message });
                 if (otpInput?.length === 6) {
                     setCounter(0);
                 }

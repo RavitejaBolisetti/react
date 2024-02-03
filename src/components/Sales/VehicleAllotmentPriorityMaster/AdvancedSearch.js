@@ -19,7 +19,7 @@ import styles from 'assets/sass/app.module.scss';
 export const AdvancedSearchFrom = (props) => {
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
     const {
-        productHierarchyList,
+        modelData,
         advanceFilterForm: { resetFields },
     } = props;
 
@@ -52,13 +52,13 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.oldModelGroup} label={translateContent('vehicleAllotmentPriorityMaster.label.oldModel')} name="oldModelGroup" rules={[validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.oldModel'))]}>
-                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect(translateContent('vehicleAllotmentPriorityMaster.label.oldModel')) })}
+                    <Form.Item initialValue={filterString?.oldModelGroup} label={translateContent('vehicleAllotmentPriorityMaster.label.oldModelExchange')} name="oldModelGroup" rules={[validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.oldModelExchange'))]}>
+                        {customSelectBox({ data: modelData, fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, placeholder: preparePlaceholderSelect(translateContent('vehicleAllotmentPriorityMaster.label.oldModel')) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.newModelGroup} label={translateContent('vehicleAllotmentPriorityMaster.label.newModel')} name="newModelGroup" rules={[validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.newModel'))]}>
-                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect(translateContent('vehicleAllotmentPriorityMaster.label.newModel')) })}
+                    <Form.Item initialValue={filterString?.newModelGroup} label={translateContent('vehicleAllotmentPriorityMaster.label.newModelBooking')} name="newModelGroup" rules={[validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.newModelBooking'))]}>
+                        {customSelectBox({ data: modelData, fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, placeholder: preparePlaceholderSelect(translateContent('vehicleAllotmentPriorityMaster.label.newModel')) })}
                     </Form.Item>
                 </Col>
             </Row>
