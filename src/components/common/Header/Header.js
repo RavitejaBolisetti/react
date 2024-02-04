@@ -280,7 +280,7 @@ const HeaderMain = (props) => {
                         },
                     });
                 }
-            }, 10 * 1000);
+            }, 900 * 1000);
 
             return () => {
                 clearInterval(interval);
