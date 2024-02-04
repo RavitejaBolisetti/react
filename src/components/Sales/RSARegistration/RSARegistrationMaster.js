@@ -697,8 +697,8 @@ export const RSARegistrationMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const handleCancelScheme = () => {
-        const data = { ...rsaDetails, requestDetails: { ...rsaDetails?.requestDetails, rsaStatus: status, rsaRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, userId: userId, ...cancelSchemeForm.getFieldsValue(), rsaCancelRemarks: cancelSchemeForm.getFieldsValue()?.cancelRemarks }, id: rsaDetails?.id };
-        delete data?.requestDetails?.cancelRemarks;
+        const data = { ...rsaDetails, requestDetails: { ...rsaDetails?.requestDetails?.[0], rsaStatus: status, rsaRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, userId: userId, ...cancelSchemeForm.getFieldsValue(), rsaCancelRemarks: cancelSchemeForm.getFieldsValue()?.cancelRemarks }, id: rsaDetails?.id };
+        delete data?.requestDetails?.[0]?.cancelRemarks;
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
