@@ -16,10 +16,14 @@ import { Modal } from 'antd';
 import * as routing from 'constants/routing';
 import { showGlobalNotification } from 'store/actions/notification';
 import { translateContent } from 'utils/translateContent';
+import { USER_TYPE } from 'constants/userType';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId, isLoggedIn, refreshToken },
+        common: {
+            Header: { data: loginUserData = [] },
+        },
 
         data: {
             ConfigurableParameterEditing: { isLoaded, data: configData = [] },
@@ -32,6 +36,7 @@ const mapStateToProps = (state) => {
         isLoggedIn,
         isLoaded,
         timeOutConfig: configData?.find((i) => i.controlId === 'STOUT'),
+        loginUserData,
     };
 };
 
@@ -47,11 +52,12 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNotification, refreshToken, token, userId, timeOutConfig }) => {
+const SessionTimeoutMain = ({ loginUserData, doLogout, doRefreshToken, showGlobalNotification, refreshToken, token, userId, timeOutConfig }) => {
     const navigate = useNavigate();
     const [timeOutSetting, setTimeOutSetting] = useState({ timeout: 180_000, promptBeforeIdle: 30_000 });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [remaining, setRemaining] = useState(timeOutSetting?.timeout);
+    const { userType = undefined } = loginUserData;
 
     useEffect(() => {
         if (timeOutConfig) {
@@ -106,16 +112,18 @@ const SessionTimeoutMain = ({ isLoggedIn, doLogout, doRefreshToken, showGlobalNo
 
     const handleSessionContinueAction = () => {
         activate();
-        if (refreshToken) {
-            doRefreshToken({
-                onSuccess: (res) => {
-                    Modal.destroyAll();
-                    setIsModalOpen(false);
-                    authPostLogin(res?.data);
-                },
-                data: { userId, token: refreshToken },
-                onError,
-            });
+        if (userType === USER_TYPE?.DEALER?.key) {
+            if (refreshToken) {
+                doRefreshToken({
+                    onSuccess: (res) => {
+                        Modal.destroyAll();
+                        setIsModalOpen(false);
+                        authPostLogin(res?.data);
+                    },
+                    data: { userId, token: refreshToken },
+                    onError,
+                });
+            }
         } else {
             Modal.destroyAll();
             setIsModalOpen(false);

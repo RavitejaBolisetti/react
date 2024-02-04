@@ -265,26 +265,29 @@ const HeaderMain = (props) => {
     const isDashboard = false;
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            if (refreshToken) {
-                doRefreshToken({
-                    onSuccess: (res) => {
-                        Modal.destroyAll();
-                        authPostLogin(res?.data);
-                    },
-                    data: { userId, token: refreshToken },
-                    onError: () => {
-                        showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Session Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
-                        navigate(routing.ROUTING_LOGIN);
-                    },
-                });
-            }
-        }, 10 * 1000);
+        if (userType === USER_TYPE?.DEALER?.key) {
+            const interval = setInterval(() => {
+                if (refreshToken) {
+                    doRefreshToken({
+                        onSuccess: (res) => {
+                            Modal.destroyAll();
+                            authPostLogin(res?.data);
+                        },
+                        data: { userId, token: refreshToken },
+                        onError: () => {
+                            showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Session Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
+                            navigate(routing.ROUTING_LOGIN);
+                        },
+                    });
+                }
+            }, 10 * 1000);
 
-        return () => {
-            clearInterval(interval);
-        };
-    });
+            return () => {
+                clearInterval(interval);
+            };
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userType]);
 
     return (
         <>
