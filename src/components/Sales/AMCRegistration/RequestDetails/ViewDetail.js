@@ -49,7 +49,7 @@ const ViewDetail = (props) => {
 
                             {userType === AMC_CONSTANTS?.MNM?.key ? (
                                 <>
-                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED && data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key && (
+                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED?.key && data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key && (
                                         <>
                                             <Divider className={styles.marB20} />
                                             <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
@@ -100,7 +100,7 @@ const ViewDetail = (props) => {
                                         </>
                                     )}
 
-                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED && data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key && (
+                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED?.key && data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key && (
                                         <>
                                             <Divider />
                                             <Row gutter={20} className={styles.marB20}>

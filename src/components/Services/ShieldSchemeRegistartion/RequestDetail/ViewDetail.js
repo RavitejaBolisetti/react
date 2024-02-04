@@ -52,7 +52,7 @@ const ViewDetail = (props) => {
 
                             {userType === AMC_CONSTANTS?.MNM?.key ? (
                                 <>
-                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED && data?.requestStatus === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key && (
+                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED?.key && data?.requestStatus === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key && (
                                         <>
                                             {/* <Divider className={styles.marT20} /> */}
                                             {/* <div className={styles.marB20}> */}
@@ -107,7 +107,7 @@ const ViewDetail = (props) => {
                                             )}
                                         </>
                                     )}
-                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED && data?.requestStatus === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key && (
+                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED?.key && data?.requestStatus === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key && (
                                         <>
                                             <Divider />
                                             <Row gutter={20} className={styles.marB20}>
