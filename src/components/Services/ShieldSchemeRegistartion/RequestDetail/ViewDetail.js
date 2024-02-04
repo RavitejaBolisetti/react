@@ -27,17 +27,17 @@ const ViewDetail = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
     return (
         <>
-            {formData &&
+            {formData?.length > 0 &&
                 formData?.map((data, i) => {
+                    const requestType = data?.requestType;
                     return (
                         <Card>
                             <Row type="flex" justify="space-between" align="middle" size="large">
                                 <Row type="flex" justify="space-around" align="middle">
                                     <Typography>
-                                        {REQUEST_CONSTANT?.[data?.requestType] | translateContent('shieldSchemeRegistration.label.registrationRequest')} | {checkAndSetDefaultValue(data?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
+                                        {REQUEST_CONSTANT?.[requestType]} | {checkAndSetDefaultValue(data?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
                                     </Typography>
                                 </Row>
                                 {RSARegistrationStatusTag(data?.requestStatus)}
@@ -45,7 +45,7 @@ const ViewDetail = (props) => {
                             <Row type="flex" align="middle" className={data?.requestStatus === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <div className={styles.tableTextColor85}>
-                                        {translateContent('amcRegistration.label.requestedOn')}: {screenType === 'RSA' ? checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, registrationPriceType), false, DATA_TYPE?.DATE_TIME?.key) : data?.rsaRegistrationDate}
+                                        {translateContent('amcRegistration.label.requestedOn')}: {screenType !== 'RSA' ? checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, registrationPriceType), false, DATA_TYPE?.DATE_TIME?.key) : data?.rsaRegistrationDate}
                                     </div>
                                 </Col>
                             </Row>
