@@ -16,7 +16,7 @@ import { CardSkeleton } from 'components/common/Skeleton';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { typeData, schemeData, styles, isLoading = false } = props;
+    const { isOTFModule = false, typeData, schemeData, styles, isLoading = false } = props;
     const [activeKey, setActiveKey] = useState([1]);
 
     const viewProps = {
@@ -86,7 +86,8 @@ const ViewDetailMain = (props) => {
         </Descriptions>
     );
 
-    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || (schemeData && schemeData?.sales?.length > 0);
+    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || (!isOTFModule && schemeData?.sales?.length > 0) || (isOTFModule && schemeData?.sales?.filter((i) => i?.active)?.length > 0);
+
     return isLoading ? (
         <CardSkeleton content={false} titleHeight={60} count={2} />
     ) : (

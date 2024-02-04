@@ -205,7 +205,7 @@ const AddEditFormMain = (props) => {
         );
     };
 
-    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || schemeData?.sales?.length > 0;
+    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || (!isOTFModule && schemeData?.sales?.length > 0) || (isOTFModule && schemeData?.sales?.filter((i) => i?.active)?.length > 0);
     return isLoading ? (
         <CardSkeleton content={false} titleHeight={60} count={2} />
     ) : (
