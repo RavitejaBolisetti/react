@@ -411,7 +411,10 @@ export const AMCRegistrationMasterBase = (props) => {
     useEffect(() => {
         if (userId && filterString?.amcStatus) {
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+            const onErrorAction = () => {
+                setShowDataLoading(false);
+            };
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, filterString]);
@@ -610,7 +613,7 @@ export const AMCRegistrationMasterBase = (props) => {
         if (!type) {
             finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber };
         } else if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
-            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails?.[0], amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? (isMNMApproval ? QUERY_BUTTONS_CONSTANTS?.APPROVED?.key : QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) : QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails?.[0], amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? (isMNMApproval ? QUERY_BUTTONS_CONSTANTS?.APPROVED?.key : QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) : requestPayload?.amcRequestDetails?.[0]?.requestStatus, ...cancelAMCForm.getFieldsValue() } };
         } else if (type === AMC_CONSTANTS?.AMC_CANCELLATION?.key) {
             finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails?.[0], amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
         }
