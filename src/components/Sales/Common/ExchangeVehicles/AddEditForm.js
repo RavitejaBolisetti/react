@@ -143,7 +143,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="kilometer" label={translateContent('commonModules.label.exchangeDetails.kms')} initialValue={formData?.kilometer} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.kilometer')), validateOnlyPositiveNumber(translateContent('commonModules.label.exchangeDetails.kilometer'))]}>
+                            <Form.Item name="kilometer" label={translateContent('commonModules.label.exchangeDetails.kms')} initialValue={formData?.kilometer} rules={[validateRequiredInputField(translateContent('commonModules.label.exchangeDetails.kilometer')), validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.exchangeDetails.kilometer'))]}>
                                 <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.kilometer'))} maxLength={50} />
                             </Form.Item>
                         </Col>
@@ -228,7 +228,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="procurementPrice" label={translateContent('commonModules.label.exchangeDetails.procurementPrice')} initialValue={formData?.procurementPrice} rules={[validateOnlyPositiveNumber(translateContent('commonModules.label.exchangeDetails.procurementPrice'))]}>
+                            <Form.Item name="procurementPrice" label={translateContent('commonModules.label.exchangeDetails.procurementPrice')} initialValue={formData?.procurementPrice} rules={[validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.exchangeDetails.procurementPrice'))]}>
                                 <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.procurementPrice'))} />
                             </Form.Item>
                         </Col>

@@ -97,7 +97,8 @@ const SchemeDetailsMasterBase = (props) => {
         styles,
         onCloseAction,
         formData,
-        isLoading,
+        isLoading,        
+        isOTFModule: true,
         ...props,
     };
     const myProps = {
