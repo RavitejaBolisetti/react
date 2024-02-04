@@ -409,7 +409,7 @@ export const OtfBlockMasterMain = (props) => {
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i?.data?.prodctCode);
 
-            setButtonData({ ...defaultBtnVisiblity, editBtn: flatternData.find((i) => formData?.data?.prodctCode === i.data?.prodctCode)?.data?.attributeKey === ModelGroup?.MODEL_GROUP?.key });
+            setButtonData({ ...defaultBtnVisiblity, editBtn: formData?.data?.attributeType === ModelGroup?.MODEL_GROUP?.key });
 
             const prodctShrtName = flatternData.find((i) => formData?.data?.prodctCode === i.data?.prodctCode)?.data?.prodctShrtName;
 
