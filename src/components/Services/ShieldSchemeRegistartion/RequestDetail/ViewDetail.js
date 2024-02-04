@@ -17,6 +17,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { RSARegistrationStatusTag } from 'components/Sales/RSARegistration/utils/RSARegistrationStatusTag';
 import { REQUEST_CONSTANT } from 'components/Sales/AMCRegistration/utils/AMCConstants';
 import RequestedOnDate from './RequestedOnDate';
+import RequestedOnDateRSA from './RequestdateRSA';
 
 const ViewDetail = (props) => {
     const { registrationPriceType, screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowDetails, typeData } = props;
@@ -45,7 +46,7 @@ const ViewDetail = (props) => {
                             <Row type="flex" align="middle" className={data?.requestStatus === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <div className={styles.tableTextColor85}>
-                                        {translateContent('amcRegistration.label.requestedOn')}: {screenType !== 'RSA' ? checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, registrationPriceType), false, DATA_TYPE?.DATE_TIME?.key) : data?.rsaRegistrationDate}
+                                        {translateContent('amcRegistration.label.requestedOn')}: {screenType !== 'RSA' ? checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, registrationPriceType), false, DATA_TYPE?.DATE_TIME?.key) : checkAndSetDefaultValue(RequestedOnDateRSA(data, data?.requestStatus, registrationPriceType), false, DATA_TYPE?.DATE_TIME?.key)}
                                     </div>
                                 </Col>
                             </Row>

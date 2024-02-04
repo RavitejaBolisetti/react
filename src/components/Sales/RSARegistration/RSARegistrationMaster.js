@@ -772,7 +772,7 @@ export const RSARegistrationMasterBase = (props) => {
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
+        setStatus(rsaDetails?.requestDetails[0]?.requestStatus);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);
