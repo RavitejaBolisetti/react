@@ -13,7 +13,6 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { UploadUtil } from 'utils/Upload';
 
-
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { SearchBox } from 'components/utils/SearchBox';
@@ -27,7 +26,6 @@ const AddEditForm = (props) => {
     const { pincodeData, onHandleSelect, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: true };
     const { viewMode } = formActionType;
-    
 
     const [options, setOptions] = useState(false);
     const [searchby, setSearchType] = useState();
@@ -106,7 +104,6 @@ const AddEditForm = (props) => {
         { key: '2', value: 'Change Registration No.' },
         { key: '3', value: 'Change Insurance Expiry Date' },
         { key: '4', value: 'Current PUC Expiry Date' },
-       
     ];
 
     const searchType = [
@@ -122,169 +119,140 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={addressForm} id="myAdd" onFinish={handleSave} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
-    {/* //    <Row gutter={20}> */}
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                
+                {/* //    <Row gutter={20}> */}
                 <Card>
-                <Row gutter={20}>        
-          <Row type="flex" align="middle">
-                                   <Text strong> {'Bin Wise Stock Details'}</Text>                                        
-                               </Row>                            
-                               <Divider className={styles.marT20} />
-              
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.requesttype')} name="requesttype" rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.requesttype'))]}>
-                            {customSelectBox({ data: requesttype, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.requesttype')) })}
-                        </Form.Item>
+                    <Row align="middle">
+                        <Text strong> {'Change Reques'}</Text>
+                    </Row>
+                    <Divider className={styles.marT20} />
 
-                        <Form.Item label={translateContent('vehicleRelated.label.dealerBranch')}>
-                            <Input value={'Acbd1234456'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.searchBy')} name="searchBy" rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.searchBy'))]}>
-                            {customSelectBox({ onChange: onHandleChange, data: searchType, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.searchBy')) })}
-                        </Form.Item>
-                    </Col>
-
-                    {searchby === '1' && (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label={translateContent('vehicleRelated.label.registrationNo')}>
-                                <Search placeholder="Search" allowClear className={styles.headerSearchField} />
+                    <Row gutter={20}>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.requesttype')} name="requesttype" rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.requesttype'))]}>
+                                {customSelectBox({ data: requesttype, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.requesttype')) })}
                             </Form.Item>
                         </Col>
-                    )}
-                   
-                    {searchby === '2' && (
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.dealerBranch')}>
+                                <Input value={'Acbd1234456'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.searchBy')} name="searchBy" rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.searchBy'))]}>
+                                {customSelectBox({ onChange: onHandleChange, data: searchType, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.searchBy')) })}
+                            </Form.Item>
+                        </Col>
+
+                        {searchby === '1' && (
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label={translateContent('vehicleRelated.label.registrationNo')}>
+                                    <Search placeholder="Search" allowClear className={styles.headerSearchField} />
+                                </Form.Item>
+                            </Col>
+                        )}
+
+                        {searchby === '2' && (
+                            <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                <Form.Item label={translateContent('vehicleRelated.label.chassisNo')}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.chassisNo'))} maxLength={50} {...disabledProps} />
+                                </Form.Item>
+                            </Col>
+                        )}
+                    </Row>
+                </Card>
+                <Card>
+                    <Row type="flex" align="middle">
+                        <Text strong> {'Current Details'}</Text>
+                    </Row>
+                    <Divider className={styles.marT20} />
+                    <Row gutter={16}>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.customerId')}>
+                                <Input value={'Acbd1234456'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.customerName')}>
+                                <Input value={'Aryaman Kulshreshtha'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerName'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+
                         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.chassisNo')}>
-                                <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.chassisNo'))} maxLength={50} {...disabledProps} />
+                                <Input value={'SDFG12345'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.chassisNo'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                    )}
-                       
-</Row>
-</Card>
-</Col>
-<Card>
-                           
- <Row type="flex" align="middle">
-       <Text strong> {'Bin Wise Stock Details'}</Text>                                        
-          </Row>                            
-            <Divider className={styles.marT20} />
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.customerId')}>
-                            <Input value={'Acbd1234456'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
 
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.customerName')}>
-                            <Input value={'Aryaman Kulshreshtha'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerName'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.engineNo')}>
+                                <Input value={'HJK12345'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.engineNo'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
 
-
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.chassisNo')}>
-                            <Input value={'SDFG12345'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.chassisNo'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.engineNo')}>
-                            <Input value={'HJK12345'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.engineNo'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.currentInsuranceExpiryDate')}>
-                            <Input value={'23/09/2025'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.currentInsuranceExpiryDate'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.currentPUCExpiryDate')}>
-                            <Input value={'11/02/2025'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.currentPUCExpiryDate'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-
-</Card>          
-<Row gutter={20}>      
-
- <Card>
-                           
-                           <Row type="flex" align="middle">
-                                                    <Text strong> {'Bin Wise Stock Details'}</Text>                                        
-                                                </Row>                            
-                                                <Divider className={styles.marT20} />
-                <Divider />
-
-               
-                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.newcustomerId')}>
-                            <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newcustomerId'))} maxLength={50}  />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.customerName')}>
-                            <Input value={'Aryaman Kulshreshtha'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerName'))} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-
-                 
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('vehicleRelated.label.newregistrationNo')}>
-                            <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newregistrationNo'))} maxLength={50}/>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleRelated.label.newInsuranceExpiryDate')} name="newInsuranceExpiryDate">
-                                        <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label={translateContent('vehicleRelated.label.newPUCExpiryDate')} name="newPUCExpiryDate">
-                                        <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
-                                    </Form.Item>
-                                </Col>
-                
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Descriptions.Item label={''}>
-                        <Dragger className={styles.uploadDraggerStrip}>
-                            <Space direction="vertical">
-                                <div>
-                                    <Title level={5}>{'Click or drop your file here to upload'}</Title>
-                                </div>
-                            </Space>
-                        </Dragger>
-                    </Descriptions.Item>
-    
-                  </Col>
-                  </Card>
-                </Row>
-
-
-
-
-
-
-
-
-                <Form.Item hidden name="id" initialValue="" />
-{/* 
-                {!viewMode && (
-                    <Row gutter={20} className={styles.marB20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
-                            <Button onClick={handleSave} type="primary">
-                                {translateContent('global.buttons.save')}
-                            </Button>
-                            <Button onClick={handleCancelFormEdit} danger>
-                                {translateContent('global.buttons.cancel')}
-                            </Button>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.currentInsuranceExpiryDate')}>
+                                <Input value={'23/09/2025'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.currentInsuranceExpiryDate'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.currentPUCExpiryDate')}>
+                                <Input value={'11/02/2025'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.currentPUCExpiryDate'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
                         </Col>
                     </Row>
-                )} */}
+                </Card>
+                <Card>
+                    <Row gutter={20}>
+                        <Row type="flex" align="middle">
+                            <Text strong> {'New Details'}</Text>
+                        </Row>
+                        <Divider className={styles.marT20} />
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.newcustomerId')}>
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newcustomerId'))} maxLength={50} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.customerName')}>
+                                <Input value={'Aryaman Kulshreshtha'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerName'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.newregistrationNo')}>
+                                <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newregistrationNo'))} maxLength={50} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.newInsuranceExpiryDate')} name="newInsuranceExpiryDate">
+                                <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.newPUCExpiryDate')} name="newPUCExpiryDate">
+                                <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
+                            <Descriptions.Item label={''}>
+                                <Dragger className={styles.uploadDraggerStrip}>
+                                    <Space direction="vertical">
+                                        <div>
+                                            <Title level={5}>{'Click or drop your file here to upload'}</Title>
+                                        </div>
+                                    </Space>
+                                </Dragger>
+                            </Descriptions.Item>
+                        </Col>
+                    </Row>
+                </Card>
+
+                <Form.Item hidden name="id" initialValue="" />
             </Form>
         </>
     );

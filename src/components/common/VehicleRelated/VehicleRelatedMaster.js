@@ -28,7 +28,6 @@ import { QUERY_BUTTONS } from './QueryButtons/QueryButtonConstants';
 import { VEHICLERELATED_SECTION } from 'constants/modules/VehicleRelated/VehicleRelatedSections';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { QueryButtons } from './QueryButtons';
-// import AppliedAdvanceFilter from 'components/common/RoleManagement/AppliedAdvanceFilter';
 
 
 const mapStateToProps = (state) => {
@@ -75,17 +74,6 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-// const statusFilter = [
-//     {
-//         key: 1,
-//         value: ' Pending For Approval',
-//     },
-//     {
-//         key: 2,
-//         value: 'Approved',
-//     },
-   
-// ];
 
 export const VehicleRelatedMasterBase = (props) => {
     const { userId, data, totalRecords, moduleTitle } = props;

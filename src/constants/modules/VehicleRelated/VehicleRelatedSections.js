@@ -10,10 +10,9 @@ export const VEHICLERELATED_SECTION = {
         title: 'Change Request Details',
         displayOnList: true,
     },
-   
 
     APPROVAL_DETAILS: {
-        id: 2,
+        id: 3,
         title: 'Approval Details',
         displayOnList: true,
     },

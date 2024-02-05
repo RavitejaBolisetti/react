@@ -255,16 +255,16 @@ const RequestDetailsMasterBase = (props) => {
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title || translateContent(section?.translateKey)} </h2>
-                        <Card>
+                        {/* <Card> */}
                            
                                 <>
-                                <Row type="flex" align="middle">
+                                {/* <Row type="flex" align="middle">
                                         <Text strong> {'Bin Wise Stock Details'}</Text>                                        
                                     </Row>                            
-                                    <Divider className={styles.marT20} />
+                                    <Divider className={styles.marT20} /> */}
                                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                               </>                         
-                        </Card>
+                        {/* </Card> */}
                     </Col>
                 </Row>
                 <Row>

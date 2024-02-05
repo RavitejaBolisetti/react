@@ -10,10 +10,10 @@ import { withDrawer } from 'components/withDrawer';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
-import ApprovalDetailsMaster from './ApprovalDetails';
 
 import { VEHICLERELATED_SECTION } from 'constants/modules/VehicleRelated/VehicleRelatedSections';
 import RequestDetailsMaster from './RequestDetails';
+import { ClaimApprovalRequestMaster, ClaimDetailsMaster } from './ClaimApprovalRequest';
 
 const VehicleRelatedMasterContainerMain = (props) => {
     const { currentSection } = props;
@@ -26,9 +26,9 @@ const VehicleRelatedMasterContainerMain = (props) => {
             case VEHICLERELATED_SECTION.REQUEST_DETAILS.id: {
                 return <RequestDetailsMaster {...myProps} />;
             }
-                     
+
             case VEHICLERELATED_SECTION.APPROVAL_DETAILS.id: {
-                return <ApprovalDetailsMaster {...myProps} />;
+                return <ClaimApprovalRequestMaster {...myProps} />;
             }
             default: {
                 return false;
