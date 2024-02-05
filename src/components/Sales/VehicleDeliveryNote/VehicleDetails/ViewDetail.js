@@ -35,7 +35,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.vinNumber')}>{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.engineNumber')}>{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.keyNumber')}>{checkAndSetDefaultValue(formData?.keyNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode')}>{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode')}>{checkAndSetDefaultValue(formData?.oemModelCode, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelDescription')}>{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>

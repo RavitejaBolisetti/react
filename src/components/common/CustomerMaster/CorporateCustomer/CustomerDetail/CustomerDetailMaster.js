@@ -104,12 +104,11 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
-
+    
     useEffect(() => {
         if (customerDetailsData) {
-            form?.setFieldsValue({ ...customerDetailsData, corporateDescription: customerDetailsData?.corporateName });
+            form.setFieldsValue({ ...customerDetailsData, corporateDescription: customerDetailsData?.corporateName });
             setFormData(customerDetailsData);
-            fetchCorporateTypeLovList({ setIsLoading: listCorporateTypeLovShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerDetailsData]);
@@ -122,11 +121,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && !isCorporateLovDataLoaded) {
+        if (userId) {
             fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
+            fetchCorporateTypeLovList({ setIsLoading: listCorporateTypeLovShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isCorporateLovDataLoaded]);
+    }, [userId]);
 
     const extraParams = [
         {
