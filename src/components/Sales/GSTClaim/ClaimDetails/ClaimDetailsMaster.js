@@ -3,16 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ViewDetail from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
 import { DealerCorporateClaimFormButton } from '../CorporateClaimFormButton';
 
 import { MODULE_TYPE_CONSTANTS } from 'constants/modules/vehicleChecklistConstants';
 import styles from 'assets/sass/app.module.scss';
+import { NEXT_ACTION } from 'utils/btnVisiblity';
 
 const mapStateToProps = (state) => {
     const {
@@ -21,13 +23,9 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
-
-    const moduleTitle = 'Dealer Corporate Claims';
-
     let returnValue = {
         userId,
         typeData,
-        moduleTitle,
     };
     return returnValue;
 };
@@ -38,8 +36,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ClaimDetailsMain = (props) => {
-    const { userId, handleButtonClick, selectedRecord } = props;
-    const { isChecklistDataLoading } = props;
+    const { userId, handleButtonClick, selectedRecord, setButtonData, defaultBtnVisiblity } = props;
+    const { isChecklistDataLoading, specialClaimType } = props;
     const { showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, uniqueMatchKey } = props;
 
@@ -53,7 +51,12 @@ const ClaimDetailsMain = (props) => {
     const [AdvanceformData, setAdvanceformData] = useState([]);
     const [isEditing, setisEditing] = useState();
 
+    useEffect(() => {
+        setButtonData((prev) => ({ ...prev, claimInvoice: true, creditNote: true }));
+    }, []);
+
     const onFinish = (data) => {
+        handleButtonClick({ buttonAction: NEXT_ACTION });
         console.log('🚀 ~ file: CorporateClaim.js:83 ~ onFinish ~ data:', data);
     };
 
@@ -85,12 +88,10 @@ const ClaimDetailsMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {/* <h2>{translateContent('vehicleReceiptChecklist.heading.section' + section?.id)}</h2> */}
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <ViewDetail />
-                    {/* <AddEditForm {...formProps} /> */}
+                    {!specialClaimType ? <ViewDetail {...formProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

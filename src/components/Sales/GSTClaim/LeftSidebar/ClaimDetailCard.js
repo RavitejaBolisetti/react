@@ -35,7 +35,6 @@ const ClaimDetailCard = (props) => {
     const { ProfileData, isProductHierarchyLoading, record, isProfileDataLoading } = props;
     if (isProfileDataLoading || isProductHierarchyLoading) return <CardSkeleton />;
 
-
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -50,11 +49,7 @@ const ClaimDetailCard = (props) => {
                 }
                 key={1}
             >
-                <div className={styles.detailCardText}>
-                    Claim Type
-                    <span>{record?.claimType}</span>
-                </div>
-                <Divider />
+               
                 <div className={styles.detailCardText}>
                     {'Claim Date'}
                     <span>{record?.claimDate}</span>
@@ -64,12 +59,33 @@ const ClaimDetailCard = (props) => {
                     {'Claim Status'}
                     <span>{record?.claimStatus}</span>
                 </div>
+
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {'IRN Status'}
-                    <span>{record?.irnStatus}</span>
+                    {'Area Office'}
+                    <span>{'N/A'}</span>
                 </div>
                 <Divider />
+
+                <div className={styles.detailCardText}>
+                    Dealer code
+                    <span>{record?.claimType}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Dealer Name
+                    <span>{record?.claimDate}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Financial Year
+                    <span>{record?.claimStatus}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Month
+                    <span>{record?.irnStatus}</span>
+                </div>
             </Panel>
         </Collapse>
     );

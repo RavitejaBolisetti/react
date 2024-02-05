@@ -3,15 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Card } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { AddEditForm } from './AddEditForm';
+import ViewDetail from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { DealerCorporateClaimFormButton } from '../CorporateClaimFormButton';
+import { NEXT_ACTION } from 'utils/btnVisiblity';
 
 const mapStateToProps = (state) => {
     const {
@@ -21,12 +22,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Corporate Claims';
-
     let returnValue = {
         userId,
         typeData,
-        moduleTitle,
     };
     return returnValue;
 };
@@ -36,10 +34,10 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators({}, dispatch),
 });
 
-const CorporateClaimMain = (props) => {
-    const { isChecklistDataLoading } = props;
+const CreditNoteDetailMasterMain = (props) => {
+    const { isChecklistDataLoading, setButtonData, defaultBtnVisiblity } = props;
     const { showGlobalNotification } = props;
-    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, uniqueMatchKey } = props;
+    const { form, selectedCheckListId, section, formActionType, handleFormValueChange, uniqueMatchKey, handleButtonClick } = props;
 
     const pageIntialState = {
         pageSize: 10,
@@ -51,7 +49,12 @@ const CorporateClaimMain = (props) => {
     const [AdvanceformData, setAdvanceformData] = useState([]);
     const [isEditing, setisEditing] = useState();
 
+    useEffect(() => {
+        setButtonData((prev) => ({ ...defaultBtnVisiblity, attachDigitalSignature: true, generateIRN: true }));
+    }, []);
+
     const onFinish = (data) => {
+        handleButtonClick({ buttonAction: NEXT_ACTION });
         console.log('🚀 ~ file: CorporateClaim.js:83 ~ onFinish ~ data:', data);
     };
 
@@ -82,13 +85,10 @@ const CorporateClaimMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {/* <h2>{translateContent('vehicleReceiptChecklist.heading.section' + section?.id)}</h2> */}
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <Card className={styles.cardView}>
-                        <AddEditForm {...formProps} />
-                    </Card>
+                    <ViewDetail {...formProps} />
                 </Col>
             </Row>
             <Row>
@@ -99,4 +99,4 @@ const CorporateClaimMain = (props) => {
         </Form>
     );
 };
-export const CorporateClaimMaster = connect(mapStateToProps, mapDispatchToProps)(CorporateClaimMain);
+export const CreditNoteDetailMaster = connect(mapStateToProps, mapDispatchToProps)(CreditNoteDetailMasterMain);

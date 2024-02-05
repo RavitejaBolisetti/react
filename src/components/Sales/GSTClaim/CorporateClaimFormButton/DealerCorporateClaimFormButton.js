@@ -28,8 +28,27 @@ export const DealerCorporateClaimFormButton = ({ record, onCloseAction, buttonDa
                         </Button>
                     )}
                 </Col>
-
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
+                    {buttonData?.generateIRN && !buttonType && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                            Generate IRN
+                        </Button>
+                    )}
+                    {buttonData?.attachDigitalSignature && !buttonType && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                            Attach Digital Signature
+                        </Button>
+                    )}
+                    {buttonData?.claimInvoice && !buttonType && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                            View Claim Invoice
+                        </Button>
+                    )}
+                    {buttonData?.creditNote && !buttonType && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                            View Credit Note
+                        </Button>
+                    )}
                     {buttonData?.editBtn && !buttonType && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             {translateContent('global.buttons.edit')}

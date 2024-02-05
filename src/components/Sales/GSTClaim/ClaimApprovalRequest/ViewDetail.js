@@ -38,7 +38,7 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label={'Status' || translateContent('amcRegistration.label.invoiceDate')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.customerAddress, isLoading)}</Descriptions.Item>
                 </Descriptions>
                 <Row gutter={20} className={styles.marB20}>
-                    <Col xs={12} sm={12} md={12} lg={12}>
+                    <Col xs={24} sm={24} md={24} lg={24}>
                         <label>Remarks</label>
                         <TextArea
                             autoSize={{
@@ -51,22 +51,16 @@ const ViewDetailMain = (props) => {
                 </Row>
 
                 <Row gutter={20} className={styles.marB20}>
-                    <Col xs={8} sm={8} md={8} lg={8}>
+                    <Col xs={8} sm={12} md={12} lg={12} className={styles.buttonsGroupLeft}>
                         <Button type="primary" onClick={handleMNMApproval}>
                             Approve
                         </Button>
 
-                        <span className={styles.marL5}>
-                            <Button danger onClick={handleMNMRejection}>
-                                Reject
-                            </Button>
-                        </span>
-                        <span className={styles.marL5}>
-                            <Button danger onClick={handleMNMRejection}>
-                                Hold
-                            </Button>
-                        </span>
+                        <Button danger onClick={handleMNMRejection}>
+                            Reject
+                        </Button>
                     </Col>
+                  
                 </Row>
             </Card>
         </>

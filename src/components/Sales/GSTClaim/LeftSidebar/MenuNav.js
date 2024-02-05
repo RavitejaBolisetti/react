@@ -21,8 +21,8 @@ const MenuNav = (props) => {
     };
 
     const onHandle = ({ key, item }) => {
-        selectedOrder && setCurrentSection(key);
-        selectedOrder && setSection(item);
+        setCurrentSection(key);
+        setSection(item);
     };
 
     const items = deliveryNoteSectionList

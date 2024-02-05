@@ -13,6 +13,7 @@ import styles from 'assets/sass/app.module.scss';
 import { ClaimDetailsMaster } from './ClaimDetails';
 import { ClaimApprovalRequestMaster } from './ClaimApprovalRequest/ClaimApprovalRequestMaster';
 import { GST_CLAIM_SECTION } from 'constants/modules/IncentiveScheme/GstClaimSection';
+import { CreditNoteDetailMaster } from './CreditNoteDetail';
 
 const GSTClaimMainContainerMain = (props) => {
     const { currentSection } = props;
@@ -25,12 +26,12 @@ const GSTClaimMainContainerMain = (props) => {
             case GST_CLAIM_SECTION.CLAIM_DETAILS.id: {
                 return <ClaimDetailsMaster {...myProps} />;
             }
+            case GST_CLAIM_SECTION.CREDIT_NOTE_DETAILS.id: {
+                return <CreditNoteDetailMaster {...myProps} />;
+            }
             case GST_CLAIM_SECTION.APPROVAL_REQUEST.id: {
                 return <ClaimApprovalRequestMaster {...myProps} />;
             }
-            // case GST_CLAIM_SECTION.DOCUMENTS.id: {
-            //     return <SupportingDocumentMaster {...myProps} />;
-            // }
             default: {
                 return false;
             }

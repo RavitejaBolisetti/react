@@ -6,7 +6,6 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-// import AMCRegistrationMaster from 'components/Sales/AMCRegistration';
 import { translateContent } from 'utils/translateContent';
 import { GSTClaimMaster } from 'components/Sales';
 

@@ -9,7 +9,7 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize, ...rest }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Area Office',
@@ -52,19 +52,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             width: '14%',
         }),
 
-        // tblPrepareColumns({
-        //     title: 'Claim Status' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column4'),
-        //     dataIndex: 'claimStatus',
-        //     width: '14%',
-        // }),
-
-        // tblPrepareColumns({
-        //     title: 'Customer Name' || translateContent('vehicleReceiptChecklist.tableColumn.checklistMaster.column4'),
-        //     dataIndex: 'claimStatus',
-        //     width: '14%',
-        // }),
-
-        tblActionColumn({ handleButtonClick, styles, width: '8%', ...actionButtonVisibility }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', ...rest }),
     ];
 
     return tableColumn;

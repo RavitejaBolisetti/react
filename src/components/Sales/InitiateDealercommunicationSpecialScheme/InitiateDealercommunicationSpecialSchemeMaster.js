@@ -28,7 +28,6 @@ import { drawerTitle } from 'utils/drawerTitle';
 import { SpecialIncentiveSchemesContainer } from './SpecialIncentiveSchemesContainer';
 import { BudgetListModal } from './BudgtDetailsModal/CustomerListModal';
 import { INITIAL_DEALER_COMMUNICATION_SCHEME_SECTION } from 'constants/modules/IncentiveScheme/InitateDealerCommunicationSection';
-// import { INITIAL_DEALER_COMMUNICATION_SCHEME_SECTION } from 'constants/modules/IncentiveScheme/SpecialIncentiveSchemeSections';
 
 const mapStateToProps = (state) => {
     const {
@@ -413,8 +412,8 @@ export const InitiateDealercommunicationSpecialSchemeBase = (props) => {
         setAdvanceSearchVisible,
         handleSearchChange,
         handleButtonClick,
-        // saveButtonName: !isLastSection && 'Save'
-        saveButtonName: 'Save',
+        saveButtonName: !isLastSection && 'Save',
+        // saveButtonName: 'Save',
         showAddButton: true,
         showRefreshBtn: false,
     };

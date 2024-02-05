@@ -29,6 +29,7 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { DEALER_CORPORATE_SECTION } from 'constants/modules/DealerCorporateClaim/dealerClaimSections';
 // import { tableColumnPendingGeneration } from './tableColumnPendingGeneration';
 import { GSTClaimMainContainerMaster } from './GSTClaimMainContainer';
+import { GST_CLAIM_SECTION } from 'constants/modules/IncentiveScheme/GstClaimSection';
 
 const mapStateToProps = (state) => {
     const {
@@ -128,6 +129,10 @@ export const GSTClaimMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         cancelOtfBtn: false,
+        claimInvoice: false,
+        creditNote: true,
+        attachDigitalSignature: false,
+        generateIRN: false,
     };
     const pageIntialState = {
         pageSize: 10,
@@ -142,16 +147,16 @@ export const GSTClaimMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
+    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.UNCLAIMED?.key);
 
     const [page, setPage] = useState({ ...pageIntialState });
     const dynamicPagination = true;
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    // const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: true, canView: true, DeleteIcon: false, canAdd: true });
     const [rules, setrules] = useState({ ...rulesIntialstate });
-    const [currentStatusButton, setcurrentStatusButton] = useState('uc');
+    const [currentStatusButton, setcurrentStatusButton] = useState(QUERY_BUTTONS_CONSTANTS?.UNCLAIMED?.key);
+    const [specialClaimType, setSpecialClaimType] = useState(false);
 
     const extraParams = useMemo(() => {
         return [
@@ -230,9 +235,9 @@ export const GSTClaimMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        const defaultSection = DEALER_CORPORATE_SECTION.CLAIM_DETAILS.id;
+        const defaultSection = GST_CLAIM_SECTION.CLAIM_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(DEALER_CORPORATE_SECTION);
+        setSetionName(GST_CLAIM_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -289,8 +294,14 @@ export const GSTClaimMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, type }) => {
+        console.log('🚀 ~ handleButtonClick ~ type:', type);
+        console.log('🚀 ~ handleButtonClick ~ openDefaultSection:', openDefaultSection);
+        console.log('🚀 ~ handleButtonClick ~ buttonAction:', buttonAction);
+        console.log('🚀 ~ handleButtonClick ~ record:', record);
+
         form.resetFields();
+        setSpecialClaimType(type === 'addSpclClaimType');
 
         switch (buttonAction) {
             case ADD_ACTION:
@@ -339,6 +350,7 @@ export const GSTClaimMasterBase = (props) => {
                 viewMode: buttonAction === VIEW_ACTION,
             });
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        } else {
         }
         setIsFormVisible(true);
     };
@@ -364,14 +376,14 @@ export const GSTClaimMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
+    const isUnclaimedStatus = currentStatusButton === QUERY_BUTTONS_CONSTANTS?.UNCLAIMED?.key;
 
     const tableProps = {
         dynamicPagination,
         totalRecords,
         page,
         setPage,
-        // tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableColumn: tableColumn({ handleButtonClick }),
+        tableColumn: tableColumn({ handleButtonClick, canAdd: !!isUnclaimedStatus, canEdit: !isUnclaimedStatus, canView: !isUnclaimedStatus }),
         tableData: tabledataPFG,
         showAddButton: false,
         handleAdd: handleButtonClick,
@@ -417,7 +429,7 @@ export const GSTClaimMasterBase = (props) => {
         handleButtonClick,
         saveButtonName: 'Save',
         currentStatusButton,
-        showAddButton: true,
+        showAddButton: isUnclaimedStatus,
     };
 
     const containerProps = {
@@ -478,6 +490,8 @@ export const GSTClaimMasterBase = (props) => {
         isProductHierarchyLoading,
         currentStatusButton,
         loginUserType,
+        setSection,
+        specialClaimType,
     };
 
     const advanceFilterProps = {
@@ -495,8 +509,8 @@ export const GSTClaimMasterBase = (props) => {
         isModelDataLoading,
         rules,
         setrules,
-        showAddButton: true,
-        showRefreshBtn: false,
+        // showAddButton: false,
+        // showRefreshBtn: false,
         tableData: [{}],
         currentStatusButton,
         loginUserType,
