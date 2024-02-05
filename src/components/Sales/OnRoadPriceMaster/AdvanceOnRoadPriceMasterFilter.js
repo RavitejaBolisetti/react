@@ -56,16 +56,7 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
                                 )}
                                 {advanceFilter && (
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
-                                        <Button
-                                            icon={<FilterIcon />}
-                                            type="link"
-                                            className={styles.verticallyCentered}
-                                            onClick={() => {
-                                                setAdvanceSearchVisible(true);
-                                            }}
-                                        >
-                                            {translateContent('global.advanceFilter.title')}
-                                        </Button>
+                                        <Button children={translateContent('global.advanceFilter.title')} icon={<FilterIcon />} type="link" className={styles.verticallyCentered} onClick={() => setAdvanceSearchVisible(true)} />
                                     </Col>
                                 )}
                             </Row>
@@ -79,7 +70,7 @@ export default function AdvanceOnRoadPriceMasterFilter(props) {
                     </Button>
                 </Col>
             </Row>
-            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i?.name) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>

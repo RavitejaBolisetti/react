@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isLoading: false,
         isDetailLoaded: true,
-        filterString,        
+        filterString,
         productHierarchyDataListArray: productHierarchyData,
     };
     return returnValue;
@@ -143,7 +143,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 {
                     key: 'unit',
                     value: 'Sales',
-                },                
+                },
                 {
                     key: 'hierarchyNode',
                     value: 'MV',

@@ -541,4 +541,12 @@ export const PARAM_MASTER = {
         id: 'ON_ROAD_STATUS',
         title: 'on road price master',
     },
+    ORDR_STATS: {
+        id: 'ORDR_STATS',
+        title: 'Charger Installation Order Status',
+    },
+    CHRGR_INST_STG_TYPE: {
+        id: 'CHRGR_INST_STG_TYPE',
+        title: 'Charger Installation stage type',
+    },
 };

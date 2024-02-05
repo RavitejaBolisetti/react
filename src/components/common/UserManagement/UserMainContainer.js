@@ -22,62 +22,52 @@ import styles from 'assets/sass/app.module.scss';
 const UserMainContainerMaster = (props) => {
     const { userType, currentSection } = props;
 
-    const sideBarProps = {
-        ...props,
-    };
-    const myProps = {
-        ...props,
-    };
-
-    const renderElement = () => {
+    const RenderUserManagementSections = () => {
         switch (userType) {
             case USER_TYPE_USER.DEALER.id: {
                 switch (currentSection) {
                     case DEALER_USER_SECTION?.MAC_ID.id: {
-                        return <MacIdMaster {...myProps} />;
+                        return <MacIdMaster {...props} />;
                     }
                     case DEALER_USER_SECTION?.ASSIGN_USER_ROLES.id: {
-                        return <AssignUserRole {...myProps} />;
+                        return <AssignUserRole {...props} />;
                     }
                     case DEALER_USER_SECTION?.BRANCH_MAPPING.id: {
-                        return <BranchMapping {...myProps} />; //
+                        return <BranchMapping {...props} />; //
                     }
                     case DEALER_USER_SECTION?.PRODUCT_MAPPING.id: {
-                        return <ProductMapping {...myProps} />;
+                        return <ProductMapping {...props} />;
                     }
                     default:
-                        return;
+                        return <></>;
                 }
             }
             case USER_TYPE_USER.MANUFACTURER.id: {
                 switch (currentSection) {
                     case MANUFACTURER_USER_SECTION?.ASSIGN_USER_ROLES.id: {
-                        return <AssignUserRole {...myProps} />;
+                        return <AssignUserRole {...props} />;
                     }
 
                     default: {
-                        return;
+                        return <></>;
                     }
                 }
             }
             default: {
-                return;
+                return <></>;
             }
         }
     };
 
     return (
-        <>
-            <Row gutter={0}>
-                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
-                    <LeftSidebar {...sideBarProps} />
-                </Col>
-                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                    <div>{renderElement()}</div>
-                </Col>
-            </Row>
-        </>
+        <Row gutter={0}>
+            <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
+                <LeftSidebar {...props} />
+            </Col>
+            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+                {RenderUserManagementSections()}
+            </Col>
+        </Row>
     );
 };
-
 export const UserMainContainer = withDrawer(UserMainContainerMaster, { width: '90%', footer: null });

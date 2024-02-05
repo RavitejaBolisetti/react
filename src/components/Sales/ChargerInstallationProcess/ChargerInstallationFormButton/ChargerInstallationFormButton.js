@@ -34,11 +34,6 @@ export const ChargerInstallationFormButton = ({ record, onCloseAction, onApprove
                             {translateContent('global.buttons.approve')}
                         </Button>
                     )}
-                    {/* {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                        Edit
-                    </Button>
-                )} */}
                     {buttonData?.addRequestBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record })} type="primary">
                             {translateContent('global.buttons.addRequest')}
@@ -54,7 +49,6 @@ export const ChargerInstallationFormButton = ({ record, onCloseAction, onApprove
                             {saveButtonName}
                         </Button>
                     )}
-                    {}
                 </Col>
             </Row>
         </div>

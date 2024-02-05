@@ -13,6 +13,7 @@ import { CustomerAndVehicleView } from './CustomerAndVehicleView';
 import { EnrolmentView } from './EnrolmentView';
 import { EnrolmentNumberGenerated } from '../EnrolmentNumberGenerated';
 import { translateContent } from 'utils/translateContent';
+import { handleEnterValidation } from 'utils/handleEnterValidation';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -48,7 +49,7 @@ const AddViewFormMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onKeyDownCapture={handleEnterValidation}>
                 {isEnrolmentGenerated ? (
                     <Row gutter={20} className={styles.drawerBodyRight} justify="center" align="center">
                         <EnrolmentNumberGenerated {...myProps} />

@@ -422,8 +422,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setReportVisible(true);
         setAdditionalReportParams([
             {
-                key: deliveryType === DELIVERY_TYPE?.NOTE?.key ? 'delivery_note_id' : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? 'sa_od_delivery_challan_hdr_id' : null,
-                value: deliveryType === DELIVERY_TYPE?.NOTE?.key ? selectedOrder?.vehicleDeliveryNote : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? selectedOrder?.deliveryHdrId : null,
+                key: deliveryType === DELIVERY_TYPE?.NOTE?.key ? 'sa_od_delivery_note_hdr_id' : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? 'sa_od_delivery_challan_hdr_id' : null,
+                value: deliveryType === DELIVERY_TYPE?.NOTE?.key ? selectedOrder?.deliveryHdrId : deliveryType === DELIVERY_TYPE?.CHALLAN?.key ? selectedOrder?.deliveryHdrId : null,
             },
         ]);
     };

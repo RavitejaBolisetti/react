@@ -242,12 +242,18 @@ export const OtfBlockMasterMain = (props) => {
 
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+    const ModelGroup = {
+        MODEL_GROUP: {
+            key: 'MG',
+            value: 'Model Group',
+        },
+    };
+
     const onErrorAction = (message) => {
         resetData();
 
         showGlobalNotification({ message });
     };
-
     const onCloseAction = () => {
         form.resetFields();
 
@@ -403,7 +409,7 @@ export const OtfBlockMasterMain = (props) => {
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i?.data?.prodctCode);
 
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true });
+            setButtonData({ ...defaultBtnVisiblity, editBtn: formData?.data?.attributeType === ModelGroup?.MODEL_GROUP?.key });
 
             const prodctShrtName = flatternData.find((i) => formData?.data?.prodctCode === i.data?.prodctCode)?.data?.prodctShrtName;
 
@@ -506,7 +512,6 @@ export const OtfBlockMasterMain = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-
             setButtonData({ ...defaultBtnVisiblity, editBtn: true });
 
             formData && setFormData(data);

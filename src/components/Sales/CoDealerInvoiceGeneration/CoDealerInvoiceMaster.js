@@ -577,7 +577,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
             setButtonData({ ...defaultBtnVisiblity, closeBtn: true });
             section && setCurrentSection(CO_DEALER_SECTIONS.THANK_YOU_PAGE.id);
             setCoDealerInvoiceStateMaster((prev) => ({ ...prev, selectedOrder: MessageSplit(data)?.selectedOrder, thankyouPageTitle: MessageSplit(data)?.thankyouPageTitle, generationTitle: MessageSplit(data)?.generationTitle, generationMessage: MessageSplit(data)?.generationMessage }));
-            setSelectedOrder({ record: data?.data });
+            setSelectedOrder({ record: res?.data });
         };
 
         const requestData = {

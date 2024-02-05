@@ -19,7 +19,7 @@ import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_CHARGER_INSTALLATION as customURL } from 'constants/routingApi';
 import { CHARGER_STATUS } from 'constants/ChargerStatus';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import { FUEL_TYPE } from './Constants/FuelTypeConstant';
+import { FUEL_TYPE, REQUEST_STAGE_CONSTANTS } from './Constants/FuelTypeConstant';
 import { chargerInstallationDataActions } from 'store/actions/data/chargerInstallation/chargerInstallation';
 import { crmCustomerVehicleDataActions } from 'store/actions/data/crmCustomerVehicle';
 import { chargerInstallationGuestDetailsDataActions } from 'store/actions/data/chargerInstallation/chargerInstallationGuestDetails';
@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
             CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isLoading: isChargerSearchLoading, data: crmCustomerVehicleData = [] },
         },
     } = state;
-   
+
     const moduleTitle = translateContent('chargerInstallationProcess.heading.mainTitle');
     let returnValue = {
         userId,
@@ -148,7 +148,6 @@ export const ChargerInstallationMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -255,18 +254,6 @@ export const ChargerInstallationMasterBase = (props) => {
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
 
     useEffect(() => {
-        if (chargerInstallationMasterData && !formActionType?.addMode) {
-            if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageStatus === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
-                setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
-            }
-            if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
-                setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chargerInstallationMasterData]);
-
-    useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
@@ -279,20 +266,24 @@ export const ChargerInstallationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    useEffect(() => {
-        if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'id',
-                    title: 'id',
-                    value: selectedOrderId,
-                    name: 'Id',
-                },
-            ];
-            fetchChargerDetails({ customURL, setIsLoading: listDetailShowLoading, userId, extraParams, onErrorAction });
+    const handleChargerCall = (id) => {
+        if (id && !selectedOrderId) {
+            fetchChargerDetails({
+                customURL,
+                setIsLoading: listDetailShowLoading,
+                userId,
+                extraParams: [
+                    {
+                        key: 'id',
+                        title: 'id',
+                        value: id,
+                        name: 'Id',
+                    },
+                ],
+                onErrorAction,
+            });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    };
 
     const onHandleModal = (record) => {
         setModal(true);
@@ -337,7 +328,7 @@ export const ChargerInstallationMasterBase = (props) => {
         fetchCustomerVehicleList({ setIsLoading: listCustomerVehicleShowLoading, userId, extraParams, onSuccessAction: onSuccesscustomerAction, onErrorAction });
     };
 
-    const handleBookingChange = (e) => {
+    const handleBookingChange = () => {
         setSelectedOtfNumber('');
         setSelectedOrder('');
         setChargerDetails(false);
@@ -345,7 +336,7 @@ export const ChargerInstallationMasterBase = (props) => {
         chargerInstallationForm.setFieldsValue();
         setAddRequestData([]);
         resetCustomerVehicleData();
-        // chargerInstallationForm.resetFields();
+        setDisabled(false);
     };
 
     const handleChargerTypeChange = (buttonName) => {
@@ -365,7 +356,7 @@ export const ChargerInstallationMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
-
+        handleChargerCall(record?.id);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -391,7 +382,6 @@ export const ChargerInstallationMasterBase = (props) => {
                 const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
-                setDisabled(true);
                 break;
 
             default:
@@ -411,11 +401,6 @@ export const ChargerInstallationMasterBase = (props) => {
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
-                // if (buttonAction === VIEW_ACTION) {
-                //     if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
-                //         setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
-                //     }
-                // }
             }
         }
         setIsFormVisible(true);
@@ -428,20 +413,23 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const onChargerInstallationFinish = (values) => {
         const data = { ...values, id: '' || selectedOrderId, bookingNumber: selectedOtfNumber };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
+            setButtonData({ ...defaultBtnVisiblity });
             setIsFormVisible(false);
             resetCustomerVehicleData();
+            resetDetailData();
+            setSelectedOrder();
+            setSelectedOrderId();
         };
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        const onError = (message) => showGlobalNotification({ message });
+
         const requestData = {
-            data: data,
+            data,
             method: 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -451,10 +439,7 @@ export const ChargerInstallationMasterBase = (props) => {
         };
         saveData(requestData);
     };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
+    const handleFormValueChange = () => setButtonData({ ...buttonData, formBtnActive: true });
 
     const onCloseAction = () => {
         form.resetFields();
@@ -488,10 +473,11 @@ export const ChargerInstallationMasterBase = (props) => {
     };
 
     const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
         form.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
+        addRequestForm.resetFields();
     };
 
     const removeFilter = (key) => {
@@ -508,6 +494,46 @@ export const ChargerInstallationMasterBase = (props) => {
     };
 
     const title = translateContent('chargerInstallationProcess.heading.title');
+
+    const RequestStage = useMemo(() => {
+        const requestDetailsLength = Array?.isArray(chargerInstallationMasterData?.chargerInstDetails?.requestDetails) && chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.length;
+        const status = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.response === CHARGER_STATUS.SUCCESS?.key;
+        const statusType = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.stageType;
+        if (statusType === REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key) {
+            setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
+            return REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key;
+        }
+        if (typeData?.[PARAM_MASTER?.CHRGR_INST_STG_TYPE?.id]?.length > 0) {
+            if (formActionType?.addMode) {
+                return REQUEST_STAGE_CONSTANTS?.SITE_SURVEY?.key;
+            } else if (formActionType?.editMode || formActionType?.viewMode) {
+                if (status) {
+                    formActionType?.viewMode && setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
+                    switch (statusType) {
+                        case REQUEST_STAGE_CONSTANTS?.SITE_SURVEY?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.SITE_VALIDATION?.key;
+                        }
+                        case REQUEST_STAGE_CONSTANTS?.SITE_VALIDATION?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.INSTALLATION?.key;
+                        }
+                        case REQUEST_STAGE_CONSTANTS?.INSTALLATION?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key;
+                        }
+                        case REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key;
+                        }
+                        default: {
+                            return false;
+                        }
+                    }
+                }
+                return undefined;
+            } else {
+                return false;
+            }
+        }
+        return undefined;
+    }, [formActionType, typeData, chargerInstallationMasterData]);
 
     const advanceFilterResultProps = {
         extraParams,
@@ -536,9 +562,7 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('chargerInstallationProcess.heading.titleOverride'),
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -610,6 +634,7 @@ export const ChargerInstallationMasterBase = (props) => {
         chargerInstallationGuestDetailsData,
         isLoading: isDetailLoading,
         isChargerSearchLoading,
+        RequestStage,
     };
 
     return (

@@ -40,8 +40,6 @@ const ViewDetailMain = (props) => {
     };
 
     const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
-    const TCSAmountCalculation = getCodeValue(formData?.['taxDetails'], 'TCS', 'taxAmount', true, 'taxType');
-    const TCSAmount = TCSAmountCalculation === 'TCS' ? '-' : TCSAmountCalculation;
     return (
         <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
@@ -108,7 +106,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.priceType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleSellingPrice')}>{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.vehicleAmount')}>{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')}>{checkAndSetDefaultValue(TCSAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')}>{checkAndSetDefaultValue(formData?.tcsAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption(translateContent('vehicleInvoiceGeneration.heading.captions.benefit'))}>

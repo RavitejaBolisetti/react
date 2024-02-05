@@ -52,13 +52,13 @@ const ChangeModelVariantMasterBase = (props) => {
     const [formData, setFormData] = useState();
     useEffect(() => {
         if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
             setFormData({
                 ...vehicleDetailData,
-                // sapStatusResponseCode: 'PD',
-                // revisedModel: 'THRNMM8315642773',
-                // revisedOemModelCode: 'AW5018ZAT2A2GA01RX-1',
-                // revisedModelDescription: 'THAR AX AC P MT 4WD 6S ST RED RG-1',
+                // sapStatusResponseCode: 'CR',
+                // revisedModel: 'X700MM89615721919',
+                // revisedOemModelCode: 'AW62BCZF7T801A00RA',
+                // revisedModelDescription: 'XUV700 AX7 L PET AT 7 SEATER RED',
+                // revisedSoNumber: '0100031188',
                 // sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering',
             });
         }

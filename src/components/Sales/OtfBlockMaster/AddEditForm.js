@@ -8,7 +8,6 @@ import { Col, Input, Form, Row, Button, Switch, Select } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
@@ -17,8 +16,8 @@ import { customSelectBox } from 'utils/customSelectBox';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, formData, selectedProductName, zoneMasterData, areaOfficeData, handleZoneChange, zone } = props;
-    const { handleDealer, isAreaOfficeLoading, isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
+    const { onCloseAction, formData, selectedProductName, zoneMasterData, areaOfficeData, handleZoneChange } = props;
+    const { handleDealer, isAreaOfficeLoading, isFormBtnActive, setFormBtnActive, onFinish, dealerBlockData, form } = props;
 
     useEffect(() => {
         if (formData) {

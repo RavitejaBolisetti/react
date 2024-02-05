@@ -64,12 +64,19 @@ const PartyDetailMasterBase = (props) => {
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, partyDetailForm, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId } = props;
+    const ReceiptStatus = {
+        CANCELLED: {
+            key: 'C',
+            value: 'Cancelled',
+        },
+    };
     useEffect(() => {
         if (receiptDetailData?.partyDetails) {
             const partyDetails = receiptDetailData?.partyDetails;
             partyDetails && setRequestPayload({ ...requestPayload, partyDetails });
             const canAdvance = receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key;
-            canAdvance && setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: true }));
+            const canCancel = receiptDetailData?.receiptsDetails?.receiptStatus !== ReceiptStatus?.CANCELLED?.key;
+            canCancel && canAdvance ? setButtonData((prev) => ({ ...prev, cancelReceiptBtn: true, editBtn: false, nextBtn: true })) : setButtonData((prev) => ({ ...prev, cancelReceiptBtn: false, editBtn: false, nextBtn: true }));
             setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,12 +97,12 @@ const PartyDetailMasterBase = (props) => {
         if (partySegment && partyId) {
             const onSuccessAction = (res) => {
                 if (res?.data) {
-                    if (res?.data && typeof res?.data === 'object') {
-                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data, partyId, partySegment } });
-                        partyDetailForm.setFieldsValue({ ...res?.data });
-                    } else if (res?.data?.[0] && res?.data?.[0] instanceof Object) {
-                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data?.[0], partyId, partySegment } });
-                        partyDetailForm.setFieldsValue({ ...res?.data?.[0] });
+                    if (res?.data && !Array?.isArray(res?.data)) {
+                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data, partyId, partySegment, partyName: res?.data?.partyName || res?.data?.customerName } });
+                        partyDetailForm.setFieldsValue({ ...res?.data, partyName: res?.data?.partyName || res?.data?.customerName });
+                    } else if (res?.data?.[0] && Array?.isArray(res?.data)) {
+                        setRequestPayload({ ...requestPayload, partyDetails: { ...res?.data?.[0], partyId, partySegment, partyName: res?.data?.[0]?.partyName || res?.data?.[0]?.customerName } });
+                        partyDetailForm.setFieldsValue({ ...res?.data?.[0], partyName: res?.data?.[0]?.partyName || res?.data?.[0]?.customerName });
                     }
                     setButtonData({ ...buttonData, formBtnActive: true });
                 }

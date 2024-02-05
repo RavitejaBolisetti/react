@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
-    const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
+    const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, selectedCustomerId, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
@@ -96,7 +96,7 @@ const ContactMain = (props) => {
         {
             key: 'customerId',
             title: 'customerId',
-            value: selectedCustomer?.customerId,
+            value: selectedCustomerId,
             name: 'customerId',
         },
     ];
@@ -110,7 +110,7 @@ const ContactMain = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId) {
+        if (userId && selectedCustomerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
@@ -118,12 +118,12 @@ const ContactMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomer?.customerId]);
+    }, [userId, selectedCustomerId]);
 
     useEffect(() => {
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact) {
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomerId && customerIndData?.customerContact) {
             setContactData(customerIndData?.customerContact || []);
-        } else if (customerData?.customerContact && selectedCustomer?.customerId) {
+        } else if (customerData?.customerContact && selectedCustomerId) {
             setContactData(customerData?.customerContact || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -229,7 +229,7 @@ const ContactMain = (props) => {
             return showGlobalNotification({ message: translateContent('global.generalMessage.atLeastOneContactShouldDefault') });
         }
 
-        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
+        let data = { customerId: selectedCustomerId, customerContact: contactData };
 
         const onSuccess = (res) => {
             contactform.resetFields();

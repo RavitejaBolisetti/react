@@ -119,6 +119,7 @@ export const OtfMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
     const [refreshData, setRefreshData] = useState();
+    const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
     const [listFilterForm] = Form.useForm();
 
@@ -154,6 +155,7 @@ export const OtfMasterBase = (props) => {
     const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
         isVisible: false,
     });
+
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
@@ -197,8 +199,7 @@ export const OtfMasterBase = (props) => {
         });
     };
 
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -349,7 +350,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data,
             method: 'put',
             setIsLoading: listShowLoading,
             userId,
@@ -428,13 +429,18 @@ export const OtfMasterBase = (props) => {
                     const onErrorAction = (message) => {
                         showGlobalNotification({ message });
                     };
-                    const extraParams = [
-                        {
-                            key: 'otfId',
-                            value: selectedRecordId,
-                        },
-                    ];
-                    fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+                    fetchVehicleDetail({
+                        setIsLoading: listShowLoading,
+                        userId,
+                        extraParams: [
+                            {
+                                key: 'otfId',
+                                value: selectedRecordId,
+                            },
+                        ],
+                        onErrorAction,
+                        onSuccessAction,
+                    });
                 }
                 break;
             case CANCELLN_REJECT:
@@ -456,12 +462,13 @@ export const OtfMasterBase = (props) => {
                 });
                 setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction === VIEW_ACTION ? true : false }, buttonAction, orderStatus: record?.orderStatus }));
             }
-        } else {
-            setButtonData((prev) => ({ ...prev, formBtnActive: false }));
         }
+        // } else {
+        //     // setButtonData((prev) => ({ ...prev, formBtnActive: false })); //Hide to stop disable on edit
+        // }
     };
 
-    const onFinishSearch = (values) => {};
+    const onFinishSearch = () => {};
 
     const handleResetFilter = (e) => {
         const { pageSize } = filterString;
@@ -491,7 +498,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data,
             baseURL,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
@@ -503,8 +510,8 @@ export const OtfMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
+    const onFinishFailed = () => {
+        return false;
     };
     const handleChangeHistory = () => {
         setChangeHistoryVisible(true);
@@ -769,6 +776,8 @@ export const OtfMasterBase = (props) => {
         handleOtfSoMappingHistory,
         refreshData,
         setRefreshData,
+        productDetailRefresh,
+        setProductDetailRefresh,
         handleUnSavedChangeFn,
         setOpenVehilceModelChange,
     };
@@ -839,6 +848,8 @@ export const OtfMasterBase = (props) => {
         setRefreshData,
         setIsFormVisible,
         setShowDataLoading,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     return (

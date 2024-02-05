@@ -34,9 +34,6 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                             <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record, openDefaultSection: false })} type="primary">
                                 {translateContent('global.buttons.cancelVehiclePurchaseOrder')}
                             </Button>
-                            {/* <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                        Edit
-                    </Button> */}
                         </>
                     )}
 

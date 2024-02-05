@@ -23,9 +23,9 @@ export const tableColumnUnMapping = ({ handleButtonClick, actionButtonVisibility
         }),
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.soDate'),
-            dataIndex: 'Date',
+            dataIndex: 'soDate',
             width: '14%',
-            render: (text, record) => converDateDayjs(text),
+            render: (text) => converDateDayjs(text),
         }),
 
         tblPrepareColumns({
@@ -38,6 +38,7 @@ export const tableColumnUnMapping = ({ handleButtonClick, actionButtonVisibility
             title: translateContent('bookingSoMappUnmapp.label.bookingNumber'),
             dataIndex: 'otfNumber',
             width: '10%',
+            render: (_, record) => record?.bookingNumber ?? record?.otfNumber,
         }),
         tblPrepareColumns({
             title: translateContent('bookingSoMappUnmapp.label.customerName'),

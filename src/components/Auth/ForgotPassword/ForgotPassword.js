@@ -103,7 +103,7 @@ const ForgotPasswordBase = (props) => {
     };
 
     const onError = (message) => {
-        showGlobalNotification({ notificationType: 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
+        showGlobalNotification({ notificationType: 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message });
         if (otpInput?.length === 6) {
             setCounter(0);
         }

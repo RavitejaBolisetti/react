@@ -226,7 +226,14 @@ const IssueIndentMasterMain = (props) => {
                                                             </Text>
                                                         </Space>
                                                         {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
-                                                            <Button danger icon={<FiDownload />} onClick={() => {setReportDetail();  handlePrintDownload(element)}}>
+                                                            <Button
+                                                                danger
+                                                                icon={<FiDownload />}
+                                                                onClick={() => {
+                                                                    setReportDetail();
+                                                                    handlePrintDownload(element);
+                                                                }}
+                                                            >
                                                                 {BUTTON_NAME_CONSTANTS?.PRINT?.name}
                                                             </Button>
                                                         )}
