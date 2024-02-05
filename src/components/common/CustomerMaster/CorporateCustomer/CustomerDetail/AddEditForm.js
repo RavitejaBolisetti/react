@@ -20,15 +20,19 @@ const AddEditFormMain = (props) => {
     const [readOnly, setReadOnly] = useState(false);
 
     useEffect(() => {
-        handleCorporateTypeChange(formData?.corporateType);
+        if (userId && formData?.corporateType) {
+            handleCorporateTypeChange(formData?.corporateType);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.corporateType]);
+    }, [formData, userId]);
 
     useEffect(() => {
-        form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
+        if (customerParentCompanyData?.parentCompanyName) {
+            form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerParentCompanyData?.parentCompanyName]);
-    
+    }, [customerParentCompanyData]);
+
     const handleCorporateChange = (__, values) => {
         form.setFieldsValue({
             corporateCode: values?.option?.corporateCode,
@@ -47,13 +51,17 @@ const AddEditFormMain = (props) => {
                 corporateName: null,
                 corporateCategory: null,
             });
-        const extraParams = [
-            {
-                key: 'corporateType',
-                value,
-            },
-        ];
-        fetchCorporateDescriptionLovList({ setIsLoading: listCorporateDescriptionLovShowLoading, userId, extraParams });
+
+        fetchCorporateDescriptionLovList({
+            setIsLoading: listCorporateDescriptionLovShowLoading,
+            userId,
+            extraParams: [
+                {
+                    key: 'corporateType',
+                    value,
+                },
+            ],
+        });
     };
 
     const mobileOtpProps = {

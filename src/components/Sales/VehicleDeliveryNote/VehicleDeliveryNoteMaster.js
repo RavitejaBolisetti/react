@@ -373,7 +373,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             return false;
         }
         const onSuccessAction = (res) => {
-
             setSelectedOrder((prev) => ({ ...prev, customerName: res?.data?.customerName, customerId: res?.data?.customerId }));
             setButtonData({ ...buttonData, formBtnActive: true });
             if (res?.data?.customerId && res?.data?.customerName) {
@@ -584,10 +583,14 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const vehicleDeliveryChecklist = {
             vin: vehicleDeliveryCheckList?.vin,
             deliveryChecklistDtos: vehicleDeliveryCheckList?.deliveryChecklistDtos?.map((item) => {
-                if (item?.answerType === FORMTYPE_CONSTANTS?.FIXED_OPTIONS?.key) {
-                    return { ...item, answerText: item?.answerDescription };
+                if (item?.ismodified) {
+                    if (item?.answerType === FORMTYPE_CONSTANTS?.FIXED_OPTIONS?.key) {
+                        return { ...item, answerText: item?.answerDescription };
+                    }
+                    return { ...item };
                 }
-                return { ...item };
+
+                return { ...item, status: false };
             }),
         };
         switch (deliveryType) {
@@ -619,7 +622,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const onError = (message) => {
             showGlobalNotification({ message });
         };
-
         const requestData = {
             data: finalPayload,
             method: 'post',

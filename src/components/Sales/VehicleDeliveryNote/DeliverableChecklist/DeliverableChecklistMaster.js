@@ -66,7 +66,7 @@ const DeliverableChecklistMain = (props) => {
     const { selectedOrder, setButtonData, buttonData } = props;
     const { fetchList, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, requestPayload, setRequestPayload } = props;
-    const { uniqueMatchKey,handleLocalFormChange } = props;
+    const { uniqueMatchKey, handleLocalFormChange } = props;
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
@@ -123,9 +123,7 @@ const DeliverableChecklistMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChecklistDataLoaded, ChecklistData, formActionType]);
 
-    const onFinish = () => {
-        deliveryNoteOnFinish();
-    };
+    const onFinish = () => deliveryNoteOnFinish();
 
     const handleCheckListClick = ({ record, index }) => {
         setAdvanceformData({ ...record, index: index });
