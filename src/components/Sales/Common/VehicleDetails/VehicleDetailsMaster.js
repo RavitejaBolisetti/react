@@ -173,7 +173,15 @@ const VehicleDetailsMasterMain = (props) => {
                         value: selectedRecordId,
                     },
                 ];
-                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+                fetchList({
+                    setIsLoading: listShowLoading,
+                    userId,
+                    extraParams,
+                    onErrorAction,
+                    onSuccessAction: () => {
+                        setRefreshData(!refreshData);
+                    },
+                });
             }
 
             if (!isVehicleServiceLoaded) {
