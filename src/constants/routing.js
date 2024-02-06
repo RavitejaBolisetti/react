@@ -204,7 +204,8 @@ export const ROUTING_ISSUE_INDICATOR = ROUTING_SPARES.concat('issue-indicator');
 export const ROUTING_CAMPAIGN_DISCOUNT = ROUTING_SPARES.concat('campaign-discount');
 export const ROUTING_INVENTORY_CLASSIFICATION = ROUTING_SPARES.concat('inventory-classification');
 // export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('Target-Type');
-export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('branch-wise-stock');
+export const ROUTING_BRANCH_WISE_STOCK = ROUTING_SPARES.concat('branch-wise-stock');
+export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('Target-Type');
 
 // vehicle related
 export const ROUTING_COMMON_VEHICLE_RELATED = ROUTING_COMMON.concat('vehicle-related');
