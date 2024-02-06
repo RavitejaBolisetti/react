@@ -12,10 +12,11 @@ import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
 import { getCodeValue } from 'utils/getCodeValue';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
+import { CardSkeleton } from 'components/common/Skeleton';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { typeData, schemeData, styles, isLoading } = props;
+    const { isOTFModule = false, typeData, schemeData, styles, isLoading = false } = props;
     const [activeKey, setActiveKey] = useState([1]);
 
     const viewProps = {
@@ -85,8 +86,11 @@ const ViewDetailMain = (props) => {
         </Descriptions>
     );
 
-    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || (schemeData && schemeData?.sales?.length > 0);
-    return (
+    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || (!isOTFModule && schemeData?.sales?.length > 0) || (isOTFModule && schemeData?.sales?.filter((i) => i?.active)?.length > 0);
+
+    return isLoading ? (
+        <CardSkeleton content={false} titleHeight={60} count={2} />
+    ) : (
         <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>

@@ -1086,11 +1086,14 @@
         "label": {
             "mobileNumber": "Mobile Number",
             "customerType": "Customer Type",
+            "corporateType": "Corporate type",
+
             "emailID": "Email ID",
             "contactNo": "Contact over WhatsApp?",
             "WhatsAppNoText": "Use mobile no as WhatsApp no?",
             "whatsappNumber": "Whatsapp Number",
-            "corporateType": "Corporate Type",
+            "corporateDescription": "Corporate Description",
+            "corporate": "Corporate Type",
             "corporateName": "Corporate Name",
             "corporateCode": "Corporate Code",
             "corporateCategory": "Corporate Category",
@@ -1252,7 +1255,7 @@
             "emailId": "email id",
             "whatsappNo": "whatsapp number",
             "gender": "gender",
-            "licenseNo ": "driving license no ",
+            "licenseNo": "driving license no",
             "aadhar": "aadhar",
             "voterId": "voter id",
             "pan": "pan",
@@ -1769,7 +1772,8 @@
             "stage": "Stage",
             "requestDetails": "Request Details",
             "serviceActivity": "Service Activity:",
-            "electric": "Electric"
+            "electric": "Electric",
+            "modelDescription": "Model Description"
         },
         "placeholder": {
             "bookingNumber": "Booking Number",
@@ -4207,7 +4211,12 @@
             "search": "Search Booking Number"
         },
         "errorMsg": {
-            "message": "Validate booking number to continue"
+            "message": "Validate booking number to continue",
+            "modelGroupDifferent": "Model group should be same for swapping",
+            "modelGroupNotPresent": "Model group is not present",
+            "bookingNumberAreNotBooked": "Both booking should be booked",
+            "modelChangeRequestSent": "Model change request sent",
+            "otfNumberAreSame": "Booking number cannot be same"
         }
     },
     "vehiclePurchaseOrder": {

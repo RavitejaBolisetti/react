@@ -4,14 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Row, Col, Space, Avatar, Typography, Divider, Button, Popover } from 'antd';
+import { Row, Col, Space, Avatar, Typography } from 'antd';
 
 import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
 import { translateContent } from 'utils/translateContent';
-// import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
-// import { documentType } from '../utils/amcDocumentName';
 
 import styles from 'assets/sass/app.module.scss';
 

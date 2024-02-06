@@ -29,8 +29,8 @@ import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { translateContent } from 'utils/translateContent';
 import { TbRefresh } from 'react-icons/tb';
-// import { STATUS } from 'constants/modelVariant';
-// import { RevisedModelDetailMaster } from 'components/Sales/OTF/ChangeModelVariant/RevisedModelDetail/RevisedModelDetailMaster';
+import { RevisedModelDetailMaster } from 'components/Sales/OTF/ChangeModelVariant/RevisedModelDetail/RevisedModelDetailMaster';
+import { STATUS } from 'constants/modelVariant';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -171,7 +171,7 @@ const AddEditFormMain = (props) => {
         setRevisedModelInformation({ ...toolTipContent });
     };
 
-    // const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
 
     return (
         <>
@@ -213,8 +213,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 )}
                             </Row>
-                            <Divider />
-                            {/* {isReviedModelPending ? (
+                            {isReviedModelPending ? (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <RevisedModelDetailMaster {...props} />
@@ -222,7 +221,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             ) : (
                                 <Divider />
-                            )} */}
+                            )}
                             <Row gutter={20}>
                                 {isOTFModule && (
                                     <>
@@ -341,7 +340,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')} name="mnmNonCashBenefitAmountWithTax">
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')} name="mnmNonCashBenefitsWithTAX">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax'))} />
                                     </Form.Item>
                                 </Col>
@@ -352,7 +351,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 {showPrintDiscount && (
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
+                                        <Form.Item initialValue={formData?.printDiscount ? formData?.printDiscount === 'Y' : true} valuePropName="checked" labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
                                             <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={(checked) => (checked ? 'Y' : 'N')} />
                                         </Form.Item>
                                     </Col>

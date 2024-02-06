@@ -12,6 +12,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
+
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
@@ -56,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
+    const { deliveryNote = false, userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
     const { formData, form } = props;
 
     const onErrorAction = () => {};
@@ -113,7 +115,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label={translateContent('commonModules.label.insuranceDetails.registrationNumber')} name="registrationNumber" initialValue={formData?.registrationNumber}>
+                                <Form.Item label={translateContent('commonModules.label.insuranceDetails.registrationNumber')} name="registrationNumber" initialValue={formData?.registrationNumber} rules={deliveryNote ? [validateRequiredInputField(translateContent('commonModules.label.insuranceDetails.registrationNumber'))] : undefined}>
                                     <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.insuranceDetails.registrationNumber'))} maxLength={20} />
                                 </Form.Item>
                             </Col>

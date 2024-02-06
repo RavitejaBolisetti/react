@@ -15,6 +15,7 @@ export const timeFormatView = 'HH:mm a';
 export const calendarDateFormat = 'YYYY-MM-DD';
 export const dateTimeFormat = 'YYYY-MM-DD HH:mm:ss';
 export const mmYYYYFormat = 'MM/YYYY';
+export const dateViewWithSeconds = 'DD MMM YYYY  h:MM:ss A';
 
 export const formattedCalendarDate = (dateToConvert = '', dateFormat = 'YYYY-MM-DD') => {
     return dateToConvert ? dayjs(moment(dateToConvert).format(dateFormat), dateFormat) : null;

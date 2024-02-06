@@ -189,6 +189,11 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDataChange = ({ value, index, type }) => {
+        if (type === 'shortage') {
+            vehicleDetailForm.setFieldsValue({ [index]: { ...vehicleDetailForm.getFieldsValue()[index], shortageDetail: { ...vehicleDetailForm.getFieldsValue()[index].shortageDetail, shortageType: null, otherShortageType: null, shortageDescription: null, otherShortageDescription: null, remarks: null } } });
+        } else if (type === 'physicalStatus') {
+            vehicleDetailForm.setFieldsValue({ [index]: { ...vehicleDetailForm.getFieldsValue()[index], physicalStatusDetail: { ...vehicleDetailForm.getFieldsValue()[index].physicalStatusDetail, defectDescription: null, otherDefectDescription: null, defectType: null, otherDefectType: null, defectLocation: null, otherDefectLocation: null, remarks: null } } });
+        }
         setFormData((data) => {
             return data?.map((item, i) => (i === index ? { ...item, [type]: value } : item));
         });

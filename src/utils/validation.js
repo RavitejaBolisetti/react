@@ -103,7 +103,7 @@ export const validateGSTIN = (fieldName, lowercase = true) => ({
 
 export const validateNumberWithTwoDecimalPlaces = (fieldName, lowercase = true) => ({
     pattern: /^\d+(\.\d{1,2})?$/,
-    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName) + ' as number with two decimal is allowd',
 });
 
 export const validatePincodeField = (fieldName, digit = '6', lowercase = true) => ({
@@ -208,7 +208,7 @@ export const validateAadhar = (fieldName) => ({
 });
 export const validateVoterId = (fieldName) => ({
     pattern: /^([a-zA-Z]){3}\d{7}$/,
-    mesage: 'Please enter valid ' + fieldName,
+    message: 'Please enter valid ' + fieldName,
 });
 
 export const valueOfPer = (fieldName) => ({

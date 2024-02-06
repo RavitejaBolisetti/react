@@ -28,7 +28,7 @@ const ViewDetail = (props) => {
     return (
         <>
             {formData &&
-                formData?.map((data) => {
+                formData?.map((data, i) => {
                     return (
                         <Card>
                             <Row type="flex" justify="space-between" align="middle" size="large">
@@ -37,19 +37,19 @@ const ViewDetail = (props) => {
                                         {REQUEST_CONSTANT?.[data?.requestType]} | {checkAndSetDefaultValue(data?.customerName, false)} | {selectedAMC?.amcRegistrationNumber}
                                     </Typography>
                                 </Row>
-                                {AMCStatusTags(data?.amcStatus)}
+                                {AMCStatusTags(data?.requestStatus)}
                             </Row>
                             <Row type="flex" align="middle" className={data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>
                                     <div className={styles.tableTextColor85}>
-                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, amcRegistration?.priceType), false, DATA_TYPE?.DATE?.key)}
+                                        {translateContent('amcRegistration.label.requestedOn')}: {checkAndSetDefaultValue(RequestedOnDate(data, data?.requestStatus, amcRegistration?.priceType), false, DATA_TYPE?.DATE_TIME?.key)}
                                     </div>
                                 </Col>
                             </Row>
 
                             {userType === AMC_CONSTANTS?.MNM?.key ? (
                                 <>
-                                    {data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key && (
+                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED?.key && data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key && (
                                         <>
                                             <Divider className={styles.marB20} />
                                             <Descriptions {...viewProps} column={{ xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 }}>
@@ -61,13 +61,14 @@ const ViewDetail = (props) => {
 
                                     <Row gutter={20} className={styles.marB20}>
                                         <Col xs={8} sm={8} md={8} lg={8}>
-                                            {workflowMasterDetails?.allowedActions?.map((element, i) => {
-                                                return (
-                                                    <Button className={i && styles.marL5} onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
-                                                        {element?.actionName}
-                                                    </Button>
-                                                );
-                                            })}
+                                            {i === 0 &&
+                                                workflowMasterDetails?.allowedActions?.map((element, i) => {
+                                                    return (
+                                                        <Button className={i && styles.marL5} onClick={element?.actionCode === AMC_CONSTANTS?.WORKFLOW_APPROVE?.key ? () => handleMNMApproval() : () => handleMNMRejection()} type="primary" key={i}>
+                                                            {element?.actionName}
+                                                        </Button>
+                                                    );
+                                                })}
                                         </Col>
                                     </Row>
                                 </>
@@ -91,7 +92,7 @@ const ViewDetail = (props) => {
                                                     <Descriptions {...viewProps}>
                                                         <Descriptions.Item label={translateContent('amcRegistration.label.approvedOrRejectedBy')}>{checkAndSetDefaultValue(data?.approvedByOrRejectedBy)}</Descriptions.Item>
                                                         <Descriptions.Item label={translateContent('amcRegistration.label.userId')}>{checkAndSetDefaultValue(data?.userId)}</Descriptions.Item>
-                                                        <Descriptions.Item label={translateContent('amcRegistration.label.approvedDate')}>{checkAndSetDefaultValue(data?.approvedDate, false, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                                        <Descriptions.Item label={translateContent('amcRegistration.label.approvedDate')}>{checkAndSetDefaultValue(data?.approvedDate, false, DATA_TYPE?.DATE_TIME?.key)}</Descriptions.Item>
                                                         {data?.requestStatus === AMC_CONSTANTS?.REJECTED?.key && <Descriptions.Item label={translateContent('amcRegistration.label.reasonForRejection')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.AMC_CANCEL_REASON.id], data?.reasonForRejection))}</Descriptions.Item>}
                                                     </Descriptions>
                                                 </>
@@ -99,7 +100,7 @@ const ViewDetail = (props) => {
                                         </>
                                     )}
 
-                                    {data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key && (
+                                    {data?.requestType === AMC_CONSTANTS?.CANCELLED?.key && data?.requestStatus === AMC_CONSTANTS?.PENDING_FOR_APPROVAL?.key && (
                                         <>
                                             <Divider />
                                             <Row gutter={20} className={styles.marB20}>

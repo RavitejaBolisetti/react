@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterMain = (props) => {
     const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, fetchProductAttribiteDetail, isLoading, saveData } = props;
     const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
+    const { refreshData, setRefreshData, productDetailRefresh, setProductDetailRefresh, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
     const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true, requestPayload = undefined } = props;
@@ -110,7 +110,6 @@ const VehicleDetailsMasterMain = (props) => {
     const [onModelSubmit, setOnModelSubmit] = useState(false);
     const [productAttributeData, setProductAttributeData] = useState(false);
     const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
-    const [productDetailRefresh, setProductDetailRefresh] = useState(false);
 
     const onSuccessAction = () => {
         return false;
@@ -151,14 +150,14 @@ const VehicleDetailsMasterMain = (props) => {
             // setFormData(vehicleDetailData);
             setFormData({
                 ...vehicleDetailData,
-                // sapStatusResponseCode: 'PD',
-                // revisedModel: 'THRNMM8315642773',
-                // revisedOemModelCode: 'AW5018ZAT2A2GA01RX-1',
-                // revisedModelDescription: 'THAR AX AC P MT 4WD 6S ST RED RG-1',
+                tcsAmount: vehicleDetailData?.taxDetails?.find((i) => i?.taxType === 'TCS')?.taxAmount || 0,
+                // sapStatusResponseCode: 'CR',
+                // revisedModel: 'X700MM89615721919',
+                // revisedOemModelCode: 'AW62BCZF7T801A00RA',
+                // revisedModelDescription: 'XUV700 AX7 L PET AT 7 SEATER RED',
+                // revisedSoNumber: '0100031188',
                 // sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering',
             });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'CR', revisedModel: 'THRNMM8405642808' });
-            // setFormData({ ...vehicleDetailData, sapStatusResponseCode: 'RJ', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
             vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
         }
@@ -275,14 +274,18 @@ const VehicleDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
     const findSchemAndDiscount = (data = requestPayload?.schemeOfferDetails?.sales) => {
+        const additionalCorpDiscount = requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount;
         if (Array?.isArray(data)) {
             const schemeDataObj = requestPayload?.schemeOfferDetails?.sales?.find((item) => item?.active);
             if (schemeDataObj) {
-                return { salesSchemeId: schemeDataObj?.salesSchemeId, salesSchemeDiscountType: schemeDataObj?.salesSchemeDiscountType, additionalCorpDiscount: requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount };
+                return { salesSchemeId: schemeDataObj?.salesSchemeId, salesSchemeDiscountType: schemeDataObj?.salesSchemeDiscountType, additionalCorpDiscount };
             }
-            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount };
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount };
+        } else if (additionalCorpDiscount) {
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount };
+        } else {
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: undefined };
         }
-        return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: undefined };
     };
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });

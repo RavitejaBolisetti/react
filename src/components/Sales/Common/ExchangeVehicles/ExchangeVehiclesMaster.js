@@ -149,6 +149,8 @@ const ExchangeVehiclesBase = (props) => {
     const [modelGroup, setModelGroup] = useState(null);
     const [isMahindraMake, setIsMahindraMake] = useState(false);
     const [isExchangeVisible, setExchangeVisible] = useState(false);
+    const [formMasterData, setFormMasterData] = useState([]);
+    const [makeModelVarientDisabled, setMakeModelVarientDisabled] = useState(false);
 
     const [exhangeDataParams, setExchangeDataParams] = useState();
 
@@ -163,6 +165,7 @@ const ExchangeVehiclesBase = (props) => {
     useEffect(() => {
         if (isOTFModule && exchangeData) {
             setFormData(exchangeData?.exchange ? exchangeData : null);
+            setFormMasterData(exchangeData?.exchange ? exchangeData : null);
             setIsMahindraMake(exchangeData?.make === MAHINDRA_MAKE);
             setExchangeDataParams({ make: exchangeData?.make, modelGroup: exchangeData?.modelGroup });
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -173,6 +176,7 @@ const ExchangeVehiclesBase = (props) => {
     useEffect(() => {
         if (exchangeDataPass) {
             setFormData(exchangeDataPass);
+            setFormMasterData(exchangeDataPass);
             setIsMahindraMake(exchangeDataPass?.make === MAHINDRA_MAKE);
             setExchangeDataParams({ make: exchangeDataPass?.make, modelGroup: exchangeDataPass?.modelGroup });
         }
@@ -198,15 +202,21 @@ const ExchangeVehiclesBase = (props) => {
 
     const fnSetData = (data) => {
         if (data?.make) {
-            setFormData({ ...data, exchange: isExchangeVisible, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.vinNumber });
             handleFormValueChange();
+            setExchangeDataParams({ make: data?.make, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
+            setMakeModelVarientDisabled(true);
         } else if (data && !data?.make) {
-            setFormData({ ...data, exchange: isExchangeVisible, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, exchange: isExchangeVisible, make: MAHINDRA_MAKE, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.vinNumber });
             handleFormValueChange();
+            setExchangeDataParams({ make: MAHINDRA_MAKE, modelGroup: data?.modelGroup });
             setEditableOnSearch(true);
+            setIsMahindraMake(true);
+            setMakeModelVarientDisabled(true);
         } else if (!data) {
             setEditableOnSearch(false);
+            setMakeModelVarientDisabled(false);
             form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegistrationNumber', 'oldChessisNumber']);
         }
     };
@@ -325,7 +335,6 @@ const ExchangeVehiclesBase = (props) => {
     const showAlert = (val) => {
         setModelGroup((prev) => ({ ...prev, oldModelGroup: val }));
     };
-
     useEffect(() => {
         if (selectedOrder?.modelCode) {
             const LovParams = [
@@ -342,7 +351,7 @@ const ExchangeVehiclesBase = (props) => {
 
     useEffect(() => {
         if (VehicleLovCodeData && isProductHierarchyDataLoaded) {
-            setModelGroup((prev) => ({ ...prev, newModelGroup: VehicleLovCodeData?.[0]?.modelGroupCode }));
+            setModelGroup((prev) => ({ ...prev, newModelGroup: VehicleLovCodeData?.find((item) => item.prodctCode === selectedOrder?.modelCode)?.modelGroupCode }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleLovCodeData]);
@@ -394,7 +403,7 @@ const ExchangeVehiclesBase = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION , onSave: true });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             };
 
             const requestData = {
@@ -464,7 +473,7 @@ const ExchangeVehiclesBase = (props) => {
         form,
         formData,
         onFinish,
-
+        makeModelVarientDisabled,
         typeData,
 
         isSchemeLovLoading,
@@ -496,6 +505,7 @@ const ExchangeVehiclesBase = (props) => {
         isMahindraMake,
         isExchangeVisible,
         setExchangeVisible,
+        formMasterData,
     };
 
     const viewProps = {
@@ -511,6 +521,7 @@ const ExchangeVehiclesBase = (props) => {
         MAHINDRA_MAKE,
         isMahindraMake,
         setIsMahindraMake,
+        formMasterData,
     };
 
     const VehiclePriorityAlertProp = {

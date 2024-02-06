@@ -8,7 +8,7 @@ import { RSA_QUERY_BUTTONS as QUERY_BUTTONS_CONSTANTS, QUERY_BUTTONS_MNM_USER } 
 import { RSA_CONSTANTS } from './RSA_CONSTANT';
 
 export const RSARegistrationStatusTag = (status) => {
-    let tag = '';
+    let tag = '-';
     switch (status) {
         case QUERY_BUTTONS_CONSTANTS.PENDING.key:
             tag = <Tag color="warning">{QUERY_BUTTONS_CONSTANTS.PENDING.title}</Tag>;
@@ -33,6 +33,8 @@ export const RSARegistrationStatusTag = (status) => {
             break;
 
         default:
+            tag = <Tag color="error">NO STATUS</Tag>;
+            break;
     }
     return tag;
 };

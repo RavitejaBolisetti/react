@@ -610,7 +610,7 @@ export const RSARegistrationMasterBase = (props) => {
     }, [userId, vinNumber]);
 
     const onFinish = ({ type = null }) => {
-        const data = { ...requestPayload, rsaRegistrationDetails: { ...requestPayload?.registrationDetails, registrationInformation: { ...requestPayload?.registrationDetails?.registrationInformation, employeeCode: requestPayload?.registrationDetails?.registrationInformation?.employeeName, managerCode: requestPayload?.registrationDetails?.registrationInformation?.managerName, otfNumber: bookingNumber } }, vehicleAndCustomerDetails: requestPayload?.vehicleAndCustomerDetails };
+        const data = { ...requestPayload, rsaRegistrationDetails: { ...requestPayload?.registrationDetails, registrationInformation: { ...requestPayload?.registrationDetails?.registrationInformation, otfNumber: bookingNumber } }, vehicleAndCustomerDetails: requestPayload?.vehicleAndCustomerDetails };
         delete data?.registrationDetails;
         delete data?.rsaRegistrationDetails?.registrationInformation?.employeeName;
         delete data?.rsaRegistrationDetails?.registrationInformation?.managerName;
@@ -697,8 +697,8 @@ export const RSARegistrationMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const handleCancelScheme = () => {
-        const data = { ...rsaDetails, requestDetails: { ...rsaDetails?.requestDetails, rsaStatus: status, rsaRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, userId: userId, ...cancelSchemeForm.getFieldsValue(), rsaCancelRemarks: cancelSchemeForm.getFieldsValue()?.cancelRemarks }, id: rsaDetails?.id };
-        delete data?.requestDetails?.cancelRemarks;
+        const data = { ...rsaDetails, requestDetails: { ...rsaDetails?.requestDetails?.[0], rsaStatus: status, rsaRegistrationDate: rsaDetails?.rsaRegistrationDetails?.registrationInformation?.rsaRegistrationDate, userId: userId, ...cancelSchemeForm.getFieldsValue(), rsaCancelRemarks: cancelSchemeForm.getFieldsValue()?.cancelRemarks }, id: rsaDetails?.id };
+        delete data?.requestDetails?.[0]?.cancelRemarks;
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -772,7 +772,7 @@ export const RSARegistrationMasterBase = (props) => {
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
+        setStatus(rsaDetails?.requestDetails[0]?.requestStatus);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);

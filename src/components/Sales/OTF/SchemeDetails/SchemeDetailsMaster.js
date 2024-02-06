@@ -14,13 +14,13 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/SchemeDetails';
 import styles from 'assets/sass/app.module.scss';
 
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-
             OTF: {
                 SchemeDetail: { isLoaded: isDataLoaded = false, isLoading, data: schemeData = [] },
             },
@@ -42,6 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: otfSchemeDetailDataActions.fetchList,
+            saveData: otfSchemeDetailDataActions.saveData,
             listShowLoading: otfSchemeDetailDataActions.listShowLoading,
             resetData: otfSchemeDetailDataActions.reset,
             showGlobalNotification,
@@ -51,9 +52,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SchemeDetailsMasterBase = (props) => {
-    const { resetData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
+    const { resetData, onCloseAction, fetchList, saveData, formActionType, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedRecordId, section, handleFormValueChange, isLoading, NEXT_ACTION, handleButtonClick } = props;
-    const { FormActionButton, StatusBar, setButtonData } = props;
+    const { FormActionButton, StatusBar, buttonData } = props;
     const [formData, setFormData] = useState();
 
     useEffect(() => {
@@ -72,6 +73,13 @@ const SchemeDetailsMasterBase = (props) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
+    const extraParams = [
+        {
+            key: 'otfId',
+            value: selectedRecordId,
+        },
+    ];
+
     useEffect(() => {
         if (!isLoading && userId && selectedRecordId) {
             const extraParams = [
@@ -85,31 +93,41 @@ const SchemeDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId]);
 
-    useEffect(() => {
-        if (formActionType?.viewMode) {
-            setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true, saveBtn: false }));
-        } else if (formActionType?.editMode) {
-            setButtonData((prev) => ({ ...prev, editBtn: false, nextBtn: true, saveBtn: true }));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
-
     const viewProps = {
         styles,
         onCloseAction,
         formData,
-        isLoading,
+        isLoading,        
+        isOTFModule: true,
         ...props,
     };
     const myProps = {
         ...props,
         styles,
         formData,
-        // buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
+        isOTFModule: true,
     };
 
-    const onFinish = () => {
-        handleButtonClick({ buttonAction: NEXT_ACTION });
+    const onFinish = (data) => {
+        const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
     };
 
     return (
@@ -129,7 +147,7 @@ const SchemeDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} />
+                    <FormActionButton {...myProps} buttonData={{ ...buttonData, editBtn: false, saveBtn: false }} />
                 </Col>
             </Row>
         </Form>

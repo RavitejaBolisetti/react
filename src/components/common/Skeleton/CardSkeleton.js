@@ -7,10 +7,10 @@ import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export const CardSkeleton = ({ title = true, content = true, titleHeight = 48, contentHeight = 265 }) => {
+export const CardSkeleton = ({ title = true, content = true, titleHeight = 48, contentHeight = 265, count = 1 }) => {
     const theme = 'light';
-    return (
-        <div>
+    return [...Array(count)].map((e, i) => (
+        <div style={{ marginBottom: '8px' }}>
             {title ? (
                 <SkeletonTheme baseColor={`${theme === 'dark' ? '#444' : '#f5f5f5'}`} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
                     <div data-testid="title-skeleton">
@@ -30,5 +30,5 @@ export const CardSkeleton = ({ title = true, content = true, titleHeight = 48, c
                 ''
             )}
         </div>
-    );
+    ));
 };

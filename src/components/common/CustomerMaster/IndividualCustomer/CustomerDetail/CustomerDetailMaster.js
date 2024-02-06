@@ -22,6 +22,8 @@ import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
+import { corporateCompanyDescriptionDataActions } from 'store/actions/data/customerMaster/corporateDescription';
+import { corporateCompanyDescriptionTypeDataActions } from 'store/actions/data/customerMaster/corporateDescriptionType';
 
 const mapStateToProps = (state) => {
     const {
@@ -30,6 +32,9 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
+                CorporateDescription: { isFilteredListLoaded: isCorporateDescriptionLoaded = false, isLoading: isCorporateDescriptionLovLoading, filteredListData: corporateDescriptionLovData },
+                CorporateDescriptionType: { isFilteredListLoaded: isCorporateDescriptionTypeLoaded = false, isLoading: isCorporateDescriptionTypeLovLoading, filteredListData: corporateTypeLovData },
+
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -51,6 +56,13 @@ const mapStateToProps = (state) => {
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
+
+        isCorporateDescriptionLoaded,
+        isCorporateDescriptionTypeLoaded,
+        isCorporateDescriptionLovLoading,
+        isCorporateDescriptionTypeLovLoading,
+        corporateDescriptionLovData,
+        corporateTypeLovData,
     };
     return returnValue;
 };
@@ -78,6 +90,12 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
 
+            fetchCorporateDescriptionLovList: corporateCompanyDescriptionDataActions.fetchFilteredList,
+            listCorporateDescriptionLovShowLoading: corporateCompanyDescriptionDataActions.listShowLoading,
+
+            fetchCorporateTypeLovList: corporateCompanyDescriptionTypeDataActions.fetchFilteredList,
+            listCorporateTypeLovShowLoading: corporateCompanyDescriptionTypeDataActions.listShowLoading,
+
             hideGlobalNotification,
             showGlobalNotification,
         },
@@ -90,7 +108,7 @@ const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId, mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType } = props;
+    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading } = props;
     const { sendOTP, validateOTP } = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -113,8 +131,9 @@ const CustomerDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (data) {
-            form.setFieldsValue({ ...data });
+            form.setFieldsValue({ ...data, corporateDescription: data?.corporateName });
             setFormData(data);
+            fetchCorporateTypeLovList({ setIsLoading: listCorporateTypeLovShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);

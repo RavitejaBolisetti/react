@@ -19,4 +19,9 @@ export const DATA_TYPE = {
         key: 'dayjs',
         title: 'Dayjs',
     },
+    DATE_TIME: {
+        id: 4,
+        key: 'datetime',
+        title: 'Date Time',
+    },
 };

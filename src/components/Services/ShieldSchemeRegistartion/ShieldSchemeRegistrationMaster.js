@@ -42,6 +42,7 @@ import { drawerTitle } from 'utils/drawerTitle';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { SALE_TYPE } from './utils/saleTypeConstant';
+import { debounce } from 'utils/debounce';
 
 const mapStateToProps = (state) => {
     const {
@@ -176,6 +177,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [cancelSchemeVisible, setCancelSchemeVisible] = useState(false);
     const [searchValue, setSearchValue] = useState();
     const [vinNumber, setVinNumber] = useState();
+    const [odometerReading, setOdometerReading] = useState(null);
     const [saleType, setSaleType] = useState();
     const [bookingNumber, setBookingNumber] = useState();
     const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
@@ -351,6 +353,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
 
+    const handleOdometerReading = debounce((e) => {
+        setOdometerReading(e.target.value);
+    }, 500);
+
     useEffect(() => {
         if (loginUserData?.userType) {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
@@ -425,7 +431,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [userId, selectedOrderId]);
 
     useEffect(() => {
-        if (vinNumber) {
+        if (vinNumber && odometerReading) {
             const extraParams = [
                 {
                     key: 'vin',
@@ -433,11 +439,17 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     value: vinNumber,
                     name: 'vin',
                 },
+                {
+                    key: 'odometerReading',
+                    title: 'odometerReading',
+                    value: odometerReading,
+                    name: 'odometerReading',
+                },
             ];
             fetchSchemeDescription({ setIsLoading: listSchemeLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, vinNumber]);
+    }, [userId, vinNumber, odometerReading]);
 
     useEffect(() => {
         if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily) {
@@ -840,7 +852,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
+        setStatus(detailShieldData?.requestDetails[0]?.requestStatus);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);
@@ -883,7 +895,8 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleCancelScheme = () => {
-        const data = { id: detailShieldData?.id, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, userId: userId, status: status, ...cancelSchemeForm.getFieldsValue() };
+        const detailPayload = detailShieldData?.requestDetails?.[0];
+        const data = { id: detailPayload?.id, shieldHdrId: detailPayload?.shieldHdrId, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, userId: userId, status: status, ...cancelSchemeForm.getFieldsValue() };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -1031,6 +1044,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         shieldDetailForm,
         // registrationForm,
         // schemeForm,
+        handleOdometerReading,
         vehicleCustomerForm,
         vehicleDetailForm,
         customerDetailForm,

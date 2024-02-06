@@ -9,7 +9,7 @@ export const preparePlaceholderText = (name, prefix = true, lowercase = true) =>
     return prefix ? translateContent('global.placeholder.input').concat(lowercase ? name?.toLowerCase() : name) : name;
 };
 
-export const preparePlaceholderSelect = (name) => {
+export const preparePlaceholderSelect = (name = '') => {
     return translateContent('global.placeholder.select') + name?.toLowerCase();
 };
 

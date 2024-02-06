@@ -22,6 +22,7 @@ import { tableColumnApportion } from './tableColumnApportion';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { BASE_URL_APPORTION_DETAILS_SEARCH } from 'constants/routingApi';
+import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
 
 const mapStateToProps = (state) => {
     const {
@@ -203,7 +204,7 @@ const ApportionDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} buttonData={{ ...props.buttonData, editBtn: formActionType?.viewMode }} />
+                    <VehicleReceiptFormButton {...props} buttonData={{ ...props.buttonData, editBtn: formActionType?.viewMode && receiptStatus !== QUERY_BUTTONS_CONSTANTS.CANCELLED.key }} />
                 </Col>
             </Row>
         </Form>
