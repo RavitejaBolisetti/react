@@ -107,7 +107,8 @@ import {
 } from 'pages/Sales';
 
 import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage, 
-    PartMasterPage, } from 'pages/Spares';
+    PartMasterPage,
+    BranchwiseStockViewMasterPage, } from 'pages/Spares';
 
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -334,6 +335,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
                    {/* Spares Master */}
                 <Route path={routing.ROUTING_PART_MASTER} element={<PartMasterPage />} exact />
+                <Route path={routing.ROUTING_TARGET_TYPE} element={<BranchwiseStockViewMasterPage />} exact />
                  {/* Vehicle Related */} 
                  <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
 

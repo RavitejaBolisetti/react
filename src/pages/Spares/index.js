@@ -16,6 +16,7 @@ import IssueIndicatorMasterPage from './IssueIndicator';
 import CampaignDiscountPage from './CampaignDiscount';
 import UnitOfMeasureMasterPage  from './UnitOfMeasure';
 import InventoryClassificationPage from './InventoryClassification';
+import BranchwiseStockViewMasterPage from './BranchwiseStockView.js';
 
 export {
     UnitOfMeasureMasterPage,
@@ -30,4 +31,5 @@ export {
     InventoryClassificationPage,
     PartMasterPage,
     StoreMasterPage,
+    BranchwiseStockViewMasterPage,
 };
