@@ -549,4 +549,8 @@ export const PARAM_MASTER = {
         id: 'CHRGR_INST_STG_TYPE',
         title: 'Charger Installation stage type',
     },
+    DLVR_AMC_SCH_TYP: {
+        id: 'DLVR_AMC_SCH_TYP',
+        title: 'Delivery note scheme type',
+    },
 };

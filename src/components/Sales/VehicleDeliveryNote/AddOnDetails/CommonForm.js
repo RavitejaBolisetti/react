@@ -12,14 +12,16 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, registerDisabled, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false, handleEditRegister, handleCancelRegister, disableKey, muiltipleFormData, handleAmcDescriptionData }) => {
     const disableProps = { disabled: isReadOnly };
     const handleChange = (values) => {
         const code = openAccordian && schemeDescriptionDatamain.hasOwnProperty(openAccordian) && schemeDescriptionDatamain[openAccordian]?.find((item) => item?.schemeDescription === values);
+
         if (code) {
-            addOnForm.setFieldValue('schemeCode', code?.id);
-            addOnForm.setFieldValue('schemeAmount', code?.schemeAmount);
+            const { id: schemeCode, schemeAmount } = code;
+            addOnForm.setFieldsValue({ schemeCode, schemeAmount });
         }
     };
 
@@ -29,7 +31,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 {openAccordian === 'AMC' && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.schemeType} label={translateContent('vehicleDeliveryNote.addOnDetails.label.schemeType')} name="schemeType" rules={[validateRequiredSelectField(translateContent('vehicleDeliveryNote.addOnDetails.label.schemeType'))]}>
-                            {customSelectBox({ data: typeData['DLVR_AMC_SCH_TYP'], placeholder: preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.schemeType')), fieldNames: { key: 'key', value: 'value' }, ...disableProps, onChange: handleAmcDescriptionData })}
+                            {customSelectBox({ data: typeData?.[PARAM_MASTER?.DLVR_AMC_SCH_TYP?.id], placeholder: preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.schemeType')), fieldNames: { key: 'key', value: 'value' }, ...disableProps, onChange: handleAmcDescriptionData })}
                         </Form.Item>
                     </Col>
                 )}
@@ -40,7 +42,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} label={translateContent('vehicleDeliveryNote.addOnDetails.label.saleType')} name="saleType" rules={[validateRequiredInputField(translateContent('vehicleDeliveryNote.addOnDetails.label.saleType'))]}>
-                        {customSelectBox({ data: typeData?.['DLVR_SALE_TYP'], placeholder: preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.saleType')), ...disableProps })}
+                        {customSelectBox({ data: typeData?.[PARAM_MASTER?.DLVR_SALE_TYP?.id], placeholder: preparePlaceholderText(translateContent('vehicleDeliveryNote.addOnDetails.label.saleType')), ...disableProps })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

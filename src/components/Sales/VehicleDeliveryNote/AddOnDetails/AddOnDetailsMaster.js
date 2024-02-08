@@ -80,12 +80,12 @@ const mapDispatchToProps = (dispatch) => ({
 export const AddOnDetailsMasterMain = (props) => {
     const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
-    const { selectedOrder } = props;
-
+    const { resetAmc, resetRsa, resetSheild } = props;
     const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData, handleLocalFormChange } = props;
     const { fetchAmc, listAmcLoading } = props;
     const { fetchRsa, listRsaLoading } = props;
     const { fetchSheild, listSheildLoaing } = props;
+    const { selectedOrder } = props;
 
     const [formData, setFormData] = useState();
     const [searchData, setsearchData] = useState({});
@@ -170,6 +170,16 @@ export const AddOnDetailsMasterMain = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section, userId]);
+
+    useEffect(() => {
+        return () => {
+            resetAmc();
+            resetRsa();
+            resetSheild();
+            setSchemeDescriptionData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleOnChange = (e) => {
         form.setFieldsValue({
