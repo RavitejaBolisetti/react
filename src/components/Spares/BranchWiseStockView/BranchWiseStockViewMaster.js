@@ -7,7 +7,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Col, Form, Row, Button } from 'antd';
+import { Col, Form, Row, Button, Input } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -24,6 +24,11 @@ import AdvanceVehiclePriceMasterFilter from './AdvanceVehiclePriceMasterFilter';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 import { DisableParent, FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
+import { tableColumnBranch } from './tableColumnBranch';
+import styles from 'assets/sass/app.module.scss';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+
+const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -33,7 +38,6 @@ const mapStateToProps = (state) => {
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-
         },
     } = state;
 
@@ -54,8 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-          
-
             showGlobalNotification,
         },
         dispatch
@@ -63,9 +65,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const BranchWiseStockViewMasterBase = (props) => {
-    const { filterString,typeData,moduleTitle, setFilterString, saveData, userId, showGlobalNotification } = props;
+    const { filterString, typeData, moduleTitle, setFilterString, saveData, userId, showGlobalNotification } = props;
     const { data, resetData, downloadFile, listShowLoading, userType } = props;
-    
+
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -123,8 +125,6 @@ export const BranchWiseStockViewMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
-
-
 
     const extraParams = useMemo(() => {
         return [
@@ -209,8 +209,6 @@ export const BranchWiseStockViewMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page]);
-
-
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         setFormData(record);
@@ -297,12 +295,27 @@ export const BranchWiseStockViewMasterBase = (props) => {
 
     const tableProps = {
         dynamicPagination,
-        totalRecords: data.length,
-        page,
-        setPage,
+        // totalRecords: data.length,
+        // page,
+        // setPage,
         isLoading: false,
         tableColumn: tableColumn(handleButtonClick),
+        tableData: new Array(5).fill({}) ||data,
+        showAddButton: false,
+        isLoading: false,
+        pagination: false,
+    };
+    const tablePropsBranch = {
+        dynamicPagination,
+        // totalRecords: data.length,
+        // page,
+        // setPage,
+        isLoading: false,
+        tableColumn: tableColumnBranch(handleButtonClick),
         tableData: data,
+        showAddButton: false,
+        isLoading: false,
+        pagination: false,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -329,7 +342,7 @@ export const BranchWiseStockViewMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
         titleOverride: translateContent('vehiclePriceMaster.label.advanceFilters'),
-    
+
         handleFilterChange,
         filteredStateData,
         filteredCityData,
@@ -405,12 +418,32 @@ export const BranchWiseStockViewMasterBase = (props) => {
     return (
         <>
             <AdvanceVehiclePriceMasterFilter {...advanceFilterResultProps} />
+            <AdvancedSearch {...advanceFilterProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
+                    <ListDataTable {...tableProps} />
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Form
+                            layout="inline"
+                            // layout="vertical"
+                            autoComplete="off"
+                            colon={false}
+                        >
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
+                                    <Form.Item label={'Area Code'} name={'areaCode'}>
+                                        <Search maxLength={50} placeholder={preparePlaceholderText('Area Code')} loading={false} allowClear />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
+                        <ListDataTable {...tablePropsBranch} />
+                    </div>
                 </Col>
             </Row>
-            <AdvancedSearch {...advanceFilterProps} />
+
             <ViewDetail {...viewProps} />
         </>
     );
