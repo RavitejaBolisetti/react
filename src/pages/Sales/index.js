@@ -55,7 +55,11 @@ import MultiModalVehicleMasterForResaleVehiclePage from './MultiModalVehicleMast
 import MultiBrandUsedVehicleCampaignCreationPage from './MultiBrandUsedVehicleCampaignCreation';
 import MultiBrandUsedVehiclePriceCapturingPage from './MultiBrandUsedVehiclePriceCapturing';
 import BrandSpiderMasterPage from './BrandSpiderMaster';
-
+import SpecialIncentiveSchemesPage from './SpecialIncentiveSchemes';
+import InitiateDealercommunicationSpecialSchemeMasterPage from './InitiateDealercommunicationSpecialScheme';
+import DealerCommunicationViewPage from './DealerCommunicationView';
+import UploadFestiveSchemePage from './UploadFestiveScheme';
+import GSTClaimPage from './GSTClaim'
 
 export {
     OTFMasterPage,
@@ -99,10 +103,14 @@ export {
     ExchangeLoyaltyReclaimRequestMasterPage,
     ExchangeClaimMasterPage,
     LoyaltyClaimMasterPage,
-
+    SpecialIncentiveSchemesPage,
+    InitiateDealercommunicationSpecialSchemeMasterPage,
+    DealerCommunicationViewPage,
+    GSTClaimPage,
     ResaleVehicleColorMasterPage,
     MultiModalVehicleMasterForResaleVehiclePage,
     BrandSpiderMasterPage,
     MultiBrandUsedVehicleCampaignCreationPage,
     MultiBrandUsedVehiclePriceCapturingPage,
+    UploadFestiveSchemePage,
 };

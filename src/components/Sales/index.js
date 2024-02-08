@@ -32,6 +32,10 @@ import ResaleVehicleColorMaster from './ResaleVehicleColorMaster';
 import MultiModelVehicleMasterForResaleVehicleMaster from './MultiModelVehicleResaleVehicleMaster';
 
 import { CentralFameSubsidyMaster } from './CentralFameSubsidy';
+import InitiateDealercommunicationSpecialSchemeMaster from './InitiateDealercommunicationSpecialScheme';
+import DealerCommunicationViewMaster from './DealerCommunicationView';
+import UploadFestiveSchemeMaster from './UploadFestiveScheme';
+import GSTClaimMaster from './GSTClaim';
 
 export {
     OtfMaster,
@@ -60,4 +64,8 @@ export {
     IncentiveScheme,
     ResaleVehicleColorMaster,
     MultiModelVehicleMasterForResaleVehicleMaster,
+    InitiateDealercommunicationSpecialSchemeMaster,
+    DealerCommunicationViewMaster,
+    UploadFestiveSchemeMaster,
+    GSTClaimMaster,
 };
