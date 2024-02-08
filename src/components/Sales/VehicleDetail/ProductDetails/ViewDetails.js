@@ -73,7 +73,7 @@ const ViewDetailMain = (props) => {
                         {formData?.connectedVehicle?.map((element, index) => {
                             return (
                                 <Collapse expandIcon={expandIcon} activeKey={innerAccordian} onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
-                                    <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
+                                    <Panel header={`${element?.tcuId ? element?.tcuId : '-'} | ${element?.esimNo ? element?.esimNo : '-'}`} key={index}>
                                         <Divider />
                                         <Descriptions {...viewProps}>
                                             <Descriptions.Item label={translateContent('vehicleDetail.connectedVehicle.tcuId')}>{checkAndSetDefaultValue(formData?.connectedVehicle && element?.tcuId, isLoading)}</Descriptions.Item>

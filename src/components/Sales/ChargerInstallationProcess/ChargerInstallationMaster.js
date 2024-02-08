@@ -23,10 +23,13 @@ import { FUEL_TYPE, REQUEST_STAGE_CONSTANTS } from './Constants/FuelTypeConstant
 import { chargerInstallationDataActions } from 'store/actions/data/chargerInstallation/chargerInstallation';
 import { crmCustomerVehicleDataActions } from 'store/actions/data/crmCustomerVehicle';
 import { chargerInstallationGuestDetailsDataActions } from 'store/actions/data/chargerInstallation/chargerInstallationGuestDetails';
+import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
+import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
+import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -41,6 +44,12 @@ const mapStateToProps = (state) => {
                 ChargerInstallationGuestDetails: { isLoaded: isGuestDataLoaded = false, isLoading: isGuestLoading, data: chargerInstallationGuestDetailsData = [] },
             },
             CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isLoading: isChargerSearchLoading, data: crmCustomerVehicleData = [] },
+            OTF: {
+                Vehicle: {
+                    ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                    VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
+                },
+            },
         },
     } = state;
 
@@ -63,6 +72,14 @@ const mapStateToProps = (state) => {
         chargerInstallationGuestDetailsData,
         isDetailLoading,
         isChargerSearchLoading,
+
+        isModelDataLoaded,
+        isModelLoading,
+        modelData,
+
+        isVariantDataLoaded,
+        isVariantLoading,
+        variantData,
     };
     return returnValue;
 };
@@ -86,6 +103,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchGuestDetails: chargerInstallationGuestDetailsDataActions.fetchList,
             listGuestShowLoading: chargerInstallationGuestDetailsDataActions.listShowLoading,
 
+            fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
+            listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
+            resetModel: vehicleModelDetailsDataActions.reset,
+
+            fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
+            listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
+            resetVariant: vehicleModelDetailsDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -96,6 +121,8 @@ export const ChargerInstallationMasterBase = (props) => {
     const { data, userId, isChargerSearchLoading, isDetailLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
     const { resetCustomerVehicleData, filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading, modelData, variantData } = props;
+
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
     const [requestPayload, setRequestPayload] = useState({ chargerInstDetails: {}, chargerInstAddressDetails: {} });
@@ -298,6 +325,18 @@ export const ChargerInstallationMasterBase = (props) => {
         fetchGuestDetails({ setIsLoading: listGuestShowLoading, userId, extraParams, onErrorAction });
     };
 
+    const makeExtraParams = (key, title, value, name) => {
+        const extraParams = [
+            {
+                key: key,
+                title: title,
+                value: value,
+                name: name,
+            },
+        ];
+        return extraParams;
+    };
+
     const handleBookingNumberSearch = (otfNumber) => {
         if (!otfNumber) return false;
         const extraParams = [
@@ -311,6 +350,8 @@ export const ChargerInstallationMasterBase = (props) => {
         const onSuccesscustomerAction = (res) => {
             chargerInstallationForm.setFieldsValue({ otfNumber: otfNumber });
             if (!(res?.data?.otfDetails?.orderStatus === OTF_STATUS?.CANCELLED?.key || res?.data?.otfDetails?.orderStatus === OTF_STATUS?.DELIVERED?.key) && res?.data?.vehicleDetails?.fuel === FUEL_TYPE?.ELECTR?.key) {
+                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+                fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.vehicleDetails?.modelGroup, 'modelGroupCode') });
                 setChargerDetails(true);
                 setButtonData((prev) => ({ ...prev, formBtnActive: true }));
                 chargerInstallationForm.setFieldsValue({ bookingStatus: getCodeValue(typeData?.ORDR_STATS, crmCustomerVehicleData?.otfDetails?.orderStatus) });
@@ -635,6 +676,8 @@ export const ChargerInstallationMasterBase = (props) => {
         isLoading: isDetailLoading,
         isChargerSearchLoading,
         RequestStage,
+        modelData,
+        variantData,
     };
 
     return (

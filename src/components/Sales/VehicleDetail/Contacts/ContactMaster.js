@@ -96,6 +96,11 @@ const ContactMasterMain = (props) => {
     }, []);
 
     useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (selectedRecordId && userId) {
             fetchList({ setIsLoading: listShowLoading, extraParams });
         }

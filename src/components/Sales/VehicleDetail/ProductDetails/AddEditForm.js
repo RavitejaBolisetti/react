@@ -215,7 +215,7 @@ const AddEditFormMain = (props) => {
                                 {formData?.connectedVehicle?.map((element, index) => {
                                     return (
                                         <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={innerAccordian} {...collapseProps}>
-                                            <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
+                                            <Panel header={`${element?.tcuId ? element?.tcuId : '-'} | ${element?.esimNo ? element?.esimNo : '-'} `} key={index}>
                                                 <Divider />
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

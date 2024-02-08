@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const AccountRelatedMasterBase = (props) => {
     const { form, handleFormValueChange } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, isLoading, resetData } = props;
-    const { formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
+    const { buttonData, setButtonData, formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState();
 
@@ -79,6 +79,11 @@ export const AccountRelatedMasterBase = (props) => {
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
+
+    useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (isDataLoaded) {

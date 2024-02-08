@@ -23,7 +23,7 @@ const { Search } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isChargerSearchLoading, formData, typeData, disabled, setDisabled, chargerInstallationMasterData, isLoading, formActionType, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
+    const { modelData, variantData, isChargerSearchLoading, formData, typeData, disabled, setDisabled, chargerInstallationMasterData, isLoading, formActionType, chargerDetails, activeKey, setActiveKey, chargerInstallationForm, crmCustomerVehicleData, setAddRequestVisible, addRequestVisible, handleBookingNumberSearch, handleBookingChange, addRequestForm, addRequestData, setAddRequestData } = props;
 
     const viewProps = {
         bordered: false,
@@ -104,8 +104,8 @@ const AddEditFormMain = (props) => {
                                     <>
                                         <Divider />
                                         <Descriptions {...viewProps}>
-                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelVariant, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(getCodeValue(modelData, crmCustomerVehicleData?.vehicleDetails?.modelGroup, 'modelGroupDescription', true, 'modelGroupCode'), isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(getCodeValue(variantData, crmCustomerVehicleData?.vehicleDetails?.modelVariant, 'variantDescription', true, 'variantCode'), isLoading)}</Descriptions.Item>
                                             <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
                                             <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.color, isLoading)}</Descriptions.Item>
                                             <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(crmCustomerVehicleData?.vehicleDetails?.modelCode, isLoading)}</Descriptions.Item>

@@ -101,6 +101,11 @@ export const CustomerDetailsMain = (props) => {
         !activeKey?.includes(key) ? setActiveKey([key]) : setActiveKey([]);
     };
 
+    useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const extraParams = [
         {
             key: 'vin',
@@ -253,7 +258,7 @@ export const CustomerDetailsMain = (props) => {
             id: recordId,
         };
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
         };
