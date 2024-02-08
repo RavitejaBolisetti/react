@@ -44,11 +44,9 @@ const mapStateToProps = (state) => {
                 ChargerInstallationGuestDetails: { isLoaded: isGuestDataLoaded = false, isLoading: isGuestLoading, data: chargerInstallationGuestDetailsData = [] },
             },
             CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isLoading: isChargerSearchLoading, data: crmCustomerVehicleData = [] },
-            OTF: {
-                Vehicle: {
-                    ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
-                    VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
-                },
+            Vehicle: {
+                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
             },
         },
     } = state;
