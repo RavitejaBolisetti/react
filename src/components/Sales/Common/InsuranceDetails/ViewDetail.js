@@ -14,8 +14,8 @@ import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
-import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
+import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -77,14 +77,13 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
     return (
         <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCompany')}>{checkAndSetDefaultValue(getCodeValue(insuranceCompanies, formData?.insuranceCompany), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCoverNote')}>{checkAndSetDefaultValue(formData?.insuranceCoverNote, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceAmount')}>{checkAndSetDefaultValue(formData?.insuranceAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCoverNoteDate')}>{checkAndSetDefaultValue(formData?.insuranceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCoverNoteDate')}>{formData?.insuranceDate ? checkAndSetDefaultValue(convertDateTimedayjs(formData?.insuranceDate.slice(0, 10), dateFormatView)) : '-'}</Descriptions.Item>
                 <Descriptions.Item label={translateContent('commonModules.label.insuranceDetails.registrationNumber')}>{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
