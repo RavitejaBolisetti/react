@@ -553,4 +553,8 @@ export const PARAM_MASTER = {
         id: 'DLVR_AMC_SCH_TYP',
         title: 'Delivery note scheme type',
     },
+    DLVR_NT_OMR: {
+        id: 'DLVR_NT_OMR',
+        title: 'Delivery note odometer reading',
+    },
 };

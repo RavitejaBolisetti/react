@@ -16,6 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, registerDisabled, relationshipManagerData, schemeDescriptionDatamain, isReadOnly = false, handleEditRegister, handleCancelRegister, disableKey, muiltipleFormData, handleAmcDescriptionData }) => {
     const disableProps = { disabled: isReadOnly };
+    const odometerValue = typeData?.[PARAM_MASTER?.DLVR_NT_OMR?.id]?.[0]?.value;
     const handleChange = (values) => {
         const code = openAccordian && schemeDescriptionDatamain.hasOwnProperty(openAccordian) && schemeDescriptionDatamain[openAccordian]?.find((item) => item?.schemeDescription === values);
 
@@ -62,7 +63,8 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                     </Form.Item>
                 </Col>
                 <Form.Item hidden name="schemeCode" />
-                <Form.Item value={true} initialValue={true} hidden name="mappedInDelivery" />
+                <Form.Item value={true} initialValue={true} name="mappedInDelivery" hidden />
+                <Form.Item value={odometerValue} initialValue={odometerValue} name="odometerReading" hidden />
             </Row>
             {!formActionType?.viewMode &&
                 (!registerDisabled?.[openAccordian] ? (

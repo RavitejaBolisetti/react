@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfSoMappingDataActions.fetchList,
             listShowLoading: otfSoMappingDataActions.listShowLoading,
             saveData: otfSoMappingDataActions.saveData,
+            saveFormShowLoading: otfSoMappingDataActions.saveFormShowLoading,
 
             showGlobalNotification,
         },
@@ -70,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const MappingMasterMain = (props) => {
     const { dynamicPagination, otfSomappingData, userId, showGlobalNotification, moduleTitle, isOtfSoMappingLoading, selectedKey } = props;
-    const { listShowLoading, saveData, advanceFilterString, setadvanceFilterString } = props;
+    const { saveFormShowLoading, saveData, advanceFilterString, setadvanceFilterString, isLoadingOnSave } = props;
     const [form] = Form.useForm();
 
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
@@ -120,10 +121,10 @@ const MappingMasterMain = (props) => {
         };
 
         const requestData = {
+            data,
             customURL: CustomUrl,
-            data: data,
             method: 'put',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -156,6 +157,8 @@ const MappingMasterMain = (props) => {
         saveButtonName: BUTTON_NAME?.UNMAP?.name,
         formData,
         multipleForm: false,
+
+        isLoadingOnSave,
     };
 
     return (

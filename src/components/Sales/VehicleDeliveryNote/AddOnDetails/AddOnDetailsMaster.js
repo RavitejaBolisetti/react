@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -122,11 +123,11 @@ export const AddOnDetailsMasterMain = (props) => {
             {
                 key: 'odometerReading',
                 title: 'odometerReading',
-                value: 2,
+                value: typeData?.[PARAM_MASTER?.DLVR_NT_OMR?.id]?.[0]?.value || '',
                 name: 'odometer reading',
             },
         ];
-    }, [selectedOrder, requestPayload?.vehicleDetails?.vinNumber]);
+    }, [selectedOrder, requestPayload?.vehicleDetails?.vinNumber, typeData]);
 
     useEffect(() => {
         if (selectedOrder?.invoicehdrId && userId) {
@@ -220,13 +221,10 @@ export const AddOnDetailsMasterMain = (props) => {
                     setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
                 }
                 setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
-                // const message = !formData?.[key] ? 'registered' : 'saved';
-                // showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: `Scheme has been ${message} successfully` });
             })
             .catch((err) => console.error(err));
     };
     const handleAmcDescriptionData = (amcSchemeCode) => {
-        console.log('amcSchemeCode', amcSchemeCode);
         fetchAmc({
             setIsLoading: listAmcLoading,
             userId,

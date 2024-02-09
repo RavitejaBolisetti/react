@@ -247,10 +247,9 @@ export const validateNegativeNumber = (fieldName) => ({
     message: fieldName + ' Does not accept negative numbers',
 });
 
-export const isIssuePriceValid = (value, dealerPrice) => {
+export const isIssuePriceValid = (value = 0, dealerPrice = 0) => {
     if (!value) return Promise.resolve();
-    // else if (!dealerPrice) return Promise.reject(new Error(`Net Dealer Price not present`));
-    else if (!dealerPrice || value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
+    else if (dealerPrice && value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
     else return Promise.resolve();
 };
 
