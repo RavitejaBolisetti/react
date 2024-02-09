@@ -9,6 +9,7 @@ import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { isIssuePriceValid, validateRequiredInputField, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
+import { handleEnterValidation } from 'utils/handleEnterValidation';
 
 const { Search } = Input;
 
@@ -22,13 +23,14 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
     };
     const disabledProps = { disabled: isReadonly };
 
-    const handleDependentReset = () => {
-        issueForm.resetFields(['engineNumber', 'oemInvoiceDate', 'invoiceNumber', 'grnDate', 'grnNumber', 'netDealerPrice']);
+    const handleDependentReset = () => issueForm.resetFields(['engineNumber', 'oemInvoiceDate', 'invoiceNumber', 'grnDate', 'grnNumber', 'netDealerPrice']);
+    const handleIssueCharges = (__, value) => {
+        const netDealerPrice = issueForm.getFieldValue('netDealerPrice');
+        return isIssuePriceValid(value, netDealerPrice);
     };
-
     return (
         <>
-            <Form form={issueForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
+            <Form onKeyDownCapture={handleEnterValidation} form={issueForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={24}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={cancellationData?.modelDescription} name="modelDescription" label={translateContent('stockTransferIndent.issueIndent.label.modelDescription')}>
@@ -70,7 +72,7 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="issueCharges" label={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} rules={[validateNumberWithTwoDecimalPlaces(translateContent('stockTransferIndent.issueIndent.validation.issueCharges')), { validator: (_, value) => issueForm.getFieldValue('netDealerPrice') && isIssuePriceValid(value, issueForm.getFieldValue('netDealerPrice')) }]}>
+                        <Form.Item name="issueCharges" label={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} rules={[validateNumberWithTwoDecimalPlaces(translateContent('stockTransferIndent.issueIndent.validation.issueCharges')), { validator: handleIssueCharges }]}>
                             <Input placeholder={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} maxLength={50} />
                         </Form.Item>
                     </Col>
