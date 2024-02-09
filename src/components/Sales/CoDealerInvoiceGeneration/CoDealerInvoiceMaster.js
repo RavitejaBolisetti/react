@@ -791,6 +791,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         cancelInvoiceForm,
         onCloseAction: onCancelCloseAction,
         typeData,
+        showCancellationType: false,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.CO_DEALER_INVOICE_DOCUMENT;
