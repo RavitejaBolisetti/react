@@ -16,9 +16,10 @@ import { translateContent } from 'utils/translateContent';
 const { Text } = Typography;
 
 const SoFormMasterMain = (props) => {
-    const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear } = props;
+    const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear, isLoadingOnSave } = props;
     const { isLocationLoading = false, loginUserData } = props;
     const disabledProps = { disabled: isReadOnly };
+    const isSaveLoadingDisable = { disabled: isLoadingOnSave };
     const handleTitle = useMemo(() => {
         switch (selectedKey) {
             case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key: {
@@ -97,9 +98,13 @@ const SoFormMasterMain = (props) => {
                                     </Row>
                                     <Row gutter={20} className={styles.marB20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupRight}>
-                                            <Button onClick={handleCancel}>{translateContent('global.buttons.cancel')}</Button>
-                                            <Button onClick={handleClear}>{translateContent('global.buttons.clear')}</Button>
-                                            <Button htmlType="submit" type="primary">
+                                            <Button {...isSaveLoadingDisable} onClick={handleCancel}>
+                                                {translateContent('global.buttons.cancel')}
+                                            </Button>
+                                            <Button {...isSaveLoadingDisable} onClick={handleClear}>
+                                                {translateContent('global.buttons.clear')}
+                                            </Button>
+                                            <Button {...isSaveLoadingDisable} htmlType="submit" type="primary">
                                                 {translateContent('global.buttons.submit')}
                                             </Button>
                                         </Col>

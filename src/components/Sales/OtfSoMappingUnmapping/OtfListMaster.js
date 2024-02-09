@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
             OTFSoMapping: {
                 DealerParent: { isFilteredListLoaded: isParentLovLoaded = false, isLoading: isParentLovLoading = false, filteredListData: DealerParentData = [] },
                 DealerParentLocation: { isLoaded: isLocationLoaded = false, isLoading: isLocationLoading = false, data: LocationData = [] },
-                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [], filter: advanceFilterString },
+                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [], filter: advanceFilterString, isLoadingOnSave },
             },
         },
         common: {
@@ -78,6 +78,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         advanceFilterString,
         SORTING_COULUMN_NAME,
+
+        isLoadingOnSave,
     };
 
     return returnValue;
@@ -100,6 +102,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: otfSoMappingDataActions.saveData,
             resetData: otfSoMappingDataActions.reset,
             setadvanceFilterString: otfSoMappingDataActions.setFilter,
+            saveFormShowLoading: otfSoMappingDataActions.saveFormShowLoading,
 
             showGlobalNotification,
         },
@@ -113,7 +116,7 @@ export const OtfListMasterBase = (props) => {
     const { isLocationLoading, LocationData, fetchDealerLocation, listDealerLocation, resetDealerLocationData } = props;
     const { isOtfSoMappingLoaded, isOtfSoMappingLoading, otfSomappingData, resetData, fetchList, listShowLoading, saveData, showGlobalNotification } = props;
     const { isConfigurableLoading, loginUserData } = props;
-    const { setadvanceFilterString, advanceFilterString, SORTING_COULUMN_NAME } = props;
+    const { setadvanceFilterString, advanceFilterString, SORTING_COULUMN_NAME, isLoadingOnSave, saveFormShowLoading } = props;
 
     const pageIntialState = {
         pageSize: 10,
@@ -457,7 +460,7 @@ export const OtfListMasterBase = (props) => {
                 customURL: CustomUrl,
                 data: finalData,
                 method: 'put',
-                setIsLoading: listShowLoading,
+                setIsLoading: saveFormShowLoading,
                 userId,
                 onError,
                 onSuccess,
@@ -521,6 +524,8 @@ export const OtfListMasterBase = (props) => {
         advanceFilterString,
         setadvanceFilterString,
         loginUserData,
+
+        isLoadingOnSave,
     };
     const SomappingUnmappingFilterProps = {
         form,
