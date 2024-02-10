@@ -557,4 +557,12 @@ export const PARAM_MASTER = {
         id: 'DLVR_NT_OMR',
         title: 'Delivery note odometer reading',
     },
+    SO_MAP_UNMAP_RESN_CAT: {
+        id: 'SO_MAP_UNMAP_RESN_CAT',
+        title: 'booking so mapping reason category',
+    },
+    SO_MAP_UNMAP_RESN_DESC: {
+        id: 'SO_MAP_UNMAP_RESN_DESC',
+        title: 'booking so mapping reason description',
+    },
 };

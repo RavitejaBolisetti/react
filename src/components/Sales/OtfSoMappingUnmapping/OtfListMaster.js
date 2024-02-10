@@ -129,6 +129,7 @@ export const OtfListMasterBase = (props) => {
     const [status, setstatus] = useState();
     const [selectedKey, setselectedKey] = useState();
     const [DropDownData, setDropDownData] = useState([]);
+    const [descriptiondata, setDescriptionData] = useState([]);
     const [page, setPage] = useState({ ...pageIntialState });
 
     const [form] = Form.useForm();
@@ -319,9 +320,17 @@ export const OtfListMasterBase = (props) => {
     };
 
     const handleClear = () => {
+        const parentGroupCode = SoForm.getFieldsValue()?.parentGroupCode;
         SoForm.resetFields();
-        resetDealerLocationData();
-        setfilterString();
+        if (loginUserData?.userType === HEADER_CONSTANTS?.DLR?.key) {
+            SoForm.setFieldValue('parentGroupCode', parentGroupCode);
+            setfilterString();
+            setDescriptionData([]);
+        } else {
+            resetDealerLocationData();
+            setfilterString();
+            setDescriptionData([]);
+        }
     };
 
     const handleCancel = () => {
@@ -446,9 +455,7 @@ export const OtfListMasterBase = (props) => {
 
             const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
             const onSuccess = (res) => {
-                SoForm.resetFields();
-                resetDealerLocationData();
-                setfilterString();
+                handleClear();
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             };
 
@@ -526,6 +533,8 @@ export const OtfListMasterBase = (props) => {
         loginUserData,
 
         isLoadingOnSave,
+        descriptiondata,
+        setDescriptionData,
     };
     const SomappingUnmappingFilterProps = {
         form,
