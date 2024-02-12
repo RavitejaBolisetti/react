@@ -1014,7 +1014,7 @@
             "invoiceDate": "Invoice Date",
             "irnNo": "IRN No.",
             "irnStatus": "IRN Status",
-            "amcCertificateNo": "AMC Registration Number",
+            "amcCertificateNo": "AMC Certificate",
             "amcIncenticeClaim": "AMC Incentive Claim"
         },
         "placeholder": {
@@ -4401,8 +4401,8 @@
             "invoiceDate": "Invoice Date",
             "irnNo": "IRN No.",
             "irnStatus": "IRN Status",
-            "schemeCertificateNo": "Scheme Certificate No.",
-            "invoiceNo": "Invoice No.",
+            "schemeCertificateNo": "Scheme Certificate",
+            "invoiceNo": "Invoice Number",
             "vehicleRegistrationNo": "Vehicle Registration No.",
             "orgWarrantyStartDate": "Org. Warranty Start Date",
             "modelGroup": "Model Group",

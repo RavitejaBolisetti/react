@@ -88,7 +88,7 @@ const ViewDetailMain = (props) => {
                                                 {translateContent('shieldSchemeRegistration.label.invoiceDate')}:{checkAndSetDefaultValue(formData?.registrationInformation?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
                                             </Text>
                                         </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
                                             </Text>
@@ -97,7 +97,7 @@ const ViewDetailMain = (props) => {
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
                                             </Text>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
                                 </Card>
                             )}
@@ -105,9 +105,7 @@ const ViewDetailMain = (props) => {
                             <Card>
                                 <Row>
                                     <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                        <Text strong>
-                                            {props?.screenType === 'RSA' ? 'RSA Certificate Number' : translateContent('shieldSchemeRegistration.label.schemeCertificateNo')} : {checkAndSetDefaultValue(formData?.registrationInformation?.shieldCertificateNumber, isLoading)}
-                                        </Text>
+                                        <Text strong>{props?.screenType === 'RSA' ? 'RSA Certificate' : translateContent('shieldSchemeRegistration.label.schemeCertificateNo')}</Text>
                                     </Col>
                                     <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                         <div className={styles.floatRight}>
@@ -148,7 +146,7 @@ const ViewDetailMain = (props) => {
                                                 {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.registrationInformation?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
                                             </Text>
                                         </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
                                             </Text>
@@ -157,7 +155,7 @@ const ViewDetailMain = (props) => {
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
                                             </Text>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
                                 </Card>
                             )}

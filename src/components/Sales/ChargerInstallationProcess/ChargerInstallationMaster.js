@@ -263,12 +263,19 @@ export const ChargerInstallationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, chargerStatus, filterString, page]);
+    useEffect(() => {
+        if (userId) {
+            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         const defaultSection = CHARGER_INSTALLATION_SECTION.CHARGER_DETAILS.id;
         setDefaultSection(defaultSection);
         setSetionName(CHARGER_INSTALLATION_SECTION);
         setSection(defaultSection);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -306,6 +313,10 @@ export const ChargerInstallationMasterBase = (props) => {
                     },
                 ],
                 onErrorAction,
+                onSuccessAction: (res) => {
+                    console.log('res', res);
+                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.chargerInstDetails?.modelGroup, 'modelGroupCode') });
+                },
             });
         }
     };
@@ -348,7 +359,6 @@ export const ChargerInstallationMasterBase = (props) => {
         const onSuccesscustomerAction = (res) => {
             chargerInstallationForm.setFieldsValue({ otfNumber: otfNumber });
             if (!(res?.data?.otfDetails?.orderStatus === OTF_STATUS?.CANCELLED?.key || res?.data?.otfDetails?.orderStatus === OTF_STATUS?.DELIVERED?.key) && res?.data?.vehicleDetails?.fuel === FUEL_TYPE?.ELECTR?.key) {
-                fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
                 fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.vehicleDetails?.modelGroup, 'modelGroupCode') });
                 setChargerDetails(true);
                 setButtonData((prev) => ({ ...prev, formBtnActive: true }));

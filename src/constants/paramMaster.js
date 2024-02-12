@@ -565,4 +565,8 @@ export const PARAM_MASTER = {
         id: 'SO_MAP_UNMAP_RESN_DESC',
         title: 'booking so mapping reason description',
     },
+    COLOR_MAP: {
+        id: 'COLOR_MAP',
+        title: 'charger insstallation color map',
+    },
 };
