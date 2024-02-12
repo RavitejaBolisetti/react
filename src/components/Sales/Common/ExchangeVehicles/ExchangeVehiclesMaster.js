@@ -14,24 +14,24 @@ import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
-import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
+import { exchangeVehicleDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { exchangeVehicleAlertDataAction } from 'store/actions/data/otf/exchangeVehicleAlert';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT, BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
+import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
+import { withSpinner } from 'components/withSpinner';
 
 import styles from 'assets/sass/app.module.scss';
-import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
+                ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
                 SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
                 ExchangeVehicleAlert: { isLoaded: isExchangeVehicleAlertLoaded = false, isLoading: isExchangeVehicleAlertLoading = false, data: exchangeVehicleAlertData = false },
@@ -55,6 +55,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         exchangeData,
         isLoading,
+        showSpinner: !props?.formActionType?.viewMode,
+        isLoadingOnSave,
         moduleTitle,
 
         financeLovData,
@@ -111,9 +113,11 @@ const mapDispatchToProps = (dispatch) => ({
             listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
             resetVariant: vehicleModelDetailsDataActions.reset,
 
-            fetchList: schemeDataActions.fetchList,
-            listShowLoading: schemeDataActions.listShowLoading,
-            saveData: schemeDataActions.saveData,
+            fetchList: exchangeVehicleDataActions.fetchList,
+            listShowLoading: exchangeVehicleDataActions.listShowLoading,
+            saveFormShowLoading: exchangeVehicleDataActions.saveFormShowLoading,
+            saveData: exchangeVehicleDataActions.saveData,
+            resetData: exchangeVehicleDataActions.reset,
 
             fetchListVehicleExchangeAlert: exchangeVehicleAlertDataAction.fetchList,
             listShowLoadingVehicleExchangeAlert: exchangeVehicleAlertDataAction.listShowLoading,
@@ -122,7 +126,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
             ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
 
-            resetData: schemeDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -130,7 +133,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, exchangeDataPass, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
+    const { exchangeData, exchangeDataPass, isLoading, fetchList, userId, listShowLoading, saveFormShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
     const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
@@ -409,7 +412,7 @@ const ExchangeVehiclesBase = (props) => {
             const requestData = {
                 data: data,
                 method: exchangeData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
+                setIsLoading: saveFormShowLoading,
                 userId,
                 onError: onErrorAction,
                 onSuccess,
@@ -554,4 +557,4 @@ const ExchangeVehiclesBase = (props) => {
     );
 };
 
-export const ExchangeVehiclesMaster = connect(mapStateToProps, mapDispatchToProps)(ExchangeVehiclesBase);
+export const ExchangeVehiclesMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(ExchangeVehiclesBase));

@@ -36,6 +36,8 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        isLoadingOnSave: isLoading,
+        disabled: isLoading,
     };
 
     const viewProps = {
