@@ -313,10 +313,7 @@ export const ChargerInstallationMasterBase = (props) => {
                     },
                 ],
                 onErrorAction,
-                onSuccessAction: (res) => {
-                    console.log('res', res);
-                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.chargerInstDetails?.modelGroup, 'modelGroupCode') });
-                },
+                onSuccessAction: (res) => fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.chargerInstDetails?.modelGroup, 'modelGroupCode') }),
             });
         }
     };
