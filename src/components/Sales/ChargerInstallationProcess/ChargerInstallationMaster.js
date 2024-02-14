@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ChargerInstallation: {
-                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [], isDetailLoading = false },
+                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [], isDetailLoading, isLoadingOnSave },
                 ChargerInstallationGuestDetails: { isLoaded: isGuestDataLoaded = false, isLoading: isGuestLoading, data: chargerInstallationGuestDetailsData = [] },
             },
             CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isLoading: isChargerSearchLoading, data: crmCustomerVehicleData = [] },
@@ -68,7 +68,8 @@ const mapStateToProps = (state) => {
         isGuestDataLoaded,
         isGuestLoading,
         chargerInstallationGuestDetailsData,
-        isDetailLoading,
+        isLoading: isDetailLoading,
+        isLoadingOnSave,
         isChargerSearchLoading,
 
         isModelDataLoaded,
@@ -314,7 +315,6 @@ export const ChargerInstallationMasterBase = (props) => {
                 ],
                 onErrorAction,
                 onSuccessAction: (res) => {
-                    console.log('res', res);
                     fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.chargerInstDetails?.modelGroup, 'modelGroupCode') });
                 },
             });
@@ -623,6 +623,7 @@ export const ChargerInstallationMasterBase = (props) => {
     };
 
     const containerProps = {
+        ...props,
         record: selectedOrder,
         form,
         chargerInstallationForm,
@@ -681,7 +682,6 @@ export const ChargerInstallationMasterBase = (props) => {
         setModal,
         onHandleModal,
         chargerInstallationGuestDetailsData,
-        isLoading: isDetailLoading,
         isChargerSearchLoading,
         RequestStage,
         modelData,

@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ShieldSchemeRegistration: {
-                ShieldSchemeSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: detailShieldData = [] },
+                ShieldSchemeSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, isDetailLoading, isLoadingOnSave, data, filter: filterString, detailData: detailShieldData = [] },
                 SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeLoading, detailData: schemeDetail = [] },
             },
             AMCRegistration: {
@@ -83,6 +83,7 @@ const mapStateToProps = (state) => {
         detailShieldData,
         moduleTitle,
         isSearchLoading,
+        isLoading: isDetailLoading,
         isSearchDataLoaded,
         isEmployeeDataLoaded,
         isEmployeeDataLoading,
@@ -100,6 +101,7 @@ const mapStateToProps = (state) => {
         isProductHierarchyDataLoaded,
         isProductHierarchyDataLoading,
         ProductHierarchyData,
+        isLoadingOnSave,
 
         locations,
         dealerLocationId,
@@ -126,6 +128,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetLocationData: applicationMasterDataActions.resetLocations,
 
             saveData: shieldSchemeSearchDataAction.saveData,
+            saveFormShowLoading: shieldSchemeSearchDataAction.saveFormShowLoading,
+            listDetailShowLoading: shieldSchemeSearchDataAction.listDetailShowLoading,
             resetData: shieldSchemeSearchDataAction.reset,
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
             resetSchemeDetail: schemeDescriptionDataAction.resetDetail,
@@ -152,7 +156,43 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
-    const { dealerLocationId, userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
+    const {
+        dealerLocationId,
+        userId,
+        loginUserData,
+        invoiceStatusList,
+        typeData,
+        data,
+        showGlobalNotification,
+        totalRecords,
+        moduleTitle,
+        fetchList,
+        fetchDetail,
+        fetchSchemeDescription,
+        fetchEmployeeList,
+        fetchManagerList,
+        saveData,
+        listShowLoading,
+        saveFormShowLoading,
+        listDetailShowLoading,
+        listSchemeLoading,
+        listEmployeeShowLoading,
+        setFilterString,
+        filterString,
+        detailShieldData,
+        resetDetail,
+        resetSchemeDetail,
+        isEmployeeDataLoaded,
+        isEmployeeDataLoading,
+        isSchemeLoading,
+        employeeData,
+        managerData,
+        schemeDetail,
+        fetchDealerParentsLovList,
+        dealerParentsLovList,
+        fetchDealerLocations,
+        dealerLocations,
+    } = props;
     const { downloadFile, resetLocationData, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
@@ -425,7 +465,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     name: 'id',
                 },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -530,7 +570,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -651,7 +691,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     name: 'otfNumber',
                 },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -709,7 +749,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     name: 'transaction',
                 },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -750,7 +790,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             data: data,
             method: 'post',
             customURL: BASE_URL_SHIELD_REGISTRATION,
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             errorData: true,
@@ -1037,6 +1077,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const containerProps = {
+        ...props,
         userType,
         userId,
         record: selectedOrder,
