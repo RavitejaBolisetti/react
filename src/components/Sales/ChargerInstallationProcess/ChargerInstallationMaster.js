@@ -682,7 +682,6 @@ export const ChargerInstallationMasterBase = (props) => {
         setModal,
         onHandleModal,
         chargerInstallationGuestDetailsData,
-        isLoading: isDetailLoading,
         isChargerSearchLoading,
         RequestStage,
         modelData,
