@@ -201,7 +201,9 @@
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
             "reGenerateIRN": "Re-Generate IRN",
-            "irnStatusNotPresent": "IRN status not present"
+            "irnStatusNotPresent": "IRN status not present",
+            "yes": "Yes",
+            "no": "No"
         },
         "placeholder": {
             "input": "Enter ",

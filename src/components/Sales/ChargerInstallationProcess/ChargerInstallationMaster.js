@@ -117,7 +117,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ChargerInstallationMasterBase = (props) => {
-    const { data, userId, isChargerSearchLoading, isDetailLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
+    const { data, userId, isChargerSearchLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
     const { resetCustomerVehicleData, filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading, modelData, variantData } = props;

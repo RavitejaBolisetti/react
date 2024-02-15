@@ -10,19 +10,21 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export const VehicleDeliveryNoteFormButton = ({ handlePrintDownload, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, CancelDeliveryButtonName = 'Cancel Delivery Note', PrintButtonName = 'Print Delivery Note' }) => {
+export const VehicleDeliveryNoteFormButton = ({ handlePrintDownload, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoading, isLoadingOnSave, isLastSection, CancelDeliveryButtonName = 'Cancel Delivery Note', PrintButtonName = 'Print Delivery Note' }) => {
+    const disabled = isLoading || isLoadingOnSave;
+    const disabledProps = { disabled };
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button {...disabledProps} danger onClick={onCloseAction}>
                             {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button {...disabledProps} danger onClick={onCloseAction}>
                             {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
@@ -30,31 +32,31 @@ export const VehicleDeliveryNoteFormButton = ({ handlePrintDownload, record, onC
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                        <Button {...disabledProps} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
                     {buttonData?.printDeliveryNoteBtn && (
-                        <Button onClick={() => handlePrintDownload(record)} danger>
+                        <Button {...disabledProps} onClick={() => handlePrintDownload(record)} danger>
                             {PrintButtonName}
                         </Button>
                     )}
 
                     {buttonData?.cancelDeliveryNoteBtn && (
-                        <Button onClick={onCancelDeliveryNote} danger>
+                        <Button {...disabledProps} onClick={onCancelDeliveryNote} danger>
                             {CancelDeliveryButtonName}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button {...disabledProps} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             {translateContent('global.buttons.next')}
                         </Button>
                     )}
 
                     {buttonData?.saveBtn && (
-                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive || disabled} onClick={() => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}
                         </Button>
                     )}

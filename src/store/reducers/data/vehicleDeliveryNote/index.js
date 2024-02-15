@@ -16,16 +16,18 @@ import { DeliverableChecklistMain } from './deliverableChecklistMain';
 import { SchemeDescriptionShield } from './fetchSchemeShield';
 import { SchemeDescriptionRsa } from './fetchSchemeRsa';
 import { SchemeDescriptionAmc } from './fetchSchemeAmc';
+import { ChallanCancelDeliveryNote } from './challanCancel';
 
 export const VehicleDeliveryNote = combineReducers({
     VehicleDeliveryNoteSearchList,
     RelationshipManager,
     CustomerDetailsDeliveryNote,
-     VehicleDetailsChallan,
+    VehicleDetailsChallan,
     CancelDeliveryNote,
     VinNumberSearch,
     DeliverableChecklistMain,
     SchemeDescriptionShield,
     SchemeDescriptionRsa,
     SchemeDescriptionAmc,
+    ChallanCancelDeliveryNote,
 });

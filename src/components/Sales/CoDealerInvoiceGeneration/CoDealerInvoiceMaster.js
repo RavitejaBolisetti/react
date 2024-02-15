@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CoDealerInvoice: {
-                CoDealerInvoiceSearch: { isDetailLoaded: isCoDealerLoaded = false, isDetailLoading: isSearchLoading, data, detailData: CoDealerData = [], filter: filterString },
+                CoDealerInvoiceSearch: { isDetailLoaded: isCoDealerLoaded = false, isDetailLoading: isSearchLoading, isLoadingOnSave, isDetailLoading, data, detailData: CoDealerData = [], filter: filterString },
                 CoDealerVINNumber: { data: VinData, isLoading: isVinLoading, isLoaded: isVinLoaded },
             },
             DealerHierarchy: {
@@ -71,6 +71,8 @@ const mapStateToProps = (state) => {
         filterString,
         indentToDealerData,
         CoDealerData,
+        isLoading: isDetailLoading,
+        isLoadingOnSave,
 
         VinData,
         isVinLoading,
@@ -93,6 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: CoDealerSearchDataActions.setFilter,
             fetchCoDealerProfileData: vehicleInvoiceGenerationDataActions.fetchData,
             saveData: CoDealerSearchDataActions.saveData,
+            saveFormShowLoading: CoDealerSearchDataActions.saveFormShowLoading,
 
             fetchCoDealerDetails: CoDealerSearchDataActions.fetchDetail,
             resetCoDealerDetailData: CoDealerSearchDataActions.resetDetail,
@@ -131,8 +134,8 @@ export const CoDealerInvoiceMasterBase = (props) => {
     const { fetchCoDealerInvoice, isCoDealerLoaded, listShowCoDealerLoading } = props;
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;
     const { CancelInvoiceGenerated, isVinLoading, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE, resetTaxDetails, restCancellationData } = props;
-    const { generateIrn, listIrnLoading } = props;
-    const { cityData, stateData, fetchStateLovList, fetchCityLovList, listCityLoading, listStateLoading } = props;
+    const { saveFormShowLoading, isLoading, generateIrn, listIrnLoading } = props;
+    const { cityData, stateData, isLoadingOnSave, fetchStateLovList, fetchCityLovList, listCityLoading, listStateLoading } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -583,7 +586,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         const requestData = {
             data: finalPayload,
             method: 'post',
-            setIsLoading: listShowCoDealerLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError: onErrorAction,
             onSuccess,
@@ -733,6 +736,9 @@ export const CoDealerInvoiceMasterBase = (props) => {
     };
 
     const containerProps = {
+        isLoadingOnSave,
+        isLoading,
+        showSpinner: !formActionType?.viewMode,
         record: selectedOrder,
         form,
         formActionType,

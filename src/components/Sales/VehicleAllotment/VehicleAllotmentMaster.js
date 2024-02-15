@@ -334,6 +334,11 @@ export const VehicleAllotmentMasterBase = (props) => {
             return false;
         }
 
+        setConfirmRequest({
+            ...confirmRequest,
+            isVisible: false,
+        });
+        
         let updatedStatus = '';
         if (buttonAction === FROM_ACTION_TYPE?.ALLOT) {
             updatedStatus = VEHICLE_TYPE?.ALLOTED.key;
@@ -353,12 +358,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
-
-            setConfirmRequest({
-                ...confirmRequest,
-                isVisible: false,
-            });
+            setIsFormVisible(false);           
         };
 
         const onError = (message) => {
