@@ -293,9 +293,16 @@ const Login = (props) => {
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.loginFooter}>
+                                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                        <div className={`${styles.loginFooter} ${styles.textLeft}`}>
                                                             <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>{translate('login.link.mnmLogin')}</Link>
+                                                        </div>
+                                                    </Col>
+                                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                        <div className={`${styles.loginFooter} ${styles.textRight}`}>
+                                                            <Link to={process.env.REACT_APP_SAP_IBP_URL} target="_blank">
+                                                                {translate('login.link.sapIBP')}
+                                                            </Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

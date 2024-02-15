@@ -433,7 +433,8 @@
             "continue": "Continue"
         },
         "link": {
-            "mnmLogin": "M&M User Login"
+            "mnmLogin": "M&M User Login",
+            "sapIBP": "SAP IBP"
         }
     },
     "sessionTimeout": {
