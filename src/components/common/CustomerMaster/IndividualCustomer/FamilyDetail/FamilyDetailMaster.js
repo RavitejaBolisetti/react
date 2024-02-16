@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: relationData = [] },
             CustomerMaster: {
-                FamilyDetails: { isLoaded: isFamilyLoaded = false, isLoading: isFamilyLoading, data: familyData = [] },
+                FamilyDetails: { isLoaded: isFamilyLoaded = false, isLoading: isFamilyLoading, data: familyData = [], isLoadingOnSave },
                 FamilyDetailSearch: { isLoading: isSearchLoading, data: familySearchData = [] },
             },
         },
@@ -43,6 +43,8 @@ const mapStateToProps = (state) => {
         familyData,
         familySearchData,
         isSearchLoading,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -54,6 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchFamilyDetailsList: familyDetailsDataActions.fetchList,
             listFamilyDetailsShowLoading: familyDetailsDataActions.listShowLoading,
             saveData: familyDetailsDataActions.saveData,
+            saveFormShowLoading: familyDetailsDataActions.saveFormShowLoading,
 
             fetchFamilySearchList: familyDetailSearchDataActions.fetchList,
             listFamilySearchLoading: familyDetailSearchDataActions.listShowLoading,
@@ -67,6 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 const FamilyDetailMasterBase = (props) => {
     const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
     const { buttonData, setButtonData, formActionType, isSearchLoading, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
+    const { saveFormShowLoading } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
@@ -199,13 +203,12 @@ const FamilyDetailMasterBase = (props) => {
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        const onError = (message) => showGlobalNotification({ message });
+
         const requestData = {
-            data: data,
+            data,
             method: 'post',
-            setIsLoading: listFamilyDetailsShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,

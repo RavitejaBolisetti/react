@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData },
+                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData, isLoadingOnSave },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, isLoading: isViewDocumentLoading, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
@@ -48,6 +48,8 @@ const mapStateToProps = (state) => {
         isViewDataLoaded,
         isViewDocumentLoading,
         viewDocument,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -59,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: indiviualProfileDataActions.fetchList,
             listIndiviualShowLoading: indiviualProfileDataActions.listShowLoading,
             saveData: indiviualProfileDataActions.saveData,
+            saveFormShowLoading: indiviualProfileDataActions.saveFormShowLoading,
             resetData: indiviualProfileDataActions.reset,
 
             saveDocumentData: supportingDocumentDataActions.saveData,
@@ -81,6 +84,8 @@ const IndividualProfileBase = (props) => {
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
     const { saveDocumentData, uploadDocumentFile, uploadConsentDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
     const { resetViewData, resetData, viewListShowLoading } = props;
+    const { isLoadingOnSave, saveFormShowLoading } = props;
+
     const [form] = Form.useForm();
 
     const [activeKey, setActiveKey] = useState([1]);
@@ -197,11 +202,8 @@ const IndividualProfileBase = (props) => {
             dateOfBirth: formatDate(values?.dateOfBirth),
             weddingAnniversary: formatDate(values?.weddingAnniversary),
             categoryType: subApplication,
-            // keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
-            // authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
+
             id: recordId,
-            // profileFileDocId: uploadedFile ? uploadedFile : '',
-            // customerFormDocId: uploadedConsentFile ? uploadedConsentFile : '',
         };
 
         const onSuccess = (res) => {
@@ -218,10 +220,12 @@ const IndividualProfileBase = (props) => {
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+        const customerId = indiviualData?.customerId;
+
         const requestData = {
-            data: data,
-            method: indiviualData?.customerId ? 'put' : 'post',
-            setIsLoading: listIndiviualShowLoading,
+            data,
+            method: customerId ? 'put' : 'post',
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -297,6 +301,8 @@ const IndividualProfileBase = (props) => {
         handleFormValueChange,
         subApplication,
         setSubApplication,
+
+        isLoadingOnSave,
     };
 
     const viewProps = {

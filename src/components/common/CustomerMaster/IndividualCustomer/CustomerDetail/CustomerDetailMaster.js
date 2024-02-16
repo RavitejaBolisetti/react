@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
+                CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data, isLoadingOnSave },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 CorporateDescription: { isFilteredListLoaded: isCorporateDescriptionLoaded = false, isLoading: isCorporateDescriptionLovLoading, filteredListData: corporateDescriptionLovData },
                 CorporateDescriptionType: { isFilteredListLoaded: isCorporateDescriptionTypeLoaded = false, isLoading: isCorporateDescriptionTypeLovLoading, filteredListData: corporateTypeLovData },
@@ -63,6 +63,8 @@ const mapStateToProps = (state) => {
         isCorporateDescriptionTypeLovLoading,
         corporateDescriptionLovData,
         corporateTypeLovData,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -89,6 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
+            saveFormShowLoading: customerDetailsIndividualDataActions.saveFormShowLoading,
 
             fetchCorporateDescriptionLovList: corporateCompanyDescriptionDataActions.fetchFilteredList,
             listCorporateDescriptionLovShowLoading: corporateCompanyDescriptionDataActions.listShowLoading,
@@ -108,7 +111,7 @@ const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId, mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading } = props;
+    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading, saveFormShowLoading } = props;
     const { sendOTP, validateOTP } = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -158,15 +161,19 @@ const CustomerDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedCustomerId) {
-            const extraParams = [
-                {
-                    key: 'customerId',
-                    title: 'customerId',
-                    value: selectedCustomerId,
-                    name: 'Customer ID',
-                },
-            ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchList({
+                setIsLoading: listShowLoading,
+                userId,
+                extraParams: [
+                    {
+                        key: 'customerId',
+                        title: 'customerId',
+                        value: selectedCustomerId,
+                        name: 'Customer ID',
+                    },
+                ],
+                onErrorAction,
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId, refreshData]);
@@ -225,7 +232,7 @@ const CustomerDetailMasterBase = (props) => {
         const requestData = {
             data: data,
             method: 'post',
-            setIsLoading: listSupportingDocumentShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,

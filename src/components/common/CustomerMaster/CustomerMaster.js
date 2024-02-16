@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isSupportingDocumentDataLoaded = false, isSupportingDocumentLoading, data: supportingData },
             CustomerMaster: {
-                CustomerDetailsIndividual: { detailData: historyData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData },
+                CustomerDetailsIndividual: { detailData: historyData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData, isLoading: isIndividualLoading = false },
             },
         },
         customer: {
@@ -69,6 +69,8 @@ const mapStateToProps = (state) => {
         isSupportingDocumentDataLoaded,
         isSupportingDocumentLoading,
         supportingData,
+
+        isIndividualLoading,
     };
     return returnValue;
 };
@@ -82,6 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: customerDetailDataActions.setFilter,
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
+
             resetViewData: documentViewDataActions.reset,
 
             fetchCustomerChangeHistory: customerDetailsIndividualDataActions.changeHistory,
@@ -99,6 +102,7 @@ const CustomerMasterMain = (props) => {
     const { data, fetchList, userId, isLoading, listShowLoading, changeHistoryData, fetchCustomerChangeHistory, listShowChangeHistoryLoading, moduleTitle, typeData, resetData, totalRecords } = props;
     const { filterString, setFilterString, ChangeHistoryTitle } = props;
     const { resetViewData, downloadFile, listDownloadShowLoading } = props;
+
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
@@ -131,6 +135,7 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         setFilterString({ current: 1, customerType: CUSTOMER_TYPE?.INDIVIDUAL.id, pageSize: 10 });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -330,11 +335,8 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    // const onFinish = (values, e) => {};
-
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
-        // form.validateFields().then((values) => {});
     };
 
     const handleOkUnsavedModal = () => {
@@ -359,10 +361,6 @@ const CustomerMasterMain = (props) => {
         setPage: setFilterString,
         filterString,
     };
-
-    // const onChange = (sorter, filters) => {
-    //     form.resetFields();
-    // };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -487,8 +485,8 @@ const CustomerMasterMain = (props) => {
         setFormActionType,
         onFinishFailed,
         isVisible: isFormVisible,
-        onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        onCloseAction: !isLoading && onCloseDrawer,
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         customerType,
         ADD_ACTION,
@@ -574,11 +572,6 @@ const CustomerMasterMain = (props) => {
                                     </Form.Item>
                                 </Form>
                             </Col>
-                            {/* <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add
-                                </Button>
-                            </Col> */}
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
                             <Row gutter={20}>

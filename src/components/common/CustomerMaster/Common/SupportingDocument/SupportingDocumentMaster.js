@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
         auth: { userId, accessToken, token },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
+            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData, isLoadingOnSave },
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
@@ -43,6 +43,8 @@ const mapStateToProps = (state) => {
         supportingData,
         isViewDataLoaded,
         viewDocument,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -57,6 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchList: supportingDocumentDataActions.fetchList,
             saveData: supportingDocumentDataActions.saveData,
+            saveFormShowLoading: supportingDocumentDataActions.saveFormShowLoading,
+
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             downloadFile: supportingDocumentDataActions.downloadFile,
             listShowLoading: supportingDocumentDataActions.listShowLoading,
@@ -74,6 +78,7 @@ const SupportingDocumentBase = (props) => {
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
     const { buttonData, setButtonData, formActionType } = props;
     const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
+    const { saveFormShowLoading } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
     const [uploadedFileList, setUploadedFileList] = useState();
@@ -161,27 +166,25 @@ const SupportingDocumentBase = (props) => {
     const onFinish = () => {
         const title = translateContent('global.generalNotifications.customerUpdate.title');
         const message = translateContent('global.generalNotifications.customerUpdate.message');
+        const data = payload || [];
 
         if (fileList.length > 0) {
-            const onSuccess = (res) => {
+            const onSuccess = () => {
                 setFileList([]);
                 setEmptyList(false);
                 setUploadedFile();
                 form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title, message });
-
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
                 setIsFormVisible(false);
             };
 
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
+            const onError = (message) => showGlobalNotification({ message });
 
             const requestData = {
-                data: payload,
+                data,
                 method: 'post',
-                setIsLoading: listShowLoading,
+                setIsLoading: saveFormShowLoading,
                 userId,
                 onError,
                 onSuccess,
