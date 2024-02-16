@@ -13,7 +13,7 @@ import { translateContent } from 'utils/translateContent';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, setRegisterDisabled, registerDisabled, shieldForm, rsaForm, amcForm, formActionType, openAccordian, setOpenAccordian, onSingleFormFinish, schemeDescriptionData, handleEmployeeSearch, handleOnChange, muiltipleFormData, handleAmcDescriptionData } = props;
+    const { formData, setRegisterDisabled, registerDisabled, shieldForm, rsaForm, amcForm, formActionType, openAccordian, setOpenAccordian, onSingleFormFinish, schemeDescriptionData, handleEmployeeSearch, handleOnChange, muiltipleFormData, handleAmcDescriptionData, employeeData } = props;
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -37,6 +37,7 @@ const AddEditFormMain = (props) => {
         handleCancelRegister,
         muiltipleFormData,
         handleAmcDescriptionData,
+        relationshipManagerData: employeeData?.[openAccordian],
     };
     const shieldInfoProps = { formData: formData?.sheildRequest, addOnForm: shieldForm, isReadOnly: registerDisabled[openAccordian] };
     const rsaProps = { formData: formData?.rsaRequest, addOnForm: rsaForm, isReadOnly: registerDisabled[openAccordian] };
