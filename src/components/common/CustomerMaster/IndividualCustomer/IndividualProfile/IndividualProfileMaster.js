@@ -23,6 +23,7 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -337,4 +338,4 @@ const IndividualProfileBase = (props) => {
     );
 };
 
-export const IndividualProfileMaster = connect(mapStateToProps, mapDispatchToProps)(IndividualProfileBase);
+export const IndividualProfileMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(IndividualProfileBase));

@@ -21,6 +21,7 @@ import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
 import dayjs from 'dayjs';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -45,6 +46,7 @@ const mapStateToProps = (state) => {
         isSearchLoading,
 
         isLoadingOnSave,
+        isLoading: isFamilyLoading,
     };
     return returnValue;
 };
@@ -286,4 +288,4 @@ const FamilyDetailMasterBase = (props) => {
     );
 };
 
-export const FamilyDetailMaster = connect(mapStateToProps, mapDispatchToProps)(FamilyDetailMasterBase);
+export const FamilyDetailMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(FamilyDetailMasterBase));

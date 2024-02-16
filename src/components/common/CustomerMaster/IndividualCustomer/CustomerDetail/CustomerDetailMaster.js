@@ -24,6 +24,7 @@ import styles from 'assets/sass/app.module.scss';
 import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
 import { corporateCompanyDescriptionDataActions } from 'store/actions/data/customerMaster/corporateDescription';
 import { corporateCompanyDescriptionTypeDataActions } from 'store/actions/data/customerMaster/corporateDescriptionType';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -478,4 +479,4 @@ const CustomerDetailMasterBase = (props) => {
         </>
     );
 };
-export const CustomerDetailMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailMasterBase);
+export const CustomerDetailMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(CustomerDetailMasterBase));

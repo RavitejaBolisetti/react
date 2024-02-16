@@ -24,6 +24,7 @@ import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
 
 const { Text } = Typography;
 
@@ -51,6 +52,7 @@ const mapStateToProps = (state) => {
         customerIndData,
 
         isLoadingOnSave: isCorporateContactsFormSaving || isIndividualFormSaveLoading,
+        isLoading: isCustomerDataLoading || isCustomerIndDataLoading,
     };
     return returnValue;
 };
@@ -317,4 +319,4 @@ const ContactMain = (props) => {
     );
 };
 
-export const IndividualContact = connect(mapStateToProps, mapDispatchToProps)(ContactMain);
+export const IndividualContact = connect(mapStateToProps, mapDispatchToProps)(withSpinner(ContactMain));

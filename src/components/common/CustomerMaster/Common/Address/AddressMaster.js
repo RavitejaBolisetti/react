@@ -25,6 +25,7 @@ import { NoDataFound } from 'utils/noDataFound';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
@@ -55,6 +56,7 @@ const mapStateToProps = (state) => {
         pincodeData: pincodeData?.pinCodeDetails,
 
         isLoadingOnSave: isCorporateFormLoading || isIndividualFormLoading,
+        isLoading: isAddressLoading || isCorporateAddressLoading,
     };
     return returnValue;
 };
@@ -98,7 +100,7 @@ const AddressMasterBase = (props) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const noDataTitle = translateContent('global.generalNotifications.noDataExist.title');
-    
+
     const addDataTitle = (
         <p className={styles.textCenter}>
             Please add new address using <br /> <strong>“Add”</strong> button at top
@@ -295,4 +297,4 @@ const AddressMasterBase = (props) => {
     );
 };
 
-export const AddressMaster = connect(mapStateToProps, mapDispatchToProps)(AddressMasterBase);
+export const AddressMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(AddressMasterBase));

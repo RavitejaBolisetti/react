@@ -20,6 +20,7 @@ import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
@@ -297,5 +298,5 @@ const SupportingDocumentBase = (props) => {
     );
 };
 
-const SupportingDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(SupportingDocumentBase);
+const SupportingDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(SupportingDocumentBase));
 export default SupportingDocumentMaster;

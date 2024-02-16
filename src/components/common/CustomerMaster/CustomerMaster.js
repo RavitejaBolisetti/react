@@ -524,6 +524,7 @@ const CustomerMasterMain = (props) => {
         previousSection,
         setIsUnsavedDataPopup,
         setNextCurrentSection,
+        showSpinner: !formActionType?.viewMode,
     };
 
     const showAddButton = true;
