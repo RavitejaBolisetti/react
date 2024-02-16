@@ -113,6 +113,7 @@ const CustomerDetailMasterBase = (props) => {
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification, customerType, fetchCorporateTypeLovList, listCorporateTypeLovShowLoading, saveFormShowLoading } = props;
     const { sendOTP, validateOTP } = props;
+
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
@@ -232,7 +233,7 @@ const CustomerDetailMasterBase = (props) => {
         const requestData = {
             data: data,
             method: 'post',
-            setIsLoading: saveFormShowLoading,
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -326,7 +327,7 @@ const CustomerDetailMasterBase = (props) => {
         const requestData = {
             data: reqdata,
             method: selectedCustomerId ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
