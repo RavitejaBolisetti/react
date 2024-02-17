@@ -44,9 +44,9 @@ const ViewDetailMain = (props) => {
                             isLoading
                         )}
                     </Descriptions.Item>
-                    <Descriptions.Item label={translateContent('customerMaster.label.corporateDescription')}>{checkAndSetDefaultValue(formData?.corporateName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('customerMaster.label.corporateName')}>{formData?.corporateName}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('customerMaster.label.corporateCode')}>{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.corporateDescription')}>{checkAndSetDefaultValue(formData?.corporateDescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.corporateName')}>{checkAndSetDefaultValue(formData?.corporateName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('customerMaster.label.corporateCode')}>{checkAndSetDefaultValue(formData?.corporateCode, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('customerMaster.label.corporateCategory')}>{checkAndSetDefaultValue(formData?.corporateCategory, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </div>

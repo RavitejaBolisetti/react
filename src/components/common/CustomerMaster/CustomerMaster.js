@@ -488,7 +488,7 @@ const CustomerMasterMain = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction: onCloseDrawer,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         customerType,
         ADD_ACTION,
@@ -528,7 +528,7 @@ const CustomerMasterMain = (props) => {
         setNextCurrentSection,
     };
 
-    const showAddButton = true;
+    const showAddButton = false;
 
     const handleCancelUnsaveDataModal = () => {
         setIsUnsavedDataPopup(false);
@@ -626,10 +626,11 @@ const CustomerMasterMain = (props) => {
                                 }}
                                 description={
                                     <>
-                                        {translateContent('customerMaster.label.noRecordFound')} <br /> {translateContent('customerMaster.label.please')}
+                                        {translateContent('customerMaster.label.noRecordFound')}
+                                        {/* <br /> {translateContent('customerMaster.label.please')}
                                         <b> {translateContent('customerMaster.label.addCus')} </b>
                                         {translateContent('customerMaster.label.usingBelow')} <br />
-                                        {translateContent('customerMaster.label.button')}
+                                        {translateContent('customerMaster.label.button')} */}
                                     </>
                                 }
                             >
