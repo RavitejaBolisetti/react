@@ -44,7 +44,6 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
-                    {/* <UploadUtils {...formProps} /> */}
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label={translateContent('customerMaster.label.purpose')}>{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('customerMaster.label.mobileNo')}>{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
@@ -58,13 +57,6 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label={translateContent('customerMaster.label.lastSurname')}>{checkAndSetDefaultValue(formData?.lastName, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('customerMaster.label.eMail')}>{checkAndSetDefaultValue(formData?.contactEmailId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('customerMaster.label.alternateEmail')}>{checkAndSetDefaultValue(formData?.alternateEmailId, isLoading)}</Descriptions.Item>
-
-                        {/* <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youTubeChannel, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhp, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultContactIndicator ? 'Yes' : 'No', isLoading)}</Descriptions.Item> */}
                     </Descriptions>
                 </>
             ) : (
