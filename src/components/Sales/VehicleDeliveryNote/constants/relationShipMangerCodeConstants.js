@@ -14,4 +14,9 @@ export const RELATIONSHIP_MANAGER_CONSTANTS = {
         key: 'SC',
         title: 'RelationShip Manager Sales consultant',
     },
+    EMPLOYEE: {
+        id: 3,
+        key: 'E',
+        title: 'RelationShip Manager employeeType',
+    },
 };

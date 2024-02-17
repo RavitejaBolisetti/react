@@ -97,6 +97,7 @@ export const AddOnDetailsMasterMain = (props) => {
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
     const [schemeDescriptionDatamain, setSchemeDescriptionData] = useState({ Shield: [], RSA: [], AMC: [] });
+    const [employeeData, setEmployeeData] = useState({ RSA: [], Shield: [], AMC: [] });
     const [registerDisabled, setRegisterDisabled] = useState({ Shield: false, RSA: false, AMC: false });
 
     const onErrorAction = (message) => {
@@ -165,9 +166,28 @@ export const AddOnDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AddonDetailsData, section]);
 
+    const amcSuccessAction = (res) => {
+        if (res?.data && Array?.isArray(res?.data)) {
+            setEmployeeData((prev) => ({ ...prev, AMC: res?.data, Shield: res?.data }));
+        }
+    };
+
+    const rsaSucessAction = (res) => {
+        if (res?.data && Array?.isArray(res?.data)) {
+            setEmployeeData((prev) => ({ ...prev, RSA: res?.data }));
+        }
+        handleEmployeeSearch({ registrationType: 'AMC', onSuccessAction: amcSuccessAction, onErrorAction });
+    };
+
+    const rsaErrorAction = () => {
+        handleEmployeeSearch({ registrationType: 'AMC', onSuccessAction: amcSuccessAction, onErrorAction });
+    };
+
     useEffect(() => {
-        if (userId && section?.id) handleEmployeeSearch();
-        setButtonData({ ...buttonData, formBtnActive: true });
+        if (userId && section?.id) {
+            handleEmployeeSearch({ registrationType: 'RSA', onSuccessAction: rsaSucessAction, onErrorAction: rsaErrorAction });
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section, userId]);
@@ -178,6 +198,7 @@ export const AddOnDetailsMasterMain = (props) => {
             resetRsa();
             resetSheild();
             setSchemeDescriptionData();
+            setEmployeeData({ RSA: [], Shield: [], AMC: [] });
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -188,24 +209,29 @@ export const AddOnDetailsMasterMain = (props) => {
         });
     };
 
-    const handleEmployeeSearch = () => {
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        fetchRelationshipManger({
-            setIsLoading: listRelationshipMangerShowLoading,
-            userId,
-            onErrorAction,
-            extraParams: [
-                {
-                    key: 'employeeType',
-                    title: 'employeeType',
-                    value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER_SALES_CONSULTANT?.key,
-                    name: 'Sales consultant employees',
-                },
-            ],
-        });
+    const handleEmployeeSearch = ({ registrationType, onErrorAction = () => {}, onSuccessAction = () => {} }) => {
+        if (registrationType) {
+            fetchRelationshipManger({
+                setIsLoading: listRelationshipMangerShowLoading,
+                userId,
+                onErrorAction,
+                onSuccessAction,
+                extraParams: [
+                    {
+                        key: 'employeeType',
+                        title: 'employeeType',
+                        value: RELATIONSHIP_MANAGER_CONSTANTS?.EMPLOYEE?.key,
+                        name: 'Sales consultant employees',
+                    },
+                    {
+                        key: 'registrationType',
+                        title: 'registrationType',
+                        value: registrationType,
+                        name: 'registrationType',
+                    },
+                ],
+            });
+        }
     };
     const getCodeValue = (data, key) => {
         return data?.find((i) => i?.schemeDescription === key)?.id;
@@ -284,6 +310,7 @@ export const AddOnDetailsMasterMain = (props) => {
         registerDisabled,
         muiltipleFormData: AddonDetailsData,
         handleAmcDescriptionData,
+        employeeData,
     };
 
     return (
