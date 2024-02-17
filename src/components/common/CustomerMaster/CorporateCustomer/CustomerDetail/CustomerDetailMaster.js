@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [] },
+                CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [], isLoadingOnSave },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 CustomerParentCompany: { isLoaded: isCustomerParentCompanyDataLoaded = false, isCustomerParentCompanyLoading, data: customerParentCompanyData = [] },
                 CorporateDescription: { isFilteredListLoaded: isCorporateDescriptionLoaded = false, isLoading: isCorporateDescriptionLovLoading, filteredListData: corporateDescriptionLovData },
@@ -37,6 +37,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
+
     const moduleTitle = 'Customer Details';
 
     let returnValue = {
@@ -63,6 +64,8 @@ const mapStateToProps = (state) => {
         isCorporateDescriptionTypeLovLoading,
         corporateDescriptionLovData,
         corporateTypeLovData,
+
+        isLoadingOnSave,
     };
 
     return returnValue;
@@ -81,6 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: customerDetailsDataActions.fetchList,
             listShowLoading: customerDetailsDataActions.listShowLoading,
             saveData: customerDetailsDataActions.saveData,
+            saveFormShowLoading: customerDetailsDataActions.saveFormShowLoading,
             resetData: customerDetailsDataActions.reset,
 
             fetchCorporateDescriptionLovList: corporateCompanyDescriptionDataActions.fetchFilteredList,
@@ -95,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData, customerType } = props;
+    const { userId, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, saveFormShowLoading, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData, customerType } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
     const { fetchCorporateTypeLovList, listCorporateTypeLovShowLoading, setFilterString, form, handleFormValueChange, buttonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
@@ -104,7 +108,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
-
+    
     useEffect(() => {
         if (customerDetailsData) {
             form.setFieldsValue({ ...customerDetailsData });
@@ -203,7 +207,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         const requestData = {
             data: reqdata,
             method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError: onErrorAction,
             onSuccess,
