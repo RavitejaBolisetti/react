@@ -13,7 +13,7 @@ import { Form } from 'antd';
 import { otfSoMappingDataActions, OtfSoMappingDealerParentActions, OtfSoMappingDealerLocationDataActions } from 'store/actions/data/otfSoMappingUnmapping';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { BASE_URL_OTF_SO_MAPPING_SWAP as CustomUrl, BASE_URL_SO_MAPPING_SEARCH as CustomSearchUrl } from 'constants/routingApi';
+import { BASE_URL_OTF_SO_MAPPING_SWAP as CustomUrl, BASE_URL_SO_MAPPING_SEARCH as CustomSearchUrl, BASE_URL_OTF_SO_MAPPING_MAIN as reserveQuotaUrl } from 'constants/routingApi';
 
 import { MasterContainer } from './MasterContainer';
 import { setAllkeysToNull } from './Constants';
@@ -221,6 +221,11 @@ export const OtfListMasterBase = (props) => {
                 title: 'dealerLocationCode',
                 value: filterString?.dealerLocationCode,
             },
+            {
+                key: 'reserveQuota',
+                title: 'reserveQuota',
+                value: filterString?.reserveQuota,
+            },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -274,6 +279,11 @@ export const OtfListMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [advanceFilterString]);
 
+    const CanSearch = SOParams && advanceFilterString && Object?.keys(advanceFilterString)?.length && advanceFilterString?.status;
+    const canFetchData = extraParams && filterString && Object?.keys(filterString)?.length;
+    const isSearchDataLoadedAndSet = otfSomappingData && typeof otfSomappingData === 'object' && Object?.keys(otfSomappingData)?.length && isOtfSoMappingLoaded && !otfSomappingData?.hasOwnProperty('paginationData');
+    const isreserveQuota = selectedKey === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key;
+
     useEffect(() => {
         if (userId) {
             fetchDealerParentLov({ setIsLoading: listDealerParentLoading, userId });
@@ -282,21 +292,21 @@ export const OtfListMasterBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
-        if (extraParams && filterString && Object?.keys(filterString)?.length) {
+        if (canFetchData) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [extraParams]);
 
     useEffect(() => {
-        if (SOParams && advanceFilterString && Object?.keys(advanceFilterString)?.length && advanceFilterString?.status) {
+        if (CanSearch) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams: SOParams, onErrorAction, customURL: CustomSearchUrl });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [advanceFilterString]);
 
     useEffect(() => {
-        if (otfSomappingData && typeof otfSomappingData === 'object' && Object?.keys(otfSomappingData)?.length && isOtfSoMappingLoaded && !otfSomappingData?.hasOwnProperty('paginationData')) {
+        if (isSearchDataLoadedAndSet) {
             SoForm.setFieldsValue({ [filterString?.formType]: { ...otfSomappingData, otfNumber: filterString?.otfNumber, soNumber: filterString?.soNumber || otfSomappingData?.soNumber, otfDate: converDateDayjs(otfSomappingData?.otfDate), soDate: converDateDayjs(otfSomappingData?.soDate) } });
             setfilterString();
             resetData();
@@ -346,32 +356,33 @@ export const OtfListMasterBase = (props) => {
     };
 
     const handleSelect = (key) => {
-        if (!key) {
+        if (key) {
+            ClearAllData();
+            setselectedKey(key);
+            setstatus(
+                Object?.values(OTF_SO_MAPPING_UNMAPPING_CONSTANTS)?.reduce((prev, curr) => {
+                    if (curr?.key === key) {
+                        prev = curr;
+                    }
+                    return prev;
+                }, {})
+            );
+        } else {
             setselectedKey();
             ClearAllData();
             setstatus();
-            return false;
         }
-        ClearAllData();
-        setselectedKey(key);
-        setstatus(
-            Object?.values(OTF_SO_MAPPING_UNMAPPING_CONSTANTS)?.reduce((prev, curr) => {
-                if (curr?.key === key) {
-                    prev = curr;
-                }
-                return prev;
-            }, {})
-        );
     };
 
     const handleSearchChange = (value, type) => {
-        if (!value) return false;
-        SoForm?.validateFields(['parentGroupCode', 'locationCode'])
-            .then(() => {
-                const formValues = SoForm.getFieldsValue();
-                setfilterString({ otfNumber: formValues[type]?.otfNumber, soNumber: formValues[type]?.soNumber, soStatusCode: type === FORM_TYPE_CONSTANSTS?.FORM_1?.id ? status?.CRD_1 : status?.CRD_2, parentGroupCode: formValues?.parentGroupCode, dealerLocationCode: formValues?.locationCode, formType: type });
-            })
-            .catch(() => {});
+        if (value) {
+            SoForm.validateFields(['parentGroupCode', 'locationCode'])
+                .then(() => {
+                    const formValues = SoForm.getFieldsValue();
+                    setfilterString({ reserveQuota: isreserveQuota ? 'Y' : undefined, otfNumber: formValues?.[type]?.otfNumber, soNumber: formValues?.[type]?.soNumber, soStatusCode: type === FORM_TYPE_CONSTANSTS?.FORM_1?.id ? status?.CRD_1 : status?.CRD_2, parentGroupCode: formValues?.parentGroupCode, dealerLocationCode: formValues?.locationCode, formType: type });
+                })
+                .catch(() => {});
+        }
     };
     const handleResetData = (type, exception = undefined) => {
         switch (type) {
@@ -384,7 +395,7 @@ export const OtfListMasterBase = (props) => {
                 break;
             }
             default: {
-                return;
+                break;
             }
         }
     };
@@ -433,50 +444,62 @@ export const OtfListMasterBase = (props) => {
         }
     };
     const onFinish = (values) => {
+        let requestedFinalPayload = {};
         const formOneData = values?.[FORM_TYPE_CONSTANSTS?.FORM_1?.id];
         const formTwoData = values?.[FORM_TYPE_CONSTANSTS?.FORM_2?.id];
-        if (checkIfCanProceedWithSwapping({ formOneData, formTwoData })) {
-            const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
-            const form_1_Values = {
-                otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
-                soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soNumber,
-                soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soStatusCode,
-            };
-            const form_2_Values = {
-                otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber || '',
-                soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soNumber,
-                soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
-            };
 
-            if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
-                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
+        const onSuccess = (res) => {
+            const { responseMessage } = res;
+            handleClear();
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: responseMessage });
+        };
+
+        if (isreserveQuota) {
+            requestedFinalPayload = {
+                otfNumber: formTwoData?.otfNumber,
+                soNumber: formOneData?.soNumber,
+                action: 'MAP',
+                cancellationRemarks: '',
+                mapStatusCode: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key,
+                reserveQuota: filterString?.reserveQuota,
+            };
+        } else {
+            if (checkIfCanProceedWithSwapping({ formOneData, formTwoData })) {
+                const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
+                const form_1_Values = {
+                    otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
+                    soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soNumber,
+                    soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soStatusCode,
+                };
+                const form_2_Values = {
+                    otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber || '',
+                    soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soNumber,
+                    soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
+                };
+
+                if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
+                    showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
+                    return false;
+                }
+
+                requestedFinalPayload = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
+            } else {
                 return false;
             }
-
-            const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
-            const onSuccess = (res) => {
-                handleClear();
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-            };
-
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
-
-            const requestData = {
-                customURL: CustomUrl,
-                data: finalData,
-                method: 'put',
-                setIsLoading: saveFormShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
-        } else {
-            return false;
         }
+        const customURL = isreserveQuota ? reserveQuotaUrl : CustomUrl;
+
+        const requestData = {
+            customURL,
+            data: requestedFinalPayload,
+            method: 'put',
+            setIsLoading: saveFormShowLoading,
+            userId,
+            onError: onErrorAction,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
 
     const handleDealerParent = (parentCode) => {
@@ -562,9 +585,7 @@ export const OtfListMasterBase = (props) => {
         status,
         advanceFilter: true,
         removeFilter,
-        handleResetFilter: () => {
-            setadvanceFilterString({ status: advanceFilterString?.status });
-        },
+        handleResetFilter: () => setadvanceFilterString({ status: advanceFilterString?.status }),
     };
 
     return (
