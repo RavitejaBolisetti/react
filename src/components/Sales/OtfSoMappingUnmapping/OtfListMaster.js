@@ -461,7 +461,7 @@ export const OtfListMasterBase = (props) => {
                 action: 'MAP',
                 cancellationRemarks: '',
                 mapStatusCode: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key,
-                reserveQuota: filterString?.reserveQuota,
+                reserveQuota: 'Y',
             };
         } else {
             if (checkIfCanProceedWithSwapping({ formOneData, formTwoData })) {
