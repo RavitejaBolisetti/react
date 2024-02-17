@@ -1089,7 +1089,7 @@
         "label": {
             "mobileNumber": "Mobile Number",
             "customerType": "Customer Type",
-            "corporateType": "Corporate type",
+            "corporateType": "Corporate Type",
 
             "emailID": "Email ID",
             "contactNo": "Contact over WhatsApp?",
