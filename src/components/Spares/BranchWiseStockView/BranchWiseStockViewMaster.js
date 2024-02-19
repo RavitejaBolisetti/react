@@ -7,7 +7,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Col, Form, Row, Button, Input } from 'antd';
+import { Col, Form, Row, Typography, Input } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -15,20 +15,18 @@ import { AdvancedSearch } from './AdvancedSearch';
 import ListDataTable from 'utils/ListDataTable/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { BASE_URL_VEHICLE_PRICE_MASTER_SEARCH as customURL } from 'constants/routingApi';
 import { ViewDetail } from './ViewDetail';
-import { VehiclePriceMasterUpload } from './VehiclePriceMasterUpload';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import AdvanceVehiclePriceMasterFilter from './AdvanceVehiclePriceMasterFilter';
-import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
-import { DisableParent, FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 import { tableColumnBranch } from './tableColumnBranch';
 import styles from 'assets/sass/app.module.scss';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { tableColumnPlant } from './tableColumnPlant';
 
 const { Search } = Input;
+const { Text } = Typography;
 
 const mapStateToProps = (state) => {
     const {
@@ -66,58 +64,28 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const BranchWiseStockViewMasterBase = (props) => {
     const { filterString, typeData, moduleTitle, setFilterString, saveData, userId, showGlobalNotification } = props;
-    const { data, resetData, downloadFile, listShowLoading, userType } = props;
+    const { data, userType } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [searchForm] = Form.useForm();
 
-    const [uploadedFile, setUploadedFile] = useState();
-    const [emptyList, setEmptyList] = useState(true);
-
-    const [fileList, setFileList] = useState([]);
-
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [filteredStateData, setFilteredStateData] = useState([]);
     const [filteredCityData, setFilteredCityData] = useState([]);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
-    const [cityCodeValue, setCityCodeValue] = useState();
-    const [singleDisabled, setSingleDisabled] = useState(false);
-    const [productHierarchyData, setProductHierarchyData] = useState([]);
     const [resetAdvanceFilter, setResetAdvanceFilter] = useState(false);
+    const [showMoreList, setShowMoreList] = useState({ isDealer: false, isPlant: false });
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
-
-    const onRemove = () => {
-        setFileList([]);
-        setUploadedFile();
-        setSingleDisabled(false);
-    };
-
-    const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
-        setRefershData(false);
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (res) => {
-        showGlobalNotification({ message: res });
-        setShowDataLoading(false);
-    };
-
-    const paramMasterId = 'VH_PRC_SRCH';
 
     useEffect(() => {
         if (filterString) {
@@ -126,132 +94,13 @@ export const BranchWiseStockViewMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
-    const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'searchType',
-                title: translateContent('vehiclePriceMaster.label.type'),
-                value: filterString?.searchType,
-                // name: typeData[paramMasterId]?.find((i) => i?.key === filterString?.searchType)?.value,
-                canRemove: false,
-                filter: true,
-            },
-            {
-                key: 'searchParam',
-                title: translateContent('vehiclePriceMaster.label.value'),
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'modelCode',
-                title: translateContent('vehiclePriceMaster.label.model'),
-                value: FindProductName(productHierarchyData, filterString?.model, 'oemModelCode'),
-                name: FindProductName(productHierarchyData, filterString?.model),
-                canRemove: true,
-                filter: true,
-            },
-
-            {
-                key: 'stateCode',
-                title: translateContent('vehiclePriceMaster.label.state'),
-                value: filterString?.stateCode,
-                name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'cityCode',
-                title: translateContent('vehiclePriceMaster.label.city'),
-                value: filterString?.cityCode,
-                name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
-                canRemove: true,
-                filter: true,
-            },
-
-            {
-                key: 'priceAsOnDate',
-                title: translateContent('vehiclePriceMaster.label.endDate'),
-                value: filterString?.priceAsOnDate,
-                name: filterString?.priceAsOnDate ? convertDateTime(filterString?.priceAsOnDate, dateFormatView) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'pageSize',
-                title: translateContent('vehiclePriceMaster.label.value'),
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: translateContent('vehiclePriceMaster.label.value'),
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: translateContent('vehiclePriceMaster.label.sortBy'),
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: translateContent('vehiclePriceMaster.label.sortType'),
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         setFormData(record);
         setIsFormVisible(true);
     };
 
-    const handleFilterChange =
-        (name, type = 'value') =>
-        (value) => {
-            if (!value) {
-                switch (name) {
-                    case 'countryCode': {
-                        setFilteredStateData();
-                        setFilteredDistrictData();
-                        setFilteredCityData();
-                        advanceFilterForm.setFieldsValue({ stateCode: undefined });
-                        //advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
-
-                        break;
-                    }
-                    case 'stateCode': {
-                        setFilteredDistrictData();
-                        setFilteredCityData();
-                        //advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                        //advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-                        break;
-                    }
-
-                    case 'cityCode': {
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-                }
-                return;
-            }
-        };
-
     const onFinish = () => {
-        let data = { docId: uploadedFile };
+        let data = {};
         const onSuccess = (res) => {
             setShowDataLoading(true);
 
@@ -300,18 +149,26 @@ export const BranchWiseStockViewMasterBase = (props) => {
         // setPage,
         isLoading: false,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: new Array(5).fill({}) ||data,
+        tableData: new Array(3).fill({}) || data,
         showAddButton: false,
         isLoading: false,
         pagination: false,
     };
+
     const tablePropsBranch = {
         dynamicPagination,
-        // totalRecords: data.length,
-        // page,
-        // setPage,
         isLoading: false,
         tableColumn: tableColumnBranch(handleButtonClick),
+        tableData: data,
+        showAddButton: false,
+        isLoading: false,
+        pagination: false,
+    };
+
+    const tablePropsPlant = {
+        dynamicPagination,
+        isLoading: false,
+        tableColumn: tableColumnPlant(handleButtonClick),
         tableData: data,
         showAddButton: false,
         isLoading: false,
@@ -342,8 +199,7 @@ export const BranchWiseStockViewMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
         titleOverride: translateContent('vehiclePriceMaster.label.advanceFilters'),
-
-        handleFilterChange,
+        // handleFilterChange,
         filteredStateData,
         filteredCityData,
         filteredDistrictData,
@@ -355,50 +211,14 @@ export const BranchWiseStockViewMasterBase = (props) => {
         setAdvanceSearchVisible,
     };
 
-    const handleOnClick = () => {
-        setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true });
-        setIsUploadFormVisible(true);
-    };
-
-    const removeFilter = (key) => {
-        if (key === 'countryCode') {
-            setFilterString(undefined);
-        } else if (key === 'stateCode') {
-            const { stateCode, districtCode, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
-
-            if (!rest?.stateCode && !rest?.districtCode && !rest?.keyword) {
-                setFilterString();
-            } else {
-                setFilterString({ ...rest });
-            }
-        }
-    };
     const title = translateContent('vehiclePriceMaster.heading.mainTitle');
 
     const advanceFilterResultProps = {
-        extraParams,
-        removeFilter,
-        advanceFilter: true,
-        otfFilter: true,
-        filterString,
-        setFilterString,
         from: listFilterForm,
         onFinish,
-        handleResetFilter,
-        advanceFilterForm,
-
-        title,
         setAdvanceSearchVisible,
-        typeData: typeData?.[PARAM_MASTER.VH_PRC_SRCH.id],
-        searchForm,
-        handleOnClick,
-        resetAdvanceFilter,
-        setResetAdvanceFilter,
-        userType,
+        showMoreList,
+        setShowMoreList,
     };
 
     const buttonProps = {
@@ -423,24 +243,39 @@ export const BranchWiseStockViewMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />
                 </Col>
+                {showMoreList?.isDealer && (
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <div className={styles.contentHeaderBackground}>
+                            <Text strong className={styles.marB20}>
+                                Dealer Wise Stock
+                            </Text>
+                            <Form
+                                layout="inline"
+                                // layout="vertical"
+                                autoComplete="off"
+                                colon={false}
+                            >
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB10}>
+                                        <Form.Item label={'Area Code'} name={'areaCode'}>
+                                            <Search maxLength={50} placeholder={preparePlaceholderText('Area Code')} loading={false} allowClear />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </Form>
+                            <ListDataTable {...tablePropsBranch} />
+                        </div>
+                    </Col>
+                )}
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Form
-                            layout="inline"
-                            // layout="vertical"
-                            autoComplete="off"
-                            colon={false}
-                        >
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
-                                    <Form.Item label={'Area Code'} name={'areaCode'}>
-                                        <Search maxLength={50} placeholder={preparePlaceholderText('Area Code')} loading={false} allowClear />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </Form>
-                        <ListDataTable {...tablePropsBranch} />
-                    </div>
+                    {showMoreList?.isPlant && (
+                        <div className={styles.contentHeaderBackground}>
+                            <Text strong className={styles.marB20}>
+                                Plant Wise Stock
+                            </Text>
+                            <ListDataTable {...tablePropsPlant} />
+                        </div>
+                    )}
                 </Col>
             </Row>
 

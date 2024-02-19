@@ -3,22 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 import { tableColumn } from './tableColumn';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
-import { geoStateDataActions } from 'store/actions/data/geo/states';
-import { geoCityDataActions } from 'store/actions/data/geo/cities';
 
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -281,7 +276,7 @@ export const BinToBinTransferMasterBase = (props) => {
         advanceFilterProps,
         title,
         setFilteredDistrictData,
-        tableData: searchData,
+        tableData: searchData || [{}],
         showAddButton: true,
         showRefreshBtn: false
 

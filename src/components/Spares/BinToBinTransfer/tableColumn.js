@@ -12,47 +12,21 @@ export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Corporate Code'|| `${translateContent('city.title.cityCode')}`,
-            dataIndex: 'corporateCode',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Corporate Name' ||`${translateContent('city.title.cityName')}`,
-            dataIndex: 'corporateName',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Corporate Category' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'corporateCategory',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Corporate Type' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'type',
-            width: '15%',
+            title: 'Issue No',
+            dataIndex: 'issueNo',
+            width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Valid From' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
+            title: 'Issue Date',
+            dataIndex: 'issueDate',
+            width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Valid To' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
+            title: 'Receipt No',
+            dataIndex: 'receiptNo',
+            width: '14%',
         }),
-        tblPrepareColumns({
-            title: 'Status' || `${translateContent('city.title.districtName')}`,
-            dataIndex: 'stateName',
-            width: '15%',
-        }),
-
-        tblStatusColumn({ styles }),
-
-        tblActionColumn({ handleButtonClick, styles, canEdit: true,  })
+        tblActionColumn({ handleButtonClick, styles, canEdit: true })
     );
 
     return tableColumn;

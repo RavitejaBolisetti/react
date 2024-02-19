@@ -87,7 +87,8 @@ const AddEditFormMain = (props) => {
 
     const tableProps = {
         tableColumn: tableColumnVehicleDetails({ handleButtonClick: handleButtonClickVehicleDetails, canEdit: toggleButton === STOCK_TRANSFER?.RAISED.key, canDelete: toggleButton === STOCK_TRANSFER?.RAISED.key, canView: false }),
-        tableData: tableDataItem,
+        // tableData: tableDataItem,
+        tableData: [{}],
         pagination: false,
     };
 

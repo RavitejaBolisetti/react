@@ -214,6 +214,7 @@ export const ROUTING_INVENTORY_CLASSIFICATION = ROUTING_SPARES.concat('inventory
 export const ROUTING_BRANCH_WISE_STOCK = ROUTING_SPARES.concat('branch-wise-stock');
 export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('target-type');
 export const ROUTING_TO_BIN_TRANSFER = ROUTING_SPARES.concat('bin-to-bin-transfer');
+export const ROUTING_STOCK_TRANSFER_INDENT = ROUTING_SPARES.concat('stock-transfer-indent');
 
 // vehicle related
 export const ROUTING_COMMON_VEHICLE_RELATED = ROUTING_COMMON.concat('vehicle-related');

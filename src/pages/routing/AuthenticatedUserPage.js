@@ -101,7 +101,7 @@ import {
     GSTClaimPage,
 } from 'pages/Sales';
 
-import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage, PartMasterPage, TargetTypesPage, BranchwiseStockViewMasterPage, BinToBinTransferPage } from 'pages/Spares';
+import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage, PartMasterPage, TargetTypesPage, BranchwiseStockViewMasterPage, BinToBinTransferPage, StockTransferIndentSpareMasterPage } from 'pages/Spares';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
 import { PageNotFound } from 'components/PageNotFound';
@@ -336,6 +336,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_PART_MASTER} element={<PartMasterPage />} exact />
                 <Route path={routing.ROUTING_BRANCH_WISE_STOCK} element={<BranchwiseStockViewMasterPage />} exact />
                 <Route path={routing.ROUTING_TO_BIN_TRANSFER} element={<BinToBinTransferPage />} exact />
+                <Route path={routing.ROUTING_STOCK_TRANSFER_INDENT} element={<StockTransferIndentSpareMasterPage />} exact />
                 {/* Vehicle Related */}
                 <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
 

@@ -16,6 +16,7 @@ import { dateFormat } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import PartDetailsMain from './PartDetails';
 
 const { Option } = Select;
 
@@ -65,6 +66,7 @@ const AddEditFormMain = (props) => {
         isVisible: viewMode,
         formData,
         styles,
+        formActionType,
     };
 
     const buttonProps = {
@@ -91,51 +93,28 @@ const AddEditFormMain = (props) => {
                     ) : (
                         <>
                             <Row gutter={16}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.countryCode} label={translateContent('Corporate Code' || 'city.label.countryCode')} name="countryCode" placeholder={preparePlaceholderSelect(translateContent('city.placeholder.country'))} rules={[validateRequiredInputField(translateContent('city.validation.country'))]}>
-                                        <Input placeholder={preparePlaceholderText('CorporateCode' || translateContent('city.placeholder.cityCode'))} maxLength={6} disabled={editMode ? true : false} />
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label={'Issue Number'} name="issueNumber">
+                                        <Input placeholder={preparePlaceholderText('document code')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                    <Form.Item label={'Issue Date'} name="fromDate">
+                                        <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} disabled={isReadOnly} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label={'Receipt Number'} name="receiptNumber">
+                                        <Input placeholder={preparePlaceholderText('Receipt Number')} />
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={'Corporate Name' || translateContent('city.label.stateName')} initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('Corporate Name' || translateContent('city.validation.stateName'))]}>
-                                        <Input placeholder={preparePlaceholderText('Corporate Name' || translateContent('city.placeholder.cityCode'))} maxLength={6} disabled={editMode ? true : false} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={'Corporate Category' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField('Corporate Category' || translateContent('city.validation.cityName'))]} name="name">
-                                        <Select optionFilterProp="children" options={ []} placeholder={preparePlaceholderSelect('Corporate Category')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
-                                        {/* <Input placeholder={preparePlaceholderText('Corporate Category' || translateContent('city.placeholder.cityName'))} maxLength={50} /> */}
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={'Corporate Type' || translateContent('city.label.cityName')} initialValue={formData?.name} rules={[validateRequiredInputField(translateContent('Corporate Type' || 'city.validation.cityName'))]} name="name">
-                                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Corporate Type')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
-
-                                        {/* <Input placeholder={preparePlaceholderText('Corporate Type' || translateContent('city.placeholder.cityName'))} maxLength={50} /> */}
-                                    </Form.Item>
-                                </Col>
-
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={'Valid From' || translateContent('configurableParameter.label.fromDate')} name="fromDate" rules={[validateRequiredInputField('Valid From' || translateContent('configurableParameter.validation.fromDateValidaiton'))]}>
-                                        <DatePicker format={dateFormat} placeholder={'Valid From' || prepareDatePickerText(dateFormat)} disabled={isReadOnly} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label={'Valid To' || translateContent('configurableParameter.label.fromDate')} name="fromDate" rules={[validateRequiredInputField('Valid To' || translateContent('configurableParameter.validation.fromDateValidaiton'))]}>
-                                        <DatePicker format={dateFormat} placeholder={'Valid To' || prepareDatePickerText(dateFormat)} disabled={isReadOnly} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={formData?.active} label="Status" name="isActive">
-                                        <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={true} />
-                                    </Form.Item>
-                                </Col>
                             </Row>
                         </>
                     )}
+
+                    <PartDetailsMain {...props} />
+                    
                 </Col>
             </Row>
 
@@ -144,4 +123,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, {width: 1200});
