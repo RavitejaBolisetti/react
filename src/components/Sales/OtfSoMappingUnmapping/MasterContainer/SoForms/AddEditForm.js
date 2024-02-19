@@ -6,14 +6,14 @@
 import React from 'react';
 import { Input, Form } from 'antd';
 import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField } from 'utils/validation';
-import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS } from 'components/Sales/OtfSoMappingUnmapping/Constants';
+import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 
 import styles from 'assets/sass/app.module.scss';
 import { ListSkeleton } from 'components/common/Skeleton';
 import { translateContent } from 'utils/translateContent';
 const { Search } = Input;
 
-const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoading, filterString, handleResetData, status }) => {
+const AddEditFormMain = ({ isreserveQuota, formType, disabledProps, handleSearchChange, isLoading, filterString, handleResetData, status }) => {
     if (isLoading && formType === filterString?.formType) return <ListSkeleton count={12} height={30} />;
     const hideFields = status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key && formType === 'FORM_1';
 
@@ -81,9 +81,9 @@ const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoadin
             <Form.Item label={translateContent('bookingSoMappUnmapp.label.modelDescription')} name={[formType, 'modelDescription']}>
                 <Input {...disabledProps} />
             </Form.Item>
-            <Form.Item  name={[formType, 'orderStatus']} hidden/>
-            <Form.Item  name={[formType, 'revisedModel']} hidden/>
-                       
+            <Form.Item name={[formType, 'orderStatus']} hidden />
+            <Form.Item name={[formType, 'revisedModel']} hidden />
+            {isreserveQuota && FORM_TYPE_CONSTANSTS?.FORM_2?.id === formType && <Form.Item name={[formType, 'reserveQuotaOtfNumber']} hidden />}
         </>
     );
 };

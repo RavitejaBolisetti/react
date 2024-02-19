@@ -163,6 +163,7 @@ const MappingMasterMain = (props) => {
 
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
+    const handlePageChange = (values) => setadvanceFilterString({ ...advanceFilterString, ...values });
 
     const tableProps = {
         dynamicPagination,
@@ -174,9 +175,8 @@ const MappingMasterMain = (props) => {
         isLoading: isOtfSoMappingLoading,
         filterString: advanceFilterString,
         page: advanceFilterString,
-        setPage: setadvanceFilterString,
+        setPage: handlePageChange,
     };
-
     const searchCustomButtonProperties = {
         icon: undefined,
         customButton: true,
