@@ -108,7 +108,7 @@ const IssueIndentMasterMain = (props) => {
     };
 
     const handleAdd = () => {
-        setIssueModal(true);
+        setIssueData((prev) => [...prev, {}]);
     };
 
     const onFinish = (values) => {
@@ -140,8 +140,6 @@ const IssueIndentMasterMain = (props) => {
             onError,
             onSuccess,
         };
-
-        // saveIssueDetail(requestData);
     };
 
     const onStatusChange = (values) => {
@@ -172,8 +170,6 @@ const IssueIndentMasterMain = (props) => {
             onError,
             onSuccess,
         };
-
-        // saveIssueDetail(requestData);
     };
 
     const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: INDENT_ACTION_LIST.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData, vehicleVinDataLoading };
@@ -190,19 +186,16 @@ const IssueIndentMasterMain = (props) => {
             <div className={styles.drawerBodyNew}>
                 <Text>Part Details</Text>
                 <ViewIndentDetail {...ViewDetailProps} />
-                {/* {cancellationData?.balancedQuantity > 0 && cancellationData?.balancedQuantity && handleBtnVisibility({ toggleButton, checkKey: undefined, defaultVisibility })?.canAdd && ( */}
-                    <Row className={styles.marB20} gutter={20} justify="start">
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Button type="primary" onClick={handleAdd}>
-                                {BUTTON_NAME_CONSTANTS?.ADD?.name}
-                            </Button>
-                        </Col>
-                    </Row>
-                {/* // )} */}
+                <Row className={styles.marB20} gutter={20} justify="start">
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Button type="primary" onClick={handleAdd}>
+                            {BUTTON_NAME_CONSTANTS?.ADD?.name}
+                        </Button>
+                    </Col>
+                </Row>
 
                 <div className={styles.viewDrawerContainer}>
-                    {/* {indentIssueDataLoading ||  ? ( */}
-                    { false  ? (
+                    {false ? (
                         <InputSkeleton height={80} count={3} />
                     ) : (
                         issueData?.map((element, i) => {
@@ -218,15 +211,7 @@ const IssueIndentMasterMain = (props) => {
                                                                 <Text>
                                                                     {translateContent('stockTransferIndent.issueIndent.label.stIssueNo')} : {element?.issueNumber ? element?.issueNumber : 'NA'}
                                                                 </Text>
-                                                                {/* <Text>|</Text> */}
-                                                                {/* <Text>
-                                                                    {translateContent('')}: {element?.vin ? element?.vin : 'NA'}
-                                                                </Text> */}
-                                                            </div>
-                                                            {/* <Text type="secondary">
-                                                                {translateContent('stockTransferIndent.issueIndent.label.status')} : {typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value}
-                                                            </Text> */}
-                                                            <div>
+
                                                                 <Button>Add</Button>
                                                             </div>
                                                         </Space>
@@ -269,4 +254,3 @@ const IssueIndentMasterMain = (props) => {
 };
 
 export const IssueIndentMaster = withDrawer(IssueIndentMasterMain, { width: '90%', footer: null });
-

@@ -21,7 +21,7 @@ import PartDetailsMain from './PartDetails';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode, addMode } = undefined, onFinish } = props;
+    const { form, formData, onCloseAction, formActionType, onFinish } = props;
 
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
@@ -63,7 +63,7 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
-        isVisible: viewMode,
+        isVisible: formActionType?.viewMode,
         formData,
         styles,
         formActionType,
@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {viewMode ? (
+                    {formActionType?.viewMode ? (
                         <ViewDetail {...viewProps} />
                     ) : (
                         <>
@@ -108,13 +108,11 @@ const AddEditFormMain = (props) => {
                                         <Input placeholder={preparePlaceholderText('Receipt Number')} />
                                     </Form.Item>
                                 </Col>
-
                             </Row>
                         </>
                     )}
 
                     <PartDetailsMain {...props} />
-                    
                 </Col>
             </Row>
 
@@ -123,4 +121,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {width: 1200});
+export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
