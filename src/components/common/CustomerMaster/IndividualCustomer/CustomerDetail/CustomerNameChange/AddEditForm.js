@@ -83,7 +83,7 @@ const AddEditFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                    <Form.Item label={translateContent('customerMaster.label.title')} initialValue={customerNameList?.titleCode} name={'titleCode' + formType} data-testid="title" rules={[validateRequiredSelectField('title')]}>
+                    <Form.Item label={translateContent('customerMaster.label.title')} initialValue={customerNameList?.titleCode} name={'titleCode' + formType} data-testid="title" rules={[showChangeHistory && validateRequiredSelectField('title')]}>
                         <Select {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.title'))} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.TITLE}></Select>
                     </Form.Item>
                 </Col>
