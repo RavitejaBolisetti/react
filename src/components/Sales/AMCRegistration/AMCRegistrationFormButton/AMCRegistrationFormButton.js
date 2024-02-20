@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Popover } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
@@ -32,9 +32,14 @@ export const AMCRegistrationFormButton = ({ isLoading, record, onCloseAction, ha
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.cancelAMCBtn && (
-                        <Button disabled={disabled} onClick={handleWholeAMCCancellation} danger>
-                            {translateContent('amcRegistration.buttons.cancelAMC')}
-                        </Button>
+                        <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
+                            <Button disabled={disabled} danger>
+                                {translateContent('amcRegistration.buttons.cancelAMC')}
+                            </Button>
+                        </Popover>
+                        // <Button disabled={disabled} onClick={handleWholeAMCCancellation} danger>
+                        //     {translateContent('amcRegistration.buttons.cancelAMC')}
+                        // </Button>
                     )}
 
                     {buttonData?.rejectCancelBtn && (

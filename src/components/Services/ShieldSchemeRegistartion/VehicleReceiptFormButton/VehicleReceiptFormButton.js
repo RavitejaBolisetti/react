@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
 
@@ -38,9 +38,15 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
 
                     {buttonData?.cancelSchemeBtn && (
                         <>
+                            <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
+                                <Button disabled={disabled} danger>
+                                    {translateContent('shieldSchemeRegistration.buttons.cancelScheme')}
+                                </Button>
+                            </Popover>
+                            {/* 
                             <Button disabled={disabled} danger onClick={handleWholeSchemeCancellation}>
                                 {translateContent('shieldSchemeRegistration.buttons.cancelScheme')}
-                            </Button>
+                            </Button> */}
                         </>
                     )}
 
