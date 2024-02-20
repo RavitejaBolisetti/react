@@ -163,6 +163,9 @@ const UnmappingAndCancellationMain = (props) => {
 
         saveData(requestData);
     };
+
+    const handlePageChange = (values) => setadvanceFilterString({ ...advanceFilterString, ...values });
+
     const tableProps = {
         dynamicPagination,
         totalRecords: otfSomappingData?.totalRecords || 'NA',
@@ -173,7 +176,7 @@ const UnmappingAndCancellationMain = (props) => {
         isLoading: isOtfSoMappingLoading,
         filterString: advanceFilterString,
         page: advanceFilterString,
-        setPage: setadvanceFilterString,
+        setPage: handlePageChange,
     };
     const formProps = {
         form,

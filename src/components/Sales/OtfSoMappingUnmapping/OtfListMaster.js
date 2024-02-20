@@ -307,7 +307,7 @@ export const OtfListMasterBase = (props) => {
 
     useEffect(() => {
         if (isSearchDataLoadedAndSet) {
-            SoForm.setFieldsValue({ [filterString?.formType]: { ...otfSomappingData, otfNumber: filterString?.otfNumber, soNumber: filterString?.soNumber || otfSomappingData?.soNumber, otfDate: converDateDayjs(otfSomappingData?.otfDate), soDate: converDateDayjs(otfSomappingData?.soDate) } });
+            SoForm.setFieldsValue({ [filterString?.formType]: { ...otfSomappingData, reserveQuotaOtfNumber: isreserveQuota ? otfSomappingData?.otfNumber : undefined, otfNumber: filterString?.otfNumber, soNumber: filterString?.soNumber || otfSomappingData?.soNumber, otfDate: converDateDayjs(otfSomappingData?.otfDate), soDate: converDateDayjs(otfSomappingData?.soDate) } });
             setfilterString();
             resetData();
         }
@@ -322,12 +322,7 @@ export const OtfListMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedKey, loginUserData?.parentGroupCode]);
 
-    const MappingUnmapping = (key) => {
-        if (key) {
-            setadvanceFilterString({ ...advanceFilterString, status: key });
-            // userId && SOParams && fetchList({ setIsLoading: listShowLoading, userId, extraParams: SOParams, onSuccessAction, onErrorAction, customURL: CustomSearchUrl });
-        }
-    };
+    const MappingUnmapping = (key) => key && setadvanceFilterString({ ...advanceFilterString, status: key });
 
     const handleClear = () => {
         const parentGroupCode = SoForm.getFieldsValue()?.parentGroupCode;
@@ -456,7 +451,7 @@ export const OtfListMasterBase = (props) => {
 
         if (isreserveQuota) {
             requestedFinalPayload = {
-                otfNumber: formTwoData?.otfNumber,
+                otfNumber: formTwoData?.reserveQuotaOtfNumber,
                 soNumber: formOneData?.soNumber,
                 action: 'MAP',
                 cancellationRemarks: '',
@@ -558,6 +553,8 @@ export const OtfListMasterBase = (props) => {
         isLoadingOnSave,
         descriptiondata,
         setDescriptionData,
+
+        isreserveQuota,
     };
     const SomappingUnmappingFilterProps = {
         form,

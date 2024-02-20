@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
+                CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, data },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -47,7 +47,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        isLoading,
         data,
         typeData,
         isSupportingDocumentLoading,
@@ -86,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerNameChangeMasterBase = (props) => {
     const { typeData, setCustomerNameList, status, setShowNameChangeHistory } = props;
     const {
-        formActionType: { addMode, editMode },
+        formActionType: { addMode, editMode, viewMode },
         formData,
         userId,
         showGlobalNotification,
@@ -98,7 +97,7 @@ const CustomerNameChangeMasterBase = (props) => {
 
     const { selectedCustomerId } = props;
     const customerNameChangeRequest = formData?.customerNameChangeRequest || false;
-    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
+    const { showChangeHistory = true, fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
     const [emptyList, setEmptyList] = useState(true);
     const [fileList, setFileList] = useState([]);
@@ -312,7 +311,7 @@ const CustomerNameChangeMasterBase = (props) => {
                             {translateContent('customerMaster.drawerSubHeading.cusTitle')}
                         </Text>
                     </Col>
-                    {!addMode && (
+                    {!addMode && showChangeHistory && (
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCentered}>
                                 {translateContent('global.buttons.viewHistory')}
@@ -330,7 +329,7 @@ const CustomerNameChangeMasterBase = (props) => {
                                 <Panel
                                     header={
                                         <Row justify="space-between" className={styles.fullWidth}>
-                                            {customerName({ currentKey: item?.id, formData: item?.formData, requestPending: item?.pending, changeAllowed: item?.changeAllowed, canEdit: item?.canEdit })}
+                                            {customerName({ currentKey: item?.id, formData: item?.formData, requestPending: item?.pending, changeAllowed: item?.changeAllowed, canEdit: item?.canEdit && showChangeHistory })}
 
                                             {item?.pending && <div className={styles.verticallyCentered}>{status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : <Tag color="warning">Pending for Approval</Tag>}</div>}
                                         </Row>
@@ -338,7 +337,7 @@ const CustomerNameChangeMasterBase = (props) => {
                                     key={item?.id}
                                 >
                                     <Divider />
-                                    {item?.changeAllowed ? <AddEditForm {...formProps} /> : <ViewDetail {...viewProps} showApproveNameChangeRequestBtn={item?.pending} />}
+                                    {item?.changeAllowed || (!showChangeHistory && !viewMode) ? <AddEditForm {...formProps} /> : <ViewDetail {...viewProps} showApproveNameChangeRequestBtn={item?.pending} />}
                                 </Panel>
                             </Collapse>
                         );
