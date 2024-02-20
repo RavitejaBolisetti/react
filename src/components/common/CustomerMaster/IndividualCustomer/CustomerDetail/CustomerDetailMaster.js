@@ -443,6 +443,7 @@ const CustomerDetailMasterBase = (props) => {
         numbValidatedSuccess,
         setNumbValidatedSuccess,
         defaultExtraParam,
+        showChangeHistory: true,
     };
 
     const viewProps = {

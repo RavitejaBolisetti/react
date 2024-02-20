@@ -13,6 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
 import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificationModal';
 import { translateContent } from 'utils/translateContent';
+import { CustomerNameChangeMaster } from '../../IndividualCustomer/CustomerDetail/CustomerNameChange';
 
 const AddEditFormMain = (props) => {
     const { typeData, formData, form, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
@@ -76,6 +77,10 @@ const AddEditFormMain = (props) => {
         defaultExtraParam,
     };
 
+    const nameChangeProps = {
+        ...props,
+    };
+
     return (
         <Space direction="vertical" size="small" style={{ display: 'flex' }}>
             <Card style={{ backgroundColor: '#F2F2F2' }}>
@@ -96,13 +101,13 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
                 <Divider />
-
+                <CustomerNameChangeMaster {...nameChangeProps} />
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                    {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.companyName} label={translateContent('customerMaster.label.companyName')} name="companyName" data-testid="companyName" rules={[validateRequiredInputField(translateContent('customerMaster.validation.compName'))]}>
                             <Input disabled={true} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.compName'))} />
                         </Form.Item>
-                    </Col>
+                    </Col> */}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode">
                             <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.companyCode'))} onChange={validateParentCode} disabled={editMode} />

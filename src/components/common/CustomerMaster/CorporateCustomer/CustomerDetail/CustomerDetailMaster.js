@@ -107,12 +107,15 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [showForm, setShowForm] = useState(false);
 
     const [formData, setFormData] = useState();
+    const [customerNameList, setCustomerNameList] = useState({});
     const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
-    
+
     useEffect(() => {
         if (customerDetailsData) {
             form.setFieldsValue({ ...customerDetailsData });
             setFormData(customerDetailsData);
+            const { titleCode, firstName, middleName, lastName } = customerDetailsData;
+            setCustomerNameList({ titleCode, firstName, middleName, lastName });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerDetailsData]);
@@ -190,7 +193,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         }
 
         const recordId = customerDetailsData?.id || '';
-        const reqdata = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
+        const reqdata = { ...customerDetailsData, ...values, customerId: selectedCustomer?.customerId, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -259,6 +262,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         setNumbValidatedSuccess,
         customerType,
         defaultExtraParam,
+        customerNameList,
+        setCustomerNameList,
+        showChangeHistory: false,
     };
 
     const viewProps = {
@@ -266,6 +272,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         formData,
         styles,
         isLoading,
+        showChangeHistory: false,
     };
 
     const myProps = {
