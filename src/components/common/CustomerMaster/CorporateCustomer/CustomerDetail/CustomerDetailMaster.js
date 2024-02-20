@@ -186,6 +186,10 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         showGlobalNotification({ message });
     };
 
+    const prepareCompanyName = (formData) => {
+        return (formData?.titleCode ? formData?.titleCode + ' ' : '') + (formData?.firstName ? formData?.firstName + ' ' : '') + (formData?.middleName ? formData?.middleName + ' ' : '') + (formData?.lastName ? formData?.lastName + ' ' : '');
+    };
+
     const onFinish = (values) => {
         if (!formActionType?.addMode && !numbValidatedSuccess && customerDetailsData?.mobileNumber !== values?.mobileNumber) {
             showGlobalNotification({ message: translateContent('customerMaster.notification.verify') });
@@ -193,8 +197,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         }
 
         const recordId = customerDetailsData?.id || '';
-        const reqdata = { ...customerDetailsData, ...values, customerId: selectedCustomer?.customerId, id: recordId };
-
+        const reqdata = { ...formData, ...values, companyName: prepareCompanyName(formData), customerId: selectedCustomer?.customerId, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
