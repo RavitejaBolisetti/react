@@ -14,7 +14,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 const { Search } = Input;
 
-const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, cancellationData, vehicleVinDataLoading }) => {
+const IssueIndentFromMain = ({ identifier, issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, cancellationData, vehicleVinDataLoading }) => {
     const modalProps = {
         reset: true,
         submit: true,
@@ -23,10 +23,6 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
         handleResetFilter: onCloseAction,
     };
     const disabledProps = { disabled: isReadonly };
-
-    const handleDependentReset = () => {
-        // issueForm.resetFields(['engineNumber', 'oemInvoiceDate', 'invoiceNumber', 'grnDate', 'grnNumber', 'netDealerPrice']);
-    };
 
     return (
         <>
@@ -37,7 +33,6 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                             {customSelectBox({
                                 data: [{ key: 'st1', value: 'st1' }],
                                 placeholder: preparePlaceholderSelect('store'),
-                                // onChange: handleDealerParentChange,
                             })}
                         </Form.Item>
                     </Col>
@@ -46,52 +41,20 @@ const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly 
                             {customSelectBox({
                                 data: [{ key: 'st1', value: 'st1' }],
                                 placeholder: preparePlaceholderSelect('bin location'),
-                                // onChange: handleDealerParentChange,
                             })}
-                            {/* <Search loading={vehicleVinDataLoading} placeholder={translateContent('stockTransferIndent.issueIndent.label.vin')} onSearch={handleVinSearch} onChange={handleDependentReset} maxLength={50} /> */}
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="Current Stock" label={translateContent('Current Stock')}>
+                        <Form.Item name="currentStock" label={translateContent('Current Stock')}>
                             <Input placeholder={translateContent('Current Stock')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="Issued Qty" label={translateContent('Issued Qty')}>
+                        <Form.Item name="issuedQty" label={translateContent('Issued Qty')}>
                             <Input placeholder={translateContent('Issued Qty')} maxLength={50} />
                         </Form.Item>
                     </Col>
                 </Row>
-                {/* <Row gutter={24}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="invoiceNumber" label={translateContent('stockTransferIndent.issueIndent.label.oemInvoiceNumber')}>
-                            <Input placeholder={translateContent('stockTransferIndent.issueIndent.label.oemInvoiceNumber')} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="grnDate" label={translateContent('stockTransferIndent.issueIndent.label.grnDate')}>
-                            <Input placeholder={translateContent('stockTransferIndent.issueIndent.label.grnDate')} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={24}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="grnNumber" label={translateContent('stockTransferIndent.issueIndent.label.grnNo')}>
-                            <Input placeholder={translateContent('stockTransferIndent.issueIndent.label.grnNo')} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="issueCharges" label={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} rules={[validateNumberWithTwoDecimalPlaces(translateContent('stockTransferIndent.issueIndent.validation.issueCharges')), { validator: (_, value) => issueForm.getFieldValue('netDealerPrice') && isIssuePriceValid(value, issueForm.getFieldValue('netDealerPrice')) }]}>
-                            <Input placeholder={translateContent('stockTransferIndent.issueIndent.label.issueCharge')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="netDealerPrice" label={translateContent('stockTransferIndent.issueIndent.label.netDealerPrice')}>
-                            <Input placeholder={translateContent('stockTransferIndent.issueIndent.label.netDealerPrice')} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row> */}
-
                 <ModalButtons {...modalProps} />
             </Form>
         </>

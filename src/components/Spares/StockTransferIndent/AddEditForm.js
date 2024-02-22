@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Input, Form, Card, Collapse, Divider, Button, DatePicker } from 'antd';
 import { FiPlus } from 'react-icons/fi';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 
 import { withDrawer } from 'components/withDrawer';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
@@ -131,16 +131,6 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card>
                             <Row gutter={24}>
-                                {/* <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                    <Form.Item label={translateContent('Indent No')} name="indentNo" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentToParent'))]}>
-                                        <Input placeholder={preparePlaceholderText('Indent No' || translateContent('city.placeholder.cityCode'))} disabled={ true} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                    <Form.Item initialValue={dayjs()} label={translateContent('Indent Date')} name="indentDate" >
-                                    <DatePicker value={dayjs()} format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} disabled={ true} />
-                                    </Form.Item>
-                                </Col> */}
                                 <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <Form.Item label={translateContent('Indent Status')} name="indentStatus" rules={[validateRequiredSelectField(translateContent('Indent Status'))]}>
                                         {customSelectBox({
@@ -150,15 +140,7 @@ const AddEditFormMain = (props) => {
                                         })}
                                     </Form.Item>
                                 </Col>
-                                {/* <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                    <Form.Item label={translateContent('stockTransferIndent.label.indentToParent')} name="indentToParent" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentToParent'))]}>
-                                        {customSelectBox({
-                                            data: [],
-                                            placeholder: preparePlaceholderSelect(''),
-                                            onChange: handleDealerParentChange,
-                                        })}
-                                    </Form.Item>
-                                </Col> */}
+
                                 <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <Form.Item label={translateContent('stockTransferIndent.label.indentToLocation')} name="indentToLocation" rules={[validateRequiredSelectField(translateContent('stockTransferIndent.validation.indentToLocation'))]}>
                                         {customSelectBox({
@@ -172,12 +154,12 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <Form.Item label={translateContent('Total Indent Quantity')} name="totalIndentQuantity" rules={[validateRequiredSelectField(translateContent('Total Indent Quantity'))]}>
-                                        <Input placeholder={preparePlaceholderText('Total Indent Quantity')} disabled={ true} />
+                                        <Input placeholder={preparePlaceholderText('Total Indent Quantity')} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <Form.Item label={translateContent('Total Indent Value')} name="totalIndentQuantity" rules={[validateRequiredSelectField(translateContent('Total Indent Value'))]}>
-                                        <Input placeholder={preparePlaceholderText('Total Indent Value')} disabled={ true} />
+                                        <Input placeholder={preparePlaceholderText('Total Indent Value')} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 {/* <Col xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -186,7 +168,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col> */}
 
-                                <Col xs={24} sm={18} md={18} lg={18} xl={18} xxl={18} >
+                                <Col xs={24} sm={18} md={18} lg={18} xl={18} xxl={18}>
                                     <Form.Item name="remarks" label={translateContent('stockTransferIndent.label.remark')}>
                                         <TextArea maxLength={90} placeholder={preparePlaceholderText(translateContent('stockTransferIndent.label.remark'))} showCount data-testid="remark" />
                                     </Form.Item>

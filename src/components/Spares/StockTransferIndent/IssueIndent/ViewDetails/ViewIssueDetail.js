@@ -15,8 +15,9 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { RxCross1 } from 'react-icons/rx';
 
-export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleRequest, toggleButton }) => {
+export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleRequest, toggleButton, issueData, setIssueData, parentKey, childKey }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -26,28 +27,43 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
 
     const viewData = {
         ...formData,
-        issueDate: converDateDayjs(formData?.issueDate),
-        oemInvoiceDate: converDateDayjs(formData?.oemInvoiceDate),
-        grnDate: converDateDayjs(formData?.grnDate),
-        issueStatus: typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === formData?.issueStatus)?.value,
     };
 
     const buttonVisibility = handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus });
     return (
         <Card>
-            {/* <Descriptions {...viewProps}>
-                <Descriptions.Item label={translateContent('Part No' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNo')}>{checkAndSetDefaultValue(viewData?.issueNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('Part Description' ||'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteDate')}>{checkAndSetDefaultValue(viewData?.issueDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('UOM' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteStatus')}>{checkAndSetDefaultValue(viewData?.issueStatus, isLoading)}</Descriptions.Item>
-            </Descriptions> */}
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label={translateContent('Store' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNo')}>{checkAndSetDefaultValue(viewData?.issueNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('Bin Location' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteDate')}>{checkAndSetDefaultValue(viewData?.issueDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('Current Stock' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteStatus')}>{checkAndSetDefaultValue(viewData?.issueStatus, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('Issued Qty' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteStatus')}>{checkAndSetDefaultValue(viewData?.issueStatus, isLoading)}</Descriptions.Item>
-            </Descriptions>
+            <Row>
+                <Col xs={18} sm={18} md={18} lg={18} xl={18}>
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label={translateContent('Store' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNo')}>{checkAndSetDefaultValue(viewData?.store, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('Bin Location' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteDate')}>{checkAndSetDefaultValue(viewData?.binLocation, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('Current Stock' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteStatus')}>{checkAndSetDefaultValue(viewData?.currentStock, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('Issued Qty' || 'stockTransferIndent.issueIndent.viewDetails.label.stIssueNoteStatus')}>{checkAndSetDefaultValue(viewData?.issuedQty, isLoading)}</Descriptions.Item>
+                    </Descriptions>
+                </Col>
+                <Col className={styles.fullyCentered} xs={2} sm={2} md={2} lg={2} xl={2}>
+                    <Button
+                        icon={<RxCross1 />}
+                        type="link"
+                        onClick={() =>
+                            setIssueData((prev) => {
+                                const newArr = prev.map((item, idx) => {
+                                    if (idx === parentKey && item?.issueDetails) {
+                                        return { issueDetails: item?.issueDetails.filter((i, idx2) => childKey !== idx2) };
+                                    }
+                                    return item;
+                                });
+                                return newArr;
+                            })
+                        }
+                    />
+                </Col>
+            </Row>
 
-            <Row gutter={20} className={styles.marB20}>
+            {/* <Row gutter={20} className={styles.marB20}>
+                <Button danger onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RETURNED)}>
+                    {BUTTON_NAME_CONSTANTS?.RETURN?.name}
+                </Button>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
                     {buttonVisibility?.canReceive && (
                         <Button type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
@@ -60,7 +76,7 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
                         </Button>
                     )}
                 </Col>
-            </Row>
+            </Row> */}
         </Card>
     );
 };

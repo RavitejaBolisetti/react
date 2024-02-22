@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Button, Form, Collapse, Typography, Divider, Space } from 'antd';
+import { Row, Col, Button, Form, Collapse, Typography, Divider, Space, Card } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { ViewIndentDetail, ViewIssueDetail } from './ViewDetails';
 import { BUTTON_NAME_CONSTANTS, INDENT_ACTION_LIST, ISSUE_ACTION_LIST } from '../constants';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { PlusOutlined } from '@ant-design/icons';
+
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { handleBtnVisibility } from '../utils';
 import { IssueIndentFrom } from './IssueIndentFrom';
@@ -18,6 +19,7 @@ import styles from 'assets/sass/app.module.scss';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { FiDownload } from 'react-icons/fi';
 import { translateContent } from 'utils/translateContent';
+import { handleUnSavedChange } from 'utils/UnSaveDataConfirmation';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -35,10 +37,11 @@ const IssueIndentMasterMain = (props) => {
 
     const [issueForm] = Form.useForm();
     const [issueModalOpen, setIssueModal] = useState(false);
-    const [issueData, setIssueData] = useState([{}]);
+    const [issueData, setIssueData] = useState([]);
     const [myActiveKey, setmyActiveKey] = useState([]);
     const [confirmRequest, setConfirmRequest] = useState();
     const [refershData, setRefershData] = useState(false);
+    const [identifier, setIdentifier] = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -50,32 +53,6 @@ const IssueIndentMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleVinData]);
-
-    // useEffect(() => {
-    //     if (!indentIssueDataLoading && indentIssueData && indentIssueDataLoaded) setIssueData(indentIssueData);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [indentIssueDataLoading, indentIssueData, indentIssueDataLoaded]);
-
-    // useEffect(() => {
-    //     const extraParams = [
-    //         {
-    //             key: 'indentNumber',
-    //             title: 'Number',
-    //             value: cancellationData?.indentNumber,
-    //         },
-
-    //         {
-    //             key: 'modelCode',
-    //             title: 'Model Code',
-    //             value: cancellationData?.modelCode,
-    //         },
-    //     ];
-    //     fetchIssueList({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams });
-    //     return () => {
-    //         resetIssueList();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [refershData]);
 
     const handleCollapses = (values) => {
         myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
@@ -108,38 +85,22 @@ const IssueIndentMasterMain = (props) => {
     };
 
     const handleAdd = () => {
-        setIssueData((prev) => [...prev, {}]);
+        setIssueData((prev) => [...prev, { issueDetails: [] }]);
     };
 
     const onFinish = (values) => {
-        // if (!values?.engineNumber) {
-        //     showGlobalNotification({ message: translateContent('stockTransferIndent.issueIndent.validation.searchVinToContinue') });
-        //     return;
-        // }
-        const { invoiceDate, invoiceNumber, ...rest } = values;
-
-        const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.oemInvoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
-
-        const onSuccess = (res) => {
-            issueForm.resetFields();
-            setIssueModal(false);
-            resetVinDetails();
-            setRefershIndentData(!refershIndentData);
-            setRefershData(!refershData);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+        console.log('identifier', identifier, values);
+        const newArr = issueData?.map((item, index) => {
+            if (index === identifier) {
+                const Arr = item?.issueDetails;
+                return { issueDetails: [...Arr, values] };
+            }
+            return item;
+        });
+        console.log('newArr', newArr);
+        setIssueData(newArr);
+        setIssueModal(false);
+        issueForm.resetFields();
     };
 
     const onStatusChange = (values) => {
@@ -172,7 +133,7 @@ const IssueIndentMasterMain = (props) => {
         };
     };
 
-    const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: INDENT_ACTION_LIST.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData, vehicleVinDataLoading };
+    const IssueVehicleDetailsProps = { identifier, onCloseAction, isVisible: issueModalOpen, titleOverride: INDENT_ACTION_LIST.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData, vehicleVinDataLoading };
 
     const handleConfirmationClose = () => {
         setConfirmRequest({
@@ -180,73 +141,92 @@ const IssueIndentMasterMain = (props) => {
             isVisible: false,
         });
     };
+    const handleIssueModalAdd = ({ uniqueKey }) => {
+        setIdentifier(uniqueKey);
+        setIssueModal(true);
+    };
 
     return (
         <>
-            <div className={styles.drawerBodyNew}>
-                <Text>Part Details</Text>
-                <ViewIndentDetail {...ViewDetailProps} />
-                <Row className={styles.marB20} gutter={20} justify="start">
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button type="primary" onClick={handleAdd}>
-                            {BUTTON_NAME_CONSTANTS?.ADD?.name}
-                        </Button>
-                    </Col>
-                </Row>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Text>Part Details</Text>
+                    <ViewIndentDetail {...ViewDetailProps} />
+                    <Row className={styles.marB20} justify="start">
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Button type="primary" onClick={handleAdd}>
+                                {BUTTON_NAME_CONSTANTS?.ADD?.name}
+                            </Button>
+                        </Col>
+                    </Row>
 
-                <div className={styles.viewDrawerContainer}>
-                    {false ? (
-                        <InputSkeleton height={80} count={3} />
-                    ) : (
-                        issueData?.map((element, i) => {
-                            return (
-                                <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" collapsible="icon">
-                                    <Panel
-                                        header={
-                                            <Row justify="space-between">
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                    <Space size="middle">
-                                                        <Space size="small" direction="vertical">
+                    <div
+                    // className={styles.viewDrawerContainer}
+                    >
+                        {false ? (
+                            <InputSkeleton height={80} count={3} />
+                        ) : (
+                            issueData?.map((element, i) => {
+                                return (
+                                    <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" collapsible="icon">
+                                        <Panel
+                                            header={
+                                                <>
+                                                    <Row>
+                                                        <Col xs={20} sm={20} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
+                                                            {/* <Space style={{ display: 'flex' }} size="middle"> */}
+                                                            {/* <Space size="small" direction="vertical"> */}
                                                             <div>
                                                                 <Text>
                                                                     {translateContent('stockTransferIndent.issueIndent.label.stIssueNo')} : {element?.issueNumber ? element?.issueNumber : 'NA'}
                                                                 </Text>
-
-                                                                <Button>Add</Button>
                                                             </div>
-                                                        </Space>
-                                                        {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
-                                                            <Button
-                                                                danger
-                                                                icon={<FiDownload />}
-                                                                onClick={() => {
-                                                                    setReportDetail();
-                                                                    handlePrintDownload(element);
-                                                                }}
-                                                            >
-                                                                {BUTTON_NAME_CONSTANTS?.PRINT?.name}
+                                                            {/* </Space> */}
+                                                            {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
+                                                                <Button
+                                                                    danger
+                                                                    icon={<FiDownload />}
+                                                                    onClick={() => {
+                                                                        setReportDetail();
+                                                                        handlePrintDownload(element);
+                                                                    }}
+                                                                >
+                                                                    {BUTTON_NAME_CONSTANTS?.PRINT?.name}
+                                                                </Button>
+                                                            )}
+                                                            {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canCancel && (
+                                                                <Button danger onClick={() => handleRequest(element, ISSUE_ACTION_LIST?.CANCEL)} className={styles.marR10}>
+                                                                    {BUTTON_NAME_CONSTANTS?.CANCEL?.name}
+                                                                </Button>
+                                                            )}
+                                                            {/* </Space> */}
+                                                        </Col>
+                                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
+                                                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleIssueModalAdd({ uniqueKey: i })}>
+                                                                Add
                                                             </Button>
-                                                        )}
-                                                        {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canCancel && (
-                                                            <Button danger onClick={() => handleRequest(element, ISSUE_ACTION_LIST?.CANCEL)}>
-                                                                {BUTTON_NAME_CONSTANTS?.CANCEL?.name}
-                                                            </Button>
-                                                        )}
-                                                    </Space>
-                                                </Col>
-                                            </Row>
-                                        }
-                                        key={i}
-                                    >
-                                        <Divider />
-                                        <ViewIssueDetail typeData={typeData} formData={element} handleRequest={handleRequest} handleBtnVisibility={handleBtnVisibility} toggleButton={toggleButton} />
-                                    </Panel>
-                                </Collapse>
-                            );
-                        })
-                    )}
-                </div>
-            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    {/* <Button icon={<PlusOutlined />} type="primary" onClick={() => handleIssueModalAdd({ uniqueKey: i })}>
+                                                    Add
+                                                </Button> */}
+                                                </>
+                                            }
+                                            key={i}
+                                        >
+                                            <Divider />
+                                            {element?.issueDetails?.map((item, dataIndex) => (
+                                                <ViewIssueDetail parentKey={i} childKey={dataIndex} setIssueData={setIssueData} issueData={issueData} typeData={typeData} formData={item} handleRequest={handleRequest} handleBtnVisibility={handleBtnVisibility} toggleButton={toggleButton} />
+                                            ))}
+                                        </Panel>
+                                    </Collapse>
+                                );
+                            })
+                        )}
+                    </div>
+                    {/* </div> */}
+                </Col>
+            </Row>
             <ConfirmationModal {...confirmRequest} />
             <IssueIndentFrom {...IssueVehicleDetailsProps} />
         </>
