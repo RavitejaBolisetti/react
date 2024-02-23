@@ -185,6 +185,13 @@ export const ROUTING_INCENTIVE_SCHEME_MASTER = ROUTING_SALES.concat('incentive-s
 export const ROUTING_INCENTIVE_SCHEME = ROUTING_SALES.concat('incentive-schemes');
 export const ROUTING_INCENTIVE_CLAIM = ROUTING_SALES.concat('incentive-claim');
 
+export const ROUTING_SPECIAL_INCENTIVE_SCHEME = ROUTING_SALES.concat('special-incentive-scheme');
+export const ROUTING_INITIATE_DEALER_SCHEME_SPECIAL = ROUTING_SALES.concat('initiate-dealer-scheme-special'); //remove 
+export const ROUTING_DEALER_COMMUNICTION_VIEW = ROUTING_SALES.concat('dealer-communication-view');
+export const ROUTING_UPLOAD_FESTIVE_SCHEME = ROUTING_SALES.concat('upload-festive-scheme');
+
+export const ROUTING_GST_CLAIM = ROUTING_SALES.concat('gst-claim');
+
 
 // Used Vehicle
 export const ROUTING_BRAND_SPIDER_MASTER = ROUTING_SALES.concat('brand-spider-master');
@@ -209,7 +216,9 @@ export const ROUTING_CAMPAIGN_DISCOUNT = ROUTING_SPARES.concat('campaign-discoun
 export const ROUTING_INVENTORY_CLASSIFICATION = ROUTING_SPARES.concat('inventory-classification');
 // export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('Target-Type');
 export const ROUTING_BRANCH_WISE_STOCK = ROUTING_SPARES.concat('branch-wise-stock');
-export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('Target-Type');
+export const ROUTING_TARGET_TYPE = ROUTING_SPARES.concat('target-type');
+export const ROUTING_TO_BIN_TRANSFER = ROUTING_SPARES.concat('bin-to-bin-transfer');
+export const ROUTING_STOCK_TRANSFER_INDENT = ROUTING_SPARES.concat('stock-transfer-indent');
 
 // vehicle related
 export const ROUTING_COMMON_VEHICLE_RELATED = ROUTING_COMMON.concat('vehicle-related');

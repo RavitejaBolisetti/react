@@ -18,6 +18,8 @@ import UnitOfMeasureMasterPage  from './UnitOfMeasure';
 import InventoryClassificationPage from './InventoryClassification';
 import BranchwiseStockViewMasterPage from './BranchwiseStockView.js';
 import TargetTypesPage from './TargetTypes';
+import BinToBinTransferPage from './BinToBinTransfer';
+import StockTransferIndentSpareMasterPage from './StockTransferIndent'
 
 export {
     UnitOfMeasureMasterPage,
@@ -34,4 +36,6 @@ export {
     StoreMasterPage,
     BranchwiseStockViewMasterPage,
     TargetTypesPage,
+    BinToBinTransferPage,
+    StockTransferIndentSpareMasterPage
 };

@@ -6,14 +6,13 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Branch',
             dataIndex: 'branch',
-            width: '15%',
+            width: '15%',   
         }),
 
         tblPrepareColumns({
@@ -27,7 +26,8 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'currentStock',
             width: '15%',
         }),
-        tblActionColumn({ handleButtonClick, canEdit: false, styles }),
+
+        // tblActionColumn({ handleButtonClick, canEdit: false, styles }),
     ];
 
     return tableColumn;

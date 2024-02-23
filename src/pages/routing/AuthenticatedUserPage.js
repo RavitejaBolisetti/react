@@ -47,17 +47,7 @@ import {
 
 import { VehicleRelatedPage } from 'pages/common/VehicleRelated';
 
-import { TaxChargesPage, 
-    TaxChargesCategoryPage,
-    AccountCategoryPage, 
-    VehicleModelTaxChargesCategoryPage, 
-    DocumentTypeOtherChargesPage, 
-    CreditDebitNoteMasterPage, 
-    GSTIRNAuthenticationPage, 
-    ChartOfAccountPage, 
-    GstIRNTransactionPage,
-    VoucherPaymentPage, } 
-    from 'pages/FinancialAccounting';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage, VoucherPaymentPage } from 'pages/FinancialAccounting';
 import {
     OTFMasterPage,
     VehicleDetailMasterPage,
@@ -104,25 +94,14 @@ import {
     BrandSpiderMasterPage,
     MultiBrandUsedVehicleCampaignCreationPage,
     MultiBrandUsedVehiclePriceCapturingPage,
+    SpecialIncentiveSchemesPage,
+    InitiateDealercommunicationSpecialSchemeMasterPage,
+    DealerCommunicationViewPage,
+    UploadFestiveSchemePage,
+    GSTClaimPage,
 } from 'pages/Sales';
 
-import { 
-    UnitOfMeasureMasterPage, 
-    CampaignDiscountPage, 
-    IssueIndicatorMasterPage, 
-    KitMasterPage, 
-    MaterialPricingGroupPage, 
-    MovementClassMasterPage, 
-    PartCategoryMasterPage, 
-    SpareProductDivisionMasterPage, 
-    StoreMasterPage, 
-    VendorBrandMasterPage, 
-    InventoryClassificationPage, 
-    PartMasterPage,
-    TargetTypesPage,
-    BranchwiseStockViewMasterPage,
-} from 'pages/Spares';
-
+import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage, PartMasterPage, TargetTypesPage, BranchwiseStockViewMasterPage, BinToBinTransferPage, StockTransferIndentSpareMasterPage } from 'pages/Spares';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
 import { PageNotFound } from 'components/PageNotFound';
@@ -325,6 +304,13 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME_MASTER} element={<IncentiveSchemeMasterPage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_SCHEME} element={<IncentiveSchemePage />} exact />
                 <Route path={routing.ROUTING_INCENTIVE_CLAIM} element={<IncentiveClaimPage />} exact />
+               
+                <Route path={routing.ROUTING_SPECIAL_INCENTIVE_SCHEME} element={<SpecialIncentiveSchemesPage />} exact />
+                <Route path={routing.ROUTING_INITIATE_DEALER_SCHEME_SPECIAL} element={<InitiateDealercommunicationSpecialSchemeMasterPage />} exact />
+                <Route path={routing.ROUTING_DEALER_COMMUNICTION_VIEW} element={<DealerCommunicationViewPage />} exact />
+                <Route path={routing.ROUTING_UPLOAD_FESTIVE_SCHEME} element={<UploadFestiveSchemePage />} exact />
+                 <Route path={routing.ROUTING_GST_CLAIM} element={<GSTClaimPage />} exact />
+                
 
                 {/* Used Vehicle */}
                 <Route path={routing.ROUTING_RESALE_VEHICLE_COLOR_MASTER} element={<ResaleVehicleColorMasterPage />} exact />
@@ -333,7 +319,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_BRAND_SPIDER_MASTER} element={<BrandSpiderMasterPage />} exact />
                 <Route path={routing.ROUTING_MULTI_BRAND_USED_VEHICLE_CAMPAIGN_CREATION} element={<MultiBrandUsedVehicleCampaignCreationPage />} exact />
                 <Route path={routing.ROUTING_MULTI_BRAND_USED_VEHICLE_PRICE_CAPTURING} element={<MultiBrandUsedVehiclePriceCapturingPage />} exact />
-{/* spare/ */}
+                {/* spare/ */}
                 <Route path={routing.ROUTING_STORE_MASTER} element={<StoreMasterPage />} exact />
                 <Route path={routing.ROUTING_KIT_MASTER} element={<KitMasterPage />} exact />
                 <Route path={routing.ROUTING_PART_CATEGORY_MASTER} element={<PartCategoryMasterPage />} exact />
@@ -343,18 +329,23 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_MOVEMENT_CLASS} element={<MovementClassMasterPage />} exact />
                 <Route path={routing.ROUTING_ISSUE_INDICATOR} element={<IssueIndicatorMasterPage />} exact />
                 <Route path={routing.ROUTING_CAMPAIGN_DISCOUNT} element={<CampaignDiscountPage />} exact />
-                <Route path={routing.ROUTING_INVENTORY_CLASSIFICATION} element={<InventoryClassificationPage />} exact />  
-                <Route path={routing.ROUTING_TARGET_TYPE} element={<TargetTypesPage />} exact />   
+                <Route path={routing.ROUTING_INVENTORY_CLASSIFICATION} element={<InventoryClassificationPage />} exact />
+                <Route path={routing.ROUTING_TARGET_TYPE} element={<TargetTypesPage />} exact />
                 {/*  */}
                 <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
-                   {/* Spares Master */}
+                {/* Spares Master */}
                 <Route path={routing.ROUTING_PART_MASTER} element={<PartMasterPage />} exact />
                 <Route path={routing.ROUTING_TARGET_TYPE} element={<BranchwiseStockViewMasterPage />} exact />
                  {/* Vehicle Related */} 
                  <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
                     {/* DemandForecasting */} 
                  <Route path={routing.ROUTING_DEMAND_FORECASTING} element={<DemandForecastingMasterPage/>} exact />
+                <Route path={routing.ROUTING_BRANCH_WISE_STOCK} element={<BranchwiseStockViewMasterPage />} exact />
+                <Route path={routing.ROUTING_TO_BIN_TRANSFER} element={<BinToBinTransferPage />} exact />
+                <Route path={routing.ROUTING_STOCK_TRANSFER_INDENT} element={<StockTransferIndentSpareMasterPage />} exact />
+                {/* Vehicle Related */}
+                <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
 
                 <Route path={routing.ROUTING_UNIT_OF_MEASURE_MASTER} element={<UnitOfMeasureMasterPage />} exact />
             </Routes>

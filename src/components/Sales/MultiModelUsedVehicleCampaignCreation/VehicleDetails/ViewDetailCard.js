@@ -133,18 +133,18 @@ const ViewDetailCard = (prop) => {
                         </Row>
                     </Col>
 
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} >
                         {!isEditing ? (
                             <>
-                                <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(formData)} />
-                                {!formData?.id?.length > 0 && <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType(formData)} type="link" icon={<FiTrash />}></Button>}
+                                <Button disabled={isBtnDisabled} type="primary" icon={<FiEdit />} onClick={() => onEdit(formData)} className={styles.marR10} >Edit</Button>
+                                {!formData?.id?.length > 0 && <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType(formData)} danger icon={<FiTrash />} >Delete</Button>}
                             </>
                         ) : (
                             <>
-                                <Button type="link" onClick={onUpdate}>
+                                <Button type="primary" onClick={onUpdate} className={styles.marR10}>
                                     {translateContent('global.buttons.add')}
                                 </Button>
-                                <Button type="link" onClick={() => onCancel()}>
+                                <Button danger onClick={() => onCancel()} >
                                     {translateContent('global.buttons.cancel')}
                                 </Button>
                             </>
