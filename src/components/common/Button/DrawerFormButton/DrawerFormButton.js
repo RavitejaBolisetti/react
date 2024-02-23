@@ -12,7 +12,7 @@ import { translateContent } from 'utils/translateContent';
 
 const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = translateContent('global.buttons.save'), handleButtonClick, isLoading, isLoadingOnSave, multipleForm = false, handlePrintDownload }) => {
     const disabled = isLoadingOnSave || isLoading;
-    const disabledProps = { disabled: disabled };
+    const disabledProps = { disabled };
     return (
         <Row gutter={20} className={multipleForm ? styles.formFooterNew : ''}>
             <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.buttonsGroupLeft}>

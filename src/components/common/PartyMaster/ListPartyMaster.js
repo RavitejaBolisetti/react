@@ -31,14 +31,12 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: configData = [], filteredListData: typeData = [] },
-            PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData },
+            PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData, isDetailLoading },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
             },
         },
     } = state;
-
-    // const moduleTitle = 'Party Master';
 
     let returnValue = {
         userId,
@@ -54,6 +52,8 @@ const mapStateToProps = (state) => {
         isLoading,
         pincodeData: pincodeData?.pinCodeDetails,
         moduleTitle: translateContent('partyMaster.heading.moduleTitle'),
+
+        isDetailLoading,
     };
     return returnValue;
 };
@@ -64,6 +64,8 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: partyMasterDataActions.fetchList,
             fetchDetail: partyMasterDataActions.fetchDetail,
+            listDetailShowLoading: partyMasterDataActions.listDetailShowLoading,
+            resetDetailData: partyMasterDataActions.resetDetail,
             saveData: partyMasterDataActions.saveData,
             listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
@@ -78,8 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListPartyMasterBase = (props) => {
     const { data, detailData, saveData, fetchList, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { typeData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData } = props;
-
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, resetDetailData, listDetailShowLoading, isDetailLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
 
@@ -151,13 +152,9 @@ export const ListPartyMasterBase = (props) => {
         form.resetFields();
         setFormData([]);
         forceUpdate();
-        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
-            fetchDetail({ setIsLoading: listShowLoading, userId, partyCode: `${record?.partyCode}` });
-            setRecordData(record);
-        }
+        [EDIT_ACTION, VIEW_ACTION]?.includes(buttonAction) && setRecordData(record);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
         setIsFormVisible(true);
     };
 
@@ -187,20 +184,21 @@ export const ListPartyMasterBase = (props) => {
             setOnSaveShowLoading(defaultSaveBtnLoading);
         };
 
-        const requestData = {
-            data: data,
+        saveData({
+            data,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
-        };
-
-        saveData(requestData);
+        });
     };
 
     const onCloseAction = () => {
         form.resetFields();
+        setFormData([]);
+        setRecordData({});
+        resetDetailData();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
@@ -255,6 +253,8 @@ export const ListPartyMasterBase = (props) => {
         handleButtonClick,
         showGlobalNotification,
         onSaveShowLoading,
+        isLoading: isDetailLoading,
+        listDetailShowLoading,
     };
 
     const tableProps = {
