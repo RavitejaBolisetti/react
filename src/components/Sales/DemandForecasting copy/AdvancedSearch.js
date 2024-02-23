@@ -33,10 +33,9 @@ export const AdvancedSearchFrom = (props) => {
         className: styles.headerSelectField,
     };
     const status = [
-        { key: '1', value: 'All' },
-        { key: '2', value: 'Pending' },
-        { key: '3', value: 'Approved' },
-        { key: '4', value: 'Rejected' },
+        { key: '1', value: 'Pending' },
+        { key: '2', value: 'Approved' },
+        { key: '3', value: 'Rejected' },
        ];
 
     const modalProps = {
@@ -50,24 +49,7 @@ export const AdvancedSearchFrom = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
-              
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Area Office" name="areaOffice">
-                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Area Office')} fieldNames={{ label: 'areaOffice', value: 'areaOffice' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Dealer Name" name="dealerName">
-                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Name')} fieldNames={{ label: 'dealerName', value: 'dealerName' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} /> 
-                     </Form.Item>
-                </Col>
-                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Dealer Branch" name="dealerbranch">
-                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Branch')} fieldNames={{ label: 'dealerbranch', value: 'dealerbranch' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
-                    </Form.Item>
-                </Col> */}
-               
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="From Date" name="fromDate">
                         <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('fromDate')} fieldNames={{ label: 'fromDate', value: 'fromDate' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
@@ -77,13 +59,35 @@ export const AdvancedSearchFrom = (props) => {
                         <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('toDate')} fieldNames={{ label: 'toDate', value: 'toDate' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
+            {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Dealer Name" name="dealerName">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Name')} fieldNames={{ label: 'dealerName', value: 'dealerName' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} /> 
+                     </Form.Item>
+                </Col> */}
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Area Office" name="areaOffice">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Area Office')} fieldNames={{ label: 'areaOffice', value: 'areaOffice' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Dealer Location" name="dealerlocation">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Location')} fieldNames={{ label: 'location', value: 'location' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} /> 
+                     </Form.Item>
+                </Col>
+                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Dealer Branch" name="dealerbranch">
+                        <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('Dealer Branch')} fieldNames={{ label: 'dealerbranch', value: 'dealerbranch' }} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    </Form.Item>
+                </Col> */}
+               
               
-
+              
+{/* 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item label={translateContent('vehicleRelated.label.status')}  rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.status'))]}>
                             {customSelectBox({ data: status, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.status')) })}
                         </Form.Item>
-                        </Col>
+                        </Col> */}
             </Row>
 
             <ModalButtons {...modalProps} />

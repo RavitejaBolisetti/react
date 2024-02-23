@@ -23,63 +23,59 @@ import styles from 'assets/sass/app.module.scss';
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 import { drawerTitle } from 'utils/drawerTitle';
-import { VehicleRelatedMasterContainer } from './VehicleRelatedMasterContainer';
-import { QUERY_BUTTONS } from './QueryButtons/QueryButtonConstants';
-import { VEHICLERELATED_SECTION } from 'constants/modules/VehicleRelated/VehicleRelatedSections';
+import { DemandForecastingMasterContainer } from './DemandForecastingMasterContainer';
+//import { QUERY_BUTTONS } from './QueryButtons/QueryButtonConstants';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { QueryButtons } from './QueryButtons';
-
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { translateContent } from 'utils/translateContent';
+import { DEMANDFORECASTING_SECTION } from 'constants/modules/demandForecasting/demandForecastingSections';
+//import { QueryButtons } from './QueryButtons';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [], data: productHierarchyData },
         },
     } = state;
-    const moduleTitle = 'Vehicle Related';
+    const moduleTitle = 'Dealer Demand Forecasting';
 
-    let returnValue = {
+    
+    
+    return {
         userId,
         moduleTitle,
         typeData: typeData['CHK_STATS'],
         typedataMaster: typeData,
-
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
         VehicleLovCodeData,
+        productHierarchyData,
     };
-    return returnValue;
 };
 
-const tabledataOth = [
-    {
-        dealerName: 'Test Autos',
-        dealerBranch: 'Greater noida',
-        claimType: 'Test Calim type',
-        clameNo: 'CLM988',
-        modelName: 'XUV700',
-        claimStatus: 'Pending For Approval',
-    },
-];
+
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchProductData: productHierarchyDataActions.fetchList,
+            ProductLovLoading: productHierarchyDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-
-export const VehicleRelatedMasterBase = (props) => {
-    const { userId, data, totalRecords, moduleTitle } = props;
+export const DemandForecastingMasterBase = (props) => {
+    // const { data, totalRecords, moduleTitle } = props;
+    const { data, totalRecords,moduleTitle } = props;
     const { isModelDataLoading, vehicleModelData } = props;
     const { isProfileDataLoaded, ProfileData, ChecklistData, typeData } = props;
     const { VehicleLovCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
+    const { fetchProductData, productHierarchyData, ProductLovLoading, userId } = props;
 
     const [listFilterForm] = Form.useForm();
     const [filterString, setFilterString] = useState({});
@@ -132,7 +128,7 @@ export const VehicleRelatedMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS?.APPROVAL_PENDING?.key);
+    //const [buttonType, setbuttonType] = useState(QUERY_BUTTONS?.APPROVAL_PENDING?.key);
 
     const [page, setPage] = useState({ ...pageIntialState });
     const dynamicPagination = true;
@@ -141,68 +137,7 @@ export const VehicleRelatedMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
     const [rules, setrules] = useState({ ...rulesIntialstate });
-    const [btnStatus, setBtnStatus] = useState(QUERY_BUTTONS?.APPROVAL_PENDING?.key);
-
-    const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'checklistStatus',
-                title: 'checklistStatus',
-                value: buttonType,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'fromDate',
-                title: 'Reciept From Date',
-                value: filterString?.fromDate,
-                name: convertDateTime(filterString?.fromDate, dateFormatView, 'fromDate'),
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'Reciept To Date',
-                value: filterString?.toDate,
-                name: convertDateTime(filterString?.toDate, dateFormatView, 'toDate'),
-                canRemove: false,
-                filter: true,
-            },
-            {
-                key: 'model',
-                title: 'Model',
-                value: filterString?.model,
-                name: vehicleModelData?.find((element) => filterString?.model === element?.prodctCode)?.prodctShrtName,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page, buttonType]);
+    // const [btnStatus, setBtnStatus] = useState(QUERY_BUTTONS?.APPROVAL_PENDING?.key);
 
     useEffect(() => {
         return () => {
@@ -210,11 +145,11 @@ export const VehicleRelatedMasterBase = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-  
+
     useEffect(() => {
-        const defaultSection =   VEHICLERELATED_SECTION.REQUEST_DETAILS.id;
+        const defaultSection = DEMANDFORECASTING_SECTION.DEALERDEMAND_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName( VEHICLERELATED_SECTION);
+        setSetionName(DEMANDFORECASTING_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -232,18 +167,18 @@ export const VehicleRelatedMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (isAdvanceSearchVisible && filterString) {
-            advanceFilterForm.resetFields();
-            const { toDate, fromDate } = filterString;
-            if (fromDate && toDate) setrules({ fromdate: true, todate: true });
-            advanceFilterForm.setFieldsValue({ ...filterString, fromDate: formatDateToCalenderDate(fromDate), toDate: formatDateToCalenderDate(toDate) });
-        } else {
-            setrules({ fromdate: false, todate: false });
-            advanceFilterForm.setFieldsValue({ ...filterString, fromDate: undefined, toDate: undefined, model: undefined });
+        if (userId) {
+            fetchProductData({
+                setIsLoading: ProductLovLoading,
+                userId,
+                onErrorAction: (message) => {
+                    showGlobalNotification({ message });
+                },
+                extraParams: [{ key: 'unit', value: 'Sales' }],
+            });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAdvanceSearchVisible, filterString]);
+    }, [userId]);
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
@@ -326,10 +261,9 @@ export const VehicleRelatedMasterBase = (props) => {
     };
 
     const onFinishSearch = (values) => {};
-
-    const onFinish = (data) => {
-       // console.log('🚀 ~ file: DealerCorporateClaimMaster.js:438 ~ onFinish ~ data:', data);
-    };
+    // const onFinish = (data) => {
+    //     console.log('🚀 ~ file: DealerCorporateClaimMaster.js:438 ~ onFinish ~ data:', data);
+    // };
 
     const onFinishFailed = (errorInfo) => {
         return;
@@ -353,7 +287,7 @@ export const VehicleRelatedMasterBase = (props) => {
         page,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableData: tabledataOth,
+        //tableData: tabledataOth,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
@@ -370,23 +304,15 @@ export const VehicleRelatedMasterBase = (props) => {
         }
     };
 
-    const handleQuickFilterBtnClik = (item) => {
-        setBtnStatus(item?.key)
-    };
-
     const advanceFilterResultProps = {
-        extraParams,
         removeFilter,
         advanceFilter: true,
         filter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
-        onFinish,
         onFinishFailed,
-  
-        title: <QueryButtons currentItem={btnStatus} items={QUERY_BUTTONS} onClick={handleQuickFilterBtnClik} />,
-        queryBtnData: QUERY_BUTTONS,
+        title: 'Search By Product',
         data,
         otfSearchRules,
         setOtfSearchRules,
@@ -397,13 +323,11 @@ export const VehicleRelatedMasterBase = (props) => {
         setAdvanceSearchVisible,
         handleSearchChange,
         handleButtonClick,
-        // saveButtonName: !isLastSection && 'Save'
         saveButtonName: 'Save',
         showAddButton: true,
         showRefreshBtn: false,
-        showAddButton: true,
-        tableData: [{}],
-        showRefreshBtn: false,
+        tableData: new Array(10).fill({}),
+        productHierarchyData,
     };
 
     const containerProps = {
@@ -413,13 +337,11 @@ export const VehicleRelatedMasterBase = (props) => {
         form,
         formActionType,
         setFormActionType,
-        saveButtonName: 'Submit',
-        onFinish,
         onFinishFailed,
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(moduleTitle),
+        titleOverride: (drawerTitle(formActionType)).concat(' ' + moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -445,9 +367,7 @@ export const VehicleRelatedMasterBase = (props) => {
         setFormData,
         handleFormValueChange,
         isLastSection,
-        VehicelReceiptChecklistOnfinish: onFinish,
         supportingData: ChecklistData,
-        buttonType: buttonType === QUERY_BUTTONS?.COMPLETED?.key ? true : false,
         checkListDataModified,
         setcheckListDataModified,
         addMode: formActionType?.addMode,
@@ -463,6 +383,7 @@ export const VehicleRelatedMasterBase = (props) => {
         data,
         isProfileDataLoading,
         isProductHierarchyLoading,
+        saveButtonName: translateContent('global.buttons.submit'),
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
@@ -482,27 +403,22 @@ export const VehicleRelatedMasterBase = (props) => {
         showAddButton: true,
         showRefreshBtn: false,
         tableData: [{}],
-        btnStatus,
-        setBtnStatus,
-       // statusFilter,
     };
 
     return (
         <>
             <AdvanceFilter {...advanceFilterResultProps} />
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps}/> */}
             <AdvancedSearch {...advanceFilterProps} />
-
-            {/* <AppliedAdvanceFilter {...advanceFilterProps} /> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-            <VehicleRelatedMasterContainer {...containerProps} />
+            <DemandForecastingMasterContainer {...containerProps} />
         </>
     );
+    
 };
 
-export const VehicleRelatedMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleRelatedMasterBase);
+export const DemandForecastingMaster = connect(mapStateToProps, mapDispatchToProps)(DemandForecastingMasterBase);

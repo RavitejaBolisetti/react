@@ -20,16 +20,26 @@ const ViewDetailBase = (props) => {
     };
 
     return (
-        <div className={styles.viewDrawerContainer}>
+        <div>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label={translateContent('partMaster.label.store')}>{'Store name1'||checkAndSetDefaultValue(getCodeValue(addData, formData?.storename), isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partMaster.label.binLocation')}>{'Bin Location1'||checkAndSetDefaultValue(formData?.binlocation, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partMaster.label.stockinhand')}>{'200'||checkAndSetDefaultValue(formData?.stockinhand, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partMaster.label.allocatedstock')}>{'100'||checkAndSetDefaultValue(formData?.addressLine3, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partMaster.label.remarks')}>{'Remark in details'||checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partMaster.placeholder.active')}>{'Active'||checkAndSetDefaultValue(formData?.tehsilName, isLoading)}</Descriptions.Item>
-                     <Descriptions.Item>{formData?.deafultAddressIndicator}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.requesttype')}>{'Change Customer ID'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.customerId')}>{'ABCD123456'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.customerName')}>{'Aryaman Kulshreshtha'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.registrationNo')}>{'HR41CD1234'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.chassisNo')}>{'SDFG12345'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.engineNo')}>{'HJK12345'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.currentInsuranceExpiryDate')}>{'23/09/2025'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.currentPUCExpiryDate')}>{'11/02/2025'}</Descriptions.Item>
+
+                    <Descriptions.Item label={translateContent('vehicleRelated.label.newcustomerId')}>{'XCVD123456'}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

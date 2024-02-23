@@ -11,27 +11,25 @@ import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
 
-import { VEHICLERELATED_SECTION } from 'constants/modules/VehicleRelated/VehicleRelatedSections';
-import RequestDetailsMaster from './RequestDetails';
-import { ClaimApprovalRequestMaster, } from './ClaimApprovalRequest';
-
-const VehicleRelatedMasterContainerMain = (props) => {
+import DemandForeCastingFormButtons from './DemandForeCastingFormButtons';
+import DealerDemandForecastingMaster from './DealerDemandForecasting';
+import { DEMANDFORECASTING_SECTION } from 'constants/modules/demandForecasting/demandForecastingSections';
+const DemandForecastingMasterContainerMain = (props) => {
     const { currentSection } = props;
+
     const myProps = {
         ...props,
+        DrawerFormButton: DemandForeCastingFormButtons,
     };
 
     const renderElement = () => {
         switch (currentSection) {
-            case VEHICLERELATED_SECTION.REQUEST_DETAILS.id: {
-                return <RequestDetailsMaster {...myProps} />;
+            case DEMANDFORECASTING_SECTION?.DEALERDEMAND_DETAILS?.id: {
+                return <DealerDemandForecastingMaster {...myProps} />;
             }
 
-            case VEHICLERELATED_SECTION.APPROVAL_DETAILS.id: {
-                return <ClaimApprovalRequestMaster {...myProps} />;
-            }
             default: {
-                return false;
+                return <></>;
             }
         }
     };
@@ -48,4 +46,4 @@ const VehicleRelatedMasterContainerMain = (props) => {
     );
 };
 
-export const VehicleRelatedMasterContainer = withDrawer(VehicleRelatedMasterContainerMain, { width: '90%', footer: null });
+export const DemandForecastingMasterContainer = withDrawer(DemandForecastingMasterContainerMain, { width: '90%', footer: null });

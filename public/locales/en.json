@@ -4820,8 +4820,10 @@
             "customerName": "Customer Name",
             "chassisNo": "Chassis No.",
             "engineNo": "Engine No.",
-            "requesttype": "Request Type"
-        
+            "requesttype": "Request Type",
+            "requestId": "Request ID",
+            "requestDate": "Request Date",
+            "status": "Status"        
         },
         "label": {
             "requesttype": "Request Type",
@@ -4844,12 +4846,7 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "status": "Status"
-           
-                                
-            
-           },
-
+            "status": "Status"     },
         "placeholder": { 
             "requesttype": "Request Type",
             "searchBy": "Search By",
@@ -4871,12 +4868,9 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "status": "Status"
-            
-         },
+            "status": "Status"    },
 
-
-        "validation": {
+           "validation": {
             "partNumber": "Part Number",
             "searchBy": "Search By",
             "registrationNo": "Registration No.",
@@ -4890,9 +4884,7 @@
             "newregistrationNo": "New Registration No.",
             "newInsuranceExpiryDate": "New Insurance Expiry Date",
             "newPUCExpiryDate": "New PUC Expiry Date",
-            "browseUpload": "Browse & Upload"       
-                      
-            
+            "browseUpload": "Browse & Upload"              
         },
 
         "section": {
@@ -4904,8 +4896,81 @@
             "download": "Download",
             "cancel": "Cancel"
         }
+    },
+
+    "demandForecasting": {
+        "heading": {
+                "mainTitle": "Demand Forecasting",
+            "modelDescription": "Model Group",
+            "DealerName": "Dealer Name",
+            "zone": "Zone",
+            "areaOffice": "Area Office",
+            "location": "Location",
+            "currentYearRetail": "Current Year Retail",
+            "lastYearRetail": "Last Year Retail",
+            "moduleTitle":"Dealer Demand Forecasting"
+        },
+
+        "label": {
+            "searchBy": "Search By",
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name",
+            "location": "Location",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "eDCMModel": "eDCM Model",
+            "finYear": "Financial Year",
+            "month": "Month",
+            "currentMonth": "Current Month",
+            "currentMonth1": "Current Month + 1",
+            "currentMonth2": "Current Month + 2",
+            "currentMonth3": "Current Month + 3"
+           },
+
+        "placeholder": { 
+            "searchBy": "Search By",
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name",
+            "location": "Location",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "eDCMModel": "eDCM Model",
+            "finYear": "Fin Year",
+            "month": "Month",
+            "currentMonth": "Current Month",
+            "currentMonth1": "Current Month + 1",
+            "currentMonth2": "Current Month + 2",
+            "currentMonth3": "Current Month + 3"            
+         },
+        "validation": {
+            "searchBy": "Search By",
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name",
+            "location": "Location",
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "eDCMModel": "eDCM Model",
+            "finYear": "Fin Year",
+            "month": "Month",
+            "currentMonth": "Current Month",
+            "currentMonth1": "Current Month + 1",
+            "currentMonth2": "Current Month + 2",
+            "currentMonth3": "Current Month + 3" 
+        },
+        "drawerSubHeading":{
+            "header":"Model Forecasting Details"
+        },
+
+        "section": {
+            "drawertitle": "Thank You"
+        },
+        "text": {},
+
+        "button": {
+            "download": "Download",
+            "cancel": "Cancel",
+            "upload":"Upload"
+        }
     }
-
-
 
 }

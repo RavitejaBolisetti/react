@@ -21,14 +21,19 @@ const { TextArea, Search } = Input;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
 const AddEditForm = (props) => {
-    const { addressForm, setAddressData, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, uploadProps, userId, formData, formActionType, handleOnChange } = props;
+    const { addressForm, setAddressData, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, uploadProps, userId, formData, onSearch, isSearchLoading, formActionType, handleOnChange } = props;
     const { forceUpdate, handleFormValueChange, setIsAdding, showGlobalNotification, addData, resetPincodeData } = props;
     const { pincodeData, onHandleSelect, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: true };
+    const [regNo, SetRegNo] = useState();
+    const [chassisNo, SetChassisNo] = useState();
+    const [date, SetDate] = useState();
     const { viewMode } = formActionType;
-
+    
+ 
     const [options, setOptions] = useState(false);
     const [searchby, setSearchType] = useState();
+    const [requesttype, setRequestType] = useState();
     const [pinSearchData, setPinSearchData] = useState({});
 
     const onErrorAction = (message) => {
@@ -57,9 +62,17 @@ const AddEditForm = (props) => {
     };
 
     const onHandleChange = (value) => {
-        setSearchType(value);
+        setSearchType(value);   
+        SetRegNo('');    
+        console.log (value);
     };
 
+    const onRequestTypeChange = (value) => {
+        setRequestType(value);
+        SetRegNo('');
+        console.log (value);
+    };
+   
     const handleSave = () => {
         addressForm
             .validateFields()
@@ -99,18 +112,27 @@ const AddEditForm = (props) => {
                 console.error('err', err);
             });
     };
-    const requesttype = [
-        { key: '1', value: 'Change Customer ID' },
-        { key: '2', value: 'Change Registration No.' },
-        { key: '3', value: 'Change Insurance Expiry Date' },
-        { key: '4', value: 'Current PUC Expiry Date' },
+    const requestType = [
+        { key: '4', value: 'Change Customer ID' },
+        { key: '5', value: 'Change Registration No.' },
+        { key: '6', value: 'Change Insurance Expiry Date' },
+        { key: '7', value: 'Change PUC Expiry Date' },
     ];
 
     const searchType = [
         { key: '1', value: 'Registration No.' },
         { key: '2', value: 'Chassis No.' },
-        { key: '3', value: 'Requested Date' },
+       
     ];
+
+    const onChangeRequest = (value)=>{
+        SetRegNo(value);
+        SetChassisNo(value);
+        SetDate(value)
+
+    };
+ 
+
 
     const searchBoxProps = {
         singleField: true,
@@ -121,22 +143,22 @@ const AddEditForm = (props) => {
             <Form form={addressForm} id="myAdd" onFinish={handleSave} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
                 {/* //    <Row gutter={20}> */}
                 <Card>
-                    <Row align="middle">
-                        <Text strong> {'Change Reques'}</Text>
-                    </Row>
-                    <Divider className={styles.marT20} />
+                    {/* <Row align="middle">
+                        <Text strong> {'Change Request'}</Text>
+                    </Row> */}
+                    {/* <Divider className={styles.marT20} /> */}
 
                     <Row gutter={20}>
                         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.requesttype')} name="requesttype" rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.requesttype'))]}>
-                                {customSelectBox({ data: requesttype, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.requesttype')) })}
+                                {customSelectBox({ onChange: onRequestTypeChange, data: requestType, placeholder: preparePlaceholderSelect(translateContent('vehicleRelated.label.requesttype')) })}
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                        {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.dealerBranch')}>
                                 <Input value={'Acbd1234456'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerId'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
-                        </Col>
+                        </Col> */}
 
                         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.searchBy')} name="searchBy" rules={[validateRequiredSelectField(translateContent('vehicleRelated.validation.searchBy'))]}>
@@ -147,25 +169,33 @@ const AddEditForm = (props) => {
                         {searchby === '1' && (
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label={translateContent('vehicleRelated.label.registrationNo')}>
-                                    <Search placeholder="Search" allowClear className={styles.headerSearchField} />
+                                    <Search placeholder="Search" onSearch={onChangeRequest}allowClear className={styles.headerSearchField} />
                                 </Form.Item>
                             </Col>
                         )}
 
                         {searchby === '2' && (
                             <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                <Form.Item label={translateContent('vehicleRelated.label.chassisNo')}>
-                                    <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.chassisNo'))} maxLength={50} {...disabledProps} />
-                                </Form.Item>
-                            </Col>
+                                 <Form.Item label={translateContent('vehicleRelated.placeholder.chassisNo')}>
+                                    <Search placeholder="Search" onSearch={onChangeRequest} allowClear className={styles.headerSearchField} />
+                                </Form.Item> 
+                        </Col>
                         )}
-                    </Row>
-                </Card>
-                <Card>
-                    <Row type="flex" align="middle">
-                        <Text strong> {'Current Details'}</Text>
-                    </Row>
-                    <Divider className={styles.marT20} />
+                         {/* {searchby === '3' && (
+                            <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                 <Form.Item label={translateContent('vehicleRelated.placeholder.requestDate')}>
+                                    <Search placeholder="Search" onSearch={onChangeRequest} allowClear className={styles.headerSearchField} />
+                                </Form.Item> 
+
+                        </Col>
+                        )}                */}
+                  </Row>
+                  </Card>
+                 {(regNo || chassisNo || date) && <> <Card>
+                       {/* <Row type="flex" align="middle">
+                            <Text strong> {'Current Details'}</Text>
+                        </Row>
+                        <Divider className={styles.marT20} /> */}
                     <Row gutter={16}>
                         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.customerId')}>
@@ -176,6 +206,11 @@ const AddEditForm = (props) => {
                         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.customerName')}>
                                 <Input value={'Aryaman Kulshreshtha'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerName'))} maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item label={translateContent('vehicleRelated.label.registrationNo')}>
+                                <Input value={'HR41CD1234'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.registrationNo'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
@@ -205,40 +240,43 @@ const AddEditForm = (props) => {
                 </Card>
                 <Card>
                     <Row gutter={20}>
-                        <Row type="flex" align="middle">
+                        {/* <Row type="flex" align="middle">
                             <Text strong> {'New Details'}</Text>
                         </Row>
-                        <Divider className={styles.marT20} />
-
-                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                            <Form.Item label={translateContent('vehicleRelated.label.newcustomerId')}>
-                                <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newcustomerId'))} maxLength={50} />
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                            <Form.Item label={translateContent('vehicleRelated.label.customerName')}>
-                                <Input value={'Aryaman Kulshreshtha'} placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.customerName'))} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
+                        <Divider className={styles.marT20} /> */}
+                    {requesttype === '4' && (
+                               <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                               <Form.Item label={translateContent('vehicleRelated.label.newcustomerId')}>
+                                   <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newcustomerId'))} maxLength={50} />
+                               </Form.Item>
+                           </Col>
+                        )}
+                     
+               
+                         {requesttype === '5' && (
 
                         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.newregistrationNo')}>
                                 <Input placeholder={preparePlaceholderText(translateContent('vehicleRelated.placeholder.newregistrationNo'))} maxLength={50} />
                             </Form.Item>
                         </Col>
+                         )}
+                          {requesttype === '6' && (
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.newInsuranceExpiryDate')} name="newInsuranceExpiryDate">
                                 <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
                             </Form.Item>
                         </Col>
+                          )}
+                           {requesttype === '7' && (
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label={translateContent('vehicleRelated.label.newPUCExpiryDate')} name="newPUCExpiryDate">
                                 <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
                             </Form.Item>
                         </Col>
+                           )}
 
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.marB20}>
                             <Descriptions.Item label={''}>
                                 <Dragger className={styles.uploadDraggerStrip}>
                                     <Space direction="vertical">
@@ -251,7 +289,8 @@ const AddEditForm = (props) => {
                         </Col>
                     </Row>
                 </Card>
-
+                </>
+}
                 <Form.Item hidden name="id" initialValue="" />
             </Form>
         </>

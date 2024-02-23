@@ -24,7 +24,7 @@ export default function AdvanceFilter(props) {
     const { extraParams, handleButtonClick, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
     const { showChangeHistoryButton, showChangeHistoryList, downloadReport, handleDownloadReport, uploadBtn, handleOnClickUpload, tableData, addBtnVisible, handleReferesh, showRefreshBtn, showAddButton } = props;
 
-    const {typeData } = props;
+    const { typeData } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -40,12 +40,18 @@ export default function AdvanceFilter(props) {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.masterListSearchForm}>
                     {filter && (
-                        <Form form={searchForm} >
+                        <Form form={searchForm}>
                             <Form.Item name="Search">
-                                <div className={styles.verticallyCentered}>
-                                    {title}
+                                <div className={`${styles.verticallyCentered}${styles.fullWidth}`}>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={9} lg={9} xl={9}>
+                                            {title}
+                                        </Col>
+                                        <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                            <SearchBox {...serachBoxProps} />
+                                        </Col>
+                                    </Row>
                                     {/* <Search placeholder="Search" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} /> */}
-                                    <SearchBox {...serachBoxProps} />
                                 </div>
                             </Form.Item>
                         </Form>
@@ -63,9 +69,9 @@ export default function AdvanceFilter(props) {
                         >
                             Advance Filters
                         </Button>
-                    </Col>         
+                    </Col>
                 )}
-                <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
+                <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                     {showChangeHistoryButton && (
                         <Button icon={<FaHistory />} onClick={showChangeHistoryList} type="primary">
                             {translateContent('global.changeHistory.title')}

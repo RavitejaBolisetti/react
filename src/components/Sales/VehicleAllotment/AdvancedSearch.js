@@ -72,9 +72,6 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {/* <Form.Item initialValue={filterString?.model} label="Model Description" name="model">
-                        {customSelectBox({ data: productHierarchyData, placeholder: preparePlaceholderSelect('Model'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' } })}
-                    </Form.Item> */}
                     <ProductModelHierarchy {...treeSelectFieldProps} />
                 </Col>
             </Row>
@@ -93,12 +90,12 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={20}>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
-                <Button onClick={handleResetFilter} danger data-testid="reset">
-                    {translateContent('global.buttons.reset')}
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
+                    <Button onClick={handleResetFilter} danger data-testid="reset">
+                        {translateContent('global.buttons.reset')}
                     </Button>
                     <Button htmlType="submit" type="primary" data-testid="apply" className={styles.marL10}>
-                    {translateContent('global.buttons.apply')}
+                        {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>
             </Row>

@@ -6,7 +6,7 @@
 export const QUERY_BUTTONS = {
     PENDING: {
         id: 1,
-        title: 'Pending ',
+        title: 'Pending for Approval',
         key: 'PND',
     },
     // APPROVED: {
@@ -14,10 +14,10 @@ export const QUERY_BUTTONS = {
     //     title: 'Approved',
     //     key: 'APV',
     // },
-    REJECTED: {
-        id: 3,
-        title: 'Rejected',
-        key: "RJT",
-    },
+    // REJECTED: {
+    //     id: 3,
+    //     title: 'Rejected',
+    //     key: "RJT",
+    // },
 };
 
