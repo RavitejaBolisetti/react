@@ -50,16 +50,11 @@ const ChangeModelVariantMasterBase = (props) => {
     } = props;
 
     const [formData, setFormData] = useState();
+
     useEffect(() => {
         if (vehicleDetailData) {
             setFormData({
                 ...vehicleDetailData,
-                // sapStatusResponseCode: 'CR',
-                // revisedModel: 'X700MM89615721919',
-                // revisedOemModelCode: 'AW62BCZF7T801A00RA',
-                // revisedModelDescription: 'XUV700 AX7 L PET AT 7 SEATER RED',
-                // revisedSoNumber: '0100031188',
-                // sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering',
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
