@@ -21,7 +21,7 @@ const SoFormMasterMain = (props) => {
     const { descriptiondata, setDescriptionData } = props;
     const disabledProps = { disabled: isReadOnly };
     const isSaveLoadingDisable = { disabled: isLoadingOnSave };
-
+    console.log(' status', status);
     useEffect(() => {
         return () => {
             setDescriptionData([]);

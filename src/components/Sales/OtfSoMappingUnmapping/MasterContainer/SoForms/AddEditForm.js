@@ -16,7 +16,7 @@ const { Search } = Input;
 const AddEditFormMain = ({ isreserveQuota, formType, disabledProps, handleSearchChange, isLoading, filterString, handleResetData, status }) => {
     if (isLoading && formType === filterString?.formType) return <ListSkeleton count={12} height={30} />;
     const hideFields = status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key && formType === 'FORM_1';
-
+    const soStatusValue = FORM_TYPE_CONSTANSTS?.FORM_1?.id === formType ? status?.CRD_1 : status?.CRD_2;
     return (
         <>
             {hideFields && (
@@ -54,7 +54,7 @@ const AddEditFormMain = ({ isreserveQuota, formType, disabledProps, handleSearch
                 <Input {...disabledProps} />
             </Form.Item>
             <Form.Item hidden initialValue={formType} name={[formType, 'formType']} />
-            <Form.Item hidden initialValue={formType} name={[formType, 'soStatusCode']} />
+            <Form.Item hidden initialValue={soStatusValue} name={[formType, 'soStatusCode']} />
             {!hideFields && (
                 <>
                     <Form.Item label={translateContent('bookingSoMappUnmapp.label.customerId')} name={[formType, 'customerId']}>
@@ -83,7 +83,7 @@ const AddEditFormMain = ({ isreserveQuota, formType, disabledProps, handleSearch
             </Form.Item>
             <Form.Item name={[formType, 'orderStatus']} hidden />
             <Form.Item name={[formType, 'revisedModel']} hidden />
-            {isreserveQuota && FORM_TYPE_CONSTANSTS?.FORM_2?.id === formType && <Form.Item name={[formType, 'reserveQuotaOtfNumber']} hidden />}
+            {isreserveQuota && FORM_TYPE_CONSTANSTS?.FORM_2?.id === formType && <Form.Item initialValue={''} name={[formType, 'reserveQuotaOtfNumber']} hidden />}
         </>
     );
 };

@@ -13,7 +13,7 @@ import { Form } from 'antd';
 import { otfSoMappingDataActions, OtfSoMappingDealerParentActions, OtfSoMappingDealerLocationDataActions } from 'store/actions/data/otfSoMappingUnmapping';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { BASE_URL_OTF_SO_MAPPING_SWAP as CustomUrl, BASE_URL_SO_MAPPING_SEARCH as CustomSearchUrl, BASE_URL_OTF_SO_MAPPING_MAIN as reserveQuotaUrl } from 'constants/routingApi';
+import { BASE_URL_OTF_SO_MAPPING_SWAP as customURL, BASE_URL_SO_MAPPING_SEARCH as CustomSearchUrl } from 'constants/routingApi';
 
 import { MasterContainer } from './MasterContainer';
 import { setAllkeysToNull } from './Constants';
@@ -181,9 +181,7 @@ export const OtfListMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const handleSortyByColumnName = (key) => {
-        if (!key) {
-            return null;
-        } else {
+        if (key) {
             switch (key) {
                 case SORTING_COULUMN_NAME?.PO_NUMBER?.key:
                     return SORTING_COULUMN_NAME?.PO_NUMBER?.value;
@@ -193,6 +191,7 @@ export const OtfListMasterBase = (props) => {
                     return key;
             }
         }
+        return undefined;
     };
     const extraParams = useMemo(() => {
         return [
@@ -354,14 +353,16 @@ export const OtfListMasterBase = (props) => {
         if (key) {
             ClearAllData();
             setselectedKey(key);
-            setstatus(
-                Object?.values(OTF_SO_MAPPING_UNMAPPING_CONSTANTS)?.reduce((prev, curr) => {
+            setstatus(() => {
+                const constantValues = Object?.values(OTF_SO_MAPPING_UNMAPPING_CONSTANTS);
+                const currentKeyObj = constantValues?.reduce((prev, curr) => {
                     if (curr?.key === key) {
                         prev = curr;
                     }
                     return prev;
-                }, {})
-            );
+                }, {});
+                return currentKeyObj;
+            });
         } else {
             setselectedKey();
             ClearAllData();
@@ -442,6 +443,8 @@ export const OtfListMasterBase = (props) => {
         let requestedFinalPayload = {};
         const formOneData = values?.[FORM_TYPE_CONSTANSTS?.FORM_1?.id];
         const formTwoData = values?.[FORM_TYPE_CONSTANSTS?.FORM_2?.id];
+        const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
+        const commonPayloadData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode };
 
         const onSuccess = (res) => {
             const { responseMessage } = res;
@@ -451,16 +454,22 @@ export const OtfListMasterBase = (props) => {
 
         if (isreserveQuota) {
             requestedFinalPayload = {
-                otfNumber: formTwoData?.reserveQuotaOtfNumber,
-                soNumber: formOneData?.soNumber,
-                action: 'MAP',
-                cancellationRemarks: '',
-                mapStatusCode: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key,
-                reserveQuota: 'Y',
+                ...commonPayloadData,
+                soDetails: [
+                    {
+                        soNumber: formOneData?.soNumber,
+                        soStatusCode: formOneData?.soStatusCode,
+                    },
+                    {
+                        otfNumber: formTwoData?.reserveQuotaOtfNumber,
+                        soNumber: formTwoData?.soNumber,
+                        soStatusCode: formTwoData?.soStatusCode,
+                    },
+                ],
+                sapResponseSuccess: false,
             };
         } else {
             if (checkIfCanProceedWithSwapping({ formOneData, formTwoData })) {
-                const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
                 const form_1_Values = {
                     otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
                     soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soNumber,
@@ -477,14 +486,13 @@ export const OtfListMasterBase = (props) => {
                     return false;
                 }
 
-                requestedFinalPayload = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
+                requestedFinalPayload = { ...commonPayloadData, soDetails: [form_1_Values, form_2_Values] };
             } else {
                 return false;
             }
         }
-        const customURL = isreserveQuota ? reserveQuotaUrl : CustomUrl;
 
-        const requestData = {
+        saveData({
             customURL,
             data: requestedFinalPayload,
             method: 'put',
@@ -492,9 +500,7 @@ export const OtfListMasterBase = (props) => {
             userId,
             onError: onErrorAction,
             onSuccess,
-        };
-
-        saveData(requestData);
+        });
     };
 
     const handleDealerParent = (parentCode) => {
