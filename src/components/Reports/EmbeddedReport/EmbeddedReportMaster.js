@@ -106,7 +106,6 @@ export const EmbeddedReportMasterMain = (props) => {
             setReportConfig({
                 type: 'report',
                 id: data?.embedReports?.[0]?.reportId.substr(46, 92),
-                //embedUrl: data?.embedReports?.[0]?.embedUrl,
                 embedUrl: embedUrl,
                 accessToken: data.embedToken,
                 tokenType: models.TokenType.Embed,

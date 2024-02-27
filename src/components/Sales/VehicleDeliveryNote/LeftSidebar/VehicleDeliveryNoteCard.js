@@ -73,7 +73,7 @@ const VehicleDeliveryNoteCard = (props) => {
                 <div className={styles.detailCardText}>
                     {translateContent('vehicleDeliveryNote.label.status')}
                     <div className={styles.tooltipAlign}>
-                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}
+                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus), isLoading)}
                         {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === DELIVERY_NOTE_STATUS?.CANCELLED?.key && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
                     </div>
                 </div>
