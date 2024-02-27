@@ -151,6 +151,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (vehicleDetailData) {
             setFormData({
                 ...vehicleDetailData,
+                tcsAmount: vehicleDetailData?.taxDetails?.find((i) => i?.taxType === 'TCS')?.taxAmount || 0,
             });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
             vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
