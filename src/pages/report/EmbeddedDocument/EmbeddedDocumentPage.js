@@ -11,7 +11,7 @@ import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 const EmbeddedDocumentBase = (props) => {
     const params = useParams();
-    const reportDetail = Object.values(EMBEDDED_REPORTS)?.find((i) => i.slug === params?.slug);
+    const reportDetail = Object.values(EMBEDDED_REPORTS)?.find((i) => i?.slug === params?.slug);
 
     return <>{reportDetail && <EmbeddedReportMaster reportDetail={reportDetail} />}</>;
 };

@@ -255,6 +255,7 @@ export const ListPartyMasterBase = (props) => {
         onSaveShowLoading,
         isLoading: isDetailLoading,
         listDetailShowLoading,
+        showSpinner: formActionType?.editMode,
     };
 
     const tableProps = {

@@ -30,7 +30,7 @@ const AddEditFormMain = (props) => {
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, showGlobalNotification, onSaveShowLoading } = props;
+    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, showGlobalNotification, onSaveShowLoading, isLoading } = props;
 
     const [options, setOptions] = useState(false);
 
@@ -69,7 +69,9 @@ const AddEditFormMain = (props) => {
             form.resetFields();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [detailData]);
+    }, [detailData, editMode, viewMode]);
+
+    console.log('data', formData);
 
     useEffect(() => {
         setOptions();
@@ -145,6 +147,7 @@ const AddEditFormMain = (props) => {
         isVisible: viewMode,
         formData,
         styles,
+        isLoading,
     };
     const buttonProps = {
         formData,
