@@ -6,10 +6,10 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import  DemandForecastingMaster from 'components/Sales/DemandForecasting';
+import  DealerDemandForecastingMaster from 'components/Sales/DealerDemandForecasting';
 import { translateContent } from 'utils/translateContent';
 
-const DemandForecastingMasterBase = (props) => {
+const DealerDemandForecastingMasterBase = (props) => {
     const pageTitle = translateContent('demandForecasting.heading.mainTitle');
     const pageHeaderData = {
         pageTitle, 
@@ -19,10 +19,10 @@ const DemandForecastingMasterBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <DemandForecastingMaster />
+            <DealerDemandForecastingMaster />
         </>
     );
 };
 
-export const DemandForecastingMasterPage = withLayoutMaster(DemandForecastingMasterBase);
+export const DealerDemandForecastingMasterPage = withLayoutMaster(DealerDemandForecastingMasterBase);
 

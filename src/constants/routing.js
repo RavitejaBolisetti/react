@@ -176,7 +176,7 @@ export const ROUTING_EXCHANGE_CLAIM_GENERATION = ROUTING_SALES.concat('exchange-
 export const ROUTING_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('loyalty-claim-generation');
 
 //DemandForecasting
-export const ROUTING_DEMAND_FORECASTING = ROUTING_SALES.concat('demand-forecasting');
+export const ROUTING_DEALER_DEMAND_FORECASTING = ROUTING_SALES.concat('dealer-demand-forecasting');
 
 
 // Incentive scheme and claim

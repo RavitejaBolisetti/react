@@ -124,6 +124,8 @@ const AddEditForm = (props) => {
     const customOpenModal = ({ buttonAction }) => {
         handleOpenModal({ buttonAction, groupAdd: false, varinatAdd: true });
     };
+    
+
     const tableProps = {
         srl: false,
         pagination: false,
@@ -131,47 +133,132 @@ const AddEditForm = (props) => {
         tableColumn: tableColumnModelDetails({ handleButtonClick: customOpenModal, canView: false }),
         bordered: true,
         //scroll: { x: '100%', y: 'calc(100vh - 220px)' },
-
         tableData: [
               {
-    key: 1,
-    modelVariant:'Product Group',
-    children: [
+        key: 1,
+        product:'Mahindra Xylo',
+        currentMonth: '4',
+        currentMonth1: '8',
+        currentMonth2:'12',
+        currentMonth3:'20',
+        children: [
       {
         key: 11,
-        name: 'John Brown',
-        age: 42,
-        address: 'New York No. 2 Lake Park',
-        modelVariant:'121',
-        currentMonth:'March',
+        product: 'Mahindra Xylo H8 ABS BS IV',     
+        currentMonth: '1',
+        currentMonth1: '2',
+        currentMonth2:'3',
+        currentMonth3:'5',
       },
       {
         key: 12,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        modelVariant:'121',
-        currentMonth:'March',
+        product: 'Mahindra Xylo D2 BS-III',
+        currentMonth: '1',
+        currentMonth1: '2',
+        currentMonth2:'3',
+        currentMonth3:'5',
       },
       {
         key: 13,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        modelVariant:'121',
-        currentMonth:'March',
+        product: 'Mahindra Xylo D2 BS-IV',
+        currentMonth: '1',
+        currentMonth1: '2',
+        currentMonth2:'3',
+        currentMonth3:'5',
       }, {
         key: 14,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        modelVariant:'121',
-        currentMonth:'March',
-      },
+        product: 'Mahindra Xylo H4 ABS Airbag BS IV',
+        currentMonth: '1',
+        currentMonth1: '2',
+        currentMonth2:'3',
+        currentMonth3:'5',
+      },         
     ],
-  },
-        ],
-    };
+            }, 
+            {
+                key: 2,
+                product:'Mahindra Enforcer',
+                //currentMonth: '1',
+                //currentMonth1: '2',
+               // currentMonth2:'3',
+               // currentMonth3:'5',
+                children: [
+              {
+                key: 21,
+                product: 'Mahindra Enforcer Single Cab 4×2 Standard',     
+                currentMonth: '1',
+                currentMonth1: '2',
+                currentMonth2:'3',
+                currentMonth3:'5',
+              },
+              {
+                key: 22,
+                product: 'Mahindra Enforcer Single Cab 4×2 Floodbuster',
+                currentMonth: '1',
+                currentMonth1: '2',
+                currentMonth2:'3',
+                currentMonth3:'5',
+              },
+              {
+                key: 23,
+                product: 'Mahindra Enforcer Single Cab 4×2 Elite',
+                currentMonth: '1',
+                currentMonth1: '2',
+                currentMonth2:'3',
+                currentMonth3:'5',
+              }, {
+                key: 24,
+                product: 'Mahindra Enforcer Double Cab 4×4 Floodbuster',
+                currentMonth: '1',
+                currentMonth1: '2',
+                currentMonth2:'3',
+                currentMonth3:'5',
+              },         
+            ],
+                    }, 
+                    {
+                        key: 3,
+                        product:'Mahindra Scorpio',
+                        //currentMonth: '1',
+                        //currentMonth1: '2',
+                       // currentMonth2:'3',
+                       // currentMonth3:'5',
+                        children: [
+                      {
+                        key: 31,
+                        product: 'Mahindra Scorpio GLX',     
+                        currentMonth: '1',
+                        currentMonth1: '2',
+                        currentMonth2:'3',
+                        currentMonth3:'5',
+                      },
+                      {
+                        key: 32,
+                        product: 'Mahindra Scorpio Floodbuster',
+                        currentMonth: '1',
+                        currentMonth1: '2',
+                        currentMonth2:'3',
+                        currentMonth3:'5',
+                      },
+                      {
+                        key: 33,
+                        product: 'Scorpio N Z2 Diesel',
+                        currentMonth: '1',
+                        currentMonth1: '2',
+                        currentMonth2:'3',
+                        currentMonth3:'5',
+                      }, {
+                        key: 14,
+                        product: 'Scorpio N Z4',
+                        currentMonth: '1',
+                        currentMonth1: '2',
+                        currentMonth2:'3',
+                        currentMonth3:'5',
+                      },         
+                    ],
+                            }, 
+],
+};
 
     return (
         <>
@@ -206,7 +293,7 @@ const AddEditForm = (props) => {
                     </Row>
                 </Card> */}
 
-                {/* <Card> */}
+                <Card>
                     <Row gutter={24}>
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Button className={styles.marB5} icon={<PlusOutlined />} type="primary" onClick={() => handleOpenModal({ buttonAction: FROM_ACTION_TYPE?.ADD, groupAdd: true, varinatAdd: false })}>
@@ -222,31 +309,12 @@ const AddEditForm = (props) => {
                                     <Panel
                                         header={
                                             <>
-                                                <Row gutter={24} className={styles.normalfont}>
+                                                <Row gutter={24} >
                                                     <Col sm={8} md={8} lg={8} xl={8}>
-                                                        <p> Modal Group</p>
-                                                        <p> Mahindra Verito Vibe</p>
+                                                        <p> Total Product Forecasting : 88</p>
+                                                       
                                                     </Col>
-                                                    <Col sm={2} md={2} lg={2} xl={2}>
-                                                        <p>April</p>
-                                                        <p>12</p>
-                                                    </Col>
-                                                    <Col sm={2} md={2} lg={2} xl={2}>
-                                                        <p>May</p>
-                                                        <p>4</p>
-                                                    </Col>
-                                                    <Col sm={2} md={2} lg={2} xl={2}>
-                                                        <p>June</p>
-                                                        <p>4</p>
-                                                    </Col>
-                                                    <Col sm={4} md={4} lg={4} xl={4}>
-                                                        <p>July</p>
-                                                        <p>8</p>
-                                                    </Col>
-                                                    <Col sm={2} md={2} lg={2} xl={2}>
-                                                        <p>Total</p>
-                                                        <p>28</p>
-                                                    </Col>
+                                                    
                                                 </Row>
                                             </>
                                         }
@@ -262,8 +330,9 @@ const AddEditForm = (props) => {
                                                 {/* <p className={`${styles.marB5} ${styles.floatLeft}`}>
                                                     Total Variant : 14
                                                 </p> */}
-                                                <DataTable {...tableProps} scroll={{ y: 180 }} />
+                                                <DataTable {...tableProps}  />
                                             </Col>
+                                            {/* scroll={{ y: 180 }} */}
                                         </Row>
                                     </Panel>
                                 </Collapse>
@@ -271,7 +340,7 @@ const AddEditForm = (props) => {
                         </Row>
                     </div>
 
-                    <div className={styles.viewDrawerContainer}>
+                    {/* <div className={styles.viewDrawerContainer}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => handleCollapse(1)} expandIconPosition="end" className={styles.collapseContainer}>
@@ -279,9 +348,9 @@ const AddEditForm = (props) => {
                                         header={
                                             <>
                                                 <Row gutter={24} className={styles.normalfont}>
-                                                    {/* <Col sm={4} md={4} lg={4} xl={4}> */}
+                                                   
                                                     <Col sm={8} md={8} lg={8} xl={8}>
-                                                        {/* Modal Group : Mahindra Verito Vibe */}
+                                                      
                                                         <p> Modal Group</p>
                                                         <p> Mahindra Verito Vibe</p>
                                                     </Col>
@@ -322,9 +391,9 @@ const AddEditForm = (props) => {
                                 </Collapse>
                             </Col>
                         </Row>
-                    </div>
+                    </div> */}
 
-                    <div className={styles.viewDrawerContainer}>
+                    {/* <div className={styles.viewDrawerContainer}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => handleCollapse(1)} expandIconPosition="end" className={styles.collapseContainer}>
@@ -332,9 +401,9 @@ const AddEditForm = (props) => {
                                         header={
                                             <>
                                                 <Row gutter={24} className={styles.normalfont}>
-                                                    {/* <Col sm={4} md={4} lg={4} xl={4}> */}
+                                                
                                                     <Col sm={8} md={8} lg={8} xl={8}>
-                                                        {/* Modal Group : Mahindra Verito Vibe */}
+                                                      
                                                         <p> Modal Group</p>
                                                         <p> Mahindra Verito Vibe</p>
                                                     </Col>
@@ -373,8 +442,8 @@ const AddEditForm = (props) => {
                                 </Collapse>
                             </Col>
                         </Row>
-                    </div>
-                {/* </Card> */}
+                    </div> */}
+                </Card>
 
                 <Form.Item hidden name="id" initialValue="" />
             </Form>

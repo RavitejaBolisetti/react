@@ -4900,7 +4900,7 @@
 
     "demandForecasting": {
         "heading": {
-                "mainTitle": "Demand Forecasting",
+                "mainTitle": "Dealer Demand Forecasting",
             "modelDescription": "Model Group",
             "DealerName": "Dealer Name",
             "zone": "Zone",
@@ -4916,6 +4916,7 @@
             "dealerCode": "Dealer Code",
             "dealerName": "Dealer Name",
             "location": "Location",
+            "product": "Product",
             "modelGroup": "Model Group",
             "modelVariant": "Model Variant",
             "eDCMModel": "eDCM Model",

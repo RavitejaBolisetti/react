@@ -8,43 +8,44 @@ import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
 
-    
+
 
 export const tableColumnModelDetails = ({ handleButtonClick, canEdit = true, canDelete = false, sorter = false, canView = false }) => {
     const tableColumn = [
         
         tblPrepareColumns({
-            title:  translateContent('demandForecasting.label.modelVariant'),
-            dataIndex: 'modelVariant',
-           width: '16%',
+            title:  translateContent('demandForecasting.label.product'),
+            dataIndex: 'product',
+            width: '34%',
             sorter,
         }),
-
+  
         tblPrepareColumns({
             title: "April",
             dataIndex: 'currentMonth',
-          width: '4%',
+            name:'name',
+          width: '6%',
             sorter,
         }),
 
         tblPrepareColumns({
             title: "May ",
-            dataIndex: 'name',
-           width: '5%',
+            dataIndex: 'currentMonth1',
+           width: '6%',
             sorter,
         }),
 
         tblPrepareColumns({
             title: "June",
-            dataIndex: 'age',
-           width: '5%',
+            dataIndex: 'currentMonth2',
+           width: '6%',
             sorter,
         }),
 
         tblPrepareColumns({
             title: "July",
-            dataIndex: 'address',
-           width: '16%',
+            dataIndex: 'currentMonth3',
+           width: '6%',
             sorter,
         }),
 
