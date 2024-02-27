@@ -71,8 +71,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData, editMode, viewMode]);
 
-    console.log('data', formData);
-
     useEffect(() => {
         setOptions();
         // eslint-disable-next-line react-hooks/exhaustive-deps

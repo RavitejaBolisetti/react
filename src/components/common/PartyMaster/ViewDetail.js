@@ -15,31 +15,31 @@ const ViewDetailBase = ({ formData, styles, isLoading }) => {
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
-    const CheckSetWrapper = (value) => checkAndSetDefaultValue(value, isLoading);
+    const checkAndSetDefaultValueWithLoader = (value) => checkAndSetDefaultValue(value, isLoading);
 
     return (
         <>
             <div className={`${styles?.viewContainer} ${styles?.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label={translateContent('partyMaster.label.partyCategory')}>{CheckSetWrapper(formData?.partyCategory)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.partyCode')}>{CheckSetWrapper(formData?.partyCode)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.partyName')}>{CheckSetWrapper(formData?.partyName)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.contactPersonName')}>{CheckSetWrapper(formData?.contactPersonName)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.designation')}>{CheckSetWrapper(formData?.designation)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.address')}>{CheckSetWrapper(formData?.address)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.pinCode')}>{CheckSetWrapper(formData?.pinCode)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.city')}>{CheckSetWrapper(formData?.city)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.tehsil')}>{CheckSetWrapper(formData?.tehsil)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.district')}>{CheckSetWrapper(formData?.district)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.state')}>{CheckSetWrapper(formData?.state)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.mobileNumber')}>{CheckSetWrapper(formData?.mobileNumber)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.alternateMobileNumber')}>{CheckSetWrapper(formData?.alternateMobileNumber)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.gstinNumber')}>{CheckSetWrapper(formData?.gstInNumber)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.pan')}>{CheckSetWrapper(formData?.panNumber)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.partsDiscount') + '(%)'}>{CheckSetWrapper(formData?.partsDiscount)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.creditDays')}>{CheckSetWrapper(formData?.creditDays)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.creditLimit')}>{CheckSetWrapper(formData?.creditLimit)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('partyMaster.label.remarks')}>{CheckSetWrapper(formData?.remarks)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.partyCategory')}>{checkAndSetDefaultValueWithLoader(formData?.partyCategory)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.partyCode')}>{checkAndSetDefaultValueWithLoader(formData?.partyCode)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.partyName')}>{checkAndSetDefaultValueWithLoader(formData?.partyName)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.contactPersonName')}>{checkAndSetDefaultValueWithLoader(formData?.contactPersonName)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.designation')}>{checkAndSetDefaultValueWithLoader(formData?.designation)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.address')}>{checkAndSetDefaultValueWithLoader(formData?.address)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.pinCode')}>{checkAndSetDefaultValueWithLoader(formData?.pinCode)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.city')}>{checkAndSetDefaultValueWithLoader(formData?.city)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.tehsil')}>{checkAndSetDefaultValueWithLoader(formData?.tehsil)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.district')}>{checkAndSetDefaultValueWithLoader(formData?.district)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.state')}>{checkAndSetDefaultValueWithLoader(formData?.state)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.mobileNumber')}>{checkAndSetDefaultValueWithLoader(formData?.mobileNumber)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.alternateMobileNumber')}>{checkAndSetDefaultValueWithLoader(formData?.alternateMobileNumber)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.gstinNumber')}>{checkAndSetDefaultValueWithLoader(formData?.gstInNumber)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.pan')}>{checkAndSetDefaultValueWithLoader(formData?.panNumber)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.partsDiscount') + '(%)'}>{checkAndSetDefaultValueWithLoader(formData?.partsDiscount)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.creditDays')}>{checkAndSetDefaultValueWithLoader(formData?.creditDays)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.creditLimit')}>{checkAndSetDefaultValueWithLoader(formData?.creditLimit)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('partyMaster.label.remarks')}>{checkAndSetDefaultValueWithLoader(formData?.remarks)}</Descriptions.Item>
                 </Descriptions>
             </div>
         </>
