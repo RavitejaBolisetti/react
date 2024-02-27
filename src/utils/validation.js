@@ -92,7 +92,8 @@ export const validationNumber = (fieldName, lowercase = true) => ({
 });
 
 export const validateOnlyPositiveNumber = (fieldName, lowercase = true) => ({
-    pattern: /^[1-9]+[0-9]*$/,
+    // pattern: /^[0-9]+[0-9]*$/,
+    pattern: /^\d*$/,
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
