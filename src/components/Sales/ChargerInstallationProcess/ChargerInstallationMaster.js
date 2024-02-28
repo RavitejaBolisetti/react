@@ -546,7 +546,7 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const RequestStage = useMemo(() => {
         const requestDetailsLength = Array?.isArray(chargerInstallationMasterData?.chargerInstDetails?.requestDetails) && chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.length;
-        const status = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.response === CHARGER_STATUS.SUCCESS?.key;
+        const status = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.stageStatus?.toUpperCase() === CHARGER_STATUS?.SUCCESS?.key;
         const statusType = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.stageType;
         if (statusType === REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key) {
             setButtonData((prev) => ({ ...prev, addRequestBtn: false }));

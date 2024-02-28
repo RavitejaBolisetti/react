@@ -569,4 +569,8 @@ export const PARAM_MASTER = {
         id: 'COLOR_MAP',
         title: 'charger insstallation color map',
     },
+    CHRGR_INST_DTL_STAT: {
+        id: 'CHRGR_INST_DTL_STAT',
+        title: 'Charger installation stage status',
+    },
 };
