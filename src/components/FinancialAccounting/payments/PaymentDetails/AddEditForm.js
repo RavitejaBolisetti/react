@@ -74,7 +74,7 @@ const AddEditFormMain = (props) => {
                                     <Select
                                         showSearch
                                         allowClear
-                                        placeholder="Select a person"
+                                        placeholder="select payment mode"
                                         optionFilterProp="children"
                                         onChange={handleChnage}
                                         options={[
