@@ -11,5 +11,6 @@ import CreditDebitNoteMasterPage from './CreditDebitNote';
 import { GSTIRNAuthenticationPage } from './GSTIRNAuthentication';
 import { GstIRNTransactionPage } from './GstIRNTransaction';
 import  VoucherPaymentPage from './payments';
+import  VoucherTallyExportPage from './VoucherTallyExport';
 
-export { TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage, AccountCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage, VoucherPaymentPage };
+export { TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage, AccountCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage, VoucherPaymentPage, VoucherTallyExportPage };

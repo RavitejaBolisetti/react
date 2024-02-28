@@ -47,7 +47,7 @@ import {
 
 import { VehicleRelatedPage } from 'pages/common/VehicleRelated';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage, VoucherPaymentPage } from 'pages/FinancialAccounting';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage, VoucherPaymentPage, VoucherTallyExportPage } from 'pages/FinancialAccounting';
 import {
     OTFMasterPage,
     VehicleDetailMasterPage,
@@ -285,6 +285,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 {/* UI-Screens */}
                 <Route path={routing.ROUTING_FINANCE_PAYMENT} element={<VoucherPaymentPage />} exact />
+                <Route path={routing.ROUTING_VOUCHER_TALLY_EXPORT} element={<VoucherTallyExportPage />} exact />
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_SCHEME_REGISTRATION} element={<CorporateSchemeRegistrationMasterPage />} exact />

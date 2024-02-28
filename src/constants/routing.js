@@ -150,7 +150,7 @@ export const ROUTING_CENTRAL_FAME_SUBSIDY = ROUTING_SALES.concat('central-fame-s
 
 //Financial-accounting
 export const ROUTING_FINANCE_PAYMENT = ROUTING_FINANCIAL_ACCOUNTING.concat('voucher-payment');
-
+export const ROUTING_VOUCHER_TALLY_EXPORT = ROUTING_FINANCIAL_ACCOUNTING.concat('voucher-tally-export');
 
 //Corporate Scheme
 export const ROUTING_DEALER_CORPORATE_CLAIM = ROUTING_SALES.concat('dealer-corporate-claim');
