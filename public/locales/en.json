@@ -500,9 +500,9 @@
             "createNewPassword": "Create New Password"
         },
         "label": {
-            "oldPassword": "old password",
-            "newPassword": "new password",
-            "confirmPassword": "confirm password",
+            "oldPassword": "Old password",
+            "newPassword": "New password",
+            "confirmPassword": "Confirm password",
             "updatePassword": "Update Password"
         },
         "placeholder": {},

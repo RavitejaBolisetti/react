@@ -145,7 +145,7 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
                                     if (!value || getFieldValue('newPassword') === value) {
                                         return Promise.resolve();
                                     }
-                                    return Promise.reject(new Error(translateContent('global.validation.passwordNotMatch')));
+                                    return Promise.reject(new Error(translateContent('updatePassword.validation.NewPasswordAndConfirmPassworddoesnMatch')));
                                 },
                             }),
                         ]}
