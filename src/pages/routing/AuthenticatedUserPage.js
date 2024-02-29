@@ -47,7 +47,7 @@ import {
 
 import { VehicleRelatedPage } from 'pages/common/VehicleRelated';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage, VoucherPaymentPage } from 'pages/FinancialAccounting';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage, GstIRNTransactionPage, VoucherPaymentPage, VoucherTallyExportPage } from 'pages/FinancialAccounting';
 import {
     OTFMasterPage,
     VehicleDetailMasterPage,
@@ -101,7 +101,7 @@ import {
     GSTClaimPage,
 } from 'pages/Sales';
 
-import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage, PartMasterPage, TargetTypesPage, BranchwiseStockViewMasterPage, BinToBinTransferPage, StockTransferIndentSpareMasterPage } from 'pages/Spares';
+import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage, KitMasterPage, MaterialPricingGroupPage, MovementClassMasterPage, PartCategoryMasterPage, SpareProductDivisionMasterPage, StoreMasterPage, VendorBrandMasterPage, InventoryClassificationPage, PartMasterPage, TargetTypesPage, BranchwiseStockViewMasterPage, BinToBinTransferPage, StockTransferIndentSpareMasterPage, PurchaseOrderTypeMasterPage } from 'pages/Spares';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
 import { PageNotFound } from 'components/PageNotFound';
@@ -285,6 +285,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
                 {/* UI-Screens */}
                 <Route path={routing.ROUTING_FINANCE_PAYMENT} element={<VoucherPaymentPage />} exact />
+                <Route path={routing.ROUTING_VOUCHER_TALLY_EXPORT} element={<VoucherTallyExportPage />} exact />
                 <Route path={routing.ROUTING_DEALER_CORPORATE_CLAIM} element={<DealerCorporateClaimMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_MASTER} element={<CorporateMasterPage />} exact />
                 <Route path={routing.ROUTING_CORPORATE_SCHEME_REGISTRATION} element={<CorporateSchemeRegistrationMasterPage />} exact />
@@ -347,6 +348,7 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_BRANCH_WISE_STOCK} element={<BranchwiseStockViewMasterPage />} exact />
                 <Route path={routing.ROUTING_TO_BIN_TRANSFER} element={<BinToBinTransferPage />} exact />
                 <Route path={routing.ROUTING_STOCK_TRANSFER_INDENT} element={<StockTransferIndentSpareMasterPage />} exact />
+                <Route path={routing.ROUTING_PURCHASE_ORDER_RATE} element={<PurchaseOrderTypeMasterPage />} exact /> 
                 {/* Vehicle Related */}
                 <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
 
