@@ -2171,6 +2171,11 @@
     }
 
     /*--------------RC Virtual End--------------*/
+    .ant-table-wrapper {
+        .ant-table-summary{
+            background: #F2F2F2;
+        }
+    }
 }
 
 // :global .ant-descriptions .ant-descriptions-header {

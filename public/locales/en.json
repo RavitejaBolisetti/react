@@ -4900,7 +4900,7 @@
 
     "demandForecasting": {
         "heading": {
-                "mainTitle": "Dealer Demand Forecasting",
+            "mainTitle": "Demand Forecasting",
             "modelDescription": "Model Group",
             "DealerName": "Dealer Name",
             "zone": "Zone",

@@ -57,13 +57,18 @@ export default function AppliedAdvanceFilter(props) {
                             </Form.Item>
                         </Form>
                     </Col>
-                    {showAddButton && (
+                    {/* {showAddButton && (
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 {translateContent('global.buttons.add')}
                             </Button>
                         </Col>
-                    )}
+                    )} */}
+
+                    {showAddButton && (
+                   <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>      
+                    <Button type="primary">Download Data</Button>
+                    </Col>)}
                 </Row>
 
                 {advanceFilter && filterString?.advanceFilter && extraParams?.find((i) => i.value && i.filter) && (

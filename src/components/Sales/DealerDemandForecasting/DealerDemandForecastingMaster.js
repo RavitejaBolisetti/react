@@ -13,10 +13,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import styles from 'assets/sass/app.module.scss';
-import { tableColumn } from './tableColumn';
-
-import { showGlobalNotification } from 'store/actions/notification';
-import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+// import { tableColumn } from './tableColumn'; { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
@@ -34,11 +31,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Demand Forecasting';
-
     return {
         userId,
-        moduleTitle,
         typeData: typeData['CHK_STATS'],
         typedataMaster: typeData,
         isProductHierarchyDataLoaded,
@@ -54,12 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
             viewListShowLoading: documentViewDataActions.listShowLoading,
             fetchProductData: productHierarchyDataActions.fetchList,
             ProductLovLoading: productHierarchyDataActions.listShowLoading,
-            saveData: supportingDocumentDataActions.saveData,
-            uploadDocumentFile: supportingDocumentDataActions.uploadFile,
-            downloadFile: supportingDocumentDataActions.downloadFile,
-            listShowLoading: supportingDocumentDataActions.listShowLoading,
-            resetData: supportingDocumentDataActions.resetData,
-            showGlobalNotification,
+           
         },
         dispatch
     ),
@@ -67,10 +56,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerDemandForecastingMasterBase = (props) => {
     // const { data, totalRecords, moduleTitle } = props;
-    const { data, totalRecords, moduleTitle, selectedCustomer, saveData, listShowLoading, DrawerFormButton } = props;
-    const { isModelDataLoading, vehicleModelData } = props;
+    const { data, totalRecords, selectedCustomer, saveData, listShowLoading, DrawerFormButton } = props; 
 
-    const { VehicleLovCodeData, isProfileDataLoading, isProductHierarchyLoading } = props;
     const { fetchProductData, productHierarchyData, ProductLovLoading, userId } = props;
     const [addressForm] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -321,18 +308,18 @@ export const DealerDemandForecastingMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const tableProps = {
-        dynamicPagination,
-        totalRecords,
-        page,
-        setPage,
-        tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        //tableData: tabledataOth,
-        showAddButton: false,
-        handleAdd: handleButtonClick,
-        noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
-        isLoading: showDataLoading,
-    };
+    // const tableProps = {
+    //     dynamicPagination,
+    //     totalRecords,
+    //     page,
+    //     setPage,
+    //   //  tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
+    //     //tableData: tabledataOth,
+    //     showAddButton: false,
+    //     handleAdd: handleButtonClick,
+    //     noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+    //     isLoading: showDataLoading,
+    // };
     const removeFilter = (key) => {
         if (key === 'fromDate') {
             const { fromDate, toDate, ...rest } = filterString;

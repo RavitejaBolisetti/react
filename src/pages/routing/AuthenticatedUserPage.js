@@ -126,7 +126,7 @@ import OverRiderClaimPage from 'pages/Sales/OverRiderClaim';
 import { IncentiveSchemeMasterPage } from 'pages/Sales/IncentiveSchemeMaster/IncentiveSchemeMasterPage';
 import IncentiveSchemePage from 'pages/Sales/IncentiveScheme';
 import DealerDemandForecastingMasterPage from 'pages/Sales/DealerDemandForecasting';
-
+import DemandForecastingMasterPage from 'pages/Sales/DemandForecasting';
 
 const mapStateToProps = (state) => {
     const {
@@ -341,6 +341,9 @@ const AuthenticatedUserPageMain = (props) => {
                  <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
                     {/* DealerDemandForecasting */} 
                  <Route path={routing.ROUTING_DEALER_DEMAND_FORECASTING} element={<DealerDemandForecastingMasterPage/>} exact />
+
+                 <Route path={routing.ROUTING_DEMAND_FORECASTING} element={<DemandForecastingMasterPage/>} exact />
+
                 <Route path={routing.ROUTING_BRANCH_WISE_STOCK} element={<BranchwiseStockViewMasterPage />} exact />
                 <Route path={routing.ROUTING_TO_BIN_TRANSFER} element={<BinToBinTransferPage />} exact />
                 <Route path={routing.ROUTING_STOCK_TRANSFER_INDENT} element={<StockTransferIndentSpareMasterPage />} exact />

@@ -6,11 +6,11 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import  DealerDemandForecastingMaster from 'components/Sales/DealerDemandForecasting';
+import  DemandForecastingMaster from 'components/Sales/DemandForecasting';
 import { translateContent } from 'utils/translateContent';
 
-const DealerDemandForecastingMasterBase = (props) => {
-    const pageTitle = translateContent('demandForecasting.heading.moduleTitle');
+const DemandForecastingMasterBase = (props) => {
+    const pageTitle = translateContent('demandForecasting.heading.mainTitle');
     const pageHeaderData = {
         pageTitle, 
         canMarkFavourite: true,
@@ -19,10 +19,10 @@ const DealerDemandForecastingMasterBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <DealerDemandForecastingMaster />
+            <DemandForecastingMaster />
         </>
     );
 };
 
-export const DealerDemandForecastingMasterPage = withLayoutMaster(DealerDemandForecastingMasterBase);
+export const DemandForecastingMasterPage = withLayoutMaster(DemandForecastingMasterBase);
 

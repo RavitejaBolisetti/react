@@ -3,40 +3,75 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Form, Row, Select, Input, DatePicker, Switch } from 'antd';
 import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { dateFormat, formatDate } from 'utils/formatDateTime';
+import { bindActionCreators } from 'redux';
 
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { customSelectBox } from 'utils/customSelectBox';
-const { Option } = Select;
+import { ProductModelHierarchy } from 'components/utils/ProductModelHierarchy';
+import { showGlobalNotification } from 'store/actions/notification';
+
 
 export const AdvancedSearchFrom = (props) => {
-    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
+    const { setAdvanceSearchVisible, productHierarchyData, resetAdvanceFilter } = props;
+    const {
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        advanceFilterForm: { resetFields },
+    } = props;
+
+    const [parentAppCode, setParentAppCode] = useState();
+
+    useEffect(() => {
+        resetFields();
+        if (!filterString?.model) setParentAppCode();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, resetAdvanceFilter]);
 
     const onFinish = (values) => {
-        setFilterString({ ...values, advanceFilter: true });
-        handleFilterChange(false);
+        setFilterString({
+            ...filterString,
+            ...values,
+            model: values?.model,
+            vehicleStatus: values?.vehicleStatus,
+            pdDone: values?.pdDone,
+            advanceFilter: true,
+            current: 1,
+        });
         setAdvanceSearchVisible(false);
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
+    const handleResetFilter = (e) => {
+        advanceFilterForm.resetFields();
     };
-    const status = [
-        { key: '1', value: 'Pending' },
-        { key: '2', value: 'Approved' },
-        { key: '3', value: 'Rejected' },
-       ];
+    const handleSelectTreeClick = (value) => {
+        setParentAppCode(value);
+        advanceFilterForm.setFieldValue('Product Hierarchy', value);
+    };
+
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        defaultParent: false,
+        selectedTreeSelectKey: parentAppCode,
+        handleSelectTreeClick,
+        defaultValue: null,
+        placeholder: preparePlaceholderSelect('Select Product'),
+        filterString,
+        name: 'Product Hierarchy',
+        labelName: 'Product Hierarchy',
+    };
+
+
 
     const modalProps = {
         reset: true,
@@ -48,7 +83,12 @@ export const AdvancedSearchFrom = (props) => {
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
-            <Row gutter={16}>
+            <Row gutter={24}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>           
+             <ProductModelHierarchy {...treeSelectFieldProps} />                
+                   
+           </Col>          
+          
             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="From Date" name="fromDate">
                         <Select optionFilterProp="children" options={[]} placeholder={preparePlaceholderSelect('fromDate')} fieldNames={{ label: 'fromDate', value: 'fromDate' }}  allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
@@ -96,3 +136,5 @@ export const AdvancedSearchFrom = (props) => {
 };
 
 export const AdvancedSearch = withModal(AdvancedSearchFrom, {});
+
+

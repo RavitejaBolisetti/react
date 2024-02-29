@@ -11,7 +11,7 @@ import { tblSerialNumberColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-export default function DataTable({ filterString, isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
+export default function DataTable({ filterString, isLoading,summary, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
     const [tablePagination, setPagination] = useState({
         pageSize: 10,
         current: 1,
@@ -73,7 +73,7 @@ export default function DataTable({ filterString, isLoading, rowSelection = unde
     return (
         <div className={styles.marB20}>
             <div className={styles.mainDataTable}>
-                <Table rowSelection={rowSelection} pagination={pagination ? { ...tablePagination } : false} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} rowKey={rowKey} scroll={scroll} />
+                <Table summary={summary} rowSelection={rowSelection} pagination={pagination ? { ...tablePagination } : false} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} rowKey={rowKey} scroll={scroll} />
             </div>
             {!isLoading && pagination && showPaginator && (
                 <Row gutter={20} className={styles.marT20}>

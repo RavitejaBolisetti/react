@@ -14,13 +14,13 @@ export const tableColumn = ({ handleButtonClick, page, pageSize }) => {
         tblPrepareColumns({
             title: translateContent('demandForecasting.heading.modelDescription'),
             dataIndex: 'modelDescription',
-            width: '22%',
+            width: '16%',
         }),
-        // tblPrepareColumns({
-        //     title: translateContent('demandForecasting.heading.DealerName'),
-        //     dataIndex: 'DealerName',
-        //     width: '15%',
-        // }),
+        tblPrepareColumns({
+            title: translateContent('demandForecasting.heading.DealerName'),
+            dataIndex: 'DealerName',
+            width: '16%',
+        }),
         // tblPrepareColumns({
         //     title: translateContent('demandForecasting.heading.zone'),
         //     dataIndex: 'zone',
@@ -29,12 +29,12 @@ export const tableColumn = ({ handleButtonClick, page, pageSize }) => {
        tblPrepareColumns({
             title: translateContent('demandForecasting.heading.areaOffice'),
             dataIndex: 'areaOffice',
-            width: '15%',
+            width: '14%',
         }),
         tblPrepareColumns({
             title: translateContent('demandForecasting.heading.location'),
             dataIndex: 'location',
-            width: '15%',
+            width: '14%',
         }),
         tblPrepareColumns({
             title: translateContent('demandForecasting.heading.currentYearRetail'),
@@ -47,7 +47,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize }) => {
             dataIndex: 'lastYearRetail',
             width: '20%',
         }),
-        tblActionColumn({ handleButtonClick, styles, canEdit: true })       
+        //tblActionColumn({ handleButtonClick, styles, canEdit: false })       
     ];
 
     return tableColumn;

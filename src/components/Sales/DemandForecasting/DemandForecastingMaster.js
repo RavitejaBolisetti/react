@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -17,19 +17,14 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { formatDateToCalenderDate, convertDateTime, dateFormatView } from 'utils/formatDateTime';
+
 import styles from 'assets/sass/app.module.scss';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
-import { drawerTitle } from 'utils/drawerTitle';
-import { DemandForecastingMasterContainer } from './DemandForecastingMasterContainer';
-//import { QUERY_BUTTONS } from './QueryButtons/QueryButtonConstants';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { translateContent } from 'utils/translateContent';
-import { DEMANDFORECASTING_SECTION } from 'constants/modules/demandForecasting/demandForecastingSections';
-//import { QueryButtons } from './QueryButtons';
 
 const mapStateToProps = (state) => {
     const {
@@ -39,7 +34,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [], data: productHierarchyData },
         },
     } = state;
-    const moduleTitle = 'Dealer Demand Forecasting';
+    const moduleTitle = 'Demand Forecasting';
 
     
     
@@ -146,14 +141,7 @@ export const DemandForecastingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        const defaultSection = DEMANDFORECASTING_SECTION.DEALERDEMAND_DETAILS.id;
-        setDefaultSection(defaultSection);
-        setSetionName(DEMANDFORECASTING_SECTION);
-        setSection(defaultSection);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+   
     useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
@@ -280,14 +268,22 @@ export const DemandForecastingMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
+    const tabledataOth = [
+        {   modelDescription: 'Scorpio N Z2 Diesel',
+            DealerName: 'NBS International Ltd',
+            areaOffice: 'Greater Noida',
+            location: 'NB01',           
+            currentYearRetail: '04/10/2024',            
+            lastYearRetail: '04/11/2023',
+        },
+    ];
     const tableProps = {
         dynamicPagination,
         totalRecords,
         page,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        //tableData: tabledataOth,
+        tableData: tabledataOth,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
@@ -341,7 +337,7 @@ export const DemandForecastingMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (drawerTitle(formActionType)).concat(' ' + moduleTitle),
+       // titleOverride: (drawerTitle(formActionType)).concat(' ' + moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -402,7 +398,7 @@ export const DemandForecastingMasterBase = (props) => {
         setrules,
         showAddButton: true,
         showRefreshBtn: false,
-        tableData: [{}],
+        productHierarchyData,
     };
 
     return (
@@ -414,8 +410,7 @@ export const DemandForecastingMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable {...tableProps} />
                 </Col>
-            </Row>
-            <DemandForecastingMasterContainer {...containerProps} />
+            </Row>          
         </>
     );
     

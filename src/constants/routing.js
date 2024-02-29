@@ -177,7 +177,7 @@ export const ROUTING_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('loyalty-cl
 
 //DemandForecasting
 export const ROUTING_DEALER_DEMAND_FORECASTING = ROUTING_SALES.concat('dealer-demand-forecasting');
-
+export const ROUTING_DEMAND_FORECASTING = ROUTING_SALES.concat('demand-forecasting');
 
 // Incentive scheme and claim
 export const ROUTING_MITRA_BROKER_REGISTRATION = ROUTING_SALES.concat('mitra-broker-registration');
