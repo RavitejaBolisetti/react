@@ -23,13 +23,13 @@ import styles from 'assets/sass/app.module.scss';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 import { translateContent } from 'utils/translateContent';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [], filter: filterString },
+                Referrals: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, data: referralData = [], filter: filterString },
             },
         },
         customer: {
@@ -42,6 +42,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         referralData,
         isLoading,
+        showSpinner: !props?.formActionType?.viewMode,
+        isLoadingOnSave,
         isDataCustomerLoaded,
         isCustomerLoading,
         customerDetail,
@@ -59,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCustomerList: otfReferralsDataActions.fetchData,
             setFilterString: otfReferralsDataActions.setFilter,
             listShowLoading: otfReferralsDataActions.listShowLoading,
+            saveFormShowLoading: otfReferralsDataActions.saveFormShowLoading,
             resetData: otfReferralsDataActions.reset,
             saveData: otfReferralsDataActions.saveData,
             showGlobalNotification,
@@ -68,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, referralDataPass, isLoading } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, saveFormShowLoading, userId, referralData, referralDataPass, isLoading } = props;
     const { form, selectedRecordId, selectedOrderId, section, handleFormValueChange, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
 
@@ -182,7 +185,7 @@ const ReferralsMasterBase = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction: onError, userId });
             };
 
@@ -193,7 +196,7 @@ const ReferralsMasterBase = (props) => {
             const requestData = {
                 data: data,
                 method: referralData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
+                setIsLoading: saveFormShowLoading,
                 userId,
                 onError,
                 onSuccess,

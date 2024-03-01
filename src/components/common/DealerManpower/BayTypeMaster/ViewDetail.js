@@ -17,8 +17,8 @@ const ViewDetailBase = ({ formData, styles }) => {
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Bay Type Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="Bay Type Name">{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label="Bay Type Code">{formData?.bayTypecode}</Descriptions.Item>
+                    <Descriptions.Item label="Bay Type Name">{formData?.bayTypename}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </div>

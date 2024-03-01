@@ -4,21 +4,20 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { Row, Col, Space, Avatar, Typography, Divider, Button, Popover } from 'antd';
+import { Row, Col, Space, Avatar, Typography } from 'antd';
 
 import { HiCheck } from 'react-icons/hi';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import { AMC_CONSTANTS } from '../utils/AMCConstants';
-import { AMC_REPORT_DOCUMENT_TYPE } from '../utils/amcReportDocumentType';
 import { translateContent } from 'utils/translateContent';
-import { documentType } from '../utils/amcDocumentName';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { Title, Text } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const { FormActionButton, handlePrintDownload, record, selectedOrder } = props;
+    const { FormActionButton, selectedOrder } = props;
+    // const { handlePrintDownload, record, handleDownloadFile } = props;
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -60,19 +59,23 @@ export const ThankYouMaster = (props) => {
                                 <CopytoClipboard type={'primary'} buttonText={'Copy'} text={selectedOrder?.message} />
                             </Space>
 
-                            <Divider />
-                            <Space size="middle" direction="vertical">
-                                <Text>{translateContent('amcRegistration.validation.doWantToDownload')} </Text>
-                                <Row justify="space-between">
-                                    {   documentType?.map((type) => (
-                                        <Popover content={'Coming Soon'} trigger={type?.id === 2 ? 'none' : 'hover'}>
-                                            <Button onClick={() => (type?.id === 2 ? handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value }) : null)} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
-                                                {type?.name}
-                                            </Button>
-                                        </Popover>
-                                    ))}
-                                </Row>
-                            </Space>
+                            {/* {selectedOrder?.data?.amcRegistration?.priceType !== AMC_CONSTANTS?.PAID?.key && (
+                                <>
+                                    <Divider />
+                                    <Space size="middle" direction="vertical">
+                                        <Text>{translateContent('amcRegistration.validation.doWantToDownload')} </Text>
+                                        <Row justify="space-between">
+                                            {documentType?.map((type) => (
+                                                <Popover>
+                                                    <Button onClick={() => (type?.id === 2 ? handlePrintDownload({ ...record, typeRecord: AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value }) : handleDownloadFile(selectedOrder?.data?.amcRegistration?.documentId))} danger style={{ margin: type?.id === 2 ? '0 12px' : '0' }}>
+                                                        {type?.name}
+                                                    </Button>
+                                                </Popover>
+                                            ))}
+                                        </Row>
+                                    </Space>
+                                </>
+                            )} */}
                         </div>
                     </Space>
                 </Col>

@@ -12,13 +12,13 @@ import styles from 'assets/sass/app.module.scss';
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: translateContent('vehicleAllotmentPriorityMaster.label.oldModel'),
+            title: translateContent('vehicleAllotmentPriorityMaster.label.oldModelExchange'),
             dataIndex: 'oldModelGroup',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: translateContent('vehicleAllotmentPriorityMaster.label.newModel'),
+            title: translateContent('vehicleAllotmentPriorityMaster.label.newModelBooking'),
             dataIndex: 'newModelGroup',
             width: '15%',
         }),

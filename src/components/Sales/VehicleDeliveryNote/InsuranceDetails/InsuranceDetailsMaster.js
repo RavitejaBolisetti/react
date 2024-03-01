@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading = false, NEXT_ACTION, handleButtonClick } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType, handleLocalFormChange } = props;
     const [formData, setFormData] = useState({});
 
     useEffect(() => {
@@ -73,6 +73,7 @@ const InsuranceDetailsMasterBase = (props) => {
         isLoading,
         formData,
         pageType,
+        deliveryNote: true,
     };
 
     const myProps = {
@@ -92,7 +93,7 @@ const InsuranceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onValuesChange={handleFormValueChange}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleLocalFormChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

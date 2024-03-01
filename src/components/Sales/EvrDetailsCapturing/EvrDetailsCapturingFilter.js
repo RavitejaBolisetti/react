@@ -4,19 +4,23 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Form, Input } from 'antd';
+import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
-
-const { Search } = Input;
+import { SearchBox } from 'components/utils/SearchBox';
 
 export default function EvrDetailsCapturingFilter(props) {
     const { extraParams, removeFilter, handleClear, advanceFilter, setAdvanceSearchVisible, searchForm, chargingStatusType, handleChargingTypeChange, handleSearch, filterString, evrStatusList } = props;
-
+    const searchBoxProps = {
+        placeholder: translateContent('evrDetailsCapturing.placeholder.headerSearch'),
+        allowClear: false,
+        singleField: true,
+        handleSearchWithoutParameter: handleSearch,
+    };
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
@@ -26,8 +30,9 @@ export default function EvrDetailsCapturingFilter(props) {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
                                     <QueryButtons currentItem={chargingStatusType} items={evrStatusList} onClick={handleChargingTypeChange} />
+
                                     <div className={styles.fullWidth}>
-                                        <Search placeholder={translateContent('evrDetailsCapturing.placeholder.headerSearch')} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                        <SearchBox {...searchBoxProps} />
                                     </div>
                                 </Col>
                                 {advanceFilter && (

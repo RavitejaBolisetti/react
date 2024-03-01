@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { PARAM_MASTER } from 'constants/paramMaster';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -80,12 +81,12 @@ const mapDispatchToProps = (dispatch) => ({
 export const AddOnDetailsMasterMain = (props) => {
     const { typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, AddonDetailsData, userId } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData, deliveryNoteMasterData } = props;
-    const { selectedOrder } = props;
-
-    const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData } = props;
+    const { resetAmc, resetRsa, resetSheild } = props;
+    const { isAmcLoaded, schemeAmcData, isRsaLoaded, schemeRsaData, isShieldLoaded, schemeShieldData, handleLocalFormChange } = props;
     const { fetchAmc, listAmcLoading } = props;
     const { fetchRsa, listRsaLoading } = props;
     const { fetchSheild, listSheildLoaing } = props;
+    const { selectedOrder } = props;
 
     const [formData, setFormData] = useState();
     const [searchData, setsearchData] = useState({});
@@ -96,6 +97,7 @@ export const AddOnDetailsMasterMain = (props) => {
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
     const [schemeDescriptionDatamain, setSchemeDescriptionData] = useState({ Shield: [], RSA: [], AMC: [] });
+    const [employeeData, setEmployeeData] = useState({ RSA: [], Shield: [], AMC: [] });
     const [registerDisabled, setRegisterDisabled] = useState({ Shield: false, RSA: false, AMC: false });
 
     const onErrorAction = (message) => {
@@ -113,8 +115,20 @@ export const AddOnDetailsMasterMain = (props) => {
                 value: selectedOrder?.invoicehdrId,
                 name: 'Invoice Number',
             },
+            {
+                key: 'vin',
+                title: 'vin',
+                value: requestPayload?.vehicleDetails?.vinNumber,
+                name: 'VIN',
+            },
+            {
+                key: 'odometerReading',
+                title: 'odometerReading',
+                value: typeData?.[PARAM_MASTER?.DLVR_NT_OMR?.id]?.[0]?.value || '',
+                name: 'odometer reading',
+            },
         ];
-    }, [selectedOrder]);
+    }, [selectedOrder, requestPayload?.vehicleDetails?.vinNumber, typeData]);
 
     useEffect(() => {
         if (selectedOrder?.invoicehdrId && userId) {
@@ -152,12 +166,42 @@ export const AddOnDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AddonDetailsData, section]);
 
+    const amcSuccessAction = (res) => {
+        if (res?.data && Array?.isArray(res?.data)) {
+            setEmployeeData((prev) => ({ ...prev, AMC: res?.data, Shield: res?.data }));
+        }
+    };
+
+    const rsaSucessAction = (res) => {
+        if (res?.data && Array?.isArray(res?.data)) {
+            setEmployeeData((prev) => ({ ...prev, RSA: res?.data }));
+        }
+        handleEmployeeSearch({ registrationType: 'AMC', onSuccessAction: amcSuccessAction, onErrorAction });
+    };
+
+    const rsaErrorAction = () => {
+        handleEmployeeSearch({ registrationType: 'AMC', onSuccessAction: amcSuccessAction, onErrorAction });
+    };
+
     useEffect(() => {
-        if (userId && section?.id) handleEmployeeSearch();
-        setButtonData({ ...buttonData, formBtnActive: true });
+        if (userId && section?.id) {
+            handleEmployeeSearch({ registrationType: 'RSA', onSuccessAction: rsaSucessAction, onErrorAction: rsaErrorAction });
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [section, userId]);
+
+    useEffect(() => {
+        return () => {
+            resetAmc();
+            resetRsa();
+            resetSheild();
+            setSchemeDescriptionData();
+            setEmployeeData({ RSA: [], Shield: [], AMC: [] });
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleOnChange = (e) => {
         form.setFieldsValue({
@@ -165,24 +209,29 @@ export const AddOnDetailsMasterMain = (props) => {
         });
     };
 
-    const handleEmployeeSearch = () => {
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        fetchRelationshipManger({
-            setIsLoading: listRelationshipMangerShowLoading,
-            userId,
-            onErrorAction,
-            extraParams: [
-                {
-                    key: 'employeeType',
-                    title: 'employeeType',
-                    value: RELATIONSHIP_MANAGER_CONSTANTS?.RELATIONSHIP_MANAGER_SALES_CONSULTANT?.key,
-                    name: 'Sales consultant employees',
-                },
-            ],
-        });
+    const handleEmployeeSearch = ({ registrationType, onErrorAction = () => {}, onSuccessAction = () => {} }) => {
+        if (registrationType) {
+            fetchRelationshipManger({
+                setIsLoading: listRelationshipMangerShowLoading,
+                userId,
+                onErrorAction,
+                onSuccessAction,
+                extraParams: [
+                    {
+                        key: 'employeeType',
+                        title: 'employeeType',
+                        value: RELATIONSHIP_MANAGER_CONSTANTS?.EMPLOYEE?.key,
+                        name: 'Sales consultant employees',
+                    },
+                    {
+                        key: 'registrationType',
+                        title: 'registrationType',
+                        value: registrationType,
+                        name: 'registrationType',
+                    },
+                ],
+            });
+        }
     };
     const getCodeValue = (data, key) => {
         return data?.find((i) => i?.schemeDescription === key)?.id;
@@ -198,21 +247,23 @@ export const AddOnDetailsMasterMain = (props) => {
                     setRequestPayload({ ...requestPayload, deliveryNoteAddOnDetails: { ...requestPayload?.deliveryNoteAddOnDetails, [key]: { ...formDataset, schemeCode: getCodeValue(schemeDescriptionDatamain[openAccordian], formDataset?.schemeDescription) } } });
                 }
                 setRegisterDisabled((prev) => ({ ...prev, [openAccordian]: true }));
-                const message = !formData?.[key] ? 'registered' : 'saved';
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: `Scheme has been ${message} successfully` });
             })
             .catch((err) => console.error(err));
     };
     const handleAmcDescriptionData = (amcSchemeCode) => {
-        const params = [
-            ...extraParams,
-            {
-                key: 'type',
-                title: 'Amc Scheme code',
-                value: amcSchemeCode,
-            },
-        ];
-        fetchAmc({ setIsLoading: listAmcLoading, userId, extraParams: params, onErrorAction });
+        fetchAmc({
+            setIsLoading: listAmcLoading,
+            userId,
+            extraParams: [
+                ...extraParams,
+                {
+                    key: 'type',
+                    title: 'Amc Scheme code',
+                    value: amcSchemeCode,
+                },
+            ],
+            onErrorAction,
+        });
     };
     const onFinish = () => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -230,6 +281,7 @@ export const AddOnDetailsMasterMain = (props) => {
         typeData,
         relationshipManagerData,
         schemeDescriptionDatamain,
+        schemeAmcData,
     };
     const formProps = {
         form,
@@ -258,10 +310,11 @@ export const AddOnDetailsMasterMain = (props) => {
         registerDisabled,
         muiltipleFormData: AddonDetailsData,
         handleAmcDescriptionData,
+        employeeData,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleLocalFormChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Input, Row, Col, Form } from 'antd';
+import { Input, Row, Col, Form, Divider } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
+import { validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, DecimalPercentageValidation } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 
 const CreditFormBase = (props) => {
@@ -15,9 +15,10 @@ const CreditFormBase = (props) => {
 
     return (
         <>
+            <Divider />
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.creditCardTransNumber} label={translateContent('receipts.label.receiptDetails.creditCardTransactionsNumber')} name="creditCardTransNumber" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.creditCardTransactionsNumber'))]}>
+                    <Form.Item initialValue={formData?.creditCardTransNumber} label={translateContent('receipts.label.receiptDetails.creditCardTransactionsNumber')} name="creditCardTransNumber" rules={[validateRequiredInputField(translateContent('receipts.validation.creditCardTransactionsNumber')),validationFieldLetterAndNumber(translateContent('receipts.validation.creditCardTransactionsNumber'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.creditCardTransactionsNumber'))} />
                     </Form.Item>
                 </Col>
@@ -27,7 +28,7 @@ const CreditFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ccServiceChargePercentage} label={translateContent('receipts.label.receiptDetails.serviceChargePercentage')} name="ccServiceChargePercentage" rules={[validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.serviceChargePercentage'))]}>
+                    <Form.Item initialValue={formData?.ccServiceChargePercentage} label={translateContent('receipts.label.receiptDetails.serviceChargePercentage')} name="ccServiceChargePercentage" rules={[DecimalPercentageValidation(translateContent('receipts.validation.serviceChargePercentage'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('receipts.label.receiptDetails.serviceChargePercentage'))} />
                     </Form.Item>
                 </Col>

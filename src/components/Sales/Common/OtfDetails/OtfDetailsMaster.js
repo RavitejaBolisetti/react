@@ -137,7 +137,7 @@ const OtfDetailsMasterBase = (props) => {
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             fetchOTFDetail({ customURL, fetchOTFDetail, setIsLoading: listShowLoading, userId, extraParams });
         };
 
@@ -198,7 +198,7 @@ const OtfDetailsMasterBase = (props) => {
             setloyaltyValue(false);
         }
     };
-    
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -216,7 +216,7 @@ const OtfDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...props} isLoadingOnSave={isLoading} disabled={isLoading} />
                 </Col>
             </Row>
         </Form>

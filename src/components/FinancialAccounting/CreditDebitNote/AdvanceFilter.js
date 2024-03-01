@@ -13,6 +13,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
 import { RxCross2 } from 'react-icons/rx';
 import { translateContent } from 'utils/translateContent';
+import { VOUCHER_TYPE } from 'constants/VoucherType';
 
 export default function AdvanceFilter(props) {
     const { handleButtonClick, extraParams, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, setAdvanceSearchVisible, searchForm, removeFilter } = props;
@@ -70,10 +71,10 @@ export default function AdvanceFilter(props) {
                     </Row>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                    <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, transactionType: 'credit' })}>
+                    <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, voucherType: VOUCHER_TYPE?.CREDIT_TYPE?.type })}>
                         {translateContent('global.buttons.addCreditNote')}
                     </Button>
-                    <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, transactionType: 'debit' })} data-testid="add_debit_btn">
+                    <Button type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, voucherType: VOUCHER_TYPE?.DEBIT_TYPE?.type })} data-testid="add_debit_btn">
                         {translateContent('global.buttons.addDebitNote')}
                     </Button>
                 </Col>
@@ -83,7 +84,7 @@ export default function AdvanceFilter(props) {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
-                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')} : </div>
+                                <div className={styles.advanceFilterTitle}>{translateContent('global.advanceFilter.appliedAdvanceFilter')} </div>
 
                                 {extraParams?.map((filter) => {
                                     return (

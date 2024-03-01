@@ -221,15 +221,15 @@ export const PARAM_MASTER = {
         title: 'Vehicle Price Search',
     },
     LTC: {
-        id: 'LTC',
+        id: '012',
         title: 'Lost to Competition',
     },
     PROCAN: {
-        id: 'PROCAN',
+        id: '013',
         title: 'Product Change',
     },
     LOMMD: {
-        id: 'LOMMD',
+        id: '010',
         title: 'Lost other M&M Dealer',
     },
     SALE_TYPE: {
@@ -504,5 +504,73 @@ export const PARAM_MASTER = {
     ENROLLED_BY: {
         id: 'ENROLLED_BY',
         title: 'Enrolled By',
+    },
+    DEL_NOTE_CANCL_STATS: {
+        id: 'DEL_NOTE_CANCL_STATS',
+        title: 'Delivery Note Cancellation',
+    },
+    TYRE_MAKE: {
+        id: 'TYRE_MAKE',
+        title: 'Product Details Tyre Make',
+    },
+    BATTERY_MAKE: {
+        id: 'BATTERY_MAKE',
+        title: 'Product Details Battery Make',
+    },
+    OTF_SO_MAPPING_UNMAPPING_SER: {
+        id: 'OTF_SO_MAPPING_UNMAPPING_SER',
+        title: 'Otf so Mapping and unmapping Search',
+    },
+    DEFCT_CD: {
+        id: 'DEFCT_CD',
+        title: 'Defect',
+    },
+    MODE_OF_DIS: {
+        id: 'MODE_OF_DIS',
+        title: 'mode of  discount sales scheme and offer',
+    },
+    SALS_SCHEM_TYPE: {
+        id: 'SALS_SCHEM_TYPE',
+        title: 'Sales scheme type of discount sales scheme and offer',
+    },
+    CHNG_EX_ORG: {
+        id: 'CHNG_EX_ORG',
+        title: 'on road price master',
+    },
+    ON_ROAD_STATUS: {
+        id: 'ON_ROAD_STATUS',
+        title: 'on road price master',
+    },
+    ORDR_STATS: {
+        id: 'ORDR_STATS',
+        title: 'Charger Installation Order Status',
+    },
+    CHRGR_INST_STG_TYPE: {
+        id: 'CHRGR_INST_STG_TYPE',
+        title: 'Charger Installation stage type',
+    },
+    DLVR_AMC_SCH_TYP: {
+        id: 'DLVR_AMC_SCH_TYP',
+        title: 'Delivery note scheme type',
+    },
+    DLVR_NT_OMR: {
+        id: 'DLVR_NT_OMR',
+        title: 'Delivery note odometer reading',
+    },
+    SO_MAP_UNMAP_RESN_CAT: {
+        id: 'SO_MAP_UNMAP_RESN_CAT',
+        title: 'booking so mapping reason category',
+    },
+    SO_MAP_UNMAP_RESN_DESC: {
+        id: 'SO_MAP_UNMAP_RESN_DESC',
+        title: 'booking so mapping reason description',
+    },
+    COLOR_MAP: {
+        id: 'COLOR_MAP',
+        title: 'charger insstallation color map',
+    },
+    CHRGR_INST_DTL_STAT: {
+        id: 'CHRGR_INST_DTL_STAT',
+        title: 'Charger installation stage status',
     },
 };

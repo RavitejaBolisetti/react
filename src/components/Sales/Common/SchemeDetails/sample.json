@@ -1,0 +1,70 @@
+{
+    "exchange": {
+        "schemeType": "Exhange Scheme",
+        "schemeCategory": "Category One",
+        "amount": 2400,
+        "validFrom": "2024-01-01",
+        "validTo": "2024-01-31",
+        "description": "Sample exhange offer",
+        "discountType": "CN"
+    },
+    "loyalty": {
+        "schemeType": "Loyality Scheme",
+        "schemeCategory": "Loyality Category One",
+        "amount": 2400,
+        "validFrom": "2024-01-01",
+        "validTo": "2024-01-31",
+        "description": "Sample Loyality offer",
+        "discountType": "CN"
+    },
+    "corporate": {
+        "corporateCode": "Corporate Scheme",
+        "corporateDescription": "Category One",
+        "corporateName": 2400,
+        "corporateCategory": "2024-01-01",
+        "stdDealerAmount": "2024-01-31",
+        "stdOEMDiscount": "Sample test offer",
+        "corporateAdditionalApplicableDiscount": "Y",
+        "corporateAdditionalDiscount": 3400,
+        "totalCorporateDiscount": 34000,
+        "discountType": "DI"
+    },
+    "sales": [
+        {
+            "id": "1",
+            "schemeName": "Sales Scheme One",
+            "schemeType": "Sales Scheme",
+            "schemeCategory": "Scheme Category One",
+            "amount": 2700,
+            "validFrom": "2024-01-01",
+            "validTo": "2024-01-31",
+            "description": "Sample Scheme offer",
+            "discountType": "DI",
+            "active": true
+        },
+        {
+            "id": "2",
+            "schemeName": "Sales Scheme Two",
+            "schemeType": "Sales Scheme",
+            "schemeCategory": "Sales Category Two",
+            "amount": 2400,
+            "validFrom": "2024-01-01",
+            "validTo": "2024-01-31",
+            "description": "Sample Scheme offer",
+            "discountType": "CN",
+            "active": false
+        },
+        {
+            "id": 3,
+            "schemeName": "Sales Scheme One",
+            "schemeType": "Sales Scheme",
+            "schemeCategory": "Sales Category One",
+            "amount": 2400,
+            "validFrom": "2024-01-01",
+            "validTo": "2024-01-31",
+            "description": "Sample Sales offer",
+            "discountType": "CN",
+            "active": false
+        }
+    ]
+}

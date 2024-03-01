@@ -96,6 +96,11 @@ const ContactMasterMain = (props) => {
     }, []);
 
     useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (selectedRecordId && userId) {
             fetchList({ setIsLoading: listShowLoading, extraParams });
         }
@@ -188,7 +193,7 @@ const ContactMasterMain = (props) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             if (searchType === VEHICLE_DETAIL_SECTION) {
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction });
             }
@@ -246,7 +251,7 @@ const ContactMasterMain = (props) => {
                                     <Divider className={styles.marT20} />
                                     <div className={styles.headerBox}>
                                         {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                        {!contactData?.length && !isAdding ? <NoDataFound informtion={noDataTitle} /> : <ViewList {...formProps} />}
+                                        {!contactData?.length && !isAdding ? <NoDataFound information={noDataTitle} /> : <ViewList {...formProps} />}
                                     </div>
                                 </>
                             )}

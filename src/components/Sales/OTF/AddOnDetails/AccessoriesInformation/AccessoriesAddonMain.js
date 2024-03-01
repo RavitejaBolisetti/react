@@ -92,7 +92,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, partNameSearchVisible, setPart
         <>
             <Divider />
             {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
-            {!addOnItemInfo?.length && !addButtonDisabled?.partDetailsResponses && <NoDataFound informtion={translateContent('bookingManagement.label.addAccessories')} />}
+            {!addOnItemInfo?.length && !addButtonDisabled?.partDetailsResponses && <NoDataFound information={translateContent('bookingManagement.label.addAccessories')} />}
             {addOnItemInfo?.map((element, index) => {
                 return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
             })}

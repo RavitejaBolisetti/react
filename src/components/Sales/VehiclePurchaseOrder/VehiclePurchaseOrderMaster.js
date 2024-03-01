@@ -24,7 +24,8 @@ import { VehiclePurchaseOrderDetailMaster } from './VehiclePurchaseOrderDetail';
 import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
-
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -33,6 +34,8 @@ const mapStateToProps = (state) => {
             Vehicle: {
                 VehiclePurchaseOrderDetail: { data, filter: filterString },
             },
+            // ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
+            ProductHierarchy: { data: productHierarchyData = [] },
         },
     } = state;
 
@@ -50,6 +53,7 @@ const mapStateToProps = (state) => {
         isLoading: false,
         isDetailLoaded: true,
         filterString,
+        productHierarchyDataListArray: productHierarchyData,
     };
     return returnValue;
 };
@@ -63,6 +67,10 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: vehiclePurchaseOrderDataActions.setFilter,
             saveData: saveVPODataActions.saveData,
             resetData: vehiclePurchaseOrderDataActions.reset,
+
+            fetchProductList: productHierarchyDataActions.fetchList,
+            ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -72,6 +80,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, totalRecords } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
     const { vehicleDetailStatusList, vpoTypeList, resetData } = props;
+    const { fetchProductList, productHierarchyDataListArray } = props;
+    const [productHierarchyDataArray, setProductHierarchyDataArray] = useState([]);
+
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -121,6 +132,27 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [changeView, setChangeView] = useState(false);
 
+    useEffect(() => {
+        setProductHierarchyDataArray(productHierarchyDataListArray?.map((i) => DisableParent(i, 'subProdct')));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyDataListArray]);
+
+    useEffect(() => {
+        if (userId) {
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+                {
+                    key: 'hierarchyNode',
+                    value: 'MV',
+                },
+            ];
+            fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
     const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
@@ -451,7 +483,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -481,6 +513,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         extraParamsAfterSave: extraParams,
         showDataLoading,
         changeView,
+        productHierarchyDataArray,
     };
     const cancelProps = {
         ...props,

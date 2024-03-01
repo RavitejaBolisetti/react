@@ -9,11 +9,11 @@ import { FiPlus } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validationNumber, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DataTable } from 'utils/dataTable';
-import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formatDateToEndOfDayDate } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
@@ -22,7 +22,6 @@ import { productTableColumn } from './productTableColumn';
 import { ProductHierarchyModal } from './ProductHierarchyModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { ViewDetail } from './ViewDetail';
-import { disablePastDate } from 'utils/disableDate';
 import { DrawerFormButton } from 'components/common/Button';
 import { OFFER_TYPE_CONSTANTS } from './constants/offerTypeCodeConstants';
 import { SCHEME_TYPE_CONSTANTS } from './constants/schemeTypeConstants';
@@ -30,7 +29,6 @@ import { zoneAreaTableColumn } from './zoneAreaTableColumn';
 import { ZoneAreaModal } from './ZoneAreaModal';
 import { translateContent } from 'utils/translateContent';
 import { FindProductName } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-import { ENCASH_CONSTANTS } from './constants/encashContants';
 import { DELETE_ACTION } from 'utils/btnVisiblity';
 
 const { Panel } = Collapse;
@@ -64,18 +62,18 @@ const AddEditFormMain = (props) => {
         return Promise.reject(new Error(translateContent('vehicleSalesSchemeMaster.text.dateError')));
     };
 
-    useEffect(() => {
-        if (saleService?.sales && saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.ALL?.key });
-        } else if (saleService?.sales && !saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SALES?.key });
-        } else if (!saleService?.sales && saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SERVICE?.key });
-        } else if (!saleService?.sales && !saleService?.service) {
-            addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.NO?.key });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [saleService]);
+    // useEffect(() => {
+    //     if (saleService?.sales && saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.ALL?.key });
+    //     } else if (saleService?.sales && !saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SALES?.key });
+    //     } else if (!saleService?.sales && saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.SERVICE?.key });
+    //     } else if (!saleService?.sales && !saleService?.service) {
+    //         addSchemeForm.setFieldValue({ encash: ENCASH_CONSTANTS.NO?.key });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [saleService]);
 
     const handleSales = (props) => {
         setSaleService({ sales: props, service: saleService?.service });
@@ -127,7 +125,7 @@ const AddEditFormMain = (props) => {
             if (isPresent && Object?.keys(isPresent)?.length > 0) {
                 showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.text.errorMessageText1') });
             } else {
-                setTableDataItem((prev) => [ { ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true },...prev]);
+                setTableDataItem((prev) => [{ ...values, modelName: data, toggleStatus: values?.toggleStatus, status: true }, ...prev]);
             }
         }
         setEditingData({});
@@ -188,6 +186,7 @@ const AddEditFormMain = (props) => {
     const onCloseZoneDetails = () => {
         setAddZoneArea(false);
         addZoneAreaForm.resetFields();
+        setZoneTableDataItem([]);
     };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -343,30 +342,30 @@ const AddEditFormMain = (props) => {
                                         {taxField === OFFER_TYPE_CONSTANTS?.DISCOUNT?.key && (
                                             <>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item initialValue={formData?.amountWithoutTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
+                                                    <Form.Item initialValue={formData?.amountWithoutTax} rules={[validationNumber(translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax'))]} label={translateContent('vehicleSalesSchemeMaster.label.amountWithoutTax')} name="amountWithoutTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithoutTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                    <Form.Item initialValue={formData?.amountWithTax} label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
+                                                    <Form.Item initialValue={formData?.amountWithTax} rules={[validationNumber(translateContent('vehicleSalesSchemeMaster.label.amountWithTax'))]} label={translateContent('vehicleSalesSchemeMaster.label.amountWithTax')} name="amountWithTax">
                                                         <Input placeholder={preparePlaceholderText(translateContent('vehicleSalesSchemeMaster.placeholder.amountWithTax'))} disabled={disableAmountTaxField} />
                                                     </Form.Item>
                                                 </Col>
                                             </>
                                         )}
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formatDateToCalenderDate(filterString?.validityFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.validityFromDate')} name="validityFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityFromDate'))]} className={styles?.datePicker}>
-                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disablePastDate} className={styles.fullWidth} onChange={() => addSchemeForm.setFieldValue({ toDate: undefined })} />
+                                            <Form.Item initialValue={formatDateToEndOfDayDate(filterString?.validityFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.validityFromDate')} name="validityFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityFromDate'))]} className={styles?.datePicker}>
+                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} />
                                             </Form.Item>
                                         </Col>
 
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Form.Item
-                                                initialValue={formatDateToCalenderDate(filterString?.validityToDate)}
+                                                initialValue={formatDateToEndOfDayDate(filterString?.validityToDate)}
                                                 label={translateContent('vehicleSalesSchemeMaster.label.validityToDate')}
                                                 name="validityToDate"
                                                 rules={[
-                                                    validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityTodate')),
+                                                    validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.validityToDate')),
                                                     {
                                                         validator: (_, value) => {
                                                             return addSchemeForm.getFieldValue('validityFromDate') ? CheckDateEffectiveTo(value, addSchemeForm?.getFieldValue('validityFromDate')) : null;
@@ -379,13 +378,13 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formatDateToCalenderDate(formData?.vehicleInvoiceFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.vehicleInvoiceFromDate')} name="vehicleInvoiceFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.vehicleInvoiceFromDate'))]} className={styles?.datePicker}>
-                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disablePastDate} onChange={() => addSchemeForm.setFieldsValue({ toDate: undefined })} />
+                                            <Form.Item initialValue={formatDateToEndOfDayDate(formData?.vehicleInvoiceFromDate)} label={translateContent('vehicleSalesSchemeMaster.label.vehicleInvoiceFromDate')} name="vehicleInvoiceFromDate" rules={[validateRequiredSelectField(translateContent('vehicleSalesSchemeMaster.validation.vehicleInvoiceFromDate'))]} className={styles?.datePicker}>
+                                                <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth}  onChange={() => addSchemeForm.setFieldsValue({ toDate: undefined })} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Form.Item
-                                                initialValue={formatDateToCalenderDate(formData?.vehicleInvoiceToDate)}
+                                                initialValue={formatDateToEndOfDayDate(formData?.vehicleInvoiceToDate)}
                                                 label={translateContent('vehicleSalesSchemeMaster.label.vehicleInvoiceToDate')}
                                                 name="vehicleInvoiceToDate"
                                                 rules={[
@@ -406,13 +405,13 @@ const AddEditFormMain = (props) => {
                                             <Form.Item initialValue={formData?.encash} name="encash" label={translateContent('vehicleSalesSchemeMaster.label.encash')} />
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item name="sales" initialValue={saleService ? formData?.encash : ''} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnSales')}>
+                                            <Form.Item name="sales" initialValue={formActionType?.editMode ? saleService?.sales === true : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnSales')}>
                                                 <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={handleSales} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Form.Item name="service" initialValue={saleService ? formData?.encash : ''} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnService')}>
-                                                <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={handleServices} defaultChecked={false} />
+                                            <Form.Item name="service" initialValue={formActionType?.editMode ? saleService?.service === true : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" label={translateContent('vehicleSalesSchemeMaster.label.encashOnService')}>
+                                                <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={handleServices} />
                                             </Form.Item>
                                         </Col>
 

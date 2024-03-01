@@ -13,7 +13,7 @@ export const ViewTechnicalDocDetail = () => {
     return (
         <div className={styles.viewDrawerContainer}>
             {/* {supportingData?.length > 0 ? ( */}
-            <NoDataFound informtion={translateContent('vehicleDetail.documents.label.noTechnicalDocumentsFound')} />
+            <NoDataFound information={translateContent('vehicleDetail.documents.label.noTechnicalDocumentsFound')} />
             {/* <Card> */}
             {/* {supportingData?.map((uploadData) => {
                     return (

@@ -73,8 +73,9 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = translateCo
                             </Collapse>
                         )}
                     </div>
-                    <div>
-                        {documentType.length > 0 && (
+
+                    {documentType.length > 0 && (
+                        <div>
                             <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                                 <Panel header={headerTitle(translateContent('applicationMaster.text.documentType'))} key="2">
                                     <Divider />
@@ -83,10 +84,11 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = translateCo
                                     ))}
                                 </Panel>
                             </Collapse>
-                        )}
-                    </div>
-                    <div>
-                        {accessibleLocation?.length > 0 && (
+                        </div>
+                    )}
+
+                    {accessibleLocation?.length > 0 && (
+                        <div>
                             <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                                 <Panel header={headerTitle(translateContent('applicationMaster.text.accessibleDealerLocation'))} key="3">
                                     <Divider />
@@ -95,8 +97,8 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = translateCo
                                     ))}
                                 </Panel>
                             </Collapse>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </Descriptions>
             </div>
         </>

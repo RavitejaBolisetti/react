@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const { userId, moduleTitle } = props;
 
-    const { VehicleModelTaxChargesCategoryData, VehicleModelTaxChargesCategoryisLoading, VehicleModelTaxChargesCategoryDataLoaded, totalRecords, dynamicPagination, data } = props;
+    const { VehicleModelTaxChargesCategoryData, VehicleModelTaxChargesCategoryisLoading, totalRecords, dynamicPagination, data } = props;
     const { ProductHierarchyData, isProductHierarchyDataLoading, isProductHierarchyDataLoaded } = props;
     const { isAccountDataLoaded, AccountData, listAccountCategoryLovLoading } = props;
     const { isTaxCategoryDataLoaded, TaxCategoryData } = props;
@@ -112,15 +112,12 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState({});
-    const [searchData, setSearchdata] = useState([]);
     const [ModelOptions, setModelOptions] = useState([]);
     const [TaxChargesOptions, setTaxChargesOptions] = useState([]);
     const [AccountDataOptions, setAccountDataOptions] = useState([]);
 
     const [refershData, setRefershData] = useState(false);
     const page = { pageSize: 10, current: 1 };
-    const [selectedModelGroup, setselectedModelGroup] = useState('');
-
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -139,7 +136,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     };
     const onErrorAction = () => {
         resetData();
-        setSearchdata([]);
         setshowDataLoading(false);
     };
 
@@ -297,7 +293,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         showGlobalNotification,
         onFinish,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         formData,
         setIsFormVisible,
         formActionType,

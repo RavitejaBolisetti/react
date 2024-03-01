@@ -27,7 +27,10 @@
             "tehsil": "Tehsil",
             "select": "Select",
             "passwordStrength": "Password strength",
-            "actions": "Actions"
+            "actions": "Actions",
+            "input": "input",
+            "yes": "Yes",
+            "no": "No"
         },
         "validation": {
             "input": "Please enter ",
@@ -145,7 +148,7 @@
             "cancel": "Cancel",
             "print/download": "Print/Download",
             "replaceImage": "Replace Image",
-            "saveAndNew": "Save and New",
+            "saveAndNew": "Save & New",
             "saveAndAddNew": "Save & Add New",
             "saveAndNext": "Save & Next",
             "next": "Next",
@@ -153,7 +156,7 @@
             "delete": "Delete",
             "cancelBooking": "Cancel Booking",
             "transferBooking": "Transfer Booking",
-            "bookingMappingHistory": "Booking Mapping History",
+            "bookingMappingHistory": "SO Mapping History",
             "saveCloseBtn": "Save & Close",
             "seeMore": "See more",
             "seeLess": "See less",
@@ -178,9 +181,9 @@
             "cancelVehiclePurchaseOrder": "Cancel Vehicle Purchase Order",
             "register": "Register",
             "addCreditNote": "Add Credit Note",
-            "addDebitNote": "Add Dedit Note",
+            "addDebitNote": "Add Debit Note",
             "printReceipt": "Print Receipt",
-            "applyFilter": "Apply Filter",
+            "applyFilter": "Apply",
             "printForm21": "Print Form 21",
             "printInvoice": "Print Invoice",
             "cancelInvoice": "Cancel Invoice",
@@ -197,7 +200,10 @@
             "printCreditDebit": "Print Credit Debit Note",
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
-            "reGenerateIRN": "Re-Generate IRN"
+            "reGenerateIRN": "Re-Generate IRN",
+            "irnStatusNotPresent": "IRN status not present",
+            "yes": "Yes",
+            "no": "No"
         },
         "placeholder": {
             "input": "Enter ",
@@ -220,7 +226,11 @@
         "heading": {
             "collapse.bookingCustomer": "Booking Customer",
             "collapse.billingCustomer": "Billing Customer",
-            "confirmation": "Confirmation"
+            "confirmation": "Confirmation",
+            "schemeAndOfferDetails.exchange": "Exchange Scheme",
+            "schemeAndOfferDetails.loyalty": "Loyalty Scheme",
+            "schemeAndOfferDetails.corporate": "Corporate Scheme",
+            "schemeAndOfferDetails.salesScheme": "Sales Scheme"
         },
         "label": {
             "bookingDetails.bookingNumber": "Booking Number",
@@ -248,15 +258,22 @@
             "bookingCustomerAndBillingCustomer.sameAsBookingCustomer": "Same as Booking Customer",
 
             "vehicleDetails.vehicleDetails": "Vehicle Details",
+            "vehicleDetails.vehicleInformation": "Vehicle Information",
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.oemModelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
+            "vehicleDetails.vehicleUsageType": "Vehicle Usage",
             "vehicleDetails.saleType": "Sale Type",
             "vehicleDetails.priceType": "Price Type",
             "vehicleDetails.vehicleSellingPrice": "Vehicle Selling Price",
             "vehicleDetails.vehicleAmount": "Vehicle Amount",
             "vehicleDetails.dealerDiscountWithTax": "Dealer Discount with TAX",
             "vehicleDetails.consumerSchemeWithTax": "Consumer Scheme with TAX",
+            "vehicleDetails.corporateSchemeWithTax": "Corporate Scheme with TAX",
+            "vehicleDetails.mnmCashBenefitAmountWithTax": "M&M Cash Benefits with TAX",
+            "vehicleDetails.mnmNonCashBenefitAmountWithTax": "M&M Non-Cash Benefits with TAX",
+            "vehicleDetails.fameSubsidyAmount": "Fame Subsidy Amount",
             "vehicleDetails.printDiscount": "Print Discount?",
             "vehicleDetails.taxCalculation": "Tax Calculation",
             "vehicleDetails.availableStock": "Available Stock",
@@ -265,10 +282,14 @@
             "vehicleDetails.poStatus": "PO Status",
             "vehicleDetails.soNumber": "SO Number",
             "vehicleDetails.soStatus": "SO Status",
+            "vehicleDetails.branchName": "Branch Name",
+            "vehicleDetails.chassisNumber": "Chassis Number",
+            "vehicleDetails.soDate": "SO Date",
+            "vehicleDetails.sapResonseRemarks": "Model Code Response",
             "vehicleDetails.model": "Model",
             "vehicleDetails.totalTaxAmount": "Total Tax Amount",
             "vehicleDetails.tcsAmount": "TCS Amount",
-
+            "schemeAndOfferDetails.schemeName": "Scheme Name",
             "schemeAndOfferDetails.schemeType": "Scheme Type",
             "schemeAndOfferDetails.schemeCategory": "Scheme Category",
             "schemeAndOfferDetails.Amount": "Amount",
@@ -276,6 +297,18 @@
             "schemeAndOfferDetails.validTo": "Valid To",
             "schemeAndOfferDetails.description": "Description",
             "schemeAndOfferDetails.noScheme": "No Scheme and Offer Details Available",
+            "schemeAndOfferDetails.discountType": "Discount Type",
+
+            "schemeAndOfferDetails.corporateCode": "Corporate Code",
+            "schemeAndOfferDetails.corporateDescription": "Corporate Description",
+            "schemeAndOfferDetails.corporateName": "Corporate Name",
+            "schemeAndOfferDetails.corporateCategory": "Corporate Category",
+            "schemeAndOfferDetails.stdDealerAmount": "Std Dealer Amount",
+            "schemeAndOfferDetails.stdOEMDiscount": "Std OEM Discount",
+            "schemeAndOfferDetails.corporateAdditionalApplicableDiscount": "Corp. Add. Applicable Discount",
+            "schemeAndOfferDetails.corporateAdditionalDiscount": "Additional Discount",
+            "schemeAndOfferDetails.totalCorporateDiscount": "Corporate Discount",
+            "schemeAndOfferDetails.corporateDiscountType": "Discount Type",
 
             "insuranceDetails.insuranceCompany": "Insurance Company",
             "insuranceDetails.insuranceCoverNote": "Insurance Cover Note",
@@ -371,6 +404,7 @@
         },
         "validation": {
             "mandatoryBookingCustomer": "Please provide booking customer",
+            "mandatoryBillingCustomer": "Please provide Billing customer",
             "modelValidation": "Model selected is not valid",
             "modelChangeConfirmation": "If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?"
         }
@@ -401,7 +435,8 @@
             "continue": "Continue"
         },
         "link": {
-            "mnmLogin": "M&M User Login"
+            "mnmLogin": "M&M User Login",
+            "sapIBP": "SAP IBP"
         }
     },
     "sessionTimeout": {
@@ -424,7 +459,8 @@
         "heading": {
             "mainTitle": "Forgot Your Password",
             "subtitle": "Please enter your user credential",
-            "createNewPassword": "Create New Password"
+            "createNewPassword": "Create New Password",
+            "newPassword": "New Password"
         },
         "label": {
             "userId": "user id",
@@ -437,7 +473,7 @@
             "dealerManagementSystem": "Dealer Management System",
             "otpVerification": "OTP Verification",
             "enterOTP": "Enter OTP",
-            "newPassword": "new password",
+            "newPassword": "New password",
             "confirmPassword": "Confirm password",
             "DidnotReceiveAnOTP": "Didn't receive an OTP"
         },
@@ -464,9 +500,9 @@
             "createNewPassword": "Create New Password"
         },
         "label": {
-            "oldPassword": "old password",
-            "newPassword": "new password",
-            "confirmPassword": "confirm password",
+            "oldPassword": "Old password",
+            "newPassword": "New password",
+            "confirmPassword": "Confirm password",
             "updatePassword": "Update Password"
         },
         "placeholder": {},
@@ -487,16 +523,20 @@
             "subTitleAddWidget": "Add Widget",
             "keyHighlights": "Key Highlights",
             "actionItems": "Action Items",
-            "dashboardKpi": "Dashboard KPI",
+            "dashboardKpi": "KPI's",
             "latestNews": "Latest News",
             "birthdayCalendar": "Birthday Calendar",
             "todayBirthday": "Today's Birthday",
-            "upcomingBirthdays": "Upcoming Birthdays"
+            "upcomingBirthdays": "Upcoming Birthdays",
+            "billing": "Billing",
+            "retail": "Retail",
+            "stockInDays": "Stock Aging(in days)"
         },
         "label": {
             "billing": "Billing",
             "retail": "Retail",
-            "stockInDays": "Stock in days"
+            "stockInDays": "Stock Aging(in days)",
+            "noDataFound": "No data found"
         },
         "placeholder": {},
         "validation": {},
@@ -892,8 +932,9 @@
             "moduleTitle": "AMC Registration Details"
         },
         "validation": {
-            "noSchemeVIN": "No Schemes present for this VIN",
+            "noSchemeVIN": "No Schemes present for this AMC Type",
             "noVINFound": "No VIN found for searched Booking Number",
+            "validateOTF": "Please Validate Booking Number to Continue",
             "noEmployeesFound": "No employees found for searched name",
             "incorrectEmployeeName": "Employee name is not correct",
             "discoutGreaterThanScheme": "Discount cannot exceed Scheme amount",
@@ -952,6 +993,7 @@
             "registrationRequest": "Registration Request",
             "requestedOn": "Requested On",
             "reasonForCancellationRquest": "Reason for Cancellation Request",
+            "cancellationType": "Cancellation Type",
             "remarkForCancellation": "Remark for Cancellation",
             "approvedOrRejectedBy": "Approved/Rejected By",
             "approvedDate": "Approved Date",
@@ -975,7 +1017,7 @@
             "invoiceDate": "Invoice Date",
             "irnNo": "IRN No.",
             "irnStatus": "IRN Status",
-            "amcCertificateNo": "AMC Registration Number",
+            "amcCertificateNo": "AMC Certificate",
             "amcIncenticeClaim": "AMC Incentive Claim"
         },
         "placeholder": {
@@ -1047,11 +1089,14 @@
         "label": {
             "mobileNumber": "Mobile Number",
             "customerType": "Customer Type",
+            "corporateType": "Corporate Type",
+
             "emailID": "Email ID",
             "contactNo": "Contact over WhatsApp?",
             "WhatsAppNoText": "Use mobile no as WhatsApp no?",
             "whatsappNumber": "Whatsapp Number",
-            "corporateType": "Corporate Type",
+            "corporateDescription": "Corporate Description",
+            "corporate": "Corporate Type",
             "corporateName": "Corporate Name",
             "corporateCode": "Corporate Code",
             "corporateCategory": "Corporate Category",
@@ -1213,7 +1258,7 @@
             "emailId": "email id",
             "whatsappNo": "whatsapp number",
             "gender": "gender",
-            "licenseNo ": "driving license no ",
+            "licenseNo": "driving license no",
             "aadhar": "aadhar",
             "voterId": "voter id",
             "pan": "pan",
@@ -1632,7 +1677,8 @@
             "cancellationRemark": "Cancellation Remarks",
             "mnmInvoice": "M&M Invoice",
             "pdiDone": "PDI Done",
-            "allotVehicle": "Allot Vehicle"
+            "allotVehicle": "Allot Vehicle",
+            "vehicleSOMapping": "So Mapping"
         },
         "tableColumn": {
             "description": "Description",
@@ -1650,16 +1696,31 @@
             "selectPart": "Select Part"
         },
         "modelVariant": {
+            "heading": {
+                "modelChange": "If you proceed with model change, the price will be calculated as per the selected model. Do you wish to continue?",
+                "cancelChangeRequest": "Are you sure you want to Cancel change model request?"
+            },
             "label": {
+                "model": "Model",
                 "modelDescription": "Revised Model Description",
-                "modelCode": "Revised Model Code"
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code",
+                "confirmation": "Confirmation",
+                "cancelRequest": "Cancel Request",
+                "createPurchaseOrder": "Create Purchase Order"
             },
             "validation": {
                 "model": "Model",
-                "modelCode": "Model Code"
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code"
             },
             "placeholder": {
-                "modelCode": "Model Code"
+                "model": "Model",
+                "modelCode": "Model Code",
+                "oemModelCode": "Model Code"
+            },
+            "button": {
+                "yes": "Yes"
             }
         }
     },
@@ -1714,7 +1775,8 @@
             "stage": "Stage",
             "requestDetails": "Request Details",
             "serviceActivity": "Service Activity:",
-            "electric": "Electric"
+            "electric": "Electric",
+            "modelDescription": "Model Description"
         },
         "placeholder": {
             "bookingNumber": "Booking Number",
@@ -1778,7 +1840,8 @@
             "location": "Location",
             "irnResponse": "IRN Server Response",
             "irnStatus": "IRN Status",
-            "gstin": "GSTIN"
+            "gstin": "GSTIN",
+            "action": "Action"
         }
     },
 
@@ -1788,7 +1851,8 @@
     "vehicleDetail": {
         "heading": {
             "mainTitle": "Vehicle Details",
-            "title": "Search Vehicle"
+            "title": "Search Vehicle",
+            "mnmUserOnly": "Below Fields to be shown for Mahindra users only"
         },
         "label": {
             "vin": "VIN",
@@ -1853,11 +1917,13 @@
                 }
             }
         },
+
         "productDetails": {
             "heading": {
                 "moduleTitle": "Product Details",
                 "attributeTitle": "Product Attribute Details",
-                "aggregateTitle": "Aggregates"
+                "aggregateTitle": "Aggregates",
+                "noProductDataFound": "No product Attribute Details Present"
             },
             "label": {
                 "productDivision": "Product Division",
@@ -1868,7 +1934,8 @@
                 "model": "Model ",
                 "item": "Item",
                 "make": "Make",
-                "serialNo": "Serial No."
+                "serialNo": "Serial No.",
+                "attributeDetailsNotPresent": "No product Attribute Details Present"
             }
         },
         "customerDetails": {
@@ -1923,6 +1990,18 @@
                 "noData": "No data"
             }
         },
+        "connectedVehicle": {
+            "connectedVehicle": "Connected Vehicle",
+            "tcuId": "TCU ID",
+            "esimNo": "E-SIM No",
+            "esimStatus": "E-SIM Status",
+            "preferredMobileNo1": "Prefered Mobile No 1",
+            "preferredMobileNo2": "Prefered Mobile No 2",
+            "kycStatus": "KYC Status",
+            "received": "Recieved",
+            "notReceived": "Not Recieved",
+            "noConnectedVehicleFound": "No Connected Vehicle Found"
+        },
         "documents": {
             "heading": {
                 "moduleTitle": "Documents",
@@ -1948,8 +2027,8 @@
     },
     "rsmAsmApproval": {
         "heading": {
-            "mainTitle": "RSM/ASM Approval",
-            "title": "RSM Approval Summary",
+            "mainTitle": "Delivery/Invoice Cancellation Approval",
+            "title": "Delivery/Invoice Cancellation Approval Summary",
             "titleOverride": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters :"
         },
@@ -2324,7 +2403,7 @@
             "titleOverride": "Advance Filter",
             "dealerList": "Dealer List",
             "modelDetails": "Model Details",
-            "advancedFilter": "Advanced Filter",
+            "advancedFilter": "Advance Filter",
             "appliedAdvanceFilters": "Applied Advance Filters"
         },
         "label": {
@@ -2344,7 +2423,7 @@
         }
     },
     "stockTransferIndent": {
-        "isueIndent": {
+        "issueIndent": {
             "label": {
                 "vin": "VIN",
                 "stIssueNo": "ST issue Note No.",
@@ -2356,11 +2435,14 @@
                 "grnNo": "GRN No",
                 "issueCharge": "Issue Charge",
                 "netDealerPrice": "Net Dealer Price",
-                "status": "Status"
+                "status": "Status",
+                "indentToParent": "Indent To Parent"
             },
             "validation": {
                 "vin": "vin",
-                "issueCharges": "Issue Charges"
+                "issueCharges": "Issue Charges",
+                "searchVinToContinue": "Search VIN to continue",
+                "indentToParent": "Indent To Parent"
             },
             "viewDetails": {
                 "label": {
@@ -2416,6 +2498,8 @@
             "editVehicleDetails": "Edit Vehicle Details",
             "indentStatus": "Indent Status",
             "indentToParent": "Indent To Parent",
+            "indentFromParent": "Indent From Parent",
+
             "indentToLocation": "Indent To Location",
             "remark": "Remark",
             "modelDescription": "Model Description",
@@ -2518,6 +2602,7 @@
 
             "vehicleDetails.modelDescription": "Model Description",
             "vehicleDetails.modelCode": "Model Code",
+            "vehicleDetails.oemModelCode": "Model Code",
             "vehicleDetails.vin": "VIN",
             "vehicleDetails.saleType": "Sale Type",
             "vehicleDetails.priceType": "Price Type",
@@ -2578,6 +2663,7 @@
             "referrals.dateOfBirth": "Date of Birth",
 
             "cancelInvoice.reasonForCancellation": "Reason for Cancellation",
+            "cancelInvoice.cancellationType": "Cancellation Type",
             "digitalSignature": "Digital Signature"
         },
         "placeholder": {},
@@ -2617,7 +2703,6 @@
             "drawerTitleMain": "Vehicle Receipt Checklist",
             "section1": "Checklist Details",
             "section2": "Supporting Documents",
-
             "collapse": {},
             "profileCard": {
                 "checklistNumber": "CheckList Number:",
@@ -2631,6 +2716,7 @@
             }
         },
         "label": {
+            "receiptNumber": " Receipt Number",
             "checklistDetails": {
                 "remarks": "Remarks",
                 "details": "Details"
@@ -2755,7 +2841,7 @@
                 "model": "Model",
                 "modelName": "Model Name",
                 "color": "Color",
-                "seatingCapacity:": "Seating Capacity",
+                "seatingCapacity": "Seating Capacity",
                 "fuel": "Fuel",
                 "variants": "Variants",
                 "modelDescription": "Model Description",
@@ -2767,8 +2853,19 @@
                 "demoVehicle": "Demo Vehicle",
                 "vehicleStatus": "Vehicle Status",
                 "physicalStatus": "Physical Status",
+                "otherDefectType": "Other Defect Type",
+                "otherDefectLocation": "Other Defect Location",
+                "otherDefectDescription": "Other Defect Description",
                 "shortage": "Shortage",
-                "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No."
+                "vehicleReceiptChecklistNumber": "Vehicle Receipt Checklist No.",
+                "defectType": "Defect Type",
+                "defectDescription": "Defect Description",
+                "shortageType": "Shortage Type",
+                "otherShortageType": "Other Shortage Type",
+                "shortageDescription": "Shortage Description",
+                "otherShortageDescription": "Other Shortage Description",
+                "remarks": "Remarks",
+                "defectLocation": "Defect Location"
             },
             "advancedSearch": {
                 "grnFromDate": "GRN From Date",
@@ -2860,6 +2957,7 @@
                 "editApportion": "Edit Apportion Details",
                 "addApportion": "Add Apportion Details",
                 "apportionDetailsText": "Apportion Details",
+                "totalReceivedAmountText": "total received amount",
                 "totalApportionAmountText": "The entire paid amount has been apportioned. Cannot be apportioned further."
             },
             "receiptFromDate": "Receipt From Date",
@@ -3459,6 +3557,7 @@
             "termsconditiondescription": "Description"
         }
     },
+
     "bookingSoMapping": {
         "heading": {
             "moduleTitle": "Booking SO Mapping Control",
@@ -3478,7 +3577,8 @@
         "validation": {
             "variantCode": "Variant Code",
             "productVariant": "Product Variant",
-            "userForMappingUnmapping": "User for Mapping/Unmapping"
+            "userForMappingUnmapping": "User for Mapping/Unmapping",
+            "mappedSoCancel": "SO already mapped kindly unmap & then Cancel"
         }
     },
     "vehicleDeliveryNote": {
@@ -3520,13 +3620,18 @@
             "bookingNumber": "Booking Number:",
             "cancelledDate": "Cancelled Date",
             "cancelledBy": "Cancelled By",
-            "remarksForCancellation": "Remarks for Cancellation"
+            "remarksForCancellation": "Remarks for Cancellation",
+            "deliveryNoteChallanFromDate": "Delivery Challan From Date",
+            "deliveryNoteChallanToDate": "Delivery Challan To Date",
+            "notGenerated": "NOT GENERATED"
         },
         "placeholder": {
             "select": "Select"
         },
+
         "notificationError": {
-            "enterCustomerId": "Enter customer id to continue"
+            "enterCustomerId": "Enter customer id to continue",
+            "customerDetails": "Customer details not present"
         },
         "invoiceDetails": {
             "heading": {
@@ -3676,7 +3781,8 @@
             "voucherType": "Voucher Type",
             "partySegment": "Party Segment",
             "fromDate": "From Date",
-            "toDate": "To Date"
+            "toDate": "To Date",
+            "apportionDetailMissing": "Apportion Details are missing"
         },
         "leftSideBar": {
             "label": {
@@ -3819,7 +3925,8 @@
             "message": {
                 "successMessage": "Account Head validated successfully",
                 "errorMessage": "Write-off and apportion amount cannot exceed balance amount",
-                "documentInvalid": "Document Number is invalid"
+                "documentInvalid": "Document Number is invalid",
+                "duplicateDocumentNumber": "Duplicate document number is invalid"
             }
         }
     },
@@ -3924,7 +4031,8 @@
             "viewHierarchyText": "Please select product from left side hierarchy to view “Hierarchy Details”.",
             "productHierarchy": "Product Hierarchy",
             "manufacturerAdmin": "Manufacturer Administrative Hierarchy",
-            "dealerCode": "Dealer Code"
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name"
         },
         "placeholder": {
             "organizationHierarchy": "Organization Hierarchy",
@@ -4014,7 +4122,7 @@
             "clientId": "Client Id",
             "parent": "parent",
             "secretId": "Secret Id",
-            "password": "password",
+            "password": "Password",
             "dealerName": "Dealer Name",
             "gstin": "Select GSTIN"
         },
@@ -4033,7 +4141,7 @@
         },
         "gstBranchAccessibleMaster": {
             "heading": {
-                "moduleTitle": " GST Details"
+                "moduleTitle": "GST Details"
             },
             "label": {
                 "branchName": "Branch Name",
@@ -4293,16 +4401,24 @@
             "resonCategoryCode": "Reason Category",
             "reasonDescriptionCode": "Reason Description",
 
+            "otfNumber": "Booking Number",
+
             "customerId": "Customer ID",
             "mobileNumber": "Mobile No.",
             "modelGroup": "Model Group",
-            "modelVariant": "Model Variant"
+            "modelVariant": "Model Variant",
+            "noInfoMessage": "Please Select from dropdown options to see details"
         },
         "placeholder": {
             "search": "Search Booking Number"
         },
         "errorMsg": {
-            "message": "Validate booking number to continue"
+            "message": "Validate booking number to continue",
+            "modelGroupDifferent": "Model group should be same for swapping",
+            "modelGroupNotPresent": "Model group is not present",
+            "bookingNumberAreNotBooked": "Both booking should be booked",
+            "modelChangeRequestSent": "Model change request sent",
+            "otfNumberAreSame": "Booking number cannot be same"
         }
     },
     "vehiclePurchaseOrder": {
@@ -4355,7 +4471,8 @@
                 "soNo": "So No",
                 "soDate": "So Date",
                 "soStatus": "So Status",
-                "sapStatus": "SAP Response Status"
+                "sapStatus": "SAP Response Status",
+                "sapRemarks": "SAP Response Remarks"
             },
             "placeholder": {
                 "dealerCode": "Enter Dealer Code",
@@ -4486,8 +4603,8 @@
             "invoiceDate": "Invoice Date",
             "irnNo": "IRN No.",
             "irnStatus": "IRN Status",
-            "schemeCertificateNo": "Scheme Certificate No.",
-            "invoiceNo": "Invoice No.",
+            "schemeCertificateNo": "Scheme Certificate",
+            "invoiceNo": "Invoice Number",
             "vehicleRegistrationNo": "Vehicle Registration No.",
             "orgWarrantyStartDate": "Org. Warranty Start Date",
             "modelGroup": "Model Group",
@@ -4596,7 +4713,8 @@
             "vehicleInvoiceToDate": "vehicle invoice to date",
             "vehicleInvoiceFromDate": "vehicle invoice from date",
             "zone": "zone",
-            "area": "area"
+            "area": "area",
+            "mobileNumberFound": "Mobile Number already exist. Please use another mobile number."
         },
         "text": {
             "messageText": "Click or drop your file here to upload",
@@ -4645,6 +4763,37 @@
             }
         },
         "placeholder": {},
+        "validation": {
+            "toDate": "Date cant be less than Effective from date",
+            "ModelCode": "Model code is not present"
+        },
+        "text": {},
+        "button": {
+            "printCoDealerInvoice": "Download/Print Co-Dealer Invoice",
+            "cancelInvoice": "Cancel Invoice"
+        }
+    },
+    "centralFameSubsidy": {
+        "heading": {
+            "moduleTitle": "Central Fame Subsidy",
+            "title": "Central Fame Subsidy"
+        },
+        "label": {
+            "batterycapacity": "Battery Capacity",
+            "taxiIndicator": "Taxi Indicator",
+            "subsidyAmount": "Central Subsidy Amount",
+            "percentageOnExShowRoomPrice": "Percentage On ExshowRoomPrice",
+            "demandIncentive": "Demand Incentive",
+            "totalAmount": "Total Amount",
+            "activeIndicator": "Active Indicator",
+            "tableColumn": {
+                "product": "Model Variant",
+                "modelGroup": "Model Group",
+                "taxIndicator": "Taxi Indicator",
+                "variantCode": "Variant Code"
+            }
+        },
+        "placeholder": { "modelGroupVariant": "Please select model group and model Variant" },
         "validation": {
             "toDate": "Date cant be less than Effective from date",
             "ModelCode": "Model code is not present"

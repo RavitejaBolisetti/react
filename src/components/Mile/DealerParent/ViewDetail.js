@@ -26,7 +26,9 @@ const ViewDetailBase = ({ formData, styles, parameterType, typeData }) => {
                     <Descriptions.Item label={translateContent('dealerParent.label.ownerName')}>{formData?.ownerName}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('dealerParent.label.contactNumber')}>{formData?.mobileNumber}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('dealerParent.label.emailId')}>{formData?.emailId}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('dealerParent.label.status')}>{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerParent.label.status')}>
+                        <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>

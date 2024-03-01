@@ -37,9 +37,9 @@ const VehicleReceiptDetailCard = (props) => {
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
                             {translateContent('vehicleReceipt.heading.profileCard.grnNumber')}
-                            <span className={styles.activeForm}>
+                            <span>
                                 {selectedRecord?.grnNumber || 'New'}
-                                <CopytoClipboard text={selectedRecord?.grnNumber} />
+                                <CopytoClipboard buttonText={null} text={selectedRecord?.grnNumber} />
                             </span>
                         </div>
                     </>

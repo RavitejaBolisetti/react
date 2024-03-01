@@ -31,14 +31,11 @@ export const VehicleCustomerSearchForm = (props) => {
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
                     <Button onClick={onCloseAction} danger>
                         {translateContent('global.buttons.cancel')}
                     </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
+                    <Button htmlType="submit" type="primary" className={styles.marL10}>
                         {translateContent('vehicleDetail.placeholder.select')}
                     </Button>
                 </Col>

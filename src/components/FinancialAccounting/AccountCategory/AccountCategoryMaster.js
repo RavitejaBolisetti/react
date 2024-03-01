@@ -36,6 +36,9 @@ const mapStateToProps = (state) => {
                 AccountCategoryDocumentDescription: { isLoaded: isAccountCategoryDocumentDescriptionLoaded = false, data: accountCategoryDocumentDescription = [] },
             },
         },
+        common: {
+            Header: { data: headerData },
+        },
     } = state;
 
     let returnValue = {
@@ -51,6 +54,7 @@ const mapStateToProps = (state) => {
         financialAccountData,
         isAccountCategoryDocumentDescriptionLoaded,
         documentDescriptionData: accountCategoryDocumentDescription,
+        headerData,
     };
     return returnValue;
 };
@@ -79,12 +83,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountCategoryMain = (props) => {
-    const { moduleTitle, userId, showGlobalNotification, taxChargeCategoryCodeData, totalRecords, fetchAccountCategory, listShowLoadingAccountCategory, saveData, accountCategoryData, fetchApplicationMenu, applicationMenuData, listShowLoadingApplicationMenu, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, listShowLoadingFinancialAccountHead, financialAccountData, isDocumentDescriptionLoaded, documentDescriptionData, fetchDocumentDescription, listShowLoadingDocumentDescription, pageTitle } = props;
+    const { moduleTitle, userId, showGlobalNotification, taxChargeCategoryCodeData, totalRecords, fetchAccountCategory, listShowLoadingAccountCategory, saveData, accountCategoryData, fetchApplicationMenu, applicationMenuData, listShowLoadingApplicationMenu, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, listShowLoadingFinancialAccountHead, financialAccountData, isDocumentDescriptionLoaded, documentDescriptionData, fetchDocumentDescription, listShowLoadingDocumentDescription, headerData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
 
+    const [userType, setUserType] = useState('');
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -241,6 +246,11 @@ export const AccountCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accountCategory]);
 
+    useEffect(() => {
+        setUserType(headerData?.userType);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [headerData, userId]);
+
     const handleReferesh = () => {
         setShowDataLoading(true);
         setRefershData(!refershData);
@@ -328,7 +338,7 @@ export const AccountCategoryMain = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -363,7 +373,7 @@ export const AccountCategoryMain = (props) => {
         page,
         setPage,
         isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(handleButtonClick, userType),
         tableData: accountCategoryData,
         handleButtonClick: () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD }),
     };
@@ -379,6 +389,7 @@ export const AccountCategoryMain = (props) => {
         handleButtonClick,
         title: translateContent('accountCategory.label.accountCategoryCode'),
         tableData: accountCategoryData,
+        userType,
     };
 
     return (

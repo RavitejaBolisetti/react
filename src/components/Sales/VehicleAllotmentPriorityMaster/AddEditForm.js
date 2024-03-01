@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, onFinish, typeData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { data, productHierarchyList, viewVehicleAllotData, roleData } = props;
+    const { data, modelData, viewVehicleAllotData, roleData } = props;
 
     const getRoleName = (value) => {
         return roleData?.find((i) => i?.key === value)?.value;
@@ -87,7 +87,7 @@ const AddEditFormMain = (props) => {
         formActionType,
         roleData,
         data,
-        productHierarchyList,
+        modelData,
     };
 
     const buttonProps = {
@@ -116,12 +116,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('vehicleAllotmentPriorityMaster.label.oldModelExchange')} initialValue={formData?.oldModelGroup} name="oldModelGroup" rules={[validateRequiredInputField(translateContent('vehicleAllotmentPriorityMaster.label.oldModel'))]}>
-                                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, disabled: formActionType?.editMode ? true : false, placeholder: preparePlaceholderSelect('old model') })}
+                                        {customSelectBox({ data: modelData, fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, disabled: formActionType?.editMode ? true : false, placeholder: preparePlaceholderSelect('old model') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label={translateContent('vehicleAllotmentPriorityMaster.label.newModelBooking')} initialValue={formData?.newModelGroup} name="newModelGroup" rules={[validateRequiredInputField(translateContent('vehicleAllotmentPriorityMaster.label.newModel'))]}>
-                                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, disabled: formActionType?.editMode ? true : false, placeholder: preparePlaceholderSelect('new model') })}
+                                        {customSelectBox({ data: modelData, fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, disabled: formActionType?.editMode ? true : false, placeholder: preparePlaceholderSelect('new model') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -135,7 +135,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item> */}
                                     <Form.Item
                                         initialValue={formatDateToCalenderDate(formData?.effectiveToDate)}
-                                        label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveFromDate')}
+                                        label={translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')}
                                         name="effectiveToDate"
                                         rules={[
                                             validateRequiredSelectField(translateContent('vehicleAllotmentPriorityMaster.label.effectiveToDate')),

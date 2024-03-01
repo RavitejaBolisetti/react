@@ -13,12 +13,14 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 
 const { TextArea } = Input;
 
 export const RejectRequestForm = (props) => {
-    const { formData, cancelDeliveryNoteForm, onFinish, cancelModalCloseAction, retailMonth, typeData, yesRetailMonth, setYesRetailMonth } = props;
-
+    const { formData, cancelDeliveryNoteForm, onFinish, cancelModalCloseAction, retailMonth, typeData, yesRetailMonth, setYesRetailMonth, isCancelFormLoading } = props;
+    const isFormLoading = { disabled: isCancelFormLoading };
+    
     return (
         <Form autoComplete="off" layout="vertical" form={cancelDeliveryNoteForm} onFinish={onFinish}>
             {retailMonth ? (
@@ -60,14 +62,14 @@ export const RejectRequestForm = (props) => {
             {retailMonth ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Button onClick={cancelModalCloseAction} danger className={styles.fullWidth}>
-                            Cancel
+                        <Button {...isFormLoading} onClick={cancelModalCloseAction} danger className={styles.fullWidth}>
+                            {translateContent('global.buttons.cancel')}
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Button className={styles.fullWidth} htmlType="submit" type="primary">
-                            Submit
+                        <Button {...isFormLoading} className={styles.fullWidth} htmlType="submit" type="primary">
+                            {translateContent('global.buttons.submit')}
                         </Button>
                     </Col>
                 </Row>
@@ -77,20 +79,14 @@ export const RejectRequestForm = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Button onClick={cancelModalCloseAction} danger className={styles.fullWidth}>
-                                        No
+                                    <Button {...isFormLoading} onClick={cancelModalCloseAction} danger className={styles.fullWidth}>
+                                        {translateContent('global.buttons.no')}
                                     </Button>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Button
-                                        className={styles.fullWidth}
-                                        onClick={() => {
-                                            setYesRetailMonth(false);
-                                        }}
-                                        type="primary"
-                                    >
-                                        Yes
+                                    <Button {...isFormLoading} className={styles.fullWidth} onClick={() => setYesRetailMonth(false)} type="primary">
+                                        {translateContent('global.buttons.yes')}
                                     </Button>
                                 </Col>
                             </Row>
@@ -99,14 +95,14 @@ export const RejectRequestForm = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Button onClick={cancelModalCloseAction} danger className={styles.fullWidth}>
-                                        Cancel
+                                    <Button {...isFormLoading} onClick={cancelModalCloseAction} danger className={styles.fullWidth}>
+                                        {translateContent('global.buttons.cancel')}
                                     </Button>
                                 </Col>
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Button className={styles.fullWidth} onClick={onFinish} type="primary">
-                                        Submit
+                                    <Button {...isFormLoading} className={styles.fullWidth} onClick={onFinish} type="primary">
+                                        {translateContent('global.buttons.submit')}
                                     </Button>
                                 </Col>
                             </Row>

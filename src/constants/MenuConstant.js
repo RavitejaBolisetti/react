@@ -214,17 +214,18 @@ export const MenuConstant = {
         parentMenuId: 'COMN-11',
     },
 
-    [getMenyKey('SRST-2.2')]: {
-        key: 'SRST-2.2',
+    [getMenyKey('SRST-02.02')]: {
+        key: 'SRST-02.02',
         link: routing.ROUTING_RSA_REGISTRATION,
         icon: undefined,
-        parentMenuId: 'SRST-2',
+        parentMenuId: 'SRST-02',
     },
-    [getMenyKey('SRST-3.3')]: {
-        key: 'SRST-3.3',
+
+    [getMenyKey('SRST-03.03')]: {
+        key: 'SRST-03.03',
         link: routing.ROUTING_AMC_REGISTRATION,
         icon: undefined,
-        parentMenuId: 'SRST-3',
+        parentMenuId: 'SRST-03',
     },
     [getMenyKey('SACT-03.04')]: {
         key: 'SACT-03.04',
@@ -545,6 +546,30 @@ export const MenuConstant = {
         slug: 'vehicle-delivery-note-report',
     },
 
+    [getMenyKey('SRSR-09.02')]: {
+        key: 'SRSR-09.02',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SRSR-02.09',
+        slug: 'enrolment_transaction_report',
+    },
+
+    [getMenyKey('SRSR-03.01')]: {
+        key: 'SRSR-03.01',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SRSR-02.03',
+        slug: 'amc_report',
+    },
+
+    [getMenyKey('SACR-04.25')]: {
+        key: 'SACR-04.25',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'otf_so_not_mapped_report',
+    },
+
     [getMenyKey('SACR-05.16')]: {
         key: 'SACR-05.16',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
@@ -718,6 +743,13 @@ export const MenuConstant = {
         parentMenuId: 'SACT-04',
     },
 
+    [getMenyKey('SACT-04.06')]: {
+        key: 'SACT-04.06',
+        link: routing.ROUTING_VEHICLE_CHECKLIST_MASTER,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
     [getMenyKey('SACT-04.07')]: {
         key: 'SACT-04.07',
         link: routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST,
@@ -795,22 +827,58 @@ export const MenuConstant = {
         parentMenuId: 'FINA-05',
     },
 
-    [getMenyKey('SACT-05')]: {
-        key: 'SACT-05',
-        link: routing.ROUTING_VIN_BLOCK_MASTER,
-        icon: undefined,
-        parentMenuId: 'Sales',
-    },
     [getMenyKey('SA-EV-01')]: {
         key: 'SA-EV-01',
         link: routing.ROUTING_CHARGER_INSTALLATION_PROCESS,
         icon: undefined,
         parentMenuId: 'SACT-06.06',
     },
-    [getMenyKey('SRST-1.2')]: {
-        key: 'SRST-1.2',
+
+    [getMenyKey('SRST-01.02')]: {
+        key: 'SRST-01.02',
         link: routing.ROUTING_SHIELD_SCHEME_REGISTER,
         icon: undefined,
-        parentMenuId: 'SRST-1',
+        parentMenuId: 'SRST-01',
+    },
+
+    [getMenyKey('SACT-06.09')]: {
+        key: 'SACT-06.09',
+        link: routing.ROUTING_VIN_BLOCK_MASTER,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
+    [getMenyKey('SACT-06.10')]: {
+        key: 'SACT-06.10',
+        link: routing.ROUTING_CO_DEALER_INVOICE,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
+    [getMenyKey('SACT-06.11')]: {
+        key: 'SACT-06.11',
+        link: routing.ROUTING_OTF_BLOCK_MASTER,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
+    [getMenyKey('SACT-06.12')]: {
+        key: 'SACT-06.12',
+        link: routing.ROUTING_RSM_ASM_APPROVAL,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
+    [getMenyKey('SACT-06.13')]: {
+        key: 'SACT-06.13',
+        link: routing.ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+    [getMenyKey('SACT-07')]: {
+        key: 'SACT-07',
+        link: routing.ROUTING_CENTRAL_FAME_SUBSIDY,
+        icon: undefined,
+        parentMenuId: 'Sales',
     },
 };

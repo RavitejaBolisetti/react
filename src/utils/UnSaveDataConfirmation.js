@@ -8,6 +8,27 @@ import { LANGUAGE_EN } from 'language/en';
 import { ConfirmationModal } from './ConfirmationModal';
 import { translateContent } from './translateContent';
 
+export const handleUnSavedChange = ({ buttonData, setButtonData, unSavedDataModalProps, setUnSavedModelVisible, successFn = undefined, formActionType = undefined }) => {
+    const onCloseAction = () => setUnSavedModelVisible({ ...unSavedDataModalProps, isVisible: false });
+
+    const onSubmitAction = () => {
+        successFn && successFn();
+        setUnSavedModelVisible({ ...unSavedDataModalProps, isVisible: false });
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
+
+    if (buttonData?.formBtnActive && !formActionType?.addMode) {
+        setUnSavedModelVisible({
+            ...unSavedDataModalProps,
+            isVisible: true,
+            onSubmitAction,
+            onCloseAction,
+        });
+    } else {
+        successFn();
+    }
+};
+
 export const UnSaveDataConfirmation = ({ isVisible = false, onCloseAction, onSubmitAction }) => {
     const unsavedDataModalProps = {
         isVisible,

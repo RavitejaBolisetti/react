@@ -78,14 +78,14 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
     // ];
 
     useEffect(() => {
-        if (userId && selectedId) {
+        if (userId && selectedId?.id) {
             setButtonData({ ...buttonData, formBtnActive: true });
             const extraParams = [
                 {
-                    key: 'supplierInvoiceNumber',
-                    title: 'supplierInvoiceNumber',
-                    value: selectedId,
-                    name: 'Supplier Invoice Number',
+                    key: 'id',
+                    title: 'id',
+                    value: selectedId?.id,
+                    name: 'id',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });

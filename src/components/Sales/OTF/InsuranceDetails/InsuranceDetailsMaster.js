@@ -11,15 +11,17 @@ import { bindActionCreators } from 'redux';
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
+import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
-const mapStateToProps = (state) => {
+
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
+                InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, data: insuranceData = [] },
             },
             PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
         },
@@ -30,6 +32,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         insuranceData,
         isLoading,
+        isLoadingOnSave,
+        showSpinner: !props?.formActionType?.viewMode,
         isInsuranceCompanyDataLoaded,
         insuranceCompanies,
     };
@@ -44,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: insuranceDetailDataActions.listShowLoading,
             resetData: insuranceDetailDataActions.reset,
             saveData: insuranceDetailDataActions.saveData,
-
+            saveFormShowLoading: insuranceDetailDataActions.saveFormShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -52,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InsuranceDetailsMasterBase = (props) => {
-    const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, saveFormShowLoading, showGlobalNotification } = props;
     const { form, selectedRecordId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
 
@@ -107,10 +111,6 @@ const InsuranceDetailsMasterBase = (props) => {
         pageType,
     };
 
-    const myProps = {
-        ...props,
-    };
-
     const onFinish = (values) => {
         const recordId = insuranceData?.id || '';
         const data = { ...values, id: recordId, otfId: selectedRecordId };
@@ -121,7 +121,7 @@ const InsuranceDetailsMasterBase = (props) => {
         } else {
             const onSuccess = (res) => {
                 setButtonData({ ...buttonData, formBtnActive: false });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
             };
@@ -133,7 +133,7 @@ const InsuranceDetailsMasterBase = (props) => {
             const requestData = {
                 data: data,
                 method: insuranceData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
+                setIsLoading: saveFormShowLoading,
                 userId,
                 onError,
                 onSuccess,
@@ -161,11 +161,11 @@ const InsuranceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} />
+                    <FormActionButton {...props} />
                 </Col>
             </Row>
         </Form>
     );
 };
 
-export const InsuranceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(InsuranceDetailsMasterBase);
+export const InsuranceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(InsuranceDetailsMasterBase));

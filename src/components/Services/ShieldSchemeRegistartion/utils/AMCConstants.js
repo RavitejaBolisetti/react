@@ -46,7 +46,7 @@ export const AMC_CONSTANTS = {
     },
     APPROVED: {
         id: 8,
-        key: 'APPR',
+        key: 'COM',
         title: 'Approved',
     },
     REJECTED: {
@@ -76,7 +76,7 @@ export const AMC_CONSTANTS = {
     },
     CANCELLED: {
         id: 17,
-        key: 'CNCL',
+        key: 'CAN',
         title: 'Cancelled',
     },
     REGISTRATION_REQUEST: {
@@ -86,7 +86,7 @@ export const AMC_CONSTANTS = {
     },
     CANCELLATION_REQUEST: {
         id: 19,
-        key: 'CNCL',
+        key: 'CAN',
         title: 'Cancellation Request',
     },
     WORKFLOW_REJECT: {
@@ -109,10 +109,24 @@ export const AMC_CONSTANTS = {
         key: 'DP',
         title: 'Paid',
     },
-    CUSTOMER_MOBILE_NO : {
-        id : 24,
-        key : 'customerMobileNo',
-        title : 'customer mobile number parameter'
-    }
-
+    CUSTOMER_MOBILE_NO: {
+        id: 24,
+        key: 'customerMobileNo',
+        title: 'customer mobile number parameter',
+    },
+    EMPLOYEE: {
+        id: 25,
+        key: 'E',
+        title: 'Employee key',
+    },
+    MANAGER: {
+        id: 26,
+        key: 'M',
+        title: 'Manager Key',
+    },
+    RSA_APPROVED: {
+        id: 27,
+        key: 'Completed',
+        title: 'Approved',
+    },
 };

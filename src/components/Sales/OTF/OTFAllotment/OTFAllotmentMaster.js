@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { filteredListData: productHierarchyData = [] },
             vehicleAllotmentData: {
-                vehicleAllotment: { data: allotmentSearchedList, filter: filterString },
+                vehicleAllotment: { data: allotmentSearchedList, isLoading, filter: filterString },
             },
         },
     } = state;
@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
         typeData,
         moduleTitle,
         filterString,
+        isLoading,
         allotmentSearchedList,
         productHierarchyData,
     };

@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ApplicationMaster: { applicationDetailsData, applicationData, isApplicationDeatilsLoading, isLoading },
             FinancialAccounting: {
-                GstIrnTransactionDetails: { data: gstIrnTreeData = [] },
+                GstIrnTransactionDetails: { isLoaded: isGSTIRNDataLoaded = false, isLoading: isGSTIRNLoading = false, data: gstIrnTreeData = [] },
             },
         },
     } = state;
@@ -37,14 +37,14 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-
         vehicleStatusType: typeData[PARAM_MASTER.VEHCL_STATS.id],
-
         isLoading,
+        isGSTIRNLoading,
         moduleTitle,
         menuData: applicationData,
         applicationDetailsData,
         isApplicationDeatilsLoading,
+        isGSTIRNDataLoaded,
         gstIrnTreeData,
     };
     return returnValue;
@@ -59,8 +59,6 @@ const mapDispatchToProps = (dispatch) => ({
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
             onSaveShowLoading: applicationMasterDataActions.onSaveShowLoading,
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
-            fetchList: applicationMasterDataActions.fetchMenuList,
-
             applicationListShowLoading: menuDataActions.applicationListShowLoading,
 
             fetchListGstIrnTree: gstIrnTransactionAction.fetchList,
@@ -73,27 +71,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const IrnTransactionListMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading } = props;
-    const { form, selectedId, onFinish, applicationMasterDataShowLoading } = props;
+    const { isGSTIRNLoading, gstIrnTreeData, userId, section, form, onFinish } = props;
     const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading, fetchListGstIrnTree, listShowLoadingTree } = props;
-    const { gstIrnTreeData } = props;
-
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
-    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    // const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
     const [searchValue, setSearchValue] = useState('');
-
-    useEffect(() => {
-        if (userId) {
-            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, screenId: 'APPMST' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]); //menuType
 
     useEffect(() => {
         if (userId) {
@@ -125,22 +108,22 @@ const IrnTransactionListMasterBase = (props) => {
         setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
             applicationCall(keys[0]);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
         }
     };
+
     const myProps = {
-        isTreeViewVisible,
-        // handleTreeViewVisiblity,
+        isTreeViewVisible: true,
         selectedTreeKey,
         selectedTreeSelectKey,
         setSelectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: gstIrnTreeData, //menuData,
+        treeData: gstIrnTreeData,
         setSearchValue,
         searchValue,
         callOnForm: true,
+        isLoading: isGSTIRNLoading,
     };
 
     return (
@@ -163,15 +146,7 @@ const IrnTransactionListMasterBase = (props) => {
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Spin spinning={isApplicationDeatilsLoading}>
                             {selectedTreeKey?.length && applicationDetailsData?.length ? (
-                                <>
-                                    <ViewDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
-
-                                    {/* <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} /> */}
-
-                                    {/* <div className={styles.viewContainerFooter}>
-                                    <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
-                                </div> */}
-                                </>
+                                <ViewDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
                             ) : (
                                 <div className={styles.emptyContainer}>
                                     <Empty

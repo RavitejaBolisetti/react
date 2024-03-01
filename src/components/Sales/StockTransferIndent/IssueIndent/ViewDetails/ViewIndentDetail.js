@@ -28,21 +28,21 @@ const ViewIndentDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.indentNumber')}>{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.indentDate')}>{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.indentStatus')}>{checkAndSetDefaultValue(viewData?.indentStatus, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.indentToLocation')}>{checkAndSetDefaultValue(viewData?.indentToLocation, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.indentNumber')}>{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.indentDate')}>{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.indentStatus')}>{checkAndSetDefaultValue(viewData?.indentStatus, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.indentToLocation')}>{checkAndSetDefaultValue(viewData?.indentToLocation, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.modelDescription')}>{checkAndSetDefaultValue(viewData?.modelDescription, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.modelCode')}>{checkAndSetDefaultValue(viewData?.modelCode, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.requestedQuantity')}>{checkAndSetDefaultValue(String(viewData?.requestedQuantity), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.cancelledQuantity')}>{checkAndSetDefaultValue(String(viewData?.cancelledQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.modelDescription')}>{checkAndSetDefaultValue(viewData?.modelDescription, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.modelCode')}>{checkAndSetDefaultValue(viewData?.modelCode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.requestedQuantity')}>{checkAndSetDefaultValue(String(viewData?.requestedQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.cancelledQuantity')}>{checkAndSetDefaultValue(String(viewData?.cancelledQuantity), isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.issuedAndNotReceivedQuantity')}>{checkAndSetDefaultValue(String(viewData?.issuedAndNotReceivedQuantity), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.receivedQuantity')}>{checkAndSetDefaultValue(String(viewData?.receivedQuantity), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label={translateContent('stockTransferIndent.isueIndent.viewDetails.label.balancedQuantity')}>{checkAndSetDefaultValue(String(viewData?.balancedQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.issuedAndNotReceivedQuantity')}>{checkAndSetDefaultValue(String(viewData?.issuedAndNotReceivedQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.receivedQuantity')}>{checkAndSetDefaultValue(String(viewData?.receivedQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label={translateContent('stockTransferIndent.issueIndent.viewDetails.label.balancedQuantity')}>{checkAndSetDefaultValue(String(viewData?.balancedQuantity), isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

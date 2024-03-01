@@ -8,11 +8,12 @@ import { Row, Col, Input, Form, DatePicker, Card, Select } from 'antd';
 import { translateContent } from 'utils/translateContent';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { CardSkeleton } from 'components/common/Skeleton';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, buttonData, setButtonData, supplierTypeData } = props;
+    const { isLoading, formData, form, buttonData, setButtonData, supplierTypeData } = props;
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -33,7 +34,7 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    return (
+    return !isLoading ? (
         <Card>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -107,6 +108,8 @@ const AddEditFormMain = (props) => {
                 </Col>
             </Row>
         </Card>
+    ) : (
+        <CardSkeleton title={false} contentHeight={350} />
     );
 };
 

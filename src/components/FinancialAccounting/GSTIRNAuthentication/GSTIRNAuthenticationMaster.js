@@ -17,14 +17,15 @@ import { UploadUtil } from 'utils/Upload';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
 import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
-// import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { gstIrnLoginAction } from 'store/actions/data/financialAccounting/gstIrnLoginAction';
 import { selectGstToDocAction } from 'store/actions/data/financialAccounting/selectGstToDocAction';
 import { BASE_URL_GST_DOCID_NAME as customURL } from 'constants/routingApi';
 
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { drawerTitle } from 'utils/drawerTitle';
+
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -36,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = translateContent('gstIRNAuthentication.heading.moduleTitle');
+    const moduleTitle = translateContent('gstIRNAuthentication.gstBranchAccessibleMaster.heading.moduleTitle');
     let returnValue = {
         userId,
         accessToken,
@@ -71,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GSTIRNAuthenticationMasterBase = (props) => {
     const { userId, data, showGlobalNotification } = props;
-    const { typeData } = props;
+    const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
     const { listShowLoadingGstLogin, fetchListGstLogin, listShowLoading, saveData } = props;
     const { fetchGstDoc, downloadFile } = props;
@@ -81,7 +82,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const [selectedId, setSelectedId] = useState();
     const [finalData, setFinalData] = useState([]);
     const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
@@ -162,9 +162,9 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     useEffect(() => {
         const defaultSection = GST_IRN_SECTION.BRANCH_ACCESSIBLE.id;
-        setDefaultSection(defaultSection);
         setSetionName(GST_IRN_SECTION);
         setSection(defaultSection);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -209,9 +209,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         const data = { ...values, docId: uploadedFile ? uploadedFile : docData.documentId };
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchListGstLogin({ setIsLoading: listShowLoadingGstLogin, userId, onSuccessAction, onErrorAction });
-
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
             setCurrentSection(1);
@@ -262,6 +260,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     };
 
     const containerProps = {
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         record: selectedRecord,
         form,
         formActionType,

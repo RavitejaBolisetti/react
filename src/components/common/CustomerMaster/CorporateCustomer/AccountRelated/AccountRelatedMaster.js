@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CorporateAccounts: { isLoaded: isDataLoaded = false, isLoading, data: accountData = {} },
+                CorporateAccounts: { isLoaded: isDataLoaded = false, isLoading, data: accountData = {}, isLoadingOnSave },
             },
         },
     } = state;
@@ -36,6 +36,8 @@ const mapStateToProps = (state) => {
         accountData,
         isLoading,
         moduleTitle,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -48,6 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: corporateAccountsRelatedDataActions.saveData,
             resetData: corporateAccountsRelatedDataActions.reset,
             listShowLoading: corporateAccountsRelatedDataActions.listShowLoading,
+            saveFormShowLoading: corporateAccountsRelatedDataActions.saveFormShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -58,6 +61,7 @@ export const AccountRelatedMasterBase = (props) => {
     const { form, handleFormValueChange } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, isLoading, resetData } = props;
     const { formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
+    const { saveFormShowLoading } = props;
 
     const [formData, setFormData] = useState();
 
@@ -110,14 +114,12 @@ export const AccountRelatedMasterBase = (props) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        const onError = (message) => showGlobalNotification({ message });
 
         const requestData = {
-            data: data,
+            data,
             method: accountData?.customerId ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,

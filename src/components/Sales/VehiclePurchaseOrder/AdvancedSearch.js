@@ -20,6 +20,8 @@ import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, typeData } = props;
+    const { isReadOnly = true } = props;
+    const disabledProps = { disabled: isReadOnly };
     const {
         filterString,
         setFilterString,
@@ -53,7 +55,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.orderType || PURCHASE_ORDER_TYPE_STATUS.AGAINSTSTOCK.key} label={translateContent('vehiclePurchaseOrder.label.orderType')} name="orderType" rules={[validateRequiredSelectField(translateContent('vehiclePurchaseOrder.validation.orderType'))]}>
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField} {...disabledProps}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -82,14 +84,11 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
                     <Button onClick={handleCancelFilter} danger>
                         {translateContent('global.buttons.reset')}
                     </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary" data-testid="searchButton">
+                    <Button htmlType="submit" type="primary" data-testid="searchButton" className={styles.marL10}>
                         {translateContent('global.buttons.search')}
                     </Button>
                 </Col>

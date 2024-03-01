@@ -58,7 +58,7 @@ export const ViewDetail = (props) => {
                     })}
                 </>
             ) : (
-                viewMode && <NoDataFound informtion={noDataTitle} />
+                viewMode && <NoDataFound information={noDataTitle} />
             )}
         </div>
     );

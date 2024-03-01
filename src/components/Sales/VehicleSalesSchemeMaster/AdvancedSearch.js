@@ -54,6 +54,7 @@ export const AdvancedSearchFrom = (props) => {
         handleResetFilter,
     };
 
+    
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
         const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
         if (bool) {

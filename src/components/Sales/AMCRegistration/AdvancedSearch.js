@@ -63,7 +63,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={filterString?.dealerLocation} label={translateContent('amcRegistration.label.dealerLocation')} name="dealerLocation">
-                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.dealerLocation')), fieldNames: { key: 'locationCode', value: 'dealerLocationName' } })}
+                            {customSelectBox({ data: dealerLocations, placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.dealerLocation')), fieldNames: { key: 'locationId', value: 'dealerLocationName' } })}
                         </Form.Item>
                     </Col>
                 </Row>
@@ -95,14 +95,13 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
+            
+
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
                     <Button onClick={handleResetFilter} danger>
                         {translateContent('global.buttons.reset')}
                     </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
+                    <Button htmlType="submit" type="primary" className={styles.marL10}>
                         {translateContent('global.buttons.apply')}
                     </Button>
                 </Col>

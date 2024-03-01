@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { tableColumnUnMapping } from './tableColumnUnmapping';
 import { connect } from 'react-redux';
 
@@ -21,6 +21,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { ListDataTable } from 'utils/ListDataTable';
 
 import { Form } from 'antd';
+import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [], isLoading: isConfigurableLoading = false },
             OTFSoMapping: {
-                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [], filter: filterString },
+                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [], filter: filterString, isLoadingOnSave },
             },
         },
 
@@ -51,6 +52,8 @@ const mapStateToProps = (state) => {
 
         isConfigurableLoading,
         filterString,
+
+        isLoadingOnSave,
     };
 
     return returnValue;
@@ -63,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfSoMappingDataActions.fetchList,
             listShowLoading: otfSoMappingDataActions.listShowLoading,
             saveData: otfSoMappingDataActions.saveData,
-            resetData: otfSoMappingDataActions.reset,
+            saveFormShowLoading: otfSoMappingDataActions.saveFormShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -71,24 +74,34 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const UnmappingAndCancellationMain = (props) => {
-    const { userId, dynamicPagination = true, listShowLoading, showGlobalNotification, otfSomappingData, selectedKey, MappingUnmapping, saveData, isOtfSoMappingLoading } = props;
+    const { userId, dynamicPagination = true, saveFormShowLoading, isLoadingOnSave, showGlobalNotification, otfSomappingData, selectedKey, saveData, isOtfSoMappingLoading, advanceFilterString, setadvanceFilterString } = props;
     const [form] = Form.useForm();
-
-    const pageIntialState = {
-        pageSize: 10,
-        current: 1,
-    };
 
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
 
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [page, setPage] = useState({ ...pageIntialState });
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [buttonType, setButtonType] = useState(BUTTON_NAME?.UNMAP?.key);
     const [formData, setFormData] = useState('');
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
+    useEffect(() => {
+        setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key });
+        return () => {
+            setadvanceFilterString({});
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    const showErrorMessageCancleSo = ({ record = null, buttonAction }) => {
+        if (buttonAction === BUTTON_NAME?.CANCEL?.key && record?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.CRD_1 && record?.otfNumber) {
+            showGlobalNotification({ message: translateContent('bookingSoMapping.validation.mappedSoCancel') });
+            return true;
+        }
+        return false;
+    };
+    const handleButtonClick = (props) => {
+        const { record = null, buttonAction } = props;
+        if (showErrorMessageCancleSo({ ...props })) return false;
         record && setFormData({ ...record, buttonAction });
         buttonAction && setButtonType(buttonAction);
         buttonAction === BUTTON_NAME?.UNMAP?.key && setButtonData({ ...buttonData, formBtnActive: true });
@@ -127,7 +140,7 @@ const UnmappingAndCancellationMain = (props) => {
     const onFinish = (values) => {
         const data = { otfNumber: values?.otfNumber, soNumber: values?.soNumber || '', action: formData?.buttonAction, cancellationRemarks: values?.cancellationRemarks, mapStatusCode: selectedKey };
         const onSuccess = (res) => {
-            MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key);
+            setadvanceFilterString({ status: OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key });
             setFormData();
             setIsFormVisible(false);
             form.resetFields();
@@ -140,9 +153,9 @@ const UnmappingAndCancellationMain = (props) => {
 
         const requestData = {
             customURL: CustomUrl,
-            data: data,
+            data,
             method: 'put',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -150,16 +163,20 @@ const UnmappingAndCancellationMain = (props) => {
 
         saveData(requestData);
     };
+
+    const handlePageChange = (values) => setadvanceFilterString({ ...advanceFilterString, ...values });
+
     const tableProps = {
         dynamicPagination,
         totalRecords: otfSomappingData?.totalRecords || 'NA',
-        page,
-        setPage,
         tableColumn: tableColumnUnMapping({ handleButtonClick, actionButtonVisibility, customButtonProperties }),
         tableData: otfSomappingData?.paginationData,
         showAddButton: false,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         isLoading: isOtfSoMappingLoading,
+        filterString: advanceFilterString,
+        page: advanceFilterString,
+        setPage: handlePageChange,
     };
     const formProps = {
         form,
@@ -171,11 +188,10 @@ const UnmappingAndCancellationMain = (props) => {
         buttonData,
         setButtonData,
         saveButtonName: buttonType === BUTTON_NAME?.UNMAP?.key ? BUTTON_NAME?.UNMAP?.key : BUTTON_NAME?.CANCEL?.name,
-        handleFormValueChange: (values) => {
-            setButtonData({ ...buttonData, formBtnActive: true });
-        },
+        handleFormValueChange: () => setButtonData({ ...buttonData, formBtnActive: true }),
         buttonType,
         formData,
+        isLoadingOnSave,
     };
 
     return (

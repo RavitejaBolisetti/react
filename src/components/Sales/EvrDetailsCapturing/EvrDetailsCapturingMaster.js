@@ -39,6 +39,9 @@ const mapStateToProps = (state) => {
                 EvrDetailsCapturingSearchList: { isLoaded: isEvrDetailLoaded = false, isDetailLoaded = false, isLoading: isEvrDetailLoading, data, detailData: evrDetailData = [], filter: filterString },
             },
         },
+        common: {
+            Header: { dealerLocationId },
+        },
     } = state;
 
     const moduleTitle = translateContent('evrDetailsCapturing.heading.moduleTitle');
@@ -56,6 +59,7 @@ const mapStateToProps = (state) => {
         evrDetailData,
         isDetailLoaded,
         grnStatusType: typeData[PARAM_MASTER?.GRN_STATS?.id],
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -80,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EvrDetailsCapturingMasterBase = (props) => {
-    const { filterString, setFilterString, fetchList, evrDetailData, isDetailLoaded, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList } = props;
+    const { dealerLocationId, filterString, setFilterString, fetchList, evrDetailData, isDetailLoaded, isEvrDetailLoading, saveData, listShowLoading, userId, data, fetchDetail, listProductMainShowLoading, fetchProductList } = props;
     const { typeData, evrStatusList, filteredStateData, productHierarchyData, totalRecords, showGlobalNotification, grnStatusType } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [modelCodeName, setModelCodeName] = useState();
@@ -207,6 +211,10 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         if (userId) {
             const extraParams = [
                 {
+                    key: 'manufactureOrgCode',
+                    value: 'LMM',
+                },
+                {
                     key: 'unit',
                     value: 'Sales',
                 },
@@ -222,7 +230,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
             fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, dealerLocationId]);
 
     useEffect(() => {
         if (userId) {
@@ -303,6 +311,10 @@ export const EvrDetailsCapturingMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
+        if (!value) {
+            searchForm.validateFields();
+            return false;
+        }
         setFilterString({ ...filterString, modelDescription: value, advanceFilter: true, current: 1 });
         searchForm.resetFields();
     };

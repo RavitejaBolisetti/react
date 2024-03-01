@@ -20,11 +20,10 @@ const AMCRegistrationDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, form } = props;
     const { registrationForm, formActionType, selectedOtfNumber, setSelectedOtfNumber, handleFormValueChange, showGlobalNotification } = props;
 
-    const { schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, schemeData, listShowLoading, fetchManagerList, managerData, fetchDetail } = props;
+    const { isOTFValidated, schemeForm, FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, employeeData, fetchEmployeeList, listEmployeeShowLoading, schemeData, listShowLoading, fetchManagerList, managerData, fetchDetail } = props;
 
     const [activeKey, setActiveKey] = useState([]);
-    // const [options, setOptions] = useState([]);
-    // const [selectedEmployees, setSelectedEmployee] = useState(false);
+
     const [selectedSaleType, setselectedSaleType] = useState('');
     const generateExtraParams = (key) => {
         const extraParams = [
@@ -55,15 +54,6 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         fetchManagerList({ setIsLoading: listEmployeeShowLoading, extraParams: generateExtraParams(AMC_CONSTANTS?.MANAGER?.key), userId });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload, formActionType]);
-    // useEffect(() => {
-    //     const employeeOption = employeeData?.map((item) => ({
-    //         label: item?.employeeName,
-    //         value: item?.employeeName,
-    //         key: item?.employeeCode,
-    //     }));
-    //     setOptions(employeeOption);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [employeeData]);
 
     useEffect(() => {
         if (selectedOtfNumber) {
@@ -77,8 +67,6 @@ const AMCRegistrationDetailsMasterBase = (props) => {
             showGlobalNotification({ message });
         };
         const onSuccessAction = (res) => {
-            // showGlobalNotification({ message });
-            // registrationForm.setFieldsValue({ ...res?.data?.amcRegistration });
             schemeForm.setFieldsValue({ igstAmount: res?.data?.amcSchemeDetails?.igstAmount, sgstAmount: res?.data?.amcSchemeDetails?.sgstAmount, cgstAmount: res?.data?.amcSchemeDetails?.cgstAmount, schemeTaxAmount: res?.data?.amcSchemeDetails?.schemeTaxAmount, schemeEndDate: formatDateToCalenderDate(res?.data?.amcSchemeDetails?.schemeEndDate) });
         };
         const extraParams = [
@@ -94,9 +82,13 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                 key: 'schemeCode',
                 value: schemeForm?.getFieldValue('schemeCode'),
             },
+            {
+                key: 'otfNumber',
+                value: registrationForm?.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key ? registrationForm?.getFieldValue('bookingNumber') : null,
+            },
         ];
         if (!registrationForm?.getFieldValue('saleType') || !schemeForm?.getFieldValue('schemeDiscount') || !schemeForm?.getFieldValue('schemeCode')) {
-            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
             schemeForm
@@ -117,37 +109,6 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         registrationForm.resetFields(['vin']);
     };
 
-    // const handleEmployeeNameSearch = (searchValue) => {
-    //     const extraParams = [
-    //         {
-    //             key: 'searchParam',
-    //             value: searchValue,
-    //         },
-    //     ];
-
-    //     const onSuccessAction = (res) => {
-    //         if (!res?.data?.length) {
-    //             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.noEmployeesFound') });
-    //             setButtonData({ ...buttonData, formBtnActive: false });
-    //         } else setButtonData({ ...buttonData, formBtnActive: true });
-    //     };
-
-    //     fetchEmployeeList({ setIsLoading: listEmployeeShowLoading, userId, extraParams, onSuccessAction });
-    // };
-
-    // const handleOnSelect = (key) => {
-    //     const selectedEmployee = employeeData?.find((i) => i.employeeName === key);
-    //     setSelectedEmployee(selectedEmployee);
-    //     if (selectedEmployee) {
-    //         form.setFieldsValue({
-    //             employeeName: selectedEmployee?.employeeName,
-    //             managerName: selectedEmployee?.managerName,
-    //         });
-    //     }
-    // };
-    // const handleOnClear = () => {
-    //     form.resetFields(['managerName']);
-    // };
     const handleSchemeDescriptionChange = (code) => {
         const selectedScheme = schemeData.find((i) => {
             return i?.schemeCode === code;
@@ -164,19 +125,15 @@ const AMCRegistrationDetailsMasterBase = (props) => {
                     .then(() => {
                         if (activeKey.length === 1 && formActionType?.addMode && (schemeForm?.getFieldsValue()?.hasOwnProperty('schemeDescription') || registrationForm.getFieldsValue()?.hasOwnProperty('saleType'))) {
                             setActiveKey(['schemeKey', 'regKey']);
-                        } else if (registrationForm.getFieldValue('saleType') === AMC_CONSTANTS?.MNM_FOC?.key && !registrationForm.getFieldValue('vin')) {
+                        } else if (!isOTFValidated && registrationForm.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key) {
+                            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.validateOTF') });
+                        } else if (registrationForm.getFieldValue('priceType') === AMC_CONSTANTS?.MNM_FOC?.key && !registrationForm.getFieldValue('vin')) {
                             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.noVINFound') });
                             setButtonData({ ...buttonData, formBtnActive: false });
-                        }
-                        // else if (!options?.length) {
-                        //     setButtonData({ ...buttonData, formBtnActive: false });
-                        //     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('amcRegistration.validation.incorrectEmployeeName') });
-                        // }
-                        else {
+                        } else {
                             setRequestPayload({
                                 ...requestPayload,
                                 amcRegistration: registrationForm.getFieldsValue(),
-                                //  employeeCode: selectedEmployees?.employeeCode || employeeData?.find((value) => requestPayload?.amcRegistration?.employeeCode === value?.employeeCode)?.employeeCode },
                                 amcSchemeDetails: schemeForm.getFieldsValue(),
                             });
                             handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -238,6 +195,7 @@ const AMCRegistrationDetailsMasterBase = (props) => {
         selectedSaleType,
         employeeData,
         managerData,
+
         ...props,
     };
 

@@ -11,7 +11,7 @@ import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick, toggleButton) => {
+export const tableColumn = ({ handleButtonClick, toggleButton, dealerParentsLovList }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('stockTransferIndent.label.indentNumber'),
@@ -26,11 +26,20 @@ export const tableColumn = (handleButtonClick, toggleButton) => {
             render: (_, record) => (record?.indentDate ? convertDateMonthYear(record?.indentDate) : ''),
         }),
         tblPrepareColumns({
+            title: translateContent('stockTransferIndent.label.indentFromParent'),
+            dataIndex: 'fromParent',
+            width: '15%',
+        }),
+        tblPrepareColumns({
             title: translateContent('stockTransferIndent.label.fromLocation'),
             dataIndex: 'fromLocation',
             width: '15%',
         }),
-
+        tblPrepareColumns({
+            title: translateContent('stockTransferIndent.label.indentToParent'),
+            dataIndex: 'toParent',
+            width: '15%',
+        }),
         tblPrepareColumns({
             title: translateContent('stockTransferIndent.label.toLocation'),
             dataIndex: 'toLocation',

@@ -11,7 +11,6 @@ import { Row, Col, Form } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
-import { VIEW_ACTION } from 'utils/btnVisiblity';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -25,13 +24,14 @@ import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { BASE_URL_RSM_APPROVAL_FORM_DATA } from 'constants/routingApi';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             Sales: {
-                RSMApprovalSearch: { data, filter: filterString },
+                RSMApprovalSearch: { data, filter: filterString, isLoading },
             },
         },
     } = state;
@@ -45,6 +45,7 @@ const mapStateToProps = (state) => {
         totalRecords: data?.totalRecords || [],
         moduleTitle,
         filterString,
+        isLoading,
     };
     return returnValue;
 };
@@ -59,6 +60,8 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: rsmApprovalSearchDataAction.setFilter,
             resetData: rsmApprovalSearchDataAction.reset,
             saveData: rsmApprovalDataAction.saveData,
+            fetchRsmFormData: rsmApprovalDataAction.fetchData,
+
             showGlobalNotification,
         },
         dispatch
@@ -66,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RSMApprovalMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, showGlobalNotification, fetchRsmFormData, isLoading } = props;
     const { typeData } = props;
     const { filterString, setFilterString } = props;
 
@@ -83,18 +86,10 @@ export const RSMApprovalMasterBase = (props) => {
 
     const defaultBtnVisiblity = {
         closeBtn: true,
-        cancelBtn: false,
-        formBtnActive: true,
-        reject: true,
-        approve: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
@@ -133,13 +128,6 @@ export const RSMApprovalMasterBase = (props) => {
         setShowDataLoading(true);
     };
 
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     const extraParams = useMemo(() => {
         return [
             {
@@ -153,7 +141,7 @@ export const RSMApprovalMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'Value',
-                value: filterString?.searchParam || rsmStatusType,
+                value: filterString?.searchParam || RSM_APPROVAL_STATUS?.PENDING?.key,
                 canRemove: true,
                 filter: false,
             },
@@ -184,30 +172,30 @@ export const RSMApprovalMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current ?? 1,
                 canRemove: true,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -232,10 +220,10 @@ export const RSMApprovalMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const handleRequest = ({ requestType = false }) => {
+    const handleRequest = ({ requestType = false, requestContant = REQUEST_CONSTANT?.Reject?.value }) => {
         setRejectModalVisible(true);
-        requestType ? setRejectRequest(true) : setRejectRequest(false);
-        requestType ? setRequestType(REQUEST_CONSTANT?.Reject?.value) : setRequestType(REQUEST_CONSTANT?.Approve?.value);
+        setRejectRequest(requestType);
+        setRequestType(requestContant);
     };
 
     const handleResetFilter = () => {
@@ -244,36 +232,45 @@ export const RSMApprovalMasterBase = (props) => {
         }
         setFilterString({ searchParam: filterString?.searchParam });
     };
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
+    const getRsmAsmFormData = (record) => {
+        const onSuccessAction = (res) => {
+            const allowedActions = res?.data?.workflowMasterDetails?.allowedActions || [];
+            setFormData(res?.data);
+            setButtonData({ ...defaultBtnVisiblity, allowedActions });
+        };
+        const onErrorAction = (message) => {
+            setButtonData({ ...defaultBtnVisiblity });
+            showGlobalNotification({ message });
+        };
+        record && fetchRsmFormData({ setIsLoading: listShowLoading, userId, extraParams: [{ key: 'id', value: record?.id }], onSuccessAction, onErrorAction, customURL: BASE_URL_RSM_APPROVAL_FORM_DATA });
+    };
+    const handleButtonClick = ({ record = null }) => {
         form.resetFields();
         setFormData([]);
-        rsmStatusType === RSM_APPROVAL_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity }) : setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
-        setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
-        record && setFormData(record);
+        getRsmAsmFormData(record);
         setIsFormVisible(true);
     };
 
     const handleSearchChange = (value) => {
-        const searchValue = value.trim();
-        if (!searchValue) {
-            return;
+        if (value) {
+            setFilterString({ ...filterString, advanceFilter: true, dealerName: `${value?.trim()}` });
         }
-        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${searchValue}` });
     };
 
     const onFinish = (values) => {
         if (values?.status || requestType === REQUEST_CONSTANT?.Reject?.value) {
             let data = { ...values, request: requestType, id: formData?.id };
-            delete data?.status;
+            if (data?.hasOwnProperty('status')) {
+                delete data?.status;
+            }
             const onSuccess = (res) => {
                 form.resetFields();
                 rejectForm.resetFields();
                 setShowDataLoading(true);
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
                 setRejectModalVisible(false);
-                setButtonData({ ...buttonData, formBtnActive: false });
+                setButtonData({ ...defaultBtnVisiblity });
                 setIsFormVisible(false);
             };
 
@@ -282,7 +279,7 @@ export const RSMApprovalMasterBase = (props) => {
             };
 
             const requestData = {
-                data: data,
+                data,
                 method: 'put',
                 setIsLoading: listShowLoading,
                 userId,
@@ -312,14 +309,18 @@ export const RSMApprovalMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
-        setPage,
+
+        page: filterString,
+        setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
+        isLoading: showDataLoading,
+
         showAddButton: false,
-        handleAdd: handleButtonClick,
         noMessge: translateContent('global.generalMessage.noRecordsFound'),
-        rsmStatusType,
+        handleAdd: handleButtonClick,
+
+        filterString,
     };
 
     const removeFilter = (key) => {
@@ -327,8 +328,11 @@ export const RSMApprovalMasterBase = (props) => {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
+            const tempfilterString = filterString;
+            if (tempfilterString?.hasOwnProperty(key)) {
+                delete tempfilterString?.[key];
+            }
+            setFilterString({ ...tempfilterString });
         }
     };
 
@@ -377,6 +381,8 @@ export const RSMApprovalMasterBase = (props) => {
         setRejectRequest,
         formData,
         handleRequest,
+        isLoading,
+        REQUEST_CONSTANT,
     };
 
     const requestModuleTitle = translateContent('rsmApproval.heading.requestModuleTitle');
@@ -401,10 +407,10 @@ export const RSMApprovalMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable {...tableProps} />
                 </Col>
             </Row>
-            {formActionType?.viewMode && <ViewDetail {...viewProps} />}
+            <ViewDetail {...viewProps} />
             <RejectRequest {...rejectRequestProps} />
         </>
     );

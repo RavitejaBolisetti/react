@@ -13,40 +13,55 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
 import { MobileOtpVerificationMaster } from 'components/utils/MobileOtpVerificationModal';
 import { translateContent } from 'utils/translateContent';
+import { CustomerNameChangeMaster } from '../../IndividualCustomer/CustomerDetail/CustomerNameChange';
 
 const AddEditFormMain = (props) => {
-    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
-    const [corporateType, setCorporateType] = useState('');
+    const { typeData, formData, form, formActionType: { editMode } = undefined, customerParentCompanyData, validateParentCode, numbValidatedSuccess, setNumbValidatedSuccess, selectedCustomer, formActionType, userId, customerType, defaultExtraParam } = props;
+    const { corporateDescriptionLovData, corporateTypeLovData, fetchCorporateDescriptionLovList, listCorporateDescriptionLovShowLoading } = props;
+    const [readOnly, setReadOnly] = useState(false);
 
     useEffect(() => {
-        setCorporateType(formData?.corporateType);
-
+        if (userId && formData?.corporateType) {
+            handleCorporateTypeChange(formData?.corporateType);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.corporateType]);
+    }, [formData, userId]);
 
     useEffect(() => {
-        form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
+        if (customerParentCompanyData?.parentCompanyName) {
+            form.setFieldsValue({ parentCompanyName: customerParentCompanyData?.parentCompanyName || formData?.parentCompanyName });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerParentCompanyData?.parentCompanyName]);
+    }, [customerParentCompanyData]);
 
-    const handleCorporateChange = (value) => {
-        setCorporateType(value);
-        if (value === 'NON-LIS') {
+    const handleCorporateChange = (__, values) => {
+        form.setFieldsValue({
+            corporateCode: values?.option?.corporateCode,
+            corporateName: form.getFieldValue('corporateType') !== 'C2' ? values?.option?.corporateName : '',
+            corporateDescription: values?.option?.corporateName,
+            corporateCategory: values?.option?.corporateCategory,
+        });
+    };
+
+    const handleCorporateTypeChange = (value, values) => {
+        setReadOnly(value !== 'C2');
+        values &&
             form.setFieldsValue({
+                corporateDescription: null,
+                corporateCode: null,
                 corporateName: null,
                 corporateCategory: null,
             });
-        } else if (value === 'LIS') {
-            form.setFieldsValue({
-                corporateCode: null,
-            });
-        }
-    };
 
-    const onHandleSelect = (value) => {
-        form.setFieldsValue({
-            corporateCode: value,
-            corporateCategory: corporateLovData?.find((i) => i?.key === value)?.parentKey,
+        fetchCorporateDescriptionLovList({
+            setIsLoading: listCorporateDescriptionLovShowLoading,
+            userId,
+            extraParams: [
+                {
+                    key: 'corporateType',
+                    value,
+                },
+            ],
         });
     };
 
@@ -60,6 +75,10 @@ const AddEditFormMain = (props) => {
         numbValidatedSuccess,
         setNumbValidatedSuccess,
         defaultExtraParam,
+    };
+
+    const nameChangeProps = {
+        ...props,
     };
 
     return (
@@ -82,13 +101,13 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
                 <Divider />
-
+                <CustomerNameChangeMaster {...nameChangeProps} />
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                    {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.companyName} label={translateContent('customerMaster.label.companyName')} name="companyName" data-testid="companyName" rules={[validateRequiredInputField(translateContent('customerMaster.validation.compName'))]}>
-                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.compName'))} />
+                            <Input disabled={true} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.compName'))} />
                         </Form.Item>
-                    </Col>
+                    </Col> */}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label={translateContent('customerMaster.label.companyCode')} name="parentCompanyCode" data-testid="parentCode">
                             <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.companyCode'))} onChange={validateParentCode} disabled={editMode} />
@@ -104,40 +123,37 @@ const AddEditFormMain = (props) => {
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.corporateType} label={translateContent('customerMaster.label.corporateType')} name="corporateType" data-testid="corporateType">
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateType'))} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_TYPE']} onChange={handleCorporateChange}></Select>
+                        <Form.Item label={translateContent('customerMaster.label.corporateType')} initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
+                            {customSelectBox({
+                                data: corporateTypeLovData.map((item) => {
+                                    return { key: item.categoryCode, value: `${item?.categoryCode}-${item?.categoryDescription}` };
+                                }),
+                                placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateType')),
+                                onChange: handleCorporateTypeChange,
+                            })}
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label={translateContent('customerMaster.label.corporateDescription')} initialValue={formData?.corporateDescription} name="corporateDescription" data-testid="corporateDescription">
+                            {customSelectBox({ data: corporateDescriptionLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.label.corporateDescription')), fieldNames: { key: 'corporateCodeDescription', value: 'corporateCodeDescription' }, onChange: handleCorporateChange })}
                         </Form.Item>
                     </Col>
 
-                    {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Corporate Name" initialValue={corporateType === 'NON-LIS' ? '' : formData?.corporateName} name="corporateName" data-testid="corporateName" >
-                            {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
-                        </Form.Item>
-                    </Col> */}
-
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {corporateType === 'NON-LIS' ? (
-                            <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} />
-                            </Form.Item>
-                        ) : (
-                            <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                {/* <Select placeholder={preparePlaceholderSelect('customer name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
-                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateName')), onChange: onHandleSelect })}
-                            </Form.Item>
-                        )}
+                        <Form.Item label={translateContent('customerMaster.label.corporateName')} initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateName'))} disabled={readOnly} />
+                        </Form.Item>
                     </Col>
 
-                    {(corporateType === 'LIS' || corporateType === '') && (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={formData?.corporateCode} label={translateContent('customerMaster.label.corporateCode')} name="corporateCode" data-testid="corporate code">
-                                <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateCode'))} disabled />
-                            </Form.Item>
-                        </Col>
-                    )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.corporateCategory} label={translateContent('customerMaster.label.corporateCategory')} name="corporateCategory" data-testid="corporateCategory">
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.corporateCategory'))} disabled={corporateType === 'LIS'} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
+                        <Form.Item initialValue={formData?.corporateCode} label={translateContent('customerMaster.label.corporateCode')} name="corporateCode" data-testid="corporate code">
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateCode'))} disabled />
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label={translateContent('customerMaster.label.corporateCategory')} initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
+                            <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.corporateCategory'))} disabled />
                         </Form.Item>
                     </Col>
 

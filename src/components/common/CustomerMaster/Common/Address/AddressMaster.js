@@ -25,6 +25,7 @@ import { NoDataFound } from 'utils/noDataFound';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
@@ -32,8 +33,8 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
-                AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
-                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, isLoading: isCorporateAddressLoading, data: addressCompanyData = [] },
+                AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [], isLoadingOnSave: isIndividualFormLoading },
+                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, isLoading: isCorporateAddressLoading, data: addressCompanyData = [], isLoadingOnSave: isCorporateFormLoading },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -53,6 +54,9 @@ const mapStateToProps = (state) => {
         isPinCodeDataLoaded,
         isPinCodeLoading,
         pincodeData: pincodeData?.pinCodeDetails,
+
+        isLoadingOnSave: isCorporateFormLoading || isIndividualFormLoading,
+        isLoading: isAddressLoading || isCorporateAddressLoading,
     };
     return returnValue;
 };
@@ -65,9 +69,11 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: addressIndividualDataActions.saveData,
             resetData: addressIndividualDataActions.reset,
             listShowLoading: addressIndividualDataActions.listShowLoading,
+            saveFormIndividualLoading: addressIndividualDataActions.saveFormShowLoading,
 
             fetchListCorporate: addressCorporateDataActions.fetchList,
             saveDataCorporate: addressCorporateDataActions.saveData,
+            saveFormCorporateLoading: addressCorporateDataActions.saveFormShowLoading,
             resetDataCorporate: addressCorporateDataActions.reset,
             listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
 
@@ -81,10 +87,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, saveData, addData } = props;
+    const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, selectedCustomerId, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, buttonData, setButtonData, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
     const { isAddressLoading, isCorporateAddressLoading, fetchListCorporate, saveDataCorporate, customerType, resetData, resetPincodeData, resetDataCorporate, NEXT_ACTION } = props;
-
+    const { saveFormIndividualLoading, saveFormCorporateLoading } = props;
     const [addressForm] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [showAddEditForm, setShowAddEditForm] = useState(false);
@@ -94,6 +100,7 @@ const AddressMasterBase = (props) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const noDataTitle = translateContent('global.generalNotifications.noDataExist.title');
+
     const addDataTitle = (
         <p className={styles.textCenter}>
             Please add new address using <br /> <strong>“Add”</strong> button at top
@@ -155,7 +162,7 @@ const AddressMasterBase = (props) => {
 
     const onFinish = () => {
         let data = {
-            customerId: selectedCustomer?.customerId,
+            customerId: selectedCustomer?.customerId || selectedCustomerId,
             customerAddress: addressData?.map((el) => {
                 const { tehsilName, cityName, districtName, stateName, ...rest } = el;
                 return { ...rest };
@@ -166,34 +173,30 @@ const AddressMasterBase = (props) => {
             addressForm.resetFields();
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            if (res.data) {
+            if (res?.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                setButtonData((prev) => ({ ...prev, formBtnActive: false }));
             }
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        const onError = (message) => showGlobalNotification({ message });
 
-        const requestData = {
-            data: data,
-            method: addressIndData?.customerAddress ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-            saveData(requestData);
-        } else {
-            saveDataCorporate(requestData);
-        }
+        const saveFinalData = customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? saveData : saveDataCorporate;
+        const saveLoading = customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? saveFormIndividualLoading : saveFormCorporateLoading;
         setIsAdding(false);
         setShowAddEditForm(false);
         setIsEditing(false);
         setEditingData({});
         addressForm.resetFields();
+
+        saveFinalData({
+            data,
+            method: addressIndData?.customerAddress ? 'put' : 'post',
+            setIsLoading: saveLoading,
+            userId,
+            onError,
+            onSuccess,
+        });
     };
 
     const handleFormValueChange = () => {
@@ -278,7 +281,7 @@ const AddressMasterBase = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!addressData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewAddressList {...formProps} />}
+                                    {!addressData?.length && !isAdding ? <NoDataFound information={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewAddressList {...formProps} />}
                                 </>
                             )}
                         </Card>
@@ -294,4 +297,4 @@ const AddressMasterBase = (props) => {
     );
 };
 
-export const AddressMaster = connect(mapStateToProps, mapDispatchToProps)(AddressMasterBase);
+export const AddressMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(AddressMasterBase));

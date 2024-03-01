@@ -5,7 +5,7 @@
  */
 
 import { InputSkeleton } from 'components/common/Skeleton';
-import { convertDate, converDateDayjs, dateFormatView } from 'utils/formatDateTime';
+import { convertDate, converDateDayjs, dateFormatView, dateViewWithSeconds } from 'utils/formatDateTime';
 import { DATA_TYPE } from 'constants/dataType';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { addToolTip } from 'utils/customMenuLink';
@@ -25,6 +25,8 @@ export const checkAndSetDefaultValue = (value, isLoading, type, makeToolTip = fa
             return value ? convertDate(value, dateFormatView) : '-';
         case DATA_TYPE?.DAYJS?.key:
             return value ? converDateDayjs(value) : '-';
+        case DATA_TYPE?.DATE_TIME?.key:
+            return value ? converDateDayjs(value, dateViewWithSeconds) : '-';
         default:
             return value === 0 || value ? value : '-';
     }

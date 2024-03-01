@@ -90,7 +90,8 @@ import {
     LoyaltyDocumentMasterPage,
     ClaimEmpowermentPage,
     ExchangeLoyaltyCappingMasterPage,
-    LoyaltySchemeMasterPage
+    LoyaltySchemeMasterPage,
+    CentralFameSubsidyPage,
 } from 'pages/Sales';
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
@@ -139,7 +140,7 @@ const AuthenticatedUserPageMain = (props) => {
 
     const location = useLocation();
     const pagePath = location.pathname;
-    const canViewPage = true || flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
+    const canViewPage = flatternData?.find((menu) => (menu.link === pagePath || (menu.link && menu.slug) ? menu.link?.replace(':slug', menu.slug) === pagePath : false))?.menuId;
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -155,7 +156,8 @@ const AuthenticatedUserPageMain = (props) => {
     }, [isDataLoaded, userId]);
 
     const routeExclusion = [routing?.ROUTING_HOME, routing?.ROUTING_DASHBOARD];
-    const authorized = canViewPage || routeExclusion?.includes(pagePath);
+    const authorized = true || canViewPage || routeExclusion?.includes(pagePath);
+
     return !isLoading ? (
         authorized ? (
             <Routes>
@@ -281,7 +283,8 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_RSM_ASM_APPROVAL} element={<RsmAsmApprovalPage />} exact />
                 <Route path={routing.ROUTING_RSA_REGISTRATION} element={<RSARegistrationPage />} exact />
                 <Route path={routing.PAGE_NOT_FOUND} element={<PageNotFound />} exact />
-                <Route path={routing.CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
+                <Route path={routing.ROUTING_CO_DEALER_INVOICE} element={<CoDealerInvoiceGenerationPage />} exact />
+                <Route path={routing.ROUTING_CENTRAL_FAME_SUBSIDY} element={<CentralFameSubsidyPage />} exact />
             </Routes>
         ) : (
             <Routes>

@@ -11,20 +11,20 @@ import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails }) => {
-    // const content = <div>{translateContent('global.generalMessage.comingSoon')}</div>;
+export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLoading, isLastSection, workFlowDetails }) => {
+    const disabled = isLoading || isLoadingOnSave;
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button disabled={disabled} danger onClick={onCloseAction}>
                             {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button disabled={disabled} danger onClick={onCloseAction}>
                             {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
@@ -32,53 +32,53 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                        <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             {translateContent('global.buttons.edit')}
                         </Button>
                     )}
 
-                    {buttonData?.otfSoMappingHistoryBtn && (
-                        <Button onClick={handleOtfSoMappingHistory} type="primary">
+                    {/* {buttonData?.otfSoMappingHistoryBtn && (
+                        <Button disabled={disabled} onClick={handleOtfSoMappingHistory} type="primary">
                             {translateContent('global.buttons.bookingMappingHistory')}
                         </Button>
-                    )}
+                   } */}
 
                     {buttonData?.allotBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
+                        <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
                             {translateContent('global.buttons.allot')}
                         </Button>
                     )}
 
                     {buttonData?.unAllotBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                        <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
                             {translateContent('global.buttons.unAllot')}
                         </Button>
                     )}
 
                     {/* {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">
-                            <Button onClick={() => {}} type="primary">
+                            <Button disabled={disabled} onClick={() => {}} type="primary">
                                 {translateContent('global.buttons.invoice')}
                             </Button>
                         </Popover>
-                    )} */}
+                   } */}
 
                     {/* {buttonData?.deliveryNoteBtn && (
                         <Popover content={content} trigger="hover">
-                            <Button onClick={() => {}} type="primary">
+                            <Button disabled={disabled} onClick={() => {}} type="primary">
                                 {translateContent('global.buttons.deliveryNote')}
                             </Button>
                         </Popover>
-                    )} */}
+                   } */}
 
                     {buttonData?.transferOTFBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
+                        <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
                             {translateContent('global.buttons.transferBooking')}
                         </Button>
                     )}
 
                     {buttonData?.cancelOTFBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                        <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
                             {translateContent('global.buttons.cancelBooking')}
                         </Button>
                     )}
@@ -86,26 +86,26 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                     {buttonData?.pendingCancellationOTFBtn &&
                         workFlowDetails?.allowedActions?.map((element, i) => {
                             return (
-                                <Button onClick={() => handleButtonClick({ buttonAction: element?.actionCode, record })} type="primary" key={i}>
+                                <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: element?.actionCode, record })} type="primary" key={i}>
                                     {element?.actionName}
                                 </Button>
                             );
                         })}
 
                     {buttonData?.changeHistory && (
-                        <Button onClick={handleChangeHistory} type="primary">
+                        <Button disabled={disabled} onClick={handleChangeHistory} type="primary">
                             {translateContent('global.changeHistory.title')}
                         </Button>
                     )}
 
                     {buttonData?.saveBtn && (
-                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive || disabled} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}
                         </Button>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record, isNextBtnClick: true })} type="primary">
+                        <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record, isNextBtnClick: true })} type="primary">
                             {translateContent('global.buttons.next')}
                         </Button>
                     )}

@@ -47,6 +47,7 @@ export const ChecklistModalForms = (props) => {
 
     useEffect(() => {
         if (AdvanceformData && isVisible) {
+            setsaveDisabled(true);
             aggregateForm.setFieldsValue({ ...AdvanceformData, answerFromDate: formatDateToCalenderDate(AdvanceformData?.answerFromDate), answerToDate: formatDateToCalenderDate(AdvanceformData?.answerToDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,12 +73,13 @@ export const ChecklistModalForms = (props) => {
                     return element;
                 });
                 setcheckListDataModified(newArr);
-                setRequestPayload((prev) => ({ ...prev, vehicleDeliveryCheckList: { vin: prev?.vehicleDetails?.vinNumber, deliveryChecklistDtos: newArr?.filter((i) => i?.ismodified) } }));
+                setRequestPayload((prev) => ({ ...prev, vehicleDeliveryCheckList: { vin: prev?.vehicleDetails?.vinNumber, deliveryChecklistDtos: newArr } }));
                 setAdvanceSearchVisible(false);
                 handleFormValueChange();
                 setisEditing(false);
                 setAdvanceformData();
                 setPage((prev) => ({ pageIntialState, current: prev?.current }));
+                setsaveDisabled(true);
             })
             .catch((err) => console.error(err));
     };

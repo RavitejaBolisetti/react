@@ -171,7 +171,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                 status: values?.applicationStatus,
                 parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
-                accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId })),
+                accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id, status }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId, status })),
                 deviceType: menuType,
                 applicationAction: actionData,
                 accessableIndicator: Number(values?.accessableIndicator),
@@ -200,7 +200,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
-            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map((el) => ({ ...el })), documentType, accessibleLocation });
+            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map((el) => ({ ...el })), documentType, accessibleLocation: accessibleLocation?.map((i) => ({ ...i, status: true })) });
             setIsReadOnly(false);
             setIsFieldDisable(true);
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
@@ -224,7 +224,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
     const onClose = () => {
         setisVisible(false);
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
-        setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+        setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation: accessibleLocation?.map((i) => ({ ...i, status: true })) });
         applicationForm.resetFields();
         forceUpdate();
         setIsBtnDisabled(false);
@@ -292,7 +292,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationMasterData
                                     </span>
                                 }
                             >
-                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd()}>
                                     {translateContent('global.buttons.add')}
                                 </Button>
                             </Empty>

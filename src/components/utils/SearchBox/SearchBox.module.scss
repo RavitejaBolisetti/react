@@ -73,7 +73,6 @@
                                 position: absolute;
                                 display: block;
                                 width: 0;
-                                z-index: 1;
                                 border-style: solid;
                                 border-color: $transparentErrorL $transparentColor;
                                 border-width: 0 10px 10px;
@@ -329,7 +328,6 @@
 
                 .ant-input {
                     &::placeholder {
-                        color: $primaryRed;
                         font-size: 14px;
                         font-weight: 400;
                         color: $neutralGrey2;

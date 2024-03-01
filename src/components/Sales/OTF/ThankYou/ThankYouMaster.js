@@ -7,7 +7,6 @@
 import { Row, Col, Space, Avatar, Typography } from 'antd';
 
 import { OTFFormButton } from '../OTFFormButton';
-import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
@@ -21,7 +20,11 @@ export const ThankYouMaster = (props) => {
 
     const myProps = {
         ...props,
-        buttonData: { ...props.defaultBtnVisiblity, closeBtn: true },
+        buttonData: {
+            ...props.defaultBtnVisiblity,
+            otfSoMappingHistoryBtn: false,
+            closeBtn: true,
+        },
     };
 
     return (

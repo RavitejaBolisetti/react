@@ -45,7 +45,7 @@ const ProductMapping = (props) => {
         {
             key: 'employeeCode',
             title: 'employeeCode',
-            value: selectedRecord?.employeeCode,
+            value: selectedRecord?.userName,
         },
     ];
 
@@ -115,7 +115,7 @@ const ProductMapping = (props) => {
                 dataList.push({
                     id: saveProductId || '',
                     productCode: id,
-                    userId,
+                    userId:selectedRecord?.userName,
                     status: false,
                 });
 

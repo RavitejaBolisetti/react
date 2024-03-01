@@ -68,12 +68,12 @@ const UploadUtilsMain = (props) => {
     useEffect(() => {
         if ((!isReplacing && base64Img) || (!isAdding && base64Img)) return;
         if (uploadedFile || formData?.docId) {
-            downloadImage(uploadedFile, formData?.docId);
+            downloadImage(uploadedFile);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile, formData?.docId]);
 
-    const downloadImage = (uploadedFile, docId) => {
+    const downloadImage = (uploadedFile) => {
         setIsLoading(true);
 
         const onSuccess = (res) => {

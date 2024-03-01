@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
@@ -13,12 +13,10 @@ import { DeliverableChecklistMaindataActions } from 'store/actions/data/vehicleD
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-
 import { CoDealerFormButton } from '../CoDealerFormButton';
-
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
+import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -72,7 +70,7 @@ const IndentDetailsMain = (props) => {
             setFormData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CoDealerInvoiceStateMaster?.indentDetails, form, section?.id]);
+    }, [CoDealerInvoiceStateMaster?.indentDetails, section?.id]);
 
     const formProps = {
         stateData,

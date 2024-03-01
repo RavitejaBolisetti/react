@@ -6,7 +6,7 @@
 export const STATUS = {
     PENDING: {
         id: 'PENDING',
-        title: 'Pending',
+        title: 'Pending for SAP Confirmation',
         key: 'PD',
     },
     SUCCESS: {

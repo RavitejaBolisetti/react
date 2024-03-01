@@ -22,13 +22,14 @@ import styles from 'assets/sass/app.module.scss';
 import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: loyaltySchemeData = [] },
+                LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, isLoadingOnSave, data: loyaltySchemeData = [] },
                 SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
                 LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
                 LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
@@ -44,6 +45,8 @@ const mapStateToProps = (state) => {
         userId,
         isLoyaltySchemeDataLoaded,
         isLoading,
+        showSpinner: !props?.formActionType?.viewMode,
+        isLoadingOnSave,
         loyaltySchemeData,
 
         schemeLovData,
@@ -88,6 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfLoyaltySchemeDataActions.fetchList,
             resetData: otfLoyaltySchemeDataActions.reset,
             listShowLoading: otfLoyaltySchemeDataActions.listShowLoading,
+            saveFormShowLoading: otfLoyaltySchemeDataActions.saveFormShowLoading,
             saveData: otfLoyaltySchemeDataActions.saveData,
 
             showGlobalNotification,
@@ -97,7 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LoyaltySchemeMasterMain = (props) => {
-    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, loyaltySchemeData, loyaltySchemeDataPass, userId, showGlobalNotification } = props;
+    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, saveFormShowLoading, fetchList, loyaltySchemeData, loyaltySchemeDataPass, userId, showGlobalNotification } = props;
     const { form, selectedOrder, selectedRecordId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
@@ -170,13 +174,13 @@ const LoyaltySchemeMasterMain = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             };
 
             const requestData = {
                 data: data,
                 method: formData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
+                setIsLoading: saveFormShowLoading,
                 userId,
                 onError: onErrorAction,
                 onSuccess,
@@ -365,4 +369,4 @@ const LoyaltySchemeMasterMain = (props) => {
         </Form>
     );
 };
-export const LoyaltySchemeMaster = connect(mapStateToProps, mapDispatchToProps)(LoyaltySchemeMasterMain);
+export const LoyaltySchemeMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(LoyaltySchemeMasterMain));

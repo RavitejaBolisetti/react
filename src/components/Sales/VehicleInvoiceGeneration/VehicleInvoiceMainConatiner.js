@@ -8,7 +8,7 @@ import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
-import { LeftSidebar } from './LeftSidebar';
+import LeftSidebar from 'utils/LeftSidebar';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 
 import { InsuranceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/InsuranceDetails';
@@ -44,13 +44,14 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         vehicleInvoiceMasterData: requestPayload,
         otfData: { ...profileCardData },
     };
+
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id: {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} selectedRecordId={selectedOtfId} showPrintDiscount={true} vehicleDetailDataPass={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} selectedRecordId={selectedOtfId} showPrintDiscount={true} salesModuleType={SALES_MODULE_TYPE.INVOICE.KEY} vehicleDetailDataPass={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
                 return <SchemeDetailsMaster {...myProps} formData={requestPayload?.schemeOfferDetails} formKey={'schemeOfferDetails'} />;

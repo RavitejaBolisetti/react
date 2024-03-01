@@ -9,9 +9,10 @@ import { Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { translateContent } from 'utils/translateContent';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailBase = (props) => {
-    const { formData, styles } = props;
+    const { formData, styles, modelGroupData, modelFamilyData, productAttributeData } = props;
     const { isLoading } = props;
     const viewProps = {
         bordered: false,
@@ -31,9 +32,9 @@ const ViewDetailBase = (props) => {
                     <Descriptions.Item label={translateContent('amcRegistration.label.vehicleRegistrationNumber')}>{checkAndSetDefaultValue(formData?.vehicleRegistrationNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('amcRegistration.label.orignallyWarrantyStartDate')}>{checkAndSetDefaultValue(formData?.orignallyWarrantyStartDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
 
-                    <Descriptions.Item label={translateContent('amcRegistration.label.modelGroup')}>{checkAndSetDefaultValue(formData?.modelGroup, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('amcRegistration.label.modelFamily')}>{checkAndSetDefaultValue(formData?.modelFamily, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('amcRegistration.label.modelDescription')}>{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.modelGroup')}>{checkAndSetDefaultValue(formData?.modelGroupDesc || getCodeValue(modelGroupData, formData?.modelGroup, 'modelGroupDescription', true, 'modelGroupCode'), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.modelFamily')}>{checkAndSetDefaultValue(formData?.modelFamilyDesc || getCodeValue(modelFamilyData, formData?.modelFamily, 'familyDescription', true, 'familyCode'), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('amcRegistration.label.modelDescription')}>{checkAndSetDefaultValue(formData?.productDescription || getCodeValue(productAttributeData, formData?.modelDescription, 'prodctShrtName', true, 'prodctCode'), isLoading)}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

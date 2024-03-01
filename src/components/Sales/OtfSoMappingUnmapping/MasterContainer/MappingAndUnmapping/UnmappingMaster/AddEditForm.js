@@ -25,40 +25,47 @@ const AddEditFormMain = (props) => {
     return (
         <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBody}>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="soNumber" label={translateContent('bookingSoMappUnmapp.label.soNumber')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soNumber'))} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="poNumber" label={translateContent('bookingSoMappUnmapp.label.poNumber')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.poNumber'))} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="soDate" label={translateContent('bookingSoMappUnmapp.label.soDate')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soDate'))} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="modelDescription" label={translateContent('bookingSoMappUnmapp.label.modelDescription')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.modelDescription'))} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="chasisNumber" label={translateContent('bookingSoMappUnmapp.label.chasisNumber')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.chasisNumber'))} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="otfNumber" label={translateContent('bookingSoMappUnmapp.label.bookingNumber')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.bookingNumber'))} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Form.Item name="customerName" label={translateContent('bookingSoMappUnmapp.label.customerName')}>
-                        <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.customerName'))} />
-                    </Form.Item>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="soNumber" label={translateContent('bookingSoMappUnmapp.label.soNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soNumber'))} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="poNumber" label={translateContent('bookingSoMappUnmapp.label.poNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.poNumber'))} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="soDate" label={translateContent('bookingSoMappUnmapp.label.soDate')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.soDate'))} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="modelDescription" label={translateContent('bookingSoMappUnmapp.label.modelDescription')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.modelDescription'))} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="chasisNumber" label={translateContent('bookingSoMappUnmapp.label.chassisNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.chassisNumber'))} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="otfNumber" label={translateContent('bookingSoMappUnmapp.label.bookingNumber')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.bookingNumber'))} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                            <Form.Item name="customerName" label={translateContent('bookingSoMappUnmapp.label.customerName')}>
+                                <Input {...disableProps} placeholder={preparePlaceholderText(translateContent('bookingSoMappUnmapp.label.customerName'))} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
             <DrawerFormButton {...props} />
@@ -66,4 +73,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, { footer: null });

@@ -15,18 +15,19 @@ import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 import dayjs from 'dayjs';
-
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
+import { translateContent } from 'utils/translateContent';
+import { convertDateTimedayjs } from 'utils/formatDateTime';
+import { withSpinner } from 'components/withSpinner';
 
 import styles from 'assets/sass/app.module.scss';
-import { translateContent } from 'utils/translateContent';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                OtfCustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerFormData = {} },
+                OtfCustomerDetails: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, data: customerFormData = {} },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -43,11 +44,12 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         isLoading,
+        showSpinner: !props?.formActionType?.viewMode,
+        isLoadingOnSave,
         customerFormData,
         isPinCodeDataLoaded,
         isPinCodeLoading,
         pincodeData,
-
         isTypeDataLoaded,
         isTypeDataLoading,
         typeData: typeData,
@@ -63,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfCustomerDetailsAction.fetchList,
             saveData: otfCustomerDetailsAction.saveData,
             resetData: otfCustomerDetailsAction.reset,
+            saveFormShowLoading: otfCustomerDetailsAction.saveFormShowLoading,
             showGlobalNotification,
 
             listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
@@ -74,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, saveFormShowLoading, customerFormData, showGlobalNotification } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
     const { typeData, selectedRecordId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
@@ -134,13 +137,20 @@ export const CustomerDetailsMain = (props) => {
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         } else {
-            form.getFieldsValue();
             if (!values?.bookingCustomer?.customerId && formData?.bookingCustomer?.customerId) {
-                data = { otfId: selectedRecordId, bookingCustomer: { ...formData?.bookingCustomer, otfId: selectedRecordId }, billingCustomer: { ...values?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+                data = { otfId: selectedRecordId, bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateTimedayjs(formData?.bookingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId }, billingCustomer: { ...values?.billingCustomer, birthDate: convertDateTimedayjs(values?.billingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
             } else if (!values?.billingCustomer?.customerId && formData?.billingCustomer?.customerId) {
-                data = { otfId: selectedRecordId, bookingCustomer: { ...values?.bookingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id }, billingCustomer: { ...formData?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer } };
+                data = {
+                    otfId: selectedRecordId,
+                    bookingCustomer: { ...values?.bookingCustomer, birthDate: convertDateTimedayjs(values?.bookingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id },
+                    billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateTimedayjs(formData?.billingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: formData?.billingCustomer?.sameAsBookingCustomer },
+                };
             } else {
-                data = { otfId: selectedRecordId, bookingCustomer: { ...values?.bookingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+                data = {
+                    otfId: selectedRecordId,
+                    bookingCustomer: { ...values?.bookingCustomer, birthDate: convertDateTimedayjs(values?.bookingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer },
+                    billingCustomer: { ...values?.billingCustomer, birthDate: convertDateTimedayjs(values?.billingCustomer?.birthDate, 'YYYY-MM-DD HH:mm:ss', 'NA'), otfId: selectedRecordId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer },
+                };
             }
 
             if (onFinishCustom) {
@@ -151,7 +161,7 @@ export const CustomerDetailsMain = (props) => {
                 const onSuccess = (res) => {
                     showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
-                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
                 };
 
                 const onError = (message) => {
@@ -161,7 +171,7 @@ export const CustomerDetailsMain = (props) => {
                 const requestData = {
                     data: data,
                     method: 'put',
-                    setIsLoading: listShowLoading,
+                    setIsLoading: saveFormShowLoading,
                     userId,
                     onError,
                     onSuccess,
@@ -187,7 +197,7 @@ export const CustomerDetailsMain = (props) => {
                 extraParams,
                 userId,
                 onSuccessAction: (response) => {
-                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth } });
+                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth, gstin: response?.data?.gstin, panNo: response?.data?.pan } });
                     setButtonData({ ...buttonData, formBtnActive: true });
                 },
                 onErrorAction,
@@ -263,4 +273,4 @@ export const CustomerDetailsMain = (props) => {
     );
 };
 
-export const CustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailsMain);
+export const CustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(CustomerDetailsMain));

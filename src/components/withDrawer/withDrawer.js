@@ -8,7 +8,7 @@ import { Drawer } from 'antd';
 import styles from './withDrawer.module.scss';
 
 export const withDrawer =
-    (InputComponent, { title = 'default title', width = 520, footer }) =>
+    (InputComponent, { title = 'default title', width = '520', footer }) =>
     (props) => {
         const { onCloseAction, isVisible, isChangeHistoryContainer = false, titleOverride, onOk = () => {} } = props;
         useEffect(() => {

@@ -22,13 +22,14 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 import { ListDataTable } from 'utils/ListDataTable';
 import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
-    const { itemOptions, setitemOptions, makeOptions, setmakeOptions, modelData, modelFamilyData, variantData } = props;
+    const { itemOptions, setitemOptions, makeOptions, setmakeOptions, modelData, modelFamilyData, variantData, isDataLoaded } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionalServices, setOptionalServices, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue, ITEM_TYPE } = props;
     const { collapseProps, disabledProps, bindStatus } = props;
@@ -39,8 +40,9 @@ const AddEditFormMain = (props) => {
 
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
-    const AggregateModuleTitle = `Aggregates`;
+    const [innerAccordian, setInnerAccordian] = useState([]);
 
+    const AggregateModuleTitle = `Aggregates`;
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
@@ -61,7 +63,7 @@ const AddEditFormMain = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData,modelData, modelFamilyData, variantData, formActionType,formData]);
+    }, [formData, modelData, modelFamilyData, variantData, formActionType]);
 
     const addContactHandeler = (e) => {
         aggregateForm.resetFields();
@@ -86,6 +88,7 @@ const AddEditFormMain = (props) => {
         handleFormValueChange,
         MakefieldNames,
         ItemFieldNames,
+        isDataLoaded,
     };
     const advanceFilterProps = {
         ...AggregateFormProps,
@@ -150,6 +153,10 @@ const AddEditFormMain = (props) => {
         filterString: page,
     };
 
+    const handleInnerCollapse = (key) => {
+        setInnerAccordian((prev) => (prev === key ? '' : key));
+    };
+
     return (
         <>
             <Row gutter={20}>
@@ -181,7 +188,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={styles.modelTooltipView}>
-                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={15} />)}
+                                    {addToolTip(tooltTipText, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={15} />)}
                                     <Form.Item label={translateContent('vehicleDetail.productDetails.label.modelDescription')} name="model">
                                         <Input title={formData?.productAttributeDetail?.model} maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.productDetails.label.modelDescription'))} {...disabledProps} />
                                     </Form.Item>
@@ -201,50 +208,50 @@ const AddEditFormMain = (props) => {
                             </Row> */}
                         </Panel>
                     </Collapse>
-                    {/* <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                        <Panel header="Connected Vehicle" key="Vehicle">
+                    <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                        <Panel header={translateContent('vehicleDetail.connectedVehicle.connectedVehicle')} key="Vehicle">
                             <Form layout="vertical" autoComplete="off" form={connectedForm}>
                                 <Divider />
                                 {formData?.connectedVehicle?.map((element, index) => {
                                     return (
-                                        <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={InnerCollapse} {...collapseProps}>
-                                            <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
+                                        <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={innerAccordian} {...collapseProps}>
+                                            <Panel header={`${element?.tcuId ? element?.tcuId : '-'} | ${element?.esimNo ? element?.esimNo : '-'} `} key={index}>
                                                 <Divider />
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="TCU ID" name={[index, 'tcuId']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('tcu id')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.tcuId')} name={[index, 'tcuId']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.tcuId'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="E-Sim No" name={[index, 'esimNo']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('Sim no.')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.esimNo')} name={[index, 'esimNo']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.esimNo'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="E-Sim Status" name={[index, 'esimStatus']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('Sim status')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.esimStatus')} name={[index, 'esimStatus']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.esimStatus'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Preffered Mobile No 1" name={[index, 'preferredMobileNo1']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.preferredMobileNo1')} name={[index, 'preferredMobileNo1']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.preferredMobileNo1'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Preffered Mobile No 2" name={[index, 'preferredMobileNo2']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.preferredMobileNo2')} name={[index, 'preferredMobileNo2']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.preferredMobileNo2'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
 
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="KYC Status" name={[index, 'kycStatus']}>
-                                                            <Input maxLength={15} placeholder={preparePlaceholderText('kyc status')} {...disabledProps} />
+                                                        <Form.Item label={translateContent('vehicleDetail.connectedVehicle.kycStatus')} name={[index, 'kycStatus']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText(translateContent('vehicleDetail.connectedVehicle.kycStatus'))} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -252,28 +259,23 @@ const AddEditFormMain = (props) => {
                                         </Collapse>
                                     );
                                 })}
-                                {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
+                                {!formData?.connectedVehicle?.length && <NoDataFound information={translateContent('vehicleDetail.connectedVehicle.noConnectedVehicleFound')} />}
                             </Form>
-                        </Panel>                     
-                    </Collapse> */}
+                        </Panel>
+                    </Collapse>
                     <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel
                             header={
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <Text strong>{translateContent('vehicleDetail.productDetails.heading.aggregateTitle')}</Text>
-                                        {!formData?.productAttributeDetail &&
-                                            addToolTip(
-                                                'No product Attribute Details Present',
-                                                'bottom'
-                                            )(
-                                                <Button className={styles.marL10} data-testid="addBtn" onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
-                                                    Add
-                                                </Button>
-                                            )}
-                                        {formData?.productAttributeDetail && (
+
+                                        {addToolTip(
+                                            !formData?.productAttributeDetail && isDataLoaded ? translateContent('vehicleDetail.productDetails.heading.noProductDataFound') : '',
+                                            'bottom'
+                                        )(
                                             <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
-                                                Add
+                                                {translateContent('global.buttons.add')}
                                             </Button>
                                         )}
                                     </Col>
@@ -283,7 +285,6 @@ const AddEditFormMain = (props) => {
                         >
                             <Divider />
                             <ListDataTable {...ListDatatableProps} />
-                            {/* <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue, ITEM_TYPE })} tableData={optionalServices} pagination={false} /> */}
                         </Panel>
                     </Collapse>
                 </Col>

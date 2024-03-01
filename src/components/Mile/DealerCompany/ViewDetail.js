@@ -32,7 +32,9 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label={translateContent('dealerCompany.label.tin')}>{formData?.companyTin}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('dealerCompany.label.tan')}>{formData?.companyTan}</Descriptions.Item>
                     <Descriptions.Item label={translateContent('dealerCompany.label.pan')}>{formData?.companyPan}</Descriptions.Item>
-                    <Descriptions.Item label={translateContent('dealerCompany.label.status')}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('dealerCompany.label.status')}>
+                        <span className={formData?.status ? styles.activeText : styles?.inactiveText}>{formData?.status ? translateContent('global.label.active') : translateContent('global.label.inActive')}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
         </>

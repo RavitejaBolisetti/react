@@ -4,20 +4,21 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { convertDateTimedayjs, dateFormatView } from 'utils/formatDateTime';
+import { translateContent } from 'utils/translateContent';
+import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
 
-import { convertDate, dateFormatView } from 'utils/formatDateTime';
-import { translateContent } from 'utils/translateContent';
-
 export const tableColumn = (props) => {
-    const { handleButtonClick, formActionType } = props;
+    const { handleButtonClick, formActionType, documentTypeOptions } = props;
 
     const tableColumn = [
         tblPrepareColumns({
             title: translateContent('creditDebitNote.ApportionDetails.label.documentType'),
             dataIndex: 'documentType',
             width: '15%',
+            render: (text) => getCodeValue(documentTypeOptions, text, 'documentDescription', false, 'documentCode') || text,
         }),
 
         tblPrepareColumns({
@@ -28,9 +29,7 @@ export const tableColumn = (props) => {
         tblPrepareColumns({
             title: translateContent('creditDebitNote.ApportionDetails.label.documentDate'),
             dataIndex: 'documentDate',
-            render: (value) => {
-                return convertDate(value?.documentDate, dateFormatView);
-            },
+            render: (value) => convertDateTimedayjs(value, dateFormatView),
             width: '10%',
         }),
         tblPrepareColumns({
@@ -58,11 +57,6 @@ export const tableColumn = (props) => {
             dataIndex: 'apportionAmount',
             width: '10%',
         }),
-        // tblPrepareColumns({
-        //     title: translateContent('creditDebitNote.ApportionDetails.placeholder.remarks'),
-        //     dataIndex: 'remarks',
-        //     width: '10%',
-        // }),
     ];
 
     if (!formActionType?.viewMode) {

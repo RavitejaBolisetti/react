@@ -113,6 +113,7 @@
                                             border-radius: 2px;
                                             font-size: 10px;
                                             line-height: 18px;
+                                            padding-top: 3px;
                                         }
 
                                         .ant-badge-multiple-words {
@@ -205,8 +206,8 @@
     }
 
     .dashboardPieChart {
-        padding: 20px;
-        border: 1px solid $neutralGrey1;
+        // padding: 20px;
+        // border: 1px solid $neutralGrey1;
         border-radius: 8px;
 
         & :global {

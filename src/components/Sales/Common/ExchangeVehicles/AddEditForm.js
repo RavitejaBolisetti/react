@@ -8,7 +8,7 @@ import { Row, Col, Input, Form, Card, Switch } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateOnlyPositiveNumber } from 'utils/validation';
 import { prepareCaption } from 'utils/prepareCaption';
 import { getCodeValue } from 'utils/getCodeValue';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
@@ -19,10 +19,10 @@ import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, formActionType, editableOnSearch, showAlert, isExchangeVisible, setExchangeVisible } = props;
+    const { formMasterData, formData, form, formActionType, editableOnSearch, showAlert, isExchangeVisible, setExchangeVisible } = props;
     const { financeLovData, schemeLovData, typeData, isMahindraMake } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, MAHINDRA_MAKE, fnSetData, handleSchemeChange, viewOnly = false, makeModelVarientDisabled } = props;
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
@@ -41,6 +41,21 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
+    useEffect(() => {
+        if (isExchangeVisible) {
+            form.setFieldsValue({
+                ...formMasterData,
+            });
+
+            if (formMasterData?.make !== MAHINDRA_MAKE) {
+                setDisabled(true);
+            } else {
+                setDisabled(false);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isExchangeVisible]);
+
     const onHandleMakeChange = (value) => {
         if (value !== MAHINDRA_MAKE) {
             setDisabled(true);
@@ -57,13 +72,18 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const onExhangeChange = (value) => {
+        setExchangeVisible(value);
+        form.resetFields(Object.keys(form.getFieldsValue())?.filter((i) => i !== 'exchange'));
+    };
+
     const disabledProps = { disabled: viewOnly };
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label={translateContent('commonModules.label.exchangeDetails.exchange')} valuePropName="checked">
-                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onClick={(value) => setExchangeVisible(value)} />
+                        <Switch {...disabledProps} checkedChildren="Yes" unCheckedChildren="No" onClick={onExhangeChange} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -86,7 +106,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item label={translateContent('commonModules.label.exchangeDetails.make')} name="make" data-testid="make" initialValue={formData?.make} rules={[validateRequiredSelectField(translateContent('commonModules.label.exchangeDetails.make'))]}>
                                 {customSelectBox({
                                     data: typeData['VEHCL_MFG'],
-                                    disabled: viewOnly,
+                                    disabled: viewOnly || makeModelVarientDisabled,
                                     loading: isMakeLoading,
                                     onChange: (value) => {
                                         handleFilterChange('make', value);
@@ -100,7 +120,7 @@ const AddEditFormMain = (props) => {
                                 {customSelectBox({
                                     data: filteredModelData,
                                     loading: isModelLoading,
-                                    disabled: viewOnly,
+                                    disabled: viewOnly || makeModelVarientDisabled,
                                     fieldNames: isMahindraMake ? { key: 'modelGroupCode', value: 'modelGroupDescription' } : undefined,
                                     onChange: (value) => {
                                         handleFilterChange('modelGroup', value);
@@ -117,7 +137,7 @@ const AddEditFormMain = (props) => {
                                 {customSelectBox({
                                     data: filteredVariantData,
                                     loading: isVariantLoading,
-                                    disabled: disabled,
+                                    disabled: viewOnly || disabled || makeModelVarientDisabled,
                                     fieldNames: isMahindraMake ? { key: 'variantCode', value: 'variantDescription' } : undefined,
                                 })}
                             </Form.Item>
@@ -203,7 +223,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="customerExpectedPrice" label={translateContent('commonModules.label.exchangeDetails.customerExpectedPrice')} initialValue={formData?.customerExpectedPrice} rules={[validateNumberWithTwoDecimalPlaces(translateContent('commonModules.label.exchangeDetails.customerExpectedPrice'))]}>
+                            <Form.Item name="customerExpectedPrice" label={translateContent('commonModules.label.exchangeDetails.customerExpectedPrice')} initialValue={formData?.customerExpectedPrice} rules={[validateOnlyPositiveNumber(translateContent('commonModules.label.exchangeDetails.customerExpectedPrice'))]}>
                                 <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('commonModules.label.exchangeDetails.customerExpectedPrice'))} maxLength={50} />
                             </Form.Item>
                         </Col>

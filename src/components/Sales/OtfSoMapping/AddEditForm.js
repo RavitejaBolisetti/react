@@ -7,7 +7,6 @@ import React from 'react';
 import { Col, Input, Form, Row, Button } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -34,13 +33,13 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item label={translateContent('bookingSoMapping.label.variantCode')} name="productAttributeCode" rules={[validateRequiredSelectField(translateContent('bookingSoMapping.validation.variantCode'))]}>
-                                    <Input maxLength={6} placeholder={translateContent('bookingSoMapping.palaceholder.variantCode')} disabled={true} />
+                                    <Input maxLength={6} placeholder={translateContent('bookingSoMapping.placeholder.variantCode')} disabled={true} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item label={translateContent('bookingSoMapping.label.productVariant')} name="productAttributeValue" rules={[validateRequiredSelectField(translateContent('bookingSoMapping.validation.productVariant'))]}>
-                                    <Input placeholder={translateContent('bookingSoMapping.palaceholder.productVariant')} disabled={true} />
+                                    <Input placeholder={translateContent('bookingSoMapping.placeholder.productVariant')} disabled={true} />
                                 </Form.Item>
                             </Col>
                         </Row>

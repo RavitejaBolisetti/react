@@ -58,7 +58,7 @@ const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType, vehicleChallanData } = props;
     const { userId, soldByDealer, setFormActionType, isLoading, requestPayload } = props;
     const { form, formActionType, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, setRequestPayload } = props;
-    const { buttonData, setButtonData } = props;
+    const { buttonData, setButtonData,handleLocalFormChange } = props;
 
     const [activeKey, setActiveKey] = useState([1, 2]);
     const [otfNumber, setOtfNumber] = useState();
@@ -156,7 +156,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleLocalFormChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

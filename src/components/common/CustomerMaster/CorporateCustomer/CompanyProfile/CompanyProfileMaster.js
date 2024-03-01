@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
             CustomerMaster: {
-                CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [] },
+                CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [], isLoadingOnSave },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
         },
@@ -47,6 +47,8 @@ const mapStateToProps = (state) => {
         customerProfileData,
         viewDocument,
         moduleTitle,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -63,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetViewData: documentViewDataActions.reset,
 
             saveData: corporateCompanyProfileDataActions.saveData,
+            saveFormShowLoading: corporateCompanyProfileDataActions.saveFormShowLoading,
             uploadFile: supportingDocumentDataActions.uploadFile,
             uploadListShowLoading: supportingDocumentDataActions.listShowLoading,
             downloadFile: supportingDocumentDataActions.downloadFile,
@@ -75,12 +78,13 @@ const mapDispatchToProps = (dispatch) => ({
 const CompanyProfileBase = (props) => {
     const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, selectedCustomerId, isViewDataLoaded, resetViewData } = props;
     const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, appCategoryData, customerProfileData, fetchViewDocument, viewDocument, resetData } = props;
-    const { uploadListShowLoading } = props;
+    const { uploadListShowLoading, saveFormShowLoading } = props;
 
     const [form] = Form.useForm();
 
     const [appCategory, setAppCustomerCategory] = useState();
     const [appSubCategory, setAppSubCategory] = useState();
+    const [subApplication, setSubApplication] = useState();
     const [customerCategory, setCustomerCategory] = useState();
     const [fileList, setFileList] = useState([]);
     const [uploadedFile, setUploadedFile] = useState();
@@ -90,7 +94,7 @@ const CompanyProfileBase = (props) => {
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     useEffect(() => {
-        if ( userId && selectedCustomer?.customerId) {
+        if (userId && selectedCustomer?.customerId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -130,7 +134,7 @@ const CompanyProfileBase = (props) => {
         const recordId = customerProfileData?.id || '';
         if (uploadedFile && !values?.customerConsent) {
             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('customerMaster.notification.accept'), placement: 'bottomRight' });
-            return;
+            return false;
         }
         const customerId = selectedCustomerId;
         const authorityId = customerProfileData?.authorityDetails ? customerProfileData?.authorityDetails.id : '';
@@ -142,8 +146,8 @@ const CompanyProfileBase = (props) => {
             customerFormDocId: uploadedFile ? uploadedFile : values?.customerFormDocId,
             customerConsent: values.customerConsent,
             id: recordId,
+            categoryType: subApplication,
         };
-        // customerId: customerId
 
         const onSuccess = (res) => {
             setFileList([]);
@@ -152,18 +156,21 @@ const CompanyProfileBase = (props) => {
 
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (res.data) {
+            if (res?.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             }
-            const extraParams = [
-                {
-                    key: 'customerId',
-                    title: 'customerId',
-                    value: selectedCustomer?.customerId,
-                    name: 'customerId',
-                },
-            ];
-            fetchCompanyProfileData({ setIsLoading: listShowLoading, userId, extraParams });
+            fetchCompanyProfileData({
+                setIsLoading: listShowLoading,
+                userId,
+                extraParams: [
+                    {
+                        key: 'customerId',
+                        title: 'customerId',
+                        value: selectedCustomer?.customerId,
+                        name: 'customerId',
+                    },
+                ],
+            });
         };
 
         const onError = (message) => {
@@ -172,9 +179,9 @@ const CompanyProfileBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data,
             method: customerProfileData.customerId ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             onError,
             onSuccess,
         };
@@ -259,6 +266,8 @@ const CompanyProfileBase = (props) => {
         setEmptyList,
         uploadedFileName,
         setUploadedFileName,
+        subApplication,
+        setSubApplication,
     };
 
     const viewProps = {
@@ -268,6 +277,8 @@ const CompanyProfileBase = (props) => {
         formData: customerProfileData,
         handleOnClick,
         viewDocument,
+        setSubApplication,
+        subApplication,
     };
 
     const handleFormValueChange = () => {

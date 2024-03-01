@@ -72,7 +72,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
 
     const onFinish = (values) => {
         const onError = (message) => {
-            showGlobalNotification({ message: message[0] });
+            showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
         };
 
         const onSuccess = (res) => {

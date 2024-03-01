@@ -11,7 +11,7 @@ export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
 export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
 export const AXIOS_ERROR_INTERNAL = 'AXIOS_ERROR_INTERNAL';
 
-const baseAPICall = (params) => {
+const baseAPICall = async (params) => {
     const { method, url, data, onSuccess, displayErrorTitle = false, onError, tempRespone = false, onTimeout, postRequest, token, accessToken, userId, deviceType } = params;
     let axiosConfig = {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
@@ -46,7 +46,7 @@ const baseAPICall = (params) => {
     };
 
     try {
-        axios
+        await axios
             .request(axiosConfig)
             .then((response) => {
                 if (tempRespone && response) {
@@ -88,7 +88,7 @@ const baseAPICall = (params) => {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE, errorMessage: LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
                     } else if (error.code === 'ERR_NAME_NOT_RESOLVED') {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: LANGUAGE_EN.GENERAL.NETWORK_ERROR.MESSAGE });
                     } else {
@@ -112,7 +112,7 @@ const baseAPICall = (params) => {
 
 let axiosAPICall = baseAPICall;
 
-if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_API_CALL_USE_DEV_DELAY === true) {
+if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_API_CALL_USE_DEV_DELAY) {
     axiosAPICall = (...rest) => {
         setTimeout(() => {
             baseAPICall(...rest);

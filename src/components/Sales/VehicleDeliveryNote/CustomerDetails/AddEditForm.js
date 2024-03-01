@@ -12,7 +12,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer } = props;
+    const { form, formData, handleCustomerIdSearch, handleOnChange, soldByDealer, isCustomerLoading } = props;
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData });
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
                                                     <Input placeholder={preparePlaceholderText('Customer ID')} disabled={true} />
                                                 </>
                                             ) : (
-                                                <Search onChange={handleOnChange} onSearch={handleCustomerIdSearch} placeholder={preparePlaceholderText('Customer ID')} allowClear />
+                                                <Search loading={isCustomerLoading} onChange={handleOnChange} onSearch={handleCustomerIdSearch} placeholder={preparePlaceholderText('Customer ID')} allowClear />
                                             )}
                                         </Form.Item>
                                     </Col>
@@ -79,8 +79,8 @@ const AddEditFormMain = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.customerId')} name="pinCode">
-                                                    <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.customerDetails.label.customerId'))} disabled={true} />
+                                                <Form.Item label={translateContent('vehicleDeliveryNote.customerDetails.label.pinCode')} name="pinCode">
+                                                    <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.customerDetails.label.pinCode'))} disabled={true} />
                                                 </Form.Item>
                                             </Col>
 

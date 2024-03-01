@@ -26,6 +26,11 @@ const mapStateToProps = (state) => {
         common: {
             LeftSideBar: { collapsed = false },
         },
+        data: {
+            FinancialAccounting: {
+                FinancialAccountHead: { isLoading: isAccoutHeadLoading = false },
+            },
+        },
     } = state;
 
     const moduleTitle = translateContent('creditDebitNote.voucherDetails.heading.moduleTitle');
@@ -34,6 +39,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         moduleTitle,
+        isAccoutHeadLoading,
     };
     return returnValue;
 };
@@ -52,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VoucherDetailsMasterMain = (props) => {
-    const { formActionType, NEXT_ACTION, handleButtonClick } = props;
+    const { formActionType, NEXT_ACTION, handleButtonClick, isAccoutHeadLoading, isCreditDrawerDataLoading } = props;
     const { showGlobalNotification, setRequestPayload, handleFormValueChange, requestPayload, fetchFinancialAccountList, listFinanceShowLoading, voucherTableData, setVoucherTableData } = props;
 
     const [form] = Form.useForm();
@@ -80,6 +86,7 @@ export const VoucherDetailsMasterMain = (props) => {
         setIsReadOnly,
         voucherTableData,
         setVoucherTableData,
+        isAccoutHeadLoading,
     };
 
     const viewProps = {
@@ -88,6 +95,7 @@ export const VoucherDetailsMasterMain = (props) => {
         activeKey,
         setActiveKey,
         formActionType,
+        isLoading: isCreditDrawerDataLoading,
     };
 
     const onFinish = () => {

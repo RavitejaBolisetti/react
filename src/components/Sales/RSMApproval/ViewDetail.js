@@ -14,7 +14,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 import { translateContent } from 'utils/translateContent';
 
-const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles, handleButtonClick, onCloseAction, buttonData, setButtonData, handleRequest, queryButtons }) => {
+const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles, handleButtonClick, onCloseAction, buttonData, setButtonData, handleRequest, REQUEST_CONSTANT }) => {
     const buttonProps = {
         formData,
         onCloseAction,
@@ -23,6 +23,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
         handleButtonClick,
         setRejectRequest,
         handleRequest,
+        REQUEST_CONSTANT,
     };
 
     const statusClassName = RSM_APPROVAL_STATUS?.REJECTED?.key === formData?.status ? styles.rejectedColor : RSM_APPROVAL_STATUS?.APPROVED?.key === formData?.status ? styles.approvedColor : styles?.warningColor;

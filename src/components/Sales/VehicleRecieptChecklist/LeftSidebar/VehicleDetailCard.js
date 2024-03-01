@@ -5,32 +5,19 @@
  */
 import React from 'react';
 import { Collapse, Divider } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { dateFormatView } from 'utils/formatDateTime';
 
-import styles from 'assets/sass/app.module.scss';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { translateContent } from 'utils/translateContent';
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
-
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
-
 const VehicleDetailCard = (props) => {
     const { ProfileData, typeData, tooltTipText, isProductHierarchyLoading, record, isProfileDataLoading } = props;
     if (isProfileDataLoading || isProductHierarchyLoading) return <CardSkeleton />;
@@ -38,14 +25,14 @@ const VehicleDetailCard = (props) => {
     const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
 
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
                         {translateContent('vehicleReceiptChecklist.heading.profileCard.checklistNumber')}
-                        <span className={styles.activeForm}>
+                        <span>
                             {ProfileData?.checklistNumber || 'New'}
-                            <CopytoClipboard text={ProfileData?.checklistNumber} />
+                            <CopytoClipboard buttonText={null} text={ProfileData?.checklistNumber} />
                         </span>
                     </div>
                 }
@@ -87,7 +74,7 @@ const VehicleDetailCard = (props) => {
 
                     <span>
                         {record?.modelName ? record?.modelName : 'NA'}
-                        {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                        {addToolTip(tooltTipText, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                     </span>
                 </div>
             </Panel>

@@ -19,7 +19,6 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -59,21 +58,17 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListLessorCompanyMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, totalRecords } = props;
+    const { data, saveData, fetchList, userId, listShowLoading, showGlobalNotification, moduleTitle, totalRecords } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const DEFAULT_PAGINATION = { pageSize: 10, current: 1 };
 
-
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState(data);
     const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState(DEFAULT_PAGINATION);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [page, setPage] = useState({});
-
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -81,7 +76,6 @@ export const ListLessorCompanyMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const dynamicPagination = true;
-
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -157,33 +151,6 @@ export const ListLessorCompanyMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
-    useEffect(() => {
-        if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
-
-    useEffect(() => {
-            setSearchdata(data);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
-
-    // useEffect(() => {
-    //     if (data?.length > 0 && userId) {
-    //         if (filterString) {
-    //             const keyword = filterString?.keyword;
-    //             const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
-    //             setSearchdata(filterDataItem);
-    //             setShowDataLoading(false);
-    //         } else {
-    //             setSearchdata(data);
-    //             setShowDataLoading(false);
-    //         }
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString, isDataLoaded, data, userId]);
-
     const handleReferesh = () => {
         setShowDataLoading(true);
         setRefershData(!refershData);
@@ -201,15 +168,14 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        setPage({ ...page, current: 1 });
         if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: false, companyName: value });
+            setFilterString({ ...filterString, current: 1, pageSize: 10, advanceFilter: false, companyName: value });
         }
     };
 
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
-            setFilterString((prev) => ({ current: 1, pageSize: prev?.pageSize }));
+            setFilterString((prev) => ({ current: 1, pageSize: 10 }));
             listFilterForm.resetFields();
             setShowDataLoading(false);
         } else if (e.target.value.length > 2) {
@@ -272,8 +238,8 @@ export const ListLessorCompanyMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
-        tableData: searchData,
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
+        tableData: data,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -282,13 +248,11 @@ export const ListLessorCompanyMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
-       
     };
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: searchData,
-        page: filterString,
+        tableData: data,
         setPage: setFilterString,
         filterString,
         totalRecords,
@@ -307,7 +271,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
-        tableData: searchData,
+        tableData: data,
     };
 
     return (

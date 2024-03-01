@@ -19,16 +19,17 @@ import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_CHARGER_INSTALLATION as customURL } from 'constants/routingApi';
 import { CHARGER_STATUS } from 'constants/ChargerStatus';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import { FUEL_TYPE } from './Constants/FuelTypeConstant';
+import { FUEL_TYPE, REQUEST_STAGE_CONSTANTS } from './Constants/FuelTypeConstant';
 import { chargerInstallationDataActions } from 'store/actions/data/chargerInstallation/chargerInstallation';
 import { crmCustomerVehicleDataActions } from 'store/actions/data/crmCustomerVehicle';
 import { chargerInstallationGuestDetailsDataActions } from 'store/actions/data/chargerInstallation/chargerInstallationGuestDetails';
+import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-
-import { FilterIcon } from 'Icons';
 import { getCodeValue } from 'utils/getCodeValue';
+import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
+import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -39,12 +40,17 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ChargerInstallation: {
-                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [] },
+                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [], isDetailLoading, isLoadingOnSave },
                 ChargerInstallationGuestDetails: { isLoaded: isGuestDataLoaded = false, isLoading: isGuestLoading, data: chargerInstallationGuestDetailsData = [] },
             },
-            CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isCRMCustomerLoading, data: crmCustomerVehicleData = [] },
+            CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isLoading: isChargerSearchLoading, data: crmCustomerVehicleData = [] },
+            Vehicle: {
+                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
+            },
         },
     } = state;
+
     const moduleTitle = translateContent('chargerInstallationProcess.heading.mainTitle');
     let returnValue = {
         userId,
@@ -58,11 +64,21 @@ const mapStateToProps = (state) => {
         filterString,
         chargerInstallationMasterData,
         isCRMCustomerDataLoaded,
-        isCRMCustomerLoading,
         crmCustomerVehicleData,
         isGuestDataLoaded,
         isGuestLoading,
         chargerInstallationGuestDetailsData,
+        isLoading: isDetailLoading,
+        isLoadingOnSave,
+        isChargerSearchLoading,
+
+        isModelDataLoaded,
+        isModelLoading,
+        modelData,
+
+        isVariantDataLoaded,
+        isVariantLoading,
+        variantData,
     };
     return returnValue;
 };
@@ -73,15 +89,26 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchCustomerVehicleList: crmCustomerVehicleDataActions.fetchList,
             listCustomerVehicleShowLoading: crmCustomerVehicleDataActions.listShowLoading,
+            resetCustomerVehicleData: crmCustomerVehicleDataActions.reset,
 
             fetchList: chargerInstallationDataActions.fetchList,
-            fetchChargerDetails: chargerInstallationDataActions.fetchDetail,
             listShowLoading: chargerInstallationDataActions.listShowLoading,
+            fetchChargerDetails: chargerInstallationDataActions.fetchDetail,
+            listDetailShowLoading: chargerInstallationDataActions.listDetailShowLoading,
+            resetDetailData: chargerInstallationDataActions.resetDetail,
             setFilterString: chargerInstallationDataActions.setFilter,
             saveData: chargerInstallationDataActions.saveData,
 
             fetchGuestDetails: chargerInstallationGuestDetailsDataActions.fetchList,
             listGuestShowLoading: chargerInstallationGuestDetailsDataActions.listShowLoading,
+
+            fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
+            listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
+            resetModel: vehicleModelDetailsDataActions.reset,
+
+            fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
+            listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
+            resetVariant: vehicleModelDetailsDataActions.reset,
 
             showGlobalNotification,
         },
@@ -90,9 +117,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ChargerInstallationMasterBase = (props) => {
-    const { data, userId, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
+    const { data, userId, isChargerSearchLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
+    const { resetCustomerVehicleData, filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading, modelData, variantData } = props;
+
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
     const [requestPayload, setRequestPayload] = useState({ chargerInstDetails: {}, chargerInstAddressDetails: {} });
@@ -145,7 +174,6 @@ export const ChargerInstallationMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -236,28 +264,28 @@ export const ChargerInstallationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, chargerStatus, filterString, page]);
+    useEffect(() => {
+        if (userId) {
+            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         const defaultSection = CHARGER_INSTALLATION_SECTION.CHARGER_DETAILS.id;
         setDefaultSection(defaultSection);
         setSetionName(CHARGER_INSTALLATION_SECTION);
         setSection(defaultSection);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
     const filterActiveMenu = (items) => {
         return items;
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
-    useEffect(() => {
-        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageStatus === QUERY_BUTTONS_CONSTANTS?.COMMISSION?.key) {
-            setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
-        }
-        if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
-            setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chargerInstallationMasterData]);
+
     useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
@@ -271,20 +299,27 @@ export const ChargerInstallationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    useEffect(() => {
-        if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'id',
-                    title: 'id',
-                    value: selectedOrderId,
-                    name: 'Id',
+    const handleChargerCall = (id) => {
+        if (id && !selectedOrderId) {
+            fetchChargerDetails({
+                customURL,
+                setIsLoading: listDetailShowLoading,
+                userId,
+                extraParams: [
+                    {
+                        key: 'id',
+                        title: 'id',
+                        value: id,
+                        name: 'Id',
+                    },
+                ],
+                onErrorAction,
+                onSuccessAction: (res) => {
+                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.chargerInstDetails?.modelGroup, 'modelGroupCode') });
                 },
-            ];
-            fetchChargerDetails({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    };
 
     const onHandleModal = (record) => {
         setModal(true);
@@ -299,9 +334,20 @@ export const ChargerInstallationMasterBase = (props) => {
         fetchGuestDetails({ setIsLoading: listGuestShowLoading, userId, extraParams, onErrorAction });
     };
 
+    const makeExtraParams = (key, title, value, name) => {
+        const extraParams = [
+            {
+                key: key,
+                title: title,
+                value: value,
+                name: name,
+            },
+        ];
+        return extraParams;
+    };
+
     const handleBookingNumberSearch = (otfNumber) => {
         if (!otfNumber) return false;
-        setSelectedOtfNumber(otfNumber);
         const extraParams = [
             {
                 key: 'otfNumber',
@@ -312,12 +358,20 @@ export const ChargerInstallationMasterBase = (props) => {
         ];
         const onSuccesscustomerAction = (res) => {
             chargerInstallationForm.setFieldsValue({ otfNumber: otfNumber });
-            chargerInstallationForm.setFieldsValue({ bookingStatus: getCodeValue(typeData?.ORDR_STATS, crmCustomerVehicleData?.otfDetails?.orderStatus) });
             if (!(res?.data?.otfDetails?.orderStatus === OTF_STATUS?.CANCELLED?.key || res?.data?.otfDetails?.orderStatus === OTF_STATUS?.DELIVERED?.key) && res?.data?.vehicleDetails?.fuel === FUEL_TYPE?.ELECTR?.key) {
+                fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.vehicleDetails?.modelGroup, 'modelGroupCode') });
                 setChargerDetails(true);
                 setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                chargerInstallationForm.setFieldsValue({ bookingStatus: getCodeValue(typeData?.ORDR_STATS, crmCustomerVehicleData?.otfDetails?.orderStatus) });
+                setSelectedOtfNumber(otfNumber);
             } else {
                 showGlobalNotification({ message: translateContent('chargerInstallationProcess.notification.globalNotification') });
+                resetCustomerVehicleData();
+                setChargerDetails(false);
+                setAddRequestData([]);
+                setTimeout(() => {
+                    resetCustomerVehicleData();
+                }, 100);
             }
         };
         fetchCustomerVehicleList({ setIsLoading: listCustomerVehicleShowLoading, userId, extraParams, onSuccessAction: onSuccesscustomerAction, onErrorAction });
@@ -325,10 +379,13 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const handleBookingChange = () => {
         setSelectedOtfNumber('');
-        chargerInstallationForm.setFieldValue();
         setSelectedOrder('');
         setChargerDetails(false);
         setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+        chargerInstallationForm.setFieldsValue();
+        setAddRequestData([]);
+        resetCustomerVehicleData();
+        setDisabled(false);
     };
 
     const handleChargerTypeChange = (buttonName) => {
@@ -348,7 +405,7 @@ export const ChargerInstallationMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
-
+        handleChargerCall(record?.id);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -374,7 +431,6 @@ export const ChargerInstallationMasterBase = (props) => {
                 const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
-                setDisabled(true);
                 break;
 
             default:
@@ -394,11 +450,6 @@ export const ChargerInstallationMasterBase = (props) => {
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
-                // if (buttonAction === VIEW_ACTION) {
-                //     if (chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0]?.response === CHARGER_STATUS.SUCCESS?.key) {
-                //         setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
-                //     }
-                // }
             }
         }
         setIsFormVisible(true);
@@ -411,19 +462,23 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const onChargerInstallationFinish = (values) => {
         const data = { ...values, id: '' || selectedOrderId, bookingNumber: selectedOtfNumber };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
+            setButtonData({ ...defaultBtnVisiblity });
             setIsFormVisible(false);
+            resetCustomerVehicleData();
+            resetDetailData();
+            setSelectedOrder();
+            setSelectedOrderId();
         };
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        const onError = (message) => showGlobalNotification({ message });
+
         const requestData = {
-            data: data,
+            data,
             method: 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -433,10 +488,7 @@ export const ChargerInstallationMasterBase = (props) => {
         };
         saveData(requestData);
     };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
+    const handleFormValueChange = () => setButtonData({ ...buttonData, formBtnActive: true });
 
     const onCloseAction = () => {
         form.resetFields();
@@ -456,6 +508,8 @@ export const ChargerInstallationMasterBase = (props) => {
         setAddRequestData([]);
         setOptions();
         setButtonData({ ...defaultBtnVisiblity });
+        resetDetailData();
+        resetCustomerVehicleData();
     };
     const tableProps = {
         dynamicPagination,
@@ -468,10 +522,11 @@ export const ChargerInstallationMasterBase = (props) => {
     };
 
     const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
         form.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
+        addRequestForm.resetFields();
     };
 
     const removeFilter = (key) => {
@@ -488,6 +543,46 @@ export const ChargerInstallationMasterBase = (props) => {
     };
 
     const title = translateContent('chargerInstallationProcess.heading.title');
+
+    const RequestStage = useMemo(() => {
+        const requestDetailsLength = Array?.isArray(chargerInstallationMasterData?.chargerInstDetails?.requestDetails) && chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.length;
+        const status = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.stageStatus?.toUpperCase() === CHARGER_STATUS?.SUCCESS?.key;
+        const statusType = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.stageType;
+        if (statusType === REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key) {
+            setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
+            return REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key;
+        }
+        if (typeData?.[PARAM_MASTER?.CHRGR_INST_STG_TYPE?.id]?.length > 0) {
+            if (formActionType?.addMode) {
+                return REQUEST_STAGE_CONSTANTS?.SITE_SURVEY?.key;
+            } else if (formActionType?.editMode || formActionType?.viewMode) {
+                if (status) {
+                    formActionType?.viewMode && setButtonData((prev) => ({ ...prev, addRequestBtn: true }));
+                    switch (statusType) {
+                        case REQUEST_STAGE_CONSTANTS?.SITE_SURVEY?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.SITE_VALIDATION?.key;
+                        }
+                        case REQUEST_STAGE_CONSTANTS?.SITE_VALIDATION?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.INSTALLATION?.key;
+                        }
+                        case REQUEST_STAGE_CONSTANTS?.INSTALLATION?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key;
+                        }
+                        case REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key: {
+                            return REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key;
+                        }
+                        default: {
+                            return false;
+                        }
+                    }
+                }
+                return undefined;
+            } else {
+                return false;
+            }
+        }
+        return undefined;
+    }, [formActionType, typeData, chargerInstallationMasterData]);
 
     const advanceFilterResultProps = {
         extraParams,
@@ -516,9 +611,7 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
         titleOverride: translateContent('chargerInstallationProcess.heading.titleOverride'),
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -530,6 +623,7 @@ export const ChargerInstallationMasterBase = (props) => {
     };
 
     const containerProps = {
+        ...props,
         record: selectedOrder,
         form,
         chargerInstallationForm,
@@ -538,7 +632,7 @@ export const ChargerInstallationMasterBase = (props) => {
         onChargerInstallationFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -588,6 +682,10 @@ export const ChargerInstallationMasterBase = (props) => {
         setModal,
         onHandleModal,
         chargerInstallationGuestDetailsData,
+        isChargerSearchLoading,
+        RequestStage,
+        modelData,
+        variantData,
     };
 
     return (

@@ -16,7 +16,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
 
 export default function AdvanceFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, showAddButton = true, handleButtonClick, handleOnClick, record } = props;
+    const { extraParams, removeFilter, handleReset, advanceFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, showAddButton = true, handleButtonClick, handleOnClick, record } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -24,7 +24,6 @@ export default function AdvanceFilter(props) {
         optionType: typeData[PARAM_MASTER?.SCHEME_CODE?.id],
         defaultOption: 'schemeCode',
         setFilterString,
-        // allowClear: false,
     };
 
     return (
@@ -64,13 +63,6 @@ export default function AdvanceFilter(props) {
                         </Button>
                     )}
                 </Col>
-                {/* <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
-                    {showAddButton && (
-                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
-                        </Button>
-                    )}
-                </Col> */}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
@@ -95,7 +87,7 @@ export default function AdvanceFilter(props) {
                                 })}
                             </Col>
                             <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                <Button className={styles.clearBtn} onClick={() => handleReset()} danger>
                                     {translateContent('global.buttons.clear')}
                                 </Button>
                             </Col>

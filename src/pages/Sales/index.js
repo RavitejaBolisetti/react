@@ -41,6 +41,7 @@ import ClaimEmpowermentPage from './ClaimEmpowerment';
 import LoyaltyDocumentMasterPage from './LoyaltyDocument';
 import ExchangeLoyaltyCappingMasterPage from './ExchangeLoyaltyCappingMaster';
 import LoyaltySchemeMasterPage from './LoyaltyScheme';
+import CentralFameSubsidyPage from './CentralFameSubsidy';
 
 export {
     OTFMasterPage,
@@ -77,4 +78,5 @@ export {
     LoyaltyDocumentMasterPage,
     ExchangeLoyaltyCappingMasterPage,
     LoyaltySchemeMasterPage,
+    CentralFameSubsidyPage,
 };

@@ -4,13 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { ConfigProvider } from 'antd';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from './store/configureStore';
-import './i18n';
 import { App } from './App';
+import './i18n';
 
 import './index.scss';
 
@@ -19,15 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const providerWrapper = (
     <Provider store={store}>
-        <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: '#00b96b',
-                },
-            }}
-        >
-            <App />
-        </ConfigProvider>
+        <App />
     </Provider>
 );
 root.render(process.env.NODE_ENV === 'development' ? providerWrapper : <React.StrictMode>{providerWrapper}</React.StrictMode>);

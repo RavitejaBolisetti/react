@@ -88,11 +88,12 @@ export const validationFieldLetteNumberandPeriod = (fieldName, lowercase = true)
 
 export const validationNumber = (fieldName, lowercase = true) => ({
     pattern: /^\d+$/,
-    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+    message: 'Please enter numeric value in ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
 export const validateOnlyPositiveNumber = (fieldName, lowercase = true) => ({
-    pattern: /^[1-9]+[0-9]*$/,
+    // pattern: /^[0-9]+[0-9]*$/,
+    pattern: /^\d*$/,
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
@@ -103,7 +104,7 @@ export const validateGSTIN = (fieldName, lowercase = true) => ({
 
 export const validateNumberWithTwoDecimalPlaces = (fieldName, lowercase = true) => ({
     pattern: /^\d+(\.\d{1,2})?$/,
-    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName) + ' as number with two decimal is allowd',
 });
 
 export const validatePincodeField = (fieldName, digit = '6', lowercase = true) => ({
@@ -208,7 +209,7 @@ export const validateAadhar = (fieldName) => ({
 });
 export const validateVoterId = (fieldName) => ({
     pattern: /^([a-zA-Z]){3}\d{7}$/,
-    mesage: 'Please enter valid ' + fieldName,
+    message: 'Please enter valid ' + fieldName,
 });
 
 export const valueOfPer = (fieldName) => ({
@@ -247,10 +248,9 @@ export const validateNegativeNumber = (fieldName) => ({
     message: fieldName + ' Does not accept negative numbers',
 });
 
-export const isIssuePriceValid = (value, dealerPrice) => {
+export const isIssuePriceValid = (value = 0, dealerPrice = 0) => {
     if (!value) return Promise.resolve();
-    // else if (!dealerPrice) return Promise.reject(new Error(`Net Dealer Price not present`));
-    else if (!dealerPrice || value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
+    else if (dealerPrice && value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
     else return Promise.resolve();
 };
 
@@ -277,3 +277,8 @@ export const compareFromToDate = (compareTo) => {
         },
     };
 };
+
+export const DecimalPercentageValidation = (fieldName) => ({
+    pattern: /^(?:\d{1,2}(?:\.\d{1,2})?|100(?:\.0?0)?)$/,
+    message: fieldName + ' accepts between 0-100 and upto 2 decimal places',
+});

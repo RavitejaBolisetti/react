@@ -4,11 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Button, Collapse, Card, Typography, Divider, Switch } from 'antd';
+import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
 import dayjs from 'dayjs';
 
@@ -17,7 +16,6 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { GrSync } from 'react-icons/gr';
 import { getCodeValue } from 'utils/getCodeValue';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
@@ -30,32 +28,27 @@ import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { translateContent } from 'utils/translateContent';
-import { ChangeModelVariantMaster } from './ChangeModelVariant';
 import { TbRefresh } from 'react-icons/tb';
+import { RevisedModelDetailMaster } from 'components/Sales/OTF/ChangeModelVariant/RevisedModelDetail/RevisedModelDetailMaster';
+import { STATUS } from 'constants/modelVariant';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { isProductDataLoading, productHierarchyData, toolTipContent, handleFormValueChange, optionalServices, setOptionalServices, formData, orderStatus, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setCustomerNameList, customerNameList, changeModel, setChangeModel, onModelSubmit, setOnModelSubmit } = props;
-    const { activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule, setFilterVehicleData } = props;
+    const { isProductDataLoading, productHierarchyData, toolTipContent, setRevisedModelInformation, handleFormValueChange, optionalServices, setOptionalServices, formData, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, vehicleServiceData, setOpenVehilceModelChange } = props;
+    const { handleOtfSoMappingHistory, activeKey, onChange, formActionType, filterVehicleData, handleVehicleDetailChange, viewOnly, showPrintDiscount = false, isOTFModule } = props;
 
     const [optionForm] = Form.useForm();
     const [confirmRequest, setConfirmRequest] = useState();
     const [editingOptionalData, setEditingOptionalData] = useState({});
-
-    const findUsageType = (usage) => {
-        const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
-        return foundVal?.key;
-    };
-
     const disabledProp = { disabled: true };
+
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
                 poDate: formData?.poDate ? dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY') : undefined,
-                vehicleUsageType: findUsageType(formData?.vehicleUsageType),
                 vehicleAllocatedStatus: getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'),
             });
         }
@@ -118,19 +111,8 @@ const AddEditFormMain = (props) => {
         setOptionalServices,
         handleFormValueChange,
         vehicleServiceData,
-    };
-
-    const myProp = {
-        ...props,
-        ...OptionServicesFormProps,
-        setCustomerNameList,
-        customerNameList,
-        editingOptionalData,
         setEditingOptionalData,
-        onModelSubmit,
-        setOnModelSubmit,
-        setFilterVehicleData,
-        setChangeModel,
+        editingOptionalData,
     };
 
     const handleSelectTreeClick = (value) => {
@@ -185,15 +167,28 @@ const AddEditFormMain = (props) => {
     };
 
     const handleChangeModel = () => {
-        setChangeModel(true);
+        setOpenVehilceModelChange(true);
+        setRevisedModelInformation({ ...toolTipContent });
     };
+
+    const isReviedModelPending = formData?.revisedModel && [STATUS?.PENDING?.key, STATUS?.REJECTED?.key]?.includes(formData?.sapStatusResponseCode);
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
-                        <Panel header={translateContent('vehicleInvoiceGeneration.heading.collapse.vehicleInformation')} key="1">
+                        <Panel
+                            header={
+                                <Row type="flex" align="middle">
+                                    <Text strong> {translateContent('commonModules.label.vehicleDetails.vehicleInformation')}</Text>
+                                    <Button onClick={handleOtfSoMappingHistory} type="link">
+                                        {translateContent('global.buttons.bookingMappingHistory')}
+                                    </Button>
+                                </Row>
+                            }
+                            key="1"
+                        >
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
@@ -204,28 +199,29 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.modelCode')} name="modelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField('Model Code')]}>
-                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.oemModelCode')} name="oemModelCode" data-testid="vehicleVariant" rules={[validateRequiredInputField(translateContent('commonModules.label.vehicleDetails.oemModelCode'))]}>
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.oemModelCode'))} />
                                     </Form.Item>
+                                    <Form.Item initialValue={formData?.modelCode} name="modelCode" hidden />
                                 </Col>
 
                                 {formData?.otfStatus === OTF_STATUS?.BOOKED.key && (
                                     <Col xs={24} sm={24} md={3} lg={3} xl={3} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} disabled={onModelSubmit}>
+                                        <Button onClick={handleChangeModel} type="link" icon={<TbRefresh className={styles.marT10} size={18} />} style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
                                             Change
                                         </Button>
                                     </Col>
                                 )}
                             </Row>
-                            <Divider />
-                            {changeModel && (
+                            {isReviedModelPending ? (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <ChangeModelVariantMaster {...myProp} />
+                                        <RevisedModelDetailMaster {...props} />
                                     </Col>
                                 </Row>
+                            ) : (
+                                <Divider />
                             )}
-
                             <Row gutter={20}>
                                 {isOTFModule && (
                                     <>
@@ -259,12 +255,23 @@ const AddEditFormMain = (props) => {
                                                 <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.soStatus'))} />
                                             </Form.Item>
                                         </Col>
+                                        <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                                            <Form.Item label={translateContent('commonModules.label.vehicleDetails.sapResonseRemarks')} name="sapResonseRemarks">
+                                                <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.sapResonseRemarks'))} />
+                                            </Form.Item>
+                                        </Col>
                                     </>
                                 )}
 
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label={translateContent('commonModules.label.vehicleDetails.vin')} name="vinNumber">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vin'))} />
+                                    </Form.Item>
+                                </Col>
+
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.vehicleUsageType')} name="vehicleUsageType">
+                                        {customSelectBox({ data: typeData?.VEHCL_TYPE, onChange: (value) => handleVehicleDetailChange({ ...filterVehicleData, vehicleUsageType: value }) })}
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -294,6 +301,11 @@ const AddEditFormMain = (props) => {
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.vehicleAmount'))} />
                                     </Form.Item>
                                 </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.tcsAmount')} name="tcsAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.tcsAmount'))} />
+                                    </Form.Item>
+                                </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -320,9 +332,26 @@ const AddEditFormMain = (props) => {
                                         <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.consumerSchemeWithTax'))} />
                                     </Form.Item>
                                 </Col>
+
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.corporateSchemeWithTax')} name="corporateSchemeWithTax">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.corporateSchemeWithTax'))} />
+                                    </Form.Item>
+                                </Col>
+
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax')} name="mnmNonCashBenefitsWithTAX">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.mnmNonCashBenefitAmountWithTax'))} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label={translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount')} name="fameSubsidyAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText(translateContent('commonModules.label.vehicleDetails.fameSubsidyAmount'), true, false)} />
+                                    </Form.Item>
+                                </Col>
                                 {showPrintDiscount && (
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formActionType?.editMode ? (formData?.printDiscount === 'Y' ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
+                                        <Form.Item initialValue={formData?.printDiscount ? formData?.printDiscount === 'Y' : true} valuePropName="checked" labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label={translateContent('commonModules.label.vehicleDetails.printDiscount')}>
                                             <Switch checkedChildren={translateContent('global.yesNo.yes')} unCheckedChildren={translateContent('global.yesNo.no')} onChange={(checked) => (checked ? 'Y' : 'N')} />
                                         </Form.Item>
                                     </Col>

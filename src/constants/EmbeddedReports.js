@@ -57,9 +57,9 @@ export const EMBEDDED_REPORTS = {
 
     AMC_CETRIFICATE_DOCUMENT: {
         id: 7,
-        key: 'AMC-Certificate_Document',
+        key: 'AMC_Certificate_Document',
         title: 'AMC Certificate Document',
-        type: 'Report',
+        type: 'Document',
         slug: 'amc-certificate-document',
     },
     POSO: {
@@ -109,7 +109,7 @@ export const EMBEDDED_REPORTS = {
     RECIEPT_DOCUMENT: {
         id: 14,
         key: 'Receipt_Note',
-        title: 'Reciept Document',
+        title: 'Receipt Document',
         type: 'Document',
     },
     INVOICE_DOCUMENT: {
@@ -136,17 +136,16 @@ export const EMBEDDED_REPORTS = {
         title: 'Delivery Note Document',
         type: 'Document',
     },
-
     FORM_21_DOCUMENT: {
         id: 19,
         key: 'Form21',
         title: 'Form 21 Document',
         type: 'Document',
     },
-    STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT: {
+    STOCK_TRANSFER_RECEIVE_NOTE_DOCUMENT: {
         id: 20,
         key: 'Stock_Transfer_Receipt_Note',
-        title: 'Stock Transfer Recieve Note Document',
+        title: 'Stock Transfer Receive Note Document',
         type: 'Document',
     },
     CO_DEALER_INVOICE_REPORT: {
@@ -173,7 +172,7 @@ export const EMBEDDED_REPORTS = {
     AMC_REGISTRATION_INVOICE_DOCUMENT: {
         id: 24,
         key: 'AMC_Certificate_Document',
-        title: 'AMC Registration Invoice Document ',
+        title: 'AMC Registration Invoice Document',
         type: 'Document',
     },
     CHALLAN_DOCUMENT: {
@@ -258,7 +257,7 @@ export const EMBEDDED_REPORTS = {
     },
     RSA_CERTIFICATE_DOCUMENT: {
         id: 37,
-        key: 'RSA_Certificate_Document',
+        key: 'RSA_Document',
         title: 'RSA Certificate Document ',
         type: 'Document',
     },
@@ -270,7 +269,7 @@ export const EMBEDDED_REPORTS = {
     },
     CO_DEALER_INVOICE_DOCUMENT: {
         id: 39,
-        key: 'Co_Dealer_Invoice_Doument',
+        key: 'Co_Dealer_Invoice_Document',
         title: 'Co Dealer Invoice Document ',
         type: 'Document',
     },
@@ -284,7 +283,7 @@ export const EMBEDDED_REPORTS = {
     Sale_Register_Report: {
         id: 41,
         key: 'Sale_Register_Report',
-        title: 'Sale Registe Report ',
+        title: 'Sale Register Report ',
         type: 'Report',
         slug: 'sale_register_report',
     },
@@ -293,5 +292,12 @@ export const EMBEDDED_REPORTS = {
         key: 'Referral_Scheme_Registration_Document',
         title: 'Referral Scheme Registration Document ',
         type: 'Document',
+    },
+    AMC_REPORT: {
+        id: 43,
+        key: 'AMC_Report',
+        title: 'AMC Report ',
+        type: 'Report',
+        slug: 'amc_report',
     },
 };

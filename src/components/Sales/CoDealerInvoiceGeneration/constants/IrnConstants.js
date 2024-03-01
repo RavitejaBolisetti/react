@@ -16,10 +16,16 @@ export const IRN_CONSTANTS = {
         tagColor: 'error',
         tagDesc: 'Cancelled',
     },
-    SUCCESS: {
+    REJECTED: {
         id: 3,
-        key: 'S',
+        key: 'R',
+        tagColor: 'error',
+        tagDesc: 'Rejected',
+    },
+    APPROVED: {
+        id: 3,
+        key: 'A',
         tagColor: 'success',
-        tagDesc: 'Success',
+        tagDesc: 'Approved',
     },
 };

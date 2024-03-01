@@ -94,7 +94,6 @@ export const ReceiptMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [receiptStatus, setReceiptStatus] = useState(QUERY_BUTTONS_CONSTANTS.OPENED.key);
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
-
     const [listFilterForm] = Form.useForm();
     const [cancelReceiptForm] = Form.useForm();
 
@@ -125,6 +124,7 @@ export const ReceiptMasterBase = (props) => {
     const [partyId, setPartyId] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
+    const [previousSection, setPreviousSection] = useState(1);
 
     const dynamicPagination = true;
 
@@ -317,6 +317,7 @@ export const ReceiptMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         switch (buttonAction) {
             case ADD_ACTION:
+                setPreviousSection(1);
                 defaultSection && setCurrentSection(defaultSection);
                 partyDetailForm.resetFields();
                 setApportionList([]);
@@ -568,7 +569,7 @@ export const ReceiptMasterBase = (props) => {
         receiptOnFinish: onFinish,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -613,6 +614,9 @@ export const ReceiptMasterBase = (props) => {
         setPartySegment,
         partyId,
         setPartyId,
+
+        previousSection,
+        setPreviousSection,
     };
 
     const cancelReceiptProps = {

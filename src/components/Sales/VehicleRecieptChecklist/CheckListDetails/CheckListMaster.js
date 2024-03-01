@@ -89,6 +89,7 @@ const VehicleRecieptCheckListMain = (props) => {
             { key: 'chassisNumber', title: 'chassisNumber', value: chassisNumber, name: 'Chassis Number' },
             { key: 'id', title: 'id', value: selectedRecord?.id, name: 'id' },
         ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chassisNumber, userId]);
 
     useEffect(() => {

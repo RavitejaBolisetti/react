@@ -13,7 +13,7 @@ import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, receipt, formActionType } = props;
+    const { currentSection, setCurrentSection, receipt, formActionType, previousSection } = props;
     const receiptSectionList = Object.values(RECEIPT_SECTION);
 
     const onHandle = (key) => {
@@ -21,7 +21,7 @@ const MenuNav = (props) => {
     };
 
     const className = (id) => {
-        return formActionType?.addMode && id > currentSection ? styles.cursorNotAllowed : styles.cursorPointer;
+        return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
     };
 
     const items = receiptSectionList
@@ -32,7 +32,7 @@ const MenuNav = (props) => {
                     dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
                     // dot: getSelectedMenuAttribute(item?.id)?.menuNavIcon ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
                     children: (
-                        <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id < currentSection) ? onHandle(item?.id) : '')}>
+                        <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
                             {item.title}
                         </div>
                     ),

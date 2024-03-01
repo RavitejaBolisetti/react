@@ -14,7 +14,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_INVOICE, btnV
 import { CoDealerInvoiceMainContainer } from './CoDealerInvoiceMainContainer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { CoDealerInvoiceAdvancedSearch } from './CoDealerInvoiceAdvancedSearch';
-import { CO_DEALER_QUERY_BUTTONS, SEARCH_PARAM_CONSTANTS, THANK_YOU_TYPE } from './constants';
+import { CO_DEALER_QUERY_BUTTONS, IRN_CONSTANTS, SEARCH_PARAM_CONSTANTS, THANK_YOU_TYPE } from './constants';
 import { showGlobalNotification } from 'store/actions/notification';
 import { CO_DEALER_SECTIONS } from 'components/Sales/CoDealerInvoiceGeneration/constants';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -26,17 +26,16 @@ import { CoDealerSearchDataActions, CoDealerVinNumberDataActions } from 'store/a
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDateTime, convertDateTimedayjs, dateFormat, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { convertDateTime, convertDateTimedayjs, dateFormatView, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATE_CONSTANTS } from './constants/DateConstants';
 import { validateRequiredSelectField } from 'utils/validation';
-import { BASE_URL_CO_DEALER_DETAILS, BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_LIST, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD } from 'constants/routingApi';
+import { BASE_URL_CO_DEALER_DETAILS, BASE_URL_VEHICLE_INVOICE_IRN_GENERATION, BASE_URL_VEHICLE_INVOICE_PROFILE_CARD } from 'constants/routingApi';
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/sales/vehicleInvoiceGeneration';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { CancelInvoice } from '../VehicleInvoiceGeneration/CancelInvoice';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoCityDataActions } from 'store/actions/data/geo/cities';
-import { IRN_STATUS } from 'constants/IRNStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,7 +43,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             CoDealerInvoice: {
-                CoDealerInvoiceSearch: { isDetailLoaded: isCoDealerLoaded = false, isDetailLoading: isSearchLoading, data, detailData: CoDealerData = [], filter: filterString },
+                CoDealerInvoiceSearch: { isDetailLoaded: isCoDealerLoaded = false, isDetailLoading: isSearchLoading, isLoadingOnSave, isDetailLoading, data, detailData: CoDealerData = [], filter: filterString },
                 CoDealerVINNumber: { data: VinData, isLoading: isVinLoading, isLoaded: isVinLoaded },
             },
             DealerHierarchy: {
@@ -72,6 +71,8 @@ const mapStateToProps = (state) => {
         filterString,
         indentToDealerData,
         CoDealerData,
+        isLoading: isDetailLoading,
+        isLoadingOnSave,
 
         VinData,
         isVinLoading,
@@ -94,6 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: CoDealerSearchDataActions.setFilter,
             fetchCoDealerProfileData: vehicleInvoiceGenerationDataActions.fetchData,
             saveData: CoDealerSearchDataActions.saveData,
+            saveFormShowLoading: CoDealerSearchDataActions.saveFormShowLoading,
 
             fetchCoDealerDetails: CoDealerSearchDataActions.fetchDetail,
             resetCoDealerDetailData: CoDealerSearchDataActions.resetDetail,
@@ -119,17 +121,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCityLovList: geoCityDataActions.fetchFilteredList,
             listCityLoading: geoCityDataActions.listShowLoading,
 
-            // fetchCustomerListData: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
-            // listCustomerListLoading: vehicleDeliveryNoteCustomerDetailDataActions.listShowLoading,
-
-            // cancelDeliveryNote: cancelVehicleDeliveryNoteDataActions.saveData,
-            // cancelShowLoading: cancelVehicleDeliveryNoteDataActions.listShowLoading,
-            // cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
-
-            // resetCheckListData: DeliverableChecklistMaindataActions.reset,
-            // resetChallanData: vehicleChallanDetailsDataActions.reset,
-            // resetCustomerdata: vehicleDeliveryNoteCustomerDetailDataActions.reset,
-
             showGlobalNotification,
         },
         dispatch
@@ -137,14 +128,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CoDealerInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData = {}, userId = undefined, fetchList = () => {}, listShowLoading = () => {}, saveData = () => {} } = props;
-    const { typeData, receiptType = undefined, partySegmentType = undefined, paymentModeType = undefined, documentType = undefined, moduleTitle = '', totalRecords = 0, showGlobalNotification = () => {} } = props;
+    const { data, receiptDetailData = {}, userId = undefined, saveData = () => {} } = props;
+    const { typeData, receiptType = undefined, partySegmentType = undefined, moduleTitle = '', totalRecords = 0, showGlobalNotification = () => {} } = props;
     const { filterString, setFilterString, coDealerInvoiceStatusList = Object?.values(CO_DEALER_QUERY_BUTTONS) } = props;
     const { fetchCoDealerInvoice, isCoDealerLoaded, listShowCoDealerLoading } = props;
     const { indentToDealerData, fetchDealerParentsLovList, listShowDealerLoading, fetchCoDealerDetails, resetCoDealerDetailData, listCoDealerDetailShowLoading, CoDealerData, fetchCoDealerProfileData } = props;
     const { CancelInvoiceGenerated, isVinLoading, fetchVin, listVinLoading, resetVinData, VIN_SEARCH_TYPE, resetTaxDetails, restCancellationData } = props;
-    const { generateIrn, listIrnLoading } = props;
-    const { cityData, stateData, fetchStateLovList, fetchCityLovList, listCityLoading, listStateLoading } = props;
+    const { saveFormShowLoading, isLoading, generateIrn, listIrnLoading } = props;
+    const { cityData, stateData, isLoadingOnSave, fetchStateLovList, fetchCityLovList, listCityLoading, listStateLoading } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -201,7 +192,17 @@ export const CoDealerInvoiceMasterBase = (props) => {
     useEffect(() => {
         if (typeData && typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.length) {
             searchForm.setFieldsValue({ searchType: 'indentNumber' });
-            setCoDealerInvoiceStateMaster({ ...CoDealerInvoiceStateMaster, RFRL: typeData?.[PARAM_MASTER.RFRL.id], TAX_CALCLTN_TYPE: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], VEHCL_TYPE: typeData?.[PARAM_MASTER.VEHCL_TYPE.id], PRC_TYP: typeData?.[PARAM_MASTER.PRC_TYP.id], SALE_TYPE: typeData?.[PARAM_MASTER.SALE_TYPE.id], TYPE_DATA_INV_SEARCH: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeData: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id], typeDataFilter: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((i) => [SEARCH_PARAM_CONSTANTS?.INDENT_NUMBER?.key]?.includes(i?.key)) });
+            setCoDealerInvoiceStateMaster({
+                ...CoDealerInvoiceStateMaster,
+                RFRL: typeData?.[PARAM_MASTER.RFRL.id],
+                TAX_CALCLTN_TYPE: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id],
+                VEHCL_TYPE: typeData?.[PARAM_MASTER.VEHCL_TYPE.id],
+                PRC_TYP: typeData?.[PARAM_MASTER.PRC_TYP.id],
+                SALE_TYPE: typeData?.[PARAM_MASTER.SALE_TYPE.id],
+                TYPE_DATA_INV_SEARCH: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((item) => ![SEARCH_PARAM_CONSTANTS?.DEALER_PARENT?.key]?.includes(item?.key)),
+                typeData: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id],
+                typeDataFilter: typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]?.filter((i) => [SEARCH_PARAM_CONSTANTS?.INDENT_NUMBER?.key]?.includes(i?.key)),
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData, typeData?.[PARAM_MASTER.CO_DEALER_INV_SER.id]]);
@@ -412,7 +413,6 @@ export const CoDealerInvoiceMasterBase = (props) => {
             default:
                 formAction = { addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION };
                 btnVisibilityStatus = btnVisiblity({ defaultBtnVisiblity, buttonAction });
-
                 break;
         }
         return { formAction, btnVisibilityStatus };
@@ -440,7 +440,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
                 extraParams: ExtraParams('invoiceId', null, id),
                 onSuccessAction: (res) => {
                     setCoDealerInvoiceStateMaster((prev) => ({ ...prev, selectedOrder: { ...res?.data, invoiceDate: convertDateTimedayjs(res?.data?.invoiceDate, dateFormatView) } }));
-                    const showCancelInvoice = [IRN_STATUS?.APPROVED?.key, IRN_STATUS?.REJECTED?.key, null]?.includes(res?.data?.irnStatus) && !formActionType?.addMode && res?.data?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key;
+                    const showCancelInvoice = [IRN_CONSTANTS?.APPROVED?.key, IRN_CONSTANTS?.REJECTED?.key, null]?.includes(res?.data?.irnStatus) && !formActionType?.addMode && res?.data?.invoiceStatus === CO_DEALER_QUERY_BUTTONS?.INVOICED?.key;
                     setButtonData((prev) => ({ ...prev, cancelInvoice: showCancelInvoice }));
                 },
                 onErrorAction,
@@ -514,11 +514,10 @@ export const CoDealerInvoiceMasterBase = (props) => {
 
     const handleInvoicePrint = (record) => {
         setReportVisible(true);
-
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                value: record?.record?.id,
             },
         ]);
     };
@@ -581,12 +580,13 @@ export const CoDealerInvoiceMasterBase = (props) => {
             setButtonData({ ...defaultBtnVisiblity, closeBtn: true });
             section && setCurrentSection(CO_DEALER_SECTIONS.THANK_YOU_PAGE.id);
             setCoDealerInvoiceStateMaster((prev) => ({ ...prev, selectedOrder: MessageSplit(data)?.selectedOrder, thankyouPageTitle: MessageSplit(data)?.thankyouPageTitle, generationTitle: MessageSplit(data)?.generationTitle, generationMessage: MessageSplit(data)?.generationMessage }));
+            setSelectedOrder({ record: res?.data });
         };
 
         const requestData = {
             data: finalPayload,
             method: 'post',
-            setIsLoading: listShowCoDealerLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError: onErrorAction,
             onSuccess,
@@ -605,7 +605,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         resetCoDealerDetailData();
         resetVinData();
         resetTaxDetails();
-        setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: [], indentDetails: {}, vehicleDetailRequest: {}, selectedOrder: {} }));
+        setCoDealerInvoiceStateMaster((prev) => ({ ...prev, VinData: [], indentDetails: undefined, vehicleDetailRequest: undefined, selectedOrder: {} }));
         restCancellationData();
     };
 
@@ -736,6 +736,9 @@ export const CoDealerInvoiceMasterBase = (props) => {
     };
 
     const containerProps = {
+        isLoadingOnSave,
+        isLoading,
+        showSpinner: !formActionType?.viewMode,
         record: selectedOrder,
         form,
         formActionType,
@@ -768,6 +771,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         setLastSection,
         setSection,
         saveButtonName: translateContent('global.buttons.submit'),
+        nextBtnName: formActionType?.addMode ? translateContent('global.buttons.continue') : translateContent('global.buttons.next'),
         CoDealerInvoiceStateMaster,
         HandleVinList,
         isVinLoading,
@@ -793,6 +797,7 @@ export const CoDealerInvoiceMasterBase = (props) => {
         cancelInvoiceForm,
         onCloseAction: onCancelCloseAction,
         typeData,
+        showCancellationType: false,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.CO_DEALER_INVOICE_DOCUMENT;

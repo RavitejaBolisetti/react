@@ -19,7 +19,7 @@ import { setCollapsed } from 'store/actions/common/leftsidebar';
 import { showGlobalNotification } from 'store/actions/notification';
 import { menuDataActions } from 'store/actions/data/menu';
 import { headerDataActions } from 'store/actions/common/header';
-import { clearLocalStorageData, doRefreshToken, doLogoutAPI } from 'store/actions/auth';
+import { clearLocalStorageData, doRefreshToken, doLogoutAPI, authPostLogin } from 'store/actions/auth';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { notificationDataActions } from 'store/actions/common/notification';
 import { userAccessMasterDataAction } from 'store/actions/data/userAccess';
@@ -166,7 +166,7 @@ const HeaderMain = (props) => {
     };
 
     const onError = (message) => {
-        showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
+        showGlobalNotification({ message });
         navigate(routing.ROUTING_LOGIN);
         clearLocalStorageData();
     };
@@ -176,10 +176,8 @@ const HeaderMain = (props) => {
 
         const onSuccess = (res) => {
             fetchData({ setIsLoading: listShowLoading, userId });
-            if (roleId) {
-                fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
-                navigate(routing.ROUTING_DASHBOARD);
-            }
+            fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+            navigate(routing.ROUTING_DASHBOARD);
         };
 
         const onError = (message) => {
@@ -267,23 +265,29 @@ const HeaderMain = (props) => {
     const isDashboard = false;
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            doRefreshToken({
-                onSuccess: () => {
-                    Modal.destroyAll();
-                },
-                data: { userId, token: refreshToken },
-                onError: () => {
-                    showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Session Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
-                    navigate(routing.ROUTING_LOGIN);
-                },
-            });
-        }, 90 * 1000);
+        if (userType === USER_TYPE?.DEALER?.key) {
+            const interval = setInterval(() => {
+                if (refreshToken) {
+                    doRefreshToken({
+                        onSuccess: (res) => {
+                            Modal.destroyAll();
+                            authPostLogin(res?.data);
+                        },
+                        data: { userId, token: refreshToken },
+                        onError: () => {
+                            showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Session Expired', message: 'Your session has expired. Please log in again to continue accessing the application.' });
+                            navigate(routing.ROUTING_LOGIN);
+                        },
+                    });
+                }
+            }, 900 * 1000);
 
-        return () => {
-            clearInterval(interval);
-        };
-    });
+            return () => {
+                clearInterval(interval);
+            };
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userType]);
 
     return (
         <>

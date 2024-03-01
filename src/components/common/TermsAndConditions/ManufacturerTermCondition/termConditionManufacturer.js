@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
         },
         common: {
             LeftSideBar: { collapsed = false },
+            Header: { dealerLocationId },
         },
     } = state;
 
@@ -64,6 +65,7 @@ const mapStateToProps = (state) => {
         ManufacturerTermsConditionsDataLoaded,
         ChangeHistoryTermsConditionsData,
         ChangeHistoryTermsConditionsDataLoaded,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -88,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, changeHistoryData, ChangeHistoryTermsConditionsData, ChangeHistoryTermsConditionsDataLoaded, listShowLoading, listShowChangeHistoryLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncManufacturer = ({ dealerLocationId, moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, changeHistoryData, ChangeHistoryTermsConditionsData, ChangeHistoryTermsConditionsDataLoaded, listShowLoading, listShowChangeHistoryLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -136,7 +138,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [islanguageDataLoaded, userId]);
+    }, [islanguageDataLoaded, userId, dealerLocationId]);
 
     useEffect(() => {
         if (userId) {
@@ -267,7 +269,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         saveandnewclick,
         setIsFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
         setFormBtnDisable,

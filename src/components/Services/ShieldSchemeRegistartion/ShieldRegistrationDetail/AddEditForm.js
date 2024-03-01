@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { SALE_TYPE } from '../utils/saleTypeConstant';
 
-import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
+import { validateRequiredSelectField, validateOnlyPositiveNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -21,8 +21,8 @@ const { Search } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, saleTypes, vinNumber, bookingNumber, schemeDetail, employeeData, managerData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleEmployeeSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, isEmployeeDataLoading, handleOnSelect, handleOnClear, typeData, screenType, handleTaxChange } = props;
-    const { activeKey, setActiveKey } = props;
+    const { handleVINChange, formData, managerData, vinNumber, bookingNumber, schemeDetail, employeeData, shieldDetailForm, handleOtfSearch, handleVinSearch, handleOtfChange, saleType, handleSaleTypeChange, formActionType, isSchemeLoading, typeData, handleTaxChange } = props;
+    const { activeKey, setActiveKey, handleOdometerReading } = props;
 
     useEffect(() => {
         shieldDetailForm.setFieldsValue({ registrationInformation: { vin: vinNumber, otf: bookingNumber } });
@@ -37,6 +37,10 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
+    };
+
+    const handleEmployeeChange = ({ values, key }) => {
+        shieldDetailForm.setFieldsValue({ registrationInformation: { [key]: values?.option?.value } });
     };
 
     const handleSchemeDescription = (key) => {
@@ -58,7 +62,7 @@ const AddEditFormMain = (props) => {
     };
 
     const isDiscountLessThanAmount = (value) => {
-        if (Number(shieldDetailForm.getFieldValue()?.schemeDetails?.schemeBasicAmount) < Number(value)) {   
+        if (Number(shieldDetailForm.getFieldValue()?.schemeDetails?.schemeBasicAmount) < Number(value)) {
             return Promise.reject(translateContent('amcRegistration.validation.discoutGreaterThanScheme'));
         } else {
             return Promise.resolve();
@@ -80,18 +84,11 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item initialValue={formData?.saleType} label={translateContent('amcRegistration.label.saleType')} name={['registrationInformation', 'saleType']} rules={[validateRequiredSelectField(translateContent('amcRegistration.label.saleType'))]}>
-                                        {customSelectBox({ data: typeData['SALE_TYP'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleTaxChange })}
+                                        {customSelectBox({ data: typeData['SALE_TYPE'], placeholder: preparePlaceholderSelect(translateContent('amcRegistration.label.saleType')), onChange: handleTaxChange })}
                                     </Form.Item>
                                 </Col>
                             </>
 
-                            {saleType === SALE_TYPE?.PAID?.key && (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
-                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.availableFunds'))} disabled={true} />
-                                    </Form.Item>
-                                </Col>
-                            )}
                             {saleType !== SALE_TYPE?.PAID?.key && (
                                 <>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -109,39 +106,42 @@ const AddEditFormMain = (props) => {
                             {saleType === SALE_TYPE?.PAID?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.vin} label={translateContent('shieldSchemeRegistration.label.vin')} name={['registrationInformation', 'vin']}>
-                                        <Search allowClear onSearch={handleVinSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vin'))} disabled={!formActionType?.addMode} />
+                                        <Search allowClear onChange={handleVINChange} onSearch={handleVinSearch} loading={isSchemeLoading} placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.vin'))} disabled={!formActionType?.addMode} />
+                                    </Form.Item>
+                                </Col>
+                            )}
+                            {saleType === SALE_TYPE?.PAID?.key && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.availableFund} label={translateContent('shieldSchemeRegistration.label.availableFunds')} name={['registrationInformation', 'availableFund']}>
+                                        <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.availableFunds'))} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             )}
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.odometerReading} label={translateContent('shieldSchemeRegistration.label.odometerReading')} name={['registrationInformation', 'odometerReading']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.odometerReading')), validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.odometerReading'))]}>
-                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.odometerReading'))} />
+                                <Form.Item initialValue={formData?.odometerReading} label={translateContent('shieldSchemeRegistration.label.odometerReading')} name={['registrationInformation', 'odometerReading']} rules={[validateRequiredInputField(translateContent('shieldSchemeRegistration.label.odometerReading')), validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.odometerReading'))]}>
+                                    <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.odometerReading'))} onChange={handleOdometerReading} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.employeeName} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeName']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
-                                    {/* <AutoComplete maxLength={50} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Search onSearch={handleEmployeeSearch} onChange={handleOnClear} placeholder={preparePlaceholderText('Employee Name')} loading={isEmployeeDataLoading} type="text" allowClear />
-                                    </AutoComplete> */}
-                                    {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.employeeName')) })}
+                                <Form.Item initialValue={formData?.employeeCode} label={translateContent('shieldSchemeRegistration.label.employeeName')} name={['registrationInformation', 'employeeCode']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.employeeName'))]}>
+                                    {customSelectBox({ data: employeeData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.employeeName')), onChange: (_, values) => handleEmployeeChange({ key: 'employeeName', values }) })}
                                 </Form.Item>
+                                <Form.Item initialValue={formData?.employeeName} name={['registrationInformation', 'employeeName']} />
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.managerName} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerName']}>
-                                    {/* <Input placeholder={preparePlaceholderText('Manager Name')} disabled={true} /> */}
-                                    {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')) })}
+                                <Form.Item initialValue={formData?.managerCode} label={translateContent('shieldSchemeRegistration.label.managerName')} name={['registrationInformation', 'managerCode']}>
+                                    {customSelectBox({ data: managerData, placeholder: preparePlaceholderSelect(translateContent('shieldSchemeRegistration.label.managerName')), onChange: (_, values) => handleEmployeeChange({ key: 'managerName', values }) })}
                                 </Form.Item>
+                                <Form.Item initialValue={formData?.managerName} name={['registrationInformation', 'managerName']} />
                             </Col>
                         </Row>
-                        {/* </Form> */}
                     </Panel>
                 </Collapse>
                 <Collapse collapsible="icon" expandIcon={({ isActive }) => expandActionIcon(isActive, formActionType)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header={translateContent('shieldSchemeRegistration.heading.schemeDetails')} key="2">
                         <Divider />
-                        {/* <Form layout="vertical" autoComplete="off" form={schemeForm} onFieldsChange={handleFormValueChange}> */}
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.schemeDescription} label={translateContent('shieldSchemeRegistration.label.schemeDescription')} name={['schemeDetails', 'schemeDescription']} rules={[validateRequiredSelectField(translateContent('shieldSchemeRegistration.label.schemeDescription'))]}>
@@ -154,10 +154,10 @@ const AddEditFormMain = (props) => {
                                     </Select>
                                 </Form.Item>
                             </Col>
-                            <Form.Item hidden label="" name={['schemeDetails', 'sgstAmount']} />
-                            <Form.Item hidden label="" name={['schemeDetails', 'igstAmount']} />
-                            <Form.Item hidden label="" name={['schemeDetails', 'cgstAmount']} />
-                            <Form.Item hidden label="" name={['schemeDetails', 'familyCode']} />
+                            <Form.Item hidden name={['schemeDetails', 'sgstAmount']} />
+                            <Form.Item hidden name={['schemeDetails', 'igstAmount']} />
+                            <Form.Item hidden name={['schemeDetails', 'cgstAmount']} />
+                            <Form.Item hidden name={['schemeDetails', 'familyCode']} />
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.schemeCode} label={translateContent('shieldSchemeRegistration.label.schemeCode')} name={['schemeDetails', 'schemeCode']}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeCode'))} disabled={true} />
@@ -171,7 +171,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateOnlyPositiveNumber(translateContent('shieldSchemeRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
+                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateRequiredInputField(translateContent('shieldSchemeRegistration.label.schemeDiscount')), validateNumberWithTwoDecimalPlaces(translateContent('shieldSchemeRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={handleTaxChange} />
                                 </Form.Item>
                             </Col>

@@ -6,7 +6,6 @@
 import React from 'react';
 import { Modal, Col, Form, Row, DatePicker } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 

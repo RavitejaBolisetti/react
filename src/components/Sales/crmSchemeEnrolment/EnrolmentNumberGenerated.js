@@ -12,8 +12,9 @@ import { translateContent } from 'utils/translateContent';
 const { Title, Text } = Typography;
 
 export const EnrolmentNumberGenerated = (props) => {
-    const { generatedData } = props;
+    const { generatedData, handlePrintDownload } = props;
     const title = translateContent('crmSchemeEnrolment.heading.enrollmentTitle');
+
 
     return (
         <Space justify="center" align="center">
@@ -48,7 +49,7 @@ export const EnrolmentNumberGenerated = (props) => {
                                             <path d="M7.64062 1.75V5.425H11.3156" stroke="#FF3E5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     }
-                                    onClick={''}
+                                    onClick={() => handlePrintDownload({ record: generatedData })}
                                 >
                                     {translateContent('crmSchemeEnrolment.button.downloadPrint')}
                                 </Button>

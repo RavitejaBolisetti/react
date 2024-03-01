@@ -5,33 +5,21 @@
  */
 import React, { useMemo } from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import styles from 'assets/sass/app.module.scss';
 import { addToolTip } from 'utils/customMenuLink';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { DELIVERY_NOTE_STATUS } from '../constants/deliveryNoteStatus';
 import { translateContent } from 'utils/translateContent';
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
-
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
 
 const VehicleDeliveryNoteCard = (props) => {
     const { selectedOrder, typeData, isLoading, toolTipContent, formActionType } = props;
@@ -52,7 +40,7 @@ const VehicleDeliveryNoteCard = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOrder]);
     return (
-        <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>
@@ -85,7 +73,7 @@ const VehicleDeliveryNoteCard = (props) => {
                 <div className={styles.detailCardText}>
                     {translateContent('vehicleDeliveryNote.label.status')}
                     <div className={styles.tooltipAlign}>
-                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}
+                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus), isLoading)}
                         {formActionType?.viewMode && selectedOrder?.deliveryNoteStatus === DELIVERY_NOTE_STATUS?.CANCELLED?.key && <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>}
                     </div>
                 </div>

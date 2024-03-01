@@ -4,25 +4,26 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction, handleWholeSchemeCancellation, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction, handleWholeSchemeCancellation, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoading, isLoadingOnSave, isLastSection }) => {
+    const disabled = isLoading || isLoadingOnSave;
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
                 <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button disabled={disabled} danger onClick={onCloseAction}>
                             {translateContent('global.buttons.close')}
                         </Button>
                     )}
 
                     {buttonData?.cancelBtn && (
-                        <Button danger onClick={onCloseAction}>
+                        <Button disabled={disabled} danger onClick={onCloseAction}>
                             {translateContent('global.buttons.cancel')}
                         </Button>
                     )}
@@ -37,15 +38,21 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
 
                     {buttonData?.cancelSchemeBtn && (
                         <>
-                            <Button danger onClick={handleWholeSchemeCancellation}>
+                            <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
+                                <Button disabled={disabled} danger>
+                                    {translateContent('shieldSchemeRegistration.buttons.cancelScheme')}
+                                </Button>
+                            </Popover>
+                            {/* 
+                            <Button disabled={disabled} danger onClick={handleWholeSchemeCancellation}>
                                 {translateContent('shieldSchemeRegistration.buttons.cancelScheme')}
-                            </Button>
+                            </Button> */}
                         </>
                     )}
 
                     {buttonData?.cancelRSABtn && (
                         <>
-                            <Button danger onClick={handleWholeSchemeCancellation}>
+                            <Button disabled={disabled} danger onClick={handleWholeSchemeCancellation}>
                                 {translateContent('shieldSchemeRegistration.buttons.cancelRSA')}
                             </Button>
                         </>
@@ -53,25 +60,23 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
 
                     {buttonData?.viewRSAHistoryBtn && (
                         <>
-                            <Button danger onClick={handleWholeSchemeCancellation}>
+                            <Button disabled={disabled} danger onClick={handleWholeSchemeCancellation}>
                                 {translateContent('shieldSchemeRegistration.buttons.viewRsaHistory')}
                             </Button>
                         </>
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button disabled={disabled} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             {translateContent('global.buttons.next')}
                         </Button>
                     )}
 
                     {buttonData?.saveBtn && (!formActionType?.editMode || isLastSection || formActionType?.addMode) && (
-                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive || disabled} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}
                         </Button>
                     )}
-
-                    {}
                 </Col>
             </Row>
         </div>

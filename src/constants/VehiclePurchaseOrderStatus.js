@@ -44,4 +44,9 @@ export const VEHICLE_PURCHASE_ORDER_STATUS = {
         key: 'INV',
         title: 'Invoiced',
     },
+    DLT: {
+        id: 9,
+        key: 'DLT',
+        title: 'Deleted',
+    },
 };

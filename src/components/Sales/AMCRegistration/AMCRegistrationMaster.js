@@ -43,6 +43,10 @@ import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
+import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 const mapStateToProps = (state) => {
     const {
@@ -50,14 +54,18 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             AMCRegistration: {
-                AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [] },
+                AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isDetailLoading, isLoadingOnSave, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [] },
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
                 AMCScheme: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeDataLoading, filteredListData: schemeData = [] },
                 DealerLocations: { filteredListData: locations = [] },
             },
             OTF: {
                 OtfSearchList: { isLoaded: isOTFDataLoaded = false, isLoading: isOTFSearchLoading, data: otfData = [] },
+                LoyaltyModelGroup: { isLoading: isLoyaltyLoading, filteredListData: modelGroupData = [] },
+                ModelFamily: { isLoading: isModelLoading, data: modelFamilyData = [] },
             },
+            ProductHierarchy: { isLoading: isProductLoading, filteredListData: productAttributeData = [] },
+
             DealerHierarchy: {
                 DealerParent: { filteredListData: dealerParentsLovList },
             },
@@ -80,6 +88,8 @@ const mapStateToProps = (state) => {
         filterString,
         loginUserData,
         amcRegistrationDetailData,
+        isLoading: isDetailLoading || isOTFSearchLoading,
+        isLoadingOnSave,
 
         isEmployeeDataLoaded,
         isEmployeeDataLoading,
@@ -96,9 +106,16 @@ const mapStateToProps = (state) => {
         isLoginDataLoading,
 
         dealerParentsLovList,
-        dealerLocations,
+        dealerLocations: dealerLocations.filter((value) => value?.locationId && value?.dealerLocationName),
 
         locations,
+
+        modelGroupData,
+        modelFamilyData,
+        productAttributeData,
+        isLoyaltyLoading,
+        isModelLoading,
+        isProductLoading,
     };
     return returnValue;
 };
@@ -120,6 +137,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetEmployeeData: employeeSearchDataAction.reset,
 
             fetchDetail: amcRegistrationDataAction.fetchDetail,
+            listDetailShowLoading: amcRegistrationDataAction.listDetailShowLoading,
             saveData: amcRegistrationDataAction.saveData,
 
             fetchOTFSearchedList: otfDataActions.fetchList,
@@ -136,6 +154,18 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             locationDataLoding: applicationMasterDataActions.locationDataLoding,
+            resetLocationData: applicationMasterDataActions.resetLocations,
+
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
+            listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
+
+            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            listProductShowLoading: productHierarchyDataActions.listShowLoading,
+
+            fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
+            listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
+
+            downloadFile: supportingDocumentDataActions.downloadFile,
 
             showGlobalNotification,
         },
@@ -150,7 +180,10 @@ export const AMCRegistrationMasterBase = (props) => {
     const { fetchDetail, isDataLoaded, fetchCustomerList, listCustomerShowLoading } = props;
     const { amcRegistrationDetailData, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, fetchEmployeeList, fetchManagerList, managerData, listEmployeeShowLoading, resetEmployeeData, loginUserData } = props;
     const { fetchOTFSearchedList, listOTFShowLoading, otfData, fetchDealerLocations, locationDataLoding, dealerLocations } = props;
-    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList } = props;
+    const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList, resetLocationData } = props;
+    const { modelGroupData, modelFamilyData, productAttributeData } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchModelFamilyLovList, listFamilyShowLoading } = props;
+    const { listDetailShowLoading, fetchProductLovCode, listProductShowLoading, isLoyaltyLoading, isModelLoading, isProductLoading, downloadFile } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
@@ -163,8 +196,6 @@ export const AMCRegistrationMasterBase = (props) => {
     const [cancelAMCForm] = Form.useForm();
     const [customerForm] = Form.useForm();
     const [schemeForm] = Form.useForm();
-
-    const [searchValue, setSearchValue] = useState();
 
     const [selectedOrder, setSelectedOrder] = useState('');
     const [selectedOrderId, setSelectedOrderId] = useState('');
@@ -201,6 +232,8 @@ export const AMCRegistrationMasterBase = (props) => {
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
     const [isMNMApproval, setIsMNMApproval] = useState(false);
     const [isPendingForCancellation, setIsPendingForCancellation] = useState(selectedAMC?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
+    const [isOTFValidated, setIsOTFValidated] = useState(false);
+
     useEffect(() => {
         if (loginUserData?.userType) {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
@@ -225,7 +258,23 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [amcRegistrationDetailData]);
 
     const handleDealerParentChange = (parentGroupCode) => {
-        fetchDealerLocations({ customURL: customLocationURL + '?parentGroupCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
+        if (!parentGroupCode) {
+            advanceFilterForm.resetFields(['dealerLocation']);
+            resetLocationData();
+            return;
+        }
+        fetchDealerLocations({ customURL: customLocationURL + '?dealerParentCode=' + parentGroupCode, setIsLoading: locationDataLoding, userId });
+    };
+    const handleModelData = ({ modelCode = null, modelFamily = null, modelGroup = null }) => {
+        const modelParams = [
+            {
+                key: 'prodctCode',
+                value: modelCode,
+            },
+        ];
+        fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: [{ key: 'modelGroupCode', title: 'modelGroupCode', value: modelGroup, name: 'modelGroupCode' }] });
+        fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: [{ key: 'familyCode', title: 'familyCode', value: modelFamily, name: 'familyCode' }] });
+        fetchProductLovCode({ setIsLoading: listProductShowLoading, userId, extraParams: modelParams, onErrorAction });
     };
 
     const defaultBtnVisiblity = {
@@ -323,7 +372,7 @@ export const AMCRegistrationMasterBase = (props) => {
             {
                 key: 'status',
                 title: 'Status',
-                value: filterString?.amcStatus ?? amcStatus,
+                value: filterString?.amcStatus,
                 canRemove: false,
                 filter: false,
             },
@@ -346,13 +395,28 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key, pageSize: 10, current: 1 });
+        setFilterString({ ...filterString, amcStatus: loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key ? QUERY_BUTTONS_CONSTANTS.PENDING.key : QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key, pageSize: 10, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [loginUserData?.userType]);
+
+    const handleDownloadFile = (key) => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: key,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+    };
 
     useEffect(() => {
-        if (userId) {
+        if (userId && filterString?.amcStatus) {
             setShowDataLoading(true);
+            const onErrorAction = () => {
+                setShowDataLoading(false);
+            };
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -366,6 +430,9 @@ export const AMCRegistrationMasterBase = (props) => {
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listDealerParentShowLoading, userId });
             fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
+            return () => {
+                setFilterString({});
+            };
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -390,13 +457,13 @@ export const AMCRegistrationMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handlePrintDownload = (record) => {
-        let typeRecordKey = record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeRecord === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
-        setReportButtonType(record?.typeRecord);
+        let typeRecordKey = record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.key : record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.key : record?.typeselectedAMC === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value ? AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.key : null;
+        setReportButtonType(record?.typeselectedAMC);
         setReportVisible(true);
         setAdditionalReportParams([
             {
                 key: typeRecordKey,
-                value: record?.message,
+                value: record?.amcId,
             },
         ]);
     };
@@ -432,10 +499,12 @@ export const AMCRegistrationMasterBase = (props) => {
             if (!res?.data?.otfDetails[0]?.vin) {
                 showGlobalNotification({ title: translateContent('global.notificationError.title'), notificationType: 'error', message: translateContent('amcRegistration.validation.noVINFound') });
                 setButtonData({ ...buttonData, formBtnActive: false });
+                setIsOTFValidated(false);
             } else {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 registrationForm.setFieldsValue({ vin: res?.data?.otfDetails[0]?.vin });
                 schemeForm.getFieldValue('amcType') && schemeList(res?.data?.otfDetails[0]?.vin);
+                setIsOTFValidated(true);
             }
         };
 
@@ -446,13 +515,14 @@ export const AMCRegistrationMasterBase = (props) => {
                     value: 'otfNumber',
                 },
                 {
+                    key: 'registrationType',
+                    value: 'REG',
+                },
+                {
                     key: 'searchParam',
                     value: otfNumber,
                 },
-                {
-                    key: 'otfStatus',
-                    value: 'I',
-                },
+
                 {
                     key: 'pageNumber',
                     value: '1',
@@ -470,10 +540,6 @@ export const AMCRegistrationMasterBase = (props) => {
         setAmcStatus(buttonName?.key);
         setFilterString({ amcStatus: buttonName?.key, current: 1, pageSize: 10 });
         searchForm.resetFields();
-    };
-
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
     };
 
     const handleSearch = (value) => {
@@ -499,12 +565,12 @@ export const AMCRegistrationMasterBase = (props) => {
                 setSelectedAMC('');
                 break;
             case EDIT_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
+                fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
+                fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 defaultSection && setCurrentSection(defaultSection);
                 setIsPendingForCancellation(record?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
@@ -532,9 +598,9 @@ export const AMCRegistrationMasterBase = (props) => {
                 setButtonData(Visibility);
                 if (buttonAction === VIEW_ACTION) {
                     if (userType === AMC_CONSTANTS?.DEALER?.key) {
-                        amcStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, cancelAMCBtn: true }) : amcStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        amcStatus === QUERY_BUTTONS_CONSTANTS.APPROVED.key ? setButtonData({ ...Visibility, cancelAMCBtn: true }) : setButtonData({ ...Visibility });
                     } else {
-                        amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key ? setButtonData({ ...Visibility }) : amcStatus === QUERY_BUTTONS_MNM_USER.PENDING_FOR_CANCELLATION.key ? setButtonData({ ...Visibility }) : setButtonData({ ...Visibility });
+                        setButtonData({ ...Visibility });
                     }
                 }
             }
@@ -550,9 +616,9 @@ export const AMCRegistrationMasterBase = (props) => {
         if (!type) {
             finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber };
         } else if (type === AMC_CONSTANTS?.CANCEL_REQUEST?.key) {
-            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? (isMNMApproval ? QUERY_BUTTONS_CONSTANTS?.APPROVED?.key : QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) : QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails?.[0], amcStatus: userType === AMC_CONSTANTS?.MNM?.key ? (isMNMApproval ? QUERY_BUTTONS_CONSTANTS?.APPROVED?.key : QUERY_BUTTONS_CONSTANTS?.REJECTED?.key) : requestPayload?.amcRequestDetails?.[0]?.requestStatus, ...cancelAMCForm.getFieldsValue() } };
         } else if (type === AMC_CONSTANTS?.AMC_CANCELLATION?.key) {
-            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
+            finalPayload = { ...requestPayload, amcId: selectedAMC?.amcId, amcRegistrationNumber: selectedAMC?.amcRegistrationNumber, amcRequestDetails: { ...requestPayload?.amcRequestDetails?.[0], amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key, ...cancelAMCForm.getFieldsValue() } };
         }
 
         const onError = (message) => {
@@ -673,7 +739,6 @@ export const AMCRegistrationMasterBase = (props) => {
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleChange,
         handleSearch,
         handleInvoiceTypeChange,
 
@@ -752,7 +817,7 @@ export const AMCRegistrationMasterBase = (props) => {
             .validateFields()
             .then(() => {
                 if (isMNMApproval) {
-                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails[0], amcStatus: QUERY_BUTTONS_CONSTANTS?.APPROVED?.key } });
                     onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
                 } else if (!isMNMApproval && userType === AMC_CONSTANTS?.MNM?.key) {
                     setRejectRequest(true);
@@ -765,7 +830,7 @@ export const AMCRegistrationMasterBase = (props) => {
                 } else if (amcWholeCancellation) {
                     setRejectRequest(true);
                 } else {
-                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails, amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
+                    setRequestPayload({ ...requestPayload, amcRequestDetails: { ...requestPayload?.amcRequestDetails[0], amcStatus: QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key } });
                     onFinish({ type: AMC_CONSTANTS?.CANCEL_REQUEST?.key });
                 }
             })
@@ -784,6 +849,7 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     const containerProps = {
+        ...props,
         record: selectedOrder,
         form,
         registrationForm,
@@ -862,8 +928,18 @@ export const AMCRegistrationMasterBase = (props) => {
         setIsPendingForCancellation,
         handlePrintDownload,
         schemeList,
+
+        modelGroupData,
+        modelFamilyData,
+        productAttributeData,
+        handleModelData,
+        isLoyaltyLoading,
+        isModelLoading,
+        isProductLoading,
         fetchDetail,
         listShowLoading,
+        handleDownloadFile,
+        isOTFValidated,
     };
     const cancelModalProps = {
         isVisible: isRejectModalVisible,
@@ -886,7 +962,7 @@ export const AMCRegistrationMasterBase = (props) => {
         if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.INVOICE_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_CERTIFICATE_AMC?.value) {
-            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
+            setAmcDocumentType(EMBEDDED_REPORTS?.AMC_CETRIFICATE_DOCUMENT);
         } else if (reportButtonType === AMC_REPORT_DOCUMENT_TYPE?.REGISTRATION_INCENTIVE_CLAIM_AMC?.value) {
             setAmcDocumentType(EMBEDDED_REPORTS?.AMC_REGISTRATION_INVOICE_DOCUMENT);
         }

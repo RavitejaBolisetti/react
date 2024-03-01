@@ -130,7 +130,7 @@ export const tblActionColumn = ({
         dataIndex: '',
         width,
         fixed: fixed,
-        render: (text, record, index) => [
+        render: (_, record, index) => [
             <Space size="middle">
                 {canAdd && (
                     <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
@@ -157,7 +157,7 @@ export const tblActionColumn = ({
                 )}
 
                 {canServerDataEdit && !record?.id && (
-                    <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                    <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
                     </Button>
                 )}

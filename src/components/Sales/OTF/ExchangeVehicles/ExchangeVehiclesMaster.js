@@ -20,6 +20,7 @@ import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/var
 import { exchangeVehicleAlertDataAction } from 'store/actions/data/otf/exchangeVehicleAlert';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
+import { withSpinner } from 'components/withSpinner';
 
 import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT, BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 
@@ -27,12 +28,12 @@ import styles from 'assets/sass/app.module.scss';
 import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 import { translateContent } from 'utils/translateContent';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
+                ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
                 SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
                 ExchangeVehicleAlert: { isLoaded: isExchangeVehicleAlertLoaded = false, isLoading: isExchangeVehicleAlertLoading = false, data: exchangeVehicleAlertData = false },
@@ -54,6 +55,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         exchangeData,
         isLoading,
+        isLoadingOnSave,
+        showSpinner: !props?.formActionType?.viewMode,
 
         financeLovData,
         isFinanceLovLoading,
@@ -380,7 +383,7 @@ const ExchangeVehiclesBase = (props) => {
             const onSuccess = (res) => {
                 form.resetFields();
                 fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             };
 
             const requestData = {
@@ -524,4 +527,4 @@ const ExchangeVehiclesBase = (props) => {
     );
 };
 
-export const ExchangeVehiclesMaster = connect(mapStateToProps, mapDispatchToProps)(ExchangeVehiclesBase);
+export const ExchangeVehiclesMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(ExchangeVehiclesBase));

@@ -15,7 +15,7 @@ import { SupportingDocumentMaster } from './SupportingDocument';
 import { ContactMaster } from './Contacts';
 import { EntitlementsAndSchemesMaster } from './EntitlementsAndSchemes';
 import { ComingSoonMaster } from './ComingSoon';
-import { LeftSidebar } from './LeftSidebar';
+import LeftSidebar from 'utils/LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
 

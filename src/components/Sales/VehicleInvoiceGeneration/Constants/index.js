@@ -4,4 +4,5 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { INVOICE_CONSTANTS } from './InvoiceConstants';
-export { INVOICE_CONSTANTS };
+import { DOCUMENT_CONSTANTS } from './DocumentType'
+export { INVOICE_CONSTANTS, DOCUMENT_CONSTANTS };

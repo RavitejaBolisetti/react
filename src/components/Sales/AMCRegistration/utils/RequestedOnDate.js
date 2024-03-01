@@ -27,8 +27,11 @@ function RequestedOnDate(data, requestStatus, priceType) {
                 case AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key: {
                     return data?.amcCancelDate;
                 }
+                case AMC_CONSTANTS?.UNDER_PROGRESS?.key: {
+                    return data?.amcRegistrationDate;
+                }
                 default:
-                    return data?.approvalDate;
+                    return data?.approvedDate;
             }
         }
 

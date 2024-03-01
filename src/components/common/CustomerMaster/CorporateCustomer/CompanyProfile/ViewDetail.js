@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapse, Descriptions, Divider } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -16,8 +16,14 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, appCategoryData } = props;
+    const { setSubApplication, subApplication, formData, isLoading, appCategoryData } = props;
     const [activeKey, setactiveKey] = useState([1]);
+
+    useEffect(() => {
+        setSubApplication(appCategoryData?.APP_CAT?.find((item) => item?.key === formData?.applicationCategorization)?.type);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.applicationCategorization]);
 
     const viewProps = {
         bordered: false,
@@ -55,10 +61,10 @@ const ViewDetailMain = (props) => {
 
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label={translateContent('customerMaster.label.Categorization')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('customerMaster.label.SubCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('customerMaster.label.customerCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.SubCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData[subApplication], formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('customerMaster.label.customerCategory')}>{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CUST_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                     </Descriptions>
-                    {formData?.customerCategory === 'CUS_CAT_2' && (
+                    {formData?.customerCategory === 'FLT' && (
                         <>
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label={translateContent('customerMaster.label.businessDetails')}>{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>

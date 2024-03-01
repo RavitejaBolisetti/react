@@ -17,13 +17,14 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndivisualAccounts: { isLoaded: isDataLoaded = false, isLoading, data: accountData = {} },
+                IndivisualAccounts: { isLoaded: isDataLoaded = false, isLoading, data: accountData = {}, isLoadingOnSave },
             },
         },
     } = state;
@@ -36,6 +37,8 @@ const mapStateToProps = (state) => {
         accountData,
         isLoading,
         moduleTitle,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -46,6 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: indivisualAccountsRelatedDataActions.fetchList,
             saveData: indivisualAccountsRelatedDataActions.saveData,
+            saveFormShowLoading: indivisualAccountsRelatedDataActions.saveFormShowLoading,
             resetData: indivisualAccountsRelatedDataActions.reset,
             listShowLoading: indivisualAccountsRelatedDataActions.listShowLoading,
             showGlobalNotification,
@@ -57,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const AccountRelatedMasterBase = (props) => {
     const { form, handleFormValueChange } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, isLoading, resetData } = props;
-    const { formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
+    const { buttonData, setButtonData, formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION, saveFormShowLoading } = props;
 
     const [formData, setFormData] = useState();
 
@@ -79,6 +83,11 @@ export const AccountRelatedMasterBase = (props) => {
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
     };
+
+    useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (isDataLoaded) {
@@ -114,7 +123,7 @@ export const AccountRelatedMasterBase = (props) => {
         const requestData = {
             data: data,
             method: accountData?.customerId ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -149,4 +158,4 @@ export const AccountRelatedMasterBase = (props) => {
     );
 };
 
-export const AccountRelatedMaster = connect(mapStateToProps, mapDispatchToProps)(AccountRelatedMasterBase);
+export const AccountRelatedMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(AccountRelatedMasterBase));

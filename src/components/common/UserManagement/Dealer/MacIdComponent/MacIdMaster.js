@@ -74,7 +74,7 @@ const MacIdMasterMain = (props) => {
         {
             key: 'userId',
             title: 'userId',
-            value: formData?.employeeCode,
+            value: formData?.userName,
             name: 'userId',
         },
     ];
@@ -196,7 +196,7 @@ const MacIdMasterMain = (props) => {
 
     const buttonProps = {
         ...props,
-        saveButtonName: translateContent('global.buttons.saveCloseBtn'),
+        saveButtonName: translateContent('global.buttons.submit'),
         buttonData,
     };
 

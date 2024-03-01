@@ -8,9 +8,8 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { convertDateTimedayjs } from 'utils/formatDateTime';
+import { convertDateTimedayjs, dateTimeFormat } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
-
 import styles from 'assets/sass/app.module.scss';
 
 const ChargerInstallatioDetailsMasterBase = (props) => {
@@ -29,8 +28,9 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
             .then(() => {
                 addRequestData?.length > 0 ? setAddRequestData((prev) => [value, ...prev]) : setAddRequestData([value]);
                 const values = addRequestForm.getFieldsValue();
-                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne), visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo, 'YYYY-MM-DD HH:mm:ss', true), visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree, 'YYYY-MM-DD HH:mm:ss', true) }] } }));
+                setRequestPayload((prev) => ({ ...prev, chargerInstDetails: { requestDetails: [{ id: '', stageRequestDate: convertDateTimedayjs(new Date()), requestStage: values?.requestStage, visitTimeSlotOne: convertDateTimedayjs(values?.visitTimeSlotOne, dateTimeFormat, '-'), visitTimeSlotTwo: convertDateTimedayjs(values?.visitTimeSlotTwo, dateTimeFormat, '-'), visitTimeSlotThree: convertDateTimedayjs(values?.visitTimeSlotThree, dateTimeFormat, '-') }] } }));
                 handleFormValueChange();
+                addRequestForm.resetFields();
             })
             .catch(() => {
                 showGlobalNotification({ message: translateContent('chargerInstallationDetails.notification.addRequest') });
@@ -93,18 +93,11 @@ const ChargerInstallatioDetailsMasterBase = (props) => {
                             <h2>{translateContent(section?.translateKey)}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails[0].stageType} />}
+                            {!formActionType?.addMode && <StatusBar status={chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[0].stageType} />}
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? (
-                        <>
-                            <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
-                        </>
-                    ) : (
-                        <>
-                            <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
-                        </>
-                    )}
+
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} /> : <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />}
                 </Col>
             </Row>
             <Row>

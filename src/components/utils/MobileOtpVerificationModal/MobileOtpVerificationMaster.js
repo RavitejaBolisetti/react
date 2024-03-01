@@ -70,7 +70,11 @@ const MobileOtpVerificationBase = (props) => {
         if (!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
             sendOTPVerificationCode();
             setIsModalOpen(true);
+        } else if (mobNoVerificationData?.customerMasterDetails?.length) {
+            showGlobalNotification({ notificationType: userId ? 'error' : 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message: translateContent('vehicleSalesSchemeMaster.validation.mobileNumberFound') });
+            setOtpVerified(false);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mobNoVerificationData]);
 
@@ -84,7 +88,7 @@ const MobileOtpVerificationBase = (props) => {
 
     const handleOnEdit = () => {
         setEditMobile(true);
-    }
+    };
 
     const handleNumberValidation = () => {
         if (mobileNumber) {
@@ -105,8 +109,8 @@ const MobileOtpVerificationBase = (props) => {
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
         if (Mno?.length === 10 && regex.test(Mno)) {
             setMobileNumber(Mno);
-        }else if(Mno?.length <= 10){
-            setMobileNumber(Mno);
+        } else {
+            setMobileNumber();
         }
     };
 
@@ -132,7 +136,7 @@ const MobileOtpVerificationBase = (props) => {
 
         const onSuccess = (res) => {
             setCounter(RESEND_OTP_TIME);
-            showGlobalNotification({ notificationType: 'warning', title: translateContent('customerMaster.otpModal.notification.otpSent'), message: res?.responseMessage });
+            showGlobalNotification({ notificationType: userId ? 'warning' : 'warningBeforeLogin', title: translateContent('customerMaster.otpModal.notification.otpSent'), message: res?.responseMessage });
             setOTPMessage(res?.data?.message);
         };
         const requestData = {
@@ -147,12 +151,12 @@ const MobileOtpVerificationBase = (props) => {
         if (userId) {
             const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), otp: otpInput };
             const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+                showGlobalNotification({ notificationType: userId ? 'success' : 'successBeforeLogin', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
                 setIsModalOpen(false);
                 setNumbValidatedSuccess(true);
             };
             const onError = (message) => {
-                showGlobalNotification({ title: translateContent('global.notificationError.title'), message: Array.isArray(message[0]) || message });
+                showGlobalNotification({ notificationType: userId ? 'error' : 'errorBeforeLogin', title: translateContent('global.notificationError.title'), message });
                 if (otpInput?.length === 6) {
                     setCounter(0);
                 }
@@ -177,11 +181,11 @@ const MobileOtpVerificationBase = (props) => {
         if (selectedCustomer?.customerId) {
             const data = { userId: selectedCustomer?.customerId, mobileNumber: form.getFieldValue('mobileNumber'), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
             const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'warning', title: translateContent('customerMaster.otpModal.notification.otpSent'), message: res?.responseMessage });
+                showGlobalNotification({ notificationType: userId ? 'warning' : 'warningBeforeLogin', title: translateContent('customerMaster.otpModal.notification.otpSent'), message: res?.responseMessage });
                 setOTPMessage(res?.data?.message);
             };
             const onError = (message) => {
-                showGlobalNotification({ message });
+                showGlobalNotification({ notificationType: userId ? 'error' : 'errorBeforeLogin', message });
             };
             const requestData = {
                 data: data,

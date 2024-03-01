@@ -41,7 +41,7 @@ export const AMC_CONSTANTS = {
     },
     APPROVED: {
         id: 8,
-        key: 'APPR',
+        key: 'DONE',
         title: 'Approved',
     },
     REJECTED: {
@@ -128,5 +128,5 @@ export const AMC_CONSTANTS = {
 
 export const REQUEST_CONSTANT = {
     REG: 'Registration Request',
-    CNCL: 'Cancellation Request',
+    CAN: 'Cancellation Request',
 };

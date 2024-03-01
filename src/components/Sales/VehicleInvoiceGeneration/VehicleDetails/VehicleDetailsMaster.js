@@ -32,13 +32,15 @@ const mapStateToProps = (state) => {
             },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
         },
+        common: {
+            Header: { dealerLocationId },
+        },
     } = state;
 
     const moduleTitle = 'Vehicle Details';
 
     let returnValue = {
         userId,
-
         moduleTitle,
         productAttributeData,
         isProductHierarchyDataLoaded,
@@ -52,6 +54,7 @@ const mapStateToProps = (state) => {
         isProductDataLoading: !isProductDataLoaded,
         productHierarchyDataList: productHierarchyData,
         productCode,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -89,7 +92,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton } = props;
-    const { isProductDataLoaded, fetchProductList, productCode, productHierarchyDataList } = props;
+    const { dealerLocationId, isProductDataLoaded, fetchProductList, productCode, productHierarchyDataList } = props;
     const [productModelCode, setProductModelCode] = useState();
 
     const [activeKey, setactiveKey] = useState([1]);
@@ -139,7 +142,7 @@ const VehicleDetailsMasterMain = (props) => {
             fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isProductDataLoaded, selectedOrder]);
+    }, [userId, isProductDataLoaded, selectedOrder, dealerLocationId]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);

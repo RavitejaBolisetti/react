@@ -39,7 +39,7 @@ const RSADetailCard = (props) => {
                             <span>
                                 {selectedCardData?.rsaRegistrationNumber}
                                 {selectedCardData?.rsaRegistrationNumber && (
-                                    <a className={styles.marL5}>
+                                    <a className={styles.marL5} href="javascript.void(0)" onClick={(e) => e.preventDefault()}>
                                         <CopytoClipboard buttonText={null} text={selectedCardData?.rsaRegistrationNumber} />
                                     </a>
                                 )}

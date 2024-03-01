@@ -133,7 +133,7 @@ export const ROUTING_ADDITIONAL_CLAIM = ROUTING_SALES.concat('additional-claim')
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
 export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('booking-so-mapping');
 export const ROUTING_VEHICLE_SALES_SCHEME_MASTER = ROUTING_SALES.concat('vehicle-sales-scheme-master');
-export const ROUTING_RSM_ASM_APPROVAL = ROUTING_SALES.concat('rsm-asm-approval');
+export const ROUTING_RSM_ASM_APPROVAL = ROUTING_SALES.concat('delivery-invoice-cancellation-approval');
 export const ROUTING_EVR_DETAILS_CAPTURING = ROUTING_SALES.concat('evr-details-capturing');
 
 export const ROUTING_SERVICES = '/services/';
@@ -150,3 +150,5 @@ export const ROUTING_LOYALTY_SCHEME = ROUTING_SALES.concat('loyalty-Scheme');
 
 
 
+export const ROUTING_CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
+export const ROUTING_CENTRAL_FAME_SUBSIDY = ROUTING_SALES.concat('central-fame-subsidy');

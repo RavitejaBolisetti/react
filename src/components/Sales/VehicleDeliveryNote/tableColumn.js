@@ -30,6 +30,9 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
                     };
             }
             case DELIVERY_TYPE?.CHALLAN?.key: {
+                if (deliveryStatus === QUERY_BUTTONS_CONSTANTS?.PENDING?.key) {
+                    return { renderValue: <Tag color={tagColor}>{translateContent('vehicleDeliveryNote.label.notGenerated')}</Tag>, sorting: false, DeliveryNoteColumn: translateContent('vehicleDeliveryNote.label.challanNoDate') };
+                }
                 return {
                     renderValue: (
                         <>
@@ -54,7 +57,7 @@ export const tableColumnDeliveryNoteMaster = ({ handleButtonClick, actionButtonV
         }),
         tblPrepareColumns({
             title: translateContent('vehicleDeliveryNote.label.modelGroup'),
-            dataIndex: 'modelGroup',
+            dataIndex: 'modelGroupDescription',
             width: '14%',
         }),
 

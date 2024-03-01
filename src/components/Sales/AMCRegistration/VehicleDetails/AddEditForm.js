@@ -74,19 +74,23 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.modelGroup')} name="modelGroup">
+                        <Form.Item label={translateContent('amcRegistration.label.modelGroup')} name="modelGroupDesc">
                             <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelGroup'))} />
                         </Form.Item>
+                        <Form.Item name="modelGroup" hidden />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.modelFamily')} name="modelFamily">
+                        <Form.Item label={translateContent('amcRegistration.label.modelFamily')} name="modelFamilyDesc">
                             <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelFamily'))} />
                         </Form.Item>
+                        <Form.Item name="modelFamily" hidden />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label={translateContent('amcRegistration.label.modelDescription')} name="modelDescription">
+                        <Form.Item label={translateContent('amcRegistration.label.modelDescription')} name="productDescription">
                             <Input disabled placeholder={preparePlaceholderText(translateContent('amcRegistration.label.modelDescription'))} />
                         </Form.Item>
+                        <Form.Item name="modelDescription" hidden />
+                        <Form.Item name="chasisNumber" hidden />
                     </Col>
                 </Row>
                 <VehicleListModal {...customerListProps} />

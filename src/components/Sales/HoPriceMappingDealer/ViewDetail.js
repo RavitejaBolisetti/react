@@ -36,7 +36,7 @@ const ViewDetailMain = (props) => {
 
     useEffect(() => {
         setViewProductData(() => []);
-        if (formActionType?.viewMode && modelGroupArr?.length ) {
+        if (formActionType?.viewMode && modelGroupArr?.length) {
             let distinctArr = modelGroupArr.map((item) => item.prodctCode).filter((value, index, self) => self.indexOf(value) === index);
             for (let i = 0; i < distinctArr?.length; i++) {
                 let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === distinctArr[i]);
@@ -60,7 +60,7 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4>{translateContent('hoPriceMapping.heading.dealerList')}</h4>
+                    <h2 className={styles.marT0}>{translateContent('hoPriceMapping.heading.dealerList')}</h2>
                 </Col>
             </Row>
             <Card>
@@ -74,7 +74,7 @@ const ViewDetailMain = (props) => {
             </Card>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4>{translateContent('hoPriceMapping.heading.modelDetails')}</h4>
+                    <h2>{translateContent('hoPriceMapping.heading.modelDetails')}</h2>
                 </Col>
             </Row>
             <Row gutter={20}>

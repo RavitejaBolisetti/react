@@ -20,8 +20,6 @@ import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
 import { BASE_URL_APPROVAL_CANCEL_REQUEST_URL as approvalCancelURL, BASE_URL_RSM_ASM_APPROVAL_DETAILS } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
-
-import { FilterIcon } from 'Icons';
 import { rsmAsmApprovalSearchDataAction } from 'store/actions/data/rsmAsmApproval/rsmAsmApprovalSearch';
 import { ViewDetail } from './ViewDetail';
 import styles from 'assets/sass/app.module.scss';
@@ -253,7 +251,6 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity });
-        // record?.requestStatus === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: true }) : setButtonData({ ...defaultBtnVisiblity, rejectApproveBtn: false });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setSelectedId(record?.id);
         setIsFormVisible(true);
@@ -280,7 +277,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.title'), message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -378,7 +375,7 @@ export const RsmAsmApprovalMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
 
-        icon: <FilterIcon size={20} />,
+        // icon: <FilterIcon size={20} />,
         titleOverride: translateContent('global.advanceFilter.title'),
 
         onCloseAction: onAdvanceSearchCloseAction,

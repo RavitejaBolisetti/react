@@ -87,6 +87,7 @@ export const CrmScreenEnrolmentBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
+    const [schemeType, setSchemeType] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -162,13 +163,13 @@ export const CrmScreenEnrolmentBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 filter: false,
             },
             {
@@ -201,6 +202,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -232,7 +234,7 @@ export const CrmScreenEnrolmentBase = (props) => {
 
     useEffect(() => {
         const isPresent = activeKey?.includes(keyValue);
-        if (isPresent & (keyValue !== 3 && keyValue !== 4)) {
+        if (isPresent && keyValue !== 3 && keyValue !== 4) {
             setActiveKey([]);
             setButtonData({ ...buttonData, saveBtn: true, formBtnActive: true });
         } else if (keyValue === 2) {
@@ -258,14 +260,18 @@ export const CrmScreenEnrolmentBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keyValue, changePress]);
 
-    const onHandleRegistrationNumber = (value) => {
-        const extraParams = [
-            {
-                key: 'vin',
-                value: value,
-            },
-        ];
-        fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL, onSuccessAction, onErrorAction });
+    const onHandleRegistrationNumber = () => {
+        form.validateFields(['registrationNumber'])
+            .then(({ registrationNumber: value }) => {
+                const extraParams = [
+                    {
+                        key: 'registrationNumber',
+                        value: value?.trim(),
+                    },
+                ];
+                fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL, onSuccessAction, onErrorAction });
+            })
+            .catch((err) => console.error(err));
     };
 
     const addFormOpen = () => {
@@ -280,6 +286,9 @@ export const CrmScreenEnrolmentBase = (props) => {
     // };
 
     const handleResetFilter = () => {
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
@@ -320,7 +329,7 @@ export const CrmScreenEnrolmentBase = (props) => {
         setAdditionalReportParams([
             {
                 key: 'sc_ws_enrolment_detail_id',
-                value: record?.id,
+                value: record?.record?.id,
             },
         ]);
     };
@@ -382,6 +391,10 @@ export const CrmScreenEnrolmentBase = (props) => {
     const onChange = (values) => {
         setKeyValue(values);
         setChangePress(() => !changePress);
+    };
+
+    const onSchemeChange = (schemeTyp) => {
+        setSchemeType(schemeTyp);
     };
 
     const tableProps = {
@@ -482,6 +495,10 @@ export const CrmScreenEnrolmentBase = (props) => {
         isSearchLoading,
         generatedData,
         handlePrintDownload,
+        onSchemeChange,
+        schemeType,
+        setCustomerData,
+        setVehicleDataDetails,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.REFERRAL_SCHEME_REGISTRATION_DOCUMENT;

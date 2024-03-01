@@ -18,7 +18,7 @@ import { translateContent } from 'utils/translateContent';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { typeData, isLoading, chargerInstallationMasterData, onHandleModal, modal, setModal } = props;
+    const { typeData, isLoading, chargerInstallationMasterData, onHandleModal, modal, setModal, modelData, variantData } = props;
 
     const viewProps = {
         bordered: false,
@@ -52,16 +52,14 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestDate')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.requestDate, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('chargerInstallationDetails.label.requestStatus')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id], chargerInstallationMasterData?.chargerInstDetails?.requestStatus), isLoading)}</Descriptions.Item>
 
-                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelGroup, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelVarient, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelGroup')}>{checkAndSetDefaultValue(getCodeValue(modelData, chargerInstallationMasterData?.chargerInstDetails?.modelGroup, 'modelGroupDescription', true, 'modelGroupCode'), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelVariant')}>{checkAndSetDefaultValue(getCodeValue(variantData, chargerInstallationMasterData?.chargerInstDetails?.modelVarient, 'variantDescription', true, 'variantCode'), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('chargerInstallationDetails.label.seatingCapacity')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.seatingCapacity, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.color, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.color')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.COLOR_MAP?.id], chargerInstallationMasterData?.chargerInstDetails?.color), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelCode')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.modelCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label={translateContent('chargerInstallationDetails.label.modelDescription')}>{checkAndSetDefaultValue(chargerInstallationMasterData?.chargerInstDetails?.model, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
-                        {/* <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <DataTable tableColumn={addRequestColumnsView(typeData, onHandleModal)} tableData={chargerInstallationMasterData?.chargerInstDetails?.requestDetails} pagination={false} scroll={{ x: 2400 }} />
-                            </Card> */}
 
                         <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
                             <Panel

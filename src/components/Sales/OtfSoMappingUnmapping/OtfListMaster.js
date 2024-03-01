@@ -8,20 +8,20 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row, Select } from 'antd';
-
-import styles from 'assets/sass/app.module.scss';
+import { Form } from 'antd';
 
 import { otfSoMappingDataActions, OtfSoMappingDealerParentActions, OtfSoMappingDealerLocationDataActions } from 'store/actions/data/otfSoMappingUnmapping';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { BASE_URL_OTF_SO_MAPPING_SWAP as CustomUrl, BASE_URL_SO_MAPPING_SEARCH as CustomSearchUrl } from 'constants/routingApi';
+import { BASE_URL_OTF_SO_MAPPING_SWAP as customURL, BASE_URL_SO_MAPPING_SEARCH as CustomSearchUrl } from 'constants/routingApi';
 
 import { MasterContainer } from './MasterContainer';
 import { setAllkeysToNull } from './Constants';
 import { OTF_SO_MAPPING_UNMAPPING_CONSTANTS, HEADER_CONSTANTS, FORM_TYPE_CONSTANSTS } from './Constants';
 import { converDateDayjs } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
+import SomappingUnmappingFilter from './SomappingUnmappingFilter';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
             OTFSoMapping: {
                 DealerParent: { isFilteredListLoaded: isParentLovLoaded = false, isLoading: isParentLovLoading = false, filteredListData: DealerParentData = [] },
                 DealerParentLocation: { isLoaded: isLocationLoaded = false, isLoading: isLocationLoading = false, data: LocationData = [] },
-                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [] },
+                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [], filter: advanceFilterString, isLoadingOnSave },
             },
         },
         common: {
@@ -42,6 +42,18 @@ const mapStateToProps = (state) => {
 
     const moduleTitle = translateContent('bookingSoMapping.heading.pageTitle');
 
+    const SORTING_COULUMN_NAME = {
+        PO_NUMBER: {
+            id: 1,
+            key: 'poNumber',
+            value: 'purchaseOrderNumber',
+        },
+        SO_DATE: {
+            id: 2,
+            key: 'Date',
+            value: 'soDate',
+        },
+    };
     let returnValue = {
         collapsed,
         userId,
@@ -64,6 +76,10 @@ const mapStateToProps = (state) => {
 
         loginUserData,
         isDataLoaded,
+        advanceFilterString,
+        SORTING_COULUMN_NAME,
+
+        isLoadingOnSave,
     };
 
     return returnValue;
@@ -85,6 +101,8 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfSoMappingDataActions.listShowLoading,
             saveData: otfSoMappingDataActions.saveData,
             resetData: otfSoMappingDataActions.reset,
+            setadvanceFilterString: otfSoMappingDataActions.setFilter,
+            saveFormShowLoading: otfSoMappingDataActions.saveFormShowLoading,
 
             showGlobalNotification,
         },
@@ -94,11 +112,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const OtfListMasterBase = (props) => {
     const { userId, typeData } = props;
-
     const { DealerParentData, fetchDealerParentLov, listDealerParentLoading, resetDealerParentData } = props;
     const { isLocationLoading, LocationData, fetchDealerLocation, listDealerLocation, resetDealerLocationData } = props;
     const { isOtfSoMappingLoaded, isOtfSoMappingLoading, otfSomappingData, resetData, fetchList, listShowLoading, saveData, showGlobalNotification } = props;
     const { isConfigurableLoading, loginUserData } = props;
+    const { setadvanceFilterString, advanceFilterString, SORTING_COULUMN_NAME, isLoadingOnSave, saveFormShowLoading } = props;
 
     const pageIntialState = {
         pageSize: 10,
@@ -108,13 +126,15 @@ export const OtfListMasterBase = (props) => {
     const disabledProps = { disabled: true };
 
     const [filterString, setfilterString] = useState({});
-    const [status, setstatus] = useState(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.NO_DATA);
-    const [selectedKey, setselectedKey] = useState(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.NO_DATA?.key);
+    const [status, setstatus] = useState();
+    const [selectedKey, setselectedKey] = useState();
     const [DropDownData, setDropDownData] = useState([]);
+    const [descriptiondata, setDescriptionData] = useState([]);
     const [page, setPage] = useState({ ...pageIntialState });
 
     const [form] = Form.useForm();
     const [SoForm] = Form.useForm();
+    const [searchForm] = Form.useForm();
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
@@ -147,7 +167,7 @@ export const OtfListMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && typeData) {
-            setDropDownData(handleDropDownData(typeData[PARAM_MASTER?.SO_MAP?.id], loginUserData));
+            setDropDownData(handleDropDownData(typeData?.[PARAM_MASTER?.SO_MAP?.id], loginUserData));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, typeData]);
@@ -158,9 +178,21 @@ export const OtfListMasterBase = (props) => {
             resetData();
             resetDealerLocationData();
         };
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    const handleSortyByColumnName = (key) => {
+        if (key) {
+            switch (key) {
+                case SORTING_COULUMN_NAME?.PO_NUMBER?.key:
+                    return SORTING_COULUMN_NAME?.PO_NUMBER?.value;
+                case SORTING_COULUMN_NAME?.SO_DATE?.key:
+                    return SORTING_COULUMN_NAME?.SO_DATE?.value;
+                default:
+                    return key;
+            }
+        }
+        return undefined;
+    };
     const extraParams = useMemo(() => {
         return [
             {
@@ -188,9 +220,68 @@ export const OtfListMasterBase = (props) => {
                 title: 'dealerLocationCode',
                 value: filterString?.dealerLocationCode,
             },
+            {
+                key: 'reserveQuota',
+                title: 'reserveQuota',
+                value: filterString?.reserveQuota,
+            },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    const SOParams = useMemo(() => {
+        return [
+            {
+                key: 'mapStatusCode',
+                title: 'mapStatusCode',
+                value: advanceFilterString?.status,
+                canRemove: false,
+                filter: false,
+            },
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: advanceFilterString?.searchType,
+                name: typeData?.[PARAM_MASTER.OTF_SO_MAPPING_UNMAPPING_SER.id]?.find((i) => i?.key === advanceFilterString?.searchType)?.value,
+                canRemove: false,
+                filter: true,
+            },
+            {
+                key: 'searchParam',
+                title: 'Value',
+                value: advanceFilterString?.searchParam,
+                name: advanceFilterString?.searchParam,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: advanceFilterString?.pageSize ?? 10,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: advanceFilterString?.current ?? 1,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: handleSortyByColumnName(advanceFilterString?.sortBy),
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: advanceFilterString?.sortType,
+            },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [advanceFilterString]);
+
+    const CanSearch = SOParams && advanceFilterString && Object?.keys(advanceFilterString)?.length && advanceFilterString?.status;
+    const canFetchData = extraParams && filterString && Object?.keys(filterString)?.length;
+    const isSearchDataLoadedAndSet = otfSomappingData && typeof otfSomappingData === 'object' && Object?.keys(otfSomappingData)?.length && isOtfSoMappingLoaded && !otfSomappingData?.hasOwnProperty('paginationData');
+    const isreserveQuota = selectedKey === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key;
 
     useEffect(() => {
         if (userId) {
@@ -198,107 +289,60 @@ export const OtfListMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
     useEffect(() => {
-        if (extraParams && filterString && Object?.keys(filterString)?.length) {
+        if (canFetchData) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [extraParams]);
+
     useEffect(() => {
-        if (otfSomappingData && typeof otfSomappingData === 'object' && Object?.keys(otfSomappingData)?.length && isOtfSoMappingLoaded && !otfSomappingData?.hasOwnProperty('paginationData')) {
-            SoForm.setFieldsValue({ [filterString?.formType]: { ...otfSomappingData, otfDate: converDateDayjs(otfSomappingData?.otfDate), soDate: converDateDayjs(otfSomappingData?.soDate) } });
+        if (CanSearch) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: SOParams, onErrorAction, customURL: CustomSearchUrl });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [advanceFilterString]);
+
+    useEffect(() => {
+        if (isSearchDataLoadedAndSet) {
+            SoForm.setFieldsValue({ [filterString?.formType]: { ...otfSomappingData, reserveQuotaOtfNumber: isreserveQuota ? otfSomappingData?.otfNumber : undefined, otfNumber: filterString?.otfNumber, soNumber: filterString?.soNumber || otfSomappingData?.soNumber, otfDate: converDateDayjs(otfSomappingData?.otfDate), soDate: converDateDayjs(otfSomappingData?.soDate) } });
             setfilterString();
             resetData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfSomappingData, isOtfSoMappingLoaded]);
-
-    const MappingUnmapping = (key) => {
-        const SOParams = [
-            {
-                key: 'mapStatusCode',
-                title: 'mapStatusCode',
-                value: key,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-            },
-        ];
-
-        userId && SOParams && fetchList({ setIsLoading: listShowLoading, userId, extraParams: SOParams, onSuccessAction, onErrorAction, customURL: CustomSearchUrl });
-    };
-
     useEffect(() => {
-        switch (selectedKey) {
-            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_BILLED?.key: {
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_BILLED);
-                break;
-            }
-            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_LIVE?.key: {
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_LIVE);
-                break;
-            }
-            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.key: {
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE);
-                break;
-            }
-            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key: {
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA);
-                break;
-            }
-            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING?.key: {
-                MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING?.key);
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_MAPPING);
-                break;
-            }
-            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key: {
-                MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING?.key);
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_UNMAPPING);
-                break;
-            }
-            case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key: {
-                MappingUnmapping(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION?.key);
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.SO_CANCELLATION);
-                break;
-            }
-            default: {
-                setstatus(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.NO_DATA);
-            }
+        const setDealerCodeValue = [OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_BILLED?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_LIVE?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.key, OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key]?.includes(selectedKey);
+        if (loginUserData?.userType === HEADER_CONSTANTS?.DLR?.key && setDealerCodeValue && loginUserData?.parentGroupCode) {
+            SoForm.setFieldValue('parentGroupCode', loginUserData?.parentGroupCode);
+            handleDealerParent(loginUserData?.parentGroupCode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedKey]);
+    }, [selectedKey, loginUserData?.parentGroupCode]);
+
+    const MappingUnmapping = (key) => key && setadvanceFilterString({ ...advanceFilterString, status: key });
 
     const handleClear = () => {
+        const parentGroupCode = SoForm.getFieldsValue()?.parentGroupCode;
         SoForm.resetFields();
-        resetDealerLocationData();
-        setfilterString();
+        if (loginUserData?.userType === HEADER_CONSTANTS?.DLR?.key) {
+            SoForm.setFieldValue('parentGroupCode', parentGroupCode);
+            setfilterString();
+            setDescriptionData([]);
+        } else {
+            resetDealerLocationData();
+            setfilterString();
+            setDescriptionData([]);
+        }
     };
+
     const handleCancel = () => {
-        setselectedKey(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.NO_DATA?.key);
+        setselectedKey();
         SoForm.resetFields();
         form.resetFields();
     };
+
     const ClearAllData = () => {
         SoForm.resetFields();
         setfilterString();
@@ -306,24 +350,35 @@ export const OtfListMasterBase = (props) => {
     };
 
     const handleSelect = (key) => {
-        if (!key) {
-            setselectedKey(OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.NO_DATA?.key);
+        if (key) {
             ClearAllData();
-            return;
-        }
-        ClearAllData();
-        setselectedKey(key);
-    };
-    const handleSearchChange = (value, type) => {
-        if (!value) return;
-        SoForm?.validateFields(['parentGroupCode', 'locationCode'])
-            .then(() => {
-                const formValues = SoForm.getFieldsValue();
-                setfilterString({ otfNumber: formValues[type]?.otfNumber, soNumber: formValues[type]?.soNumber, soStatusCode: type === FORM_TYPE_CONSTANSTS?.FORM_1?.id ? status?.CRD_1 : status?.CRD_2, parentGroupCode: formValues?.parentGroupCode, dealerLocationCode: formValues?.locationCode, formType: type });
-            })
-            .catch(() => {
-                return;
+            setselectedKey(key);
+            setstatus(() => {
+                const constantValues = Object?.values(OTF_SO_MAPPING_UNMAPPING_CONSTANTS);
+                const currentKeyObj = constantValues?.reduce((prev, curr) => {
+                    if (curr?.key === key) {
+                        prev = curr;
+                    }
+                    return prev;
+                }, {});
+                return currentKeyObj;
             });
+        } else {
+            setselectedKey();
+            ClearAllData();
+            setstatus();
+        }
+    };
+
+    const handleSearchChange = (value, type) => {
+        if (value) {
+            SoForm.validateFields(['parentGroupCode', 'locationCode'])
+                .then(() => {
+                    const formValues = SoForm.getFieldsValue();
+                    setfilterString({ reserveQuota: isreserveQuota ? 'Y' : undefined, otfNumber: formValues?.[type]?.otfNumber, soNumber: formValues?.[type]?.soNumber, soStatusCode: type === FORM_TYPE_CONSTANSTS?.FORM_1?.id ? status?.CRD_1 : status?.CRD_2, parentGroupCode: formValues?.parentGroupCode, dealerLocationCode: formValues?.locationCode, formType: type });
+                })
+                .catch(() => {});
+        }
     };
     const handleResetData = (type, exception = undefined) => {
         switch (type) {
@@ -336,10 +391,11 @@ export const OtfListMasterBase = (props) => {
                 break;
             }
             default: {
-                return;
+                break;
             }
         }
     };
+
     const handleNullcheck = (obj1, obj2, exception = false) => {
         let f1 = false;
         let f2 = false;
@@ -356,52 +412,103 @@ export const OtfListMasterBase = (props) => {
                 break;
             }
         }
-        return f1 || f2;
+        return f1 ?? f2;
     };
-
-    const onFinish = (values) => {
-        const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
-        const form_1_Values = {
-            otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
-            soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soNumber,
-            soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soStatusCode,
-        };
-        const form_2_Values = {
-            otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber,
-            soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soNumber,
-            soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
-        };
-        if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
-            showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationSuccess.title'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
-            return;
+    const checkIfCanProceedWithSwapping = ({ formOneData, formTwoData }) => {
+        const isModelGroupPresent = formOneData?.modelGroup && formTwoData?.modelGroup;
+        const bothOtfAreBooked = formOneData?.orderStatus === OTF_STATUS?.BOOKED?.key && formTwoData?.orderStatus === OTF_STATUS?.BOOKED?.key;
+        const isModelChangeRequestSent = formOneData?.revisedModel || formTwoData?.revisedModel;
+        if (formOneData?.otfNumber === formTwoData?.otfNumber) {
+            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.otfNumberAreSame') });
+            return false;
+        } else if (!isModelGroupPresent) {
+            showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupNotPresent') });
+            return false;
+        } else {
+            if (formOneData?.modelGroup !== formTwoData?.modelGroup) {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelGroupDifferent') });
+                return false;
+            } else if (!bothOtfAreBooked) {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.bookingNumberAreNotBooked') });
+                return false;
+            } else if (isModelChangeRequestSent) {
+                showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.modelChangeRequestSent') });
+                return false;
+            } else {
+                return true;
+            }
         }
-        const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
+    };
+    const onFinish = (values) => {
+        let requestedFinalPayload = {};
+        const formOneData = values?.[FORM_TYPE_CONSTANSTS?.FORM_1?.id];
+        const formTwoData = values?.[FORM_TYPE_CONSTANSTS?.FORM_2?.id];
+        const { locationCode: dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode } = values;
+        const commonPayloadData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode };
+
         const onSuccess = (res) => {
-            SoForm.resetFields();
-            resetDealerLocationData();
-            setfilterString();
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            const { responseMessage } = res;
+            handleClear();
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: responseMessage });
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        if (isreserveQuota) {
+            requestedFinalPayload = {
+                ...commonPayloadData,
+                soDetails: [
+                    {
+                        soNumber: formOneData?.soNumber,
+                        soStatusCode: formOneData?.soStatusCode,
+                    },
+                    {
+                        otfNumber: formTwoData?.reserveQuotaOtfNumber,
+                        soNumber: formTwoData?.soNumber,
+                        soStatusCode: formTwoData?.soStatusCode,
+                    },
+                ],
+                sapResponseSuccess: false,
+            };
+        } else {
+            if (checkIfCanProceedWithSwapping({ formOneData, formTwoData })) {
+                const form_1_Values = {
+                    otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.otfNumber || '',
+                    soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soNumber,
+                    soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_1?.id]?.soStatusCode,
+                };
+                const form_2_Values = {
+                    otfNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.otfNumber || '',
+                    soNumber: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soNumber,
+                    soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
+                };
 
-        const requestData = {
-            customURL: CustomUrl,
-            data: finalData,
+                if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
+                    showGlobalNotification({ title: translateContent('global.notificationSuccess.error'), message: translateContent('bookingSoMappUnmapp.errorMsg.message') });
+                    return false;
+                }
+
+                requestedFinalPayload = { ...commonPayloadData, soDetails: [form_1_Values, form_2_Values] };
+            } else {
+                return false;
+            }
+        }
+
+        saveData({
+            customURL,
+            data: requestedFinalPayload,
             method: 'put',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
-            onError,
+            onError: onErrorAction,
             onSuccess,
-        };
-
-        saveData(requestData);
+        });
     };
 
     const handleDealerParent = (parentCode) => {
-        if (!parentCode) resetDealerLocationData();
+        if (!parentCode) {
+            resetDealerLocationData();
+            SoForm.resetFields(['locationCode']);
+            return false;
+        }
         SoForm.resetFields(['locationCode']);
         const DealerParams = [
             {
@@ -412,8 +519,20 @@ export const OtfListMasterBase = (props) => {
         ];
         fetchDealerLocation({ setIsLoading: listDealerLocation, userId, extraParams: DealerParams });
     };
-
-    const ContainerProps = {
+    const removeFilter = (key) => {
+        let obj = { ...advanceFilterString };
+        if (key === 'searchParam') {
+            delete obj?.searchParam;
+            delete obj?.searchType;
+            setadvanceFilterString({ ...obj });
+        } else {
+            const obj = { ...advanceFilterString };
+            delete obj?.[key];
+        }
+        setadvanceFilterString({ ...obj });
+    };
+    const containerProps = {
+        dynamicPagination: true,
         selectedKey,
         typeData,
         SoForm,
@@ -433,22 +552,49 @@ export const OtfListMasterBase = (props) => {
         page,
         setPage,
         MappingUnmapping,
+        advanceFilterString,
+        setadvanceFilterString,
+        loginUserData,
+
+        isLoadingOnSave,
+        descriptiondata,
+        setDescriptionData,
+
+        isreserveQuota,
+    };
+    const SomappingUnmappingFilterProps = {
+        form,
+        isConfigurableLoading,
+        selectBoxkey: 'code',
+        selectBoxProps: {
+            loading: !DropDownData?.length,
+            options: DropDownData,
+            fieldNames: { label: 'value', value: 'key' },
+            onChange: handleSelect,
+            placeholder: translateContent('global.placeholder.select'),
+            allowClear: true,
+            showSearch: true,
+            optionFilterProp: 'value',
+        },
+        searchBoxProps: {
+            searchForm,
+            optionType: typeData?.[PARAM_MASTER.OTF_SO_MAPPING_UNMAPPING_SER.id],
+            defaultOption: 'soNumber',
+            setFilterString: setadvanceFilterString,
+            filterString: advanceFilterString,
+            allowClear: false,
+        },
+        extraParams: SOParams,
+        status,
+        advanceFilter: true,
+        removeFilter,
+        handleResetFilter: () => setadvanceFilterString({ status: advanceFilterString?.status }),
     };
 
     return (
         <>
-            <div className={styles.contentHeaderBackground}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form form={form} autoComplete="off" colon={false} className={styles.masterListSearchForm}>
-                            <Form.Item name="code">
-                                <Select loading={isConfigurableLoading} options={DropDownData} fieldNames={{ label: 'value', value: 'key' }} onChange={handleSelect} placeholder={translateContent('global.placeholder.select')} allowClear showSearch optionFilterProp="value" />
-                            </Form.Item>
-                        </Form>
-                    </Col>
-                </Row>
-            </div>
-            {MasterContainer({ ...ContainerProps })}
+            <SomappingUnmappingFilter {...SomappingUnmappingFilterProps} />
+            <MasterContainer {...containerProps} />
         </>
     );
 };

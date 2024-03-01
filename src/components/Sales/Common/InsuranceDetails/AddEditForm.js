@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, DatePicker, Space, Card, Select } from 'antd';
+import { Col, Input, Form, Row, DatePicker, Space, Card } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -12,11 +12,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
+
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
 import { BASE_URL_PARTY_MASTER_LOV as customURL } from 'constants/routingApi';
 import { translateContent } from 'utils/translateContent';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const mapStateToProps = (state) => {
     const {
@@ -55,9 +58,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
+    const { deliveryNote = false, userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
     const { formData, form } = props;
-    const { Option } = Select;
 
     const onErrorAction = () => {};
 
@@ -91,13 +93,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label={translateContent('commonModules.label.insuranceDetails.insuranceCompany')} name="insuranceCompany" initialValue={formData?.insuranceCompany}>
-                                    <Select placeholder={preparePlaceholderSelect(translateContent('commonModules.label.insuranceDetails.insuranceCompany'))}>
-                                        {insuranceCompanies?.map((item) => (
-                                            <Option value={item?.key} key={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
+                                    {customSelectBox({ data: insuranceCompanies, placeholder: preparePlaceholderSelect(translateContent('commonModules.label.insuranceDetails.insuranceCompany')) })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -119,7 +115,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label={translateContent('commonModules.label.insuranceDetails.registrationNumber')} name="registrationNumber" initialValue={formData?.registrationNumber}>
+                                <Form.Item label={translateContent('commonModules.label.insuranceDetails.registrationNumber')} name="registrationNumber" initialValue={formData?.registrationNumber} rules={deliveryNote ? [validateRequiredInputField(translateContent('commonModules.label.insuranceDetails.registrationNumber'))] : undefined}>
                                     <Input placeholder={preparePlaceholderText(translateContent('commonModules.label.insuranceDetails.registrationNumber'))} maxLength={20} />
                                 </Form.Item>
                             </Col>

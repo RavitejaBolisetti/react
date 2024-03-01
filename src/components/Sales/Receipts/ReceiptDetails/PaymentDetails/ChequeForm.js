@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Input, DatePicker, Row, Col, Form } from 'antd';
+import { Input, DatePicker, Row, Col, Form, Divider } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
-import { validateLettersWithWhitespaces, validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validationNumber } from 'utils/validation';
+import { validateLettersWithWhitespaces, validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validationNumber, validateRequiredSelectField } from 'utils/validation';
 import { translateContent } from 'utils/translateContent';
 import { disableFutureDate } from 'utils/disableDate';
 
@@ -19,6 +19,7 @@ const ChequeFormBase = (props) => {
 
     return (
         <>
+            <Divider />
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.receivedAmount} label={translateContent('receipts.label.receiptDetails.receivedAmount')} name="receivedAmount" rules={[validateRequiredInputField(translateContent('receipts.validation.receivedAmount')), validateNumberWithTwoDecimalPlaces(translateContent('receipts.validation.receivedAmount'))]}>
@@ -26,19 +27,19 @@ const ChequeFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ddCheckNumber} label={translateContent('receipts.label.receiptDetails.chequeDDNumber')} name="ddCheckNumber" rules={[validationFieldLetterAndNumber(translateContent('receipts.validation.chequeNo')), validationNumber(translateContent('receipts.validation.chequeNo'))]}>
+                    <Form.Item initialValue={formData?.ddCheckNumber} label={translateContent('receipts.label.receiptDetails.chequeDDNumber')} name="ddCheckNumber" rules={[validateRequiredInputField(translateContent('receipts.validation.chequeNo')),validationFieldLetterAndNumber(translateContent('receipts.validation.chequeNo')), validationNumber(translateContent('receipts.validation.chequeNo'))]}>
                         <Input maxLength={6} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.chequeNo'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ddCheckDate} label={translateContent('receipts.label.receiptDetails.chequeDDDate')} name="ddCheckDate">
+                    <Form.Item rules={[validateRequiredSelectField(translateContent('receipts.validation.chequeDDDate'))]} initialValue={formData?.ddCheckDate} label={translateContent('receipts.label.receiptDetails.chequeDDDate')} name="ddCheckDate">
                         <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderText(translateContent('receipts.placeholder.chequeDate'))} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.bankName} label={translateContent('receipts.label.receiptDetails.bankName')} name="bankName" rules={[validateLettersWithWhitespaces(translateContent('receipts.validation.bankName'))]}>
+                    <Form.Item initialValue={formData?.bankName} label={translateContent('receipts.label.receiptDetails.bankName')} name="bankName" rules={[validateRequiredInputField(translateContent('receipts.validation.bankName')),validateLettersWithWhitespaces(translateContent('receipts.validation.bankName'))]}>
                         <Input placeholder={preparePlaceholderText(translateContent('receipts.placeholder.bankName'))} />
                     </Form.Item>
                 </Col>

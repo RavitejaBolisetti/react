@@ -40,6 +40,9 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleReceiptFormButton } from './VehicleReceiptFormButton';
 import { drawerTitle } from 'utils/drawerTitle';
 import { dealerLocationsDataAction } from 'store/actions/data/amcRegistration/dealerLocations';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { SALE_TYPE } from './utils/saleTypeConstant';
+import { debounce } from 'utils/debounce';
 
 const mapStateToProps = (state) => {
     const {
@@ -47,7 +50,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ShieldSchemeRegistration: {
-                ShieldSchemeSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: detailShieldData = [] },
+                ShieldSchemeSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, isDetailLoading, isLoadingOnSave, data, filter: filterString, detailData: detailShieldData = [] },
                 SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeLoading, detailData: schemeDetail = [] },
             },
             AMCRegistration: {
@@ -66,7 +69,7 @@ const mapStateToProps = (state) => {
             },
         },
         common: {
-            Header: { data: loginUserData = [] },
+            Header: { data: loginUserData = [], dealerLocationId },
         },
     } = state;
     const moduleTitle = translateContent('shieldSchemeRegistration.heading.moduleTitle');
@@ -80,6 +83,7 @@ const mapStateToProps = (state) => {
         detailShieldData,
         moduleTitle,
         isSearchLoading,
+        isLoading: isDetailLoading,
         isSearchDataLoaded,
         isEmployeeDataLoaded,
         isEmployeeDataLoading,
@@ -88,7 +92,7 @@ const mapStateToProps = (state) => {
         employeeData,
         managerData,
         dealerParentsLovList,
-        dealerLocations,
+        dealerLocations: dealerLocations.filter((value) => value?.locationId && value?.dealerLocationName),
         schemeDetail,
         filterString,
         isModelFamilyDataLoaded,
@@ -97,8 +101,10 @@ const mapStateToProps = (state) => {
         isProductHierarchyDataLoaded,
         isProductHierarchyDataLoading,
         ProductHierarchyData,
+        isLoadingOnSave,
 
         locations,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -119,7 +125,11 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchFilteredList,
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
+            resetLocationData: applicationMasterDataActions.resetLocations,
+
             saveData: shieldSchemeSearchDataAction.saveData,
+            saveFormShowLoading: shieldSchemeSearchDataAction.saveFormShowLoading,
+            listDetailShowLoading: shieldSchemeSearchDataAction.listDetailShowLoading,
             resetData: shieldSchemeSearchDataAction.reset,
             resetDetail: shieldSchemeSearchDataAction.resetDetail,
             resetSchemeDetail: schemeDescriptionDataAction.resetDetail,
@@ -137,6 +147,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchLocationLovList: dealerLocationsDataAction.fetchFilteredList,
             listLocationShowLoading: dealerLocationsDataAction.listShowLoading,
 
+            downloadFile: supportingDocumentDataActions.downloadFile,
+
             showGlobalNotification,
         },
         dispatch
@@ -144,8 +156,44 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ShieldSchemeRegistrationMasterMain = (props) => {
-    const { userId, loginUserData, invoiceStatusList, typeData, data, showGlobalNotification, totalRecords, moduleTitle, fetchList, fetchDetail, fetchSchemeDescription, fetchEmployeeList, fetchManagerList, saveData, listShowLoading, listSchemeLoading, listEmployeeShowLoading, setFilterString, filterString, detailShieldData, resetDetail, resetSchemeDetail, isEmployeeDataLoaded, isEmployeeDataLoading, isSchemeLoading, employeeData, managerData, schemeDetail, fetchDealerParentsLovList, dealerParentsLovList, fetchDealerLocations, dealerLocations } = props;
-    const { fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
+    const {
+        dealerLocationId,
+        userId,
+        loginUserData,
+        invoiceStatusList,
+        typeData,
+        data,
+        showGlobalNotification,
+        totalRecords,
+        moduleTitle,
+        fetchList,
+        fetchDetail,
+        fetchSchemeDescription,
+        fetchEmployeeList,
+        fetchManagerList,
+        saveData,
+        listShowLoading,
+        saveFormShowLoading,
+        listDetailShowLoading,
+        listSchemeLoading,
+        listEmployeeShowLoading,
+        setFilterString,
+        filterString,
+        detailShieldData,
+        resetDetail,
+        resetSchemeDetail,
+        isEmployeeDataLoaded,
+        isEmployeeDataLoading,
+        isSchemeLoading,
+        employeeData,
+        managerData,
+        schemeDetail,
+        fetchDealerParentsLovList,
+        dealerParentsLovList,
+        fetchDealerLocations,
+        dealerLocations,
+    } = props;
+    const { downloadFile, resetLocationData, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -161,7 +209,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [vehicleCustomerDetailsOnly, setVehicleCustomeDetailsOnly] = useState({});
 
-    const page = { pageSize: 10, current: 1 };
     const dynamicPagination = true;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -170,6 +217,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [cancelSchemeVisible, setCancelSchemeVisible] = useState(false);
     const [searchValue, setSearchValue] = useState();
     const [vinNumber, setVinNumber] = useState();
+    const [odometerReading, setOdometerReading] = useState(null);
     const [saleType, setSaleType] = useState();
     const [bookingNumber, setBookingNumber] = useState();
     const [amcWholeCancellation, setAmcWholeCancellation] = useState(false);
@@ -182,6 +230,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [reportButtonType, setReportButtonType] = useState();
     const [shieldDocumentType, setShieldDocumentType] = useState();
     const [requestPayload, setRequestPayload] = useState({ registrationDetails: {}, vehicleAndCustomerDetails: {} });
+    const [isVINOrOTFValidated, setIsVINOrOTFValidated] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -206,8 +255,6 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [shieldDetailForm] = Form.useForm();
-    // const [registrationForm] = Form.useForm();
-    // const [schemeForm] = Form.useForm();
     const [vehicleCustomerForm] = Form.useForm();
     const [vehicleDetailForm] = Form.useForm();
     const [customerDetailForm] = Form.useForm();
@@ -258,7 +305,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             {
                 key: 'status',
                 title: 'Status',
-                value: filterString?.amcStatus || amcStatus,
+                value: filterString?.status,
                 canRemove: false,
                 filter: false,
             },
@@ -281,14 +328,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.current || page?.current,
+                value: filterString?.current ?? 1,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize || page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
@@ -311,20 +358,20 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, amcStatus, filterString, page]);
+    }, [searchValue, filterString]);
 
     useEffect(() => {
         const defaultSection = SHIELD_REGISTRATION_SECTION.SHIELD_REGISTRATION_DETAILS.id;
@@ -333,6 +380,33 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleDownloadFile = (key) => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: key,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+    };
+
+    const handleOdometerReading = debounce((e) => {
+        setOdometerReading(e.target.value);
+    }, 500);
+
+    useEffect(() => {
+        if (loginUserData?.userType) {
+            if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_CONSTANTS?.PENDING?.key });
+            } else {
+                setFilterString({ ...filterString, pageSize: 10, current: 1, status: QUERY_BUTTONS_MNM_USER?.PENDING_FOR_APPROVAL?.key });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loginUserData?.userType]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -350,11 +424,11 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             if (loginUserData?.userType === AMC_CONSTANTS?.DEALER?.key) {
                 setAmcStatus(QUERY_BUTTONS_CONSTANTS.PENDING.key);
                 setUserType(AMC_CONSTANTS?.DEALER?.key);
-                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_CONSTANTS.PENDING.key });
+                setFilterString({ ...filterString, status: QUERY_BUTTONS_CONSTANTS.PENDING.key });
             } else {
                 setAmcStatus(QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key);
                 setUserType(AMC_CONSTANTS?.MNM?.key);
-                setFilterString({ ...filterString, amcStatus: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
+                setFilterString({ ...filterString, status: QUERY_BUTTONS_MNM_USER.PENDING_FOR_APPROVAL.key });
             }
         }
 
@@ -362,7 +436,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     }, [loginUserData?.userType]);
 
     useEffect(() => {
-        if (userId && filterString?.amcStatus) {
+        if (userId && loginUserData?.userType && filterString?.status) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -373,6 +447,10 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         if (userId) {
             fetchDealerParentsLovList({ setIsLoading: listShowLoading, userId });
             fetchLocationLovList({ setIsLoading: listLocationShowLoading, userId });
+
+            return () => {
+                setFilterString({});
+            };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -387,13 +465,13 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     name: 'id',
                 },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
     useEffect(() => {
-        if (vinNumber) {
+        if (vinNumber && odometerReading) {
             const extraParams = [
                 {
                     key: 'vin',
@@ -401,11 +479,17 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     value: vinNumber,
                     name: 'vin',
                 },
+                {
+                    key: 'odometerReading',
+                    title: 'odometerReading',
+                    value: odometerReading,
+                    name: 'odometerReading',
+                },
             ];
             fetchSchemeDescription({ setIsLoading: listSchemeLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, vinNumber]);
+    }, [userId, vinNumber, odometerReading]);
 
     useEffect(() => {
         if (detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelFamily) {
@@ -435,13 +519,13 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             fetchModelList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup]);
+    }, [userId, detailShieldData?.vehicleAndCustomerDetails?.vehicleDetails?.modelGroup, dealerLocationId]);
 
     const handleInvoiceTypeChange = (buttonName) => {
         const key = buttonName?.key;
         setAmcStatus(key);
         searchForm.resetFields();
-        setFilterString({ amcStatus: key, current: 1, pageSize: 10 });
+        setFilterString({ status: key, current: 1, pageSize: 10 });
     };
 
     const handleTaxChange = () => {
@@ -473,12 +557,20 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 key: 'rate',
                 value: shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeBasicAmount,
             },
+            {
+                key: 'otfNumber',
+                value: saleType === SALE_TYPE?.MNM_FOC?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.otf : null,
+            },
+            {
+                key: 'vin',
+                value: saleType === SALE_TYPE?.PAID?.key ? shieldDetailForm?.getFieldsValue()?.registrationInformation?.vin : null,
+            },
         ];
         if (!shieldDetailForm?.getFieldsValue()?.registrationInformation?.saleType || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeDescription || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeCode || !shieldDetailForm?.getFieldsValue()?.schemeDetails?.schemeBasicAmount) {
-            showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
+            // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -492,8 +584,13 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleDealerParentChange = (value) => {
+        if (!value) {
+            advanceFilterForm.resetFields(['dealerLocation']);
+            resetLocationData();
+            return;
+        }
         if (userId) {
-            fetchDealerLocations({ customURL: customURL + '?parentGroupCode=' + value, setIsLoading: listShowLoading, userId });
+            fetchDealerLocations({ customURL: customURL + '?dealerParentCode=' + value, setIsLoading: listShowLoading, userId });
         }
     };
 
@@ -561,8 +658,12 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleOtfSearch = (value) => {
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setIsVINOrOTFValidated(false);
+        };
         setBookingNumber(value);
-        resetSchemeDetail();
+        !(bookingNumber === value) && resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
             schemeDetails: {
                 schemeDescription: undefined,
@@ -580,6 +681,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                 setVinNumber(res?.data?.vehicleAndCustomerDetails?.vehicleDetails?.vin);
                 setVehicleCustomeDetailsOnly(res?.data);
                 showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+                setIsVINOrOTFValidated(true);
             };
             const extraParams = [
                 {
@@ -589,16 +691,37 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     name: 'otfNumber',
                 },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
+    };
+
+    const VIN_SEARCH_CONSTANT = {
+        SHIELD: {
+            id: 1,
+            key: 'SHIELD',
+        },
     };
 
     const handleVinSearch = (value) => {
         const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             setVehicleCustomeDetailsOnly(res?.data);
+            setIsVINOrOTFValidated(true);
+
+            shieldDetailForm.setFieldsValue({
+                registrationInformation: {
+                    availableFund: res?.data?.registrationDetails?.registrationInformation?.availableFund,
+                },
+            });
         };
         setVinNumber(value);
-        resetSchemeDetail();
+
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsVINOrOTFValidated(false);
+        };
+        !(vinNumber === value) && resetSchemeDetail();
         shieldDetailForm.setFieldsValue({
             schemeDetails: {
                 schemeDescription: undefined,
@@ -619,8 +742,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
                     value: value,
                     name: 'vin',
                 },
+                {
+                    key: 'transaction',
+                    title: 'SHIELD',
+                    value: VIN_SEARCH_CONSTANT?.SHIELD?.key,
+                    name: 'transaction',
+                },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -661,7 +790,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
             data: data,
             method: 'post',
             customURL: BASE_URL_SHIELD_REGISTRATION,
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             errorData: true,
@@ -700,10 +829,14 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         setRequestPayload();
     };
 
+    const setPage = (page) => {
+        setFilterString({ ...filterString, ...page });
+    };
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        setPage: setFilterString,
+        setPage: setPage,
         page: filterString,
         tableColumn: tableColumn({ handleButtonClick, userType, locations }),
         tableData: data,
@@ -725,8 +858,9 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         setShowDataLoading(false);
-        setFilterString({ amcStatus: filterString?.amcStatus });
+        setFilterString({ status: filterString?.status, pageSize });
         advanceFilterForm.resetFields();
     };
 
@@ -758,7 +892,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     const handleCancelRequest = () => {
         setCancelSchemeVisible(true);
         setAmcWholeCancellation(false);
-        setStatus(QUERY_BUTTONS_CONSTANTS?.CANCELLED?.key);
+        setStatus(detailShieldData?.requestDetails[0]?.requestStatus);
     };
     const handleMNMApproval = () => {
         setCancelSchemeVisible(true);
@@ -801,7 +935,8 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const handleCancelScheme = () => {
-        const data = { id: detailShieldData?.id, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, status: status, requestDetails: { ...requestPayload?.requestDetails, userId: userId, ...cancelSchemeForm.getFieldsValue() } };
+        const detailPayload = detailShieldData?.requestDetails?.[0];
+        const data = { id: detailPayload?.id, shieldHdrId: detailPayload?.shieldHdrId, customerName: '', shieldRegistrationDate: detailShieldData?.registrationDetails?.registrationDate, userId: userId, status: status, ...cancelSchemeForm.getFieldsValue() };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -942,6 +1077,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
     };
 
     const containerProps = {
+        ...props,
         userType,
         userId,
         record: selectedOrder,
@@ -949,6 +1085,7 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         shieldDetailForm,
         // registrationForm,
         // schemeForm,
+        handleOdometerReading,
         vehicleCustomerForm,
         vehicleDetailForm,
         customerDetailForm,
@@ -1030,6 +1167,9 @@ export const ShieldSchemeRegistrationMasterMain = (props) => {
         amcStatus,
         handleTaxChange,
         selectedCardData,
+        handleDownloadFile,
+        showGlobalNotification,
+        isVINOrOTFValidated,
     };
 
     useEffect(() => {

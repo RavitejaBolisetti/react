@@ -14,6 +14,7 @@ import { CustomEditor } from 'components/common/CustomEditor';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
 import styles from 'assets/sass/app.module.scss';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const { Option } = Select;
 
@@ -71,13 +72,7 @@ const AddEditFormMain = (props) => {
 
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                     <Form.Item initialValue={formData?.productcode} label={translateContent('termConditionManufacturer.label.productHierarchy')} name="productcode" rules={[validateRequiredSelectField(translateContent('termConditionManufacturer.validation.productHierarchy'))]}>
-                                        <Select disabled={formActionType?.viewMode} placeholder={translateContent('termConditionManufacturer.placeholder.selectParameter')} allowClear>
-                                            {productHierarchyList?.map((item) => (
-                                                <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
-                                                    {item.prodctShrtName}
-                                                </Option>
-                                            ))}
-                                        </Select>
+                                        {customSelectBox({ data: productHierarchyList, placeholder: translateContent('termConditionManufacturer.placeholder.selectParameter'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, disabled: formActionType?.viewMode })}
                                     </Form.Item>
                                 </Col>
                             </Row>

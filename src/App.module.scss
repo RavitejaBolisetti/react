@@ -3,32 +3,30 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
- @import 'assets/sass/app.module.scss';
-
- :global .ant-notification-topRight {
-    top: 16px !important;
-    right: -8px !important;
-}
+@import 'assets/sass/app.module.scss';
 
 :global {
+    .ant-notification-topRight {
+        top: 16px !important;
+        right: -8px !important;
+    }
 	.ant-notification-bottomRight {
-		.ant-notification-notice {
-			width: 475px !important;
-			padding: 10px !important;
-			bottom: 40px !important;
-			margin-top: 30px;
-		}
-	}
+        .ant-notification-notice {
+            width: 475px !important;
+            padding: 10px !important;
+            bottom: 40px !important;
+            margin-top: 30px;
+        }
+    }
+    .ant-notification-topRight {
+        .ant-notification-notice {
+            width: 320px;
+            padding: 10px 16px;
+        }
+    }
 }
 
-:global {
-	.ant-notification-topRight {
-		.ant-notification-notice {
-			width: 320px;
-			padding: 10px 16px;
-		}
-	}
-}
+
 
 .antNotificationOverlay {
     // bottom: auto;
@@ -43,255 +41,378 @@
 /*--------- Error Notification Pop Up Design Start ---------*/
 
 .error {
-	color: $semanticError;
-	background: $transparentErrorL !important;
-	border: 1px solid $semanticError;
-	& :global {
-		.ant-notification-notice-icon {
-			font-weight: 700;
-		}
-		.ant-notification-notice-message {
-			font-weight: 500;
-			margin-bottom: 0px !important;
-			font-size: 14px !important;
-			line-height: 24px !important;
-			color: $semanticError !important;
-		}
-		.ant-notification-close-icon {
-			color: $semanticError !important;
-		}
-		.ant-notification-notice-description {
-			line-height: 24px !important;
-			font-weight: 400 !important;
-			padding-right: 30px;
-			color: $primaryBlack;
-		}
-		.ant-notification-notice-btn {
-			margin-left: 35px;
-			float: left !important;
-			font-size: 12px;
-			.ant-btn-primary {
-				background-color: $primaryRed;
-				color: $primaryWhite;
-			}
-			.ant-btn-dangerous {
-				color: $primaryRed;
-				border-color: $primaryRed;
-			}
-		}
-		.ant-btn-default.ant-btn-dangerous {
-			&:not(:disabled) {
-				&:hover {
-					background-color: $brandColor !important;
-				}
-			}
-		}
-		.ant-notification-notice-close {
-			top: 10px !important;
-			right: 15px !important;
-			&:hover {
-				background-color: $transparentColor !important;
-			}
-		}
-		.ant-btn.ant-btn-sm {
-			padding: 0 16px;
-			font-size: 12px !important;
-			line-height: 20px;
-		}
-	}
+    color: $semanticError;
+    background: $transparentErrorL !important;
+    border: 1px solid $semanticError;
+
+    & :global {
+        .ant-notification-notice-icon {
+            font-weight: 700;
+        }
+
+        .ant-notification-notice-message {
+            font-weight: 500;
+            margin-bottom: 0px !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+            color: $semanticError !important;
+        }
+
+        .ant-notification-close-icon {
+            color: $semanticError !important;
+        }
+
+        .ant-notification-notice-description {
+            line-height: 24px !important;
+            font-weight: 400 !important;
+            padding-right: 30px;
+            color: $primaryBlack;
+        }
+
+        .ant-notification-notice-btn {
+            margin-left: 35px;
+            float: left !important;
+            font-size: 12px;
+
+            .ant-btn-primary {
+                background-color: $primaryRed;
+                color: $primaryWhite;
+            }
+
+            .ant-btn-dangerous {
+                color: $primaryRed;
+                border-color: $primaryRed;
+            }
+        }
+
+        .ant-btn-default.ant-btn-dangerous {
+            &:not(:disabled) {
+                &:hover {
+                    background-color: $brandColor !important;
+                }
+            }
+        }
+
+        .ant-notification-notice-close {
+            top: 10px !important;
+            right: 15px !important;
+
+            &:hover {
+                background-color: $transparentColor !important;
+            }
+        }
+
+        .ant-btn.ant-btn-sm {
+            padding: 0 16px;
+            font-size: 12px !important;
+            line-height: 20px;
+        }
+    }
 }
+
 /*--------- Warrning Notification Pop Up Design Start ---------*/
 
 .warning {
     color: $semanticWarning;
-	background: $transparentWarning-dark !important;
-	border: 1px solid $semanticWarning;
-	& :global {
-		.ant-notification-notice-icon {
-			font-weight: 700;
-		}
-		.ant-notification-notice-message {
-			font-weight: 500;
-			margin-bottom: 0px !important;
-			font-size: 14px !important;
-			line-height: 24px !important;
-			color: $semanticWarning !important;
-		}
-		.ant-notification-notice-close {
-			color: $semanticWarning !important;
-			top: 10px !important;
-			right: 15px !important;
-			&:hover {
-				background-color: $transparentColor !important;
-			}
-		}
-		.ant-notification-notice-description {
-			line-height: 24px !important;
-			font-weight: 400 !important;
-			padding-right: 30px;
-			color: $primaryWhite !important;
-		}
-		.ant-notification-notice-btn {
-			margin-left: 35px;
-			float: left !important;
-			font-size: 12px;
-			.ant-btn-primary {
-				background-color: $semanticWarning;
-				color: $primaryWhite;
-				&:not(:disabled) {
-					&:hover {
-						background-color: $semanticWarning;
-						color: $primaryWhite;
-					}
-				}
-			}
-			.ant-btn-dangerous {
-				color: $semanticWarning;
-				border-color: $semanticWarning !important;
-			}
-		}
-		.ant-btn-default.ant-btn-dangerous {
-			&:not(:disabled) {
-				&:hover {
-					background-color: $semanticWarning !important;
-					color: $primaryWhite;
-				}
-			}
-		}
-		.ant-btn.ant-btn-sm {
-			padding: 0 16px;
-			font-size: 12px !important;
-			line-height: 20px;
-		}
-	}
+    background: $transparentWarning-light !important;
+    border: 1px solid $semanticWarning;
+
+    & :global {
+        .ant-notification-notice-icon {
+            font-weight: 700;
+        }
+
+        .ant-notification-notice-message {
+            font-weight: 500;
+            margin-bottom: 0px !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+            color: $semanticWarning !important;
+        }
+
+        .ant-notification-notice-close {
+            color: $semanticWarning !important;
+            top: 10px !important;
+            right: 15px !important;
+
+            &:hover {
+                background-color: $transparentColor !important;
+            }
+        }
+
+        .ant-notification-notice-description {
+            line-height: 24px !important;
+            font-weight: 400 !important;
+            padding-right: 30px;
+            color: $primaryBlack !important;
+        }
+
+        .ant-notification-notice-btn {
+            margin-left: 35px;
+            float: left !important;
+            font-size: 12px;
+
+            .ant-btn-primary {
+                background-color: $semanticWarning;
+                color: $primaryWhite;
+
+                &:not(:disabled) {
+                    &:hover {
+                        background-color: $semanticWarning;
+                        color: $primaryWhite;
+                    }
+                }
+            }
+
+            .ant-btn-dangerous {
+                color: $semanticWarning;
+                border-color: $semanticWarning !important;
+            }
+        }
+
+        .ant-btn-default.ant-btn-dangerous {
+            &:not(:disabled) {
+                &:hover {
+                    background-color: $semanticWarning !important;
+                    color: $primaryWhite;
+                }
+            }
+        }
+
+        .ant-btn.ant-btn-sm {
+            padding: 0 16px;
+            font-size: 12px !important;
+            line-height: 20px;
+        }
+    }
 }
+
 /*--------- Sucess Notification Pop Up Design Start ---------*/
 
 .success {
     color: $semanticSuccess;
-	background: $transparentSuccessL !important;
-	border: 1px solid $semanticSuccess;
-	& :global {
-		.ant-notification-notice-icon {
-			font-weight: 700;
-		}
-		.ant-notification-notice-message {
-			font-weight: 500;
-			margin-bottom: 0px !important;
-			font-size: 14px !important;
-			line-height: 24px !important;
-			color: $semanticSuccess !important;
-		}
-		.ant-notification-close-icon {
-			color: $semanticSuccess !important;
-		}
-		.ant-notification-notice-description {
-			line-height: 24px !important;
-			font-weight: 400 !important;
-			padding-right: 30px;
-			color: $primaryBlack;
-		}
-		.ant-notification-notice-close {
-			top: 10px !important;
-			right: 15px !important;
-			&:hover {
-				background-color: $transparentColor !important;
-			}
-		}
-	}
-	
+    background: $transparentSuccessL !important;
+    border: 1px solid $semanticSuccess;
+
+    & :global {
+        .ant-notification-notice-icon {
+            font-weight: 700;
+        }
+
+        .ant-notification-notice-message {
+            font-weight: 500;
+            margin-bottom: 0px !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+            color: $semanticSuccess !important;
+        }
+
+        .ant-notification-close-icon {
+            color: $semanticSuccess !important;
+        }
+
+        .ant-notification-notice-description {
+            line-height: 24px !important;
+            font-weight: 400 !important;
+            padding-right: 30px;
+            color: $primaryBlack;
+        }
+
+        .ant-notification-notice-close {
+            top: 10px !important;
+            right: 15px !important;
+
+            &:hover {
+                background-color: $transparentColor !important;
+            }
+        }
+    }
 }
+
 /*--------- Error Before Loging Notification Pop Up Design Start ---------*/
 
 .errorBeforeLogin {
     color: $semanticError;
-	background: $transparentError-dark !important;
-	border: 1px solid $semanticError;
-	& :global {
-		.ant-notification-notice-icon {
-			font-weight: 700;
-		}
-		.ant-notification-notice-message {
-			font-weight: 500;
-			margin-bottom: 0px !important;
-			font-size: 14px !important;
-			line-height: 24px !important;
-			color: $semanticError !important;
-		}
-		.ant-notification-close-icon {
-			color: $semanticError !important;
-		}
-		.ant-notification-notice-description {
-			line-height: 24px !important;
-			font-weight: 400 !important;
-			padding-right: 30px;
-			color: $primaryWhite !important;
-		}
-		.ant-notification-notice-btn {
-			margin-left: 35px;
-			float: left !important;
-			font-size: 12px;
-			.ant-btn-primary {
-				background-color: $brandColor;
-				color: $primaryWhite;
-			}
-			.ant-btn-dangerous {
-				color: $brandColor;
-				border-color: $brandColor;
-			}
-		}
-		.ant-btn-default.ant-btn-dangerous {
-			&:not(:disabled) {
-				&:hover {
-					background-color: $primaryRed !important;
-				}
-			}
-		}
-		.ant-notification-notice-close {
-			top: 10px !important;
-			right: 15px !important;
-			&:hover {
-				background-color: $transparentColor !important;
-			}
-		}
-		.ant-btn.ant-btn-sm {
-			padding: 0 16px;
-			font-size: 12px !important;
-			line-height: 20px;
-		}
-	}
+    background: $transparentError-dark !important;
+    border: 1px solid $semanticError;
+
+    & :global {
+        .ant-notification-notice-icon {
+            font-weight: 700;
+        }
+
+        .ant-notification-notice-message {
+            font-weight: 500;
+            margin-bottom: 0px !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+            color: $semanticError !important;
+        }
+
+        .ant-notification-close-icon {
+            color: $semanticError !important;
+        }
+
+        .ant-notification-notice-description {
+            line-height: 24px !important;
+            font-weight: 400 !important;
+            padding-right: 30px;
+            color: $primaryWhite !important;
+        }
+
+        .ant-notification-notice-btn {
+            margin-left: 35px;
+            float: left !important;
+            font-size: 12px;
+
+            .ant-btn-primary {
+                background-color: $brandColor;
+                color: $primaryWhite;
+            }
+
+            .ant-btn-dangerous {
+                color: $brandColor;
+                border-color: $brandColor;
+            }
+        }
+
+        .ant-btn-default.ant-btn-dangerous {
+            &:not(:disabled) {
+                &:hover {
+                    background-color: $primaryRed !important;
+                }
+            }
+        }
+
+        .ant-notification-notice-close {
+            top: 10px !important;
+            right: 15px !important;
+
+            &:hover {
+                background-color: $transparentColor !important;
+            }
+        }
+
+        .ant-btn.ant-btn-sm {
+            padding: 0 16px;
+            font-size: 12px !important;
+            line-height: 20px;
+        }
+    }
 }
+
 /*--------- Sucess Before Loging Notification Pop Up Design Start ---------*/
 .successBeforeLogin {
-	& :global {     
-	color: $semanticSuccess;
-	background: $transparentSuccess-dark !important;
-	border: 1px solid $semanticSuccess;
-		.ant-notification-notice-icon {
-			font-weight: 700;
-		}
-		.ant-notification-notice-message {
-			font-weight: 500;
-			margin-bottom: 0px !important;
-			font-size: 14px !important;
-			line-height: 24px !important;
-			color: $semanticSuccess !important;
-		}
-		.ant-notification-close-icon {
-			color: $semanticSuccess !important;
-		}
-		.ant-notification-notice-description {
-			line-height: 24px !important;
-			font-weight: 400 !important;
-			padding-right: 30px;
-			color: $primaryWhite !important;
-		}
-		.ant-notification-notice-close {
-			top: 10px !important;
-			right: 15px !important;
-			&:hover {
-				background-color: $transparentColor !important;
-			}
-		}
-	}
+    & :global {
+        color: $semanticSuccess;
+        background: $transparentSuccess-dark !important;
+        border: 1px solid $semanticSuccess;
+
+        .ant-notification-notice-icon {
+            font-weight: 700;
+        }
+
+        .ant-notification-notice-message {
+            font-weight: 500;
+            margin-bottom: 0px !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+            color: $semanticSuccess !important;
+        }
+
+        .ant-notification-close-icon {
+            color: $semanticSuccess !important;
+        }
+
+        .ant-notification-notice-description {
+            line-height: 24px !important;
+            font-weight: 400 !important;
+            padding-right: 30px;
+            color: $primaryWhite !important;
+        }
+
+        .ant-notification-notice-close {
+            top: 10px !important;
+            right: 15px !important;
+
+            &:hover {
+                background-color: $transparentColor !important;
+            }
+        }
+    }
+}
+
+.warningBeforeLogin {
+    color: $semanticWarning;
+    background: $transparentWarning-dark !important;
+    border: 1px solid $semanticWarning;
+
+    & :global {
+        .ant-notification-notice-icon {
+            font-weight: 700;
+        }
+
+        .ant-notification-notice-message {
+            font-weight: 500;
+            margin-bottom: 0px !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+            color: $semanticWarning !important;
+        }
+
+        .ant-notification-notice-close {
+            color: $semanticWarning !important;
+            top: 10px !important;
+            right: 15px !important;
+
+            &:hover {
+                background-color: $transparentColor !important;
+            }
+        }
+
+        .ant-notification-notice-description {
+            line-height: 24px !important;
+            font-weight: 400 !important;
+            padding-right: 30px;
+            color: $primaryWhite !important;
+        }
+
+        .ant-notification-notice-btn {
+            margin-left: 35px;
+            float: left !important;
+            font-size: 12px;
+
+            .ant-btn-primary {
+                background-color: $semanticWarning;
+                color: $primaryWhite;
+
+                &:not(:disabled) {
+                    &:hover {
+                        background-color: $semanticWarning;
+                        color: $primaryWhite;
+                    }
+                }
+            }
+
+            .ant-btn-dangerous {
+                color: $semanticWarning;
+                border-color: $semanticWarning !important;
+            }
+        }
+
+        .ant-btn-default.ant-btn-dangerous {
+            &:not(:disabled) {
+                &:hover {
+                    background-color: $semanticWarning !important;
+                    color: $primaryWhite;
+                }
+            }
+        }
+
+        .ant-btn.ant-btn-sm {
+            padding: 0 16px;
+            font-size: 12px !important;
+            line-height: 20px;
+        }
+    }
 }

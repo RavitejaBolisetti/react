@@ -23,13 +23,14 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { translateContent } from 'utils/translateContent';
 
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData },
+                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData, isLoadingOnSave },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, isLoading: isViewDocumentLoading, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
@@ -48,6 +49,8 @@ const mapStateToProps = (state) => {
         isViewDataLoaded,
         isViewDocumentLoading,
         viewDocument,
+
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -59,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: indiviualProfileDataActions.fetchList,
             listIndiviualShowLoading: indiviualProfileDataActions.listShowLoading,
             saveData: indiviualProfileDataActions.saveData,
+            saveFormShowLoading: indiviualProfileDataActions.saveFormShowLoading,
             resetData: indiviualProfileDataActions.reset,
 
             saveDocumentData: supportingDocumentDataActions.saveData,
@@ -81,6 +85,8 @@ const IndividualProfileBase = (props) => {
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
     const { saveDocumentData, uploadDocumentFile, uploadConsentDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
     const { resetViewData, resetData, viewListShowLoading } = props;
+    const { isLoadingOnSave, saveFormShowLoading } = props;
+
     const [form] = Form.useForm();
 
     const [activeKey, setActiveKey] = useState([1]);
@@ -97,6 +103,7 @@ const IndividualProfileBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [subApplication, setSubApplication] = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -195,11 +202,9 @@ const IndividualProfileBase = (props) => {
             customerId: selectedCustomerId,
             dateOfBirth: formatDate(values?.dateOfBirth),
             weddingAnniversary: formatDate(values?.weddingAnniversary),
-            // keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
-            // authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
+            categoryType: subApplication,
+
             id: recordId,
-            // profileFileDocId: uploadedFile ? uploadedFile : '',
-            // customerFormDocId: uploadedConsentFile ? uploadedConsentFile : '',
         };
 
         const onSuccess = (res) => {
@@ -216,10 +221,12 @@ const IndividualProfileBase = (props) => {
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+        const customerId = indiviualData?.customerId;
+
         const requestData = {
-            data: data,
-            method: indiviualData?.customerId ? 'put' : 'post',
-            setIsLoading: listIndiviualShowLoading,
+            data,
+            method: customerId ? 'put' : 'post',
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -293,6 +300,10 @@ const IndividualProfileBase = (props) => {
         uploadedConsentFileName,
         setUploadedConsentFileName,
         handleFormValueChange,
+        subApplication,
+        setSubApplication,
+
+        isLoadingOnSave,
     };
 
     const viewProps = {
@@ -306,6 +317,8 @@ const IndividualProfileBase = (props) => {
         handleOnClick,
         isLoading,
         downloadFileFromButton,
+        setSubApplication,
+        subApplication,
     };
 
     return (
@@ -325,4 +338,4 @@ const IndividualProfileBase = (props) => {
     );
 };
 
-export const IndividualProfileMaster = connect(mapStateToProps, mapDispatchToProps)(IndividualProfileBase);
+export const IndividualProfileMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(IndividualProfileBase));

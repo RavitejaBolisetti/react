@@ -12,10 +12,10 @@ const spinIndicator = <img src={IMAGES.LOADING_IMG} alt="loading_images" />;
 
 export const withSpinner = (InputComponent, wideSpiner = false) => {
     return (props) => {
-        const { isLoading = false } = props;
+        const { isLoading = false, showSpinner = true } = props;
         return (
             <div className={styles.spinner}>
-                <Spin spinning={isLoading} indicator={spinIndicator} key={'spin'} wrapper ClassName={wideSpiner ? styles.fullWidth : ''}>
+                <Spin spinning={showSpinner ? isLoading : false} indicator={spinIndicator} key={'spin'} wrapper className={wideSpiner ? styles.fullWidth : ''}>
                     <InputComponent {...props} />
                 </Spin>
             </div>

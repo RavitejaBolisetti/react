@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { documentTypeLedgerDataActions } from 'store/actions/data/financialAccounting/documentTypeLedger';
-import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
 import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMaster';
 import { vehicleAllotPriorityActions } from 'store/actions/data/vehicle/vehicleAllotmentPriorityAction';
@@ -29,23 +28,26 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
+import { BASE_URL_PRODUCT_MODEL_GROUP } from 'constants/routingApi';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            TermCondition: {
-                ProductHierarchyData: { data: productHierarchyList },
-            },
             Vehicle: {
                 VehicleAllotPriorityDetail: { data: vehicleAllotData, filter: filterString },
                 VehicleAllotPriorDetail: { data: viewVehicleAllotData },
+                ModelVehicleDetails: { isLoading: isModelLoading, data: modelData = [] },
             },
             DealerManpower: {
                 RoleMaster: { filteredListData: roleData = [] },
                 DesignationMaster: { data },
             },
+        },
+        common: {
+            Header: { dealerLocationId },
         },
     } = state;
 
@@ -55,12 +57,14 @@ const mapStateToProps = (state) => {
         moduleTitle,
         typeData: typeData,
         totalRecords: vehicleAllotData?.totalRecords,
-        productHierarchyList,
         vehicleAllotData,
         viewVehicleAllotData,
         filterString,
         roleData,
         data,
+        dealerLocationId,
+        isModelLoading,
+        modelData,
     };
     return returnValue;
 };
@@ -73,8 +77,9 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoadingDocTypeLedger: documentTypeLedgerDataActions.listShowLoading,
             saveData: documentTypeLedgerDataActions.saveData,
 
-            fetchProductList: tncProductHierarchyDataActions.fetchList,
-            listShowLoading: tncProductHierarchyDataActions.listShowLoading,
+            fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
+            listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
+            resetModel: vehicleModelDetailsDataActions.reset,
 
             fetchVehicleList: vehicleAllotPrioritySaveActions.fetchList,
             saveDataAllot: vehicleAllotPrioritySaveActions.saveData,
@@ -84,6 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
 
             fetchVehicleAllotList: vehicleAllotPriorityActions.fetchList,
+            listShowLoading: vehicleAllotPriorityActions.listShowLoading,
             resetDataList: vehicleAllotPriorityActions.reset,
 
             fetchList: dealerManpowerDesignationMasterDataActions.fetchList,
@@ -99,9 +105,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const VehicleAllotmentPriorityMasterMain = (props) => {
     const { moduleTitle, userId, showGlobalNotification, typeData, taxChargeCategoryTypeData, totalRecords } = props;
-    const { fetchProductList, productHierarchyList, listShowLoading, listShowAllotLoading, saveDataAllot } = props;
+    const { modelData, listShowLoading, listShowAllotLoading, saveDataAllot } = props;
     const { resetDataList, vehicleAllotData, fetchVehicleAllotList, fetchVehicleList, viewVehicleAllotData } = props;
-    const { data, fetchList, roleData, fetchRoleLovList } = props;
+    const { data, fetchList, roleData, fetchRoleLovList, fetchModelLovList, listModelShowLoading } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -156,7 +162,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchProductList({ setIsLoading: listShowLoading, userId });
+            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -202,7 +208,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
                 key: 'oldModelGroup',
                 title: 'Old Model',
                 value: filterString?.oldModelGroup,
-                name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.oldModelGroup)?.prodctShrtName,
+                name: modelData?.find((i) => i?.modelGroupCode === filterString?.oldModelGroup)?.modelGroupDescription,
                 canRemove: true,
                 filter: true,
             },
@@ -210,7 +216,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
                 key: 'newModelGroup',
                 title: 'New Model',
                 value: filterString?.newModelGroup,
-                name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.newModelGroup)?.prodctShrtName,
+                name: modelData?.find((i) => i?.modelGroupCode === filterString?.newModelGroup)?.modelGroupDescription,
                 canRemove: true,
                 filter: true,
             },
@@ -407,7 +413,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setFilterString,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -427,7 +433,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setDropdownItems,
         isFormBtnActive,
         typeData,
-        productHierarchyList,
+        modelData,
         viewVehicleAllotData,
         handleRoleFunction,
         data,
@@ -476,7 +482,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         handleResetFilter,
         onSearchHandle,
         setAdvanceSearchVisible,
-        productHierarchyList,
+        modelData,
     };
 
     const tableProps = {

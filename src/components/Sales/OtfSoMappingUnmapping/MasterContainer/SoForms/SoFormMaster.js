@@ -3,22 +3,31 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Card, Row, Col, Space, Typography, Button, Form, Select } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import SoStyles from 'assets/sass/Somapping.module.scss';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredSelectField } from 'utils/validation';
-import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS, CARD_TITLE_CONSTANT } from 'components/Sales/OtfSoMappingUnmapping/Constants';
+import { FORM_TYPE_CONSTANSTS, OTF_SO_MAPPING_UNMAPPING_CONSTANTS, CARD_TITLE_CONSTANT, HEADER_CONSTANTS } from 'components/Sales/OtfSoMappingUnmapping/Constants';
 import { translateContent } from 'utils/translateContent';
 
 const { Text } = Typography;
 
 const SoFormMasterMain = (props) => {
-    const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear } = props;
-    const { isLocationLoading = false } = props;
+    const { selectedKey, isReadOnly = true, status, SoForm, handleFormChange, onFinish, handleCancel, typeData, DealerParentData, handleDealerParent, LocationData, handleClear, isLoadingOnSave } = props;
+    const { isLocationLoading = false, loginUserData } = props;
+    const { descriptiondata, setDescriptionData } = props;
     const disabledProps = { disabled: isReadOnly };
+    const isSaveLoadingDisable = { disabled: isLoadingOnSave };
+    console.log(' status', status);
+    useEffect(() => {
+        return () => {
+            setDescriptionData([]);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const handleTitle = useMemo(() => {
         switch (selectedKey) {
             case OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key: {
@@ -29,6 +38,13 @@ const SoFormMasterMain = (props) => {
             }
         }
     }, [selectedKey]);
+    const commonSelectProps = {
+        fieldNames: { label: 'value', value: 'key' },
+        placeholder: translateContent('global.placeholder.select'),
+        allowClear: true,
+        showSearch: true,
+        optionFilterProp: 'value',
+    };
 
     return (
         <>
@@ -48,14 +64,15 @@ const SoFormMasterMain = (props) => {
                         onFinish={onFinish}
                         colon={false}
                         layout="horizontal"
+                        onKeyDownCapture={(e) => e.code === 'Enter' && e.preventDefault()}
                     >
-                        <Row gutter={20}>
+                        <Row onk gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Card className={`${styles.fullWidth} ${styles.whiteBG}`}>
                                     <Row gutter={20}>
                                         <Col span={11}>
                                             <Form.Item label={translateContent('bookingSoMappUnmapp.label.dealerParent')} name="parentGroupCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.dealerParent'))]}>
-                                                <Select options={DealerParentData} placeholder={translateContent('global.placeholder.select')} fieldNames={{ label: 'value', value: 'key' }} allowClear showSearch optionFilterProp="value" onChange={handleDealerParent} />
+                                                <Select disabled={loginUserData?.userType === HEADER_CONSTANTS?.DLR?.key} options={DealerParentData} placeholder={translateContent('global.placeholder.select')} fieldNames={{ label: 'value', value: 'key' }} allowClear showSearch optionFilterProp="value" onChange={handleDealerParent} />
                                             </Form.Item>
                                         </Col>
                                         <Col span={11} offset={2}>
@@ -85,20 +102,24 @@ const SoFormMasterMain = (props) => {
                                     <Row gutter={20} className={SoStyles.descriptionSection}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item label={translateContent('bookingSoMappUnmapp.label.resonCategoryCode')} name="resonCategoryCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.resonCategoryCode'))]}>
-                                                <Select options={typeData[PARAM_MASTER?.SO_RC?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder={translateContent('global.placeholder.select')} allowClear showSearch optionFilterProp="value" />
+                                                <Select {...commonSelectProps} options={typeData[PARAM_MASTER?.SO_MAP_UNMAP_RESN_CAT?.id]} onChange={(value) => setDescriptionData(typeData[PARAM_MASTER?.SO_MAP_UNMAP_RESN_DESC?.id]?.filter((item) => item?.type === value))} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item label={translateContent('bookingSoMappUnmapp.label.reasonDescriptionCode')} name="reasonDescriptionCode" rules={[validateRequiredSelectField(translateContent('bookingSoMappUnmapp.label.reasonDescriptionCode'))]}>
-                                                <Select options={typeData[PARAM_MASTER?.SO_RD?.id]} fieldNames={{ label: 'value', value: 'key' }} placeholder={translateContent('global.placeholder.select')} allowClear showSearch optionFilterProp="value" />
+                                                <Select {...commonSelectProps} options={descriptiondata} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20} className={styles.marB20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupRight}>
-                                            <Button onClick={handleCancel}>Cancel</Button>
-                                            <Button onClick={handleClear}>Clear</Button>
-                                            <Button htmlType="submit" type="primary">
+                                            <Button {...isSaveLoadingDisable} onClick={handleCancel}>
+                                                {translateContent('global.buttons.cancel')}
+                                            </Button>
+                                            <Button {...isSaveLoadingDisable} onClick={handleClear}>
+                                                {translateContent('global.buttons.clear')}
+                                            </Button>
+                                            <Button {...isSaveLoadingDisable} htmlType="submit" type="primary">
                                                 {translateContent('global.buttons.submit')}
                                             </Button>
                                         </Col>

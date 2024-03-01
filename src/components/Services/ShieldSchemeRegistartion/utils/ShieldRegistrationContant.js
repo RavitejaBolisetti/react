@@ -13,7 +13,7 @@ export const QUERY_BUTTONS_CONSTANTS = {
     APPROVED: {
         id: 'approved',
         title: 'Approved',
-        key: 'APPR',
+        key: 'COM',
         active: true,
     },
     REJECTED: {
@@ -25,7 +25,7 @@ export const QUERY_BUTTONS_CONSTANTS = {
     CANCELLED: {
         id: 'cancelled',
         title: 'Cancelled',
-        key: 'CNCL',
+        key: 'CAN',
         active: false,
     },
 };

@@ -26,11 +26,13 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [] },
-
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            OTF: {
+                VehicleDetails: { isLoading: VehicleDetailsTaxLoading = false },
+            },
         },
     } = state;
-
+    const NO_DATA = '-';
     let returnValue = {
         userId,
         typeData,
@@ -38,6 +40,8 @@ const mapStateToProps = (state) => {
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
         productAttributeData,
+        NO_DATA,
+        VehicleDetailsTaxLoading,
     };
     return returnValue;
 };
@@ -60,14 +64,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMain = (props) => {
-    const { CoDealerInvoiceStateMaster, form, handleFormValueChange, section, formActionType, setButtonData, resetProductData } = props;
-    const { fetchData, listShowLoading, userId, coDealerOnFinish, listProductShowLoading, fetchProductLovCode, isProductHierarchyDataLoaded, productAttributeData } = props;
+    const { CoDealerInvoiceStateMaster, form, NO_DATA, section, formActionType, resetProductData } = props;
+    const { fetchData, listShowLoading, userId, coDealerOnFinish, listProductShowLoading, fetchProductLovCode, isProductHierarchyDataLoaded, productAttributeData, showGlobalNotification, VehicleDetailsTaxLoading } = props;
     const [formData, setFormData] = useState();
     const [collapseActiveKey, setcollapseActiveKey] = useState([1]);
     const [dealerDiscount, setDealerDicountValue] = useState();
     const [changeStatus, setchangeStatus] = useState();
     const trueDealerDiscount = useDeferredValue(dealerDiscount);
     const [toolTipContent, setToolTipContent] = useState();
+    const [previousFormFields, setpreviousFormFields] = useState({});
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -82,7 +87,7 @@ const VehicleDetailsMain = (props) => {
     }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest?.modelCode]);
 
     const handleVehicleDetailChange = ({ modelCode, discountAmount, saleType, priceType }) => {
-        if (modelCode && discountAmount && saleType && priceType) {
+        if (modelCode && saleType && priceType) {
             const extraParams = [
                 {
                     key: 'modelCode',
@@ -90,7 +95,7 @@ const VehicleDetailsMain = (props) => {
                 },
                 {
                     key: 'discountAmount',
-                    value: discountAmount,
+                    value: discountAmount ?? '0',
                 },
 
                 {
@@ -106,10 +111,16 @@ const VehicleDetailsMain = (props) => {
 
             const onSuccessAction = (res) => {
                 setFormData({ ...res?.data });
+                setpreviousFormFields({ ...res?.data });
                 form.setFieldsValue({ ...res?.data });
             };
 
             const onErrorAction = (message) => {
+                if (previousFormFields instanceof Object && Object?.keys(previousFormFields)?.length > 0) {
+                    form.setFieldsValue(previousFormFields);
+                } else {
+                    form.resetFields();
+                }
                 showGlobalNotification({ message });
             };
 
@@ -125,12 +136,13 @@ const VehicleDetailsMain = (props) => {
         return () => {
             setFormData();
             resetProductData();
+            setpreviousFormFields();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, form, section?.id]);
+    }, [CoDealerInvoiceStateMaster?.vehicleDetailRequest, section?.id]);
 
     useEffect(() => {
-        if (trueDealerDiscount && changeStatus) {
+        if (trueDealerDiscount || changeStatus) {
             handleVehicleDetailChange({ modelCode: form.getFieldValue('modelCode'), discountAmount: form.getFieldValue('discountAmount'), saleType: form.getFieldValue('saleType'), priceType: form.getFieldValue('priceType') });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,19 +152,19 @@ const VehicleDetailsMain = (props) => {
             setToolTipContent(
                 <div>
                     <p>
-                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']?.['color'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']?.['seatingCapacity'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']?.['fuel'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']?.['variant'] ?? NO_DATA}</span>
                     </p>
                     <p>
-                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
+                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']?.['name'] ?? NO_DATA}</span>
                     </p>
                 </div>
             );
@@ -176,6 +188,9 @@ const VehicleDetailsMain = (props) => {
         setchangeStatus,
         toolTipContent,
         setToolTipContent,
+        isLoading: VehicleDetailsTaxLoading,
+        previousFormFields,
+        setpreviousFormFields,
     };
     const viewProps = {
         ...formProps,

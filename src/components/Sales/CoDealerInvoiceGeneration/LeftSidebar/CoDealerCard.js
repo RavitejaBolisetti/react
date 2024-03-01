@@ -5,35 +5,22 @@
  */
 import React, { useMemo } from 'react';
 import { Collapse, Space, Avatar, Typography, Divider, Button } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import styles from 'assets/sass/app.module.scss';
 import { addToolTip } from 'utils/customMenuLink';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { translateContent } from 'utils/translateContent';
-import { CO_DEALER_QUERY_BUTTONS } from '../constants';
-import { IRN_STATUS } from 'constants/IRNStatus';
+import { CO_DEALER_QUERY_BUTTONS, IRN_CONSTANTS } from '../constants';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
-
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
 
 const CoDealerCard = (props) => {
     const { selectedOrder, isLoading, formActionType, typeData, setConfirmRequest, confirmRequest, handleIRNGeneration } = props;
@@ -52,12 +39,11 @@ const CoDealerCard = (props) => {
                 if (!selectedOrder?.irnStatus) {
                     showIrnGenrationButton = true;
                 } else {
-                    if (selectedOrder?.irnStatus === IRN_STATUS?.APPROVED?.key) {
+                    if ([IRN_CONSTANTS?.APPROVED?.key, IRN_CONSTANTS?.REJECTED?.key]?.includes(selectedOrder?.irnStatus)) {
                         showInfo = true;
                         showIrnGenrationButton = false;
                     } else {
                         showInfo = false;
-                        showIrnGenrationButton = false;
                     }
                 }
                 gstInPresent = true;
@@ -86,7 +72,7 @@ const CoDealerCard = (props) => {
         });
     };
     return (
-        <Collapse bordered={true} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>

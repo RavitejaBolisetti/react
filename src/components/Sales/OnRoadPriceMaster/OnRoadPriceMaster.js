@@ -23,6 +23,10 @@ import { AddEditForm } from './AddEditForm';
 import { viewOnRoadPriceDetailAction } from 'store/actions/data/vehicle/viewOnRoadPriceDetailAction';
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { geoCityDataActions } from 'store/actions/data/geo/cities';
+import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
+import { defaultPageProps } from 'utils/defaultPageProps';
 
 const mapStateToProps = (state) => {
     const {
@@ -86,6 +90,13 @@ const mapDispatchToProps = (dispatch) => ({
             listOnRoadViewPriceShowLoading: viewOnRoadPriceDetailAction.listShowLoading,
             saveData: viewOnRoadPriceDetailAction.saveData,
             resetData: viewOnRoadPriceDetailAction.reset,
+
+            fetchCityLovList: geoCityDataActions.fetchFilteredList,
+            listCityShowLoading: geoCityDataActions.listShowLoading,
+
+            fetchProductLovList: tncProductHierarchyDataActions.fetchList,
+            listProductShowLoading: tncProductHierarchyDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -98,6 +109,9 @@ export const OnRoadPriceMasterBase = (props) => {
     const { typeData, listVehiclePriceShowLoading, fetchOnRoadPriceList } = props;
     const { moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData } = props;
     const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
+
+    const { fetchCityLovList, listCityShowLoading, fetchProductLovList, listProductShowLoading } = props;
+
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -119,8 +133,9 @@ export const OnRoadPriceMasterBase = (props) => {
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+
     const dynamicPagination = true;
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
@@ -132,21 +147,24 @@ export const OnRoadPriceMasterBase = (props) => {
 
     const onErrorAction = (res) => {
         showGlobalNotification({ message: res });
+        setShowDataLoading(false);
     };
 
     useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
+        if (userId) {
+            fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
+            fetchCityLovList({ setIsLoading: listCityShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [userId]);
+
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'priceType',
                 title: 'Pricing Type',
                 value: filterString?.priceType,
-                name: typeData['PRC_TYP']?.find((i) => i?.key === filterString?.priceType)?.value,
+                name: typeData[PARAM_MASTER?.PRC_TYP?.id]?.find((i) => i?.key === filterString?.priceType)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -163,7 +181,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 key: 'pricingCity',
                 title: 'Pricing City',
                 value: filterString?.pricingCity,
-                name: cityData?.find((i) => i?.code === filterString?.pricingCity)?.name,
+                name: cityData?.find((i) => i?.key === filterString?.pricingCity)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -172,7 +190,7 @@ export const OnRoadPriceMasterBase = (props) => {
                 key: 'changeInExShowroomOrg',
                 title: 'Change EX ShowRoom Org',
                 value: filterString?.changeInExShowroomOrg,
-                name: typeData['CHNG_EX_ORG']?.find((i) => i?.key === filterString?.changeInExShowroomOrg)?.value,
+                name: filterString?.changeInExShowroomOrg && typeData?.[PARAM_MASTER?.CHNG_EX_ORG?.id]?.find((i) => i?.key === filterString?.changeInExShowroomOrg)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -180,44 +198,18 @@ export const OnRoadPriceMasterBase = (props) => {
                 key: 'status',
                 title: 'Status',
                 value: filterString?.status,
-                name: typeData['ON_ROAD_STATUS']?.find((i) => i?.key === filterString?.status)?.value,
+                name: filterString?.status && typeData?.[PARAM_MASTER?.ON_ROAD_STATUS?.id]?.find((i) => i?.key === filterString?.status)?.value,
                 canRemove: true,
                 filter: true,
             },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
+            ...defaultPageProps(filterString),
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchOnRoadPriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -231,7 +223,6 @@ export const OnRoadPriceMasterBase = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
-                // defaultSection && setCurrentSection(defaultSection);
                 break;
             case EDIT_ACTION:
                 fetchOnRoadViewPriceDetail({
@@ -295,15 +286,20 @@ export const OnRoadPriceMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: res, placement: 'bottomRight' });
         };
 
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: documentId,
-                name: 'docId',
-            },
-        ];
-        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        downloadFile({
+            setIsLoading: listShowLoading,
+            userId,
+            extraParams: [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: documentId,
+                    name: 'docId',
+                },
+            ],
+            onSuccessAction,
+            onErrorAction,
+        });
         resetData();
     };
 
@@ -336,7 +332,7 @@ export const OnRoadPriceMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data,
             method: 'post',
             setIsLoading: listVehiclePriceShowLoading,
             userId,
@@ -356,11 +352,13 @@ export const OnRoadPriceMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
-        setPage,
+        page: filterString,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: vehiclePriceData,
+        filterString,
+        showAddButton: false,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -369,7 +367,7 @@ export const OnRoadPriceMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
-        setFilterString();
+        setFilterString({ current: 1, pageSize: 10 });
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
     };
@@ -384,7 +382,7 @@ export const OnRoadPriceMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: 'Advance Filters',
+        titleOverride: translateContent('global.advanceFilter.title'),
         isCityDataLoaded,
         cityData,
         filterString,
@@ -438,6 +436,7 @@ export const OnRoadPriceMasterBase = (props) => {
             form.resetFields();
             setFileList([]);
             resetViewData();
+            setSingleDisabled(false);
         },
         buttonData,
         setButtonData,
@@ -473,6 +472,9 @@ export const OnRoadPriceMasterBase = (props) => {
         validationText: translateContent('onRoadPriceMaster.message.uploadValidation'),
         supportedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
         maxSize: 8,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
     };
 
     const buttonProps = {
@@ -483,7 +485,7 @@ export const OnRoadPriceMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        titleOverride: drawerTitle(formActionType).concat(" ").concat(moduleTitle),
+        titleOverride: drawerTitle(formActionType).concat(' ').concat(moduleTitle),
         isVisible: isFormVisible,
         onCloseAction,
         formData,
@@ -511,12 +513,12 @@ export const OnRoadPriceMasterBase = (props) => {
             <AdvanceOnRoadPriceMasterFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
+                    <ListDataTable {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            {formActionType?.editMode ? <AddEditForm {...viewProps} /> : <ViewDetail {...viewProps} />}
 
+            {formActionType?.editMode ? <AddEditForm {...viewProps} /> : <ViewDetail {...viewProps} />}
             <OnRoadPriceMasterUpload {...uploadProps} />
         </>
     );

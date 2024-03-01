@@ -20,7 +20,7 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import styles from 'assets/sass/app.module.scss';
 
 import PaymentAddEdit from './PaymentAddEdit';
-import ReceiptInfoAddEdit from './ReceiptInfoAddEdit';
+import ReceiptInfoAdd from './ReceiptInfoAddEdit';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
 import { translateContent } from 'utils/translateContent';
 
@@ -74,19 +74,9 @@ const ReceiptDetailMasterBase = (props) => {
     const [partyId, setPartyId] = useState();
 
     useEffect(() => {
-        if (partyDetailData?.length > 0) {
-            paymentForm.setFieldsValue({
-                paymentBankName: partyDetailData?.[0]?.partyName,
-                paymentBankLocation: partyDetailData?.[0]?.partyLocationCode,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [partyDetailData]);
-
-    useEffect(() => {
         if (requestPayload?.receiptsDetails?.paymentDetails) {
             setPaymentDataList(requestPayload?.receiptsDetails?.paymentDetails);
-            setButtonData({ ...buttonData, formBtnActive: true });
+            setButtonData((prev) => ({ ...prev, formBtnActive: true }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requestPayload?.receiptsDetails]);
@@ -97,16 +87,18 @@ const ReceiptDetailMasterBase = (props) => {
             setRequestPayload({ ...requestPayload, receiptsDetails: receiptDetailData.receiptsDetails });
             setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
             setTotalReceivedAmount(receiptDetailData?.receiptsDetails?.totalReceivedAmount);
-            receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key && !formActionType?.editMode && setButtonData({ ...buttonData, nextBtn: false, saveBtn: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData?.receiptsDetails]);
     useEffect(() => {
-        if (formActionType?.editMode && receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
-            setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: false });
-        } else if (formActionType?.editMode) {
-            setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: true });
+        if (formActionType?.editMode || formActionType?.viewMode) {
+            if (receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
+                setButtonData({ ...buttonData, editBtn: false, nextBtn: false });
+            } else {
+                setButtonData({ ...buttonData, editBtn: false, nextBtn: true });
+            }
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, receiptDetailData?.receiptsDetails]);
 
@@ -120,21 +112,35 @@ const ReceiptDetailMasterBase = (props) => {
     };
 
     const handlePaymentSearch = () => {
-        const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-        };
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
-        const extraParams = [
-            {
-                key: 'partyCode',
-                title: 'partyCode',
-                value: partyId,
-                name: 'partyCode',
-            },
-        ];
-        fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER, onSuccessAction, onErrorAction });
+        if (partyId) {
+            const onSuccessAction = (res) => {
+                const showPaymentBankdata = res?.data?.[0];
+                if (showPaymentBankdata) {
+                    paymentForm.setFieldsValue({
+                        paymentBankName: showPaymentBankdata?.partyName,
+                        paymentBankLocation: showPaymentBankdata?.address,
+                    });
+                }
+            };
+            const onErrorAction = (message) => {
+                showGlobalNotification({ message });
+            };
+            fetchPartyDetail({
+                setIsLoading: listShowLoading,
+                userId,
+                extraParams: [
+                    {
+                        key: 'partyCode',
+                        title: 'partyCode',
+                        value: partyId,
+                        name: 'partyCode',
+                    },
+                ],
+                customURL: BASE_URL_PARTY_MASTER,
+                onSuccessAction,
+                onErrorAction,
+            });
+        }
     };
 
     const handleSavepaymenttForm = () => {
@@ -150,12 +156,15 @@ const ReceiptDetailMasterBase = (props) => {
                         let formData = [...prev];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingListData?.purposeOfContact && el?.mobileNumber === editingListData?.mobileNumber && el?.FirstName === editingListData?.FirstName);
                         formData.splice(index, 1, { ...value });
+                        setRequestPayload((prev) => ({ ...prev, receiptsDetails: { ...prev?.receiptsDetails, paymentDetails: formData } }));
                         return [...formData];
                     });
                 } else {
                     setPaymentDataList((prev) => {
-                        const updVal = prev?.length ? [{ ...value, id: '' }, ...prev] : [{ ...value, id: '' }];
-                        return updVal;
+                        const tempArr = prev?.length ? [{ ...value, id: '' }, ...prev] : [{ ...value, id: '' }];
+                        setPaymentDataList(requestPayload?.receiptsDetails?.paymentDetails);
+                        setRequestPayload((prev) => ({ ...prev, receiptsDetails: { ...prev?.receiptsDetails, paymentDetails: tempArr } }));
+                        return tempArr;
                     });
                 }
                 setIsAdding(false);
@@ -166,9 +175,7 @@ const ReceiptDetailMasterBase = (props) => {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 setTotalReceivedAmount(parseFloat(totalReceivedAmount) + parseFloat(value.receivedAmount));
             })
-            .catch((err) => {
-                console.error('err', err);
-            });
+            .catch(() => {});
     };
 
     const onFinish = () => {
@@ -280,9 +287,7 @@ const ReceiptDetailMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-
-                    {!formActionType?.viewMode ? <ReceiptInfoAddEdit {...formProps} /> : <ViewDetail {...viewProps} />}
-
+                    {formActionType?.addMode ? <ReceiptInfoAdd {...formProps} /> : <ViewDetail {...viewProps} />}
                     <PaymentAddEdit {...formProps} />
                 </Col>
             </Row>

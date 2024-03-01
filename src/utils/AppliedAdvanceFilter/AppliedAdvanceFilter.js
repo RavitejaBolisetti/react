@@ -9,6 +9,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { FaHistory } from 'react-icons/fa';
 import { FilterIcon } from 'Icons';
 import styles from 'assets/sass/app.module.scss';
+import { USER_TYPE } from 'constants/userType';
 
 import { TfiReload } from 'react-icons/tfi';
 import { BsDownload } from 'react-icons/bs';

@@ -5,31 +5,18 @@
  */
 import React from 'react';
 import { Collapse, Divider } from 'antd';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 
-const { Panel } = Collapse;
-const expandIcon = ({ isActive }) =>
-    isActive ? (
-        <>
-            <span>{translateContent('global.buttons.seeLess')}</span>
-            <SlArrowUp size={13} />
-        </>
-    ) : (
-        <>
-            <span>{translateContent('global.buttons.seeMore')}</span>
-            <SlArrowDown size={13} />
-        </>
-    );
+import styles from 'assets/sass/app.module.scss';
+import { seeMoreLessIcon } from 'utils/seeMoreLessIcon';
 
+const { Panel } = Collapse;
 const GstAuthenticationDetailCard = (props) => {
     const { isLoading } = props;
 
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
+        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={seeMoreLessIcon} collapsible="icon">
             <Panel
                 header={
                     <>

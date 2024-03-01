@@ -183,7 +183,7 @@ const Login = (props) => {
             btn: btn,
             duration: 0,
             onClose: handleSkip,
-            className: notificationStyles.warning,
+            className: notificationStyles.warningBeforeLogin,
         });
     };
 
@@ -194,6 +194,7 @@ const Login = (props) => {
         const shandleSkipForNow = () => {
             status === 'A' && handleSkipUpdatePassword(data);
         };
+
         const btn = (data) => (
             <Space>
                 {status === 'A' && (
@@ -214,7 +215,7 @@ const Login = (props) => {
             btn: btn(data),
             duration: 0,
             onClose: shandleSkipForNow,
-            className: status === 'E' ? notificationStyles.error : notificationStyles.warning,
+            className: status === 'E' ? notificationStyles.errorBeforeLogin : notificationStyles.warningBeforeLogin,
         });
     };
 
@@ -292,9 +293,16 @@ const Login = (props) => {
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.loginFooter}>
+                                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                        <div className={`${styles.loginFooter} ${styles.textLeft}`}>
                                                             <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>{translate('login.link.mnmLogin')}</Link>
+                                                        </div>
+                                                    </Col>
+                                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                        <div className={`${styles.loginFooter} ${styles.textRight}`}>
+                                                            <Link to={process.env.REACT_APP_SAP_IBP_URL} target="_blank">
+                                                                {translate('login.link.sapIBP')}
+                                                            </Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

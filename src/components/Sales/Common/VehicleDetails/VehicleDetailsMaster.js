@@ -19,16 +19,21 @@ import { SALES_MODULE_TYPE } from 'constants/salesModuleType';
 import styles from 'assets/sass/app.module.scss';
 import { withSpinner } from 'components/withSpinner';
 import { translateContent } from 'utils/translateContent';
+import { OTF_STATUS } from 'constants/OTFStatus';
+import { refactorProductAttributeData } from 'utils/refactorProductAttributeData';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
+                VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [], isLoadingOnSave },
                 VehicleDetailsServiceLov: { isFilteredListLoaded: isVehicleServiceLoaded = false, isLoading: isVehicleServiceLoading, filteredListData: vehicleServiceData },
             },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
+        },
+        common: {
+            Header: { dealerLocationId },
         },
     } = state;
 
@@ -37,13 +42,13 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
+        isLoadingOnSave,
         otfVehicleDetailData: vehicleDetailData,
         isLoading,
         moduleTitle,
-        productAttributeData,
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
-
+        showSpinner: !props?.formActionType?.viewMode,
         isVehicleServiceLoaded,
         isVehicleServiceLoading,
         vehicleServiceData,
@@ -52,6 +57,7 @@ const mapStateToProps = (state) => {
         isProductDataLoading: !isProductDataLoaded,
         productHierarchyDataList: productHierarchyData,
         productCode,
+        dealerLocationId,
     };
     return returnValue;
 };
@@ -64,12 +70,13 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfvehicleDetailsDataActions.listShowLoading,
             fetchData: otfvehicleDetailsDataActions.fetchData,
             saveData: otfvehicleDetailsDataActions.saveData,
+            saveFormShowLoading: otfvehicleDetailsDataActions.saveFormShowLoading,
             resetData: otfvehicleDetailsDataActions.reset,
 
             fetchProductList: productHierarchyDataActions.fetchList,
             ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
             fetchProductDetail: productHierarchyDataActions.fetchDetail,
-            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            fetchProductAttribiteDetail: productHierarchyDataActions.fetchProductAttribiteDetail,
 
             fetchServiceLov: otfvehicleDetailsServiceLovDataActions.fetchFilteredList,
             serviceLoading: otfvehicleDetailsServiceLovDataActions.listShowLoading,
@@ -81,19 +88,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, productAttributeData, fetchProductLovCode, isLoading, saveData } = props;
+    const { saveFormShowLoading, isProductDataLoading, otfVehicleDetailData, vehicleDetailDataPass, isVehicleLovDataLoading, fetchProductAttribiteDetail, isLoading, saveData } = props;
     const { form, selectedOrderId, selectedRecordId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { refreshData, setRefreshData, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
+    const { refreshData, setRefreshData, productDetailRefresh, setProductDetailRefresh, isVehicleServiceLoaded, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, fetchData, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, salesModuleType } = props;
-    const { fetchProductList, productHierarchyDataList, showOptionalService = true } = props;
-
+    const { dealerLocationId, fetchProductList, productHierarchyDataList, showOptionalService = true, requestPayload = undefined } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setFormData] = useState({});
     const [optionalServices, setOptionalServices] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
 
     const [toolTipContent, setToolTipContent] = useState();
+    const [revisedModelInformation, setRevisedModelInformation] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
     const [vehicleDetailData, setVehicleDetailData] = useState();
@@ -101,8 +108,11 @@ const VehicleDetailsMasterMain = (props) => {
     const [customerNameList, setCustomerNameList] = useState({});
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
-    const [changeModel, setChangeModel] = useState(false);
+    const [showChangeModel, setShowChangeModel] = useState(false);
     const [onModelSubmit, setOnModelSubmit] = useState(false);
+    const [productAttributeData, setProductAttributeData] = useState(false);
+    const [revisedProductAttributeData, setRevisedProductAttributeData] = useState(false);
+
     const onSuccessAction = () => {
         return false;
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -113,6 +123,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const isOTFModule = salesModuleType === SALES_MODULE_TYPE.OTF.KEY;
+    const isInvoiceModule = salesModuleType === SALES_MODULE_TYPE.INVOICE.KEY;
 
     const vehicleDetailFinalData = useMemo(() => {
         if (isOTFModule && otfVehicleDetailData) {
@@ -125,14 +136,25 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailFinalData) {
             setVehicleDetailData(vehicleDetailFinalData);
+            // setVehicleDetailData({ ...vehicleDetailFinalData, sapStatusResponseCode: 'PD', revisedModel: 'THRNMM8405642808', sapResonseRemarks: 'EDCM : Error : Pl. check Material AS22APEU5T101A00WP  - Group :  is not active for ordering' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailFinalData]);
+    useEffect(() => {
+        if (isInvoiceModule && formActionType?.addMode) {
+            handleVehicleDetailChange({ modelCode: vehicleDetailDataPass?.modelCode, discountAmount: vehicleDetailDataPass?.discountAmount, saleType: vehicleDetailDataPass?.saleType, priceType: vehicleDetailDataPass?.priceType, vehicleUsageType: vehicleDetailDataPass?.vehicleUsageType });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isInvoiceModule]);
 
     useEffect(() => {
         if (vehicleDetailData) {
-            setFormData(vehicleDetailData);
+            setFormData({
+                ...vehicleDetailData,
+                tcsAmount: vehicleDetailData?.taxDetails?.find((i) => i?.taxType === 'TCS')?.taxAmount || 0,
+            });
             vehicleDetailData?.optionalServices && setOptionalServices(vehicleDetailData?.optionalServices?.map((el) => ({ ...el, status: true })) || []);
+            vehicleDetailData?.revisedModel && setShowChangeModel(vehicleDetailData?.otfStatus === OTF_STATUS?.BOOKED.key);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
@@ -146,7 +168,15 @@ const VehicleDetailsMasterMain = (props) => {
                         value: selectedRecordId,
                     },
                 ];
-                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+                fetchList({
+                    setIsLoading: listShowLoading,
+                    userId,
+                    extraParams,
+                    onErrorAction,
+                    onSuccessAction: () => {
+                        setRefreshData(!refreshData);
+                    },
+                });
             }
 
             if (!isVehicleServiceLoaded) {
@@ -154,7 +184,7 @@ const VehicleDetailsMasterMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedRecordId, isVehicleServiceLoaded]);
+    }, [userId, selectedRecordId, isVehicleServiceLoaded, productDetailRefresh]);
 
     useEffect(() => {
         setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
@@ -162,7 +192,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productHierarchyDataList]);
 
     useEffect(() => {
-        if (isOTFModule && userId && selectedOrder?.modelCode) {
+        if (isOTFModule && userId && selectedOrder?.modelCode && dealerLocationId) {
             const extraParams = [
                 {
                     key: 'unit',
@@ -182,7 +212,7 @@ const VehicleDetailsMasterMain = (props) => {
             setButtonData({ ...buttonData, formBtnActive: !formActionType.viewMode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder]);
+    }, [userId, selectedOrder, dealerLocationId]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -207,52 +237,62 @@ const VehicleDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resetData]);
 
+    const getProductAttributeDetail = (value, fnSetData) => {
+        const extraParams = [
+            {
+                key: 'prodctCode',
+                value,
+            },
+        ];
+
+        const onSuccessAction = (res) => {
+            fnSetData(res?.[0]);
+        };
+
+        fetchProductAttribiteDetail({ setIsLoading: () => {}, userId, onErrorAction, onSuccessAction, extraParams });
+    };
+
     useEffect(() => {
-        if (userId && isProductHierarchyDataLoaded && productAttributeData?.length > 0) {
-            setToolTipContent(
-                <div>
-                    <p>
-                        {translateContent('commonModules.toolTip.color')} - <span>{productAttributeData['0']['color'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.seating')} - <span>{productAttributeData['0']['seatingCapacity'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.fuel')} - <span>{productAttributeData['0']['fuel'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.variant')} - <span>{productAttributeData['0']['variant'] ?? 'Na'}</span>
-                    </p>
-                    <p>
-                        {translateContent('commonModules.toolTip.name')} - <span>{productAttributeData['0']['name'] ?? 'Na'}</span>
-                    </p>
-                </div>
-            );
+        if (productAttributeData) {
+            setToolTipContent(refactorProductAttributeData(productAttributeData));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
+    }, [productAttributeData]);
+
+    useEffect(() => {
+        if (revisedProductAttributeData) {
+            setRevisedModelInformation(refactorProductAttributeData(revisedProductAttributeData));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [revisedProductAttributeData]);
 
     useEffect(() => {
         if (vehicleDetailData?.modelCode && !isProductHierarchyDataLoaded) {
-            const lovExtraParams = [
-                {
-                    key: 'prodctCode',
-                    value: vehicleDetailData?.modelCode,
-                },
-            ];
+            getProductAttributeDetail(vehicleDetailData?.modelCode, setProductAttributeData);
+        }
 
-            const onErrorActionProduct = () => {
-                // resetProductLov();
-            };
-
-            fetchProductLovCode({ setIsLoading: () => {}, userId, onErrorAction: onErrorActionProduct, extraParams: lovExtraParams });
+        if (vehicleDetailData?.revisedModel) {
+            getProductAttributeDetail(vehicleDetailData?.revisedModel, setRevisedProductAttributeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
-
+    const findSchemAndDiscount = (data = requestPayload?.schemeOfferDetails?.sales) => {
+        const additionalCorpDiscount = requestPayload?.schemeOfferDetails?.corporate?.corporateAdditionalDiscount;
+        if (Array?.isArray(data)) {
+            const schemeDataObj = requestPayload?.schemeOfferDetails?.sales?.find((item) => item?.active);
+            if (schemeDataObj) {
+                return { salesSchemeId: schemeDataObj?.salesSchemeId, salesSchemeDiscountType: schemeDataObj?.salesSchemeDiscountType, additionalCorpDiscount };
+            }
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount };
+        } else if (additionalCorpDiscount) {
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount };
+        } else {
+            return { salesSchemeId: undefined, salesSchemeDiscountType: undefined, additionalCorpDiscount: undefined };
+        }
+    };
     const handleVehicleDetailChange = (vehicleData) => {
         setFilterVehicleData({ ...vehicleData });
-        const { productModelCode, discountAmount, saleType, priceType } = vehicleData;
+        const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType } = vehicleData;
         const extraParams = [
             {
                 key: 'otfId',
@@ -276,6 +316,25 @@ const VehicleDetailsMasterMain = (props) => {
                 key: 'priceType',
                 value: priceType,
             },
+
+            {
+                key: 'vehicleUsageType',
+                value: vehicleUsageType,
+            },
+
+            {
+                key: 'salesSchemeId',
+                value: findSchemAndDiscount()?.salesSchemeId,
+            },
+
+            {
+                key: 'salesSchemeDiscountType',
+                value: findSchemAndDiscount()?.salesSchemeDiscountType,
+            },
+            {
+                key: 'additionalCorpDiscount',
+                value: findSchemAndDiscount()?.additionalCorpDiscount,
+            },
         ];
 
         const onSuccessAction = (res) => {
@@ -284,12 +343,12 @@ const VehicleDetailsMasterMain = (props) => {
         };
 
         const onErrorAction = (message) => {
-            showGlobalNotification({ message: message });
+            showGlobalNotification({ message });
 
-            const { productModelCode, discountAmount, saleType, priceType } = vehicleDetailData;
-            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType });
+            const { productModelCode, discountAmount, saleType, priceType, vehicleUsageType, salesSchemeId, salesSchemeDiscountType } = vehicleDetailData;
+            setFilterVehicleData({ ...vehicleData, productModelCode, discountAmount, saleType, priceType, vehicleUsageType, salesSchemeId, salesSchemeDiscountType });
 
-            setVehicleDetailData(vehicleDetailData);
+            setVehicleDetailData(otfVehicleDetailData);
             setFormData({ ...vehicleDetailData });
         };
 
@@ -311,7 +370,7 @@ const VehicleDetailsMasterMain = (props) => {
             case SALES_MODULE_TYPE.OTF.KEY:
                 if (productAttributeData?.length === 0) {
                     showGlobalNotification({ message: translateContent('commonModules.validation.modelValidation') });
-                    return;
+                    return false;
                 }
 
                 const onSuccess = (res) => {
@@ -322,7 +381,7 @@ const VehicleDetailsMasterMain = (props) => {
                     form.resetFields();
                     resetData();
                     setRefreshData(!refreshData);
-                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
                     setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
                 };
 
@@ -333,7 +392,7 @@ const VehicleDetailsMasterMain = (props) => {
                 const requestData = {
                     data: data,
                     method: 'put',
-                    setIsLoading: listShowLoading,
+                    setIsLoading: saveFormShowLoading,
                     userId,
                     onError,
                     onSuccess,
@@ -350,13 +409,6 @@ const VehicleDetailsMasterMain = (props) => {
                 break;
         }
     };
-
-    // const handlePriceTypeChange = (value, option) => {
-    //     setPriceType(value);
-    //     if (option?.type === 'D') {
-    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This value has been deprecated. Please select another value' });
-    //     }
-    // };
 
     const formProps = {
         ...props,
@@ -390,7 +442,6 @@ const VehicleDetailsMasterMain = (props) => {
         vehicleServiceData,
 
         productHierarchyData,
-        // resetProductLov,
         isProductDataLoading,
         filterVehicleData,
         setFilterVehicleData,
@@ -405,8 +456,8 @@ const VehicleDetailsMasterMain = (props) => {
         setNameChangeRequested,
         confirmRequest,
         setConfirmRequest,
-        changeModel,
-        setChangeModel,
+        showChangeModel,
+        setShowChangeModel,
         isVehicleServiceLoaded,
         fetchServiceLov,
         serviceLoading,
@@ -415,6 +466,12 @@ const VehicleDetailsMasterMain = (props) => {
         setRefreshData,
         refreshData,
         setFormData,
+        revisedModelInformation,
+        setRevisedModelInformation,
+        getProductAttributeDetail,
+        setRevisedProductAttributeData,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     const viewProps = {
@@ -425,35 +482,44 @@ const VehicleDetailsMasterMain = (props) => {
         onChange,
         styles,
         formData,
-        toolTipContent,
-        setToolTipContent,
         typeData,
         isLoading,
         isOTFModule,
         showOptionalService,
+        toolTipContent,
+        setToolTipContent,
+        revisedModelInformation,
+        getProductAttributeDetail,
+        revisedProductAttributeData,
+        setRevisedProductAttributeData,
+        showChangeModel,
+        productDetailRefresh,
+        setProductDetailRefresh,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} data-testid="logRole">
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {StatusBar && <StatusBar status={selectedOrder?.orderStatus} />}
-                        </Col>
-                    </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...props} />
-                </Col>
-            </Row>
-        </Form>
+        <>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} data-testid="logRole">
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Row>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <h2>{section?.title}</h2>
+                            </Col>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                {StatusBar && <StatusBar status={selectedOrder?.orderStatus} />}
+                            </Col>
+                        </Row>
+                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <FormActionButton {...props} />
+                    </Col>
+                </Row>
+            </Form>
+        </>
     );
 };
 export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(VehicleDetailsMasterMain));

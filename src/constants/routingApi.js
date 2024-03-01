@@ -52,6 +52,8 @@ export const BASE_URL_CUSTOMER_MASTER_CHANGE_HISTORY = BASE_URL + 'customers/cha
 export const BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/namechangehistory';
 export const BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST = BASE_URL + 'customers/vehicle/search';
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
+export const BASE_URL_CORPORATE_DESCRIPTION = BASE_URL_CUSTOMER_MASTER + '/corporate';
+export const BASE_URL_CORPORATE_TYPE = BASE_URL_CUSTOMER_MASTER + '/corporate/type';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 
@@ -196,6 +198,8 @@ export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION = BASE_URL_INVOICE + 'i
 export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/search';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
 export const BASE_URL_INVOICE_DETAIL = BASE_URL_INVOICE + 'details';
+export const BASE_URL_INVOICE_DEFECT_LOCATION = BASE_URL_INVOICE + 'defect/location';
+export const BASE_URL_INVOICE_DEFECT_SHORTAGE = BASE_URL_INVOICE + 'defect/shortage/lov';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_CHARGER_INSTALLATION_SEARCH = BASE_URL_VEHICLE + 'charger/installation/search';
@@ -320,6 +324,7 @@ export const BASE_URL_OTF_SO_MAPPING_MAIN = BASE_URL + 'otf/somapunmap';
 export const BASE_URL_OTF_SO_MAPPING_SWAP = BASE_URL + 'otf/somapunmap/swap';
 export const BASE_URL_SO_MAPPING_SEARCH = BASE_URL + 'otf/somapunmap/search';
 export const BASE_URL_SO_MAPPING_OTF_SEARCH = BASE_URL + 'otf/somapunmap/orders';
+export const BASE_URL_VEHICLE_MODEL_SO_MAPPING_SEARCH = BASE_URL + 'otf/vehicle/salesorder/search';
 
 export const BASE_URL_STOCK_TRANSFER = BASE_URL_VEHICLE + 'stocktransfer';
 export const BASE_URL_STOCK_TRANSFER_INDENT_ISSUE = BASE_URL_VEHICLE + 'stocktransfer/indent/issue';
@@ -400,3 +405,7 @@ export const BASE_URL_DEALER_LOCATIONS = BASE_URL + 'dealer/location';
 export const BASE_URL_SCHEME_RSA_DESCRIPTION = BASE_URL_VEHICLE + 'scheme/rsa/lov';
 export const BASE_URL_CO_DEALER_VIN_DETAILS = BASE_URL_VEHICLE_ALLOTMENT + '/search';
 export const BASE_URL_TAX_CALCULATION = BASE_URL_OTF + 'codealerinvoice/taxdetails';
+export const BASE_URL_APPORTION_DETAILS_SEARCH = BASE_URL_FINANCE + 'documentdetails';
+export const BASE_URL_RSM_APPROVAL_FORM_DATA = BASE_URL_INVOICE + 'codealer/rsmapproval';
+export const BASE_URL_OTF_FAME_DETAILS = BASE_URL_OTF + 'fame/detail/search';
+export const BASE_URL_OTF_FAME_DETAILS_SAVE = BASE_URL_OTF + 'fame/detail';
