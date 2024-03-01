@@ -3040,6 +3040,205 @@
             "cancelReceipt": "Cancel Receipt"
         }
     },
+
+    "claimEmpowerment": {
+        "tableColumn": {
+            "requestId": "Request Id",
+            "requestDate": "Request Date",
+            "claimType": "Claim Type",
+            "dealerName": "Dealer Name",
+            "dealerBranch": "Dealer Branch",
+            "requeststatus": "Request Status"
+        },
+        "placeholder": {
+            "requestId": "Request Id",
+            "requestDate": "Request Date",
+            "requestStatus": "Request Status",
+            "claimType": "Claim Type",
+            "invoiceID": "Invoice ID",
+            "invoiceDate": "Invoice Date",
+            "coDealerInvoice": "Co-Dealer Invoice",
+            "chassisNo": "Chassis No",
+            "customerName": "Customer Name",
+            "invoiceStatus": "Invoice status",
+            "segment": "Segment",
+            "requestedAmount": "Requested Amount",
+            "modelDescription": "Model Description",
+            "vDNID": "VDN ID",
+            "vDNDate": "VDN Date",
+            "reasonforDelay": "Reason for Delay",
+            "documentUpload": "Document Upload",
+            "zone":"Zone",           
+            "areaOffice":"Area Office",  
+            "dealerName":"Dealer Name",
+            "locationName":"Location Name"  
+        },
+        "label": {
+            "empowerDetails": {
+                "requestId": "Request ID",
+                "requestDate": "Request Date",
+                "requestStatus": "Request Status",
+                "claimType": "Claim Type",
+                "invoiceID": "Invoice ID",
+                "invoiceDate": "Invoice Date",
+                "coDealerInvoice": "Co-Dealer Invoice",
+                "chassisNo": "Chassis No",
+                "customerName": "Customer Name",
+                "invoiceStatus": "Invoice status",
+                "segment": "Segment",
+                "requestedAmount": "Requested Amount",
+                "modelDescription": "Model Description",
+                "vDNID": "VDN ID",
+                "vDNDate": "VDN Date",
+                "reasonforDelay": "Reason for Delay",
+                "documentUpload": "Document Upload",
+                "zone":"Zone",           
+                "areaOffice":"Area Office",  
+                "dealerName":"Dealer Name",
+                "locationName":"Location Name",
+                "fromDate": "Claim From Date",
+                "toDate":"Claim To Date"  
+            }
+        },
+        "heading": {
+            "mainTitle": "Empowerment Request",
+            "drawerTitleMain": "Claim Empowerment Request",
+            "cancellationTitle": "Receipt Cancellation",
+            "sections": {
+                "section1": "Empower Request Details",
+                "section2": "Upload Details"
+            },
+            "collapse": {
+                "receiptInformation": "Receipt Information",
+                "paymentDetails": "Payment Details",
+                "apportionDetails": "Apportion Details"
+            },
+            "profileCard": {
+                "requestId": "Request ID:",
+                "requestDate": "Request Date:",
+                "status": " Request Status: "
+            }
+            
+        }
+    },
+
+    "LoyaltyDocumentMaster": {
+        "heading": {
+            "pageTitle": "Exchange/Loyalty Document Master",
+            "title": "Exchange/Loyalty Document"
+        },
+        "label": {
+            "documentId": "Document ID",
+            "documentName": "Document Name",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "placeholder": {
+            "documentId": "Document ID",
+            "documentName": "Document Name"
+        },
+        "validation": {
+            "documentId": "Document ID",
+            "documentName": "Document Name"
+        }
+    },
+
+"ExchangeLoyaltyCappingMaster": {
+    "heading": {
+        "pageTitle": "Exchange/Loyalty Capping Master",
+        "title": "Exchange/Loyalty Capping"
+    },
+    "label": {
+        "modelGroup": "Model Group",
+        "modelVariant": "Model Variant",
+        "zone": "Zone",
+        "areaOffice": "Area Office",
+        "dealerCode": "Dealer Code",
+        "dealerName": "Dealer Name",
+        "capping": "Capping %",
+        "retailSlabFrom": "Retail Slab From",
+        "retailSlabTo": "Retail Slab To",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive"
+    },
+    "placeholder": {
+        "modelGroup": "Model Group",
+        "modelVariant": "Model Variant",
+        "zone": "Zone",
+        "areaOffice": "Area Office",
+        "dealerCode": "Dealer Code",
+        "dealerName": "Dealer Name",
+        "capping": "Capping %",
+        "retailSlabFrom": "Retail Slab From",
+        "retailSlabTo": "Retail Slab To",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive"
+    },
+    "validation": {
+        "modelGroup": "Model Group",
+        "modelVariant": "Model Variant",
+        "zone": "Zone",
+        "areaOffice": "Area Office",
+        "dealerCode": "Dealer Code",
+        "dealerName": "Dealer Name",
+        "capping": "Capping %",
+        "retailSlabFrom": "Retail Slab From",
+        "retailSlabTo": "Retail Slab To",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive"
+    }
+},
+
+"LoyaltySchemeMaster": {
+    "heading": {
+        "pageTitle": "Exchange/Loyalty Scheme Master",
+        "title": "Exchange/Loyalty Scheme"
+    },
+    "label": {
+        "documentId": "Document ID",
+        "documentName": "Document Name",
+        "schemeId": "Scheme ID",
+        "SchemeName": "Scheme Name",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "documentstatus": "Is Document Active?",
+        "activesheme":"Active",
+        "inactivesheme":"Inactive",
+        "documentmandatory": "Is Document Mandatory?",
+        "documentyes":"Yes",
+        "documentno":"No"
+    },
+    "placeholder": {
+        "schemeId": "Scheme ID",
+        "SchemeName": "Scheme Name",
+        "documentId": "Document ID",
+        "documentName": "Document Name",
+        "validFrom": "Valid From",
+        "validTo": "Valid To"
+    },
+    "validation": {
+        "documentId": "Document ID",
+        "documentName": "Document Name",
+        "schemeId": "Scheme ID",
+        "SchemeName": "Scheme Name",
+        "validFrom": "Valid From",
+        "validTo": "Valid To"
+    }
+},
+
     "configurableParameter": {
         "heading": {
             "pageTitle": "Configurable Parameter Editing",
