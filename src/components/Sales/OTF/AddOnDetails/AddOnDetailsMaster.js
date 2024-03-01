@@ -4,18 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { OTFFormButton } from '../OTFFormButton';
-
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { otfAddOnDetailsDataActions } from 'store/actions/data/otf/addOnDetails';
 import { otfAddOnPartsDataActions } from 'store/actions/data/otf/addonParts';
 import { showGlobalNotification } from 'store/actions/notification';
+import { withSpinner } from 'components/withSpinner';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                AddonDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
+                AddonDetails: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, data: AddonDetailsData = [] },
                 AddonParts: { isLoaded: isAddonPartsDataLoaded = false, data: AddonPartsData = [] },
             },
         },
@@ -34,6 +34,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         isLoading,
+        isLoadingOnSave,
         AddonDetailsData,
         AddonPartsData,
         isAddonPartsDataLoaded,
@@ -51,6 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfAddOnDetailsDataActions.fetchList,
             saveData: otfAddOnDetailsDataActions.saveData,
             listShowLoading: otfAddOnDetailsDataActions.listShowLoading,
+            saveFormShowLoading: otfAddOnDetailsDataActions.saveFormShowLoading,
             resetData: otfAddOnDetailsDataActions.reset,
             resetPartData: otfAddOnPartsDataActions.reset,
             showGlobalNotification,
@@ -60,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, userId, listShowLoading, saveFormShowLoading, saveData, onFinishFailed } = props;
     const { buttonData, setButtonData, form, section, selectedOrder, selectedRecordId, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setFormData] = useState();
@@ -222,7 +224,7 @@ export const AddOnDetailsMasterMain = (props) => {
         const requestData = {
             data: data,
             method: AddonDetailsData?.id ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -291,4 +293,4 @@ export const AddOnDetailsMasterMain = (props) => {
         </Form>
     );
 };
-export const AddOnDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(AddOnDetailsMasterMain);
+export const AddOnDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(AddOnDetailsMasterMain));

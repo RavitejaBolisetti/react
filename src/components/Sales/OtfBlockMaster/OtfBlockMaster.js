@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState, useMemo } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -187,6 +187,16 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
+const ModelGroup = {
+    MODEL_GROUP: {
+        key: 'MG',
+        value: 'Model Group',
+    },
+    MODEL_FAMILY: {
+        key: 'MF',
+        value: 'Model Family',
+    },
+};
 export const OtfBlockMasterMain = (props) => {
     const { resetAreaOfficeList, viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, resetDealerList, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading } = props;
 
@@ -242,13 +252,6 @@ export const OtfBlockMasterMain = (props) => {
 
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const ModelGroup = {
-        MODEL_GROUP: {
-            key: 'MG',
-            value: 'Model Group',
-        },
-    };
-
     const onErrorAction = (message) => {
         resetData();
 
@@ -269,29 +272,43 @@ export const OtfBlockMasterMain = (props) => {
         return () => {
             resetData();
         };
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const transformProductData = useMemo(() => {
+        if (productHierarchyData?.length > 0) {
+            const generateNewData = (data) => {
+                if ([ModelGroup?.MODEL_GROUP?.key, ModelGroup?.MODEL_FAMILY?.key]?.includes(data?.attributeType) || !data?.subProdct || !data?.subProdct?.length > 0) {
+                    if (data?.hasOwnProperty('subProdct')) {
+                        data.subProdct = [];
+                    }
+                    return data;
+                }
+                if (data?.subProdct?.length > 0) {
+                    data?.subProdct?.forEach((item) => {
+                        generateNewData(item);
+                    });
+                }
+            };
+            productHierarchyData?.map((item) => generateNewData(item));
+            return productHierarchyData;
+        }
+        return productHierarchyData;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyData, ModelGroup]);
+
     const makeExtraparms = (Params) => {
         const extraParams = [];
-
         Params?.map((element) => {
             const { key, title, value, name } = element;
-
             extraParams.push({
                 key: key,
-
                 title: title,
-
                 value: value,
-
                 name: name,
             });
-
             return undefined;
         });
-
         return extraParams;
     };
 
@@ -299,7 +316,6 @@ export const OtfBlockMasterMain = (props) => {
         if (selectedProductCode && userId && selectedTreeKey) {
             fetchOTFBlockList({ setIsLoading: listOTFBlockShowLoading, userId, extraParams: makeExtraparms([{ key: 'code', title: 'code', value: selectedProductCode, name: 'code' }]), errorAction: onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedProductCode, userId, selectedTreeKey]);
 
@@ -308,17 +324,14 @@ export const OtfBlockMasterMain = (props) => {
             fetchProductDataList({ setIsLoading: listProductLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: organizationId }] });
             fetchZoneMasterList({ setIsLoading: listZoneMasterShowLoading, userId });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
 
     useEffect(() => {
         if (productHierarchyData?.attributeKey) {
             const prodctShrtName = flatternData.find((i) => productHierarchyData?.manufactureOrgParntId === i.key)?.data?.prodctShrtName;
-
             setSelectedTreeData({ ...productHierarchyData, parentName: prodctShrtName });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productHierarchyData]);
 
@@ -326,13 +339,11 @@ export const OtfBlockMasterMain = (props) => {
         if (!isDataOrgLoaded && userId) {
             fetchOrgList({ setIsLoading: listShowLoading, userId, errorAction: onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
     useEffect(() => {
         manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
 
@@ -344,15 +355,11 @@ export const OtfBlockMasterMain = (props) => {
     useEffect(() => {
         if (formData?.id) {
             setSelectedTreeSelectKey([otfBlockMasterData?.hierarchyMstId]);
-
             form.setFieldsValue({ hierarchyMstId: otfBlockMasterData?.hierarchyMstName });
         } else {
             setSelectedTreeSelectKey(null);
-
             form.setFieldsValue({ hierarchyMstId: null });
-
             form.resetFields();
-
             setOptions([]);
         }
 
@@ -374,15 +381,11 @@ export const OtfBlockMasterMain = (props) => {
     const generateList = (data) => {
         for (let i = 0; i < data?.length; i++) {
             const node = data[i];
-
             const { id: key } = node;
-
             dataList.push({
                 key,
-
                 data: node,
             });
-
             if (node[fieldNames?.children]) {
                 generateList(node[fieldNames?.children]);
             }
@@ -576,7 +579,7 @@ export const OtfBlockMasterMain = (props) => {
 
         setSearchValue,
 
-        treeData: productHierarchyData,
+        treeData: transformProductData.map((i) => DisableParent(i, 'subProdct')),
     };
 
     const formProps = {
@@ -821,9 +824,11 @@ export const OtfBlockMasterMain = (props) => {
                         <>
                             <ViewDetails {...viewProps} />
 
-                            <div className={styles.viewContainerFooter}>
-                                <HierarchyFormButton {...viewProps} />
-                            </div>
+                            {buttonData?.editBtn && (
+                                <div className={styles.viewContainerFooter}>
+                                    <HierarchyFormButton {...viewProps} />
+                                </div>
+                            )}
                         </>
                     ) : (
                         organizationId &&

@@ -107,41 +107,39 @@ const IssueIndentMasterMain = (props) => {
             });
     };
 
-    const handleAdd = () => {
-        setIssueModal(true);
-    };
+    const handleAdd = () => setIssueModal(true);
 
     const onFinish = (values) => {
-        if (!values?.engineNumber) {
+        if (values?.engineNumber) {
+            const { invoiceDate, invoiceNumber, ...rest } = values;
+
+            const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.oemInvoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
+
+            const onSuccess = (res) => {
+                issueForm.resetFields();
+                setIssueModal(false);
+                resetVinDetails();
+                setRefershIndentData(!refershIndentData);
+                setRefershData(!refershData);
+                showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
+            };
+
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
+            const requestData = {
+                data,
+                method: 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+
+            saveIssueDetail(requestData);
+        } else {
             showGlobalNotification({ message: translateContent('stockTransferIndent.issueIndent.validation.searchVinToContinue') });
-            return;
         }
-        const { invoiceDate, invoiceNumber, ...rest } = values;
-
-        const data = { ...rest, grnDate: vehicleVinData?.paginationData[0]?.grnDate, oemInvoiceDate: vehicleVinData?.paginationData[0]?.oemInvoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
-
-        const onSuccess = (res) => {
-            issueForm.resetFields();
-            setIssueModal(false);
-            resetVinDetails();
-            setRefershIndentData(!refershIndentData);
-            setRefershData(!refershData);
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveIssueDetail(requestData);
     };
 
     const onStatusChange = (values) => {

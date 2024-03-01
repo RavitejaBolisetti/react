@@ -11,12 +11,12 @@ import { Form, Row, Col } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/SchemeDetails';
 
-import styles from 'assets/sass/app.module.scss';
-
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
 import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
 
-const mapStateToProps = (state) => {
+import styles from 'assets/sass/app.module.scss';
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
@@ -32,6 +32,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         schemeData,
+        showSpinner: !props?.formActionType?.viewMode,
         isLoading,
     };
     return returnValue;
@@ -97,7 +98,7 @@ const SchemeDetailsMasterBase = (props) => {
         styles,
         onCloseAction,
         formData,
-        isLoading,        
+        isLoading,
         isOTFModule: true,
         ...props,
     };
@@ -106,6 +107,8 @@ const SchemeDetailsMasterBase = (props) => {
         styles,
         formData,
         isOTFModule: true,
+        disabled: isLoading,
+        isLoadingOnSave: isLoading,
     };
 
     const onFinish = (data) => {
@@ -154,4 +157,4 @@ const SchemeDetailsMasterBase = (props) => {
     );
 };
 
-export const SchemeDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(SchemeDetailsMasterBase);
+export const SchemeDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(SchemeDetailsMasterBase));

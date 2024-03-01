@@ -549,4 +549,28 @@ export const PARAM_MASTER = {
         id: 'CHRGR_INST_STG_TYPE',
         title: 'Charger Installation stage type',
     },
+    DLVR_AMC_SCH_TYP: {
+        id: 'DLVR_AMC_SCH_TYP',
+        title: 'Delivery note scheme type',
+    },
+    DLVR_NT_OMR: {
+        id: 'DLVR_NT_OMR',
+        title: 'Delivery note odometer reading',
+    },
+    SO_MAP_UNMAP_RESN_CAT: {
+        id: 'SO_MAP_UNMAP_RESN_CAT',
+        title: 'booking so mapping reason category',
+    },
+    SO_MAP_UNMAP_RESN_DESC: {
+        id: 'SO_MAP_UNMAP_RESN_DESC',
+        title: 'booking so mapping reason description',
+    },
+    COLOR_MAP: {
+        id: 'COLOR_MAP',
+        title: 'charger insstallation color map',
+    },
+    CHRGR_INST_DTL_STAT: {
+        id: 'CHRGR_INST_DTL_STAT',
+        title: 'Charger installation stage status',
+    },
 };

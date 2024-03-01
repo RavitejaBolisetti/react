@@ -23,10 +23,13 @@ import { FUEL_TYPE, REQUEST_STAGE_CONSTANTS } from './Constants/FuelTypeConstant
 import { chargerInstallationDataActions } from 'store/actions/data/chargerInstallation/chargerInstallation';
 import { crmCustomerVehicleDataActions } from 'store/actions/data/crmCustomerVehicle';
 import { chargerInstallationGuestDetailsDataActions } from 'store/actions/data/chargerInstallation/chargerInstallationGuestDetails';
+import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
+import { BASE_URL_PRODUCT_MODEL_GROUP, BASE_URL_PRODUCT_VARIENT } from 'constants/routingApi';
+import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 
 import { translateContent } from 'utils/translateContent';
 import { drawerTitle } from 'utils/drawerTitle';
@@ -37,10 +40,14 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ChargerInstallation: {
-                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [], isDetailLoading = false },
+                ChargerInstallationList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: chargerInstallationMasterData = [], isDetailLoading, isLoadingOnSave },
                 ChargerInstallationGuestDetails: { isLoaded: isGuestDataLoaded = false, isLoading: isGuestLoading, data: chargerInstallationGuestDetailsData = [] },
             },
             CRMCustomerVehicle: { isLoaded: isCRMCustomerDataLoaded = false, isLoading: isChargerSearchLoading, data: crmCustomerVehicleData = [] },
+            Vehicle: {
+                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
+            },
         },
     } = state;
 
@@ -61,8 +68,17 @@ const mapStateToProps = (state) => {
         isGuestDataLoaded,
         isGuestLoading,
         chargerInstallationGuestDetailsData,
-        isDetailLoading,
+        isLoading: isDetailLoading,
+        isLoadingOnSave,
         isChargerSearchLoading,
+
+        isModelDataLoaded,
+        isModelLoading,
+        modelData,
+
+        isVariantDataLoaded,
+        isVariantLoading,
+        variantData,
     };
     return returnValue;
 };
@@ -86,6 +102,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchGuestDetails: chargerInstallationGuestDetailsDataActions.fetchList,
             listGuestShowLoading: chargerInstallationGuestDetailsDataActions.listShowLoading,
 
+            fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
+            listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
+            resetModel: vehicleModelDetailsDataActions.reset,
+
+            fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
+            listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
+            resetVariant: vehicleModelDetailsDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -93,9 +117,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ChargerInstallationMasterBase = (props) => {
-    const { data, userId, isChargerSearchLoading, isDetailLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
+    const { data, userId, isChargerSearchLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
     const { resetCustomerVehicleData, filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading, modelData, variantData } = props;
+
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
     const [requestPayload, setRequestPayload] = useState({ chargerInstDetails: {}, chargerInstAddressDetails: {} });
@@ -238,12 +264,19 @@ export const ChargerInstallationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, chargerStatus, filterString, page]);
+    useEffect(() => {
+        if (userId) {
+            fetchModelLovList({ customURL: BASE_URL_PRODUCT_MODEL_GROUP.concat('/lov'), setIsLoading: listModelShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         const defaultSection = CHARGER_INSTALLATION_SECTION.CHARGER_DETAILS.id;
         setDefaultSection(defaultSection);
         setSetionName(CHARGER_INSTALLATION_SECTION);
         setSection(defaultSection);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -281,6 +314,9 @@ export const ChargerInstallationMasterBase = (props) => {
                     },
                 ],
                 onErrorAction,
+                onSuccessAction: (res) => {
+                    fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.chargerInstDetails?.modelGroup, 'modelGroupCode') });
+                },
             });
         }
     };
@@ -298,6 +334,18 @@ export const ChargerInstallationMasterBase = (props) => {
         fetchGuestDetails({ setIsLoading: listGuestShowLoading, userId, extraParams, onErrorAction });
     };
 
+    const makeExtraParams = (key, title, value, name) => {
+        const extraParams = [
+            {
+                key: key,
+                title: title,
+                value: value,
+                name: name,
+            },
+        ];
+        return extraParams;
+    };
+
     const handleBookingNumberSearch = (otfNumber) => {
         if (!otfNumber) return false;
         const extraParams = [
@@ -311,6 +359,7 @@ export const ChargerInstallationMasterBase = (props) => {
         const onSuccesscustomerAction = (res) => {
             chargerInstallationForm.setFieldsValue({ otfNumber: otfNumber });
             if (!(res?.data?.otfDetails?.orderStatus === OTF_STATUS?.CANCELLED?.key || res?.data?.otfDetails?.orderStatus === OTF_STATUS?.DELIVERED?.key) && res?.data?.vehicleDetails?.fuel === FUEL_TYPE?.ELECTR?.key) {
+                fetchVariantLovList({ customURL: BASE_URL_PRODUCT_VARIENT.concat('/lov'), setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', res?.data?.vehicleDetails?.modelGroup, 'modelGroupCode') });
                 setChargerDetails(true);
                 setButtonData((prev) => ({ ...prev, formBtnActive: true }));
                 chargerInstallationForm.setFieldsValue({ bookingStatus: getCodeValue(typeData?.ORDR_STATS, crmCustomerVehicleData?.otfDetails?.orderStatus) });
@@ -497,7 +546,7 @@ export const ChargerInstallationMasterBase = (props) => {
 
     const RequestStage = useMemo(() => {
         const requestDetailsLength = Array?.isArray(chargerInstallationMasterData?.chargerInstDetails?.requestDetails) && chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.length;
-        const status = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.response === CHARGER_STATUS.SUCCESS?.key;
+        const status = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.stageStatus?.toUpperCase() === CHARGER_STATUS?.SUCCESS?.key;
         const statusType = chargerInstallationMasterData?.chargerInstDetails?.requestDetails?.[requestDetailsLength - 1]?.stageType;
         if (statusType === REQUEST_STAGE_CONSTANTS?.COMMISSIONING?.key) {
             setButtonData((prev) => ({ ...prev, addRequestBtn: false }));
@@ -574,6 +623,7 @@ export const ChargerInstallationMasterBase = (props) => {
     };
 
     const containerProps = {
+        ...props,
         record: selectedOrder,
         form,
         chargerInstallationForm,
@@ -632,9 +682,10 @@ export const ChargerInstallationMasterBase = (props) => {
         setModal,
         onHandleModal,
         chargerInstallationGuestDetailsData,
-        isLoading: isDetailLoading,
         isChargerSearchLoading,
         RequestStage,
+        modelData,
+        variantData,
     };
 
     return (

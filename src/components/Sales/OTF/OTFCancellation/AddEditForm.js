@@ -25,7 +25,7 @@ import styles from 'assets/sass/app.module.scss';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
+    const { isLoading, otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList, productHierarchyData } = props;
     const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setParentAppCode, resetDealerList, singleDisabled, setSingleDisabled } = props;
@@ -146,6 +146,8 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        isLoadingOnSave: isLoading,
+        disabled: isLoading,
     };
 
     const viewProps = {
@@ -172,7 +174,6 @@ const AddEditFormMain = (props) => {
         labelName: 'Product',
     };
 
-    const isLoading = false;
     return (
         <>
             <Form form={otfCancellationForm} data-testid="test" onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">

@@ -217,7 +217,7 @@ export const EMBEDDED_REPORTS = {
     Enrolment_Transaction_Report: {
         id: 31,
         key: 'Enrolment_Transaction_Report',
-        title: 'Enrollment Transaction Report ',
+        title: 'Enrolment Transaction Report ',
         type: 'Report',
         slug: 'enrolment_transaction_report',
     },

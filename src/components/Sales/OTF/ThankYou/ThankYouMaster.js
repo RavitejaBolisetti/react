@@ -20,7 +20,11 @@ export const ThankYouMaster = (props) => {
 
     const myProps = {
         ...props,
-        buttonData: { ...props.defaultBtnVisiblity, otfSoMappingHistoryBtn: false, closeBtn: true },
+        buttonData: {
+            ...props.defaultBtnVisiblity,
+            otfSoMappingHistoryBtn: false,
+            closeBtn: true,
+        },
     };
 
     return (

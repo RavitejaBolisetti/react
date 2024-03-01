@@ -44,6 +44,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         vehicleInvoiceMasterData: requestPayload,
         otfData: { ...profileCardData },
     };
+
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id: {

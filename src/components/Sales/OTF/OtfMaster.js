@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 VehicleDetails: { isLoaded: isVehicleDetailDataLoaded = false, isVehicleDetailLoading, data: VehicleDetailsData = [] },
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, isChangeHistoryData = [] },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, isLoadingOnSave, data, filter: filterString, isDetailLoaded, detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, isChangeHistoryData = [] },
             },
         },
     } = state;
@@ -65,6 +65,7 @@ const mapStateToProps = (state) => {
         isDetailLoaded,
         isLoading: !isDetailLoaded,
         otfData,
+        isLoadingOnSave,
 
         moduleTitle,
         isOTFSearchLoading,
@@ -95,6 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: otfDataActions.setFilter,
             resetData: otfDataActions.reset,
             transferOTF: otfDataActions.transferOTF,
+            saveFormShowLoading: otfDataActions.saveFormShowLoading,
             listShowLoading: otfDataActions.listShowLoading,
 
             cancelOTFWorkflow: otfDataActions.cancelOTFWorkflow,
@@ -114,7 +116,7 @@ export const OtfMasterBase = (props) => {
     const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
     const { fetchVehicleDetail, updateVehicleAllotmentStatus } = props;
 
-    const { typeData, transferOTF, cancelOTFWorkflow } = props;
+    const { typeData, transferOTF, saveFormShowLoading, cancelOTFWorkflow } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
@@ -139,6 +141,7 @@ export const OtfMasterBase = (props) => {
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDetailDataLoading, setShowDetailDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [isTransferVisible, setIsTransferVisible] = useState(false);
@@ -357,7 +360,6 @@ export const OtfMasterBase = (props) => {
             onError,
             onSuccess,
         };
-
         updateVehicleAllotmentStatus(requestData);
     };
 
@@ -462,10 +464,9 @@ export const OtfMasterBase = (props) => {
                 });
                 setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction === VIEW_ACTION ? true : false }, buttonAction, orderStatus: record?.orderStatus }));
             }
+        } else {
+            setButtonData((prev) => ({ ...prev, formBtnActive: false })); //Hide to stop disable on edit
         }
-        // } else {
-        //     // setButtonData((prev) => ({ ...prev, formBtnActive: false })); //Hide to stop disable on edit
-        // }
     };
 
     const onFinishSearch = () => {};
@@ -595,7 +596,7 @@ export const OtfMasterBase = (props) => {
             data: finalData,
             customURL,
             method: 'put',
-            setIsLoading: () => {},
+            setIsLoading: saveFormShowLoading,
             userId,
             onSuccessAction: onSuccess,
             onErrorAction,
@@ -780,6 +781,9 @@ export const OtfMasterBase = (props) => {
         setProductDetailRefresh,
         handleUnSavedChangeFn,
         setOpenVehilceModelChange,
+
+        showDetailDataLoading,
+        setShowDetailDataLoading,
     };
 
     const onCancelCloseAction = () => {

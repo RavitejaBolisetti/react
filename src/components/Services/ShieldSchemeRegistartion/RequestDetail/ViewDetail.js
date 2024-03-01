@@ -18,6 +18,7 @@ import { RSARegistrationStatusTag } from 'components/Sales/RSARegistration/utils
 import { REQUEST_CONSTANT } from 'components/Sales/AMCRegistration/utils/AMCConstants';
 import RequestedOnDate from './RequestedOnDate';
 import RequestedOnDateRSA from './RequestdateRSA';
+import { SchemeStatusTag } from '../utils/schemeStatusTag';
 
 const ViewDetail = (props) => {
     const { registrationPriceType, screenType, formData, userType, selectedOrder, handleCancelRequest, handleMNMApproval, handleMNMRejection, workflowDetails, typeData } = props;
@@ -41,7 +42,7 @@ const ViewDetail = (props) => {
                                         {REQUEST_CONSTANT?.[requestType]} | {checkAndSetDefaultValue(data?.customerName)} | {selectedOrder?.shieldRegistrationNumber}
                                     </Typography>
                                 </Row>
-                                {RSARegistrationStatusTag(data?.requestStatus)}
+                                {screenType === 'RSA' ? RSARegistrationStatusTag(data?.requestStatus) : SchemeStatusTag(data?.requestStatus)}
                             </Row>
                             <Row type="flex" align="middle" className={data?.requestStatus === QUERY_BUTTONS_MNM_USER?.PENDING_FOR_CANCELLATION?.key ? '' : styles.marB20}>
                                 <Col xs={24} sm={24} md={24} lg={24}>

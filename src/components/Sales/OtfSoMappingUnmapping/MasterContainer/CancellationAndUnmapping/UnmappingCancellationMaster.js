@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [], isLoading: isConfigurableLoading = false },
             OTFSoMapping: {
-                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [], filter: filterString },
+                OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [], filter: filterString, isLoadingOnSave },
             },
         },
 
@@ -52,6 +52,8 @@ const mapStateToProps = (state) => {
 
         isConfigurableLoading,
         filterString,
+
+        isLoadingOnSave,
     };
 
     return returnValue;
@@ -64,6 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfSoMappingDataActions.fetchList,
             listShowLoading: otfSoMappingDataActions.listShowLoading,
             saveData: otfSoMappingDataActions.saveData,
+            saveFormShowLoading: otfSoMappingDataActions.saveFormShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -71,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const UnmappingAndCancellationMain = (props) => {
-    const { userId, dynamicPagination = true, listShowLoading, showGlobalNotification, otfSomappingData, selectedKey, saveData, isOtfSoMappingLoading, advanceFilterString, setadvanceFilterString } = props;
+    const { userId, dynamicPagination = true, saveFormShowLoading, isLoadingOnSave, showGlobalNotification, otfSomappingData, selectedKey, saveData, isOtfSoMappingLoading, advanceFilterString, setadvanceFilterString } = props;
     const [form] = Form.useForm();
 
     const actionButtonVisibility = { canEdit: false, canView: false, customButton: true };
@@ -150,9 +153,9 @@ const UnmappingAndCancellationMain = (props) => {
 
         const requestData = {
             customURL: CustomUrl,
-            data: data,
+            data,
             method: 'put',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -160,6 +163,9 @@ const UnmappingAndCancellationMain = (props) => {
 
         saveData(requestData);
     };
+
+    const handlePageChange = (values) => setadvanceFilterString({ ...advanceFilterString, ...values });
+
     const tableProps = {
         dynamicPagination,
         totalRecords: otfSomappingData?.totalRecords || 'NA',
@@ -170,7 +176,7 @@ const UnmappingAndCancellationMain = (props) => {
         isLoading: isOtfSoMappingLoading,
         filterString: advanceFilterString,
         page: advanceFilterString,
-        setPage: setadvanceFilterString,
+        setPage: handlePageChange,
     };
     const formProps = {
         form,
@@ -185,6 +191,7 @@ const UnmappingAndCancellationMain = (props) => {
         handleFormValueChange: () => setButtonData({ ...buttonData, formBtnActive: true }),
         buttonType,
         formData,
+        isLoadingOnSave,
     };
 
     return (

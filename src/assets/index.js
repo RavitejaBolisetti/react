@@ -22,7 +22,7 @@ import LOGO from './images/logo.png';
 import MAH_WHITE_LOGO from './img/mahindra_Wh_login.png';
 import RL_LOGO from './images/RobinDark_theme.svg';
 
-import BANNER_IMG from './images/ad-img.png';
+import BANNER_IMG from './images/ad-img.jpg';
 
 import LOADING_IMG from './images/loading_light.gif';
 

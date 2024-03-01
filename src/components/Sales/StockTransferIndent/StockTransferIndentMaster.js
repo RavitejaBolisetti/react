@@ -22,7 +22,6 @@ import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAll
 import { reportDataActions } from 'store/actions/data/report/reports';
 import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL, BASE_URL_VEHICLE_ALLOTMENT as customURLVINSearch } from 'constants/routingApi';
 import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
-import { ISSUE_STATUS } from './constants/IssueStatus';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';

@@ -56,14 +56,13 @@ const ViewContactList = (props) => {
             {contactData?.length > 0 &&
                 contactData?.map((data, i, { length }) => {
                     return (
-                        // className={i + 1 === length ? styles.marB20 : ''} (Do not remove this line as this might be used in future)
                         <Collapse key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
                                     <Row justify="space-between">
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
-                                            <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
+                                            <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
                                                     {translateContent('global.buttons.edit')}
@@ -77,7 +76,7 @@ const ViewContactList = (props) => {
                                                         {translateContent('customerMaster.label.mark')}
                                                     </Checkbox>
                                                     <Divider type="vertical" />
-                                                    <Text type="secondary">{getNameFromKey(typeData['PURPOSE'], data?.purposeOfContact)}</Text>
+                                                    <Text type="secondary">{getNameFromKey(typeData?.['PURPOSE'], data?.purposeOfContact)}</Text>
                                                 </div>
                                             </Col>
                                         )}

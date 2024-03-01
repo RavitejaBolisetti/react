@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLovData = [] },
             },
             Sales: {
-                VehicleInvoiceGeneration: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, isDetailLoaded: isInVoiceMasterDetailDataLoaded, isDetailLoading: isVehicleInvoiceDataLoading = false, detailData: vehicleInvoiceMasterData = [] },
+                VehicleInvoiceGeneration: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, isLoadingOnSave: isLoadingOnSaveInvoice, data, filter: filterString, isDetailLoaded: isInVoiceMasterDetailDataLoaded, isDetailLoading: isVehicleInvoiceDataLoading = false, detailData: vehicleInvoiceMasterData = [] },
             },
         },
     } = state;
@@ -68,6 +68,7 @@ const mapStateToProps = (state) => {
 
         filterString,
         isVehicleInvoiceDataLoading,
+        isLoadingOnSaveInvoice,
 
         vehicleInvoiceMasterData,
         isInVoiceMasterDetailDataLoaded,
@@ -94,6 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: vehicleInvoiceGenerationDataActions.saveData,
             resetDetailData: vehicleInvoiceGenerationDataActions.resetDetail,
             setFilterString: vehicleInvoiceGenerationDataActions.setFilter,
+            saveFormShowLoading: vehicleInvoiceGenerationDataActions.saveFormShowLoading,
 
             fetchOTFDetail: otfDataActions.fetchDetail,
             resetOtfData: otfDataActions.reset,
@@ -109,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, fetchList, fetchVehcileDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, fetchList, fetchVehcileDetail, listShowLoading, isLoadingOnSave, saveFormShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { isVehicleInvoiceDataLoading, listDetailShowLoading } = props;
     const { typeData, receiptType, partySegmentType, saveData, paymentModeType, documentType, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
@@ -648,12 +650,11 @@ export const VehicleInvoiceMasterBase = (props) => {
         const requestData = {
             data: data,
             method: 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
         };
-        // console.log("🚀 ~ generateInvoice ~ requestData:", requestData)
         saveData(requestData);
     };
 
@@ -819,6 +820,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const containerProps = {
         ...props,
+        isLoadingOnSave,
         // menuItem: Object.values(VEHICLE_INVOICE_SECTION),
         menuItem: filterActiveSection,
         MenuCard: LeftProfileCard,
@@ -890,7 +892,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         resetDetailData,
         setReportDetail,
     };
-
+    
     const cancelInvoiceProps = {
         isVisible: cancelInvoiceVisible,
         titleOverride: translateContent('vehicleInvoiceGeneration.heading.cancelRequestTitle'),

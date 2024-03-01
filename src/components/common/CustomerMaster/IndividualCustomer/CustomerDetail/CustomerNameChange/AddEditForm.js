@@ -17,7 +17,7 @@ import { translateContent } from 'utils/translateContent';
 
 const AddEditFormMain = (props) => {
     const { typeData, formData, formActionType: { editMode } = undefined, showGlobalNotification, buttonData, setButtonData, fileList } = props;
-    const { form, setActiveKey, customerNameList, setCustomerNameList, downloadFileFromButton, setNameChangeRequested, nameChangeHistoryItemList, setNameChangeHistoryItemList, setUploadedFile, setFileList } = props;
+    const { showChangeHistory, form, setActiveKey, customerNameList, setCustomerNameList, downloadFileFromButton, setNameChangeRequested, nameChangeHistoryItemList, setNameChangeHistoryItemList, setUploadedFile, setFileList } = props;
 
     const [singleDisabled, setSingleDisabled] = useState(false);
     const [uploadedFileInformation, setUploadedFileInformation = undefined] = useState([]);
@@ -77,31 +77,33 @@ const AddEditFormMain = (props) => {
         setActiveKey([]);
     };
 
+    const disabledProps = { disabled: !showChangeHistory };
+
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                    <Form.Item label={translateContent('customerMaster.label.title')} initialValue={customerNameList?.titleCode} name={'titleCode' + formType} data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.title'))} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.TITLE}></Select>
+                    <Form.Item label={translateContent('customerMaster.label.title')} initialValue={customerNameList?.titleCode} name={'titleCode' + formType} data-testid="title" rules={[showChangeHistory && validateRequiredSelectField('title')]}>
+                        <Select {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect(translateContent('customerMaster.placeholder.title'))} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.TITLE}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                     <Form.Item label={translateContent('customerMaster.label.firstName')} initialValue={customerNameList?.firstName} name={'firstName' + formType} data-testid="firstName" rules={[validateRequiredInputField('first name'), validationFieldLetter('first name')]}>
-                        <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.firstName'))} />
+                        <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.firstName'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                     <Form.Item label={translateContent('customerMaster.label.middleName')} initialValue={customerNameList?.middleName} name={'middleName' + formType} data-testid="middleName" rules={[validationFieldLetter('middle name')]}>
-                        <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.middleName'))} />
+                        <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.middleName'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                     <Form.Item label={translateContent('customerMaster.label.lastName')} initialValue={customerNameList?.lastName} name={'lastName' + formType} data-testid="lastName" rules={[validateRequiredInputField('last name'), validationFieldLetter('last name')]}>
-                        <Input placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.lastName'))} />
+                        <Input {...disabledProps} placeholder={preparePlaceholderText(translateContent('customerMaster.placeholder.lastName'))} />
                     </Form.Item>
                 </Col>
             </Row>
-            {editMode && (
+            {editMode && showChangeHistory && (
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

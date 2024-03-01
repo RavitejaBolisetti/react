@@ -201,7 +201,9 @@
             "registerNow": "Register Now",
             "generateIRN": "Generate IRN",
             "reGenerateIRN": "Re-Generate IRN",
-            "irnStatusNotPresent": "IRN status not present"
+            "irnStatusNotPresent": "IRN status not present",
+            "yes": "Yes",
+            "no": "No"
         },
         "placeholder": {
             "input": "Enter ",
@@ -433,7 +435,8 @@
             "continue": "Continue"
         },
         "link": {
-            "mnmLogin": "M&M User Login"
+            "mnmLogin": "M&M User Login",
+            "sapIBP": "SAP IBP"
         }
     },
     "sessionTimeout": {
@@ -497,9 +500,9 @@
             "createNewPassword": "Create New Password"
         },
         "label": {
-            "oldPassword": "old password",
-            "newPassword": "new password",
-            "confirmPassword": "confirm password",
+            "oldPassword": "Old password",
+            "newPassword": "New password",
+            "confirmPassword": "Confirm password",
             "updatePassword": "Update Password"
         },
         "placeholder": {},
@@ -1014,7 +1017,7 @@
             "invoiceDate": "Invoice Date",
             "irnNo": "IRN No.",
             "irnStatus": "IRN Status",
-            "amcCertificateNo": "AMC Registration Number",
+            "amcCertificateNo": "AMC Certificate",
             "amcIncenticeClaim": "AMC Incentive Claim"
         },
         "placeholder": {
@@ -1086,7 +1089,7 @@
         "label": {
             "mobileNumber": "Mobile Number",
             "customerType": "Customer Type",
-            "corporateType": "Corporate type",
+            "corporateType": "Corporate Type",
 
             "emailID": "Email ID",
             "contactNo": "Contact over WhatsApp?",
@@ -4401,8 +4404,8 @@
             "invoiceDate": "Invoice Date",
             "irnNo": "IRN No.",
             "irnStatus": "IRN Status",
-            "schemeCertificateNo": "Scheme Certificate No.",
-            "invoiceNo": "Invoice No.",
+            "schemeCertificateNo": "Scheme Certificate",
+            "invoiceNo": "Invoice Number",
             "vehicleRegistrationNo": "Vehicle Registration No.",
             "orgWarrantyStartDate": "Org. Warranty Start Date",
             "modelGroup": "Model Group",

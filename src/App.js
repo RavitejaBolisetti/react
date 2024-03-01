@@ -15,9 +15,9 @@ import { MainPage } from './components/MainPage';
 
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { hideGlobalNotification } from 'store/actions/notification';
+import { translateContent } from 'utils/translateContent';
 
 import styles from './App.module.scss';
-import { translateContent } from 'utils/translateContent';
 
 const mapStateToProps = (state) => ({
     notificationState: state.notification,

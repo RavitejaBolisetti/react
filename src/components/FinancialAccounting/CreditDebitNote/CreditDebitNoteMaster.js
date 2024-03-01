@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CreditDebitNoteMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, isDataLoaded, isDetailLoaded, showGlobalNotification } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, isDataLoaded, isDetailLoaded, showGlobalNotification, resetData } = props;
     const { typeData, moduleTitle } = props;
     const { fetchDetail, filterString, setFilterString, creditDebitData, isCreditDrawerDataLoading } = props;
     const [form] = Form.useForm();
@@ -386,6 +386,7 @@ export const CreditDebitNoteMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
             setRequestPayload({ voucherDetailsDto: {}, partyDetailsDto: {}, voucherAccountHeadDetailsDto: [], apportionDetailsDto: [] });
+            resetData();
         };
 
         const onError = (message) => {

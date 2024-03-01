@@ -52,10 +52,10 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Sales: {
-                RSARegistration: { isLoading: isRSAloading, data, detailData: rsaDetails, filter: filterString },
+                RSARegistration: { isLoading: isRSAloading, data, detailData: rsaDetails, isDetailLoading, isLoadingOnSave, filter: filterString },
             },
             ShieldSchemeRegistration: {
-                ShieldSchemeSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, detailData: detailShieldData = [] },
+                ShieldSchemeSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, detailData: detailShieldData = [], isDetailLoading: isVINOTFDetailLoading },
                 SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeLoading, detailData: schemeDetail = [] },
             },
             AMCRegistration: {
@@ -113,6 +113,9 @@ const mapStateToProps = (state) => {
         locations,
         dealerLocationId,
         isRSAloading,
+
+        isLoading: isDetailLoading || isVINOTFDetailLoading,
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -124,6 +127,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: rsaRegistrationDataAction.fetchList,
             fetchDetail: rsaRegistrationDataAction.fetchDetail,
             fetchDetailByVINNOTF: shieldSchemeSearchDataAction.fetchDetail,
+            listDetailVINOTFShowLoading: shieldSchemeSearchDataAction.listDetailShowLoading,
             setFilterString: rsaRegistrationDataAction.setFilter,
 
             fetchSchemeDescription: schemeDescriptionDataAction.fetchDetail,
@@ -151,6 +155,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             resetLocationData: applicationMasterDataActions.resetLocations,
 
+            listDetailShowLoading: rsaRegistrationDataAction.listDetailShowLoading,
+
             downloadFile: supportingDocumentDataActions.downloadFile,
 
             showGlobalNotification,
@@ -161,7 +167,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const RSARegistrationMasterBase = (props) => {
     const { isLoginDataLoading, userId, loginUserData, typeData, data, showGlobalNotification, totalRecords, moduleTitle, invoiceStatusList, fetchList, fetchDetail, fetchDetailByVINNOTF, fetchSchemeDescription, fetchEmployeeList, listShowLoading, listEmployeeShowLoading, setFilterString, filterString, rsaDetails, detailShieldData, resetDetail, isEmployeeDataLoaded, isEmployeeDataLoading, employeeData, managerData, fetchManagerList, schemeDetail, saveData } = props;
-    const { isRSAloading, resetLocationData, downloadFile, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
+    const { listDetailVINOTFShowLoading, listDetailShowLoading, isRSAloading, resetLocationData, downloadFile, fetchModelFamilyLovList, listFamilyShowLoading, modelFamilyData, fetchModelList, listModelShowLoading, ProductHierarchyData, locations, fetchLocationLovList, listLocationShowLoading, dealerParentsLovList, dealerLocations, fetchDealerParentsLovList, fetchDealerLocations } = props;
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
@@ -448,7 +454,7 @@ export const RSARegistrationMasterBase = (props) => {
                     name: 'id',
                 },
             ];
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: customeURL, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: customeURL, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -541,7 +547,7 @@ export const RSARegistrationMasterBase = (props) => {
                     name: 'otfNumber',
                 },
             ];
-            fetchDetailByVINNOTF({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetailByVINNOTF({ setIsLoading: listDetailVINOTFShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -565,7 +571,7 @@ export const RSARegistrationMasterBase = (props) => {
             const availableFundSuccessAction = (res) => {
                 shieldDetailForm.setFieldsValue({ registrationInformation: { availableFund: res?.data?.rsaRegistrationDetails?.registrationInformation?.availableFund } });
             };
-            fetchDetail({ setIsLoading: listShowLoading, userId, customURL: customeURL, extraParams, onSuccessAction: availableFundSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, customURL: customeURL, extraParams, onSuccessAction: availableFundSuccessAction, onErrorAction });
         };
         setVinNumber(value);
         shieldDetailForm.setFieldsValue({
@@ -589,7 +595,7 @@ export const RSARegistrationMasterBase = (props) => {
                     name: 'vin',
                 },
             ];
-            fetchDetailByVINNOTF({ setIsLoading: listShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
+            fetchDetailByVINNOTF({ setIsLoading: listDetailVINOTFShowLoading, userId, customURL: BASE_URL_SHIELD_REGISTRATION, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -882,7 +888,7 @@ export const RSARegistrationMasterBase = (props) => {
             // showGlobalNotification({ message: translateContent('amcRegistration.validation.taxValidation'), notificationType: 'warning' });
             return false;
         } else {
-            fetchDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: customeURL, onErrorAction, onSuccessAction });
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams, customURL: customeURL, onErrorAction, onSuccessAction });
         }
     };
 
@@ -961,6 +967,7 @@ export const RSARegistrationMasterBase = (props) => {
     };
 
     const containerProps = {
+        ...props,
         record: selectedOrder,
         form,
         shieldDetailForm,

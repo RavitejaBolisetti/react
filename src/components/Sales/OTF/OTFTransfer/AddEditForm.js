@@ -32,6 +32,8 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
         onFinishOTFTansfer,
+        disabled: isLoading,
+        isLoadingOnSave: isLoading,
     };
 
     const viewProps = {

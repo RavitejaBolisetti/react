@@ -154,10 +154,10 @@ const AddEditFormMain = (props) => {
                                     </Select>
                                 </Form.Item>
                             </Col>
-                            <Form.Item hidden label="" name={['schemeDetails', 'sgstAmount']} />
-                            <Form.Item hidden label="" name={['schemeDetails', 'igstAmount']} />
-                            <Form.Item hidden label="" name={['schemeDetails', 'cgstAmount']} />
-                            <Form.Item hidden label="" name={['schemeDetails', 'familyCode']} />
+                            <Form.Item hidden name={['schemeDetails', 'sgstAmount']} />
+                            <Form.Item hidden name={['schemeDetails', 'igstAmount']} />
+                            <Form.Item hidden name={['schemeDetails', 'cgstAmount']} />
+                            <Form.Item hidden name={['schemeDetails', 'familyCode']} />
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.schemeCode} label={translateContent('shieldSchemeRegistration.label.schemeCode')} name={['schemeDetails', 'schemeCode']}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeCode'))} disabled={true} />
@@ -171,7 +171,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateNumberWithTwoDecimalPlaces(translateContent('shieldSchemeRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
+                                <Form.Item initialValue={formData?.schemeDiscount} label={translateContent('shieldSchemeRegistration.label.schemeDiscount')} name={['schemeDetails', 'schemeDiscount']} rules={[validateRequiredInputField(translateContent('shieldSchemeRegistration.label.schemeDiscount')), validateNumberWithTwoDecimalPlaces(translateContent('shieldSchemeRegistration.label.schemeDiscount')), { validator: (__, value) => isDiscountLessThanAmount(value) }]}>
                                     <Input placeholder={preparePlaceholderText(translateContent('shieldSchemeRegistration.label.schemeDiscount'))} onChange={handleTaxChange} />
                                 </Form.Item>
                             </Col>

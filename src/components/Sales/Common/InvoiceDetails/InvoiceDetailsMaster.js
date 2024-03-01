@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const InvoiceDetailsMasterBase = (props) => {
     const { form, invoiceData, fetchList, userId, typeData, listShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
+    const { isLoading, section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -97,6 +97,8 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const myProps = {
         ...props,
+        isLoadingOnSave: isLoading,
+        disabled: isLoading,
         buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 

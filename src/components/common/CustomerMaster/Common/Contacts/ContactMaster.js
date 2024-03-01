@@ -24,6 +24,7 @@ import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
+import { withSpinner } from 'components/withSpinner';
 
 const { Text } = Typography;
 
@@ -31,8 +32,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         customer: {
-            customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [] },
-            customerContactsIndividual: { isLoaded: isCustomerIndDataLoaded = false, isLoading: isCustomerIndDataLoading, data: customerIndData = [] },
+            customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [], isLoadingOnSave: isCorporateContactsFormSaving = false },
+            customerContactsIndividual: { isLoaded: isCustomerIndDataLoaded = false, isLoading: isCustomerIndDataLoading, data: customerIndData = [], isLoadingOnSave: isIndividualFormSaveLoading = false },
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -49,6 +50,9 @@ const mapStateToProps = (state) => {
         isCustomerIndDataLoaded,
         isCustomerIndDataLoading,
         customerIndData,
+
+        isLoadingOnSave: isCorporateContactsFormSaving || isIndividualFormSaveLoading,
+        isLoading: isCustomerDataLoading || isCustomerIndDataLoading,
     };
     return returnValue;
 };
@@ -60,11 +64,13 @@ const mapDispatchToProps = (dispatch) => ({
             fetchContactDetailsList: customerDetailDataActions.fetchList,
             listContactDetailsShowLoading: customerDetailDataActions.listShowLoading,
             saveData: customerDetailDataActions.saveData,
+            saveFormCorporateLoading: customerDetailDataActions.saveFormShowLoading,
             resetData: customerDetailDataActions.reset,
 
             fetchContactIndividualDetailsList: customerDetailIndividualDataActions.fetchList,
             listContactIndividualDetailsShowLoading: customerDetailIndividualDataActions.listShowLoading,
             saveIndividualData: customerDetailIndividualDataActions.saveData,
+            saveFormIndividualLoading: customerDetailIndividualDataActions.saveFormShowLoading,
             resetIndividualData: customerDetailIndividualDataActions.reset,
 
             showGlobalNotification,
@@ -77,6 +83,7 @@ const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, selectedCustomerId, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
+    const { saveFormIndividualLoading, saveFormCorporateLoading } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -181,6 +188,7 @@ const ContactMain = (props) => {
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });
+        setButtonData({ ...buttonData, formBtnActive: true });
         forceUpdate();
     };
 
@@ -230,6 +238,9 @@ const ContactMain = (props) => {
         }
 
         let data = { customerId: selectedCustomerId, customerContact: contactData };
+        const isIndividualCustomer = customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id;
+        const saveFinalData = isIndividualCustomer ? saveIndividualData : saveData;
+        const saveLoading = isIndividualCustomer ? saveFormCorporateLoading : saveFormIndividualLoading;
 
         const onSuccess = (res) => {
             contactform.resetFields();
@@ -247,26 +258,20 @@ const ContactMain = (props) => {
             showGlobalNotification({ message });
         };
 
-        const requestData = {
-            data: data,
-            method: customerData?.customerContact ? 'put' : 'post',
-            setIsLoading: listContactDetailsShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-            saveIndividualData(requestData);
-        } else {
-            saveData(requestData);
-        }
-
         setShowAddEditForm(false);
         setIsEditing(false);
         setIsAdding(false);
         setEditingData({});
         contactform.resetFields();
+
+        saveFinalData({
+            data: data,
+            method: customerData?.customerContact ? 'put' : 'post',
+            setIsLoading: saveLoading,
+            userId,
+            onError,
+            onSuccess,
+        });
     };
 
     const formSkeleton = (
@@ -314,4 +319,4 @@ const ContactMain = (props) => {
     );
 };
 
-export const IndividualContact = connect(mapStateToProps, mapDispatchToProps)(ContactMain);
+export const IndividualContact = connect(mapStateToProps, mapDispatchToProps)(withSpinner(ContactMain));

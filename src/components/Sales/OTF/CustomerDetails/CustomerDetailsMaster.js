@@ -15,19 +15,19 @@ import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 import dayjs from 'dayjs';
-
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
-
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
 import { convertDateTimedayjs } from 'utils/formatDateTime';
+import { withSpinner } from 'components/withSpinner';
 
-const mapStateToProps = (state) => {
+import styles from 'assets/sass/app.module.scss';
+
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                OtfCustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerFormData = {} },
+                OtfCustomerDetails: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, data: customerFormData = {} },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -44,11 +44,12 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         isLoading,
+        showSpinner: !props?.formActionType?.viewMode,
+        isLoadingOnSave,
         customerFormData,
         isPinCodeDataLoaded,
         isPinCodeLoading,
         pincodeData,
-
         isTypeDataLoaded,
         isTypeDataLoading,
         typeData: typeData,
@@ -64,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfCustomerDetailsAction.fetchList,
             saveData: otfCustomerDetailsAction.saveData,
             resetData: otfCustomerDetailsAction.reset,
+            saveFormShowLoading: otfCustomerDetailsAction.saveFormShowLoading,
             showGlobalNotification,
 
             listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
@@ -75,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, saveFormShowLoading, customerFormData, showGlobalNotification } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
     const { typeData, selectedRecordId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
@@ -169,7 +171,7 @@ export const CustomerDetailsMain = (props) => {
                 const requestData = {
                     data: data,
                     method: 'put',
-                    setIsLoading: listShowLoading,
+                    setIsLoading: saveFormShowLoading,
                     userId,
                     onError,
                     onSuccess,
@@ -271,4 +273,4 @@ export const CustomerDetailsMain = (props) => {
     );
 };
 
-export const CustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailsMain);
+export const CustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(CustomerDetailsMain));
