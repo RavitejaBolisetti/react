@@ -98,6 +98,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetDetailData: chargerInstallationDataActions.resetDetail,
             setFilterString: chargerInstallationDataActions.setFilter,
             saveData: chargerInstallationDataActions.saveData,
+            saveFormShowLoading: chargerInstallationDataActions.saveFormShowLoading,
 
             fetchGuestDetails: chargerInstallationGuestDetailsDataActions.fetchList,
             listGuestShowLoading: chargerInstallationGuestDetailsDataActions.listShowLoading,
@@ -120,7 +121,7 @@ export const ChargerInstallationMasterBase = (props) => {
     const { data, userId, isChargerSearchLoading, resetDetailData, listDetailShowLoading, chargerInstallationMasterData, fetchGuestDetails, listGuestShowLoading, fetchList, fetchCustomerVehicleList, listCustomerVehicleShowLoading, crmCustomerVehicleData, listShowLoading, showGlobalNotification, fetchChargerDetails } = props;
     const { typeData, saveData, moduleTitle, totalRecords } = props;
     const { resetCustomerVehicleData, filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData, chargerInstallationGuestDetailsData } = props;
-    const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading, modelData, variantData } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading, modelData, variantData, saveFormShowLoading } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
@@ -480,7 +481,7 @@ export const ChargerInstallationMasterBase = (props) => {
         const requestData = {
             data,
             method: 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
