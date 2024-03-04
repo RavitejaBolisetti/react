@@ -285,13 +285,14 @@ const AddEditFormMain = (props) => {
         saveData(requestData);
     };
 
-    const onHandleSave = () => {
+    const onHandleSave = (retry = false) => {
         form?.validateFields()
             .then(() => {
                 const vehicleNewModel = form.getFieldsValue();
                 const vehicleModelChangeRequest = { model: vehicleNewModel?.model, modelCode: vehicleNewModel?.modelCode };
                 const vehicleCurrentModel = { model: formData?.model, modelCode: formData?.modelCode };
-                if (JSON.stringify(vehicleModelChangeRequest) === JSON.stringify(vehicleCurrentModel)) {
+
+                if (!retry && JSON.stringify(vehicleModelChangeRequest) === JSON.stringify(vehicleCurrentModel)) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Current and previous model are same' });
                 } else if (autoOrder && !vehicleNewModel?.createPurchaseOrder && !selectedRecord?.soNumber) {
                     showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please select one option either to map so number or create purchase order' });
@@ -480,7 +481,7 @@ const AddEditFormMain = (props) => {
                     {!isReviedModelPending && (
                         <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                             {modelStatus === STATUS?.REJECTED?.key ? (
-                                <Button loading={false} disabled={!buttonData?.formBtnActive} type="primary" form="myNameForm" onClick={onHandleSave}>
+                                <Button loading={false} disabled={!buttonData?.formBtnActive} type="primary" form="myNameForm" onClick={()=>onHandleSave(true)}>
                                     {translateContent('global.buttons.retry')}
                                 </Button>
                             ) : (

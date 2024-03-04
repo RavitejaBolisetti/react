@@ -4,10 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
+import { translateContent } from 'utils/translateContent';
 export const RSAFormButton = ({ formActionType, record, onCloseAction, showCancelSchemeConfirm, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
@@ -35,9 +36,14 @@ export const RSAFormButton = ({ formActionType, record, onCloseAction, showCance
 
                     {buttonData?.cancelSchemeBtn && (
                         <>
-                            <Button danger onClick={showCancelSchemeConfirm}>
+                            <Popover content={translateContent('global.toolTip.comingSoon')} trigger="hover">
+                                <Button danger onClick={showCancelSchemeConfirm}>
+                                    Cancel Scheme
+                                </Button>
+                            </Popover>
+                            {/* <Button danger onClick={showCancelSchemeConfirm}>
                                 Cancel Scheme
-                            </Button>
+                            </Button> */}
                         </>
                     )}
 

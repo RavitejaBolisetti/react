@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             AMCRegistration: {
-                AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [] },
+                AMCRegistrationSearch: { isLoaded: isSearchDataLoaded = false, isDetailLoading, isLoadingOnSave, isLoading: isSearchLoading, data, filter: filterString, detailData: amcRegistrationDetailData = [] },
                 EmployeeData: { isLoaded: isEmployeeDataLoaded = false, isLoading: isEmployeeDataLoading, data: employeeData = [], detailData: managerData = [] },
                 AMCScheme: { isLoaded: isSchemeDataLoaded = false, isLoading: isSchemeDataLoading, filteredListData: schemeData = [] },
                 DealerLocations: { filteredListData: locations = [] },
@@ -88,6 +88,8 @@ const mapStateToProps = (state) => {
         filterString,
         loginUserData,
         amcRegistrationDetailData,
+        isLoading: isDetailLoading || isOTFSearchLoading,
+        isLoadingOnSave,
 
         isEmployeeDataLoaded,
         isEmployeeDataLoading,
@@ -135,6 +137,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetEmployeeData: employeeSearchDataAction.reset,
 
             fetchDetail: amcRegistrationDataAction.fetchDetail,
+            listDetailShowLoading: amcRegistrationDataAction.listDetailShowLoading,
             saveData: amcRegistrationDataAction.saveData,
 
             fetchOTFSearchedList: otfDataActions.fetchList,
@@ -180,7 +183,7 @@ export const AMCRegistrationMasterBase = (props) => {
     const { fetchSchemeList, listSchemeShowLoading, isSchemeDataLoaded, isSchemeDataLoading, schemeData, isLoginDataLoading, fetchDealerParentsLovList, listDealerParentShowLoading, dealerParentsLovList, resetLocationData } = props;
     const { modelGroupData, modelFamilyData, productAttributeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchModelFamilyLovList, listFamilyShowLoading } = props;
-    const { fetchProductLovCode, listProductShowLoading, isLoyaltyLoading, isModelLoading, isProductLoading, downloadFile } = props;
+    const { listDetailShowLoading, fetchProductLovCode, listProductShowLoading, isLoyaltyLoading, isModelLoading, isProductLoading, downloadFile } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [amcStatus, setAmcStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
@@ -562,12 +565,12 @@ export const AMCRegistrationMasterBase = (props) => {
                 setSelectedAMC('');
                 break;
             case EDIT_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
+                fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                fetchDetail({ setIsLoading: listShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
+                fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams: detailExtraParams, customURL, onErrorAction });
                 record && setSelectedAMC(record);
                 defaultSection && setCurrentSection(defaultSection);
                 setIsPendingForCancellation(record?.status === AMC_CONSTANTS?.PENDING_FOR_CANCELLATION?.key);
@@ -846,6 +849,7 @@ export const AMCRegistrationMasterBase = (props) => {
     };
 
     const containerProps = {
+        ...props,
         record: selectedOrder,
         form,
         registrationForm,

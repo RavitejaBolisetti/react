@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { typeData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, vehicleDetails } = props;
-    const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION, handleButtonClick, setButtonData } = props;
     const [mnmCtcVehicleFlag, setMnmCtcVehicleFlag] = useState(false);
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -115,6 +115,7 @@ const VehicleDetailsMasterBase = (props) => {
 
         const data = { ...values, id: recordId, vin: vin, mnfcWarrEndDate: values?.mnfcWarrEndDate?.format('YYYY-MM-DD'), deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), nextServiceDueDate: values?.nextServiceDueDate?.format('YYYY-MM-DD'), pucExpiryDate: values?.pucExpiryDate?.format('YYYY-MM-DD'), insuranceExpiryDate: values?.insuranceExpiryDate?.format('YYYY-MM-DD'), saleDate: values?.saleDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
         const onSuccess = (res) => {
+            setButtonData((prev) => ({ ...prev, formBtnActive: false }));
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION, onSave: true });
             showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });

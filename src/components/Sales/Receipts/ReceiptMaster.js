@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
             cancelReceipt: cancelReceiptDataActions.saveData,
             listShowLoading: receiptDataActions.listShowLoading,
 
-            resetPartyDetailData: partyDetailDataActions.reset,
+            //resetPartyDetailData: partyDetailDataActions.reset,
 
             showGlobalNotification,
         },
@@ -429,7 +429,7 @@ export const ReceiptMasterBase = (props) => {
         partyDetailForm.resetFields();
         setReceipt();
         setTotalReceivedAmount(0.0);
-        resetPartyDetailData();
+        //resetPartyDetailData();
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();

@@ -44,6 +44,10 @@ import ExchangeLoyaltyIncentiveMasterPage from './ExchangeLoyaltyIncentiveMaster
 import MitraBrokerRegistrationMasterPage from './MitraBrokerRegistrationMaster';
 import IncentiveSchemePage from './IncentiveScheme';
 import IncentiveClaimPage from './IncentiveClaim'
+import ClaimEmpowermentPage from './ClaimEmpowerment';
+import LoyaltyDocumentMasterPage from './LoyaltyDocument';
+import ExchangeLoyaltyCappingMasterPage from './ExchangeLoyaltyCappingMaster';
+import LoyaltySchemeMasterPage from './LoyaltyScheme';
 import CentralFameSubsidyPage from './CentralFameSubsidy';
 import ExchangeLoyaltyReclaimRequestMasterPage from './ExchangeLoyaltyReclaimRequest';
 import ExchangeClaimMasterPage from './ExchangeClaim';
@@ -99,6 +103,10 @@ export {
     MitraBrokerRegistrationMasterPage,
     IncentiveSchemePage,
     IncentiveClaimPage, 
+    ClaimEmpowermentPage,
+    LoyaltyDocumentMasterPage,
+    ExchangeLoyaltyCappingMasterPage,
+    LoyaltySchemeMasterPage,
     CentralFameSubsidyPage,
     ExchangeLoyaltyReclaimRequestMasterPage,
     ExchangeClaimMasterPage,

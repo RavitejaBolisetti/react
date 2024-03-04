@@ -36,7 +36,7 @@
                 margin-inline-end: 6px;
 
                 .anticon {
-                    margin-left: -16px;
+                    margin-left: -10px;
 
                     svg {
                         margin-left: 0;
@@ -2171,6 +2171,11 @@
     }
 
     /*--------------RC Virtual End--------------*/
+    .ant-table-wrapper {
+        .ant-table-summary{
+            background: #F2F2F2;
+        }
+    }
 }
 
 // :global .ant-descriptions .ant-descriptions-header {

@@ -61,7 +61,7 @@ export const addRequestColumns = (typeData) => {
             title: translateContent('global.label.status'),
             dataIndex: 'response',
             width: '180px',
-            render: (_, record) => ChargerStatusTag(record?.response),
+            render: (_, record) => ChargerStatusTag(record?.stageStatus, typeData),
         }),
     ];
 
@@ -127,7 +127,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             dataIndex: 'response',
             key: 'response',
             width: '180px',
-            render: (_, record) => ChargerStatusTag(record?.response),
+            render: (_, record) => ChargerStatusTag(record?.stageStatus, typeData),
         }),
         tblPrepareColumns({
             title: translateContent('chargerInstallationDetailsTableColumn.label.serviceId'),

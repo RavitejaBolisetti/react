@@ -130,6 +130,7 @@ export const ROUTING_ONROAD_PRICE_MASTER = ROUTING_SALES.concat('onroad-price-ma
 export const ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER = ROUTING_SALES.concat('vehicle-allotment-priority-master');
 export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-signature');
 export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping');
+export const ROUTING_ADDITIONAL_CLAIM = ROUTING_SALES.concat('additional-claim');
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
 export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('booking-so-mapping');
 export const ROUTING_VEHICLE_SALES_SCHEME_MASTER = ROUTING_SALES.concat('vehicle-sales-scheme-master');
@@ -143,6 +144,13 @@ export const ROUTING_VIN_BLOCK_MASTER = ROUTING_SALES.concat('vin-block-master')
 export const ROUTING_GST_IRN_TRANSACTION = ROUTING_FINANCIAL_ACCOUNTING.concat('gst-irn-transaction');
 export const ROUTING_RSA_REGISTRATION = ROUTING_SALES.concat('rsa-registration');
 export const CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
+export const CLAIM_EMPOWERMENT = ROUTING_SALES.concat('claim-empowerment');
+export const LOYALTY_DOCUMENT = ROUTING_SALES.concat('loyalty-document');
+export const ROUTING_EXCHANGE_LOYALTY_CAPPING_MASTER = ROUTING_SALES.concat('exchange-loyalty-capping-master');
+export const ROUTING_LOYALTY_SCHEME = ROUTING_SALES.concat('loyalty-Scheme');
+
+
+
 export const ROUTING_CO_DEALER_INVOICE = ROUTING_SALES.concat('co-dealer-invoice');
 export const ROUTING_CENTRAL_FAME_SUBSIDY = ROUTING_SALES.concat('central-fame-subsidy');
 
@@ -178,7 +186,7 @@ export const ROUTING_LOYALTY_CLAIM_GENERATION = ROUTING_SALES.concat('loyalty-cl
 
 //DemandForecasting
 export const ROUTING_DEALER_DEMAND_FORECASTING = ROUTING_SALES.concat('dealer-demand-forecasting');
-
+export const ROUTING_DEMAND_FORECASTING = ROUTING_SALES.concat('demand-forecasting');
 
 // Incentive scheme and claim
 export const ROUTING_MITRA_BROKER_REGISTRATION = ROUTING_SALES.concat('mitra-broker-registration');

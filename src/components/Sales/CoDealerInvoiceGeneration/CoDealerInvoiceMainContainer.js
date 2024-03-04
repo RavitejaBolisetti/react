@@ -16,6 +16,7 @@ import { IndentDetailsMaster } from './IndentDetails';
 import { CoDealerFormButton } from './CoDealerFormButton';
 import { ThankYouMaster } from 'utils/ThankYouPage';
 import { THANK_YOU_BUTTONS_CONSTANTS } from './constants';
+import { withSpinner } from 'components/withSpinner';
 
 const CoDealerInvoiceContainerMain = (props) => {
     const { currentSection, selectedOtfNumber, selectedOrderId, CoDealerInvoiceStateMaster, handleThankyouButtonClick, buttonData, onCloseAction } = props;
@@ -65,4 +66,4 @@ const CoDealerInvoiceContainerMain = (props) => {
     );
 };
 
-export const CoDealerInvoiceMainContainer = withDrawer(CoDealerInvoiceContainerMain, { width: '90%', footer: null });
+export const CoDealerInvoiceMainContainer = withDrawer(withSpinner(CoDealerInvoiceContainerMain), { width: '90%', footer: null });

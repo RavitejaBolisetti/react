@@ -85,6 +85,10 @@ import {
     ExchangeLoyaltyIncentiveMasterPage,
     MitraBrokerRegistrationMasterPage,
     IncentiveClaimPage,
+    LoyaltyDocumentMasterPage,
+    ClaimEmpowermentPage,
+    ExchangeLoyaltyCappingMasterPage,
+    LoyaltySchemeMasterPage,
     CentralFameSubsidyPage,
     ExchangeLoyaltyReclaimRequestMasterPage,
     ExchangeClaimMasterPage,
@@ -105,12 +109,10 @@ import { UnitOfMeasureMasterPage, CampaignDiscountPage, IssueIndicatorMasterPage
 
 import { ShieldSchemeRegistrationPage } from 'pages/Services';
 import { PageNotFound } from 'components/PageNotFound';
-
 import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPage';
 import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocumentPage';
-
 import { CMSPage } from 'pages/cms';
 import { DealerCompanyPage } from 'pages/common/Dealer';
 import { VehicleSalesSchemeMasterPage } from 'pages/Sales/VehicleSalesSchemeMaster/VehicleSalesSchemeMasterPage';
@@ -126,7 +128,7 @@ import OverRiderClaimPage from 'pages/Sales/OverRiderClaim';
 import { IncentiveSchemeMasterPage } from 'pages/Sales/IncentiveSchemeMaster/IncentiveSchemeMasterPage';
 import IncentiveSchemePage from 'pages/Sales/IncentiveScheme';
 import DealerDemandForecastingMasterPage from 'pages/Sales/DealerDemandForecasting';
-
+import DemandForecastingMasterPage from 'pages/Sales/DemandForecasting';
 
 const mapStateToProps = (state) => {
     const {
@@ -270,6 +272,13 @@ const AuthenticatedUserPageMain = (props) => {
                 <Route path={routing.ROUTING_GST_IRN_AUTHENTICATION} element={<GSTIRNAuthenticationPage />} exact />
                 <Route path={routing.ROUTING_ONROAD_PRICE_MASTER} element={<OnRoadPriceMasterPage />} exact />
                 <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
+                <Route path={routing.CLAIM_EMPOWERMENT} element={<ClaimEmpowermentPage />} exact />
+                <Route path={routing.LOYALTY_DOCUMENT} element={<LoyaltyDocumentMasterPage />} exact />
+                <Route path={routing.ROUTING_EXCHANGE_LOYALTY_CAPPING_MASTER} element={<ExchangeLoyaltyCappingMasterPage />} exact />
+
+                <Route path={routing.ROUTING_LOYALTY_SCHEME} element={<LoyaltySchemeMasterPage />} exact />
+                
+                           
                 <Route path={routing.ROUTING_EVR_DETAILS_CAPTURING} element={<EvrDetailsCapturingMasterPage />} exact />
                 <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
                 <Route path={routing.ROUTING_SHIELD_SCHEME_REGISTER} element={<ShieldSchemeRegistrationPage />} exact />
@@ -342,6 +351,9 @@ const AuthenticatedUserPageMain = (props) => {
                  <Route path={routing.ROUTING_COMMON_VEHICLE_RELATED} element={<VehicleRelatedPage />} exact />
                     {/* DealerDemandForecasting */} 
                  <Route path={routing.ROUTING_DEALER_DEMAND_FORECASTING} element={<DealerDemandForecastingMasterPage/>} exact />
+
+                 <Route path={routing.ROUTING_DEMAND_FORECASTING} element={<DemandForecastingMasterPage/>} exact />
+
                 <Route path={routing.ROUTING_BRANCH_WISE_STOCK} element={<BranchwiseStockViewMasterPage />} exact />
                 <Route path={routing.ROUTING_TO_BIN_TRANSFER} element={<BinToBinTransferPage />} exact />
                 <Route path={routing.ROUTING_STOCK_TRANSFER_INDENT} element={<StockTransferIndentSpareMasterPage />} exact />

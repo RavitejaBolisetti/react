@@ -22,8 +22,8 @@ export const CHARGER_STATUS = {
         filter: true,
     },
     SUCCESS: {
-        id: 2,
-        key: 'Success',
+        id: 3,
+        key: 'COMP',
         title: 'Success',
         desc: 'Success',
         displayOnView: true,

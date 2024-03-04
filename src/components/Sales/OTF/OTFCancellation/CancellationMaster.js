@@ -23,9 +23,9 @@ const mapStateToProps = (state) => {
         data: {
             ProductHierarchy: { isLoaded: isProductDataLoaded = false, isLoading: isProductHierarchyLoading = false, productCode = undefined, data: productHierarchyData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
+            SupportingDocument: { isLoaded: isDataLoaded = false, data: supportingData },
             OTF: {
-                OtfCancellation: { detailData: dealerDataList = [] },
+                OtfCancellation: { detailData: dealerDataList = [], isLoading },
             },
         },
     } = state;

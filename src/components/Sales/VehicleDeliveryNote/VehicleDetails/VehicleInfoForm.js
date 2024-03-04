@@ -36,7 +36,7 @@ const VehicleInfoForm = (props) => {
 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.modelCode} label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode')} name="modelCode">
+                    <Form.Item initialValue={formData?.oemModelCode} label={translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode')} name="oemModelCode">
                         <Input placeholder={preparePlaceholderText(translateContent('vehicleDeliveryNote.vehicleDetails.label.modelCode'))} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -46,6 +46,7 @@ const VehicleInfoForm = (props) => {
                     </Form.Item>
                     {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                 </Col>
+                <Form.Item initialValue={formData?.modelCode} name="modelCode" hidden />
             </Row>
         </>
     );

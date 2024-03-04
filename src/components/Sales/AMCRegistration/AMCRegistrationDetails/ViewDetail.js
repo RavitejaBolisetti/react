@@ -124,7 +124,7 @@ const ViewDetailMain = (props) => {
                                                             {translateContent('amcRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.amcRegistration?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
                                                         </Text>
                                                     </Col>
-                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                    {/* <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                                         <Text type="secondary">
                                                             {translateContent('amcRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnNumber, isLoading)}
                                                         </Text>
@@ -133,7 +133,7 @@ const ViewDetailMain = (props) => {
                                                         <Text type="secondary">
                                                             {translateContent('amcRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnStatus, isLoading)}
                                                         </Text>
-                                                    </Col>
+                                                    </Col> */}
                                                 </Row>
                                             </Card>
                                         )}
@@ -184,7 +184,7 @@ const ViewDetailMain = (props) => {
                                                             {translateContent('amcRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.amcRegistration?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
                                                         </Text>
                                                     </Col>
-                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                    {/* <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                                         <Text type="secondary">
                                                             {translateContent('amcRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnNumber, isLoading)}
                                                         </Text>
@@ -193,7 +193,7 @@ const ViewDetailMain = (props) => {
                                                         <Text type="secondary">
                                                             {translateContent('amcRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.amcRegistration?.irnStatus, isLoading)}
                                                         </Text>
-                                                    </Col>
+                                                    </Col> */}
                                                 </Row>
                                             </Card>
                                         )}

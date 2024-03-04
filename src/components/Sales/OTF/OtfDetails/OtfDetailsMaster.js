@@ -5,13 +5,12 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Form, Row, Col } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { OTFFormButton } from '../OTFFormButton';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -19,18 +18,18 @@ import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { formatDate } from 'utils/formatDateTime';
 import { translateContent } from 'utils/translateContent';
-
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTF_STATUS } from 'constants/OTFStatus';
+import { withSpinner } from 'components/withSpinner';
 
 import styles from 'assets/sass/app.module.scss';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
+                OtfSearchList: { isDetailLoaded: isDataLoaded, isLoading, isLoadingOnSave, detailData: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -43,7 +42,9 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         otfData,
-        isLoading: !isDataLoaded,
+        isLoading,
+        showSpinner: !props?.formActionType?.viewMode,
+        isLoadingOnSave,
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
@@ -60,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: otfDataActions.saveData,
             resetData: otfDataActions.reset,
             listShowLoading: otfDataActions.listShowLoading,
-
+            saveFormShowLoading: otfDataActions.saveFormShowLoading,
             fetchSalesConsultant: salesConsultantActions.fetchList,
             listConsultantShowLoading: salesConsultantActions.listShowLoading,
             showGlobalNotification,
@@ -71,11 +72,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
-    const { userId, showGlobalNotification, section, fetchOTFDetail, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
+    const { userId, showGlobalNotification, section, fetchOTFDetail, listShowLoading, saveFormShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedRecordId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
     const { setWorkFlowDetails } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
+
     const disabledProps = {
         disabled: true,
     };
@@ -159,7 +161,7 @@ const OtfDetailsMasterBase = (props) => {
             customURL,
             data: data,
             method: 'put',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -240,4 +242,4 @@ const OtfDetailsMasterBase = (props) => {
     );
 };
 
-export const OtfDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(OtfDetailsMasterBase);
+export const OtfDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(OtfDetailsMasterBase));

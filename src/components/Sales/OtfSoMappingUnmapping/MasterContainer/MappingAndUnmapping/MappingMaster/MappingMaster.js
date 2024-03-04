@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTFSoMapping: {
-                OtfNumberSearch: { isLoaded: OtfNumberSearchLoaded = false, isLoading: OtfNumberSearchLoading = false, data: OtfNumberSearchData = {} },
+                OtfNumberSearch: { isLoaded: OtfNumberSearchLoaded = false, isLoading: OtfNumberSearchLoading = false, data: OtfNumberSearchData = {}, isLoadingOnSave },
                 OtfSoMapping: { isLoaded: isOtfSoMappingLoaded = false, isLoading: isOtfSoMappingLoading = false, data: otfSomappingData = [] },
             },
         },
@@ -52,6 +52,8 @@ const mapStateToProps = (state) => {
         otfSomappingData,
         isOtfSoMappingLoading,
         isOtfSoMappingLoaded,
+
+        isLoadingOnSave,
     };
 
     return returnValue;
@@ -66,6 +68,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: otfSoMappingSearchDataActions.reset,
             saveData: otfSoMappingSearchDataActions.saveData,
 
+            saveFormShowLoading: otfSoMappingSearchDataActions.saveFormShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -73,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MappingMasterMain = (props) => {
-    const { dynamicPagination, showGlobalNotification, moduleTitle, selectedKey } = props;
+    const { dynamicPagination, showGlobalNotification, moduleTitle, selectedKey, saveFormShowLoading, isLoadingOnSave } = props;
     const { userId, listShowLoading, fetchList, OtfNumberSearchLoading } = props;
     const { otfSomappingData, isOtfSoMappingLoading, OtfNumberSearchData, resetData, saveData, advanceFilterString, setadvanceFilterString } = props;
     const [form] = Form.useForm();
@@ -114,9 +118,9 @@ const MappingMasterMain = (props) => {
 
         const requestData = {
             customURL: CustomUrl,
-            data: data,
+            data,
             method: 'put',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -159,6 +163,7 @@ const MappingMasterMain = (props) => {
 
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
+    const handlePageChange = (values) => setadvanceFilterString({ ...advanceFilterString, ...values });
 
     const tableProps = {
         dynamicPagination,
@@ -170,9 +175,8 @@ const MappingMasterMain = (props) => {
         isLoading: isOtfSoMappingLoading,
         filterString: advanceFilterString,
         page: advanceFilterString,
-        setPage: setadvanceFilterString,
+        setPage: handlePageChange,
     };
-
     const searchCustomButtonProperties = {
         icon: undefined,
         customButton: true,
@@ -204,6 +208,7 @@ const MappingMasterMain = (props) => {
         buttonData,
         setButtonData,
         OtfNumberSearchLoading,
+        isLoadingOnSave,
     };
 
     return (

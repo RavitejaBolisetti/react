@@ -9,6 +9,7 @@ import AddEditForm from './AddEditForm';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { translateContent } from 'utils/translateContent';
+import dayjs from 'dayjs';
 
 const ViewContactDetailBase = (props) => {
     const { formData, styles } = props;
@@ -40,7 +41,7 @@ const ViewContactDetailBase = (props) => {
                         <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.name')}>{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.emailId')}>{checkAndSetDefaultValue(formData?.emailId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label={translateContent('vehicleDetail.contacts.label.preferredContactTime')}>
-                            {formData?.preferredContactTimeFrom} - {formData?.preferredContactTimeTo}
+                            {dayjs(formData?.preferredContactTimeFrom, 'HH:mm').format('hh:mm A')} - {dayjs(formData?.preferredContactTimeTo, 'HH:mm').format('hh:mm A')}
                         </Descriptions.Item>
                     </Descriptions>
                 </>

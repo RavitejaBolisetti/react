@@ -22,6 +22,7 @@ export const UPLOAD_ACTION = FROM_ACTION_TYPE?.UPLOAD;
 export const CANCEL_INVOICE = FROM_ACTION_TYPE?.CANCEL_INVOICE;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
+    console.log('buttonAction==========>>>', buttonAction);
     let btnVisibility = defaultBtnVisiblity;
     if (buttonAction === ADD_ACTION) {
         btnVisibility = { ...btnVisibility, saveBtn: true, saveAndNewBtn, cancelBtn: true };

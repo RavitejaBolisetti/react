@@ -17,15 +17,15 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDateToCalender } from 'utils/formatDateTime';
 
-import styles from 'assets/sass/app.module.scss';
 import { translateContent } from 'utils/translateContent';
-
-const mapStateToProps = (state) => {
+import { withSpinner } from 'components/withSpinner';
+import styles from 'assets/sass/app.module.scss';
+const mapStateToProps = (state, props) => {
     const {
         auth: { userId },
         data: {
             OTF: {
-                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
+                FinanceDetail: { isLoaded, isLoading, isLoadingOnSave, data: financeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
             },
         },
@@ -36,7 +36,8 @@ const mapStateToProps = (state) => {
         isLoaded,
         financeData,
         isLoading,
-
+        isLoadingOnSave,
+        showSpinner: !props?.formActionType?.viewMode,
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
         FinanceLovData,
@@ -55,6 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: otfFinanceDetailDataActions.saveData,
             resetData: otfFinanceDetailDataActions.reset,
             listShowLoading: otfFinanceDetailDataActions.listShowLoading,
+            saveFormShowLoading: otfFinanceDetailDataActions.saveFormShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -62,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, resetData, fetchList, userId, listShowLoading, saveFormShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
     const { typeData, form, selectedRecordId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
 
@@ -142,7 +144,7 @@ export const FinananceDetailsMasterBase = (props) => {
             const requestData = {
                 data: data,
                 method: financeData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
+                setIsLoading: saveFormShowLoading,
                 userId,
                 onError: onErrorAction,
                 onSuccess,
@@ -218,5 +220,5 @@ export const FinananceDetailsMasterBase = (props) => {
     );
 };
 
-const FinananceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(FinananceDetailsMasterBase);
+const FinananceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(withSpinner(FinananceDetailsMasterBase));
 export default FinananceDetailsMaster;

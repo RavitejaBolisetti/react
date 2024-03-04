@@ -115,6 +115,7 @@ export const tblActionColumn = ({
     canAdd = false,
     customButton = false,
     canUpload = false,
+    render = undefined,
     customButtonProperties = {
         customName: 'Action',
         customkey: 'ACT',
@@ -130,51 +131,53 @@ export const tblActionColumn = ({
         dataIndex: '',
         width,
         fixed: fixed,
-        render: (_, record, index) => [
-            <Space size="middle">
-                {canAdd && (
-                    <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
-                        {addToolTip(translateContent('global.buttons.add'))(<PlusOutlined />)}
-                    </Button>
-                )}
+        render: render
+            ? render
+            : (_, record, index) => [
+                  <Space size="middle">
+                      {canAdd && (
+                          <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
+                              {addToolTip(translateContent('global.buttons.add'))(<PlusOutlined />)}
+                          </Button>
+                      )}
 
-                {canEdit && (
-                    <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
-                        {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
-                    </Button>
-                )}
+                      {canEdit && (
+                          <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                              {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
+                          </Button>
+                      )}
 
-                {canView && (
-                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
-                        {addToolTip(translateContent('global.buttons.view'))(<FaRegEye />)}
-                    </Button>
-                )}
+                      {canView && (
+                          <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
+                              {addToolTip(translateContent('global.buttons.view'))(<FaRegEye />)}
+                          </Button>
+                      )}
 
-                {canUpload && record?.irnStatus !== GST_IRN_TRANSACTION_STATUS.SUCCESS.title && (
-                    <Button data-testid="upload" type="link" aria-label="fa-upload" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.UPLOAD, record, index })}>
-                        {record?.irnStatus === GST_IRN_TRANSACTION_STATUS.PENDING.title ? addToolTip(translateContent('global.buttons.generateIRN'))(<FiUpload />) : addToolTip(translateContent('global.buttons.reGenerateIRN'))(<FiUpload />)}
-                    </Button>
-                )}
+                      {canUpload && record?.irnStatus !== GST_IRN_TRANSACTION_STATUS.SUCCESS.title && (
+                          <Button data-testid="upload" type="link" aria-label="fa-upload" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.UPLOAD, record, index })}>
+                              {record?.irnStatus === GST_IRN_TRANSACTION_STATUS.PENDING.title ? addToolTip(translateContent('global.buttons.generateIRN'))(<FiUpload />) : addToolTip(translateContent('global.buttons.reGenerateIRN'))(<FiUpload />)}
+                          </Button>
+                      )}
 
-                {canServerDataEdit && !record?.id && (
-                    <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
-                        {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
-                    </Button>
-                )}
+                      {canServerDataEdit && !record?.id && (
+                          <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                              {addToolTip(translateContent('global.buttons.edit'))(<FiEdit />)}
+                          </Button>
+                      )}
 
-                {(isDeletable || (canDelete && !record?.id)) && (
-                    <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
-                        {addToolTip(translateContent('global.buttons.delete'))(<RxCross1 size={18} />)}
-                    </Button>
-                )}
+                      {(isDeletable || (canDelete && !record?.id)) && (
+                          <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
+                              {addToolTip(translateContent('global.buttons.delete'))(<RxCross1 size={18} />)}
+                          </Button>
+                      )}
 
-                {customButton && (
-                    <Button data-testid="customButton" type={customButtonProperties?.buttonType} icon={customButtonProperties?.icon} onClick={(e) => customButtonProperties?.handleCustomButtonClick({ buttonAction: customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.key : customButtonProperties?.customkey, record, index })}>
-                        {customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.name : customButtonProperties?.customName}
-                    </Button>
-                )}
-            </Space>,
-        ],
+                      {customButton && (
+                          <Button data-testid="customButton" type={customButtonProperties?.buttonType} icon={customButtonProperties?.icon} onClick={(e) => customButtonProperties?.handleCustomButtonClick({ buttonAction: customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.key : customButtonProperties?.customkey, record, index })}>
+                              {customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.name : customButtonProperties?.customName}
+                          </Button>
+                      )}
+                  </Space>,
+              ],
     };
 };
 

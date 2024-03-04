@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import { Row, Col, Card, Descriptions, Divider, Button, Collapse, Typography, Popover } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { convertDateMonthYear } from 'utils/formatDateTime';
 import { SHIELD_REPORT_DOCUMENT_TYPE } from '../utils/shieldReportDocumentType';
 import { RSA_DOCUMENT_TYPE } from '../utils/rsaReportType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -45,10 +44,10 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.saleType')}>{checkAndSetDefaultValue(getCodeValue(typeData?.[PARAM_MASTER?.SALE_TYPE?.id], formData?.registrationInformation?.saleType), isLoading)}</Descriptions.Item>
 
                         {formData?.registrationInformation?.priceType !== SALE_TYPE?.PAID?.key && <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.bookingNo')}>{checkAndSetDefaultValue(screenType === 'RSA' ? formData?.registrationInformation?.otfNumber : formData?.registrationInformation?.otf, isLoading)}</Descriptions.Item>}
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>  
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.odometerReading')}>{checkAndSetDefaultValue(formData?.registrationInformation?.odometerReading, isLoading)}</Descriptions.Item>  
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.employeeName || getCodeValue(employeeData, formData?.registrationInformation?.employeeCode) , isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.managerName || getCodeValue(managerData, formData?.registrationInformation?.managerCode) , isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.vin')}>{checkAndSetDefaultValue(formData?.registrationInformation?.vin, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.odometerReading')}>{checkAndSetDefaultValue(formData?.registrationInformation?.odometerReading, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.employeeName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.employeeName || getCodeValue(employeeData, formData?.registrationInformation?.employeeCode), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label={translateContent('shieldSchemeRegistration.label.managerName')}>{checkAndSetDefaultValue(formData?.registrationInformation?.managerName || getCodeValue(managerData, formData?.registrationInformation?.managerCode), isLoading)}</Descriptions.Item>
                     </Descriptions>
 
                     {record?.status === AMC_CONSTANTS?.CANCELLED?.key && (
@@ -86,10 +85,10 @@ const ViewDetailMain = (props) => {
                                     <Row className={styles.marB10}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Text type="secondary">
-                                                {translateContent('shieldSchemeRegistration.label.invoiceDate')}:{checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
+                                                {translateContent('shieldSchemeRegistration.label.invoiceDate')}:{checkAndSetDefaultValue(formData?.registrationInformation?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
                                             </Text>
                                         </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
                                             </Text>
@@ -98,7 +97,7 @@ const ViewDetailMain = (props) => {
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
                                             </Text>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
                                 </Card>
                             )}
@@ -106,9 +105,7 @@ const ViewDetailMain = (props) => {
                             <Card>
                                 <Row>
                                     <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                        <Text strong>
-                                            {props?.screenType === 'RSA' ? 'RSA Certificate Number' : translateContent('shieldSchemeRegistration.label.schemeCertificateNo')} : {checkAndSetDefaultValue(formData?.registrationInformation?.shieldCertificateNumber, isLoading)}
-                                        </Text>
+                                        <Text strong>{props?.screenType === 'RSA' ? 'RSA Certificate' : translateContent('shieldSchemeRegistration.label.schemeCertificateNo')}</Text>
                                     </Col>
                                     <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                         <div className={styles.floatRight}>
@@ -121,7 +118,7 @@ const ViewDetailMain = (props) => {
                                 <Row className={styles.marB10}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                         <Text type="secondary">
-                                            {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
+                                            {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.registrationInformation?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
                                         </Text>
                                     </Col>
                                 </Row>
@@ -146,10 +143,10 @@ const ViewDetailMain = (props) => {
                                     <Row className={styles.marB10}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Text type="secondary">
-                                                {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(convertDateMonthYear(formData?.registrationInformation?.invoiceDate), isLoading)}
+                                                {translateContent('shieldSchemeRegistration.label.invoiceDate')}: {checkAndSetDefaultValue(formData?.registrationInformation?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key)}
                                             </Text>
                                         </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnNo')}: {checkAndSetDefaultValue(formData?.registrationInformation?.irnNumber, isLoading)}
                                             </Text>
@@ -158,7 +155,7 @@ const ViewDetailMain = (props) => {
                                             <Text type="secondary">
                                                 {translateContent('shieldSchemeRegistration.label.irnStatus')}: {checkAndSetDefaultValue(formData?.registrationInformation?.shieldIncentiveClaim, isLoading)}
                                             </Text>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
                                 </Card>
                             )}

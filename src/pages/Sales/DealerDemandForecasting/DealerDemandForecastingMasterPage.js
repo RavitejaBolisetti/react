@@ -10,7 +10,7 @@ import  DealerDemandForecastingMaster from 'components/Sales/DealerDemandForecas
 import { translateContent } from 'utils/translateContent';
 
 const DealerDemandForecastingMasterBase = (props) => {
-    const pageTitle = translateContent('demandForecasting.heading.mainTitle');
+    const pageTitle = translateContent('demandForecasting.heading.moduleTitle');
     const pageHeaderData = {
         pageTitle, 
         canMarkFavourite: true,

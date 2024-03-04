@@ -86,7 +86,8 @@ const ViewDetailMain = (props) => {
         </Descriptions>
     );
 
-    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || (!isOTFModule && schemeData?.sales?.length > 0) || (isOTFModule && schemeData?.sales?.filter((i) => i?.active)?.length > 0);
+    const isSalesSchemeExist = (!isOTFModule && schemeData?.sales?.length > 0) || (isOTFModule && schemeData?.sales?.filter((i) => i?.active)?.length > 0);
+    const isDataExist = schemeData?.exchange || schemeData?.loyalty || schemeData?.corporate || isSalesSchemeExist;
 
     return isLoading ? (
         <CardSkeleton content={false} titleHeight={60} count={2} />
@@ -123,7 +124,7 @@ const ViewDetailMain = (props) => {
                                 </Collapse>
                             )}
 
-                            {schemeData?.sales && schemeData?.sales?.filter((i) => i?.active)?.length > 0 && (
+                            {isSalesSchemeExist && (
                                 <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                                     <Panel header={translateContent('commonModules.heading.schemeAndOfferDetails.salesScheme')} key={4}>
                                         <Divider />

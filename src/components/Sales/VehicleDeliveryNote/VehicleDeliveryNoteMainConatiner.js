@@ -20,11 +20,13 @@ import { AddOnDetailsMaster } from './AddOnDetails';
 import { DeliverableChecklistMaster } from './DeliverableChecklist';
 import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
 import { ThankYouMaster } from './ThankYou';
+
 import styles from 'assets/sass/app.module.scss';
+import { withSpinner } from 'components/withSpinner';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
     const { currentSection, selectedOtfNumber, selectedOrderId, soldByDealer, vehicleChallanData, customerDetailsDataSearched } = props;
-    const { requestPayload, setRequestPayload } = props;
+    const { requestPayload, setRequestPayload, formActionType } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
@@ -32,8 +34,8 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
     const requestData = requestPayload;
 
     const invoiceDataPayload = soldByDealer ? requestData?.deliveryNoteInvoiveDetails : requestData?.engineDetailDto;
-    const customerdataPayload = soldByDealer ? requestData?.customerDetails : props?.formActionType?.addMode ? customerDetailsDataSearched : requestData?.customerDetails;
-    const vehicleDataPayload = soldByDealer ? requestData?.vehicleDetails : props?.formActionType?.addMode ? vehicleChallanData : requestData?.vehicleInformationDto;
+    const customerdataPayload = soldByDealer ? requestData?.customerDetails : formActionType?.addMode ? customerDetailsDataSearched : requestData?.customerDetails;
+    const vehicleDataPayload = soldByDealer ? requestData?.vehicleDetails : formActionType?.addMode ? vehicleChallanData : requestData?.vehicleInformationDto;
 
     const myProps = {
         ...props,
@@ -87,4 +89,4 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
     );
 };
 
-export const VehicleDeliveryNoteMainConatiner = withDrawer(VehicleDeliveryNoteConatinerMain, { width: '90%', footer: null });
+export const VehicleDeliveryNoteMainConatiner = withDrawer(withSpinner(VehicleDeliveryNoteConatinerMain), { width: '90%', footer: null });
