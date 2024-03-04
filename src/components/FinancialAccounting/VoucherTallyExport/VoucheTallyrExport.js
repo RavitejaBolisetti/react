@@ -17,6 +17,7 @@ import VoucherTallyExportFilter from './VoucherTallyExportFilter';
 import { validateInvoiceMenu } from './LeftProfileCard/validateInvoiceMenu';
 import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { UnSaveDataConfirmation, handleUnSavedChange } from 'utils/UnSaveDataConfirmation';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
@@ -39,6 +40,7 @@ import LeftProfileCard from './LeftProfileCard';
 import AdvanceFilter from './AdvanceFilter';
 import { VoucherTallyExportMain } from './VoucherTallyExportMainConatiner';
 
+import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -147,7 +149,8 @@ export const VoucherTallyExportBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [invoiceDetailForm] = Form.useForm();
-
+    
+    const [refershData, setRefershData] = useState(false);
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
@@ -284,7 +287,7 @@ export const VoucherTallyExportBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue,  filterString]);
+    }, [searchValue, filterString]);
 
     useEffect(() => {
         if (userId) {
@@ -694,7 +697,7 @@ export const VoucherTallyExportBase = (props) => {
         filterString,
         setPage: setFilterString,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: [{}]  || data,
+        tableData: [{}] || data,
         showAddButton: false,
         typeData,
     };
@@ -775,7 +778,9 @@ export const VoucherTallyExportBase = (props) => {
 
         saveData(requestData);
     };
-
+    const handleReferesh = () => {
+        setRefershData(!refershData);
+    };
     const title = 'Vouchar Export';
     const advanceFilterResultProps = {
         extraParams,
@@ -783,7 +788,7 @@ export const VoucherTallyExportBase = (props) => {
         // invoiceStatus,
         invoiceStatusList,
         advanceFilter: true,
-        otfFilter: true,
+        otfFilter: false,
         filterString,
         setFilterString,
         from: listFilterForm,
@@ -793,11 +798,13 @@ export const VoucherTallyExportBase = (props) => {
         handleChange,
         handleSearch,
         handleInvoiceTypeChange,
+        handleReferesh,
         title,
         data,
         setAdvanceSearchVisible,
         typeData,
         searchForm,
+        //singleField:true
     };
 
     const advanceFilterProps = {
@@ -913,7 +920,26 @@ export const VoucherTallyExportBase = (props) => {
         <>
             {/* <VehicleInvoiceFilter {...advanceFilterResultProps} /> */}
             <AdvanceFilter {...advanceFilterResultProps} />
-            
+            {/* <div className={styles.contentHeaderBackground}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                            <Form.Item label={`${title}`} name="code">
+                                <Row gutter={20}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item>{customSelectBox({ placeholder: 'Post Data' })}</Form.Item>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item>{customSelectBox({ placeholder: 'Financial Companies ' })}</Form.Item>
+                                    </Col>
+                                    
+                                </Row>
+                            </Form.Item>
+                        </Form>
+                    </Col>
+                </Row>
+            </div> */}
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />

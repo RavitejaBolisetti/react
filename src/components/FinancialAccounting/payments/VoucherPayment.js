@@ -778,7 +778,7 @@ export const VoucherPaymentBase = (props) => {
         saveData(requestData);
     };
 
-    const title = 'Vouchar Payments';
+    const title = '         ';
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,

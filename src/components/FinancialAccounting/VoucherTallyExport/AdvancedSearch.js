@@ -58,14 +58,14 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label='Payment from Date' name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('vehicleDeliveryNote.label.invoiceFromDate'))]}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label='From Date' name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField(translateContent('vehicleDeliveryNote.label.invoiceFromDate'))]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label='Payment To Date'
+                        label='To Date'
                         name="toDate"
                         className={styles?.datePicker}
                         rules={[
@@ -82,25 +82,6 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
             </Row>
 
-            <Row gutter={16}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.digitalSignature} label='Payment Mode' name="digitalSignature">
-                        {customSelectBox({ })}
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.digitalSignature} label='Payment Status' name="digitalSignature">
-                        {customSelectBox({ })}
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row gutter={16}>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item initialValue={filterString?.digitalSignature} label='Party Segments' name="digitalSignature">
-                        {customSelectBox({ })}
-                    </Form.Item>
-                </Col>
-            </Row>
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.alignRight}>
