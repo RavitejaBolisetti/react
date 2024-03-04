@@ -149,7 +149,7 @@ export const VoucherTallyExportBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [invoiceDetailForm] = Form.useForm();
-    
+
     const [refershData, setRefershData] = useState(false);
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -162,6 +162,7 @@ export const VoucherTallyExportBase = (props) => {
     const [unSavedDataModalProps, setUnSavedModelVisible] = useState({
         isVisible: false,
     });
+    const [selectedRows, setSelectedRows] = useState([]);
 
     const dynamicPagination = true;
 
@@ -690,6 +691,13 @@ export const VoucherTallyExportBase = (props) => {
             resetInvoiceData();
         });
     };
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            setSelectedRows(selectedRows);
+            // setFormBtnActive(true);
+            // setSelectedRowData(selectedRows?.[0]);
+        },
+    };
 
     const tableProps = {
         dynamicPagination,
@@ -700,6 +708,10 @@ export const VoucherTallyExportBase = (props) => {
         tableData: [{}] || data,
         showAddButton: false,
         typeData,
+        rowSelection: {
+            type: 'checkbox',
+            ...rowSelection,
+        },
     };
 
     const onAdvanceSearchCloseAction = () => {

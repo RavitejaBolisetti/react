@@ -11,11 +11,6 @@ import { translateContent } from 'utils/translateContent';
 export const tableColumn = (handleButtonClick) => {
     // const [selectionType, setSelectionType] = useState('checkbox');
     const tableColumn = [
-        // tblPrepareColumns({
-        //     type: selectionType,
-        //     dataIndex: 'invoiceNumber',
-        //     width: '10%',
-        // }),
         tblPrepareColumns({
             title: 'Transaction Type',
             dataIndex: 'invoiceNumber',
@@ -43,13 +38,13 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'customerName',
             width: '30%',
         }),
+
         // tblPrepareColumns({
         //     title: translateContent('vehicleInvoiceGeneration.tableColumn.invoiceMaster.columnThree'),
         //     dataIndex: 'customerName',
         //     width: '20%',
         // }),
-        
-        
+
         // tblPrepareColumns({
         //     title: 'Payment Status',
         //     dataIndex: 'digitalSignature',
