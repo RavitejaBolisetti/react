@@ -97,16 +97,16 @@ export const EmbeddedReportMasterMain = (props) => {
         if (data && headerData) {
             let embedUrl = data?.embedReports?.[0]?.embedUrl;
 
-            // if (reportDetail?.type === REPORT_TYPE) {
-            //     let locationCode = headerData?.dealerLocations?.find((e) => e?.isDefault)?.locationCode;
-            //     let param = `&filter=Query1/parent_group_code eq '${headerData?.parentGroupCode}' and Query1/location_code eq '${locationCode}'`;
-            //     embedUrl += param;
-            // } 
-
             if (reportDetail?.type === REPORT_TYPE) {
-                let param = `&filter=Query1/user_login_id eq '${userId}'`;
+                let locationCode = headerData?.dealerLocations?.find((e) => e?.isDefault)?.locationCode;
+                let param = `&filter=Query1/parent_group_code eq '${headerData?.parentGroupCode}' and Query1/location_code eq '${locationCode}'`;
                 embedUrl += param;
-            }
+            } 
+
+            // if (reportDetail?.type === REPORT_TYPE) {
+            //     let param = `&filter=Query1/user_login_id eq '${userId}'`;
+            //     embedUrl += param;
+            // }
 
             setReportConfig({
                 type: 'report',
