@@ -101,7 +101,7 @@ export const EmbeddedReportMasterMain = (props) => {
             //     let locationCode = headerData?.dealerLocations?.find((e) => e?.isDefault)?.locationCode;
             //     let param = `&filter=Query1/parent_group_code eq '${headerData?.parentGroupCode}' and Query1/location_code eq '${locationCode}'`;
             //     embedUrl += param;
-            // }
+            // } 
 
             if (reportDetail?.type === REPORT_TYPE) {
                 let param = `&filter=Query1/user_login_id eq '${userId}'`;
