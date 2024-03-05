@@ -5,12 +5,13 @@
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear, dateFormatView, timeFormatView, convertDateTimedayjs } from 'utils/formatDateTime';
-import { ChargerStatusTag } from '../ChargerStatusTag';
+import { ChargerSearchStatusTag, ChargerStatusTag } from '../ChargerStatusTag';
 import { FiEye } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import * as IMAGES from 'assets';
 import { translateContent } from 'utils/translateContent';
+import { Button } from 'antd';
 
 export const addRequestColumns = (typeData) => {
     const tableColumn = [
@@ -147,6 +148,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             dataIndex: 'response',
             width: '180px',
             key: 'response',
+            render: (value) => ChargerSearchStatusTag(value, typeData),
         }),
         tblPrepareColumns({
             title: translateContent('chargerInstallationDetailsTableColumn.label.responseRemark'),
@@ -156,7 +158,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
         tblPrepareColumns({
             title: translateContent('chargerInstallationDetailsTableColumn.label.activity'),
             width: '150px',
-            render: (_, record) => <FiEye onClick={() => onHandleModal(record)} style={{ color: '#ff3e5b' }} />,
+            render: (_, record) => <Button onClick={() => onHandleModal(record)} icon={<FiEye />} type="link"></Button>,
         }),
         tblPrepareColumns({
             title: translateContent('chargerInstallationDetailsTableColumn.label.document'),
@@ -165,7 +167,7 @@ export const addRequestColumnsView = (typeData, onHandleModal) => {
             width: '150px',
             render: (_, record) => (
                 <a href={record?.supportingDocumentUrl} target="_blank" rel="noreferrer">
-                    <img src={IMAGES.FILE} alt="logo-images" href={record?.supportingDocumentUrl} />
+                    <img src={IMAGES.FILE} alt="document" />
                 </a>
             ),
         }),

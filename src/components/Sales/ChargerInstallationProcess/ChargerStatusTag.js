@@ -7,12 +7,10 @@ import { Tag } from 'antd';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 export const ChargerSearchStatusTag = (status, typeData) => {
-    let tag = '';
-    typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id]?.map((item) => item.key === status && (tag = <Tag color="success">{item?.value}</Tag>));
-    return tag;
+    const foundStatus = typeData?.[PARAM_MASTER.CHRGR_INST_HDR_STAT.id]?.find((item) => item?.key === status);
+    return foundStatus && <Tag color={status?.toUpperCase() === 'RJCTD' ? 'error' : 'success'}>{foundStatus?.value}</Tag>;
 };
 export const ChargerStatusTag = (status, typeData) => {
-    let tag = '';
-    typeData?.[PARAM_MASTER.CHRGR_INST_DTL_STAT.id]?.map((item) => item.key === status && (tag = <Tag color={status?.toUpperCase() === 'RJCTD' ? 'error' : 'success'}>{item?.value}</Tag>));
-    return tag;
+    const foundStatus = typeData?.[PARAM_MASTER.CHRGR_INST_DTL_STAT.id]?.find((item) => item?.key === status);
+    return foundStatus && <Tag color={status?.toUpperCase() === 'RJCTD' ? 'error' : 'success'}>{foundStatus?.value}</Tag>;
 };
