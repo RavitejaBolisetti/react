@@ -41,99 +41,99 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
-                <Panel header={'Claim Detail' || translateContent('applicationMaster.text.applicationActions')} key="1">
+                <Panel header={translateContent('overRiderClaim.heading.claimDetail') || translateContent('applicationMaster.text.applicationActions')} key="1">
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-                            <Form.Item name="mnmInvoice No" label={'M&M Invoice No'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('M&M Invoice No')} maxLength={50} disabled={!formActionType?.addMode} />
+                            <Form.Item name="mnmInvoice No" label={translateContent('overRiderClaim.label.mandmInvoiceNo')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.mandmInvoiceNo'))} maxLength={50} disabled={!formActionType?.addMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="mnmInvoiceDate" label={'M&M Invoice Date'} initialValue={formData?.financierName}>
-                                <DatePicker placeholder={preparePlaceholderSelect('M&M Invoice Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
+                            <Form.Item name="mnmInvoiceDate" label={translateContent('overRiderClaim.label.mandmInvoiceDate')} initialValue={formData?.financierName}>
+                                <DatePicker placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.mandmInvoiceDate'))} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Dealer Claim Amount'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Dealer Claim Amount')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.dealerClaimAmount')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.dealerClaimAmount'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Approved Claim Amount'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Approved Claim Amount')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.approvedClaimAmount')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.approvedClaimAmount'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'GST %'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('GST %')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.gst')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.gst'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'GST Amount'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('GST Amount')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.gstAmount')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.gstAmount'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Total Claim Amount'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Total Claim Amount')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.totalClaimAmount')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.totalClaimAmount'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Credit Note No'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Credit Note No')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.creditNoteNo')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.creditNoteNo'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Credit Note Date'} initialValue={formData?.invoiceNo}>
-                                <DatePicker placeholder={preparePlaceholderSelect('Credit Note Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.creditNoteDate')} initialValue={formData?.invoiceNo}>
+                                <DatePicker placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.creditNoteDate'))} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Credit Note Amount'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Credit Note Amount')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.creditNoteAmount')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.creditNoteAmount'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'TDS Amount'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Credit Note Amount')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.tdsAmount')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.creditNoteAmount'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Debit Note No'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Debit Note No')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.debitNoteNo')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.debitNoteNo'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Debit Note Date'} initialValue={formData?.invoiceNo}>
-                                <DatePicker placeholder={preparePlaceholderSelect('Debit Note Date')} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.debitNoteDate')} initialValue={formData?.invoiceNo}>
+                                <DatePicker placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.debitNoteDate'))} format={dateFormat} className={styles.fullWidth} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'Debit Note Amount'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Debit Note Amount')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.debitNoteAmount')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.debitNoteAmount'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'IRN Number'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('IRN Number')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.irnNumber')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.irnNumber'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>{' '}
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'IRN Status'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('IRN Status')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.irnStatus')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.irnStatus'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>{' '}
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="month" label={'IRN Desc'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('IRN Desc')} maxLength={50} {...disabledProps} />
+                            <Form.Item name="month" label={translateContent('overRiderClaim.label.irnDesc')} initialValue={formData?.invoiceNo}>
+                                <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.irnDesc'))} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
                 </Panel>
             </Collapse>
             <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
-                <Panel header={'Vehicle Detail' || translateContent('applicationMaster.text.applicationActions')} key="1">
+                <Panel header={translateContent('overRiderClaim.heading.vehicleDetail') || translateContent('applicationMaster.text.applicationActions')} key="1">
                     <Divider />
                     <VehicleDetailsMaster {...vehicleFormProps} />
                 </Panel>

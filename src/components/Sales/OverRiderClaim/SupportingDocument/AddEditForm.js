@@ -28,7 +28,7 @@ const AddEditForm = (uploadProps) => {
             <>
                 {/* <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item label={translateContent('vehicleDetail.documents.label.documentType')} name="documentTypeCd" rules={mandatoryFields ? [validateRequiredSelectField(translateContent('vehicleDetail.documents.label.documentType'))] : ''} placeholder={preparePlaceholderSelect('document type')}>
+                                    <Form.Item label={translateContent('vehicleDetail.documents.label.documentType')} name="documentTypeCd" rules={mandatoryFields ? [validateRequiredSelectField(translateContent('vehicleDetail.documents.label.documentType'))] : ''} placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.documentType'))}>
                                         <Select loading={!(typeData?.length !== 0)} onChange={handleClearChange} placeholder="Select" {...selectProps}>
                                             {typeData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>

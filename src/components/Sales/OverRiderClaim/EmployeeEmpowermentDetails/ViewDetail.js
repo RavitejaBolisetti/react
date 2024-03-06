@@ -8,7 +8,6 @@ import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { translateContent } from 'utils/translateContent';
 
-
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
 
@@ -23,24 +22,24 @@ const ViewDetailMain = (props) => {
         <>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label={'M&M Invoice No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'M&M Invoice Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Chessis No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Dealer Claim Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Approved Claim Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'GST %' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'GST Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Total Claim Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Credit Note No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Credit Note Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Credit Note Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'TDS Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Debit Note No' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Debit Note Date' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'Debit Note Amount' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'IRN Number' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'IRN Status' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label={'IRN Desc' || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.mandmInvoiceNo') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.mandmInvoiceDate') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.chessisNo') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.dealerClaimAmount') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.approvedClaimAmount') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.gst') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.gstAmount') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.totalClaimAmount') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.creditNoteNo') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.creditNoteDate') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.creditNoteAmount') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.tdsAmount') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.debitNoteNo') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.debitNoteDate') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.debitNoteAmount') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.irnNumber') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.irnStatus') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label={translateContent('overRiderClaim.label.irnDesc') || translateContent('amcRegistration.label.chassisNumber')}>{checkAndSetDefaultValue(formData?.amcCustomerDetails?.district, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
         </>

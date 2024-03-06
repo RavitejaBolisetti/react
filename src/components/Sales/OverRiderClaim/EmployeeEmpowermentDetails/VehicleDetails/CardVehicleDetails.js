@@ -17,7 +17,7 @@ const { Text } = Typography;
 
 const CardVehicleDetails = (prop) => {
     const { formData, setVehicleDetailData, setIsBtnDisabled, isBtnDisabled, onFieldsChange, chessisNoList } = prop;
-    console.log("🚀 ~ file: CardVehicleDetails.js:18 ~ CardVehicleDetails ~ formData:", formData)
+    console.log('🚀 ~ file: CardVehicleDetails.js:18 ~ CardVehicleDetails ~ formData:', formData);
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -29,13 +29,11 @@ const CardVehicleDetails = (prop) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleDownload = (id) => {
-
-    };
+    const handleDownload = (id) => {};
 
     const onEdit = (data) => {
         form.setFieldsValue({
-            ...data
+            ...data,
         });
         setIsEditing(true);
         setIsBtnDisabled(true);
@@ -48,7 +46,7 @@ const CardVehicleDetails = (prop) => {
                     const newList = prev;
                     const indx = prev?.findIndex((el) => el?.deliveryChallanNo === formData?.deliveryChallanNo);
                     newList?.splice(indx, 1, { ...newFormData });
-                    return [...newList ];
+                    return [...newList];
                 });
                 setIsEditing(false);
                 setIsBtnDisabled(false);
@@ -85,10 +83,16 @@ const CardVehicleDetails = (prop) => {
                             <Text strong>{formData?.chessisNo}</Text>
                         </div>
                         <div>
-                            <Text type="secondary">{'Challan No : ' || translateContent('applicationMaster.text.code')}{formData?.deliveryChallanNo}</Text>
+                            <Text type="secondary">
+                                {translateContent('overRiderClaim.label.challanNo') || translateContent('applicationMaster.text.code')}
+                                {formData?.deliveryChallanNo}
+                            </Text>
                         </div>
                         <div>
-                            <Text type="secondary">{'Challan Date : ' || translateContent('applicationMaster.text.code')}{convertDate(formData?.deliveryChallanDate, dateFormatView)}</Text>
+                            <Text type="secondary">
+                                {translateContent('overRiderClaim.label.challanDate') || translateContent('applicationMaster.text.code')}
+                                {convertDate(formData?.deliveryChallanDate, dateFormatView)}
+                            </Text>
                         </div>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>

@@ -3068,10 +3068,10 @@
             "vDNDate": "VDN Date",
             "reasonforDelay": "Reason for Delay",
             "documentUpload": "Document Upload",
-            "zone":"Zone",           
-            "areaOffice":"Area Office",  
-            "dealerName":"Dealer Name",
-            "locationName":"Location Name"  
+            "zone": "Zone",
+            "areaOffice": "Area Office",
+            "dealerName": "Dealer Name",
+            "locationName": "Location Name"
         },
         "label": {
             "empowerDetails": {
@@ -3092,12 +3092,12 @@
                 "vDNDate": "VDN Date",
                 "reasonforDelay": "Reason for Delay",
                 "documentUpload": "Document Upload",
-                "zone":"Zone",           
-                "areaOffice":"Area Office",  
-                "dealerName":"Dealer Name",
-                "locationName":"Location Name",
+                "zone": "Zone",
+                "areaOffice": "Area Office",
+                "dealerName": "Dealer Name",
+                "locationName": "Location Name",
                 "fromDate": "Claim From Date",
-                "toDate":"Claim To Date"  
+                "toDate": "Claim To Date"
             }
         },
         "heading": {
@@ -3118,7 +3118,6 @@
                 "requestDate": "Request Date:",
                 "status": " Request Status: "
             }
-            
         }
     },
 
@@ -3144,100 +3143,100 @@
         }
     },
 
-"ExchangeLoyaltyCappingMaster": {
-    "heading": {
-        "pageTitle": "Exchange/Loyalty Capping Master",
-        "title": "Exchange/Loyalty Capping"
+    "ExchangeLoyaltyCappingMaster": {
+        "heading": {
+            "pageTitle": "Exchange/Loyalty Capping Master",
+            "title": "Exchange/Loyalty Capping"
+        },
+        "label": {
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "zone": "Zone",
+            "areaOffice": "Area Office",
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name",
+            "capping": "Capping %",
+            "retailSlabFrom": "Retail Slab From",
+            "retailSlabTo": "Retail Slab To",
+            "validFrom": "Valid From",
+            "validTo": "Valid To",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "placeholder": {
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "zone": "Zone",
+            "areaOffice": "Area Office",
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name",
+            "capping": "Capping %",
+            "retailSlabFrom": "Retail Slab From",
+            "retailSlabTo": "Retail Slab To",
+            "validFrom": "Valid From",
+            "validTo": "Valid To",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "validation": {
+            "modelGroup": "Model Group",
+            "modelVariant": "Model Variant",
+            "zone": "Zone",
+            "areaOffice": "Area Office",
+            "dealerCode": "Dealer Code",
+            "dealerName": "Dealer Name",
+            "capping": "Capping %",
+            "retailSlabFrom": "Retail Slab From",
+            "retailSlabTo": "Retail Slab To",
+            "validFrom": "Valid From",
+            "validTo": "Valid To",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive"
+        }
     },
-    "label": {
-        "modelGroup": "Model Group",
-        "modelVariant": "Model Variant",
-        "zone": "Zone",
-        "areaOffice": "Area Office",
-        "dealerCode": "Dealer Code",
-        "dealerName": "Dealer Name",
-        "capping": "Capping %",
-        "retailSlabFrom": "Retail Slab From",
-        "retailSlabTo": "Retail Slab To",
-        "validFrom": "Valid From",
-        "validTo": "Valid To",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive"
-    },
-    "placeholder": {
-        "modelGroup": "Model Group",
-        "modelVariant": "Model Variant",
-        "zone": "Zone",
-        "areaOffice": "Area Office",
-        "dealerCode": "Dealer Code",
-        "dealerName": "Dealer Name",
-        "capping": "Capping %",
-        "retailSlabFrom": "Retail Slab From",
-        "retailSlabTo": "Retail Slab To",
-        "validFrom": "Valid From",
-        "validTo": "Valid To",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive"
-    },
-    "validation": {
-        "modelGroup": "Model Group",
-        "modelVariant": "Model Variant",
-        "zone": "Zone",
-        "areaOffice": "Area Office",
-        "dealerCode": "Dealer Code",
-        "dealerName": "Dealer Name",
-        "capping": "Capping %",
-        "retailSlabFrom": "Retail Slab From",
-        "retailSlabTo": "Retail Slab To",
-        "validFrom": "Valid From",
-        "validTo": "Valid To",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive"
-    }
-},
 
-"LoyaltySchemeMaster": {
-    "heading": {
-        "pageTitle": "Exchange/Loyalty Scheme Master",
-        "title": "Exchange/Loyalty Scheme"
+    "LoyaltySchemeMaster": {
+        "heading": {
+            "pageTitle": "Exchange/Loyalty Scheme Master",
+            "title": "Exchange/Loyalty Scheme"
+        },
+        "label": {
+            "documentId": "Document ID",
+            "documentName": "Document Name",
+            "schemeId": "Scheme ID",
+            "SchemeName": "Scheme Name",
+            "validFrom": "Valid From",
+            "validTo": "Valid To",
+            "status": "Status",
+            "active": "Active",
+            "inactive": "Inactive",
+            "documentstatus": "Is Document Active?",
+            "activesheme": "Active",
+            "inactivesheme": "Inactive",
+            "documentmandatory": "Is Document Mandatory?",
+            "documentyes": "Yes",
+            "documentno": "No"
+        },
+        "placeholder": {
+            "schemeId": "Scheme ID",
+            "SchemeName": "Scheme Name",
+            "documentId": "Document ID",
+            "documentName": "Document Name",
+            "validFrom": "Valid From",
+            "validTo": "Valid To"
+        },
+        "validation": {
+            "documentId": "Document ID",
+            "documentName": "Document Name",
+            "schemeId": "Scheme ID",
+            "SchemeName": "Scheme Name",
+            "validFrom": "Valid From",
+            "validTo": "Valid To"
+        }
     },
-    "label": {
-        "documentId": "Document ID",
-        "documentName": "Document Name",
-        "schemeId": "Scheme ID",
-        "SchemeName": "Scheme Name",
-        "validFrom": "Valid From",
-        "validTo": "Valid To",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "documentstatus": "Is Document Active?",
-        "activesheme":"Active",
-        "inactivesheme":"Inactive",
-        "documentmandatory": "Is Document Mandatory?",
-        "documentyes":"Yes",
-        "documentno":"No"
-    },
-    "placeholder": {
-        "schemeId": "Scheme ID",
-        "SchemeName": "Scheme Name",
-        "documentId": "Document ID",
-        "documentName": "Document Name",
-        "validFrom": "Valid From",
-        "validTo": "Valid To"
-    },
-    "validation": {
-        "documentId": "Document ID",
-        "documentName": "Document Name",
-        "schemeId": "Scheme ID",
-        "SchemeName": "Scheme Name",
-        "validFrom": "Valid From",
-        "validTo": "Valid To"
-    }
-},
 
     "configurableParameter": {
         "heading": {
@@ -4824,7 +4823,7 @@
             "salesOrg": "Sales Org.",
             "productDivision": "Product Division",
             "issueIndicator": "Issue Indicator",
-            "warrantyIndicator": "Warranty Indicator",          
+            "warrantyIndicator": "Warranty Indicator",
             "vendor": "Vendor",
             "brand": "Brand",
             "unitofMeasure": "Unit of Measure",
@@ -4832,15 +4831,15 @@
             "skuWiseKLQty": "SKU Wise KL Qty.",
             "minPackQty": "Min. Pack Qty.",
             "minOrderQty": "Min. Order Qty.",
-            "qtyPerVehicle": "Qty. Per Vehicle",  
+            "qtyPerVehicle": "Qty. Per Vehicle",
 
-            "materialPricingGroup": "Material Pricing Group",  
-            "hsnCode": "HSN Code", 
-            "taxCategory": "Tax Category", 
-            "accountCategory": "Account Category", 
-            "purchasePriceGNDP": "Purchase Price/GNDP", 
-            "mrp": "MRP", 
-            "sellingPrice": "Selling Price", 
+            "materialPricingGroup": "Material Pricing Group",
+            "hsnCode": "HSN Code",
+            "taxCategory": "Tax Category",
+            "accountCategory": "Account Category",
+            "purchasePriceGNDP": "Purchase Price/GNDP",
+            "mrp": "MRP",
+            "sellingPrice": "Selling Price",
             "latestLandedCost": "Latest Landed Cost",
             "inventoryType": "Inventory Type",
             "onHandStock": "On Hand Stock",
@@ -4853,7 +4852,7 @@
             "mFGPlant": "MFG Plant",
             "otherMFGPlant": "Other MFG Plant",
             "plantLocation": "Plant Location",
-            "plantBlock": "Plant Block",            
+            "plantBlock": "Plant Block",
             "activeInd": "Active Industry",
 
             "approverName": "Approver Name",
@@ -4862,7 +4861,6 @@
             "actionedon": "Actioned on",
             "remarks": "Remarks",
 
-          
             "includeinAutoIndent": "Include in Auto Indent",
             "minimumLevel": "Minimum Level",
             "maximumLevel": "Maximum Level",
@@ -4871,7 +4869,7 @@
             "reservationQty": "Reservation Qty.",
             "aBC1C2": "ABC1C2",
             "hml": "HML",
-            "rIS": "RIS",            
+            "rIS": "RIS",
             "seasonalPart": "Seasonal Part",
             "seasonFromMonth": "Season From Month",
             "seasonToMonth": "Season To Month",
@@ -4885,11 +4883,9 @@
             "stockinhand": "Stock–in-hand",
             "allocatedstock": "Allocated Stock",
             "active": "Active"
-            
-            
-           },
+        },
 
-        "placeholder": { 
+        "placeholder": {
             "partNumber": "Part Number",
             "partDescription": "Part Description",
             "partNumberSource": "Part Number Source",
@@ -4899,7 +4895,7 @@
             "salesOrg": "Sales Org.",
             "productDivision": "Product Division",
             "issueIndicator": "Issue Indicator",
-            "warrantyIndicator": "Warranty Indicator",          
+            "warrantyIndicator": "Warranty Indicator",
             "vendor": "Vendor",
             "brand": "Brand",
             "unitofMeasure": "Unit of Measure",
@@ -4908,13 +4904,13 @@
             "minPackQty": "Min. Pack Qty.",
             "minOrderQty": "Min. Order Qty.",
             "qtyPerVehicle": "Qty. Per Vehicle",
-            "materialPricingGroup": "Material Pricing Group",  
-            "hsnCode": "HSN Code", 
-            "taxCategory": "Tax Category", 
-            "accountCategory": "Account Category", 
-            "purchasePriceGNDP": "Purchase Price/GNDP", 
-            "mrp": "MRP", 
-            "sellingPrice": "Selling Price", 
+            "materialPricingGroup": "Material Pricing Group",
+            "hsnCode": "HSN Code",
+            "taxCategory": "Tax Category",
+            "accountCategory": "Account Category",
+            "purchasePriceGNDP": "Purchase Price/GNDP",
+            "mrp": "MRP",
+            "sellingPrice": "Selling Price",
             "latestLandedCost": "Latest Landed Cost",
             "inventoryType": "Inventory Type",
             "onHandStock ": "On Hand Stock ",
@@ -4927,7 +4923,7 @@
             "otherMFGPlant": "Other MFG Plant",
             "plantLocation": "Plant Location",
             "plantBlock": "Plant Block",
-            "activeInd": "Active Industry", 
+            "activeInd": "Active Industry",
 
             "approverName": "Approver Name",
             "requestedon": "Requested date",
@@ -4943,7 +4939,7 @@
             "reservationQty": "Reservation Qty.",
             "aBC1C2": "ABC1C2",
             "hml": "HML",
-            "rIS": "RIS",            
+            "rIS": "RIS",
             "seasonalPart": "Seasonal Part",
             "seasonFromMonth": "Season From Month",
             "seasonToMonth": "Season To Month",
@@ -4957,8 +4953,7 @@
             "stockinhand": "Stock–in-hand",
             "allocatedstock": "Allocated Stock",
             "active": "Active"
-         },
-
+        },
 
         "validation": {
             "partNumber": "Part Number",
@@ -4970,7 +4965,7 @@
             "salesOrg": "Sales Org.",
             "productDivision": "Product Division",
             "issueIndicator": "Issue Indicator",
-            "warrantyIndicator": "Warranty Indicator",          
+            "warrantyIndicator": "Warranty Indicator",
             "vendor": "Vendor",
             "brand": "Brand",
             "unitofMeasure": "Unit of Measure",
@@ -4979,13 +4974,13 @@
             "minPackQty": "Min. Pack Qty.",
             "minOrderQty": "Min. Order Qty.",
             "qtyPerVehicle": "Qty. Per Vehicle",
-            "materialPricingGroup": "Material Pricing Group",  
-            "hsnCode": "HSN Code", 
-            "taxCategory": "Tax Category", 
-            "accountCategory": "Account Category", 
-            "purchasePriceGNDP": "Purchase Price/GNDP", 
-            "mrp": "MRP", 
-            "sellingPrice": "Selling Price", 
+            "materialPricingGroup": "Material Pricing Group",
+            "hsnCode": "HSN Code",
+            "taxCategory": "Tax Category",
+            "accountCategory": "Account Category",
+            "purchasePriceGNDP": "Purchase Price/GNDP",
+            "mrp": "MRP",
+            "sellingPrice": "Selling Price",
             "latestLandedCost": "Latest Landed Cost",
 
             "inventoryType": "Inventory Type",
@@ -4999,8 +4994,7 @@
             "otherMFGPlant": "Other MFG Plant",
             "plantLocation": "Plant Location",
             "plantBlock": "Plant Block",
-            "activeInd": "Active Industry"            
-            
+            "activeInd": "Active Industry"
         },
 
         "section": {
@@ -5025,7 +5019,7 @@
             "requesttype": "Request Type",
             "requestId": "Request ID",
             "requestDate": "Request Date",
-            "status": "Status"        
+            "status": "Status"
         },
         "label": {
             "requesttype": "Request Type",
@@ -5048,8 +5042,9 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "status": "Status"     },
-        "placeholder": { 
+            "status": "Status"
+        },
+        "placeholder": {
             "requesttype": "Request Type",
             "searchBy": "Search By",
             "registrationNo": "Registration No.",
@@ -5070,9 +5065,10 @@
             "action": "Action",
             "fromDate": "From Date",
             "toDate": "To Date",
-            "status": "Status"    },
+            "status": "Status"
+        },
 
-           "validation": {
+        "validation": {
             "partNumber": "Part Number",
             "searchBy": "Search By",
             "registrationNo": "Registration No.",
@@ -5086,7 +5082,7 @@
             "newregistrationNo": "New Registration No.",
             "newInsuranceExpiryDate": "New Insurance Expiry Date",
             "newPUCExpiryDate": "New PUC Expiry Date",
-            "browseUpload": "Browse & Upload"              
+            "browseUpload": "Browse & Upload"
         },
 
         "section": {
@@ -5110,7 +5106,7 @@
             "location": "Location",
             "currentYearRetail": "Current Year Retail",
             "lastYearRetail": "Last Year Retail",
-            "moduleTitle":"Dealer Demand Forecasting"
+            "moduleTitle": "Dealer Demand Forecasting"
         },
 
         "label": {
@@ -5128,9 +5124,9 @@
             "currentMonth1": "Current Month + 1",
             "currentMonth2": "Current Month + 2",
             "currentMonth3": "Current Month + 3"
-           },
+        },
 
-        "placeholder": { 
+        "placeholder": {
             "searchBy": "Search By",
             "dealerCode": "Dealer Code",
             "dealerName": "Dealer Name",
@@ -5143,8 +5139,8 @@
             "currentMonth": "Current Month",
             "currentMonth1": "Current Month + 1",
             "currentMonth2": "Current Month + 2",
-            "currentMonth3": "Current Month + 3"            
-         },
+            "currentMonth3": "Current Month + 3"
+        },
         "validation": {
             "searchBy": "Search By",
             "dealerCode": "Dealer Code",
@@ -5158,10 +5154,10 @@
             "currentMonth": "Current Month",
             "currentMonth1": "Current Month + 1",
             "currentMonth2": "Current Month + 2",
-            "currentMonth3": "Current Month + 3" 
+            "currentMonth3": "Current Month + 3"
         },
-        "drawerSubHeading":{
-            "header":"Model Forecasting Details"
+        "drawerSubHeading": {
+            "header": "Model Forecasting Details"
         },
 
         "section": {
@@ -5172,8 +5168,138 @@
         "button": {
             "download": "Download",
             "cancel": "Cancel",
-            "upload":"Upload"
+            "upload": "Upload"
         }
-    }
+    },
 
+    "overRiderClaim": {
+        "heading": {
+            "pageTitle": "Over Rider Claim",
+            "claimDetail": "Claim Detail",
+            "vehicleDetail": "Vehicle Detail"
+        },
+        "table": {
+            "dealerName": "Dealer Name",
+            "dealerBranch": "Dealer Branch",
+            "claimNo": "Claim No",
+            "claimDate": "Claim Date",
+            "status": "Status",
+            "customerName": "Customer Name"
+        },
+        "claimCard": {
+            "claimNo": "Claim No",
+            "claimDate": "Claim Date",
+            "status": "Status",
+            "dealerName": "Dealer Name",
+            "dealerLocation": "Dealer Location"
+        },
+        "label": {
+            "invoiceNumber": "Invoice Number",
+            "invoiceDate": "Invoice Date",
+            "customerName": "Customer Name",
+            "customerCategory": "Customer Category",
+            "chassisNumber": "Chassis Number",
+            "claimNumber": "Claim Number",
+            "claimType": "Claim Type",
+            "claimDate": "Claim Date",
+            "claimStatus": "Claim Status",
+            "insCoverNoteNo": "Ins. Cover Note No.",
+            "insCoverNoteDate": "Ins. Cover Note Date",
+            "insPremiumValue": "Ins Premium Value",
+            "insuranceCompanyName": "Insurance Company Name",
+            "financierName": "Financier Name",
+            "dealerShareAmount": "Dealer Share Amount",
+            "oemShareAmount": "OEM Share Amount",
+            "mandmClaimNo": "M & M Claim No",
+            "mandmClaimDate": "M & M Claim Date",
+            "remarks": "Remarks",
+            "approver": "Approver",
+            "requestedDate": "Requested Date",
+            "status": "Status",
+            "actionDate": "Action Date",
+            "approvedAmount": "Approved Amount",
+            "challanNo": "Challan No : ",
+            "challanDate :": "Challan Date : ",
+            "chessisNo": "Chessis No",
+            "deliveryChallanNo": "Delivery Challan No",
+            "deliveryChallanDate": "Delivery Challan Date",
+            "mandmInvoiceNo": "M&M Invoice No",
+            "mandmInvoiceDate": "M&M Invoice Date",
+            "dealerClaimAmount": "Dealer Claim Amount",
+            "approvedClaimAmount": "Approved Claim Amount",
+            "gst": "GST %",
+            "gstAmount": "GST Amount",
+            "totalClaimAmount": "Total Claim Amount",
+            "creditNoteNo": "Credit Note No",
+            "creditNoteDate": "Credit Note Date",
+            "creditNoteAmount": "Credit Note Amount",
+            "tdsAmount": "TDS Amount",
+            "debitNoteNo": "Debit Note No",
+            "debitNoteDate": "Debit Note Date",
+            "debitNoteAmount": "Debit Note Amount",
+            "irnNumber": "IRN Number",
+            "irnStatus": "IRN Status",
+            "irnDesc": "IRN Desc",
+            "zone": "Zone",
+            "areaOffice": "Area Office",
+            "dealerName": "Dealer Name",
+            "locationName": "Location Name",
+            "claimFromDate": "Claim From Date",
+            "claimToDate": "Claim To Date",
+            "claim": "Claim",
+            "advanceFilters": "Advance Filters"
+        },
+        "placeholder": {
+            "invoiceNumber": "Invoice Number",
+            "invoiceDate": "Invoice Date",
+            "customerName": "Customer Name",
+            "customerCategory": "Customer Category",
+            "chassisNumber": "Chassis Number",
+            "claimNumber": "Claim Number",
+            "claimType": "Claim Type",
+            "claimDate": "Claim Date",
+            "claimStatus": "Claim Status",
+            "insCoverNoteNo": "Ins. Cover Note No.",
+            "insCoverNoteDate": "Ins. Cover Note Date",
+            "insPremiumValue": "Ins Premium Value",
+            "insuranceCompanyName": "Insurance Company Name",
+            "financierName": "Financier Name",
+            "dealerShareAmount": "Dealer Share Amount",
+            "oemShareAmount": "OEM Share Amount",
+            "mandmClaimNo": "M & M Claim No",
+            "mandmClaimDate": "M & M Claim Date",
+            "remarks": "Remarks",
+            "deliveryChallanNo": "Delivery Challan No",
+            "deliveryChallanDate": "Delivery Challan Date",
+            "mandmInvoiceNo": "M&M Invoice No",
+            "mandmInvoiceDate": "M&M Invoice Date",
+            "dealerClaimAmount": "Dealer Claim Amount",
+            "approvedClaimAmount": "Approved Claim Amount",
+            "gst": "GST %",
+            "gstAmount": "GST Amount",
+            "totalClaimAmount": "Total Claim Amount",
+            "creditNoteNo": "Credit Note No",
+            "creditNoteDate": "Credit Note Date",
+            "creditNoteAmount": "Credit Note Amount",
+            "debitNoteNo": "Debit Note No",
+            "debitNoteDate": "Debit Note Date",
+            "debitNoteAmount": "Debit Note Amount",
+            "irnNumber": "IRN Number",
+            "irnStatus": "IRN Status",
+            "irnDesc": "IRN Desc",
+            "documentType": "document type",
+            "zone": "zone",
+            "areaOffice": "Area Office",
+            "dealerName": "Dealer Name",
+            "locationName": "Location Name",
+            "claimToDate": "Claim To Date",
+            "claimFromDate": "Claim From Date"
+        },
+        "notification": {
+            "atleastOneFile": "Please upload at least one file to continue"
+        },
+        "validation": {},
+        "button": {},
+        "link": {}
+    }
 }

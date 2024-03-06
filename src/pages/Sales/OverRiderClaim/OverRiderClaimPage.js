@@ -7,9 +7,10 @@ import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { OverRiderClaimMaster } from 'components/Sales/OverRiderClaim';
+import { translateContent } from 'utils/translateContent';
 
 const OverRiderClaimBase = (props) => {
-    const pageTitle = 'Over Rider Claim';
+    const pageTitle = translateContent('overRiderClaim.heading.pageTitle');
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
