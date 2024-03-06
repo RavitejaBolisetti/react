@@ -23,7 +23,7 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm: { resetFields },
         rules,
         setrules,
-        statusFilter
+        statusFilter,
     } = props;
 
     const onFinish = (values) => {
@@ -58,32 +58,32 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Zone" name="zone">
-                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('zone')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    <Form.Item label={translateContent('overRiderClaim.label.zone')} name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.zone'))} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Area Office" name="zone">
-                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Area Office')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    <Form.Item label={translateContent('overRiderClaim.label.areaOffice')} name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.areaOffice'))} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Dealer Name" name="zone">
-                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Dealer Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    <Form.Item label={translateContent('overRiderClaim.label.dealerName')} name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.dealerName'))} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Location Name" name="zone">
-                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('Location Name')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                    <Form.Item label={translateContent('overRiderClaim.label.locationName')} name="zone">
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.locationName'))} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={'Claim From Date' || translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')} name="fromDate" className={styles?.datePicker} rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}>
+                    <Form.Item label={translateContent('overRiderClaim.label.claimFromDate') || translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate')} name="fromDate" className={styles?.datePicker} rules={[{ required: rules?.fromdate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message1') }]}>
                         <DatePicker
-                            placeholder={'Claim From Date' || preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
+                            placeholder={translateContent('overRiderClaim.placeholder.claimFromDate') || preparePlaceholderSelect(translateContent('vehicleReceiptChecklist.label.advanceFilter.fromDate'))}
                             format={dateFormat}
                             className={styles.fullWidth}
                             disabledDate={(current) => current > new Date()}
@@ -96,9 +96,9 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label={'Claim To Date' || translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate')} name="toDate" className={styles?.datePicker} rules={[{ required: rules?.todate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message2') }]}>
+                    <Form.Item label={translateContent('overRiderClaim.label.claimToDate') || translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate')} name="toDate" className={styles?.datePicker} rules={[{ required: rules?.todate, message: translateContent('vehicleReceiptChecklist.advanceFilter.message2') }]}>
                         <DatePicker
-                            placeholder={preparePlaceholderSelect('Claim To Date' || translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate'))}
+                            placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.claimToDate') || translateContent('vehicleReceiptChecklist.label.advanceFilter.toDate'))}
                             format={dateFormat}
                             className={styles.fullWidth}
                             disabledDate={(current) => current < advanceFilterForm?.getFieldValue('fromDate') || current > new Date()}
@@ -110,8 +110,8 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={'Claim ' + translateContent('designationMaster.label.status')}>
-                        <Select optionFilterProp="children" options={statusFilter || []} placeholder={preparePlaceholderSelect('Claim Status')} fieldNames={{ label: 'value', value: 'key' }} loading={isModelDataLoading} allowClear showSearch  />
+                    <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label={translateContent('overRiderClaim.label.claim') + translateContent('designationMaster.label.status')}>
+                        <Select optionFilterProp="children" options={statusFilter || []} placeholder={preparePlaceholderSelect(translateContent('overRiderClaim.placeholder.claimStatus'))} fieldNames={{ label: 'value', value: 'key' }} loading={isModelDataLoading} allowClear showSearch />
                     </Form.Item>
                 </Col>
             </Row>

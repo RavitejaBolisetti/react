@@ -17,43 +17,40 @@ import { dateFormat } from 'utils/formatDateTime';
 import { UploadUtil } from 'utils/Upload';
 
 const VehicleDetailsForm = ({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled, formData, formActionType, chessisNoList }) => {
-    const disabledProps = {disabled: true};
+    const disabledProps = { disabled: true };
 
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
-    const uploadProps = {
-
-    };
+    const uploadProps = {};
 
     return (
         <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-             <Row gutter={20}>
-                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="chessisNo" label={'Chessis No'} rules={[validateRequiredSelectField(translateContent('termConditionDealer.validation.productHierarchy'))]}>
-                                {customSelectBox({ data: chessisNoList, placeholder: translateContent('termConditionDealer.placeholder.selectParameter'), fieldNames: { key: 'key', value: 'value' }, disabled: formActionType?.viewMode || isBtnDisabled })}
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="deliveryChallanNo" label={'Delivery Challan No'} initialValue={formData?.invoiceNo}>
-                                <Input placeholder={preparePlaceholderText('Delivery Challan No')} maxLength={50} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                            <Form.Item name="deliveryChallanDate" label={'Delivery Challan Date'} initialValue={formData?.deliveryChallanDate}>
-                            <DatePicker format={dateFormat} placeholder={preparePlaceholderText('Delivery Challan Date')} style={{ width: '100%' }} {...disabledProps} />
-                                {/* <Input placeholder={preparePlaceholderText('Delivery Challan Date')} maxLength={50} {...disabledProps} /> */}
-                            </Form.Item>
-                        </Col>
-                        {/* upload document */}
-
-                    </Row>
-                    <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <UploadUtil {...uploadProps} handleFormValueChange={onFieldsChange} />
-                    </Col>
-                </Row>
+            <Row gutter={20}>
+                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                    <Form.Item name="chessisNo" label={translateContent('overRiderClaim.label.chessisNo')} rules={[validateRequiredSelectField(translateContent('termConditionDealer.validation.productHierarchy'))]}>
+                        {customSelectBox({ data: chessisNoList, placeholder: translateContent('termConditionDealer.placeholder.selectParameter'), fieldNames: { key: 'key', value: 'value' }, disabled: formActionType?.viewMode || isBtnDisabled })}
+                    </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                    <Form.Item name="deliveryChallanNo" label={translateContent('overRiderClaim.label.deliveryChallanNo')} initialValue={formData?.invoiceNo}>
+                        <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.deliveryChallanNo'))} maxLength={50} {...disabledProps} />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                    <Form.Item name="deliveryChallanDate" label={translateContent('overRiderClaim.label.deliveryChallanDate')} initialValue={formData?.deliveryChallanDate}>
+                        <DatePicker format={dateFormat} placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.deliveryChallanDate'))} style={{ width: '100%' }} {...disabledProps} />
+                        {/* <Input placeholder={preparePlaceholderText(translateContent('overRiderClaim.placeholder.deliveryChallanDate'))} maxLength={50} {...disabledProps} /> */}
+                    </Form.Item>
+                </Col>
+                {/* upload document */}
+            </Row>
+            <Row gutter={16}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <UploadUtil {...uploadProps} handleFormValueChange={onFieldsChange} />
+                </Col>
+            </Row>
             {!isEditing && (
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
@@ -65,6 +62,6 @@ const VehicleDetailsForm = ({ form, onFieldsChange, onFinish, isEditing, isBtnDi
             )}
         </Form>
     );
-}
+};
 
 export default VehicleDetailsForm;

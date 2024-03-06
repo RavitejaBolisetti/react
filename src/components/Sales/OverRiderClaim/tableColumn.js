@@ -12,34 +12,34 @@ import { translateContent } from 'utils/translateContent';
 export const tableColumn = ({ handleButtonClick, page, pageSize }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Dealer Name',
+            title: translateContent('overRiderClaim.table.dealerName'),
             dataIndex: 'dealerName',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Dealer Branch',
+            title: translateContent('overRiderClaim.table.dealerBranch'),
             dataIndex: 'dealerBranch',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Claim No',
+            title: translateContent('overRiderClaim.table.claimNo'),
             dataIndex: 'claimNo',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Claim Date',
+            title: translateContent('overRiderClaim.table.claimDate'),
             dataIndex: 'claimDate',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Status',
+            title: translateContent('overRiderClaim.table.status'),
             dataIndex: 'status',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: translateContent('overRiderClaim.table.customerName'),
             dataIndex: 'customerName',
             width: '14%',
         }),

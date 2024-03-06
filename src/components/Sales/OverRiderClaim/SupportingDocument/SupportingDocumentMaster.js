@@ -140,7 +140,7 @@ const SupportingDocumentBase = (props) => {
     const deleteFile = (uploadData) => {
         const data = [{ customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName }];
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: translateContent('global.notificationSuccess.success'), message: translateContent('global.generalMessage.fileDeletedSuccessfully') });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
@@ -191,7 +191,7 @@ const SupportingDocumentBase = (props) => {
             saveData(requestData);
         } else {
             if (mandatoryFields) {
-                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: 'Please upload at least one file to continue' });
+                showGlobalNotification({ notificationType: 'error', title: translateContent('global.notificationError.title'), message: translateContent('overRiderClaim.notification.atleastOneFile') });
             } else {
                 showGlobalNotification({ notificationType: 'success', title, message });
                 setFileList([]);

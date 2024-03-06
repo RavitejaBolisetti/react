@@ -6,7 +6,7 @@
 import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { CopytoClipboard } from 'utils/CopytoClipboard';    
+import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 import styles from 'assets/sass/app.module.scss';
 import { CardSkeleton } from 'components/common/Skeleton';
@@ -36,7 +36,7 @@ const ClaimDetailCard = (props) => {
             <Panel
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                        {'Claim No'}
+                        {translateContent('overRiderClaim.claimCard.claimNo')}
                         <span className={styles.detailCardText}>
                             {'N/A'}
                             <CopytoClipboard text={ProfileData?.checklistNumber} />
@@ -46,24 +46,24 @@ const ClaimDetailCard = (props) => {
                 key={1}
             >
                 <div className={styles.detailCardText}>
-                    {'Claim Date'}
+                    {translateContent('overRiderClaim.claimCard.claimDate')}
                     <span>{record?.claimDate}</span>
                 </div>
 
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {'Status'}
+                    {translateContent('overRiderClaim.claimCard.claimNo')}
                     <span>{record?.irnStatus}</span>
                 </div>
                 <Divider />
-{/* for mnm user only */}
+                {/* for mnm user only */}
                 <div className={styles.detailCardText}>
-                    {'Dealer Name'}
+                    {translateContent('overRiderClaim.claimCard.dealerName')}
                     <span>{record?.claimType}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    {'Dealer Location'}
+                    {translateContent('overRiderClaim.claimCard.dealerLocation')}
                     <span>{record?.claimType}</span>
                 </div>
             </Panel>

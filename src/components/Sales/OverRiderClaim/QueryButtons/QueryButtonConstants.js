@@ -12,7 +12,7 @@ export const QUERY_BUTTONS = {
     REJECTED: {
         id: 2,
         title: 'Rejected',
-        key: "REJ",
+        key: 'REJ',
     },
 };
 export const CHECKLIST_MESSAGE_CONSTANTS = {
