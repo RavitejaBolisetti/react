@@ -30,20 +30,26 @@ import { AddEditForm } from './AddEditForm';
 import { CorporateSchemeRegistrationMainContainer } from './DealerCorporateClaimMasterMainContainer';
 import { DEALER_CORPORATE_SECTION } from 'constants/modules/CorporateSchemeRegistration/CorporateSchemeSection';
 import { SchemeRegistrationBulkUpload } from './SchemeRegistrationBulkUpload';
+import { corporateSchemeRegistration } from 'store/actions/data/corporateSchemeRegistration/CorporateSchemeRegistration';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            corporateSchemeRegistrationData: {
+                corporateSchemeRegistration: { isLoaded: isDataLoaded = false, isLoading, data: corporateSchemeRegistrationList, filter: filterString },
+            },
         },
     } = state;
+    
     const moduleTitle = 'Corporate Scheme';
 
     let returnValue = {
         userId,
         moduleTitle,
         typeData,
+        corporateSchemeRegistrationList,
         typedataMaster: typeData,
     };
     return returnValue;
@@ -68,6 +74,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchCorporateSchemeList: corporateSchemeRegistration.fetchList,
+            listShowLoading: corporateSchemeRegistration.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -75,8 +83,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CorporateSchemeRegistrationBase = (props) => {
-    const { userId, data, totalRecords, moduleTitle } = props;
-
+    const { userId, listShowLoading, data, totalRecords, moduleTitle, fetchCorporateSchemeList, corporateSchemeRegistrationList } = props;
+    console.log(corporateSchemeRegistrationList, "asdfasd");
     const [listFilterForm] = Form.useForm();
     const [filterString, setFilterString] = useState({});
     const [selectedRecord, setSelectedRecord] = useState();
@@ -179,7 +187,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
                 canRemove: true,
             },
             {
-                key: 'pageNumber',
+                key: 'pageNo',
                 title: 'Value',
                 value: page?.current,
                 canRemove: true,
@@ -212,8 +220,9 @@ export const CorporateSchemeRegistrationBase = (props) => {
         setDefaultSection(defaultSection);
         setSetionName(DEALER_CORPORATE_SECTION);
         setSection(defaultSection);
+        fetchCorporateSchemeList({setIsLoading: listShowLoading, extraParams});
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [extraParams]);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -356,7 +365,7 @@ export const CorporateSchemeRegistrationBase = (props) => {
         page,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableData: tabledataOth,
+        tableData: corporateSchemeRegistrationList?.paginationData || [],
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,

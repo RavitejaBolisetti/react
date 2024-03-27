@@ -147,6 +147,7 @@ export const BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT = BASE_URL + 'customers/corpo
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_CORPORATE = BASE_URL + 'customers/corporate/accounts';
 export const BASE_URL_CORPORATE_COMPANY_LIST = BASE_URL + 'customers/corporate/firms';
 export const BASE_URL_CORPORATE_COMPANY_PROFILE = BASE_URL + 'customers/corporate/profile';
+export const BASE_URL_CORPORATE_SCHEME_REGISTRATION = BASE_URL + 'claims/corporate';
 
 export const BASE_URL_OTF = BASE_URL + 'otf/';
 
